@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   sliding_up_panel: ^2.0.0+1
   just_audio: ^0.9.31
+  audio_video_progress_bar: ^1.0.0
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:

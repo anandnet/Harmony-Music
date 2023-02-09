@@ -10,8 +10,8 @@ class Player extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final PlayerController playerController = Get.put(PlayerController());
-    return Scaffold(
+    final PlayerController playerController = Get.find();
+    return Scaffold( 
       body: SlidingUpPanel(
           color: Colors.red,
           minHeight: 70,
@@ -19,6 +19,7 @@ class Player extends StatelessWidget {
           panel: Center(
             child: Container(),
           ),
+          
           body: Padding(
             padding: const EdgeInsets.only(left: 25, right: 25),
             child: Column(
@@ -50,12 +51,12 @@ class Player extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                GetX<PlayerController>(builder: (context) {
+                GetX<PlayerController>(builder: (controller) {
                   return ProgressBar(
-                    progress: context.progressBarStatus.value.current,
-                    total: context.progressBarStatus.value.total,
-                    buffered: context.progressBarStatus.value.buffered,
-                    onSeek: playerController.seek,
+                    progress: controller.progressBarStatus.value.current,
+                    total: controller.progressBarStatus.value.total,
+                    buffered: controller.progressBarStatus.value.buffered,
+                    onSeek: controller.seek,
                   );
                 }),
                 Row(
@@ -67,7 +68,7 @@ class Player extends StatelessWidget {
                         icon: const Icon(Icons.favorite_border)),
                     _previousButton(playerController),
                     CircleAvatar(
-                        radius: 35, child: _playButton(playerController)),
+                        radius: 35, child: _playButton()),
                     _nextButton(playerController),
                     IconButton(
                         onPressed: () {},
@@ -85,9 +86,9 @@ class Player extends StatelessWidget {
     );
   }
 
-  Widget _playButton(PlayerController playerController) {
-    return GetX<PlayerController>(builder: (_) {
-      final buttonState = _.buttonState.value;
+  Widget _playButton() {
+    return GetX<PlayerController>(builder: (controller) {
+      final buttonState = controller.buttonState.value;
       if (buttonState == PlayButtonState.loading) {
         // 2
         return const SizedBox(
@@ -100,38 +101,38 @@ class Player extends StatelessWidget {
         return IconButton(
           icon: const Icon(Icons.play_arrow),
           iconSize: 40.0,
-          onPressed: playerController.play,
+          onPressed: controller.play,
         );
       } else if (buttonState == PlayButtonState.playing) {
         return IconButton(
           icon: const Icon(Icons.pause),
           iconSize: 40.0,
-          onPressed: playerController.pause,
+          onPressed: controller.pause,
         );
       } else {
         return IconButton(
           icon: const Icon(Icons.play_arrow),
           iconSize: 40.0,
-          onPressed: () => playerController.replay,
+          onPressed: () => controller.replay,
         );
       }
     });
   }
 
   Widget _previousButton(PlayerController playerController) {
-    return IconButton(
-      icon: const Icon(Icons.skip_previous_rounded, size: 30),
-      onPressed: playerController.prev,
-    );
+        return IconButton(
+          icon: const Icon(Icons.skip_previous_rounded, size: 30),
+          onPressed: playerController.prev,
+        );
+      }
   }
 
   Widget _nextButton(PlayerController playerController) {
     return IconButton(
-      icon: const Icon(
-        Icons.skip_next,
-        size: 30,
-      ),
-      onPressed: playerController.next,
-    );
-  }
-}
+          icon: const Icon(
+            Icons.skip_next,
+            size: 30,
+          ),
+          onPressed: playerController.next,
+        );
+      }

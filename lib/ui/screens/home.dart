@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
-import 'ui/player/Player.dart';
+import '../player/Player.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+
+import 'home_screen_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final PlayerController playerController = Get.put(PlayerController());
+  final HomeScreenController homeScreenController = Get.put(HomeScreenController());
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -31,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Center(
             child: IconButton(
           icon: const Icon(Icons.add),
-          onPressed: playerController.pushSongToPlaylist,
+          onPressed: (){homeScreenController.isContentFetched.isTrue?playerController.pushSongToPlaylist(homeScreenController.quickPicksSongList):null;},
         )),
         minHeight: 70,
         maxHeight: size.height,

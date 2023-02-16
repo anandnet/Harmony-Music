@@ -40,6 +40,10 @@ dependencies:
   audio_video_progress_bar: ^1.0.0
   get: ^4.6.5
   http: ^0.13.5
+  dio: ^4.0.6
+  dio_cookie_manager: ^2.0.0
+  cached_network_image: ^3.2.3
+      #ref: main
 
 dev_dependencies:
   flutter_test:

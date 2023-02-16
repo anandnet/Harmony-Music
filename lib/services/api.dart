@@ -1,26 +1,31 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:harmonymusic/models/music_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:just_audio/just_audio.dart';
 
 import '../ui/player/utils.dart';
 
 List<String> realtedSongsList = [];
 
 Future<dynamic> getSongdata(String songId, bool first) async {
-  final response =
-      await http.get(Uri.parse("https://pipedapi.kavin.rocks/streams/$songId"));
+  // final response =
+  //     await http.get(Uri.parse("https://pipedapi.kavin.rocks/streams/$songId"));
+  
+  final response = await Dio().get("https://pipedapi.kavin.rocks/streams/$songId");
 
   if (response.statusCode == 200) {
-    final jsonResponse = jsonDecode(response.body);
-    final Song song = Song.fromJson(jsonResponse, songId);
+    //final jsonResponse = jsonDecode(response.data.toString());
+    final Song song = Song.fromJson(response.data, songId);
+    print(song.audioStreams);
     if (first) {
-      return SongDetailsResponse(song: song, jsonResponse: jsonResponse);
+      return SongDetailsResponse(song: song, jsonResponse: response.data);
     } else {
       return song;
     }
   } else {
-    print("error loading video id${songId}");
+    print(
+        "error loading video id ${songId} & RESPONSE CODE ${response.statusCode}");
+    return getSongdata(songId, first);
   }
 }
 
@@ -48,3 +53,5 @@ Future<List> getRelatedSongsList(dynamic jsonResponse) async {
   print(list);
   return list;
 }
+
+

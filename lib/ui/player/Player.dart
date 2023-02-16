@@ -1,4 +1,5 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
@@ -11,15 +12,51 @@ class Player extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final PlayerController playerController = Get.find();
-    return Scaffold( 
+    return Scaffold(
       body: SlidingUpPanel(
-          color: Colors.red,
+          header: Container(
+            height: 80,
+            color: Colors.blueGrey,
+          ),
+          footer: Container(
+            height: 80,
+            color: Colors.amberAccent,
+          ),
+          padding: const EdgeInsets.only(top: 80, bottom: 80),
+          //color: Colors.red,
           minHeight: 70,
           maxHeight: size.height,
           panel: Center(
-            child: Container(),
+            child: Obx(
+              () {
+                return ListView.builder(
+                    itemCount: playerController.playlistSongsDetails.length,
+                    padding: const EdgeInsets.only(top: 40),
+                    itemBuilder: (context, item) {
+                      print("${playerController.currentSongIndex.value == item} $item");
+                      return Material(
+                          child: Obx(() => ListTile(
+                                tileColor: playerController.currentSongIndex.value == item
+                                    ? Colors.blueAccent
+                                    : Colors.white,
+                                leading: SizedBox(
+                                    width: 50,
+                                    child: CachedNetworkImage(
+                                        imageUrl: playerController
+                                            .playlistSongsDetails[item].thumbnail
+                                            .sizewith(40))),
+                                title: Text(
+                                  playerController.playlistSongsDetails[item].title,
+                                ),
+                                subtitle: Text(
+                                    "${playerController.playlistSongsDetails[item].artist[0]["name"]}"),
+                              )));
+                    },
+                  );
+              }
+            )
+            
           ),
-          
           body: Padding(
             padding: const EdgeInsets.only(left: 25, right: 25),
             child: Column(
@@ -29,25 +66,40 @@ class Player extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 290,
-                  child: Image.network(
-                      "https://lh3.googleusercontent.com/BZBfTByEyZo6l74pbQLGQy-7-FTnYrt5UOpJdrUhdgjpbfMC8f60_ZPRkKiC2JE0RPUpp-cW-hYKOfp_4w=w544-h544-l90-rj"),
+                  child: Obx( () =>CachedNetworkImage(
+                      imageUrl: playerController.playlistSongsDetails.isNotEmpty
+                          ? playerController.currentSong.thumbnail.sizewith(300)
+                          : "https://lh3.googleusercontent.com/BZBfTByEyZo6l74pbQLGQy-7-FTnYrt5UOpJdrUhdgjpbfMC8f60_ZPRkKiC2JE0RPUpp-cW-hYKOfp_4w=w544-h544-l90-rj",
+                      fit: BoxFit.fitHeight,
+                    ))
+      
                 ),
                 Expanded(child: Container()),
-                const Text(
-                  "Tere Liye",
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                ),
+                GetX<PlayerController>(builder: (controller) {
+                  return Text(
+                    controller.playlistSongsDetails.isNotEmpty
+                        ? controller.currentSong.title
+                        : "NA",
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontSize: 25, fontWeight: FontWeight.bold),
+                  );
+                }),
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  textAlign: TextAlign.center,
-                  "Lata Mangeshkar & Roop Kumar Rathod",
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
-                ),
+                GetX<PlayerController>(builder: (controller) {
+                  return Text(
+                    controller.playlistSongsDetails.isNotEmpty
+                        ? controller.currentSong.artist[0]["name"]
+                        : "NA",
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.normal),
+                  );
+                }),
                 const SizedBox(
                   height: 20,
                 ),
@@ -67,8 +119,7 @@ class Player extends StatelessWidget {
                         onPressed: () {},
                         icon: const Icon(Icons.favorite_border)),
                     _previousButton(playerController),
-                    CircleAvatar(
-                        radius: 35, child: _playButton()),
+                    CircleAvatar(radius: 35, child: _playButton()),
                     _nextButton(playerController),
                     IconButton(
                         onPressed: () {},
@@ -120,19 +171,19 @@ class Player extends StatelessWidget {
   }
 
   Widget _previousButton(PlayerController playerController) {
-        return IconButton(
-          icon: const Icon(Icons.skip_previous_rounded, size: 30),
-          onPressed: playerController.prev,
-        );
-      }
-  }
-
-  Widget _nextButton(PlayerController playerController) {
     return IconButton(
-          icon: const Icon(
-            Icons.skip_next,
-            size: 30,
-          ),
-          onPressed: playerController.next,
-        );
-      }
+      icon: const Icon(Icons.skip_previous_rounded, size: 30),
+      onPressed: playerController.prev,
+    );
+  }
+}
+
+Widget _nextButton(PlayerController playerController) {
+  return IconButton(
+    icon: const Icon(
+      Icons.skip_next,
+      size: 30,
+    ),
+    onPressed: playerController.next,
+  );
+}

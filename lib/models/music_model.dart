@@ -18,16 +18,16 @@ class Song{
   String title;
   String thumbnailUrl;
   int duration;
-  List<AudioStream> audioStreams;
+  Map<String,AudioStream> audioStreams;
   //List<RelatedStream> relatedStreams;
+
 
   factory Song.fromJson(Map<String, dynamic> json,String songId) => Song(
         songId: songId,
         title: json["title"],
         thumbnailUrl: json["thumbnailUrl"],
         duration: json["duration"],
-        audioStreams: List<AudioStream>.from(
-            json["audioStreams"].map((x) => AudioStream.fromJson(x))),
+        audioStreams: { for (var element in json["audioStreams"]) element["quality"] : AudioStream.fromJson(element) }
       );
 
   Map<String, dynamic> toJson() => {
@@ -35,7 +35,7 @@ class Song{
         "title": title,
         "thumbnailUrl": thumbnailUrl,
         "duration": duration,
-        "audioStreams": List<dynamic>.from(audioStreams.map((x) => x.toJson())),
+        "audioStreams": List<dynamic>.from(audioStreams.values.map((x) => x.toJson())),
       };
 }
 

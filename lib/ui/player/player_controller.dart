@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
-
-import 'package:flutter/material.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/models/durationstate.dart';
-import 'package:harmonymusic/services/api.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/services/song_stream_url_service.dart';
 import 'package:just_audio/just_audio.dart';
@@ -12,23 +10,27 @@ import 'package:just_audio/just_audio.dart';
 import '../../models/song.dart';
 
 class PlayerController extends GetxController {
-  late ConcatenatingAudioSource _playlist ;
-
+  final playlist = ConcatenatingAudioSource(
+    useLazyPreparation: true,
+    shuffleOrder: DefaultShuffleOrder(),
+    children: [],
+  ).obs;
+ final currentQueue = [].obs;
   final playlistSongsDetails = [].obs;
 
   final MusicServices _musicServices = MusicServices();
 
   late AudioPlayer _audioPlayer;
-
+  late YoutubeExplode _yt;
   final progressBarStatus = ProgressBarState(
           buffered: Duration.zero, current: Duration.zero, total: Duration.zero)
       .obs;
 
   final currentSongIndex = (0).obs;
-  final playlist = [].obs;
   final isFirstSong = true;
   final isLastSong = true;
   final isShuffleModeEnabled = false;
+  final currentSong = Rxn<Song>();
 
   final buttonState = PlayButtonState.paused.obs;
 
@@ -38,6 +40,7 @@ class PlayerController extends GetxController {
 
   void _init() async {
     _audioPlayer = AudioPlayer();
+    _yt = YoutubeExplode();
     _listenForChangesInPlayerState();
     _listenForChangesInPosition();
     _listenForChangesInBufferedPosition();
@@ -97,42 +100,32 @@ class PlayerController extends GetxController {
   }
 
   Future<void> pushSongToPlaylist(List<Song> songs) async {
-    final firstSongStreamUrl = await SongStreamUrlService(song: songs[0]).songStreamUrl;
+    //removed after implementation
+    playlistSongsDetails.clear();
+    final firstSongtreamManifest = await _yt.videos.streamsClient.getManifest(songs[0].songId);
+    final streamUri = firstSongtreamManifest.audioOnly.withHighestBitrate().url;
+    playlist.value.add(AudioSource.uri(streamUri,tag: songs[0]));
+    await _audioPlayer.setAudioSource(playlist.value, preload: true);
+    _audioPlayer.play();
 
-    
-
-     _playlist = ConcatenatingAudioSource(
-      useLazyPreparation: true,
-      shuffleOrder: DefaultShuffleOrder(),
-      children: [
-        AudioSource.uri(Uri.parse(firstSongStreamUrl["48 kbps"]))
-      ],
-    );
-      await _audioPlayer.setAudioSource(_playlist);
-      playlistSongsDetails.add(songs[0]);
-      _audioPlayer.play();
-
-
-      //Load Url of Songs other than first song
-      for (int i = 1; i < songs.length; i++) {
-      final songStreamUrl =
-          await SongStreamUrlService(song: songs[i]).songStreamUrl;
-      _playlist.add(AudioSource.uri(Uri.parse(songStreamUrl["48 kbps"])));
-      playlistSongsDetails.add(songs[i]);
+    //Load Url of Songs other than first song
+    List<AudioSource> tempList = [];
+    for (int i = 1; i < songs.length; i++) {
+      final streamManifest =
+          await _yt.videos.streamsClient.getManifest(songs[i].songId);
+      tempList.add(AudioSource.uri((streamManifest.audioOnly.withHighestBitrate().url),tag:songs[i]));
     }
-
+    playlist.value.addAll([...tempList]);
+    playlistSongsDetails.addAll([...songs]);
   }
 
   void _listenForChangesInSequenceState() {
     _audioPlayer.sequenceStateStream.listen((sequenceState) {
       if (sequenceState == null) return;
-      print("here index ${sequenceState.currentIndex}");
+      currentQueue.addAll([...sequenceState.sequence]);
+      currentSong.value = sequenceState.currentSource!.tag;
       currentSongIndex.value = sequenceState.currentIndex;
     });
-  }
-
-  Song get currentSong {
-    return playlistSongsDetails[currentSongIndex.value];
   }
 
   Future<void> play() async {

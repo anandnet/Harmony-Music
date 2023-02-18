@@ -1,22 +1,21 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:just_audio/just_audio.dart';
 import '../models/song.dart';
 
 class SongStreamUrlService{
   SongStreamUrlService({required this.song});
   final Song song;
 
-  Future<Map> get songStreamUrl async {
-  final response = await Dio().get("https://pipedapi.kavin.rocks/streams/${song.songId}");
+  Future<AudioSource?> get songStreamUrl {
+    final response = Dio().get("https://watchapi.whatever.social/streams/${song.songId}").then((value) {
+      if(value.statusCode==200){
+        final responseUrl = ((value.data["audioStreams"]).firstWhere((val) => val["quality"] == "48 kbps"))["url"];
+        return AudioSource.uri(Uri.parse(responseUrl),tag: song);
+      }
+    });
 
-  if (response.statusCode == 200) {
-    final x = Map<String,String>.fromIterable(response.data["audioStreams"],key:(item)=>item["quality"],value: (item)=>item["url"]);
-    //inspect(x);
-    return x;
-  } else {
-    print("error loading video id ${song.songId} & RESPONSE CODE ${response.statusCode}");
-    return songStreamUrl;
-  }
+    return response;
   }
 }

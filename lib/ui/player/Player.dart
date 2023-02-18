@@ -11,7 +11,7 @@ class Player extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final PlayerController playerController = Get.find();
+    final PlayerController playerController = Get.find<PlayerController>();
     return Scaffold(
       body: SlidingUpPanel(
           header: Container(
@@ -67,8 +67,9 @@ class Player extends StatelessWidget {
                 SizedBox(
                   height: 290,
                   child: Obx( () =>CachedNetworkImage(
-                      imageUrl: playerController.playlistSongsDetails.isNotEmpty
-                          ? playerController.currentSong.thumbnail.sizewith(300)
+                      imageUrl: playerController.currentQueue
+                      . isNotEmpty
+                          ? playerController.currentSong.value!.thumbnail.sizewith(300)
                           : "https://lh3.googleusercontent.com/BZBfTByEyZo6l74pbQLGQy-7-FTnYrt5UOpJdrUhdgjpbfMC8f60_ZPRkKiC2JE0RPUpp-cW-hYKOfp_4w=w544-h544-l90-rj",
                       fit: BoxFit.fitHeight,
                     ))
@@ -77,8 +78,8 @@ class Player extends StatelessWidget {
                 Expanded(child: Container()),
                 GetX<PlayerController>(builder: (controller) {
                   return Text(
-                    controller.playlistSongsDetails.isNotEmpty
-                        ? controller.currentSong.title
+                    controller.currentQueue.isNotEmpty
+                        ? controller.currentSong.value!.title
                         : "NA",
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
@@ -91,8 +92,8 @@ class Player extends StatelessWidget {
                 ),
                 GetX<PlayerController>(builder: (controller) {
                   return Text(
-                    controller.playlistSongsDetails.isNotEmpty
-                        ? controller.currentSong.artist[0]["name"]
+                    controller.currentQueue.isNotEmpty
+                        ? controller.currentSong.value?.artist[0]["name"]
                         : "NA",
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
@@ -140,15 +141,7 @@ class Player extends StatelessWidget {
   Widget _playButton() {
     return GetX<PlayerController>(builder: (controller) {
       final buttonState = controller.buttonState.value;
-      if (buttonState == PlayButtonState.loading) {
-        // 2
-        return const SizedBox(
-          //margin: EdgeInsets.all(8.0),
-          width: 64.0,
-          height: 64.0,
-          child: CircularProgressIndicator(),
-        );
-      } else if (buttonState == PlayButtonState.paused) {
+      if (buttonState == PlayButtonState.paused) {
         return IconButton(
           icon: const Icon(Icons.play_arrow),
           iconSize: 40.0,

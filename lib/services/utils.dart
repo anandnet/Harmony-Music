@@ -20,3 +20,7 @@ int? parseDuration(String duration) {
   }
   return seconds;
 }
+
+String validatePlaylistId(String playlistId) {
+  return playlistId.startsWith('VL') ? playlistId.substring(2) : playlistId;
+}

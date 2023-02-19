@@ -9,7 +9,7 @@ Future<List<dynamic>> getContinuations(
     String continuationType,
     int limit,
     Future<dynamic> Function(String additionalParams) requestFunc,
-    List<dynamic> Function(Map<String, dynamic> continuationContents) parseFunc,
+    dynamic Function(Map<String, dynamic> continuationContents) parseFunc,
     {String ctokenPath = "",
     bool reloadable = false}) async {
 

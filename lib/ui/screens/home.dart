@@ -28,21 +28,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 60),
-        child: FloatingActionButton(
-            focusElevation: 0,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20))),
-            elevation: 0,
-            onPressed: () {},
-            child: const Icon(Icons.search)),
+      floatingActionButton: Visibility(
+        visible: false,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 60),
+          child: FloatingActionButton(
+              focusElevation: 0,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
+              elevation: 0,
+              onPressed: () {},
+              child: const Icon(Icons.search)),
+        ),
       ),
       body: SlidingUpPanel(
         body: Padding(
-          padding: const EdgeInsets.only(left: 15.0,top:100),
+          padding: const EdgeInsets.only(left: 15.0),
           child: SingleChildScrollView(
-            padding: const EdgeInsets.only(bottom: 100),
+            padding: const EdgeInsets.only(bottom: 100,top: 100),
             child: Obx(() {
               return Column(
                 children: homeScreenController.isContentFetched.value

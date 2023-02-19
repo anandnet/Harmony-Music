@@ -122,11 +122,15 @@ class Player extends StatelessWidget {
                     _previousButton(playerController),
                     CircleAvatar(radius: 35, child: _playButton()),
                     _nextButton(playerController),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.shuffle,
-                        )),
+                    Obx(
+                      () {
+                        return IconButton(
+                            onPressed: playerController.toggleShuffleMode,
+                            icon:  Icon(
+                              Icons.shuffle,color: playerController.isShuffleModeEnabled.value ? Colors.green:Colors.black,
+                            ));
+                      }
+                    ),
                   ],
                 ),
                 const SizedBox(

@@ -14,8 +14,8 @@ class PlayerController extends GetxController {
     useLazyPreparation: true,
     shuffleOrder: DefaultShuffleOrder(),
     children: [],
-  ).obs;
- final currentQueue = [].obs;
+  );
+  var currentQueue = [].obs;
   final playlistSongsDetails = [].obs;
 
   final MusicServices _musicServices = MusicServices();
@@ -29,7 +29,7 @@ class PlayerController extends GetxController {
   final currentSongIndex = (0).obs;
   final isFirstSong = true;
   final isLastSong = true;
-  final isShuffleModeEnabled = false;
+  final isShuffleModeEnabled = false.obs;
   final currentSong = Rxn<Song>();
 
   final buttonState = PlayButtonState.paused.obs;
@@ -99,36 +99,59 @@ class PlayerController extends GetxController {
     });
   }
 
-  Future<void> pushSongToPlaylist(List<Song> songs) async {
+  Future<void> pushSongToPlaylist(Song song) async {
     //removed after implementation
     playlistSongsDetails.clear();
-    final firstSongtreamManifest = await _yt.videos.streamsClient.getManifest(songs[0].songId);
-    final streamUri = firstSongtreamManifest.audioOnly.withHighestBitrate().url;
-    playlist.value.add(AudioSource.uri(streamUri,tag: songs[0]));
-    await _audioPlayer.setAudioSource(playlist.value, preload: true);
+    playlist.clear();
+    currentQueue.clear();
+
+    final firstSongtreamManifest =
+        await _yt.videos.streamsClient.getManifest(song.songId);
+    currentSong.value = song;
+    playlistSongsDetails.add(song);
+    currentQueue.add(song);
+    final streamUri = firstSongtreamManifest.audioOnly.sortByBitrate()[0].url;
+    playlist.add(AudioSource.uri(streamUri, tag: song));
+    await _audioPlayer.setAudioSource(playlist, preload: true);
     _audioPlayer.play();
+
+    final response =
+        await _musicServices.getWatchPlaylist(videoId: song.songId);
+    List<Song> upNextSongList =
+        (response['tracks']).map<Song>((item) => Song.fromJson(item)).toList();
+    playlistSongsDetails.addAll([...upNextSongList.sublist(1)]);
 
     //Load Url of Songs other than first song
     List<AudioSource> tempList = [];
-    for (int i = 1; i < songs.length; i++) {
+    for (int i = 1; i < upNextSongList.length; i++) {
       final streamManifest =
-          await _yt.videos.streamsClient.getManifest(songs[i].songId);
-      tempList.add(AudioSource.uri((streamManifest.audioOnly.withHighestBitrate().url),tag:songs[i]));
+          await _yt.videos.streamsClient.getManifest(upNextSongList[i].songId);
+      tempList.add(AudioSource.uri(
+          (streamManifest.audioOnly.sortByBitrate()[0].url),
+          tag: upNextSongList[i]));
     }
-    playlist.value.addAll([...tempList]);
-    playlistSongsDetails.addAll([...songs]);
+    playlist.addAll([...tempList]);
   }
 
   void _listenForChangesInSequenceState() {
     _audioPlayer.sequenceStateStream.listen((sequenceState) {
-      if (sequenceState == null) return;
-      currentQueue.addAll([...sequenceState.sequence]);
-      currentSong.value = sequenceState.currentSource!.tag;
+      if (sequenceState == null && sequenceState!.effectiveSequence.isEmpty)
+        return;
+      currentQueue.value = [...(sequenceState.sequence).map((e) => e.tag)];
+      currentSong.value = sequenceState.currentSource?.tag;
       currentSongIndex.value = sequenceState.currentIndex;
     });
   }
 
-  Future<void> play() async {
+  Future<void> testSong(String videoId) async {
+    print(videoId);
+    final response = await _musicServices.getWatchPlaylist(videoId: videoId);
+    List<Song> upNextSongList =
+        (response['tracks']).map<Song>((item) => Song.fromJson(item)).toList();
+    inspect(upNextSongList);
+  }
+
+  void play() {
     _audioPlayer.play();
   }
 
@@ -146,6 +169,11 @@ class PlayerController extends GetxController {
 
   void seek(Duration position) {
     _audioPlayer.seek(position);
+  }
+
+  void toggleShuffleMode(){
+    _audioPlayer.setShuffleModeEnabled(!isShuffleModeEnabled.value);
+    isShuffleModeEnabled.value = !isShuffleModeEnabled.value;
   }
 
   void replay() {

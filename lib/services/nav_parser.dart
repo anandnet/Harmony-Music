@@ -87,6 +87,13 @@ const thumbnails = [
   'thumbnails'
 ];
 
+const navigation_video_type = [
+    'watchEndpoint', 'watchEndpointMusicSupportedConfigs', 'watchEndpointMusicConfig',
+    'musicVideoType'
+];
+const toggle_menu = 'toggleMenuServiceItemRenderer';
+const menu_items = ['menu', 'menuRenderer','items'];
+
 List<Map<String, dynamic>> parseMixedContent(List<dynamic> rows) {
   List<Map<String, dynamic>> items = [];
   for (var row in rows) {
@@ -110,7 +117,7 @@ List<Map<String, dynamic>> parseMixedContent(List<dynamic> rows) {
               noneIfAbsent: true, funName: "mixed1");
           if (pageType == null) {
             if (nav(data, navigation_watch_playlist_id) != null) {
-              content = parseWatchPlaylist(data);
+              content = parseWatchPlaylistHome(data);
             } else {
               content = parseSong(data);
             }
@@ -306,13 +313,72 @@ Map<String, dynamic> getFlexColumnItem(Map<String, dynamic> item, int index) {
       ['musicResponsiveListItemFlexColumnRenderer'];
 }
 
-Map<String, dynamic> parseWatchPlaylist(Map<dynamic, dynamic> data) {
+Map<String, dynamic> parseWatchPlaylistHome(Map<dynamic, dynamic> data) {
   return {
     'title': nav(data, title_text),
     'playlistId': nav(data, navigation_watch_playlist_id),
     'thumbnails': nav(data, thumbnail_renderer),
   };
 }
+
+//For Song Watch Playlist
+
+List<Map<String, dynamic>> parseWatchPlaylist(List<dynamic> results) {
+  final tracks = <Map<String, dynamic>>[];
+  const PPVWR = 'playlistPanelVideoWrapperRenderer';
+  const PPVR = 'playlistPanelVideoRenderer';
+  for (var result in results) {
+    Map<String, dynamic>? counterpart;
+    if (result.containsKey(PPVWR)) {
+      counterpart =
+          result[PPVWR]['counterpart'][0]['counterpartRenderer'][PPVR];
+      result = result[PPVWR]['primaryRenderer'];
+    }
+    if (!result.containsKey(PPVR)) {
+      continue;
+    }
+    final data = result[PPVR];
+    if (data.containsKey('unplayableText')) {
+      continue;
+    }
+    final track = parseWatchTrack(data);
+    if (counterpart != null) {
+      track['counterpart'] = parseWatchTrack(counterpart);
+    }
+    tracks.add(track);
+  }
+  return tracks;
+}
+
+Map<String, dynamic> parseWatchTrack(Map<String, dynamic> data) {
+  final songInfo = parseSongRuns(data['longBylineText']['runs']);
+
+  final track = {
+    'videoId': data['videoId'],
+    'title': nav(data, title_text),
+    'length': nav(data, ['lengthText', 'runs', 0, 'text']),
+    'thumbnails': nav(data, thumbnail),
+    'videoType':
+        nav(data, ['navigationEndpoint'] + navigation_video_type),
+  };
+  track.addAll(songInfo);
+  return track;
+}
+
+String? getTabBrowseId(Map<String, dynamic> watchNextRenderer, int tabId) {
+  if (!watchNextRenderer['tabs'][tabId]['tabRenderer']
+      .containsKey('unselectable')) {
+    return watchNextRenderer['tabs'][tabId]['tabRenderer']['endpoint']
+        ['browseEndpoint']['browseId'];
+  } else {
+    return null;
+  }
+}
+
+
+
+
+
 
 dynamic nav(dynamic root, List items,
     {bool noneIfAbsent = false, String funName = "d"}) {

@@ -7,14 +7,16 @@ class Song {
     required this.thumbnail,
     required this.artist,
     required this.album,
+    this.length
     //required this.audioStreams,
   });
 
   String songId;
   String title;
   Thumbnail thumbnail;
-  List<Map<String,dynamic>> artist;
+  List<dynamic> artist;
   Map<String,dynamic> album;
+  String? length;
   //Map<String, AudioStream> audioStreams;
   //List<RelatedStream> relatedStreams;
 
@@ -24,6 +26,7 @@ class Song {
           thumbnail: Thumbnail(json["thumbnails"][1]['url']) ,
           artist:json['artists'],
           album: json['album'],
+          length: json['length']
           // audioStreams: {
           //   for (var element in json["audioStreams"])
           //     element["quality"]: AudioStream.fromJson(element)

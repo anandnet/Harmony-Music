@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:harmonymusic/models/quick_picks.dart';
+
+import '../player/player_controller.dart';
 
 class QuickPicksWidget extends StatelessWidget {
   const QuickPicksWidget({
@@ -10,6 +13,7 @@ class QuickPicksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final PlayerController playerController = Get.find<PlayerController>();
     return Container(
       height: 320,
       width: double.infinity,
@@ -33,19 +37,21 @@ class QuickPicksWidget extends StatelessWidget {
                   mainAxisSpacing: 5,
                 ),
                 itemBuilder: (_, item) {
-                  return Material(
-                      child: ListTile(
-                    leading: SizedBox(
-                        width: 50,
-                        child: CachedNetworkImage(
-                            imageUrl: content.songList[item].thumbnail
-                                .sizewith(50))),
-                    title: Text(
-                      content.songList[item].title,overflow: TextOverflow.ellipsis,style: TextStyle(fontWeight: FontWeight.bold),
+                  return InkWell(
+                    onTap: (){playerController.pushSongToPlaylist(content.songList[item]);},
+                    child: ListTile(
+                      leading: SizedBox(
+                      width: 50,
+                      child: CachedNetworkImage(
+                          imageUrl: content.songList[item].thumbnail
+                              .sizewith(50))),
+                      title: Text(
+                    content.songList[item].title,overflow: TextOverflow.ellipsis,style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                      "${content.songList[item].artist[0]["name"]}",maxLines: 1,),
                     ),
-                    subtitle: Text(
-                        "${content.songList[item].artist[0]["name"]}",maxLines: 1,),
-                  ));
+                  );
                 }),
           ),
           SizedBox(height: 20)

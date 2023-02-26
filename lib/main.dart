@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'ui/screens/home.dart';
+import 'package:harmonymusic/ui/home.dart';
+import 'ui/screens/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SafeArea(top: false, bottom: false, child: HomeScreen()),
+      home: const SafeArea(top: false, bottom: false, child: Home()),
     );
   }
 }

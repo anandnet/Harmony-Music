@@ -6,7 +6,7 @@ class Song {
     required this.title,
     required this.thumbnail,
     required this.artist,
-    required this.album,
+    this.album,
     this.length
     //required this.audioStreams,
   });
@@ -15,7 +15,7 @@ class Song {
   String title;
   Thumbnail thumbnail;
   List<dynamic> artist;
-  Map<String,dynamic> album;
+  Map<String,dynamic>? album;
   String? length;
   //Map<String, AudioStream> audioStreams;
   //List<RelatedStream> relatedStreams;
@@ -23,7 +23,7 @@ class Song {
   factory Song.fromJson(Map<String, dynamic> json) => Song(
           songId: json["videoId"],
           title: json["title"],
-          thumbnail: Thumbnail(json["thumbnails"][1]['url']) ,
+          thumbnail: Thumbnail(json["thumbnails"][0]['url']) ,
           artist:json['artists'],
           album: json['album'],
           length: json['length']

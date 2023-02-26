@@ -24,7 +24,7 @@ class PlaylistListWidget extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                content.title,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               )),
           SizedBox(height: 5),
           Container(

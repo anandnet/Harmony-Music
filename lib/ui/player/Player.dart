@@ -14,49 +14,66 @@ class Player extends StatelessWidget {
     final PlayerController playerController = Get.find<PlayerController>();
     return Scaffold(
       body: SlidingUpPanel(
-          header: Container(
-            height: 80,
-            color: Colors.blueGrey,
-          ),
-          footer: Container(
-            height: 80,
-            color: Colors.amberAccent,
-          ),
-          padding: const EdgeInsets.only(top: 80, bottom: 80),
+          onPanelClosed: () {
+            playerController.isPlayerPaneDraggable.value = true;
+          },
+          onPanelOpened: () {
+            playerController.isPlayerPaneDraggable.value = false;
+          },
+          // padding: const EdgeInsets.only(bottom: 60),
           //color: Colors.red,
-          minHeight: 70,
+          minHeight: 75,
           maxHeight: size.height,
-          panel: Center(
-            child: Obx(
-              () {
+          collapsed: Container(
+              color: Colors.blue,
+              height: 75,
+              child: Center(
+                  child: Icon(
+                Icons.keyboard_arrow_up,
+                size: 40,
+              ))),
+          panelBuilder: (ScrollController sc) => Center(child: Obx(() {
                 return ListView.builder(
-                    itemCount: playerController.playlistSongsDetails.length,
-                    padding: const EdgeInsets.only(top: 40),
-                    itemBuilder: (context, item) {
-                      print("${playerController.currentSongIndex.value == item} $item");
-                      return Material(
-                          child: Obx(() => ListTile(
-                                tileColor: playerController.currentSongIndex.value == item
-                                    ? Colors.blueAccent
-                                    : Colors.white,
-                                leading: SizedBox(
-                                    width: 50,
-                                    child: CachedNetworkImage(
-                                        imageUrl: playerController
-                                            .playlistSongsDetails[item].thumbnail
-                                            .sizewith(40))),
-                                title: Text(
-                                  playerController.playlistSongsDetails[item].title,
-                                ),
-                                subtitle: Text(
-                                    "${playerController.playlistSongsDetails[item].artist[0]["name"]}"),
-                              )));
-                    },
-                  );
-              }
-            )
-            
-          ),
+                  controller: sc,
+                  itemCount: playerController.playlistSongsDetails.length,
+                  padding: const EdgeInsets.only(top: 55),
+                  itemBuilder: (context, index) {
+                    print(
+                        "${playerController.currentSongIndex.value == index} $index");
+                    return Material(
+                        child: Obx(() => ListTile(
+                              onTap: () {
+                                playerController.seekByIndex(index);
+                              },
+                              contentPadding: const EdgeInsets.only(
+                                  top: 0, left: 30, right: 30),
+                              tileColor:
+                                  playerController.currentSongIndex.value ==
+                                          index
+                                      ? Colors.blueAccent
+                                      : Colors.white,
+                              leading: SizedBox(
+                                  width: 40,
+                                  child: CachedNetworkImage(
+                                      imageUrl: playerController
+                                          .playlistSongsDetails[index].thumbnail
+                                          .sizewith(40))),
+                              title: Text(
+                                playerController
+                                    .playlistSongsDetails[index].title,
+                                maxLines: 1,
+                              ),
+                              subtitle: Text(
+                                "${playerController.playlistSongsDetails[index].artist[0]["name"]}",
+                                maxLines: 1,
+                              ),
+                              trailing: Text(playerController
+                                      .playlistSongsDetails[index].length ??
+                                  ""),
+                            )));
+                  },
+                );
+              })),
           body: Padding(
             padding: const EdgeInsets.only(left: 25, right: 25),
             child: Column(
@@ -65,16 +82,14 @@ class Player extends StatelessWidget {
                   height: 120,
                 ),
                 SizedBox(
-                  height: 290,
-                  child: Obx( () =>CachedNetworkImage(
-                      imageUrl: playerController.currentQueue
-                      . isNotEmpty
-                          ? playerController.currentSong.value!.thumbnail.sizewith(300)
-                          : "https://lh3.googleusercontent.com/BZBfTByEyZo6l74pbQLGQy-7-FTnYrt5UOpJdrUhdgjpbfMC8f60_ZPRkKiC2JE0RPUpp-cW-hYKOfp_4w=w544-h544-l90-rj",
-                      fit: BoxFit.fitHeight,
-                    ))
-      
-                ),
+                    height: 290,
+                    child: Obx(() => CachedNetworkImage(
+                          imageUrl: playerController.currentQueue.isNotEmpty
+                              ? playerController.currentSong.value!.thumbnail
+                                  .sizewith(300)
+                              : "https://lh3.googleusercontent.com/BZBfTByEyZo6l74pbQLGQy-7-FTnYrt5UOpJdrUhdgjpbfMC8f60_ZPRkKiC2JE0RPUpp-cW-hYKOfp_4w=w544-h544-l90-rj",
+                          fit: BoxFit.fitHeight,
+                        ))),
                 Expanded(child: Container()),
                 GetX<PlayerController>(builder: (controller) {
                   return Text(
@@ -122,15 +137,16 @@ class Player extends StatelessWidget {
                     _previousButton(playerController),
                     CircleAvatar(radius: 35, child: _playButton()),
                     _nextButton(playerController),
-                    Obx(
-                      () {
-                        return IconButton(
-                            onPressed: playerController.toggleShuffleMode,
-                            icon:  Icon(
-                              Icons.shuffle,color: playerController.isShuffleModeEnabled.value ? Colors.green:Colors.black,
-                            ));
-                      }
-                    ),
+                    Obx(() {
+                      return IconButton(
+                          onPressed: playerController.toggleShuffleMode,
+                          icon: Icon(
+                            Icons.shuffle,
+                            color: playerController.isShuffleModeEnabled.value
+                                ? Colors.green
+                                : Colors.black,
+                          ));
+                    }),
                   ],
                 ),
                 const SizedBox(

@@ -1,5 +1,7 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:audio_service/audio_service.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:get/get.dart';
@@ -9,13 +11,11 @@ import 'package:harmonymusic/services/song_stream_url_service.dart';
 import 'package:just_audio/just_audio.dart';
 
 import '../../models/song.dart';
+import '../../models/thumbnail.dart' as thumb;
 
 class PlayerController extends GetxController {
-  final playlist = ConcatenatingAudioSource(
-    useLazyPreparation: true,
-    shuffleOrder: DefaultShuffleOrder(),
-    children: [],
-  );
+  final _audioHandler = Get.find<AudioHandler>();
+  final _songUriService = SongUriService();
   var currentQueue = [].obs;
   final playlistSongsDetails = [].obs;
 
@@ -27,8 +27,7 @@ class PlayerController extends GetxController {
   bool _initFlagForPlayer = true;
   PanelController playerPanelController = PanelController();
 
-  late AudioPlayer _audioPlayer;
-  late YoutubeExplode _yt;
+  // late AudioPlayer _audioPlayer;
   final progressBarStatus = ProgressBarState(
           buffered: Duration.zero, current: Duration.zero, total: Duration.zero)
       .obs;
@@ -46,18 +45,17 @@ class PlayerController extends GetxController {
   }
 
   void _init() async {
-    _audioPlayer = AudioPlayer();
-    _yt = YoutubeExplode();
+    //_audioPlayer = AudioPlayer();
     _listenForChangesInPlayerState();
     _listenForChangesInPosition();
     _listenForChangesInBufferedPosition();
     _listenForChangesInDuration();
-    _listenForChangesInSequenceState();
+   // _listenForCurrentSong();
+    //_listenForPlaylist();
   }
 
   void panellistener(double x) {
     if (x >= 0 && x <= 0.2) {
-      //print(1 - (x*5));
       playerPaneOpacity.value = 1 - (x * 5);
       isPlayerpanelTopVisible.value = true;
     }
@@ -72,7 +70,7 @@ class PlayerController extends GetxController {
   }
 
   void _listenForChangesInPlayerState() {
-    _audioPlayer.playerStateStream.listen((playerState) {
+    _audioHandler.playbackState.listen((playerState) {
       final isPlaying = playerState.playing;
       final processingState = playerState.processingState;
       if (processingState == ProcessingState.loading ||
@@ -83,14 +81,14 @@ class PlayerController extends GetxController {
       } else if (processingState != ProcessingState.completed) {
         buttonState.value = PlayButtonState.playing;
       } else {
-        _audioPlayer.seek(Duration.zero);
-        _audioPlayer.pause();
+        _audioHandler.seek(Duration.zero);
+        _audioHandler.pause();
       }
     });
   }
 
   void _listenForChangesInPosition() {
-    _audioPlayer.positionStream.listen((position) {
+    AudioService.position.listen((position) {
       final oldState = progressBarStatus.value;
       progressBarStatus.update((val) {
         val!.current = position;
@@ -101,10 +99,10 @@ class PlayerController extends GetxController {
   }
 
   void _listenForChangesInBufferedPosition() {
-    _audioPlayer.bufferedPositionStream.listen((bufferedPosition) {
+    _audioHandler.playbackState.listen((playbackState) {
       final oldState = progressBarStatus.value;
       progressBarStatus.update((val) {
-        val!.buffered = bufferedPosition;
+        val!.buffered = playbackState.bufferedPosition;
         val.current = oldState.current;
         val.total = oldState.total;
       });
@@ -112,10 +110,10 @@ class PlayerController extends GetxController {
   }
 
   void _listenForChangesInDuration() {
-    _audioPlayer.durationStream.listen((duration) {
+    _audioHandler.mediaItem.listen((mediaitem) {
       final oldState = progressBarStatus.value;
       progressBarStatus.update((val) {
-        val!.total = duration ?? Duration.zero;
+        val!.total = mediaitem?.duration ?? Duration.zero;
         val.current = oldState.current;
         val.buffered = oldState.buffered;
       });
@@ -125,7 +123,6 @@ class PlayerController extends GetxController {
   Future<void> pushSongToPlaylist(Song song) async {
     //removed after implementation
     playlistSongsDetails.clear();
-    playlist.clear();
     currentQueue.clear();
 
     //open player pane,set current song and push first song into playing list,
@@ -135,14 +132,19 @@ class PlayerController extends GetxController {
     currentSong.value = song;
     playlistSongsDetails.add(song);
     currentQueue.add(song);
+    clearPlaylist();
 
     //get first song url and set to player
-    final firstSongtreamManifest =
-        await _yt.videos.streamsClient.getManifest(song.songId);
-    final streamUri = firstSongtreamManifest.audioOnly.sortByBitrate()[0].url;
-    playlist.add(AudioSource.uri(streamUri, tag: song));
-    await _audioPlayer.setAudioSource(playlist, preload: true);
-    _audioPlayer.play();
+    Uri songUri = await _songUriService.getSongUri(song.songId);
+    print(songUri.toString());
+    _audioHandler.addQueueItem(MediaItem(
+        id: song.songId,
+        title: song.title,
+        //album: song.album!['name'],
+        artUri: Uri.parse(song.thumbnail.sizewith(100)),
+        //artist: song.artist[0]['name'],
+        extras: {'url': songUri.toString()}));
+    _audioHandler.play();
 
     if (_initFlagForPlayer) {
       playerPanelMinHeight.value = 75;
@@ -156,24 +158,40 @@ class PlayerController extends GetxController {
     playlistSongsDetails.addAll([...upNextSongList.sublist(1)]);
 
     //Load Url of Songs other than first song
-    List<AudioSource> tempList = [];
     for (int i = 1; i < upNextSongList.length; i++) {
-      final streamManifest =
-          await _yt.videos.streamsClient.getManifest(upNextSongList[i].songId);
-      tempList.add(AudioSource.uri(
-          (streamManifest.audioOnly.sortByBitrate()[0].url),
-          tag: upNextSongList[i]));
+      Uri songUri = await _songUriService.getSongUri(upNextSongList[i].songId);
+      _audioHandler.addQueueItem(MediaItem(
+          id: upNextSongList[i].songId,
+          title: upNextSongList[i].title,
+          //album: upNextSongList[i].album!['name'],
+          artUri: Uri.parse(upNextSongList[i].thumbnail.sizewith(200)),
+          //artist: upNextSongList[i].artist[0]['name'],
+          extras: {'url': songUri.toString()}));
     }
-    playlist.addAll([...tempList]);
   }
 
-  void _listenForChangesInSequenceState() {
-    _audioPlayer.sequenceStateStream.listen((sequenceState) {
-      if (sequenceState == null && sequenceState!.effectiveSequence.isEmpty)
-        return;
-      currentQueue.value = [...(sequenceState.sequence).map((e) => e.tag)];
-      currentSong.value = sequenceState.currentSource?.tag;
-      currentSongIndex.value = sequenceState.currentIndex;
+  void _listenForCurrentSong() {
+    _audioHandler.mediaItem.listen((mediaItem) {
+      if (playlistSongsDetails.isNotEmpty) {
+        currentSong.value = playlistSongsDetails
+            .firstWhere((element) => element.title == mediaItem?.title);
+        currentSongIndex.value =
+            playlistSongsDetails.indexOf(currentSong.value);
+      }
+    });
+  }
+
+  void _listenForPlaylist() {
+    _audioHandler.queue.listen((queue) {
+      playlistSongsDetails.setAll(
+          0,
+          queue.map((e) => Song(
+                  songId: e.id,
+                  title: e.title,
+                  thumbnail: thumb.Thumbnail(e.artUri!.path),
+                  artist: [
+                    {"name": e.artist}
+                  ])));
     });
   }
 
@@ -186,42 +204,49 @@ class PlayerController extends GetxController {
   }
 
   void play() {
-    _audioPlayer.play();
+    _audioHandler.play();
   }
 
   void pause() {
-    _audioPlayer.pause();
+    _audioHandler.pause();
   }
 
   void prev() {
-    _audioPlayer.hasPrevious ? _audioPlayer.seekToPrevious() : null;
+    _audioHandler.skipToPrevious();
   }
 
   void next() {
-    _audioPlayer.hasNext ? _audioPlayer.seekToNext() : null;
+    _audioHandler.skipToNext();
   }
 
   void seek(Duration position) {
-    _audioPlayer.seek(position);
+    _audioHandler.seek(position);
   }
 
   void seekByIndex(int index) {
-    _audioPlayer.seek(Duration.zero, index: index);
+    _audioHandler.skipToQueueItem(index);
   }
 
   void toggleShuffleMode() {
-    _audioPlayer.setShuffleModeEnabled(!isShuffleModeEnabled.value);
+    isShuffleModeEnabled.value
+        ? _audioHandler.setShuffleMode(AudioServiceShuffleMode.all)
+        : _audioHandler.setShuffleMode(AudioServiceShuffleMode.none);
     isShuffleModeEnabled.value = !isShuffleModeEnabled.value;
   }
 
+  void clearPlaylist(){
+    for(int i=0;i<_audioHandler.queue.value.length;i++){
+      _audioHandler.removeQueueItemAt(i);
+    }
+  }
+
   void replay() {
-    _audioPlayer.seek(Duration.zero,
-        index: _audioPlayer.effectiveIndices!.first);
+    _audioHandler;
   }
 
   @override
   void dispose() {
-    _audioPlayer.dispose();
+    _audioHandler.customAction('dispose');
     super.dispose();
   }
 }

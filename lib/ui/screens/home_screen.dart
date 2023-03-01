@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
             // selectedIconTheme: IconThemeData(color: Colors.white),
             unselectedIconTheme: const IconThemeData(color: Colors.black),
-            selectedLabelTextStyle: const TextStyle(color: Colors.white),
+            selectedLabelTextStyle: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
             unselectedLabelTextStyle: const TextStyle(color: Colors.white38),
           ),),
           const VerticalDivider(thickness: 1, width: 2),

@@ -1,11 +1,14 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:harmonymusic/services/audio_handler.dart';
 import 'package:harmonymusic/ui/home.dart';
 import 'ui/screens/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+  Get.put<AudioHandler>(await initAudioService(),permanent: true);
   runApp(const MyApp());
 }
 

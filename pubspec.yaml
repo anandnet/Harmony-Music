@@ -44,6 +44,7 @@ dependencies:
   cached_network_image: ^3.2.3
   youtube_explode_dart: ^1.12.3
   sliding_up_panel: ^2.0.0+1
+  audio_service: ^0.18.9
       #ref: main
 
 dev_dependencies:

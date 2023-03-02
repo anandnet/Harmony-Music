@@ -17,7 +17,7 @@ class Home extends StatelessWidget {
         Get.put(HomeScreenController());
     final size = MediaQuery.of(context).size;
     return Scaffold(
-        body: Obx(() =>SlidingUpPanel(
+        body: Obx(() => SlidingUpPanel(
             header: Obx(() {
               return Visibility(
                 visible: playerController.isPlayerpanelTopVisible.value,
@@ -35,7 +35,8 @@ class Home extends StatelessWidget {
                             color: Colors.cyan,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 10),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,7 +46,7 @@ class Home extends StatelessWidget {
                                   //width: 40,
                                   child: CachedNetworkImage(
                                     imageUrl: playerController
-                                            .currentQueue.isNotEmpty
+                                            .playlistSongsDetails.isNotEmpty
                                         ? playerController
                                             .currentSong.value!.thumbnail
                                             .sizewith(50)
@@ -65,8 +66,8 @@ class Home extends StatelessWidget {
                                       SizedBox(
                                         height: 20,
                                         child: Text(
-                                          playerController
-                                                  .currentQueue.isNotEmpty
+                                          playerController.playlistSongsDetails
+                                                  .isNotEmpty
                                               ? playerController
                                                   .currentSong.value!.title
                                               : "",
@@ -79,8 +80,8 @@ class Home extends StatelessWidget {
                                       SizedBox(
                                         height: 20,
                                         child: Text(
-                                          playerController
-                                                  .currentQueue.isNotEmpty
+                                          playerController.playlistSongsDetails
+                                                  .isNotEmpty
                                               ? playerController.currentSong
                                                   .value!.artist[0]['name']
                                               : "",
@@ -91,18 +92,16 @@ class Home extends StatelessWidget {
                                   ),
                                 ),
                                 Row(
-                                  children: const [
+                                  children: [
+                                    SizedBox(width: 45, child: _playButton()),
                                     SizedBox(
                                         width: 40,
-                                        child: Icon(
-                                          Icons.play_arrow,
-                                          size: 35,
-                                        )),
-                                    SizedBox(
-                                        width: 40,
-                                        child: Icon(
-                                          Icons.skip_next_rounded,
-                                          size: 35,
+                                        child: InkWell(
+                                          onTap: playerController.next,
+                                          child: const Icon(
+                                            Icons.skip_next_rounded,
+                                            size: 35,
+                                          ),
                                         ))
                                   ],
                                 )
@@ -122,5 +121,30 @@ class Home extends StatelessWidget {
             maxHeight: size.height,
             panel: const Player(),
             body: const HomeScreen())));
+  }
+
+  Widget _playButton() {
+    return GetX<PlayerController>(builder: (controller) {
+      final buttonState = controller.buttonState.value;
+      if (buttonState == PlayButtonState.paused) {
+        return IconButton(
+          icon: const Icon(Icons.play_arrow),
+          iconSize: 35.0,
+          onPressed: controller.play,
+        );
+      } else if (buttonState == PlayButtonState.playing) {
+        return IconButton(
+          icon: const Icon(Icons.pause),
+          iconSize: 35.0,
+          onPressed: controller.pause,
+        );
+      } else {
+        return IconButton(
+          icon: const Icon(Icons.play_arrow),
+          iconSize: 35.0,
+          onPressed: () => controller.replay,
+        );
+      }
+    });
   }
 }

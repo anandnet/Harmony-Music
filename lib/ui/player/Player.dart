@@ -84,7 +84,7 @@ class Player extends StatelessWidget {
                 SizedBox(
                     height: 290,
                     child: Obx(() => CachedNetworkImage(
-                          imageUrl: playerController.currentQueue.isNotEmpty
+                          imageUrl: playerController.playlistSongsDetails.isNotEmpty
                               ? playerController.currentSong.value!.thumbnail
                                   .sizewith(300)
                               : "https://lh3.googleusercontent.com/BZBfTByEyZo6l74pbQLGQy-7-FTnYrt5UOpJdrUhdgjpbfMC8f60_ZPRkKiC2JE0RPUpp-cW-hYKOfp_4w=w544-h544-l90-rj",
@@ -93,7 +93,7 @@ class Player extends StatelessWidget {
                 Expanded(child: Container()),
                 GetX<PlayerController>(builder: (controller) {
                   return Text(
-                    controller.currentQueue.isNotEmpty
+                    controller.playlistSongsDetails.isNotEmpty
                         ? controller.currentSong.value!.title
                         : "NA",
                     textAlign: TextAlign.center,
@@ -107,7 +107,7 @@ class Player extends StatelessWidget {
                 ),
                 GetX<PlayerController>(builder: (controller) {
                   return Text(
-                    controller.currentQueue.isNotEmpty
+                    controller.playlistSongsDetails.isNotEmpty
                         ? controller.currentSong.value?.artist[0]["name"]
                         : "NA",
                     textAlign: TextAlign.center,

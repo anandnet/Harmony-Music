@@ -1,6 +1,4 @@
-import 'dart:developer';
 import 'dart:math';
-import 'package:flutter/material.dart';
 
 import 'nav_parser.dart';
 
@@ -32,7 +30,7 @@ Future<List<dynamic>> getContinuations(
     }
 
     List<dynamic> contents = getContinuationContents(results, parseFunc);
-    if (contents.length == 0) {
+    if (contents.isEmpty) {
       break;
     }
     items.addAll(contents);

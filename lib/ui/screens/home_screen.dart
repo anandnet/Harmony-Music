@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 
-import '../widgets/playlist_list_widget.dart';
+import '../widgets/home_list_widget.dart';
 import '../widgets/quickpickswidget.dart';
 import 'home_screen_controller.dart';
 
@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButton: Visibility(
-        visible: false,
+        visible: true,
         child: Padding(
           padding: const EdgeInsets.only(bottom: 60),
           child: FloatingActionButton(

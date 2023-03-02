@@ -34,11 +34,12 @@ class Song {
           );
 
   Map<String, dynamic> toJson() => {
-        "songID": songId,
+        "videoId": songId,
         "title": title,
-        "thumbnailUrl": thumbnail,
-        "artist": artist,
-        "album":album
+        "thumbnails": [{'url':thumbnail.url}],
+        "artists": artist,
+        "album":album,
+        "length":length
         // "audioStreams":
         //     List<dynamic>.from(audioStreams.values.map((x) => x.toJson())),
       };

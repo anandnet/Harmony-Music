@@ -15,8 +15,7 @@ Future<AudioHandler> initAudioService() async {
 
 class MyAudioHandler extends BaseAudioHandler {
   final _player = AudioPlayer();
-  final _playlist = ConcatenatingAudioSource(children: []);
-  final x=10;
+  final _playlist = ConcatenatingAudioSource(children: [],shuffleOrder: DefaultShuffleOrder());
 
   MyAudioHandler() {
     _loadEmptyPlaylist();
@@ -42,13 +41,12 @@ class MyAudioHandler extends BaseAudioHandler {
         controls: [
           MediaControl.skipToPrevious,
           if (playing) MediaControl.pause else MediaControl.play,
-          MediaControl.stop,
           MediaControl.skipToNext,
         ],
         systemActions: const {
           MediaAction.seek,
         },
-        androidCompactActionIndices: const [0, 1, 3],
+        androidCompactActionIndices: const [0, 1, 2],
         processingState: const {
           ProcessingState.idle: AudioProcessingState.idle,
           ProcessingState.loading: AudioProcessingState.loading,
@@ -131,8 +129,15 @@ class MyAudioHandler extends BaseAudioHandler {
     queue.add(newQueue);
   }
 
-  UriAudioSource _createAudioSource(MediaItem mediaItem) {
-    return AudioSource.uri(
+  @override
+  Future<void> updateQueue(List<MediaItem> queue) {
+    _playlist.clear();
+    _playlist.add(_createAudioSource(queue[0]));
+    return super.updateQueue(queue);
+  }
+
+  LockCachingAudioSource _createAudioSource(MediaItem mediaItem) {
+    return LockCachingAudioSource(
       Uri.parse(mediaItem.extras!['url'] as String),
       tag: mediaItem,
     );

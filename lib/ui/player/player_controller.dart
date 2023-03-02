@@ -16,7 +16,7 @@ import '../../models/thumbnail.dart' as thumb;
 class PlayerController extends GetxController {
   final _audioHandler = Get.find<AudioHandler>();
   final _songUriService = SongUriService();
-  var currentQueue = [].obs;
+  //var currentQueue = [].obs;
   final playlistSongsDetails = [].obs;
 
   final MusicServices _musicServices = MusicServices();
@@ -50,8 +50,8 @@ class PlayerController extends GetxController {
     _listenForChangesInPosition();
     _listenForChangesInBufferedPosition();
     _listenForChangesInDuration();
-   // _listenForCurrentSong();
-    //_listenForPlaylist();
+    _listenForCurrentSong();
+    _listenForPlaylistChange();
   }
 
   void panellistener(double x) {
@@ -122,28 +122,29 @@ class PlayerController extends GetxController {
 
   Future<void> pushSongToPlaylist(Song song) async {
     //removed after implementation
-    playlistSongsDetails.clear();
-    currentQueue.clear();
+    // playlistSongsDetails.clear();
+    //currentQueue.clear();
 
     //open player pane,set current song and push first song into playing list,
     if (playerPanelController.isAttached) {
       playerPanelController.open();
     }
+  
     currentSong.value = song;
-    playlistSongsDetails.add(song);
-    currentQueue.add(song);
-    clearPlaylist();
+    //playlistSongsDetails.add(song);
+    //currentQueue.add(song);
+    
 
     //get first song url and set to player
     Uri songUri = await _songUriService.getSongUri(song.songId);
-    print(songUri.toString());
-    _audioHandler.addQueueItem(MediaItem(
+    //print(songUri.toString());
+    //inspect(song);
+    _audioHandler.updateQueue([MediaItem(
         id: song.songId,
         title: song.title,
-        //album: song.album!['name'],
         artUri: Uri.parse(song.thumbnail.sizewith(100)),
-        //artist: song.artist[0]['name'],
-        extras: {'url': songUri.toString()}));
+        artist: song.artist[0]['name'],
+        extras: {'url': songUri.toString(), 'song': song.toJson()})]);
     _audioHandler.play();
 
     if (_initFlagForPlayer) {
@@ -155,7 +156,7 @@ class PlayerController extends GetxController {
         await _musicServices.getWatchPlaylist(videoId: song.songId);
     List<Song> upNextSongList =
         (response['tracks']).map<Song>((item) => Song.fromJson(item)).toList();
-    playlistSongsDetails.addAll([...upNextSongList.sublist(1)]);
+    //playlistSongsDetails.addAll([...upNextSongList.sublist(1)]);
 
     //Load Url of Songs other than first song
     for (int i = 1; i < upNextSongList.length; i++) {
@@ -163,35 +164,35 @@ class PlayerController extends GetxController {
       _audioHandler.addQueueItem(MediaItem(
           id: upNextSongList[i].songId,
           title: upNextSongList[i].title,
-          //album: upNextSongList[i].album!['name'],
           artUri: Uri.parse(upNextSongList[i].thumbnail.sizewith(200)),
-          //artist: upNextSongList[i].artist[0]['name'],
-          extras: {'url': songUri.toString()}));
+          artist: upNextSongList[i].artist[0]['name'],
+          extras: {
+            'url': songUri.toString(),
+            'song': upNextSongList[i].toJson()
+          }));
     }
   }
 
   void _listenForCurrentSong() {
     _audioHandler.mediaItem.listen((mediaItem) {
-      if (playlistSongsDetails.isNotEmpty) {
-        currentSong.value = playlistSongsDetails
-            .firstWhere((element) => element.title == mediaItem?.title);
-        currentSongIndex.value =
-            playlistSongsDetails.indexOf(currentSong.value);
+      if (mediaItem != null) {
+        currentSong.value = Song.fromJson(mediaItem.extras!['song']);
+        currentSongIndex.value = playlistSongsDetails.indexWhere(
+            (element) => element.songId == currentSong.value!.songId);
       }
     });
   }
 
-  void _listenForPlaylist() {
+  void _listenForPlaylistChange() {
     _audioHandler.queue.listen((queue) {
-      playlistSongsDetails.setAll(
-          0,
-          queue.map((e) => Song(
-                  songId: e.id,
-                  title: e.title,
-                  thumbnail: thumb.Thumbnail(e.artUri!.path),
-                  artist: [
-                    {"name": e.artist}
-                  ])));
+      //inspect(queue);
+      //print("Queue length${queue.}");
+      playlistSongsDetails.value = queue
+          .map<Song?>((mediaItem) => Song.fromJson(mediaItem.extras!['song']))
+          .whereType<Song>()
+          .toList();
+      //   playlistSongsDetails.setAll(0,
+      //       queue.map<Song?>((mediaItem) => Song.fromJson(mediaItem.extras!['song'])).toList().whereType<Song>());
     });
   }
 
@@ -234,8 +235,8 @@ class PlayerController extends GetxController {
     isShuffleModeEnabled.value = !isShuffleModeEnabled.value;
   }
 
-  void clearPlaylist(){
-    for(int i=0;i<_audioHandler.queue.value.length;i++){
+  void clearPlaylist() {
+    for (int i = 0; i < _audioHandler.queue.value.length; i++) {
       _audioHandler.removeQueueItemAt(i);
     }
   }

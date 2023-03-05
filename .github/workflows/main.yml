@@ -5,7 +5,7 @@ jobs:
     name: install dependencies
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/@master
+    - uses: actions/checkout@master
 
     - name: clean stale build and cache
       uses: ./action

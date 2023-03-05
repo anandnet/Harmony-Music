@@ -40,11 +40,13 @@ dependencies:
   get: ^4.6.5
   http: ^0.13.5
   dio: ^4.0.6
-  dio_cookie_manager: ^2.0.0
   cached_network_image: ^3.2.3
   youtube_explode_dart: ^1.12.3
   sliding_up_panel: ^2.0.0+1
   audio_service: ^0.18.9
+  palette_generator: ^0.3.3+2
+  flutter_cache_manager: ^3.3.0
+  path_provider: ^2.0.13
       #ref: main
 
 dev_dependencies:

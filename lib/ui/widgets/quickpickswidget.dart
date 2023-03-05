@@ -6,24 +6,22 @@ import 'package:harmonymusic/models/quick_picks.dart';
 import '../player/player_controller.dart';
 
 class QuickPicksWidget extends StatelessWidget {
-  const QuickPicksWidget({
-    super.key,required this.content
-  });
+  const QuickPicksWidget({super.key, required this.content});
   final QuickPicks content;
 
   @override
   Widget build(BuildContext context) {
-     final PlayerController playerController = Get.find<PlayerController>();
-    return Container(
+    final PlayerController playerController = Get.find<PlayerController>();
+    return SizedBox(
       height: 320,
       width: double.infinity,
       child: Column(
         children: [
-          const Align(
+          Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Quick Pics",
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                "Discover",
+                style: Theme.of(context).textTheme.titleLarge,
               )),
           const SizedBox(height: 10),
           Expanded(
@@ -38,23 +36,30 @@ class QuickPicksWidget extends StatelessWidget {
                 ),
                 itemBuilder: (_, item) {
                   return InkWell(
-                    onTap: (){playerController.pushSongToPlaylist(content.songList[item]);},
+                    onTap: () {
+                      playerController.pushSongToQueue(content.songList[item]);
+                    },
                     child: ListTile(
                       leading: SizedBox(
-                      width: 50,
-                      child: CachedNetworkImage(
-                          imageUrl: content.songList[item].thumbnail
-                              .sizewith(50))),
+                          width: 50,
+                          child: CachedNetworkImage(
+                              cacheKey: "${content.songList[item].songId}_song",
+                              imageUrl: content.songList[item].thumbnailUrl)),
                       title: Text(
-                    content.songList[item].title,overflow: TextOverflow.ellipsis,style: TextStyle(fontWeight: FontWeight.bold),
+                        content.songList[item].title,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       subtitle: Text(
-                      "${content.songList[item].artist[0]["name"]}",maxLines: 1,),
+                        "${content.songList[item].artist[0]["name"]}",
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
                     ),
                   );
                 }),
           ),
-          SizedBox(height: 20)
+          const SizedBox(height: 20)
         ],
       ),
     );

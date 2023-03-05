@@ -4,10 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/services/audio_handler.dart';
 import 'package:harmonymusic/ui/home.dart';
+import 'package:harmonymusic/ui/utils/theme_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Get.put<AudioHandler>(await initAudioService(),permanent: true);
+  Get.put(ThemeController());
   runApp(const MyApp());
 }
 
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
         statusBarColor: Colors.transparent,
         systemNavigationBarColor: Colors.transparent,
         systemNavigationBarDividerColor: Colors.transparent,
@@ -27,12 +29,14 @@ class MyApp extends StatelessWidget {
       ),
     );
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    return MaterialApp(
-      title: 'Music Player',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const SafeArea(top: false, bottom: false, child: Home()),
+    return GetX<ThemeController>(
+      builder: (controller) {
+        return MaterialApp(
+          title: 'Music Player',
+          theme: controller.themedata.value,
+          home: const SafeArea(top: false, bottom: false, child: Home()),
+        );
+      }
     );
   }
 }

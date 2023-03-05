@@ -26,7 +26,7 @@ class Home extends StatelessWidget {
                   child: Container(
                     height: 75,
                     width: size.width,
-                    color: Colors.amber,
+                    color: Theme.of(context).bottomSheetTheme.backgroundColor,
                     child: Center(
                       child: Column(
                         children: [
@@ -44,15 +44,13 @@ class Home extends StatelessWidget {
                                 SizedBox(
                                   height: 50,
                                   //width: 40,
-                                  child: CachedNetworkImage(
-                                    imageUrl: playerController
-                                            .playlistSongsDetails.isNotEmpty
-                                        ? playerController
-                                            .currentSong.value!.thumbnail
-                                            .sizewith(50)
-                                        : "https://lh3.googleusercontent.com/BZBfTByEyZo6l74pbQLGQy-7-FTnYrt5UOpJdrUhdgjpbfMC8f60_ZPRkKiC2JE0RPUpp-cW-hYKOfp_4w=w544-h544-l90-rj",
+                                  child: playerController
+                                            .currentSong.value!=null?CachedNetworkImage(
+                                    imageUrl:  playerController
+                                            .currentSong.value!.thumbnailUrl,
+                                    cacheKey: "${playerController.currentSong.value!.songId}_song",
                                     fit: BoxFit.fitHeight,
-                                  ),
+                                  ):const SizedBox(height: 50,width: 50,),
                                 ),
                                 const SizedBox(
                                   width: 10,
@@ -72,9 +70,9 @@ class Home extends StatelessWidget {
                                                   .currentSong.value!.title
                                               : "",
                                           maxLines: 1,
-                                          style: const TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium,
                                         ),
                                       ),
                                       SizedBox(
@@ -86,6 +84,9 @@ class Home extends StatelessWidget {
                                                   .value!.artist[0]['name']
                                               : "",
                                           maxLines: 1,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall,
                                         ),
                                       ),
                                     ],
@@ -93,13 +94,17 @@ class Home extends StatelessWidget {
                                 ),
                                 Row(
                                   children: [
-                                    SizedBox(width: 45, child: _playButton()),
+                                    SizedBox(width: 45, child: _playButton(context)),
                                     SizedBox(
                                         width: 40,
                                         child: InkWell(
                                           onTap: playerController.next,
-                                          child: const Icon(
+                                          child: Icon(
                                             Icons.skip_next_rounded,
+                                            color: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .color,
                                             size: 35,
                                           ),
                                         ))
@@ -123,24 +128,31 @@ class Home extends StatelessWidget {
             body: const HomeScreen())));
   }
 
-  Widget _playButton() {
+  Widget _playButton(BuildContext context) {
     return GetX<PlayerController>(builder: (controller) {
       final buttonState = controller.buttonState.value;
       if (buttonState == PlayButtonState.paused) {
         return IconButton(
-          icon: const Icon(Icons.play_arrow),
+          icon: Icon(
+            Icons.play_arrow_rounded,
+            color: Theme.of(context).textTheme.titleMedium!.color,
+          ),
           iconSize: 35.0,
           onPressed: controller.play,
         );
       } else if (buttonState == PlayButtonState.playing) {
         return IconButton(
-          icon: const Icon(Icons.pause),
+          icon: Icon(Icons.pause_rounded,
+            color: Theme.of(context).textTheme.titleMedium!.color,
+          ),
           iconSize: 35.0,
           onPressed: controller.pause,
         );
       } else {
         return IconButton(
-          icon: const Icon(Icons.play_arrow),
+          icon: Icon(Icons.play_arrow_rounded,
+            color: Theme.of(context).textTheme.titleMedium!.color,
+          ),
           iconSize: 35.0,
           onPressed: () => controller.replay,
         );

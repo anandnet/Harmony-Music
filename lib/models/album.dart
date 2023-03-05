@@ -21,15 +21,15 @@ class Album {
       {required this.title,
       required this.browseId,
       required this.artist,
-      required this.thumbnail});
+      required this.thumbnailUrl});
   final String browseId;
   final String title;
   final String artist;
-  final Thumbnail thumbnail;
+  final String thumbnailUrl;
 
   factory Album.fromJson(Map<dynamic, dynamic> json) => Album(
       title: json["title"],
       browseId: json["browseId"],
       artist: json["artist"],
-      thumbnail: Thumbnail(json["thumbnails"][0]["url"]));
+      thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).medium);
 }

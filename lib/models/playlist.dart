@@ -19,15 +19,15 @@ class Playlist {
       {required this.title,
       required this.playlistId,
       this.description,
-      required this.thumbnail});
+      required this.thumbnailUrl});
   final String playlistId;
   final String title;
   final String? description;
-  final Thumbnail thumbnail;
+  final String thumbnailUrl;
 
   factory Playlist.fromJson(Map<dynamic, dynamic> json) => Playlist(
       title: json["title"],
       playlistId: json["playlistId"],
-      thumbnail: Thumbnail(json["thumbnails"][0]["url"]),
+      thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).medium,
       description: json["description"]);
 }

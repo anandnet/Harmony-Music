@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io' as io;
 
-import '../widgets/home_list_widget.dart';
+import '../widgets/content_list_widget.dart';
 import '../widgets/quickpickswidget.dart';
 import 'home_screen_controller.dart';
 
@@ -30,43 +34,66 @@ class _HomeScreenState extends State<HomeScreen> {
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               elevation: 0,
-              onPressed: () {},
+              onPressed: () async {
+                // file:///data/user/0/com.example.harmonymusic/cache/libCachedImageData/
+                //file:///data/user/0/com.example.harmonymusic/cache/just_audio_cache/
+                final cacheDir = (await getTemporaryDirectory()).path;
+                if (io.Directory("$cacheDir/libCachedImageData/")
+                    .existsSync()) {
+                  final file =
+                      io.Directory("$cacheDir/libCachedImageData/").listSync();
+                  inspect(file);
+                }
+                if (io.Directory("$cacheDir/just_audio_cache/remote/")
+                    .existsSync()) {
+                  final audioFiles =
+                      io.Directory("$cacheDir/just_audio_cache/remote/")
+                          .listSync();
+
+                  inspect(audioFiles);
+                }
+              },
               child: const Icon(Icons.search)),
         ),
       ),
       body: Row(
         children: <Widget>[
           // create a navigation rail
-         Obx(() => NavigationRail(
-            selectedIndex: homeScreenController.tabIndex.value, //_selectedIndex,
-            onDestinationSelected: homeScreenController.onTabSelected,
-            minWidth: 60,
-            leading: const SizedBox(height: 100),
-            labelType: NavigationRailLabelType.all,
-            backgroundColor: Colors.green,
-            destinations: <NavigationRailDestination>[
-              railDestination("Home"),
-              railDestination("Songs"),
-              railDestination("Playlists"),
-              railDestination("Albums"),
-              railDestination("Artists"),
-              railDestination("Settings")
-            ],
-            // selectedIconTheme: IconThemeData(color: Colors.white),
-            unselectedIconTheme: const IconThemeData(color: Colors.black),
-            selectedLabelTextStyle: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
-            unselectedLabelTextStyle: const TextStyle(color: Colors.white38),
-          ),),
-          const VerticalDivider(thickness: 1, width: 2),
+          Obx(
+            () => NavigationRail(
+              selectedIndex:
+                  homeScreenController.tabIndex.value, //_selectedIndex,
+              onDestinationSelected: homeScreenController.onTabSelected,
+              minWidth: 60,
+
+              leading: const SizedBox(height: 60),
+              labelType: NavigationRailLabelType.all,
+              //backgroundColor: Colors.green,
+              destinations: <NavigationRailDestination>[
+                railDestination("Home"),
+                railDestination("Songs"),
+                railDestination("Playlists"),
+                railDestination("Albums"),
+                railDestination("Artists"),
+                //railDestination("Settings")
+              ],
+              trailing: Expanded(
+                  child: Center(
+                      child: IconButton(
+                icon: Icon(Icons.equalizer),
+                onPressed: () {},
+              ))),
+            ),
+          ),
+          //const VerticalDivider(thickness: 1, width: 2),
           Expanded(
             child: Center(
-              child: Obx(
-                (){
-                  if(homeScreenController.tabIndex.value==0){
+              child: Obx(() {
+                if (homeScreenController.tabIndex.value == 0) {
                   return Padding(
-                    padding: const EdgeInsets.only(left: 0.0),
+                    padding: const EdgeInsets.only(left: 5.0),
                     child: SingleChildScrollView(
-                      padding: const EdgeInsets.only(bottom: 100, top: 100),
+                      padding: const EdgeInsets.only(bottom: 90, top: 90),
                       child: Obx(() {
                         return Column(
                           children: homeScreenController.isContentFetched.value
@@ -76,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       "QuickPicks") {
                                     return QuickPicksWidget(content: element);
                                   } else {
-                                    return PlaylistListWidget(
+                                    return ContentListWidget(
                                       content: element,
                                     );
                                   }
@@ -86,12 +113,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       }),
                     ),
                   );
+                } else {
+                  return Center(
+                    child: Text("${homeScreenController.tabIndex.value}"),
+                  );
                 }
-                else{
-                  return Center(child: Text("${homeScreenController.tabIndex.value}"),);
-                }
-                }
-              ),
+              }),
             ),
           )
         ],
@@ -102,7 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
   NavigationRailDestination railDestination(String label) {
     return NavigationRailDestination(
       icon: const SizedBox.shrink(),
-      label: RotatedBox(quarterTurns: -1, child: Text(label)),
+      label: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: RotatedBox(quarterTurns: -1, child: Text(label))),
     );
   }
 }

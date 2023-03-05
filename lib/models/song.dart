@@ -4,7 +4,7 @@ class Song {
   Song({
     required this.songId,
     required this.title,
-    required this.thumbnail,
+    required this.thumbnailUrl,
     required this.artist,
     this.album,
     this.length
@@ -13,7 +13,7 @@ class Song {
 
   String songId;
   String title;
-  Thumbnail thumbnail;
+  String thumbnailUrl;
   List<dynamic> artist;
   Map<String,dynamic>? album;
   String? length;
@@ -23,7 +23,7 @@ class Song {
   factory Song.fromJson(Map<String, dynamic> json) => Song(
           songId: json["videoId"],
           title: json["title"],
-          thumbnail: Thumbnail(json["thumbnails"][0]['url']) ,
+          thumbnailUrl: Thumbnail(json["thumbnails"][0]['url']).medium ,
           artist:json['artists'],
           album: json['album'],
           length: json['length']
@@ -36,7 +36,7 @@ class Song {
   Map<String, dynamic> toJson() => {
         "videoId": songId,
         "title": title,
-        "thumbnails": [{'url':thumbnail.url}],
+        "thumbnails": [{'url':thumbnailUrl}],
         "artists": artist,
         "album":album,
         "length":length

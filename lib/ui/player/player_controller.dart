@@ -121,7 +121,7 @@ class PlayerController extends GetxController {
   }
 
   void _checkWithCacheDb(Song song){
-    print("cached in database");
+    //print("cached in database");
     final box =Hive.box("cacheSongs");
     if(!box.containsKey(song.songId)){
       box.put(song.songId, song);

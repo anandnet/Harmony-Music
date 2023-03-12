@@ -9,6 +9,8 @@ import 'package:harmonymusic/ui/utils/theme_controller.dart';
 import 'package:harmonymusic/ui/widgets/marqwee_widget.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import '../widgets/image_widget.dart';
+
 class Player extends StatelessWidget {
   const Player({super.key});
 
@@ -19,31 +21,31 @@ class Player extends StatelessWidget {
     final ThemeController themeController = Get.find<ThemeController>();
     return Scaffold(
       body: SlidingUpPanel(
-          onPanelClosed: () {
-            playerController.isPlayerPaneDraggable.value = true;
-          },
-          onPanelOpened: () {
-            playerController.isPlayerPaneDraggable.value = false;
-          },
-          // padding: const EdgeInsets.only(bottom: 60),
-          //color: Colors.red,
-          minHeight: 75,
+          minHeight: 65 + Get.mediaQuery.padding.bottom,
           maxHeight: size.height,
           collapsed: Container(
               color: Theme.of(context).bottomSheetTheme.modalBarrierColor,
-              height: 75,
-              child: const Center(
-                  child: Icon(
-                Icons.keyboard_arrow_up,
-                size: 40,
-              ))),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 65,
+                    child: Center(
+                        child: Icon(
+                      color: Theme.of(context).textTheme.titleMedium!.color,
+                      Icons.keyboard_arrow_up,
+                      size: 40,
+                    )),
+                  ),
+                ],
+              )),
           panelBuilder: (ScrollController sc) => Container(
               color: Theme.of(context).bottomSheetTheme.backgroundColor,
               child: Obx(() {
                 return ListView.builder(
                   controller: sc,
                   itemCount: playerController.playlistSongsDetails.length,
-                  padding: const EdgeInsets.only(top: 55),
+                  padding: EdgeInsets.only(
+                      top: 55, bottom: Get.mediaQuery.padding.bottom),
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     //print("${playerController.currentSongIndex.value == index} $index");
@@ -61,13 +63,12 @@ class Player extends StatelessWidget {
                                       : Theme.of(context)
                                           .bottomSheetTheme
                                           .backgroundColor,
-                              leading: SizedBox(
-                                  width: 40,
-                                  child: CachedNetworkImage(
-                                    cacheKey: "${playerController.playlistSongsDetails[index].songId}_song",
-                                      imageUrl: playerController
-                                          .playlistSongsDetails[index]
-                                          .thumbnailUrl)),
+                              leading: SizedBox.square(
+                                  dimension: 50,
+                                  child: ImageWidget(
+                                    song: playerController
+                                        .playlistSongsDetails[index],
+                                  )),
                               title: Text(
                                 playerController
                                     .playlistSongsDetails[index].title,
@@ -115,13 +116,12 @@ class Player extends StatelessWidget {
                 () => BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                   child: Container(
-                    decoration: BoxDecoration(
-                        color: themeController.primaryColor.value!
-                            .withOpacity(0.90)),
+                    color: themeController.primaryColor.value!
+                            .withOpacity(0.90)
                   ),
                 ),
               ),
-              // Obx(() => Container(color: themeController.primaryColor.value,)),
+
               //Player Top content
               Padding(
                 padding: const EdgeInsets.only(left: 25, right: 25),
@@ -132,12 +132,11 @@ class Player extends StatelessWidget {
                     ),
                     SizedBox(
                         height: 290,
-                        child: Obx(() =>
-                            playerController.currentSong.value != null
-                                ? CachedNetworkImage(
-                                  cacheKey: "${playerController.currentSong.value!.songId}_song",
-                                    imageUrl: playerController
-                                        .currentSong.value!.thumbnailUrl)
+                        child:
+                            Obx(() => playerController.currentSong.value != null
+                                ? ImageWidget(
+                                    song: playerController.currentSong.value!,
+                                  )
                                 : Container())),
                     Expanded(child: Container()),
                     Obx(() {
@@ -218,8 +217,8 @@ class Player extends StatelessWidget {
                         }),
                       ],
                     ),
-                    const SizedBox(
-                      height: 90,
+                    SizedBox(
+                      height: 90 + Get.mediaQuery.padding.bottom,
                     )
                   ],
                 ),

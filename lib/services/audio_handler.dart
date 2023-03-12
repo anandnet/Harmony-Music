@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:audio_service/audio_service.dart';
 import 'package:just_audio/just_audio.dart';
+import 'dart:io';
+
+import 'package:path_provider/path_provider.dart';
 
 Future<AudioHandler> initAudioService() async {
   return await AudioService.init(
@@ -14,17 +19,26 @@ Future<AudioHandler> initAudioService() async {
 }
 
 class MyAudioHandler extends BaseAudioHandler {
+  late final _cacheDir;
   final _player = AudioPlayer();
-  final _playlist = ConcatenatingAudioSource(children: [],shuffleOrder: DefaultShuffleOrder());
+  final _playlist = ConcatenatingAudioSource(
+      children: [], shuffleOrder: DefaultShuffleOrder());
 
   MyAudioHandler() {
+    _createCacheDir();
     _loadEmptyPlaylist();
     _notifyAudioHandlerAboutPlaybackEvents();
     _listenForDurationChanges();
     _listenForCurrentSongIndexChanges();
     _listenForSequenceStateChanges();
   }
-  
+
+  Future<void> _createCacheDir() async {
+    _cacheDir = (await getTemporaryDirectory()).path;
+    if (!Directory("$_cacheDir/cachedSongs/").existsSync()) {
+      Directory("$_cacheDir/cachedSongs/").createSync(recursive: true);
+    }
+  }
 
   Future<void> _loadEmptyPlaylist() async {
     try {
@@ -68,6 +82,13 @@ class MyAudioHandler extends BaseAudioHandler {
         speed: _player.speed,
         queueIndex: event.currentIndex,
       ));
+    }, onError: (Object e, StackTrace st) {
+      if (e is PlayerException) {
+        print('Error code: ${e.code}');
+        print('Error message: ${e.message}');
+      } else {
+        print('An error occurred: $e');
+      }
     });
   }
 
@@ -94,7 +115,11 @@ class MyAudioHandler extends BaseAudioHandler {
       if (_player.shuffleModeEnabled) {
         index = _player.shuffleIndices![index];
       }
+      try{
       mediaItem.add(playlist[index]);
+      }catch(e){
+        print("exception index: $index");
+      }
     });
   }
 
@@ -140,11 +165,10 @@ class MyAudioHandler extends BaseAudioHandler {
   LockCachingAudioSource _createAudioSource(MediaItem mediaItem) {
     return LockCachingAudioSource(
       Uri.parse(mediaItem.extras!['url'] as String),
+      cacheFile: File("$_cacheDir/cachedSongs/${mediaItem.id}.mp3"),
       tag: mediaItem,
     );
   }
-
-
 
   @override
   Future<void> removeQueueItemAt(int index) async {
@@ -173,7 +197,6 @@ class MyAudioHandler extends BaseAudioHandler {
     }
     _player.seek(Duration.zero, index: index);
   }
-  
 
   @override
   Future<void> skipToNext() => _player.seekToNext();

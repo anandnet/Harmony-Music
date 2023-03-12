@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/models/playlist.dart';
 import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
+import 'package:harmonymusic/ui/widgets/marqwee_widget.dart';
 
 class ContentListWidget extends StatelessWidget {
   ///ContentListWidget is used to render a section of Content like a list of Albums or Playlists in HomeScreen
@@ -13,16 +14,16 @@ class ContentListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isAlbumContent = content.runtimeType.toString() == "AlbumContent";
-    return SizedBox(
-      height: 250,
+    // ignore: avoid_unnecessary_containers
+    return Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                content.title,
-                style: Theme.of(context).textTheme.titleLarge,
-              )),
+          Text(
+            content.title,
+            //maxLines: 2,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           const SizedBox(height: 5),
           SizedBox(
             height: 200,

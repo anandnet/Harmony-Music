@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/models/quick_picks.dart';
 
 import '../player/player_controller.dart';
+import 'image_widget.dart';
 
 class QuickPicksWidget extends StatelessWidget {
   const QuickPicksWidget({super.key, required this.content});
@@ -42,9 +42,7 @@ class QuickPicksWidget extends StatelessWidget {
                     child: ListTile(
                       leading: SizedBox(
                           width: 50,
-                          child: CachedNetworkImage(
-                              cacheKey: "${content.songList[item].songId}_song",
-                              imageUrl: content.songList[item].thumbnailUrl)),
+                          child: ImageWidget(song: content.songList[item])),
                       title: Text(
                         content.songList[item].title,
                         overflow: TextOverflow.ellipsis,

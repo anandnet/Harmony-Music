@@ -6,7 +6,7 @@ import 'package:harmonymusic/services/utils.dart';
 
 const single_column = ['contents', 'singleColumnBrowseResultsRenderer'];
 const tab_content = ['tabs', 0, 'tabRenderer', 'content'];
-const single_column_tab = [
+const List<dynamic> single_column_tab = [
   'contents',
   'singleColumnBrowseResultsRenderer',
   'tabs',
@@ -88,14 +88,41 @@ const thumbnails = [
 ];
 
 const navigation_video_type = [
-    'watchEndpoint', 'watchEndpointMusicSupportedConfigs', 'watchEndpointMusicConfig',
-    'musicVideoType'
+  'watchEndpoint',
+  'watchEndpointMusicSupportedConfigs',
+  'watchEndpointMusicConfig',
+  'musicVideoType'
 ];
 const toggle_menu = 'toggleMenuServiceItemRenderer';
-const menu_items = ['menu', 'menuRenderer','items'];
+const List<dynamic> menu_items = ['menu', 'menuRenderer', 'items'];
+const menu_service = ['menuServiceItemRenderer', 'serviceEndpoint'];
+const play_button = [
+  'overlay',
+  'musicItemThumbnailOverlayRenderer',
+  'content',
+  'musicPlayButtonRenderer'
+];
+const menu_like_status = [
+  'menu',
+  'menuRenderer',
+  'topLevelButtons',
+  0,
+  'likeButtonRenderer',
+  'likeStatus'
+];
+const List<dynamic> section_list_item = ['sectionListRenderer', 'contents', 0];
+const List<dynamic> thumnail_cropped = [
+  'thumbnail',
+  'croppedSquareThumbnailRenderer',
+  'thumbnail',
+  'thumbnails'
+];
+const subtitle3 = ['subtitle', 'runs', 4, 'text'];
+const feedback_token = ['feedbackEndpoint', 'feedbackToken'];
 
 List<Map<String, dynamic>> parseMixedContent(List<dynamic> rows) {
   List<Map<String, dynamic>> items = [];
+  //inspect(rows);
   for (var row in rows) {
     if (description_shelf[0] == row.keys.first.toString()) {
       var results = nav(row, description_shelf);
@@ -143,6 +170,7 @@ List<Map<String, dynamic>> parseMixedContent(List<dynamic> rows) {
 }
 
 Map<String, dynamic> parseSong(Map<dynamic, dynamic> result) {
+  //inspect(result);
   var song = {
     'title': nav(result, title_text),
     'videoId': nav(result, navigation_video_id),
@@ -211,15 +239,9 @@ Map<String, dynamic> parseAlbum(Map<dynamic, dynamic> result) {
 }
 
 Map<String, dynamic> parseRelatedArtist(Map<String, dynamic> data) {
-  var subscribers = nav(data, ['subtitle'],
-      noneIfAbsent: true, funName: "parseRelatedArtist");
-  if (subscribers != null) {
-    subscribers = subscribers.split(' ')[0];
-  }
   return {
     'title': nav(data, title_text),
     'browseId': nav(data, n_title + navigation_browse_id),
-    'subscribers': subscribers,
     'thumbnails': nav(data, thumbnail_renderer),
   };
 }
@@ -260,7 +282,7 @@ List<dynamic> parseSongArtistsRuns(List<dynamic> runs) {
 }
 
 Map<String, dynamic> parseSongFlat(Map<String, dynamic> data) {
-  //inspect(data);
+  //print(data);
   List<Map<String, dynamic>> columns = [];
   for (int i = 0; i < data['flexColumns'].length; i++) {
     columns.add(getFlexColumnItem(data, i));
@@ -282,7 +304,7 @@ Map<String, dynamic> parseSongFlat(Map<String, dynamic> data) {
         'id': nav(columns[2], text_run + navigation_browse_id)
       };
     }
-  } 
+  }
 
   return song;
 }
@@ -290,7 +312,6 @@ Map<String, dynamic> parseSongFlat(Map<String, dynamic> data) {
 List<dynamic>? parseSongArtists(Map<String, dynamic> data, int index) {
   var flexItem = getFlexColumnItem(data, index);
   if (flexItem == null) {
-    print("1");
     return null;
   } else {
     var runs = flexItem['text']['runs'];
@@ -299,13 +320,12 @@ List<dynamic>? parseSongArtists(Map<String, dynamic> data, int index) {
 }
 
 Map<String, dynamic> getFlexColumnItem(Map<String, dynamic> item, int index) {
-  if (item['flexColumns'].length <= index ||
+  if ((item['flexColumns']).length <= index ||
       !item['flexColumns'][index]['musicResponsiveListItemFlexColumnRenderer']
           .containsKey('text') ||
       !item['flexColumns'][index]['musicResponsiveListItemFlexColumnRenderer']
               ['text']
           .containsKey('runs')) {
-    print("2");
     return {};
   }
 
@@ -323,7 +343,7 @@ Map<String, dynamic> parseWatchPlaylistHome(Map<dynamic, dynamic> data) {
 
 //For Song Watch Playlist
 
-List<Map<String, dynamic>> parseWatchPlaylist(List<dynamic> results) {
+List<dynamic> parseWatchPlaylist(List<dynamic> results) {
   final tracks = <Map<String, dynamic>>[];
   const PPVWR = 'playlistPanelVideoWrapperRenderer';
   const PPVR = 'playlistPanelVideoRenderer';
@@ -358,8 +378,7 @@ Map<String, dynamic> parseWatchTrack(Map<String, dynamic> data) {
     'title': nav(data, title_text),
     'length': nav(data, ['lengthText', 'runs', 0, 'text']),
     'thumbnails': nav(data, thumbnail),
-    'videoType':
-        nav(data, ['navigationEndpoint'] + navigation_video_type),
+    'videoType': nav(data, ['navigationEndpoint'] + navigation_video_type),
   };
   track.addAll(songInfo);
   return track;
@@ -375,10 +394,141 @@ String? getTabBrowseId(Map<String, dynamic> watchNextRenderer, int tabId) {
   }
 }
 
+//playlist songs
 
+List<dynamic> parsePlaylistItems(List<dynamic> results,
+    {List<List<dynamic>>? menuEntries}) {
+  List<dynamic> songs = [];
 
+  int count = 1;
+  for (dynamic result in results) {
+    count += 1;
+    if (!result.containsKey('musicResponsiveListItemRenderer')) {
+      continue;
+    }
+    dynamic data = result['musicResponsiveListItemRenderer'];
+    try {
+      dynamic videoId, setVideoId;
 
+      // if the item has a menu, find its setVideoId
+      if (data.containsKey('menu')) {
+        for (dynamic item in nav(data, menu_items)) {
+          if (item.containsKey('menuServiceItemRenderer')) {
+            dynamic menuService = nav(item, menu_service);
+            //inspect(menuService);
 
+            if (menuService.containsKey('playlistEditEndpoint')) {
+              videoId = menuService['playlistEditEndpoint']['actions'][0]
+                  ['removedVideoId'];
+              // print("$videoId");
+            }
+          }
+        }
+      }
+
+      // if item is not playable, the videoId was retrieved above
+      if (nav(data, play_button) != null) {
+        if (nav(data, play_button).containsKey('playNavigationEndpoint')) {
+          videoId = nav(data, play_button)['playNavigationEndpoint']
+              ['watchEndpoint']['videoId'];
+        }
+      }
+
+      String? title = getItemText(data, 0);
+      if (title == 'Song deleted') {
+        continue;
+      }
+
+      List? artists = parseSongArtists(data, 1);
+
+      dynamic album = parseSongAlbum({...data}, 2);
+
+      dynamic duration;
+      if (data.containsKey('fixedColumns')) {
+        if (getFixedColumnItem(data, 0)!['text'].containsKey('simpleText')) {
+          duration = getFixedColumnItem(data, 0)!['text']['simpleText'];
+        } else {
+          duration = getFixedColumnItem(data, 0)!['text']['runs'][0]['text'];
+        }
+      }
+
+      dynamic thumbnails_;
+      if (data.containsKey('thumbnail')) {
+        thumbnails_ = nav(data, thumbnails);
+      }
+
+      bool isAvailable = true;
+      if (data.containsKey('musicItemRendererDisplayPolicy')) {
+        isAvailable = data['musicItemRendererDisplayPolicy'] !=
+            'MUSIC_ITEM_RENDERER_DISPLAY_POLICY_GREY_OUT';
+      }
+
+      //print('here');
+      dynamic song = {
+        'videoId': videoId,
+        'title': title,
+        'artists': artists,
+        'thumbnails': thumbnails_,
+        'isAvailable': isAvailable,
+      };
+
+      if (duration != null) {
+        song['length'] = duration;
+        song['duration_seconds'] = parseDuration(duration);
+      }
+
+      if (menuEntries != null) {
+        for (final List<dynamic> menuEntry in menuEntries) {
+          song[menuEntry.last] = nav(
+              data,
+              menu_items +
+                  menuEntry.map((e) => e).whereType<String>().toList());
+        }
+      }
+      songs.add(song);
+    } catch (e) {
+      //print(e);
+    }
+  }
+  return songs;
+}
+
+Map<String, dynamic>? parseSongAlbum(Map<String, dynamic> data, int index) {
+  Map<String, dynamic> flexItem = getFlexColumnItem(data, index);
+  // print("here");
+  if (flexItem.isNotEmpty) {
+    return {
+      'name': getItemText(data, index),
+      'id': getBrowseId(flexItem, 0),
+    };
+  }
+  return null;
+}
+
+String? getBrowseId(Map<String, dynamic> item, int index) {
+  if (item['text']['runs'][index].containsKey('navigationEndpoint')) {
+    return nav(item['text']['runs'][index], navigation_browse_id);
+  }
+  return null;
+}
+
+Map<String, dynamic> parseSongMenuTokens(Map<String, dynamic> item) {
+  Map<String, dynamic> toggleMenu = item[toggle_menu];
+  String serviceType = toggleMenu['defaultIcon']['iconType'];
+  Map<String, dynamic> libraryAddToken =
+      nav(toggleMenu, ['defaultServiceEndpoint', ...feedback_token]);
+  Map<String, dynamic> libraryRemoveToken =
+      nav(toggleMenu, ['toggledServiceEndpoint', ...feedback_token]);
+
+  if (serviceType == "LIBRARY_REMOVE") {
+    // swap if already in library
+    Map<String, dynamic> temp = libraryAddToken;
+    libraryAddToken = libraryRemoveToken;
+    libraryRemoveToken = temp;
+  }
+
+  return {'add': libraryAddToken, 'remove': libraryRemoveToken};
+}
 
 dynamic nav(dynamic root, List items,
     {bool noneIfAbsent = false, String funName = "d"}) {

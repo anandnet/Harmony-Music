@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:harmonymusic/services/utils.dart';
 import 'constant.dart';
@@ -104,8 +106,8 @@ class MusicServices {
   }
 
   Future<Map<String, dynamic>> getWatchPlaylist({
-    String videoId="",
-    String playlistId ="",
+    String videoId = "",
+    String playlistId = "",
     int limit = 25,
     bool radio = false,
     bool shuffle = false,
@@ -113,17 +115,17 @@ class MusicServices {
     final data = Map.from(context);
     data['enablePersistentPlaylistPanel'] = true;
     data['isAudioOnly'] = true;
-    data['tunerSettingValue'] ='AUTOMIX_SETTING_NORMAL';
+    data['tunerSettingValue'] = 'AUTOMIX_SETTING_NORMAL';
     if (videoId == "" && playlistId == "") {
       throw Exception(
           "You must provide either a video id, a playlist id, or both");
     }
     if (videoId != "") {
       data['videoId'] = videoId;
-      if(playlistId == ""){
+      if (playlistId == "") {
         playlistId = "RDAMVM$videoId";
       }
-      
+
       if (!(radio || shuffle)) {
         data['watchEndpointMusicSupportedConfigs'] = {
           'watchEndpointMusicConfig': {
@@ -133,10 +135,11 @@ class MusicServices {
         };
       }
     }
-   
+
     playlistId = validatePlaylistId(playlistId);
-     data['playlistId'] = playlistId;
-    final isPlaylist = playlistId.startsWith('PL') || playlistId.startsWith('OLA');
+    data['playlistId'] = playlistId;
+    final isPlaylist =
+        playlistId.startsWith('PL') || playlistId.startsWith('OLA');
     if (shuffle) {
       data['params'] = "wAEB8gECKAE%3D";
     }
@@ -144,6 +147,7 @@ class MusicServices {
       data['params'] = "wAEB";
     }
     final response = (await _sendRequest("next", data)).data;
+    inspect(response);
     final watchNextRenderer = nav(response, [
       'contents',
       'singleColumnMusicWatchNextResultsRenderer',
@@ -185,5 +189,104 @@ class MusicServices {
       'lyrics': lyricsBrowseId,
       'related': relatedBrowseId
     };
+  }
+
+ 
+
+  Future<Map<String, dynamic>> getPlaylistSongs(String playlistId,
+      {int limit = 100, bool related = false, int suggestionsLimit = 0}) async {
+    String browseId =
+        playlistId.startsWith("VL") ? playlistId : "VL$playlistId";
+    final data = Map.from(context);
+    data['browseId'] = browseId;
+    Map<String, dynamic> response = (await _sendRequest('browse', data)).data;
+    Map<String, dynamic> header = response['header'];
+    Map<String, dynamic> results = nav(response,
+        single_column_tab + section_list_item + ['musicPlaylistShelfRenderer']);
+    Map<String, dynamic> playlist = {'id': results['playlistId']};
+ 
+    bool ownPlaylist =
+        header.containsKey('musicEditablePlaylistDetailHeaderRenderer');
+    if (!ownPlaylist) {
+      playlist['privacy'] = 'PUBLIC';
+      header = header['musicDetailHeaderRenderer'];
+    } else {
+      Map<String, dynamic> editableHeader =
+          header['musicEditablePlaylistDetailHeaderRenderer'];
+      playlist['privacy'] = editableHeader['editHeader']
+          ['musicPlaylistEditHeaderRenderer']['privacy'];
+      header = editableHeader['header']['musicDetailHeaderRenderer'];
+    }
+
+    playlist['title'] = nav(header, title_text);
+    playlist['thumbnails'] = nav(header, thumnail_cropped);
+    playlist["description"] = nav(header, description);
+    int runCount = header['subtitle']['runs'].length;
+    if (runCount > 1) {
+      playlist['author'] = {
+        'name': nav(header, subtitle2),
+        'id': nav(header, ['subtitle', 'runs', 2] + navigation_browse_id)
+      };
+      if (runCount == 5) {
+        playlist['year'] = nav(header, subtitle3);
+      }
+    }
+
+    int songCount = int.parse(RegExp(r'([\d,]+)')
+        .stringMatch(header['secondSubtitle']['runs'][0]['text'])!);
+    if (header['secondSubtitle']['runs'].length > 1) {
+      playlist['duration'] = header['secondSubtitle']['runs'][2]['text'];
+    }
+
+    playlist['trackCount'] = songCount;
+
+     requestFunc(additionalParams) async => (await _sendRequest("browse", data, additionalParams:additionalParams)).data;
+
+    // // suggestions and related are missing e.g. on liked songs
+    // Map<String, dynamic> sectionList = nav(response, single_column_tab + ['sectionListRenderer']);
+//   if (sectionList.containsKey('continuations')) {
+//     String additionalParams = getContinuationParams(sectionList);
+//     if (ownPlaylist && (suggestionsLimit > 0 || related)) {
+//       parseFunc(results) => parsePlaylistItems(results);
+//       Map<String, dynamic> suggested = await requestFunc(additionalParams);
+//       Map<String, dynamic> continuation = nav(suggested, SECTION_LIST_CONTINUATION);
+//       additionalParams = getContinuationParams(continuation);
+//       Map<String, dynamic> suggestionsShelf = nav(continuation, CONTENT + MUSIC_SHELF);
+//       playlist['suggestions'] = getContinuationContents(suggestionsShelf, parseFunc);
+
+//       playlist['suggestions'].addAll(await getContinuations(suggestionsShelf,
+//                                                             'musicShelfContinuation',
+//                                                             suggestionsLimit - (playlist['suggestions']).length,
+//                                                             requestFunc,
+//                                                             parseFunc,
+//                                                             reloadable: true));
+
+//     }
+//      if (related) {
+//     var response = requestFunc(additionalParams);
+//     var continuation = nav(response, SECTION_LIST_CONTINUATION);
+//     parseFunc = (results) => parseContentList(results, parsePlaylist);
+//     playlist['related'] = getContinuationContents(nav(continuation, CONTENT + CAROUSEL), parseFunc);
+//   }
+// }
+
+    if (songCount > 0) {
+      playlist['tracks'] = parsePlaylistItems(results['contents']);
+      limit ??= songCount;
+      var songsToGet = min(limit, songCount);
+
+      List<dynamic> parseFunc(contents) =>
+          parsePlaylistItems(contents);
+      if (results.containsKey('continuations')) {
+        (playlist['tracks']as List<dynamic>).addAll(await getContinuations(
+            results,
+            'musicPlaylistShelfContinuation',
+            songsToGet - (playlist['tracks']).length as int,
+            requestFunc,
+            parseFunc));
+      }
+    }
+    playlist['duration_seconds'] = sumTotalDuration(playlist);
+    return playlist;
   }
 }

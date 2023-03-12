@@ -1,12 +1,14 @@
 import 'dart:developer';
+import 'package:harmonymusic/ui/utils/home_library_controller.dart';
+import 'package:hive/hive.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/models/durationstate.dart';
-import 'package:harmonymusic/services/music_service.dart';
-import 'package:harmonymusic/services/song_stream_url_service.dart';
-import 'package:just_audio/just_audio.dart';
 
+import '/models/durationstate.dart';
+import '/services/music_service.dart';
+import '/services/song_stream_url_service.dart';
 import '../../models/song.dart';
 
 class PlayerController extends GetxController {
@@ -22,6 +24,7 @@ class PlayerController extends GetxController {
   final playerPanelMinHeight = 0.0.obs;
   bool _initFlagForPlayer = true;
   PanelController playerPanelController = PanelController();
+  HomeLibrayController homeLibrayController = Get.find<HomeLibrayController>();
 
   final progressBarStatus = ProgressBarState(
           buffered: Duration.zero, current: Duration.zero, total: Duration.zero)
@@ -34,6 +37,9 @@ class PlayerController extends GetxController {
   final currentSong = Rxn<Song>();
 
   final buttonState = PlayButtonState.paused.obs;
+
+  var _newSongFlag = true;
+  final isCurrentSongBuffered = false.obs;
 
   PlayerController() {
     _init();
@@ -63,6 +69,8 @@ class PlayerController extends GetxController {
       isPlayerPaneDraggable.value = true;
     }
   }
+
+  
 
   void _listenForChangesInPlayerState() {
     _audioHandler.playbackState.listen((playerState) {
@@ -96,12 +104,31 @@ class PlayerController extends GetxController {
   void _listenForChangesInBufferedPosition() {
     _audioHandler.playbackState.listen((playbackState) {
       final oldState = progressBarStatus.value;
+      if (playbackState.bufferedPosition.inSeconds /
+              progressBarStatus.value.total.inSeconds ==
+          1) {
+        if (_newSongFlag) {
+          _checkWithCacheDb(currentSong.value!);
+          _newSongFlag = false;
+        }
+      }
       progressBarStatus.update((val) {
         val!.buffered = playbackState.bufferedPosition;
         val.current = oldState.current;
         val.total = oldState.total;
       });
     });
+  }
+
+  void _checkWithCacheDb(Song song){
+    print("cached in database");
+    final box =Hive.box("cacheSongs");
+    if(!box.containsKey(song.songId)){
+      box.put(song.songId, song);
+      if(!homeLibrayController.isClosed){
+        homeLibrayController.cachedSongsList.value = homeLibrayController.cachedSongsList.value + [song];
+      }
+    }
   }
 
   void _listenForChangesInDuration() {
@@ -118,7 +145,9 @@ class PlayerController extends GetxController {
   void _listenForCurrentSong() {
     _audioHandler.mediaItem.listen((mediaItem) {
       if (mediaItem != null) {
-        currentSong.value = Song.fromJson(mediaItem.extras!['song']);
+        _newSongFlag = true;
+        isCurrentSongBuffered.value=false;
+        currentSong.value = Song.fromJson(mediaItem.extras!['song'],url: mediaItem.extras!['url']);
         currentSongIndex.value = playlistSongsDetails.indexWhere(
             (element) => element.songId == currentSong.value!.songId);
       }
@@ -139,22 +168,11 @@ class PlayerController extends GetxController {
   ///pushSongToPlaylist method clear previous song queue, plays the tapped song and push related
   ///songs into Queue
   Future<void> pushSongToQueue(Song song) async {
-    _audioHandler.seek(Duration.zero);
     currentSong.value = song;
+    removeAll(playlistSongsDetails.value.length);
     //open player pane,set current song and push first song into playing list,
     _playerPanelCheck();
-
-    _audioHandler.updateQueue([
-      MediaItem(
-          id: song.songId,
-          title: song.title,
-          artUri: Uri.parse(song.thumbnailUrl),
-          artist: song.artist[0]['name'],
-          extras: {
-            'url': (await _songUriService.getSongUri(song.songId)).toString(),
-            'song': song.toJson()
-          })
-    ]);
+    enqueueSong(song);
     _audioHandler.play();
 
     final response =
@@ -163,13 +181,12 @@ class PlayerController extends GetxController {
         (response['tracks']).map<Song>((item) => Song.fromJson(item)).toList();
 
     enqueueSongList(upNextSongList.sublist(1));
-
   }
 
   ///enqueueSong   append a song to current queue
   ///if current queue is empty, push the song into Queue and play that song
   Future<void> enqueueSong(Song song) async {
-    Uri songUri = await _songUriService.getSongUri(song.songId);
+    Uri? songUri = await _songUriService.getSongUri(song.songId);
 
     _audioHandler.addQueueItem(MediaItem(
         id: song.songId,
@@ -208,23 +225,39 @@ class PlayerController extends GetxController {
     }
   }
 
+  Future<void> playPlayListSong(List<Song> songs, int index) async {
+    Song songToPlay = songs[index];
+    currentSong.value = songToPlay;
+    removeAll(playlistSongsDetails.value.length);
+    songs.remove(songToPlay);
+    //open player pane,set current song and push first song into playing list,
+    _playerPanelCheck();
+    enqueueSong(songToPlay);
+    _audioHandler.play();
+    enqueueSongList(songs);
+  }
+
+  void removeAll(int length) {
+    for (int i = 0; i < length; i++) {
+      remove();
+    }
+  }
+
+  void remove() {
+    final lastIndex = _audioHandler.queue.value.length - 1;
+    if (lastIndex < 0) return;
+    _audioHandler.removeQueueItemAt(lastIndex);
+  }
+
   void _playerPanelCheck() {
     if (playerPanelController.isAttached) {
       playerPanelController.open();
     }
 
     if (_initFlagForPlayer) {
-      playerPanelMinHeight.value = 75;
+      playerPanelMinHeight.value = 75.0 + Get.mediaQuery.viewPadding.bottom;
       _initFlagForPlayer = false;
     }
-  }
-
-  Future<void> testSong(String videoId) async {
-    print(videoId);
-    final response = await _musicServices.getWatchPlaylist(videoId: videoId);
-    List<Song> upNextSongList =
-        (response['tracks']).map<Song>((item) => Song.fromJson(item)).toList();
-    inspect(upNextSongList);
   }
 
   void play() {

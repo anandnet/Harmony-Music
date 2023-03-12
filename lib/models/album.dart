@@ -24,7 +24,7 @@ class Album {
       required this.thumbnailUrl});
   final String browseId;
   final String title;
-  final String artist;
+  final String? artist;
   final String thumbnailUrl;
 
   factory Album.fromJson(Map<dynamic, dynamic> json) => Album(

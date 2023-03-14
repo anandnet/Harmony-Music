@@ -20,6 +20,21 @@ class SongUriService {
       return null;
     }
   }
+
+  Future<void> test() async {
+    print("Here");
+    var playlist =
+        await _yt.playlists.get("PLa1F2ddGya_-UvuAqHAksYnB0qL9yWDO6");
+
+    var title = playlist.title;
+    var author = playlist.author;
+// Get playlist metadata.
+    await for (var video in _yt.playlists.getVideos(playlist.id)) {
+      var videoTitle = video.title;
+      var videoAuthor = video.author;
+      print(video.url);
+    }
+  }
 }
 
 enum AudioQuality { High, Medium, Low }

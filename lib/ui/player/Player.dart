@@ -16,6 +16,7 @@ class Player extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("player");
     final size = MediaQuery.of(context).size;
     final PlayerController playerController = Get.find<PlayerController>();
     final ThemeController themeController = Get.find<ThemeController>();
@@ -43,7 +44,7 @@ class Player extends StatelessWidget {
               child: Obx(() {
                 return ListView.builder(
                   controller: sc,
-                  itemCount: playerController.playlistSongsDetails.length,
+                  itemCount: playerController.currentQueue.length,
                   padding: EdgeInsets.only(
                       top: 55, bottom: Get.mediaQuery.padding.bottom),
                   physics: const AlwaysScrollableScrollPhysics(),
@@ -67,22 +68,22 @@ class Player extends StatelessWidget {
                                   dimension: 50,
                                   child: ImageWidget(
                                     song: playerController
-                                        .playlistSongsDetails[index],
+                                        .currentQueue[index],
                                   )),
                               title: Text(
                                 playerController
-                                    .playlistSongsDetails[index].title,
+                                    .currentQueue[index].title,
                                 maxLines: 1,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               subtitle: Text(
-                                "${playerController.playlistSongsDetails[index].artist[0]["name"]}",
+                                "${playerController.currentQueue[index].artist[0]["name"]}",
                                 maxLines: 1,
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
                               trailing: Text(
                                 playerController
-                                        .playlistSongsDetails[index].length ??
+                                        .currentQueue[index].length ??
                                     "",
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
@@ -97,7 +98,7 @@ class Player extends StatelessWidget {
                   child: playerController.currentSong.value != null
                       ? CachedNetworkImage(
                           imageBuilder: (context, imageProvider) {
-                            themeController.setTheme(imageProvider);
+                            //themeController.setTheme(imageProvider);
                             return Image(
                               image: imageProvider,
                               fit: BoxFit.fitHeight,
@@ -142,7 +143,7 @@ class Player extends StatelessWidget {
                     Obx(() {
                       return MarqueeWidget(
                         child: Text(
-                          playerController.playlistSongsDetails.isNotEmpty
+                          playerController.currentQueue.isNotEmpty
                               ? playerController.currentSong.value!.title
                               : "NA",
                           textAlign: TextAlign.center,
@@ -156,7 +157,7 @@ class Player extends StatelessWidget {
                     GetX<PlayerController>(builder: (controller) {
                       return MarqueeWidget(
                         child: Text(
-                          controller.playlistSongsDetails.isNotEmpty
+                          controller.currentQueue.isNotEmpty
                               ? controller.currentSong.value?.artist[0]["name"]
                               : "NA",
                           textAlign: TextAlign.center,

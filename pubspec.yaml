@@ -45,7 +45,6 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   audio_service: ^0.18.9
   palette_generator: ^0.3.3+2
-  flutter_cache_manager: ^3.3.0
   path_provider: ^2.0.13
   shimmer: ^2.0.0
   hive: ^2.2.3

@@ -15,6 +15,7 @@ class Home extends StatelessWidget {
   static const routeName = '/appHome';
   @override
   Widget build(BuildContext context) {
+    print("Home");
     var safePadding = MediaQuery.of(context).padding.bottom;
     final PlayerController playerController = Get.find<PlayerController>();
     final size = MediaQuery.of(context).size;
@@ -85,7 +86,7 @@ class Home extends StatelessWidget {
                                           height: 20,
                                           child: Text(
                                             playerController
-                                                    .playlistSongsDetails
+                                                    .currentQueue
                                                     .isNotEmpty
                                                 ? playerController
                                                     .currentSong.value!.title
@@ -100,7 +101,7 @@ class Home extends StatelessWidget {
                                           height: 20,
                                           child: Text(
                                             playerController
-                                                    .playlistSongsDetails
+                                                    .currentQueue
                                                     .isNotEmpty
                                                 ? playerController.currentSong
                                                     .value!.artist[0]['name']

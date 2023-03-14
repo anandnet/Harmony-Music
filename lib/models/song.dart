@@ -1,3 +1,4 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:harmonymusic/models/thumbnail.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -66,6 +67,17 @@ class Song {
         // "audioStreams":
         //     List<dynamic>.from(audioStreams.values.map((x) => x.toJson())),
       };
+
+  factory Song.fromMediaItem(MediaItem mediaItem) =>
+      Song.fromJson(mediaItem.extras!['song'], url: mediaItem.extras!['url']);
+
+  /// This function can only be used when Song instance has not null [Song.url] value
+  MediaItem toMediaItem({String? manUrl}) => MediaItem(
+      id: songId,
+      title: title,
+      artUri: Uri.parse(thumbnailUrl),
+      artist: artist[0]['name'],
+      extras: {'url': manUrl ?? url, 'song': toJson()});
 
   set setUrl(String url) {
     url = url;

@@ -75,6 +75,7 @@ initHive() async {
   Directory applicationDirectory = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(applicationDirectory.path);
   Hive.registerAdapter(SongAdapter());
-  await Hive.openBox("cacheSongs");
+  await Hive.openBox("SongsCache");
+  await Hive.openBox('SongsUrlCache');
   await Hive.openBox("settings");
 }

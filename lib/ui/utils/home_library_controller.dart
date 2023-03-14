@@ -17,7 +17,7 @@ class HomeLibrayController extends GetxController{
 
   void init(){
     //TODO verify from cached directory if song exist or not
-    final box = Hive.box("cacheSongs");
+    final box = Hive.box("SongsCache");
      cachedSongsList.value = box.values.map<Song?>((song) => song as Song).whereType<Song>().toList();
      inspect(cachedSongsList.value);
      isSongFetched.value =true;

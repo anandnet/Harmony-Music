@@ -8,15 +8,13 @@ import 'package:get/get.dart';
 
 import '/models/durationstate.dart';
 import '/services/music_service.dart';
-import '/services/song_stream_url_service.dart';
 import '../../models/song.dart';
 
 class PlayerController extends GetxController {
   final _audioHandler = Get.find<AudioHandler>();
-  final _songUriService = SongUriService();
+  final _musicServices = Get.find<MusicServices>();
   final currentQueue = [].obs;
 
-  final MusicServices _musicServices = MusicServices();
   final playerPaneOpacity = (1.0).obs;
   final isPlayerpanelTopVisible = true.obs;
   final isPlayerPaneDraggable = true.obs;
@@ -48,7 +46,6 @@ class PlayerController extends GetxController {
   }
 
   void _init() async {
-    //_audioPlayer = AudioPlayer();
     _listenForChangesInPlayerState();
     _listenForChangesInPosition();
     _listenForChangesInBufferedPosition();
@@ -168,63 +165,48 @@ class PlayerController extends GetxController {
   ///pushSongToPlaylist method clear previous song queue, plays the tapped song and push related
   ///songs into Queue
   Future<void> pushSongToQueue(Song song) async {
+    _audioHandler.pause();
+    _audioHandler.seek(Duration.zero);
     currentSong.value = song;
-    removeAll(currentQueue.value.length);
+    //removeAll(currentQueue.value.length);
     //open player panel,set current song and push first song into playing list,
-    enqueueSong(song);
-    _audioHandler.play();
+    final init = _initFlagForPlayer;
     _playerPanelCheck();
+
+    !init
+        ? await _audioHandler
+            .updateQueue([song.toMediaItem(manUrl: await checkNGetUrl(song))])
+        : await enqueueSong(song);
+
+    _audioHandler.play();
 
     final response =
         await _musicServices.getWatchPlaylist(videoId: song.songId);
     List<Song> upNextSongList =
         (response['tracks']).map<Song>((item) => Song.fromJson(item)).toList();
 
-    enqueueSongList(upNextSongList.sublist(1));
+    await enqueueSongList(upNextSongList.sublist(1));
   }
 
   ///enqueueSong   append a song to current queue
   ///if current queue is empty, push the song into Queue and play that song
   Future<void> enqueueSong(Song song) async {
     //check if song is available in cache and allocate
-    if (_songsCacheBox.containsKey(song.songId)) {
-      _audioHandler.addQueueItem(
-          (_songsCacheBox.get(song.songId) as Song).toMediaItem());
-      return;
-    }
-
-    //check if song stream url is cached and allocate url accordingly
-    String url = "";
-    if (_songsUrlCacheBox.containsKey(song.songId)) {
-      if (_isUrlExpired(_songsUrlCacheBox.get(song.songId))) {
-        url = (await _songUriService.getSongUri(song.songId)).toString();
-        _songsUrlCacheBox.put(song.songId, url);
-      } else {
-        url = _songsUrlCacheBox.get(song.songId);
-      }
-    } else {
-      url = (await _songUriService.getSongUri(song.songId)).toString();
-      _songsUrlCacheBox.put(song.songId, url);
-    }
-    _audioHandler.addQueueItem(song.toMediaItem(manUrl: url));
-
-    //check if this is first song in queue then play
-    if (await _audioHandler.queue.length == 1) {
-      currentSong.value = song;
-      _playerPanelCheck();
-      _audioHandler.play();
-    }
+    await _audioHandler
+        .addQueueItem(song.toMediaItem(manUrl: await checkNGetUrl(song)));
   }
 
   ///Check if Steam Url is expired
   bool _isUrlExpired(String url) {
     RegExpMatch? match = RegExp(".expire=([0-9]+)?&").firstMatch(url);
     if (match != null) {
-      if(DateTime.now().millisecondsSinceEpoch~/1000+1800<int.parse(match[1]!)){
+      if (DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800 <
+          int.parse(match[1]!)) {
         print("Not Expired");
         return false;
       }
     }
+    print("Expired");
     return true;
   }
 
@@ -232,38 +214,53 @@ class PlayerController extends GetxController {
   ///if queue is empty,song start playing automatically
   Future<void> enqueueSongList(List<Song> songs) async {
     for (Song song in songs) {
-      enqueueSong(song);
+      await enqueueSong(song);
     }
+  }
 
-    if (await _audioHandler.queue.length == songs.length) {
-      currentSong.value = songs[0];
-      _playerPanelCheck();
-      _audioHandler.play();
+  Future<String?> checkNGetUrl(Song song) async {
+    if (_songsCacheBox.containsKey(song.songId)) {
+      return (_songsCacheBox.get(song.songId) as Song).url;
+    } else {
+      //check if song stream url is cached and allocate url accordingly
+      String url = "";
+      if (_songsUrlCacheBox.containsKey(song.songId)) {
+        if (_isUrlExpired(_songsUrlCacheBox.get(song.songId))) {
+          url = (await _musicServices.getSongUri(song.songId)).toString();
+          _songsUrlCacheBox.put(song.songId, url);
+        } else {
+          url = _songsUrlCacheBox.get(song.songId);
+        }
+      } else {
+        url = (await _musicServices.getSongUri(song.songId)).toString();
+        _songsUrlCacheBox.put(song.songId, url);
+      }
+      return url;
     }
   }
 
   Future<void> playPlayListSong(List<Song> songs, int index) async {
+    _audioHandler.pause();
+    _audioHandler.seek(Duration.zero);
     Song songToPlay = songs[index];
     currentSong.value = songToPlay;
-    removeAll(currentQueue.value.length);
+    //_audioHandler.customAction('clearQueue');
+    //await removeAll(currentQueue.value.length-1);
     songs.remove(songToPlay);
     //open player pane,set current song and push first song into playing list,
+    final init = _initFlagForPlayer;
     _playerPanelCheck();
-    enqueueSong(songToPlay);
+   
+     !init? await _audioHandler.updateQueue(
+          [songToPlay.toMediaItem(manUrl: await checkNGetUrl(songToPlay))]):
+   
+      await enqueueSong(songToPlay);
+    
+
     _audioHandler.play();
-    enqueueSongList(songs);
-  }
 
-  void removeAll(int length) {
-    for (int i = 0; i < length; i++) {
-      remove();
-    }
-  }
-
-  void remove() {
-    final lastIndex = _audioHandler.queue.value.length - 1;
-    if (lastIndex < 0) return;
-    _audioHandler.removeQueueItemAt(lastIndex);
+    //await enqueueSong(songToPlay);
+    await enqueueSongList(songs);
   }
 
   void _playerPanelCheck() {
@@ -322,11 +319,6 @@ class PlayerController extends GetxController {
   void dispose() {
     _audioHandler.customAction('dispose');
     super.dispose();
-  }
-
-  void test() async {
-    print("Here");
-    await _songUriService.test();
   }
 }
 

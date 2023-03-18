@@ -1,16 +1,13 @@
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/models/playlist.dart';
 import 'package:harmonymusic/models/quick_picks.dart';
-import 'package:harmonymusic/models/song.dart';
 import 'package:harmonymusic/services/music_service.dart';
-import 'package:harmonymusic/services/song_stream_url_service.dart';
 
 class HomeScreenController extends GetxController {
-  late MusicServices _musicServices;
+  final MusicServices _musicServices = Get.find<MusicServices>();
   final isContentFetched = false.obs;
   final homeContentList = [].obs;
   final tabIndex = 0.obs;
@@ -19,7 +16,6 @@ class HomeScreenController extends GetxController {
   }
 
   Future<void> _init() async {
-    _musicServices = MusicServices();
     final homeContentListMap = await _musicServices.getHome(limit: 7);
     //debugPrint(homeContentListMap,wrapWidth: 1024);
     _setHomeContentList(homeContentListMap);
@@ -50,4 +46,9 @@ class HomeScreenController extends GetxController {
     tabIndex.value = index;
   }
   void getRelatedArtist() {}
+
+  @override
+  void onClose() {
+    super.onClose();
+  }
 }

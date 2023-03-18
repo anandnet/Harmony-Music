@@ -143,7 +143,7 @@ class Player extends StatelessWidget {
                     Obx(() {
                       return MarqueeWidget(
                         child: Text(
-                          playerController.currentQueue.isNotEmpty
+                          playerController.currentSong.value != null
                               ? playerController.currentSong.value!.title
                               : "NA",
                           textAlign: TextAlign.center,
@@ -157,7 +157,7 @@ class Player extends StatelessWidget {
                     GetX<PlayerController>(builder: (controller) {
                       return MarqueeWidget(
                         child: Text(
-                          controller.currentQueue.isNotEmpty
+                          playerController.currentSong.value != null
                               ? controller.currentSong.value?.artist[0]["name"]
                               : "NA",
                           textAlign: TextAlign.center,

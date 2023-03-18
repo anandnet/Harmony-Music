@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/services/audio_handler.dart';
+import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/ui/home.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
@@ -69,6 +70,7 @@ Future<void> startApplicationServices() async {
   Get.lazyPut(() => PlayerController(), fenix: true);
   Get.lazyPut(() => HomeScreenController());
   Get.lazyPut(() => HomeLibrayController(),fenix: true);
+  Get.lazyPut(() => MusicServices(),fenix: true);
 }
 
 initHive() async {

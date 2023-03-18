@@ -21,8 +21,8 @@ Future<AudioHandler> initAudioService() async {
 class MyAudioHandler extends BaseAudioHandler {
   late final _cacheDir;
   final _player = AudioPlayer();
-  final _playlist = ConcatenatingAudioSource(
-      children: [], shuffleOrder: DefaultShuffleOrder());
+  final _playlist = ConcatenatingAudioSource(useLazyPreparation: true,
+      children: [],);
 
   MyAudioHandler() {
     _createCacheDir();
@@ -47,6 +47,7 @@ class MyAudioHandler extends BaseAudioHandler {
       print("Error: $e");
     }
   }
+
 
   void _notifyAudioHandlerAboutPlaybackEvents() {
     _player.playbackEventStream.listen((PlaybackEvent event) {
@@ -155,23 +156,29 @@ class MyAudioHandler extends BaseAudioHandler {
   }
 
   @override
-  Future<void> updateQueue(List<MediaItem> queue) {
-    _playlist.clear();
-    _playlist.addAll(queue.map(_createAudioSource).toList());
-
-    return super.updateQueue(queue);
+  Future<void> updateQueue(List<MediaItem> queue) async {
+    await _playlist.clear();
+    await _playlist.addAll(queue.map(_createAudioSource).toList());
+    super.updateQueue(queue);
   }
 
+@override
+  Future<void> insertQueueItem(int index, MediaItem mediaItem) {
+    // TODO: implement insertQueueItem
+    return super.insertQueueItem(index, mediaItem);
+  }
   LockCachingAudioSource _createAudioSource(MediaItem mediaItem) {
     return LockCachingAudioSource(
       Uri.parse(mediaItem.extras!['url'] as String),
       cacheFile: File("$_cacheDir/cachedSongs/${mediaItem.id}.mp3"),
       tag: mediaItem,
+
     );
   }
 
   @override
   Future<void> removeQueueItemAt(int index) async {
+    print("called remove");
     // manage Just Audio
     _playlist.removeAt(index);
 
@@ -220,22 +227,34 @@ class MyAudioHandler extends BaseAudioHandler {
     }
   }
 
+  
   @override
-  Future<void> setShuffleMode(AudioServiceShuffleMode shuffleMode) async {
-    if (shuffleMode == AudioServiceShuffleMode.none) {
-      _player.setShuffleModeEnabled(false);
-    } else {
-      await _player.shuffle();
-      _player.setShuffleModeEnabled(true);
-    }
+  Future<void> playFromMediaId(String mediaId, [Map<String, dynamic>? extras]) {
+    return super.playFromMediaId(mediaId, extras);
   }
+
+  // @override
+  // Future<void> setShuffleMode(AudioServiceShuffleMode shuffleMode) async {
+  //   if (shuffleMode == AudioServiceShuffleMode.none) {
+  //     _player.setShuffleModeEnabled(false);
+  //   } else {
+  //     await _player.shuffle();
+  //     _player.setShuffleModeEnabled(true);
+  //   }
+  // }
 
   @override
   Future<void> customAction(String name, [Map<String, dynamic>? extras]) async {
     if (name == 'dispose') {
       await _player.dispose();
       super.stop();
+    }else if(name == 'clearQueue'){
+      // _playlist = ConcatenatingAudioSource(
+      // children: [], shuffleOrder: DefaultShuffleOrder());
+      // _player.setAudioSource(_playlist);
+      _playlist.clear().then((value) => queue.value.clear());
     }
+
   }
 
   @override
@@ -243,4 +262,5 @@ class MyAudioHandler extends BaseAudioHandler {
     await _player.stop();
     return super.stop();
   }
+  
 }

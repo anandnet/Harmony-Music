@@ -3,17 +3,21 @@ import 'dart:developer';
 import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:harmonymusic/services/utils.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'constant.dart';
 import 'continuations.dart';
 import 'nav_parser.dart';
 
-class MusicServices {
+enum AudioQuality { High, Medium, Low }
+
+class MusicServices{
+  late YoutubeExplode _yt;
   // ignore: non_constant_identifier_names
-  MusicService() {
+  MusicServices() {
     init();
   }
 
-  Map<String, String> headers = {
+  final Map<String, String> _headers = {
     'user-agent': userAgent,
     'accept': '*/*',
     'accept-encoding': 'gzip, deflate',
@@ -21,15 +25,13 @@ class MusicServices {
     'content-encoding': 'gzip',
     'origin': domain,
     'cookie': 'CONSENT=YES+1',
-    'X-Goog-Visitor-Id': 'CgszaE1mUm55NHNwayjXiamfBg%3D%3D'
   };
 
-  Map<String, dynamic> context = {
+  final Map<String, dynamic> _context = {
     'context': {
       'client': {
         "clientName": "WEB_REMIX",
         "clientVersion": "1.20230213.01.00",
-        'hl': 'en'
       },
       'user': {}
     }
@@ -40,15 +42,17 @@ class MusicServices {
   Future<void> init() async {
     //check visitor id in data base, if not generate one , set lang code
     //headers['X-Goog-Visitor-Id'] = "CgttcW1ucmctbUpITSjXhJ2fBg%3D%3D";
-    context['context']['client']['hl'] = 'en';
+    _context['context']['client']['hl'] = 'en';
     final signatureTimestamp = getDatestamp() - 1;
-    context['playbackContext'] = {
+    _context['playbackContext'] = {
       'contentPlaybackContext': {'signatureTimestamp': signatureTimestamp},
     };
+    _headers['X-Goog-Visitor-Id'] = 'CgszaE1mUm55NHNwayjXiamfBg%3D%3D';
+    _yt = YoutubeExplode();
   }
 
   Future<void> genrateVisitorId() async {
-    final response = await dio.get(domain, options: Options(headers: headers));
+    final response = await dio.get(domain, options: Options(headers: _headers));
     final reg = RegExp(r'ytcfg\.set\s*\(\s*({.+?})\s*\)\s*;');
     final matches = reg.firstMatch(response.data.toString());
     String? visitorId;
@@ -65,7 +69,7 @@ class MusicServices {
     final response =
         await dio.post("$baseUrl$action$fixedParms$additionalParams",
             options: Options(
-              headers: headers,
+              headers: _headers,
             ),
             data: data);
 
@@ -78,7 +82,7 @@ class MusicServices {
 
   // Future<List<Map<String, dynamic>>>
   Future<dynamic> getHome({int limit = 4}) async {
-    final data = Map.from(context);
+    final data = Map.from(_context);
     data["browseId"] = "FEmusic_home";
     final response = await _sendRequest("browse", data);
     final results = nav(response.data, single_column_tab + section_list);
@@ -112,7 +116,7 @@ class MusicServices {
     bool radio = false,
     bool shuffle = false,
   }) async {
-    final data = Map.from(context);
+    final data = Map.from(_context);
     data['enablePersistentPlaylistPanel'] = true;
     data['isAudioOnly'] = true;
     data['tunerSettingValue'] = 'AUTOMIX_SETTING_NORMAL';
@@ -191,20 +195,18 @@ class MusicServices {
     };
   }
 
- 
-
   Future<Map<String, dynamic>> getPlaylistSongs(String playlistId,
       {int limit = 100, bool related = false, int suggestionsLimit = 0}) async {
     String browseId =
         playlistId.startsWith("VL") ? playlistId : "VL$playlistId";
-    final data = Map.from(context);
+    final data = Map.from(_context);
     data['browseId'] = browseId;
     Map<String, dynamic> response = (await _sendRequest('browse', data)).data;
     Map<String, dynamic> header = response['header'];
     Map<String, dynamic> results = nav(response,
         single_column_tab + section_list_item + ['musicPlaylistShelfRenderer']);
     Map<String, dynamic> playlist = {'id': results['playlistId']};
- 
+
     bool ownPlaylist =
         header.containsKey('musicEditablePlaylistDetailHeaderRenderer');
     if (!ownPlaylist) {
@@ -240,7 +242,9 @@ class MusicServices {
 
     playlist['trackCount'] = songCount;
 
-     requestFunc(additionalParams) async => (await _sendRequest("browse", data, additionalParams:additionalParams)).data;
+    requestFunc(additionalParams) async =>
+        (await _sendRequest("browse", data, additionalParams: additionalParams))
+            .data;
 
     // // suggestions and related are missing e.g. on liked songs
     // Map<String, dynamic> sectionList = nav(response, single_column_tab + ['sectionListRenderer']);
@@ -275,10 +279,9 @@ class MusicServices {
       limit ??= songCount;
       var songsToGet = min(limit, songCount);
 
-      List<dynamic> parseFunc(contents) =>
-          parsePlaylistItems(contents);
+      List<dynamic> parseFunc(contents) => parsePlaylistItems(contents);
       if (results.containsKey('continuations')) {
-        (playlist['tracks']as List<dynamic>).addAll(await getContinuations(
+        (playlist['tracks'] as List<dynamic>).addAll(await getContinuations(
             results,
             'musicPlaylistShelfContinuation',
             songsToGet - (playlist['tracks']).length as int,
@@ -288,5 +291,23 @@ class MusicServices {
     }
     playlist['duration_seconds'] = sumTotalDuration(playlist);
     return playlist;
+  }
+
+  Future<Uri?> getSongUri(String songId,
+      {AudioQuality quality = AudioQuality.Low}) async {
+    try {
+      final songStreamManifest =
+          await _yt.videos.streamsClient.getManifest(songId);
+      final streamUriList = songStreamManifest.audioOnly.sortByBitrate();
+      if (quality == AudioQuality.High) {
+        return songStreamManifest.audioOnly.withHighestBitrate().url;
+      } else if (quality == AudioQuality.Medium) {
+        return streamUriList[streamUriList.length ~/ 2].url;
+      } else {
+        return streamUriList[0].url;
+      }
+    } catch (e) {
+      return null;
+    }
   }
 }

@@ -310,4 +310,17 @@ class MusicServices{
       return null;
     }
   }
+
+//  Future<Uri> getSongUri(String songId) async {
+//     final response =
+//         await Dio().get("https://watchapi.whatever.social/streams/$songId");
+//     if (response.statusCode == 200) {
+//       final responseUrl = ((response.data["audioStreams"])
+//           .firstWhere((val) => val["quality"] == "48 kbps"))["url"];
+//           print("hello");
+//       return Uri.parse(responseUrl);
+//     } else {
+//       return getSongUri(songId);
+//     }
+//   }
 }

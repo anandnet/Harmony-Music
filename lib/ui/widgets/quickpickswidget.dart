@@ -27,7 +27,7 @@ class QuickPicksWidget extends StatelessWidget {
           Expanded(
             child: GridView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 20,
+                itemCount: content.songList.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
                   childAspectRatio: .26 / 1,

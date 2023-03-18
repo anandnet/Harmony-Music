@@ -19,8 +19,8 @@ import 'ui/utils/home_library_controller.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initHive();
-  Get.put<AudioHandler>(await initAudioService(), permanent: true);
   startApplicationServices();
+  Get.put<AudioHandler>(await initAudioService(), permanent: true);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.light,

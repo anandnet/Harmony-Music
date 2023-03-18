@@ -142,6 +142,7 @@ class PlayerController extends GetxController {
   void _listenForCurrentSong() {
     _audioHandler.mediaItem.listen((mediaItem) {
       if (mediaItem != null) {
+        print(mediaItem.title);
         _newSongFlag = true;
         isCurrentSongBuffered.value = false;
         currentSong.value = Song.fromMediaItem(mediaItem);
@@ -165,35 +166,29 @@ class PlayerController extends GetxController {
   ///pushSongToPlaylist method clear previous song queue, plays the tapped song and push related
   ///songs into Queue
   Future<void> pushSongToQueue(Song song) async {
-    _audioHandler.pause();
-    _audioHandler.seek(Duration.zero);
-    currentSong.value = song;
-    //removeAll(currentQueue.value.length);
     //open player panel,set current song and push first song into playing list,
     final init = _initFlagForPlayer;
-    _playerPanelCheck();
-
-    !init
-        ? await _audioHandler
-            .updateQueue([song.toMediaItem(manUrl: await checkNGetUrl(song))])
-        : await enqueueSong(song);
-
-    _audioHandler.play();
 
     final response =
         await _musicServices.getWatchPlaylist(videoId: song.songId);
     List<Song> upNextSongList =
         (response['tracks']).map<Song>((item) => Song.fromJson(item)).toList();
 
-    await enqueueSongList(upNextSongList.sublist(1));
+    !init
+        ? await _audioHandler.updateQueue(
+            upNextSongList.map((song) => song.toMediaItem()).toList())
+        : await _audioHandler.addQueueItems(
+            upNextSongList.map((song) => song.toMediaItem()).toList());
+    currentSong.value = upNextSongList[0];
+    _playerPanelCheck();
+    _audioHandler.customAction("playByIndex", {"index": 0});
   }
 
   ///enqueueSong   append a song to current queue
   ///if current queue is empty, push the song into Queue and play that song
   Future<void> enqueueSong(Song song) async {
     //check if song is available in cache and allocate
-    await _audioHandler
-        .addQueueItem(song.toMediaItem(manUrl: await checkNGetUrl(song)));
+    await _audioHandler.addQueueItem(song.toMediaItem());
   }
 
   ///Check if Steam Url is expired
@@ -218,49 +213,18 @@ class PlayerController extends GetxController {
     }
   }
 
-  Future<String?> checkNGetUrl(Song song) async {
-    if (_songsCacheBox.containsKey(song.songId)) {
-      return (_songsCacheBox.get(song.songId) as Song).url;
-    } else {
-      //check if song stream url is cached and allocate url accordingly
-      String url = "";
-      if (_songsUrlCacheBox.containsKey(song.songId)) {
-        if (_isUrlExpired(_songsUrlCacheBox.get(song.songId))) {
-          url = (await _musicServices.getSongUri(song.songId)).toString();
-          _songsUrlCacheBox.put(song.songId, url);
-        } else {
-          url = _songsUrlCacheBox.get(song.songId);
-        }
-      } else {
-        url = (await _musicServices.getSongUri(song.songId)).toString();
-        _songsUrlCacheBox.put(song.songId, url);
-      }
-      return url;
-    }
-  }
-
   Future<void> playPlayListSong(List<Song> songs, int index) async {
-    _audioHandler.pause();
-    _audioHandler.seek(Duration.zero);
-    Song songToPlay = songs[index];
-    currentSong.value = songToPlay;
-    //_audioHandler.customAction('clearQueue');
-    //await removeAll(currentQueue.value.length-1);
-    songs.remove(songToPlay);
+    print("Play Plalist somg");
     //open player pane,set current song and push first song into playing list,
     final init = _initFlagForPlayer;
+    print("clicked: $index");
+    !init
+        ?await _audioHandler
+            .updateQueue(songs.map((song) => song.toMediaItem()).toList())
+        : _audioHandler
+            .addQueueItems(songs.map((song) => song.toMediaItem()).toList());
+    _audioHandler.customAction("playByIndex", {"index": index});
     _playerPanelCheck();
-   
-     !init? await _audioHandler.updateQueue(
-          [songToPlay.toMediaItem(manUrl: await checkNGetUrl(songToPlay))]):
-   
-      await enqueueSong(songToPlay);
-    
-
-    _audioHandler.play();
-
-    //await enqueueSong(songToPlay);
-    await enqueueSongList(songs);
   }
 
   void _playerPanelCheck() {
@@ -286,8 +250,8 @@ class PlayerController extends GetxController {
     _audioHandler.skipToPrevious();
   }
 
-  void next() {
-    _audioHandler.skipToNext();
+  Future<void> next() async {
+    await _audioHandler.skipToNext();
   }
 
   void seek(Duration position) {
@@ -295,7 +259,7 @@ class PlayerController extends GetxController {
   }
 
   void seekByIndex(int index) {
-    _audioHandler.skipToQueueItem(index);
+    _audioHandler.customAction("playByIndex", {"index": index});
   }
 
   void toggleShuffleMode() {

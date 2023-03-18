@@ -274,6 +274,6 @@ Widget _nextButton(PlayerController playerController, BuildContext context) {
       color: Theme.of(context).textTheme.titleMedium!.color,
     ),
     iconSize: 30,
-    onPressed: playerController.next,
+    onPressed: ()async{await playerController.next();},
   );
 }

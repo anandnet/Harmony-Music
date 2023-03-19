@@ -191,26 +191,52 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   @override
   Future<void> skipToQueueItem(int index) async {
-    if (index < 0 || index >= queue.value.length) return;
-    if (_player.shuffleModeEnabled) {
-      index = _player.shuffleIndices![index];
+    if(index == currentIndex+1){
+      skipToNext();
+    }else if(index == currentIndex -1){
+      skipToPrevious();
+    }else{
+      customAction('playByIndex',{'index':index});
     }
-    _player.seek(Duration.zero, index: index);
+
   }
 
   @override
   Future<void> skipToNext() async {
-    _player.seek(Duration.zero);
+    //insert next song in playlist
     if (queue.value.length > currentIndex + 1) {
-      await customAction("playByIndex", {'index': currentIndex + 1});
+      await _player.seekToNext();
+      currentIndex += 1;
+      mediaItem.add(queue.value[currentIndex]);
+      await _addNextSongToPlaylist();
+    }
+    //code to maintain 3 song in playlist at a time
+    try {
+      if (_player.currentIndex! - 2 == 0) {
+        await _playList.removeAt(0);
+      }
+    } catch (e) {
+      print("Not an element at index 0");
     }
   }
 
   @override
   Future<void> skipToPrevious() async {
-    _player.seek(Duration.zero);
-    if (currentIndex - 1>=0) {
-      await customAction("playByIndex", {'index': currentIndex - 1});
+    //insert previous in playlist
+    if (currentIndex - 1 >= 0) {
+      await _player.seekToPrevious();
+      currentIndex -= 1;
+      mediaItem.add(queue.value[currentIndex]);
+      await _addPrevSongToPlaylist();
+    }
+
+    //code to maintain 3 song in playlist at a time
+    try {
+      if (_player.currentIndex! + 2 == 3) {
+        await _playList.removeAt(3);
+      }
+    } catch (e) {
+      print("Not an element at index 3");
     }
   }
 
@@ -235,21 +261,39 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     if (name == 'dispose') {
       await _player.dispose();
       super.stop();
-    } else if (name == 'setSourceNPlay') {
-      await _playList.clear();
-      await _playList.add(_createAudioSource(
-          Song.fromJson(extras!['song'], url: extras['url']).toMediaItem()));
-      await _player.play();
     } else if (name == 'playByIndex') {
       currentIndex = extras!['index'];
       final currentSong = queue.value[currentIndex];
-      _player.pause();
       mediaItem.add(currentSong);
+      await _playList.clear();
       currentSong.extras!['url'] = await checkNGetUrl(currentSong.id);
       playbackState.add(playbackState.value.copyWith(queueIndex: currentIndex));
-      await _playList.clear();
       await _playList.add(_createAudioSource(currentSong));
       await _player.play();
+      await _updatePlaylist();
+    }
+  }
+
+  Future<void> _updatePlaylist() async {
+    await _addNextSongToPlaylist();
+    await _addPrevSongToPlaylist();
+    print("playlist updated");
+  }
+
+  Future<void> _addNextSongToPlaylist() async {
+    if (queue.value.length > currentIndex + 1) {
+      final nextSong = queue.value[currentIndex + 1];
+      nextSong.extras!['url'] = await checkNGetUrl(nextSong.id);
+      await _playList.add(_createAudioSource(nextSong));
+    }
+  }
+
+  Future<void> _addPrevSongToPlaylist() async {
+    if (currentIndex - 1 >= 0) {
+      final nextSong = queue.value[currentIndex - 1];
+      nextSong.extras!['url'] = await checkNGetUrl(nextSong.id);
+      await _playList.removeAt(0);
+      await _playList.insert(0, _createAudioSource(nextSong));
     }
   }
 

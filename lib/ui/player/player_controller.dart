@@ -259,7 +259,7 @@ class PlayerController extends GetxController {
   }
 
   void seekByIndex(int index) {
-    _audioHandler.customAction("playByIndex", {"index": index});
+    _audioHandler.skipToQueueItem(index);
   }
 
   void toggleShuffleMode() {

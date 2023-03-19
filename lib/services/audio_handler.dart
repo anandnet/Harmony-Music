@@ -157,6 +157,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     final newQueue = this.queue.value
       ..replaceRange(0, this.queue.value.length, queue);
     this.queue.add(newQueue);
+    //maybe we can use isolate for this in future
+    //cache queue item url for better song skiping
+    _cacheQueueitemsUrl(queue);
   }
 
   @override
@@ -209,7 +212,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   @override
   Future<void> skipToPrevious() async {
     _player.seek(Duration.zero);
-    if (currentIndex - 1>=0) {
+    if (currentIndex - 1 >= 0) {
       await customAction("playByIndex", {'index': currentIndex - 1});
     }
   }
@@ -278,6 +281,13 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       }
       return url;
     }
+  }
+
+  void _cacheQueueitemsUrl(queue) {
+    for (MediaItem item in queue) {
+      checkNGetUrl(item.id);
+    }
+    print("url Cached");
   }
 
   ///Check if Steam Url is expired

@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/services/background_task.dart';
 import 'package:hive/hive.dart';
 import 'package:just_audio/just_audio.dart';
 import 'dart:io';
@@ -35,6 +37,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   final _playList = ConcatenatingAudioSource(
     children: [],
   );
+  late final _appdocdir;
 
   MyAudioHandler() {
     _createCacheDir();
@@ -47,6 +50,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   Future<void> _createCacheDir() async {
     _cacheDir = (await getTemporaryDirectory()).path;
+    _appdocdir = (await getApplicationDocumentsDirectory()).path;
     if (!Directory("$_cacheDir/cachedSongs/").existsSync()) {
       Directory("$_cacheDir/cachedSongs/").createSync(recursive: true);
     }
@@ -143,6 +147,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     // notify system
     final newQueue = queue.value..addAll(mediaItems);
     queue.add(newQueue);
+    List<String> qidList =
+        mediaItems.map((item) => item.id).whereType<String>().toList();
+    Isolate.spawn(cacheQueueitemsUrl,[_appdocdir,mediaItems]);
   }
 
   @override
@@ -159,8 +166,12 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     this.queue.add(newQueue);
     //maybe we can use isolate for this in future
     //cache queue item url for better song skiping
-    _cacheQueueitemsUrl(queue);
+    List<String> qidList =
+        queue.map((item) => item.id).whereType<String>().toList();
+    await Isolate.spawn(cacheQueueitemsUrl,[_appdocdir, queue]);
   }
+
+ 
 
   @override
   Future<void> insertQueueItem(int index, MediaItem mediaItem) {
@@ -246,12 +257,12 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     } else if (name == 'playByIndex') {
       currentIndex = extras!['index'];
       final currentSong = queue.value[currentIndex];
-      _player.pause();
       mediaItem.add(currentSong);
       currentSong.extras!['url'] = await checkNGetUrl(currentSong.id);
       playbackState.add(playbackState.value.copyWith(queueIndex: currentIndex));
       await _playList.clear();
       await _playList.add(_createAudioSource(currentSong));
+
       await _player.play();
     }
   }
@@ -281,13 +292,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       }
       return url;
     }
-  }
-
-  void _cacheQueueitemsUrl(queue) {
-    for (MediaItem item in queue) {
-      checkNGetUrl(item.id);
-    }
-    print("url Cached");
   }
 
   ///Check if Steam Url is expired

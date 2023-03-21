@@ -1,11 +1,14 @@
 import 'dart:developer';
+import 'dart:isolate';
 import 'package:harmonymusic/ui/utils/home_library_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_service/audio_service.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:get/get.dart';
 
+import '../../services/background_task.dart';
 import '/models/durationstate.dart';
 import '/services/music_service.dart';
 import '../../models/song.dart';
@@ -40,6 +43,7 @@ class PlayerController extends GetxController {
 
   final _songsUrlCacheBox = Hive.box("SongsUrlCache");
   final _songsCacheBox = Hive.box("SongsCache");
+  late final _appDocDir;
 
   PlayerController() {
     _init();
@@ -52,6 +56,11 @@ class PlayerController extends GetxController {
     _listenForChangesInDuration();
     _listenForCurrentSong();
     _listenForPlaylistChange();
+    _setAppDocDir();
+  }
+
+  Future<void> _setAppDocDir() async {
+    _appDocDir= (await getApplicationDocumentsDirectory()).path;
   }
 
   void panellistener(double x) {
@@ -165,9 +174,6 @@ class PlayerController extends GetxController {
   ///pushSongToPlaylist method clear previous song queue, plays the tapped song and push related
   ///songs into Queue
   Future<void> pushSongToQueue(Song song) async {
-    _audioHandler.pause();
-    _audioHandler.seek(Duration.zero);
-    currentSong.value = song;
     //removeAll(currentQueue.value.length);
     //open player panel,set current song and push first song into playing list,
     final init = _initFlagForPlayer;
@@ -184,7 +190,8 @@ class PlayerController extends GetxController {
         await _musicServices.getWatchPlaylist(videoId: song.songId);
     List<Song> upNextSongList =
         (response['tracks']).map<Song>((item) => Song.fromJson(item)).toList();
-
+    Isolate.spawn(cacheQueueitemsUrl, [_appDocDir, upNextSongList.sublist(0, upNextSongList.length ~/2),1]);
+    Isolate.spawn(cacheQueueitemsUrl, [_appDocDir, upNextSongList.sublist(upNextSongList.length~/2),2]);
     await enqueueSongList(upNextSongList.sublist(1));
   }
 
@@ -240,25 +247,21 @@ class PlayerController extends GetxController {
   }
 
   Future<void> playPlayListSong(List<Song> songs, int index) async {
-    _audioHandler.pause();
-    _audioHandler.seek(Duration.zero);
+     Isolate.spawn(cacheQueueitemsUrl, [_appDocDir, songs.sublist(0,songs.length~/2),1]);
+     Isolate.spawn(cacheQueueitemsUrl, [_appDocDir, songs.sublist(songs.length~/2),2]);
+     
     Song songToPlay = songs[index];
     currentSong.value = songToPlay;
-    //_audioHandler.customAction('clearQueue');
-    //await removeAll(currentQueue.value.length-1);
+    final init = _initFlagForPlayer;
+    !init
+        ? await _audioHandler.updateQueue(
+            [songToPlay.toMediaItem(manUrl: await checkNGetUrl(songToPlay))])
+        : await enqueueSong(songToPlay);
     songs.remove(songToPlay);
     //open player pane,set current song and push first song into playing list,
-    final init = _initFlagForPlayer;
+   
     _playerPanelCheck();
-   
-     !init? await _audioHandler.updateQueue(
-          [songToPlay.toMediaItem(manUrl: await checkNGetUrl(songToPlay))]):
-   
-      await enqueueSong(songToPlay);
-    
-
     _audioHandler.play();
-
     //await enqueueSong(songToPlay);
     await enqueueSongList(songs);
   }

@@ -40,6 +40,7 @@ class MusicServices{
   final dio = Dio();
 
   Future<void> init() async {
+    print("ibit");
     //check visitor id in data base, if not generate one , set lang code
     //headers['X-Goog-Visitor-Id'] = "CgttcW1ucmctbUpITSjXhJ2fBg%3D%3D";
     _context['context']['client']['hl'] = 'en';
@@ -294,7 +295,7 @@ class MusicServices{
   }
 
   Future<Uri?> getSongUri(String songId,
-      {AudioQuality quality = AudioQuality.Low}) async {
+      {AudioQuality quality = AudioQuality.High}) async {
     try {
       final songStreamManifest =
           await _yt.videos.streamsClient.getManifest(songId);
@@ -310,4 +311,16 @@ class MusicServices{
       return null;
     }
   }
+  //  Future<Uri> getSongUri(String songId) async {
+//     final response =
+//         await Dio().get("https://watchapi.whatever.social/streams/$songId");
+//     if (response.statusCode == 200) {
+//       final responseUrl = ((response.data["audioStreams"])
+//           .firstWhere((val) => val["quality"] == "48 kbps"))["url"];
+//           print("hello");
+//       return Uri.parse(responseUrl);
+//     } else {
+//       return getSongUri(songId);
+//     }
+//   }
 }

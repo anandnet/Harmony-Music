@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'dart:io';
 
@@ -21,11 +22,15 @@ Future<AudioHandler> initAudioService() async {
 class MyAudioHandler extends BaseAudioHandler {
   late final _cacheDir;
   final _player = AudioPlayer();
-  final _playlist = ConcatenatingAudioSource(useLazyPreparation: true,
-      children: [],);
+  final _playlist = ConcatenatingAudioSource(
+    useLazyPreparation: true,
+    children: [],
+  );
 
   MyAudioHandler() {
-    _createCacheDir();
+    if (GetPlatform.isAndroid) {
+      _createCacheDir();
+    }
     _loadEmptyPlaylist();
     _notifyAudioHandlerAboutPlaybackEvents();
     _listenForDurationChanges();
@@ -47,7 +52,6 @@ class MyAudioHandler extends BaseAudioHandler {
       print("Error: $e");
     }
   }
-
 
   void _notifyAudioHandlerAboutPlaybackEvents() {
     _player.playbackEventStream.listen((PlaybackEvent event) {
@@ -116,9 +120,9 @@ class MyAudioHandler extends BaseAudioHandler {
       if (_player.shuffleModeEnabled) {
         index = _player.shuffleIndices![index];
       }
-      try{
-      mediaItem.add(playlist[index]);
-      }catch(e){
+      try {
+        mediaItem.add(playlist[index]);
+      } catch (e) {
         print("exception index: $index");
       }
     });
@@ -137,7 +141,7 @@ class MyAudioHandler extends BaseAudioHandler {
   Future<void> addQueueItems(List<MediaItem> mediaItems) async {
     // manage Just Audio
     final audioSource = mediaItems.map(_createAudioSource);
-    _playlist.addAll(audioSource.toList());
+    _playlist.addAll(audioSource.toList() as List<AudioSource>);
 
     // notify system
     final newQueue = queue.value..addAll(mediaItems);
@@ -159,21 +163,24 @@ class MyAudioHandler extends BaseAudioHandler {
   Future<void> updateQueue(List<MediaItem> queue) async {
     await _playlist.clear();
     await _playlist.addAll(queue.map(_createAudioSource).toList());
-    super.updateQueue(queue);
+    await super.updateQueue(queue);
   }
 
-@override
+  @override
   Future<void> insertQueueItem(int index, MediaItem mediaItem) {
     // TODO: implement insertQueueItem
     return super.insertQueueItem(index, mediaItem);
   }
-  LockCachingAudioSource _createAudioSource(MediaItem mediaItem) {
+
+  AudioSource _createAudioSource(MediaItem mediaItem) {
+    if(GetPlatform.isAndroid){
     return LockCachingAudioSource(
       Uri.parse(mediaItem.extras!['url'] as String),
       cacheFile: File("$_cacheDir/cachedSongs/${mediaItem.id}.mp3"),
       tag: mediaItem,
-
-    );
+    );}else{
+      return AudioSource.uri(Uri.parse(mediaItem.extras!['url'] as String)); 
+    }
   }
 
   @override
@@ -227,7 +234,6 @@ class MyAudioHandler extends BaseAudioHandler {
     }
   }
 
-  
   @override
   Future<void> playFromMediaId(String mediaId, [Map<String, dynamic>? extras]) {
     return super.playFromMediaId(mediaId, extras);
@@ -248,13 +254,12 @@ class MyAudioHandler extends BaseAudioHandler {
     if (name == 'dispose') {
       await _player.dispose();
       super.stop();
-    }else if(name == 'clearQueue'){
+    } else if (name == 'clearQueue') {
       // _playlist = ConcatenatingAudioSource(
       // children: [], shuffleOrder: DefaultShuffleOrder());
       // _player.setAudioSource(_playlist);
       _playlist.clear().then((value) => queue.value.clear());
     }
-
   }
 
   @override
@@ -262,5 +267,4 @@ class MyAudioHandler extends BaseAudioHandler {
     await _player.stop();
     return super.stop();
   }
-  
 }

@@ -175,6 +175,7 @@ class PlayerController extends GetxController {
   ///songs into Queue
   Future<void> pushSongToQueue(Song song) async {
     //removeAll(currentQueue.value.length);
+    currentSong.value = song;
     //open player panel,set current song and push first song into playing list,
     final init = _initFlagForPlayer;
     _playerPanelCheck();
@@ -259,7 +260,7 @@ class PlayerController extends GetxController {
         : await enqueueSong(songToPlay);
     songs.remove(songToPlay);
     //open player pane,set current song and push first song into playing list,
-   
+    currentSong.value = songToPlay;
     _playerPanelCheck();
     _audioHandler.play();
     //await enqueueSong(songToPlay);

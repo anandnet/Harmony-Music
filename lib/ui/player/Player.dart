@@ -98,7 +98,7 @@ class Player extends StatelessWidget {
                   child: playerController.currentSong.value != null
                       ? CachedNetworkImage(
                           imageBuilder: (context, imageProvider) {
-                            //themeController.setTheme(imageProvider);
+                            themeController.setTheme(imageProvider);
                             return Image(
                               image: imageProvider,
                               fit: BoxFit.fitHeight,

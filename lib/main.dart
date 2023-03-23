@@ -69,13 +69,18 @@ Future<void> startApplicationServices() async {
   Get.lazyPut(() => ThemeController(), fenix: true);
   Get.lazyPut(() => PlayerController(), fenix: true);
   Get.lazyPut(() => HomeScreenController());
-  Get.lazyPut(() => HomeLibrayController(),fenix: true);
-  Get.lazyPut(() => MusicServices(),fenix: true);
+  Get.lazyPut(() => HomeLibrayController(), fenix: true);
+  Get.lazyPut(() => MusicServices(), fenix: true);
 }
 
 initHive() async {
-  Directory applicationDirectory = await getApplicationDocumentsDirectory();
-  await Hive.initFlutter(applicationDirectory.path);
+  if (GetPlatform.isWeb) {
+    await Hive.initFlutter();
+  } else {
+    Directory applicationDirectory = await getApplicationDocumentsDirectory();
+    await Hive.initFlutter(applicationDirectory.path);
+  }
+
   Hive.registerAdapter(SongAdapter());
   await Hive.openBox("SongsCache");
   await Hive.openBox('SongsUrlCache');

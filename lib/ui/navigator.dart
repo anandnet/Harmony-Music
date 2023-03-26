@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/screens/home_screen.dart';
 import 'package:harmonymusic/ui/screens/playlist_screen.dart';
+import 'package:harmonymusic/ui/screens/search_screen.dart';
 
 class ScreenNavigationSetup {
   ScreenNavigationSetup._();
@@ -23,13 +24,11 @@ class ScreenNavigation extends StatelessWidget {
         onGenerateRoute: (settings) {
           Get.routing.args = settings.arguments;
           if (settings.name == ScreenNavigationSetup.homeScreen) {
-            return GetPageRoute(
-              page: () => const HomeScreen()
-            );
+            return GetPageRoute(page: () => const HomeScreen());
           } else if (settings.name == ScreenNavigationSetup.playlistScreen) {
-            return GetPageRoute(
-              page: () => const PlayListScreen()
-            );
+            return GetPageRoute(page: () => const PlayListScreen());
+          } else if (settings.name == ScreenNavigationSetup.searchScreen) {
+            return GetPageRoute(page: () => const SearchScreen());
           }
         });
   }

@@ -12,7 +12,6 @@ import 'package:harmonymusic/ui/utils/theme_controller.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'models/song.dart';
 import 'ui/screens/home_screen_controller.dart';
 import 'ui/utils/home_library_controller.dart';
 
@@ -66,18 +65,17 @@ class MyApp extends StatelessWidget {
 }
 
 Future<void> startApplicationServices() async {
+  Get.lazyPut(() => MusicServices(true),fenix: true);
   Get.lazyPut(() => ThemeController(), fenix: true);
   Get.lazyPut(() => PlayerController(), fenix: true);
   Get.lazyPut(() => HomeScreenController());
-  Get.lazyPut(() => HomeLibrayController(),fenix: true);
-  Get.lazyPut(() => MusicServices(),fenix: true);
+  Get.lazyPut(() => HomeLibrayController(), fenix: true);
 }
 
 initHive() async {
   Directory applicationDirectory = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(applicationDirectory.path);
-  Hive.registerAdapter(SongAdapter());
   await Hive.openBox("SongsCache");
   await Hive.openBox('SongsUrlCache');
-  await Hive.openBox("settings");
+  await Hive.openBox("AppPrefs");
 }

@@ -77,13 +77,13 @@ class Player extends StatelessWidget {
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               subtitle: Text(
-                                "${playerController.currentQueue[index].artist[0]["name"]}",
+                                "${playerController.currentQueue[index].artist}",
                                 maxLines: 1,
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
                               trailing: Text(
                                 playerController
-                                        .currentQueue[index].length ??
+                                        .currentQueue[index].extras['length'] ??
                                     "",
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
@@ -97,17 +97,18 @@ class Player extends StatelessWidget {
                 () => SizedBox.expand(
                   child: playerController.currentSong.value != null
                       ? CachedNetworkImage(
+                        memCacheHeight: 200,
                           imageBuilder: (context, imageProvider) {
-                            //themeController.setTheme(imageProvider);
+                            themeController.setTheme(imageProvider);
                             return Image(
                               image: imageProvider,
                               fit: BoxFit.fitHeight,
                             );
                           },
                           imageUrl:
-                              playerController.currentSong.value!.thumbnailUrl,
+                              playerController.currentSong.value!.artUri.toString(),
                           cacheKey:
-                              "${playerController.currentSong.value!.songId}_song",
+                              "${playerController.currentSong.value!.id}_song",
                         )
                       : Container(),
                 ),
@@ -137,6 +138,7 @@ class Player extends StatelessWidget {
                             Obx(() => playerController.currentSong.value != null
                                 ? ImageWidget(
                                     song: playerController.currentSong.value!,
+                                    isLargeImage: true,
                                   )
                                 : Container())),
                     Expanded(child: Container()),
@@ -158,7 +160,7 @@ class Player extends StatelessWidget {
                       return MarqueeWidget(
                         child: Text(
                           playerController.currentSong.value != null
-                              ? controller.currentSong.value?.artist[0]["name"]
+                              ? controller.currentSong.value!.artist!
                               : "NA",
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,

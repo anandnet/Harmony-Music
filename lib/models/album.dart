@@ -31,5 +31,5 @@ class Album {
       title: json["title"],
       browseId: json["browseId"],
       artist: json["artist"],
-      thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).medium);
+      thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).high);
 }

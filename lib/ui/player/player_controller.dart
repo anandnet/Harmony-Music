@@ -1,14 +1,14 @@
 import 'dart:developer';
-import 'package:harmonymusic/ui/utils/home_library_controller.dart';
-import 'package:hive/hive.dart';
+
+import 'package:harmonymusic/models/media_Item_builder.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_service/audio_service.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:get/get.dart';
 
 import '/models/durationstate.dart';
 import '/services/music_service.dart';
-import '../../models/song.dart';
 
 class PlayerController extends GetxController {
   final _audioHandler = Get.find<AudioHandler>();
@@ -21,7 +21,6 @@ class PlayerController extends GetxController {
   final playerPanelMinHeight = 0.0.obs;
   bool _initFlagForPlayer = true;
   PanelController playerPanelController = PanelController();
-  HomeLibrayController homeLibrayController = Get.find<HomeLibrayController>();
 
   final progressBarStatus = ProgressBarState(
           buffered: Duration.zero, current: Duration.zero, total: Duration.zero)
@@ -31,27 +30,30 @@ class PlayerController extends GetxController {
   final isFirstSong = true;
   final isLastSong = true;
   final isShuffleModeEnabled = false.obs;
-  final currentSong = Rxn<Song>();
+  final currentSong = Rxn<MediaItem>();
 
   final buttonState = PlayButtonState.paused.obs;
 
   var _newSongFlag = true;
   final isCurrentSongBuffered = false.obs;
-
-  final _songsUrlCacheBox = Hive.box("SongsUrlCache");
-  final _songsCacheBox = Hive.box("SongsCache");
+  late final _appdocdir;
 
   PlayerController() {
     _init();
   }
 
   void _init() async {
+    //_createAppDocDir();
     _listenForChangesInPlayerState();
     _listenForChangesInPosition();
     _listenForChangesInBufferedPosition();
     _listenForChangesInDuration();
     _listenForCurrentSong();
     _listenForPlaylistChange();
+  }
+
+  Future<void> _createAppDocDir() async {
+    _appdocdir = (await getApplicationDocumentsDirectory()).path;
   }
 
   void panellistener(double x) {
@@ -105,7 +107,8 @@ class PlayerController extends GetxController {
               progressBarStatus.value.total.inSeconds ==
           1) {
         if (_newSongFlag) {
-          _checkWithCacheDb(currentSong.value!);
+          _audioHandler.customAction(
+              "checkWithCacheDb", {'mediaItem': currentSong.value!});
           _newSongFlag = false;
         }
       }
@@ -115,17 +118,6 @@ class PlayerController extends GetxController {
         val.total = oldState.total;
       });
     });
-  }
-
-  void _checkWithCacheDb(Song song) {
-    //print("cached in database");
-    if (!_songsCacheBox.containsKey(song.songId)) {
-      _songsCacheBox.put(song.songId, song);
-      if (!homeLibrayController.isClosed) {
-        homeLibrayController.cachedSongsList.value =
-            homeLibrayController.cachedSongsList.value + [song];
-      }
-    }
   }
 
   void _listenForChangesInDuration() {
@@ -145,86 +137,57 @@ class PlayerController extends GetxController {
         print(mediaItem.title);
         _newSongFlag = true;
         isCurrentSongBuffered.value = false;
-        currentSong.value = Song.fromMediaItem(mediaItem);
-        currentSongIndex.value = currentQueue.indexWhere(
-            (element) => element.songId == currentSong.value!.songId);
+        currentSong.value = mediaItem;
+        currentSongIndex.value = currentQueue
+            .indexWhere((element) => element.id == currentSong.value!.id);
       }
     });
   }
 
   void _listenForPlaylistChange() {
     _audioHandler.queue.listen((queue) {
-      //inspect(queue);
-      //print("Queue length${queue.}");
-      currentQueue.value = queue
-          .map<Song?>((mediaItem) => Song.fromJson(mediaItem.extras!['song']))
-          .whereType<Song>()
-          .toList();
+      currentQueue.value = queue;
     });
   }
 
   ///pushSongToPlaylist method clear previous song queue, plays the tapped song and push related
   ///songs into Queue
-  Future<void> pushSongToQueue(Song song) async {
+  Future<void> pushSongToQueue(MediaItem mediaItem) async {
     //open player panel,set current song and push first song into playing list,
+    currentSong.value = mediaItem;
     final init = _initFlagForPlayer;
-
-    final response =
-        await _musicServices.getWatchPlaylist(videoId: song.songId);
-    List<Song> upNextSongList =
-        (response['tracks']).map<Song>((item) => Song.fromJson(item)).toList();
-
-    !init
-        ? await _audioHandler.updateQueue(
-            upNextSongList.map((song) => song.toMediaItem()).toList())
-        : await _audioHandler.addQueueItems(
-            upNextSongList.map((song) => song.toMediaItem()).toList());
-    currentSong.value = upNextSongList[0];
+    _audioHandler.customAction('setSourceNPlay', {'mediaItem': mediaItem});
     _playerPanelCheck();
-    _audioHandler.customAction("playByIndex", {"index": 0});
+    final response =
+        await _musicServices.getWatchPlaylist(videoId: mediaItem.id);
+    List<MediaItem> upNextSongList = (response['tracks'])
+        .map<MediaItem>((item) => MediaItemBuilder.fromJson(item))
+        .toList();
+
+    inspect(upNextSongList);
+    await _audioHandler.updateQueue(upNextSongList);
   }
 
   ///enqueueSong   append a song to current queue
   ///if current queue is empty, push the song into Queue and play that song
-  Future<void> enqueueSong(Song song) async {
+  Future<void> enqueueSong(MediaItem mediaItem) async {
     //check if song is available in cache and allocate
-    await _audioHandler.addQueueItem(song.toMediaItem());
-  }
-
-  ///Check if Steam Url is expired
-  bool _isUrlExpired(String url) {
-    RegExpMatch? match = RegExp(".expire=([0-9]+)?&").firstMatch(url);
-    if (match != null) {
-      if (DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800 <
-          int.parse(match[1]!)) {
-        print("Not Expired");
-        return false;
-      }
-    }
-    print("Expired");
-    return true;
+    await _audioHandler.addQueueItem(mediaItem);
   }
 
   ///enqueueSongList method add song List to current queue
   ///if queue is empty,song start playing automatically
-  Future<void> enqueueSongList(List<Song> songs) async {
-    for (Song song in songs) {
-      await enqueueSong(song);
-    }
-  }
+  Future<void> enqueueSongList(List<MediaItem> mediaItems) async {}
 
-  Future<void> playPlayListSong(List<Song> songs, int index) async {
-    print("Play Plalist somg");
+  Future<void> playPlayListSong(List<MediaItem> mediaItems, int index) async {
     //open player pane,set current song and push first song into playing list,
     final init = _initFlagForPlayer;
-    print("clicked: $index");
-    !init
-        ?await _audioHandler
-            .updateQueue(songs.map((song) => song.toMediaItem()).toList())
-        : _audioHandler
-            .addQueueItems(songs.map((song) => song.toMediaItem()).toList());
-    _audioHandler.customAction("playByIndex", {"index": index});
+    currentSong.value = mediaItems[index];
     _playerPanelCheck();
+    !init
+        ? await _audioHandler.updateQueue(mediaItems)
+        : _audioHandler.addQueueItems(mediaItems);
+    await _audioHandler.customAction("playByIndex", {"index": index});
   }
 
   void _playerPanelCheck() {

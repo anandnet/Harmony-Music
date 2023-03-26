@@ -2,19 +2,25 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:math';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' as getx;
 import 'package:harmonymusic/services/utils.dart';
+import 'package:hive/hive.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+import '../helper.dart';
 import 'constant.dart';
 import 'continuations.dart';
 import 'nav_parser.dart';
 
 enum AudioQuality { High, Medium, Low }
 
-class MusicServices{
+class MusicServices extends getx.GetxService {
   late YoutubeExplode _yt;
-  // ignore: non_constant_identifier_names
-  MusicServices() {
-    init();
+  MusicServices(bool isMain) {
+    if (isMain) {
+      init();
+    } else {
+      _yt = YoutubeExplode();
+    }
   }
 
   final Map<String, String> _headers = {
@@ -41,26 +47,56 @@ class MusicServices{
 
   Future<void> init() async {
     //check visitor id in data base, if not generate one , set lang code
-    //headers['X-Goog-Visitor-Id'] = "CgttcW1ucmctbUpITSjXhJ2fBg%3D%3D";
     _context['context']['client']['hl'] = 'en';
+    _context['context']['client']['gl'] = 'IN';
     final signatureTimestamp = getDatestamp() - 1;
     _context['playbackContext'] = {
       'contentPlaybackContext': {'signatureTimestamp': signatureTimestamp},
     };
     _headers['X-Goog-Visitor-Id'] = 'CgszaE1mUm55NHNwayjXiamfBg%3D%3D';
     _yt = YoutubeExplode();
+    final appPrefsBox = Hive.box('AppPrefs');
+    if (appPrefsBox.containsKey('visitorId')) {
+      final visitorData = appPrefsBox.get("visitorId");
+      if (!isExpired(epoch: visitorData['exp'])) {
+        _headers['X-Goog-Visitor-Id'] = visitorData['id'];
+        appPrefsBox.put("visitorId", {
+          'id': visitorData['id'],
+          'exp': DateTime.now().millisecondsSinceEpoch ~/ 1000 + 2590200
+        });
+        printINFO(
+            "Got Visitor id ($visitorData['id']) from Box");
+        return;
+      }
+    }
+    var visitorId = await genrateVisitorId();
+    if (visitorId != null) {
+      _headers['X-Goog-Visitor-Id'] = visitorId;
+      printINFO("New Visitor id generated ($visitorId)");
+    } else {
+      visitorId = await genrateVisitorId();
+    }
+    appPrefsBox.put("visitorId", {
+      'id': visitorId,
+      'exp': DateTime.now().millisecondsSinceEpoch ~/ 1000 + 2592000
+    });
   }
 
-  Future<void> genrateVisitorId() async {
-    final response = await dio.get(domain, options: Options(headers: _headers));
-    final reg = RegExp(r'ytcfg\.set\s*\(\s*({.+?})\s*\)\s*;');
-    final matches = reg.firstMatch(response.data.toString());
-    String? visitorId;
-    if (matches != null) {
-      final ytcfg = json.decode(matches.group(1).toString());
-      visitorId = ytcfg['VISITOR_DATA']?.toString();
+  Future<String?> genrateVisitorId() async {
+    try {
+      final response =
+          await dio.get(domain, options: Options(headers: _headers));
+      final reg = RegExp(r'ytcfg\.set\s*\(\s*({.+?})\s*\)\s*;');
+      final matches = reg.firstMatch(response.data.toString());
+      String? visitorId;
+      if (matches != null) {
+        final ytcfg = json.decode(matches.group(1).toString());
+        visitorId = ytcfg['VISITOR_DATA']?.toString();
+      }
+      return visitorId;
+    } catch (e) {
+      return null;
     }
-    //print(visitorId);
   }
 
   Future<Response> _sendRequest(String action, Map<dynamic, dynamic> data,
@@ -291,6 +327,26 @@ class MusicServices{
     }
     playlist['duration_seconds'] = sumTotalDuration(playlist);
     return playlist;
+  }
+
+  Future<List<String>> getSearchSuggestion(String queryStr) async {
+    final data = Map.from(_context);
+    data['input'] = queryStr;
+    final res = nav(
+            (await _sendRequest("music/get_search_suggestions", data)).data,
+            ['contents', 0, 'searchSuggestionsSectionRenderer', 'contents']) ??
+        [] as List;
+    return res
+        .map<String?>((item) {
+          return (nav(item, [
+            'searchSuggestionRenderer',
+            'navigationEndpoint',
+            'searchEndpoint',
+            'query'
+          ])).toString();
+        })
+        .whereType<String>()
+        .toList();
   }
 
   Future<Uri?> getSongUri(String songId,

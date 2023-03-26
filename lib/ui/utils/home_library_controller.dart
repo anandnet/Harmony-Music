@@ -1,12 +1,12 @@
 import 'dart:developer';
 
+import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/media_Item_builder.dart';
 import 'package:hive/hive.dart';
 
-import '../../models/song.dart';
-
 class HomeLibrayController extends GetxController{
-  late RxList<Song> cachedSongsList = RxList();
+  late RxList<MediaItem> cachedSongsList = RxList();
   final isSongFetched = false.obs;
 
   @override
@@ -18,8 +18,8 @@ class HomeLibrayController extends GetxController{
   void init(){
     //TODO verify from cached directory if song exist or not
     final box = Hive.box("SongsCache");
-     cachedSongsList.value = box.values.map<Song?>((song) => song as Song).whereType<Song>().toList();
-     inspect(cachedSongsList.value);
+     cachedSongsList.value = box.values.map<MediaItem?>((item) => MediaItemBuilder.fromJson(item)).whereType<MediaItem>().toList();
+     //inspect(cachedSongsList.value);
      isSongFetched.value =true;
   }
 }

@@ -1,13 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/navigator.dart';
 import 'package:harmonymusic/ui/player/Player.dart';
-import 'package:harmonymusic/ui/screens/home_screen.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'player/player_controller.dart';
-import 'screens/home_screen_controller.dart';
 import 'widgets/image_widget.dart';
 
 class Home extends StatelessWidget {
@@ -104,7 +101,7 @@ class Home extends StatelessWidget {
                                                     .currentQueue
                                                     .isNotEmpty
                                                 ? playerController.currentSong
-                                                    .value!.artist[0]['name']
+                                                    .value!.artist!
                                                 : "",
                                             maxLines: 1,
                                             style: Theme.of(context)

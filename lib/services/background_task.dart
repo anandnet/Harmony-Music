@@ -1,56 +1,47 @@
-import 'package:audio_service/audio_service.dart';
-import 'package:flutter/services.dart';
-import 'package:harmonymusic/services/music_service.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:path_provider/path_provider.dart';
+import 'dart:isolate';
 
-import '../models/song.dart';
+import 'package:audio_service/audio_service.dart';
+import 'package:flutter/foundation.dart';
+import 'package:harmonymusic/helper.dart';
+import 'package:harmonymusic/services/music_service.dart';
+import 'package:harmonymusic/services/utils.dart';
+import 'package:hive_flutter/adapters.dart';
 
 Future<void> cacheQueueitemsUrl(List<dynamic> args) async {
-  Hive.init(args[0] as String);
-  Hive.registerAdapter(SongAdapter());
-  await Hive.openBox("SongsCache");
-  await Hive.openBox('SongsUrlCache');
-  for (MediaItem item in args[1] as List<MediaItem>) {
-   await checkNGetUrl(item.id);
+  SendPort sendPort = args[0] as SendPort;
+  Hive.init(args[1] as String);
+  final songsCacheBox = await Hive.openBox(
+    "SongsCache",
+  );
+  final songsUrlCacheBox = await Hive.openBox('SongsUrlCache');
+  final musicServices = MusicServices(false);
+  for (MediaItem item in args[2] as List<MediaItem>) {
+    await checkNGetUrl(
+        item.id, songsCacheBox, songsUrlCacheBox, musicServices);
   }
-  print("url Cached");
+  printINFO("All url Cached");
+  await Hive.close();
+  sendPort.send("Isolate ended");
+  Isolate.exit();
 }
 
-Future<String?> checkNGetUrl(String songId) async {
-  final songsCacheBox = Hive.box("SongsCache");
-  final songsUrlCacheBox =Hive.box('SongsUrlCache');
-  final musicServices = MusicServices();
+Future<void> checkNGetUrl(String songId, dynamic songsCacheBox,
+    dynamic songsUrlCacheBox, MusicServices musicServices) async {
   if (songsCacheBox.containsKey(songId)) {
-    return (songsCacheBox.get(songId) as Song).url;
+    printINFO("Song alredy cached $songId", tag: "Isolate");
+    return;
   } else {
     //check if song stream url is cached and allocate url accordingly
-    String url = "";
     if (songsUrlCacheBox.containsKey(songId)) {
-      if (_isUrlExpired(songsUrlCacheBox.get(songId))) {
-        url = (await musicServices.getSongUri(songId)).toString();
+      if (isExpired(url: songsUrlCacheBox.get(songId))) {
+        final url = (await musicServices.getSongUri(songId)).toString();
         songsUrlCacheBox.put(songId, url);
-      } else {
-        url = songsUrlCacheBox.get(songId);
       }
+      return;
     } else {
-      url = (await musicServices.getSongUri(songId)).toString();
+      final url = (await musicServices.getSongUri(songId)).toString();
       songsUrlCacheBox.put(songId, url);
-    }
-    return url;
-  }
-}
-
-///Check if Steam Url is expired
-bool _isUrlExpired(String url) {
-  RegExpMatch? match = RegExp(".expire=([0-9]+)?&").firstMatch(url);
-  if (match != null) {
-    if (DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800 <
-        int.parse(match[1]!)) {
-      print("Not Expired");
-      return false;
+      printINFO("Song Url cached $songId", tag: "Isolate");
     }
   }
-  print("Expired");
-  return true;
 }

@@ -49,7 +49,7 @@ class QuickPicksWidget extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       subtitle: Text(
-                        "${content.songList[item].artist[0]["name"]}",
+                        "${content.songList[item].artist}",
                         maxLines: 1,
                         style: Theme.of(context).textTheme.titleSmall,
                       ),

@@ -36,12 +36,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   just_audio: ^0.9.32
-  audio_video_progress_bar: ^1.0.0
+  audio_video_progress_bar: ^1.0.1
   get: ^4.6.5
   http: ^0.13.5
-  dio: ^4.0.6
+  dio: ^5.0.3
   cached_network_image: ^3.2.3
-  youtube_explode_dart: ^1.12.3
+  youtube_explode_dart: ^1.12.4
   sliding_up_panel: ^2.0.0+1
   audio_service: ^0.18.9
   palette_generator: ^0.3.3+2

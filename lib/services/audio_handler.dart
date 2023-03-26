@@ -3,15 +3,16 @@ import 'dart:isolate';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/services/background_task.dart';
+import 'package:harmonymusic/helper.dart';
+import 'package:harmonymusic/models/media_Item_builder.dart';
+import 'package:harmonymusic/services/utils.dart';
 import 'package:hive/hive.dart';
 import 'package:just_audio/just_audio.dart';
-import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
-import 'package:rxdart/src/subjects/publish_subject.dart';
 
-import '../models/song.dart';
+import '../ui/utils/home_library_controller.dart';
+import 'background_task.dart';
 import 'music_service.dart';
 
 Future<AudioHandler> initAudioService() async {
@@ -31,13 +32,15 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   final _player = AudioPlayer();
   var currentIndex;
   String nextSongUrl = '';
-  final _songsUrlCacheBox = Hive.box("SongsUrlCache");
-  final _songsCacheBox = Hive.box("SongsCache");
+  late final _appdocdir;
+  late String currentSongUrl;
+
   final _musicServices = Get.find<MusicServices>();
   final _playList = ConcatenatingAudioSource(
     children: [],
   );
-  late final _appdocdir;
+  bool isBackgroundJobRunning = false;
+  HomeLibrayController homeLibrayController = Get.find<HomeLibrayController>();
 
   MyAudioHandler() {
     _createCacheDir();
@@ -50,10 +53,10 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   Future<void> _createCacheDir() async {
     _cacheDir = (await getTemporaryDirectory()).path;
-    _appdocdir = (await getApplicationDocumentsDirectory()).path;
     if (!Directory("$_cacheDir/cachedSongs/").existsSync()) {
       Directory("$_cacheDir/cachedSongs/").createSync(recursive: true);
     }
+    _appdocdir = (await getApplicationDocumentsDirectory()).path;
   }
 
   void _addEmptyList() {
@@ -102,10 +105,10 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       //print("set ${playbackState.value.queueIndex},${event.currentIndex}");
     }, onError: (Object e, StackTrace st) {
       if (e is PlayerException) {
-        print('Error code: ${e.code}');
-        print('Error message: ${e.message}');
+        printERROR('Error code: ${e.code}');
+        printERROR('Error message: ${e.message}');
       } else {
-        print('An error occurred: $e');
+        printERROR('An error occurred: $e');
       }
     });
   }
@@ -147,9 +150,37 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     // notify system
     final newQueue = queue.value..addAll(mediaItems);
     queue.add(newQueue);
-    List<String> qidList =
-        mediaItems.map((item) => item.id).whereType<String>().toList();
-    Isolate.spawn(cacheQueueitemsUrl,[_appdocdir,mediaItems]);
+
+    isBackgroundJobRunning = true;
+    if (Hive.isBoxOpen("SongsUrlCache")) {
+      await Hive.box("SongsUrlCache").close();
+    }
+    ReceivePort receivePort = ReceivePort();
+    await Isolate.spawn(
+        cacheQueueitemsUrl, [receivePort.sendPort, _appdocdir, mediaItems]);
+    receivePort.listen((message) {
+      printINFO(message);
+      isBackgroundJobRunning = false;
+    });
+  }
+
+  @override
+  Future<void> updateQueue(List<MediaItem> queue) async {
+    final newQueue = this.queue.value
+      ..replaceRange(0, this.queue.value.length, queue);
+    this.queue.add(newQueue);
+
+    isBackgroundJobRunning = true;
+    if (Hive.isBoxOpen("SongsUrlCache")) {
+      await Hive.box("SongsUrlCache").close();
+    }
+    ReceivePort receivePort = ReceivePort();
+    await Isolate.spawn(
+        cacheQueueitemsUrl, [receivePort.sendPort, _appdocdir, queue]);
+    receivePort.listen((message) {
+      printINFO(message);
+      isBackgroundJobRunning = false;
+    });
   }
 
   @override
@@ -158,20 +189,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     final newQueue = queue.value..add(mediaItem);
     queue.add(newQueue);
   }
-
-  @override
-  Future<void> updateQueue(List<MediaItem> queue) async {
-    final newQueue = this.queue.value
-      ..replaceRange(0, this.queue.value.length, queue);
-    this.queue.add(newQueue);
-    //maybe we can use isolate for this in future
-    //cache queue item url for better song skiping
-    List<String> qidList =
-        queue.map((item) => item.id).whereType<String>().toList();
-    await Isolate.spawn(cacheQueueitemsUrl,[_appdocdir, queue]);
-  }
-
- 
 
   @override
   Future<void> insertQueueItem(int index, MediaItem mediaItem) {
@@ -251,19 +268,38 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       super.stop();
     } else if (name == 'setSourceNPlay') {
       await _playList.clear();
-      await _playList.add(_createAudioSource(
-          Song.fromJson(extras!['song'], url: extras['url']).toMediaItem()));
+      final currMed = (extras!['mediaItem'] as MediaItem);
+      mediaItem.add(currMed);
+      queue.add([currMed]);
+      currentIndex = 0;
+      currentSongUrl = (await checkNGetUrl(currMed.id))!;
+      currMed.extras!['url'] = currentSongUrl;
+      await _playList.add(_createAudioSource(currMed));
       await _player.play();
     } else if (name == 'playByIndex') {
+      await _playList.clear();
       currentIndex = extras!['index'];
       final currentSong = queue.value[currentIndex];
       mediaItem.add(currentSong);
       currentSong.extras!['url'] = await checkNGetUrl(currentSong.id);
+      currentSongUrl = currentSong.extras!['url'];
       playbackState.add(playbackState.value.copyWith(queueIndex: currentIndex));
-      await _playList.clear();
+
       await _playList.add(_createAudioSource(currentSong));
 
       await _player.play();
+    } else if (name == "checkWithCacheDb") {
+      final song = extras!['mediaItem'] as MediaItem;
+      final songsCacheBox = Hive.box("SongsCache");
+      //print("cached in database");
+      if (!songsCacheBox.containsKey(song.id)) {
+        song.extras!['url'] = currentSongUrl;
+        songsCacheBox.put(song.id, MediaItemBuilder.toJson(song));
+        if (!homeLibrayController.isClosed) {
+          homeLibrayController.cachedSongsList.value =
+              homeLibrayController.cachedSongsList.value + [song];
+        }
+      }
     }
   }
 
@@ -274,37 +310,31 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
   Future<String?> checkNGetUrl(String songId) async {
-    if (_songsCacheBox.containsKey(songId)) {
-      return (_songsCacheBox.get(songId) as Song).url;
+    final songsCacheBox = Hive.box("SongsCache");
+    if (songsCacheBox.containsKey(songId)) {
+      printINFO("Song is cached ($songId)");
+      return songsCacheBox.get(songId)['url'];
     } else {
       //check if song stream url is cached and allocate url accordingly
-      String url = "";
-      if (_songsUrlCacheBox.containsKey(songId)) {
-        if (_isUrlExpired(_songsUrlCacheBox.get(songId))) {
-          url = (await _musicServices.getSongUri(songId)).toString();
-          _songsUrlCacheBox.put(songId, url);
+      if (!isBackgroundJobRunning) {
+        final songsUrlCacheBox = await Hive.openBox("SongsUrlCache");
+        String url = "";
+        if (songsUrlCacheBox.containsKey(songId)) {
+          if (isExpired(url: songsUrlCacheBox.get(songId))) {
+            url = (await _musicServices.getSongUri(songId)).toString();
+            songsUrlCacheBox.put(songId, url);
+          } else {
+            url = songsUrlCacheBox.get(songId);
+          }
         } else {
-          url = _songsUrlCacheBox.get(songId);
+          url = (await _musicServices.getSongUri(songId)).toString();
+          songsUrlCacheBox.put(songId, url);
+          printINFO("Url is cached in Box for songId $songId");
         }
+        return url;
       } else {
-        url = (await _musicServices.getSongUri(songId)).toString();
-        _songsUrlCacheBox.put(songId, url);
-      }
-      return url;
-    }
-  }
-
-  ///Check if Steam Url is expired
-  bool _isUrlExpired(String url) {
-    RegExpMatch? match = RegExp(".expire=([0-9]+)?&").firstMatch(url);
-    if (match != null) {
-      if (DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800 <
-          int.parse(match[1]!)) {
-        print("Not Expired");
-        return false;
+        return (await _musicServices.getSongUri(songId)).toString();
       }
     }
-    print("Expired");
-    return true;
   }
 }

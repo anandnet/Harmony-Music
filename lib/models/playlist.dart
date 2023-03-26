@@ -28,6 +28,6 @@ class Playlist {
   factory Playlist.fromJson(Map<dynamic, dynamic> json) => Playlist(
       title: json["title"],
       playlistId: json["playlistId"],
-      thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).medium,
+      thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).high,
       description: json["description"]);
 }

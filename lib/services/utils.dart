@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../helper.dart';
 import 'nav_parser.dart';
 
 int getDatestamp() {
@@ -57,17 +58,31 @@ String? getItemText(Map<String, dynamic> item, int index,
   return runs[runIndex]['text'];
 }
 
-  Map<String, dynamic>? getFixedColumnItem(
-      Map<String, dynamic> item, int index) {
-    if (!item['fixedColumns'][index]
-            ['musicResponsiveListItemFixedColumnRenderer']['text']
-        .containsKey('runs')) {
-      return null;
-    }
-
-    return item['fixedColumns'][index]
-        ['musicResponsiveListItemFixedColumnRenderer'];
+Map<String, dynamic>? getFixedColumnItem(Map<String, dynamic> item, int index) {
+  if (!item['fixedColumns'][index]['musicResponsiveListItemFixedColumnRenderer']
+          ['text']
+      .containsKey('runs')) {
+    return null;
   }
 
-  
+  return item['fixedColumns'][index]
+      ['musicResponsiveListItemFixedColumnRenderer'];
+}
 
+///Check if Steam Url or given epoch is expired
+bool isExpired({String? url, int? epoch}) {
+  if (url != null) {
+    RegExpMatch? match = RegExp(".expire=([0-9]+)?&").firstMatch(url);
+    if (match != null) {
+      epoch = int.parse(match[1]!);
+    }
+  }
+
+  if (DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800 < epoch!) {
+    printINFO("${DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800}  $epoch");
+    printINFO("Url or epoch is not Expired");
+    return false;
+  }
+  printINFO("Url or epoch is Expired");
+  return true;
+}

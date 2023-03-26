@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/navigator.dart';
 import 'package:harmonymusic/ui/screens/playlist_screen_controller.dart';
-import 'package:harmonymusic/ui/utils/theme_controller.dart';
 import 'package:harmonymusic/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
 
 import '../../models/playlist.dart';
@@ -79,6 +78,7 @@ class PlayListScreen extends StatelessWidget {
                     dimension: 200,
                     child: ImageWidget(
                       playlist: playlist,
+                      isLargeImage: true,
                     )),
                 const SizedBox(
                   height: 10,
@@ -123,14 +123,14 @@ class PlayListScreen extends StatelessWidget {
                                         Theme.of(context).textTheme.titleMedium,
                                   ),
                                   subtitle: Text(
-                                    "${playListScreenController.songList[index].artist[0]["name"]}",
+                                    "${playListScreenController.songList[index].artist}",
                                     maxLines: 1,
                                     style:
                                         Theme.of(context).textTheme.titleSmall,
                                   ),
                                   trailing: Text(
                                     playListScreenController
-                                            .songList[index].length ??
+                                            .songList[index].extras!['length'] ??
                                         "",
                                     style:
                                         Theme.of(context).textTheme.titleSmall,

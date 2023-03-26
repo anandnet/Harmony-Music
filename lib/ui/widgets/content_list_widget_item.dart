@@ -5,7 +5,6 @@ import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/ui/screens/playlist_screen.dart';
 
 import '../navigator.dart';
-import '../utils/theme_controller.dart';
 import 'image_widget.dart';
 
 class ContentListItem extends StatelessWidget {
@@ -35,9 +34,11 @@ class ContentListItem extends StatelessWidget {
               child: isAlbum
                   ? ImageWidget(
                       album: content,
+                      isMediumImage: true,
                     )
                   : ImageWidget(
                       playlist: content,
+                      isMediumImage: true,
                     ),
             ),
             const SizedBox(height: 5),

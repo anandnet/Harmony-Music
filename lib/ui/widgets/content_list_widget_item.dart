@@ -1,8 +1,5 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/services/music_service.dart';
-import 'package:harmonymusic/ui/screens/playlist_screen.dart';
 
 import '../navigator.dart';
 import 'image_widget.dart';

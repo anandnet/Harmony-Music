@@ -1,19 +1,21 @@
-import 'dart:developer';
+import 'dart:isolate';
 
-import 'package:harmonymusic/models/media_Item_builder.dart';
+import 'package:flutter/widgets.dart';
+import 'package:harmonymusic/helper.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:get/get.dart';
 
+import '../../services/background_task.dart';
 import '/models/durationstate.dart';
 import '/services/music_service.dart';
 
 class PlayerController extends GetxController {
   final _audioHandler = Get.find<AudioHandler>();
   final _musicServices = Get.find<MusicServices>();
-  final currentQueue = [].obs;
+  final currentQueue = <MediaItem>[].obs;
 
   final playerPaneOpacity = (1.0).obs;
   final isPlayerpanelTopVisible = true.obs;
@@ -31,6 +33,7 @@ class PlayerController extends GetxController {
   final isLastSong = true;
   final isShuffleModeEnabled = false.obs;
   final currentSong = Rxn<MediaItem>();
+  ScrollController scrollController = ScrollController();
 
   final buttonState = PlayButtonState.paused.obs;
 
@@ -102,6 +105,7 @@ class PlayerController extends GetxController {
 
   void _listenForChangesInBufferedPosition() {
     _audioHandler.playbackState.listen((playbackState) {
+      printINFO(playbackState.bufferedPosition.inSeconds.toString());
       final oldState = progressBarStatus.value;
       if (playbackState.bufferedPosition.inSeconds /
               progressBarStatus.value.total.inSeconds ==
@@ -147,25 +151,26 @@ class PlayerController extends GetxController {
   void _listenForPlaylistChange() {
     _audioHandler.queue.listen((queue) {
       currentQueue.value = queue;
+      //currentQueue.refresh();
     });
   }
 
   ///pushSongToPlaylist method clear previous song queue, plays the tapped song and push related
   ///songs into Queue
   Future<void> pushSongToQueue(MediaItem mediaItem) async {
+    final musicServices = Get.find<MusicServices>();
+    ReceivePort receivePort = ReceivePort();
+    Isolate.spawn(
+        getUpNextSong, [receivePort.sendPort, musicServices, mediaItem.id]);
+    receivePort.first.then((value) async {
+      final upNextSongList = value as List<MediaItem>;
+      await _audioHandler.updateQueue(upNextSongList);
+    });
     //open player panel,set current song and push first song into playing list,
-    currentSong.value = mediaItem;
     final init = _initFlagForPlayer;
-    _audioHandler.customAction('setSourceNPlay', {'mediaItem': mediaItem});
+    currentSong.value = mediaItem;
     _playerPanelCheck();
-    final response =
-        await _musicServices.getWatchPlaylist(videoId: mediaItem.id);
-    List<MediaItem> upNextSongList = (response['tracks'])
-        .map<MediaItem>((item) => MediaItemBuilder.fromJson(item))
-        .toList();
-
-    inspect(upNextSongList);
-    await _audioHandler.updateQueue(upNextSongList);
+    _audioHandler.customAction("setSourceNPlay", {'mediaItem': mediaItem});
   }
 
   ///enqueueSong   append a song to current queue
@@ -188,6 +193,7 @@ class PlayerController extends GetxController {
         ? await _audioHandler.updateQueue(mediaItems)
         : _audioHandler.addQueueItems(mediaItems);
     await _audioHandler.customAction("playByIndex", {"index": index});
+    cacheQueueitemsUrl(mediaItems);
   }
 
   void _playerPanelCheck() {

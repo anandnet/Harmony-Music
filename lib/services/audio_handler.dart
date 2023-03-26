@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/media_Item_builder.dart';
@@ -31,24 +32,20 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   late final _cacheDir;
   final _player = AudioPlayer();
   var currentIndex;
-  String nextSongUrl = '';
-  late final _appdocdir;
   late String currentSongUrl;
 
-  final _musicServices = Get.find<MusicServices>();
   final _playList = ConcatenatingAudioSource(
     children: [],
   );
-  bool isBackgroundJobRunning = false;
   HomeLibrayController homeLibrayController = Get.find<HomeLibrayController>();
 
   MyAudioHandler() {
     _createCacheDir();
     _addEmptyList();
     _notifyAudioHandlerAboutPlaybackEvents();
-    _listenForDurationChanges();
+    // _listenForDurationChanges();
     _listenToPlaybackForNextSong();
-    _listenForSequenceStateChanges();
+    // _listenForSequenceStateChanges();
   }
 
   Future<void> _createCacheDir() async {
@@ -56,7 +53,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     if (!Directory("$_cacheDir/cachedSongs/").existsSync()) {
       Directory("$_cacheDir/cachedSongs/").createSync(recursive: true);
     }
-    _appdocdir = (await getApplicationDocumentsDirectory()).path;
   }
 
   void _addEmptyList() {
@@ -122,46 +118,27 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     });
   }
 
-  void _listenForDurationChanges() {
-    _player.durationStream.listen((duration) {
-      var index = currentIndex;
-      final newQueue = queue.value;
-      if (index == null || newQueue.isEmpty) return;
-      if (_player.shuffleModeEnabled) {
-        index = _player.shuffleIndices![index];
-      }
-      final oldMediaItem = newQueue[index];
-      final newMediaItem = oldMediaItem.copyWith(duration: duration);
-      newQueue[index] = newMediaItem;
-      queue.add(newQueue);
-      mediaItem.add(newMediaItem);
-    });
-  }
-
-  void _listenForSequenceStateChanges() {
-    _player.sequenceStateStream.listen((SequenceState? sequenceState) {
-      final sequence = sequenceState?.effectiveSequence;
-      if (sequence == null || sequence.isEmpty) return;
-    });
-  }
+  // void _listenForDurationChanges() {
+  //   _player.durationStream.listen((duration) {
+  //     var index = currentIndex;
+  //     final newQueue = queue.value;
+  //     if (index == null || newQueue.isEmpty) return;
+  //     if (_player.shuffleModeEnabled) {
+  //       index = _player.shuffleIndices![index];
+  //     }
+  //     final oldMediaItem = newQueue[index];
+  //     final newMediaItem = oldMediaItem.copyWith(duration: duration);
+  //     newQueue[index] = newMediaItem;
+  //     queue.add(newQueue);
+  //     mediaItem.add(newMediaItem);
+  //   });
+  // }
 
   @override
   Future<void> addQueueItems(List<MediaItem> mediaItems) async {
     // notify system
     final newQueue = queue.value..addAll(mediaItems);
     queue.add(newQueue);
-
-    isBackgroundJobRunning = true;
-    if (Hive.isBoxOpen("SongsUrlCache")) {
-      await Hive.box("SongsUrlCache").close();
-    }
-    ReceivePort receivePort = ReceivePort();
-    await Isolate.spawn(
-        cacheQueueitemsUrl, [receivePort.sendPort, _appdocdir, mediaItems]);
-    receivePort.listen((message) {
-      printINFO(message);
-      isBackgroundJobRunning = false;
-    });
   }
 
   @override
@@ -169,18 +146,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     final newQueue = this.queue.value
       ..replaceRange(0, this.queue.value.length, queue);
     this.queue.add(newQueue);
-
-    isBackgroundJobRunning = true;
-    if (Hive.isBoxOpen("SongsUrlCache")) {
-      await Hive.box("SongsUrlCache").close();
-    }
-    ReceivePort receivePort = ReceivePort();
-    await Isolate.spawn(
-        cacheQueueitemsUrl, [receivePort.sendPort, _appdocdir, queue]);
-    receivePort.listen((message) {
-      printINFO(message);
-      isBackgroundJobRunning = false;
-    });
   }
 
   @override
@@ -188,12 +153,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     // notify system
     final newQueue = queue.value..add(mediaItem);
     queue.add(newQueue);
-  }
-
-  @override
-  Future<void> insertQueueItem(int index, MediaItem mediaItem) {
-    // TODO: implement insertQueueItem
-    return super.insertQueueItem(index, mediaItem);
   }
 
   LockCachingAudioSource _createAudioSource(MediaItem mediaItem) {
@@ -266,16 +225,24 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     if (name == 'dispose') {
       await _player.dispose();
       super.stop();
-    } else if (name == 'setSourceNPlay') {
+    } else if (name == 'setSourceNPlay1') {
       await _playList.clear();
       final currMed = (extras!['mediaItem'] as MediaItem);
-      mediaItem.add(currMed);
-      queue.add([currMed]);
+      queue.add(queue.value..replaceRange(0, queue.value.length, [currMed]));
       currentIndex = 0;
+      mediaItem.add(currMed);
       currentSongUrl = (await checkNGetUrl(currMed.id))!;
       currMed.extras!['url'] = currentSongUrl;
       await _playList.add(_createAudioSource(currMed));
       await _player.play();
+      final musicServices = Get.find<MusicServices>();
+      final response =
+          await musicServices.getWatchPlaylist(videoId: currMed.id);
+      List<MediaItem> upNextSongList = (response['tracks'])
+          .map<MediaItem>((item) => MediaItemBuilder.fromJson(item))
+          .toList();
+      await updateQueue(upNextSongList);
+      print("here");
     } else if (name == 'playByIndex') {
       await _playList.clear();
       currentIndex = extras!['index'];
@@ -291,7 +258,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     } else if (name == "checkWithCacheDb") {
       final song = extras!['mediaItem'] as MediaItem;
       final songsCacheBox = Hive.box("SongsCache");
-      //print("cached in database");
       if (!songsCacheBox.containsKey(song.id)) {
         song.extras!['url'] = currentSongUrl;
         songsCacheBox.put(song.id, MediaItemBuilder.toJson(song));
@@ -300,6 +266,21 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
               homeLibrayController.cachedSongsList.value + [song];
         }
       }
+    } else if (name == 'setSourceNPlay') {
+      await _playList.clear();
+      final currMed = (extras!['mediaItem'] as MediaItem);
+      currentIndex = 0;
+
+      currentSongUrl = (await checkNGetUrl(currMed.id))!;
+      currMed.extras!['url'] = currentSongUrl;
+      await _playList.add(_createAudioSource(currMed));
+      await _player.play();
+      Future.delayed(
+        const Duration(
+          seconds: 1,
+        ),
+        () => mediaItem.add(currMed),
+      );
     }
   }
 
@@ -316,25 +297,22 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       return songsCacheBox.get(songId)['url'];
     } else {
       //check if song stream url is cached and allocate url accordingly
-      if (!isBackgroundJobRunning) {
-        final songsUrlCacheBox = await Hive.openBox("SongsUrlCache");
-        String url = "";
-        if (songsUrlCacheBox.containsKey(songId)) {
-          if (isExpired(url: songsUrlCacheBox.get(songId))) {
-            url = (await _musicServices.getSongUri(songId)).toString();
-            songsUrlCacheBox.put(songId, url);
-          } else {
-            url = songsUrlCacheBox.get(songId);
-          }
-        } else {
-          url = (await _musicServices.getSongUri(songId)).toString();
+      final songsUrlCacheBox = Hive.box("SongsUrlCache");
+      final musicServices = Get.find<MusicServices>();
+      String url = "";
+      if (songsUrlCacheBox.containsKey(songId)) {
+        if (isExpired(url: songsUrlCacheBox.get(songId))) {
+          url = (await musicServices.getSongUri(songId)).toString();
           songsUrlCacheBox.put(songId, url);
-          printINFO("Url is cached in Box for songId $songId");
+        } else {
+          url = songsUrlCacheBox.get(songId);
         }
-        return url;
       } else {
-        return (await _musicServices.getSongUri(songId)).toString();
+        url = (await musicServices.getSongUri(songId)).toString();
+        songsUrlCacheBox.put(songId, url);
+        printINFO("Url is cached in Box for songId $songId");
       }
+      return url;
     }
   }
 }

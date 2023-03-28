@@ -17,7 +17,6 @@ class PlayListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(Navigator.of(context));
     final Playlist playlist = Get.arguments as Playlist;
     final PlayerController playerController = Get.find<PlayerController>();
     final PlayListScreenController playListScreenController =

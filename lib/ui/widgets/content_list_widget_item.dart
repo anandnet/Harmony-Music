@@ -46,7 +46,7 @@ class ContentListItem extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Text(
-              isAlbum ? content.artist ?? "" : content.description ?? "",
+              isAlbum ? content.artist[0]['name'] ?? "" : content.description ?? "",
               maxLines: 1,
               style: Theme.of(context).textTheme.titleSmall,
             ),

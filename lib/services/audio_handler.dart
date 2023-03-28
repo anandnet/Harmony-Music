@@ -43,9 +43,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     _createCacheDir();
     _addEmptyList();
     _notifyAudioHandlerAboutPlaybackEvents();
-    // _listenForDurationChanges();
+    _listenForDurationChanges();
     _listenToPlaybackForNextSong();
-    // _listenForSequenceStateChanges();
+    _listenForSequenceStateChanges();
   }
 
   Future<void> _createCacheDir() async {
@@ -118,21 +118,28 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     });
   }
 
-  // void _listenForDurationChanges() {
-  //   _player.durationStream.listen((duration) {
-  //     var index = currentIndex;
-  //     final newQueue = queue.value;
-  //     if (index == null || newQueue.isEmpty) return;
-  //     if (_player.shuffleModeEnabled) {
-  //       index = _player.shuffleIndices![index];
-  //     }
-  //     final oldMediaItem = newQueue[index];
-  //     final newMediaItem = oldMediaItem.copyWith(duration: duration);
-  //     newQueue[index] = newMediaItem;
-  //     queue.add(newQueue);
-  //     mediaItem.add(newMediaItem);
-  //   });
-  // }
+  void _listenForDurationChanges() {
+    _player.durationStream.listen((duration) {
+      var index = currentIndex;
+      final newQueue = queue.value;
+      if (index == null || newQueue.isEmpty) return;
+      if (_player.shuffleModeEnabled) {
+        index = _player.shuffleIndices![index];
+      }
+      final oldMediaItem = newQueue[index];
+      final newMediaItem = oldMediaItem.copyWith(duration: duration);
+      newQueue[index] = newMediaItem;
+      queue.add(newQueue);
+      mediaItem.add(newMediaItem);
+    });
+  }
+
+  void _listenForSequenceStateChanges() {
+    _player.sequenceStateStream.listen((SequenceState? sequenceState) {
+      final sequence = sequenceState?.effectiveSequence;
+      if (sequence == null || sequence.isEmpty) return;
+    });
+  }
 
   @override
   Future<void> addQueueItems(List<MediaItem> mediaItems) async {
@@ -270,17 +277,12 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       await _playList.clear();
       final currMed = (extras!['mediaItem'] as MediaItem);
       currentIndex = 0;
-
+      mediaItem.add(currMed);
+      queue.add([currMed]);
       currentSongUrl = (await checkNGetUrl(currMed.id))!;
       currMed.extras!['url'] = currentSongUrl;
       await _playList.add(_createAudioSource(currMed));
       await _player.play();
-      Future.delayed(
-        const Duration(
-          seconds: 1,
-        ),
-        () => mediaItem.add(currMed),
-      );
     }
   }
 

@@ -14,7 +14,6 @@ import '/services/music_service.dart';
 
 class PlayerController extends GetxController {
   final _audioHandler = Get.find<AudioHandler>();
-  final _musicServices = Get.find<MusicServices>();
   final currentQueue = <MediaItem>[].obs;
 
   final playerPaneOpacity = (1.0).obs;
@@ -51,7 +50,6 @@ class PlayerController extends GetxController {
     _listenForChangesInPosition();
     _listenForChangesInBufferedPosition();
     _listenForChangesInDuration();
-    _listenForCurrentSong();
     _listenForPlaylistChange();
   }
 
@@ -105,7 +103,6 @@ class PlayerController extends GetxController {
 
   void _listenForChangesInBufferedPosition() {
     _audioHandler.playbackState.listen((playbackState) {
-      printINFO(playbackState.bufferedPosition.inSeconds.toString());
       final oldState = progressBarStatus.value;
       if (playbackState.bufferedPosition.inSeconds /
               progressBarStatus.value.total.inSeconds ==
@@ -125,18 +122,13 @@ class PlayerController extends GetxController {
   }
 
   void _listenForChangesInDuration() {
-    _audioHandler.mediaItem.listen((mediaitem) {
+    _audioHandler.mediaItem.listen((mediaItem) {
       final oldState = progressBarStatus.value;
       progressBarStatus.update((val) {
-        val!.total = mediaitem?.duration ?? Duration.zero;
+        val!.total = mediaItem?.duration ?? Duration.zero;
         val.current = oldState.current;
         val.buffered = oldState.buffered;
       });
-    });
-  }
-
-  void _listenForCurrentSong() {
-    _audioHandler.mediaItem.listen((mediaItem) {
       if (mediaItem != null) {
         print(mediaItem.title);
         _newSongFlag = true;
@@ -148,10 +140,11 @@ class PlayerController extends GetxController {
     });
   }
 
+  
   void _listenForPlaylistChange() {
     _audioHandler.queue.listen((queue) {
       currentQueue.value = queue;
-      //currentQueue.refresh();
+      currentQueue.refresh();
     });
   }
 
@@ -165,6 +158,7 @@ class PlayerController extends GetxController {
     receivePort.first.then((value) async {
       final upNextSongList = value as List<MediaItem>;
       await _audioHandler.updateQueue(upNextSongList);
+      cacheQueueitemsUrl(upNextSongList.sublist(1));
     });
     //open player panel,set current song and push first song into playing list,
     final init = _initFlagForPlayer;

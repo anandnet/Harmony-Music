@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/navigator.dart';
 import 'package:harmonymusic/ui/screens/search_screen_controller.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -28,6 +29,12 @@ class SearchScreen extends StatelessWidget {
                         parent: AlwaysScrollableScrollPhysics()),
                     itemCount: searchScreenController.suggestionList.length,
                     itemBuilder: (context, index) => ListTile(
+                      onTap: () {
+                        Get.toNamed(ScreenNavigationSetup.searchResultScreen,
+                            id: ScreenNavigationSetup.id,
+                            arguments:
+                                searchScreenController.suggestionList[index]);
+                      },
                       title: Text(searchScreenController.suggestionList[index]),
                     ),
                   )))

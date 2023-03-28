@@ -20,16 +20,19 @@ class Album {
   Album(
       {required this.title,
       required this.browseId,
-      required this.artist,
+      required this.artists,
+      this.year,
       required this.thumbnailUrl});
   final String browseId;
   final String title;
-  final String? artist;
+  final List<Map<String,dynamic>>? artists;
+  final String?  year;
   final String thumbnailUrl;
 
   factory Album.fromJson(Map<dynamic, dynamic> json) => Album(
       title: json["title"],
       browseId: json["browseId"],
-      artist: json["artist"],
+      artists: List<Map<String,dynamic>>.from(json["artists"]),
+      year:json['year'] ,
       thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).high);
 }

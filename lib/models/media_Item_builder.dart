@@ -11,11 +11,11 @@ class MediaItemBuilder {
         id: json["videoId"],
         title: json["title"],
         album: json['album']!=null ? json['album']['name']:null ,
-        artist: artistName.substring(0,artistName.length-2),
+        artist: artistName==""?artistName: artistName.substring(0,artistName.length-2),
         artUri: Uri.parse(Thumbnail(json["thumbnails"][0]['url']).high),
         extras: {
           'url': json['url'] ?? url,
-          'length': json['length'],
+          'length': json['length']?? json['duration'],
           'album': json['album'],
           'artists': json['artists']
         });

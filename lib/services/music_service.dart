@@ -64,8 +64,7 @@ class MusicServices extends getx.GetxService {
           'id': visitorData['id'],
           'exp': DateTime.now().millisecondsSinceEpoch ~/ 1000 + 2590200
         });
-        printINFO(
-            "Got Visitor id ($visitorData['id']) from Box");
+        printINFO("Got Visitor id ($visitorData['id']) from Box");
         return;
       }
     }
@@ -379,4 +378,128 @@ class MusicServices extends getx.GetxService {
 //       return getSongUri(songId);
 //     }
 //   }
+
+  Future<Map<String, dynamic>> search(String query,
+      {String? filter,
+      String? scope,
+      int limit = 30,
+      bool ignoreSpelling = false}) async {
+    final data = Map.of(_context);
+    data['query'] = query;
+
+    final Map<String, dynamic> searchResults = {};
+    final filters = [
+      'albums',
+      'artists',
+      'playlists',
+      'community_playlists',
+      'featured_playlists',
+      'songs',
+      'videos'
+    ];
+
+    if (filter != null && !filters.contains(filter)) {
+      throw Exception(
+          'Invalid filter provided. Please use one of the following filters or leave out the parameter: ${filters.join(', ')}');
+    }
+
+    final scopes = ['library', 'uploads'];
+
+    if (scope != null && !scopes.contains(scope)) {
+      throw Exception(
+          'Invalid scope provided. Please use one of the following scopes or leave out the parameter: ${scopes.join(', ')}');
+    }
+
+    if (scope == scopes[1] && filter != null) {
+      throw Exception(
+          'No filter can be set when searching uploads. Please unset the filter parameter when scope is set to uploads.');
+    }
+
+    final params = getSearchParams(filter, scope, ignoreSpelling);
+
+    if (params != null) {
+      data['params'] = params;
+    }
+
+    final response = (await _sendRequest("search", data)).data;
+
+    if (response['contents'] == null) {
+      return searchResults;
+    }
+
+    var results;
+
+    if ((response['contents']).containsKey('tabbedSearchResultsRenderer')) {
+      final tabIndex =
+          scope == null || filter != null ? 0 : scopes.indexOf(scope) + 1;
+      results = response['contents']['tabbedSearchResultsRenderer']['tabs']
+          [tabIndex]['tabRenderer']['content'];
+    } else {
+      results = response['contents'];
+    }
+
+    results = nav(results, ['sectionListRenderer', 'contents']);
+
+    if (results.length == 1 && results[0]['itemSectionRenderer']!=null) {
+      return searchResults;
+    }
+
+    String? type;
+    
+
+    for (var res in results) {
+      var category;
+      if (res.containsKey('musicCardShelfRenderer')) {
+        //final topResult = parseTopResult(res['musicCardShelfRenderer'], ['artist', 'playlist', 'song', 'video', 'station']);
+        //searchResults.add(topResult);
+        results = nav(res, ['musicCardShelfRenderer', 'contents']);
+        if (results!=null) {
+          category = nav(results[0],
+              ['messageRenderer', ...text_run_text]);
+          results=results.sublist(1);
+          //type = null;
+        } else {
+          continue;
+        }
+        continue;
+      } else if (res['musicShelfRenderer'] != null) {
+        results = res['musicShelfRenderer']['contents'];
+        var typeFilter = filter;
+
+        category = nav(res, ['musicShelfRenderer', ...title_text]);
+
+        if (typeFilter == null && scope == scopes[0]) {
+          typeFilter = category;
+        }
+
+        type =
+            typeFilter?.substring(0, typeFilter.length - 1).toLowerCase();
+      } else {
+        continue;
+      }
+
+      searchResults[category]= parseSearchResults(
+          results,
+          ['artist', 'playlist', 'song', 'video', 'station'],
+          type,
+          category);
+
+      if (filter !=null) {
+        requestFunc(additionalParams) async =>
+            (await _sendRequest("search", data, additionalParams: additionalParams)).data;
+        parseFunc(contents) => parseSearchResults(contents,['artist', 'playlist', 'song', 'video', 'station'], type, category);
+
+        if(searchResults.containsKey(category)){
+          searchResults[category]= [...(searchResults[category] as List),...(await getContinuations(
+            res['musicShelfRenderer'],
+            'musicShelfContinuation',
+            limit - ((searchResults[category] as List).length),
+            requestFunc,
+            parseFunc))];
+        }
+      }
+    }
+
+    return searchResults;
+  }
 }

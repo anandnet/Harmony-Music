@@ -4,6 +4,8 @@ import 'package:harmonymusic/ui/screens/home_screen.dart';
 import 'package:harmonymusic/ui/screens/playlist_screen.dart';
 import 'package:harmonymusic/ui/screens/search_screen.dart';
 
+import 'screens/search_result_screen.dart';
+
 class ScreenNavigationSetup {
   ScreenNavigationSetup._();
 
@@ -11,6 +13,7 @@ class ScreenNavigationSetup {
   static const homeScreen = '/homeScreen';
   static const playlistScreen = '/playlistScreen';
   static const searchScreen = '/searchScreen';
+  static const searchResultScreen = '/searchResultScreen';
 }
 
 class ScreenNavigation extends StatelessWidget {
@@ -29,6 +32,8 @@ class ScreenNavigation extends StatelessWidget {
             return GetPageRoute(page: () => const PlayListScreen());
           } else if (settings.name == ScreenNavigationSetup.searchScreen) {
             return GetPageRoute(page: () => const SearchScreen());
+          } else if (settings.name == ScreenNavigationSetup.searchResultScreen) {
+            return GetPageRoute(page: () => const SearchResultScreen());
           }
         });
   }

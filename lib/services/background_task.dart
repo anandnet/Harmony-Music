@@ -1,31 +1,27 @@
 import 'dart:isolate';
 
 import 'package:audio_service/audio_service.dart';
-import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/services/utils.dart';
 import 'package:hive_flutter/adapters.dart';
 
-Future<void> cacheQueueitemsUrl(List<dynamic> args) async {
-  SendPort sendPort = args[0] as SendPort;
-  Hive.init(args[1] as String);
-  final songsCacheBox = await Hive.openBox(
+import '../models/media_Item_builder.dart';
+
+Future<void> cacheQueueitemsUrl(List<MediaItem> mediaitems) async {
+  final songsCacheBox = Hive.box(
     "SongsCache",
   );
-  final songsUrlCacheBox = await Hive.openBox('SongsUrlCache');
-  final musicServices = MusicServices(false);
-  for (MediaItem item in args[2] as List<MediaItem>) {
-    await checkNGetUrl(
-        item.id, songsCacheBox, songsUrlCacheBox, musicServices);
+  final songsUrlCacheBox = Hive.box('SongsUrlCache');
+  final musicServices = Get.find<MusicServices>();
+  for (MediaItem item in mediaitems) {
+    await checkNPutUrl(item.id, songsCacheBox, songsUrlCacheBox, musicServices);
   }
   printINFO("All url Cached");
-  await Hive.close();
-  sendPort.send("Isolate ended");
-  Isolate.exit();
 }
 
-Future<void> checkNGetUrl(String songId, dynamic songsCacheBox,
+Future<void> checkNPutUrl(String songId, dynamic songsCacheBox,
     dynamic songsUrlCacheBox, MusicServices musicServices) async {
   if (songsCacheBox.containsKey(songId)) {
     printINFO("Song alredy cached $songId", tag: "Isolate");
@@ -44,4 +40,14 @@ Future<void> checkNGetUrl(String songId, dynamic songsCacheBox,
       printINFO("Song Url cached $songId", tag: "Isolate");
     }
   }
+}
+
+void getUpNextSong(List args) async {
+  SendPort sendPort = args[0] as SendPort;
+  final res =
+      await (args[1] as MusicServices).getWatchPlaylist(videoId: args[2]);
+      List<MediaItem> upNextSongList = (res['tracks'])
+      .map<MediaItem>((item) => MediaItemBuilder.fromJson(item))
+      .toList();
+  sendPort.send(upNextSongList);
 }

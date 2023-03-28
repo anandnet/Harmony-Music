@@ -1,8 +1,5 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/services/music_service.dart';
-import 'package:harmonymusic/ui/screens/playlist_screen.dart';
 
 import '../navigator.dart';
 import 'image_widget.dart';
@@ -49,7 +46,7 @@ class ContentListItem extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Text(
-              isAlbum ? content.artist ?? "" : content.description ?? "",
+              isAlbum ? content.artist[0]['name'] ?? "" : content.description ?? "",
               maxLines: 1,
               style: Theme.of(context).textTheme.titleSmall,
             ),

@@ -78,11 +78,128 @@ bool isExpired({String? url, int? epoch}) {
     }
   }
 
-  if (DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800 < epoch!) {
-    printINFO("${DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800}  $epoch");
+  if (epoch != null &&
+      DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800 < epoch!) {
+    printINFO(
+        "${DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800}  $epoch");
     printINFO("Url or epoch is not Expired");
     return false;
   }
   printINFO("Url or epoch is Expired");
   return true;
+}
+
+void parseMenuPlaylists(
+    Map<String, dynamic> data, Map<String, dynamic> result) {
+  var watch_menu = findObjectsByKey(
+      nav(data, ['menu', 'menuRenderer', 'items']),
+      'menuNavigationItemRenderer');
+  for (var item in watch_menu
+      .map((item) => item['menuNavigationItemRenderer'])
+      .toList()) {
+    var watch_key;
+    var icon = nav(item, ['icon', 'iconType']);
+    if (icon == 'MUSIC_SHUFFLE') {
+      watch_key = 'shuffleId';
+    } else if (icon == 'MIX') {
+      watch_key = 'radioId';
+    } else {
+      continue;
+    }
+    var watch_id = nav(
+        item, ['navigationEndpoint', 'watchPlaylistEndpoint', 'playlistId']);
+    watch_id ??=
+        nav(item, ['navigationEndpoint', 'watchEndpoint', 'playlistId']);
+    if (watch_id != null) {
+      result[watch_key] = watch_id;
+    }
+  }
+}
+
+List<dynamic> findObjectsByKey(List<dynamic> objectList, String key,
+    {String? nested}) {
+  List<dynamic> objects = [];
+  for (dynamic item in objectList) {
+    if (nested != null) {
+      item = item[nested];
+    }
+    if (item.containsKey(key)) {
+      objects.add(item);
+    }
+  }
+  return objects;
+}
+
+String? getSearchParams(String? filter, String? scope, bool ignoreSpelling) {
+  String filteredParam1 = 'EgWKAQI';
+  String? params;
+  String? param1;
+  String? param2;
+  String? param3;
+
+  if (filter == null && scope == null && !ignoreSpelling) {
+    return params;
+  }
+
+  if (scope == 'uploads') {
+    params = 'agIYAw%3D%3D';
+  }
+
+  if (scope == 'library') {
+    if (filter != null) {
+      param1 = filteredParam1;
+      param2 = _getParam2(filter);
+      param3 = 'AWoKEAUQCRADEAoYBA%3D%3D';
+    } else {
+      params = 'agIYBA%3D%3D';
+    }
+  }
+
+  if (scope == null && filter != null) {
+    if (filter == 'playlists') {
+      params = 'Eg-KAQwIABAAGAAgACgB';
+      if (!ignoreSpelling) {
+        params += 'MABqChAEEAMQCRAFEAo%3D';
+      } else {
+        params += 'MABCAggBagoQBBADEAkQBRAK';
+      }
+    } else if (filter.contains('playlists')) {
+      param1 = 'EgeKAQQoA';
+      if (filter == 'featured_playlists') {
+        param2 = 'Dg';
+      } else {
+        param2 = 'EA';
+      }
+      if (!ignoreSpelling) {
+        param3 = 'BagwQDhAKEAMQBBAJEAU%3D';
+      } else {
+        param3 = 'BQgIIAWoMEA4QChADEAQQCRAF';
+      }
+    } else {
+      param1 = filteredParam1;
+      param2 = _getParam2(filter);
+      if (!ignoreSpelling) {
+        param3 = 'AWoMEA4QChADEAQQCRAF';
+      } else {
+        param3 = 'AUICCAFqDBAOEAoQAxAEEAkQBQ%3D%3D';
+      }
+    }
+  }
+
+  if (scope == null && filter == null && ignoreSpelling) {
+    params = 'EhGKAQ4IARABGAEgASgAOAFAAUICCAE%3D';
+  }
+
+  return params ?? (param1! + param2! + param3!);
+}
+
+String? _getParam2(String filter) {
+  final filterParams = {
+    'songs': 'I',
+    'videos': 'Q',
+    'albums': 'Y',
+    'artists': 'g',
+    'playlists': 'o'
+  };
+  return filterParams[filter];
 }

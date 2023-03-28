@@ -44,7 +44,7 @@ class ThemeController extends GetxController {
               modalBarrierColor: primarySwatch[400]),
           textTheme: TextTheme(
             titleLarge: TextStyle(
-                fontSize: 25,
+                fontSize: 23,
                 fontWeight: FontWeight.bold,
                 color: textColor ?? primarySwatch[50]),
             titleMedium: TextStyle(

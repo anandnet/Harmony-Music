@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:harmonymusic/models/album.dart';
-import 'package:harmonymusic/models/playlist.dart';
 import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
-import 'package:harmonymusic/ui/widgets/marqwee_widget.dart';
 
 class ContentListWidget extends StatelessWidget {
   ///ContentListWidget is used to render a section of Content like a list of Albums or Playlists in HomeScreen
-  const ContentListWidget({super.key, this.content});
-  
+  const ContentListWidget({super.key, this.content, this.isHomeContent = true});
+
   ///content will be of class Type AlbumContent or PlaylistContent
   final dynamic content;
+  final bool isHomeContent;
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +17,21 @@ class ContentListWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            content.title,
-            //maxLines: 2,
-            style: Theme.of(context).textTheme.titleLarge,
+          SizedBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  content.title,
+                  //maxLines: 2,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                !isHomeContent
+                    ? TextButton(
+                        onPressed: () {}, child: const Text("View all"))
+                    : const SizedBox.shrink()
+              ],
+            ),
           ),
           const SizedBox(height: 5),
           SizedBox(
@@ -35,13 +44,9 @@ class ContentListWidget extends StatelessWidget {
                     : content.playlistList.length,
                 itemBuilder: (_, index) {
                   if (isAlbumContent) {
-                    return ContentListItem(
-                      content:content.albumList[index]
-                    );
+                    return ContentListItem(content: content.albumList[index]);
                   }
-                  return ContentListItem(
-                    content: content.playlistList[index]
-                  );
+                  return ContentListItem(content: content.playlistList[index]);
                 }),
           ),
         ],

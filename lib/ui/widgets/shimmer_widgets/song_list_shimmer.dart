@@ -4,8 +4,9 @@ import 'package:shimmer/shimmer.dart';
 import 'basic_container.dart';
 
 class SongListShimmer extends StatelessWidget {
-  const SongListShimmer({super.key, this.itemCount = 10});
+  const SongListShimmer({super.key, this.itemCount = 10, this.topPadding = 0});
   final int itemCount;
+  final double topPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class SongListShimmer extends StatelessWidget {
       highlightColor: Colors.grey[100]!,
       child: ListView.builder(
           itemCount: itemCount,
-          padding: const EdgeInsets.all( 0),
+          padding: EdgeInsets.only(top: topPadding, left: 0),
           itemBuilder: (_, index) {
             return _listTile();
           }),

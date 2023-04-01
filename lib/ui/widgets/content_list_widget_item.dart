@@ -14,20 +14,19 @@ class ContentListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final isAlbum = content.runtimeType.toString() == "Album";
     return InkWell(
-      onTap: !isAlbum
-          ? () {
-              Get.toNamed("/playlistScreen",
-                  id: ScreenNavigationSetup.id, arguments: content);
-            }
-          : () {},
+      onTap: () {
+        Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
+            id: ScreenNavigationSetup.id, arguments: [isAlbum, content]);
+      },
       child: Container(
-        width: 140,
-        padding: const EdgeInsets.only(left: 10.0),
+        width: 120,
+        padding: const EdgeInsets.all(0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               height: 120,
+              width: 120,
               child: isAlbum
                   ? ImageWidget(
                       album: content,
@@ -46,7 +45,9 @@ class ContentListItem extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Text(
-              isAlbum ? content.artist[0]['name'] ?? "" : content.description ?? "",
+              isAlbum
+                  ? content.artists[0]['name'] ?? ""
+                  : content.description ?? "",
               maxLines: 1,
               style: Theme.of(context).textTheme.titleSmall,
             ),

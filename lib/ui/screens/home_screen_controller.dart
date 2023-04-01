@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:harmonymusic/models/album.dart';
@@ -16,7 +15,7 @@ class HomeScreenController extends GetxController {
   }
 
   Future<void> _init() async {
-    final homeContentListMap = await _musicServices.getHome(limit: 7);
+    final homeContentListMap = await _musicServices.getHome(limit: 10);
     //debugPrint(homeContentListMap,wrapWidth: 1024);
     _setHomeContentList(homeContentListMap);
     isContentFetched.value = true;
@@ -47,8 +46,4 @@ class HomeScreenController extends GetxController {
   }
   void getRelatedArtist() {}
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

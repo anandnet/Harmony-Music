@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:harmonymusic/ui/screens/search_result_screen_controller.dart';
 import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
 
 class ContentListWidget extends StatelessWidget {
@@ -22,13 +24,19 @@ class ContentListWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  content.title,
+                   content.title.length>12 ?"${content.title.substring(0,12)}...":content.title,
                   //maxLines: 2,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 !isHomeContent
                     ? TextButton(
-                        onPressed: () {}, child: const Text("View all"))
+                        onPressed: () {
+                          final scrresController =
+                              Get.find<SearchResultScreenController>();
+                          scrresController.viewAllCallback(content.title);
+                        },
+                        child: Text("View all",
+                            style: Theme.of(Get.context!).textTheme.titleSmall))
                     : const SizedBox.shrink()
               ],
             ),
@@ -37,7 +45,11 @@ class ContentListWidget extends StatelessWidget {
           SizedBox(
             height: 200,
             //color: Colors.blueAccent,
-            child: ListView.builder(
+            child: ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                separatorBuilder: (context, index) => const SizedBox(
+                      width: 10,
+                    ),
                 scrollDirection: Axis.horizontal,
                 itemCount: isAlbumContent
                     ? content.albumList.length

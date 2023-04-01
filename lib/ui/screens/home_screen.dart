@@ -23,8 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Get.find<HomeScreenController>();
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    return Scaffold(
+    return  Scaffold(
       floatingActionButton: Visibility(
           visible: true,
           child: Obx(

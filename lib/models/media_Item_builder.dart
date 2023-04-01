@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:audio_service/audio_service.dart';
 import 'package:harmonymusic/models/thumbnail.dart';
 
@@ -17,7 +19,8 @@ class MediaItemBuilder {
           'url': json['url'] ?? url,
           'length': json['length']?? json['duration'],
           'album': json['album'],
-          'artists': json['artists']
+          'artists': json['artists'],
+          'duration_seconds':json['duration_seconds']
         });
   }
 

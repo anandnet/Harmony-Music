@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:harmonymusic/helper.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_service/audio_service.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:get/get.dart';
 
@@ -38,7 +37,6 @@ class PlayerController extends GetxController {
 
   var _newSongFlag = true;
   final isCurrentSongBuffered = false.obs;
-  late final _appdocdir;
 
   PlayerController() {
     _init();
@@ -51,10 +49,6 @@ class PlayerController extends GetxController {
     _listenForChangesInBufferedPosition();
     _listenForChangesInDuration();
     _listenForPlaylistChange();
-  }
-
-  Future<void> _createAppDocDir() async {
-    _appdocdir = (await getApplicationDocumentsDirectory()).path;
   }
 
   void panellistener(double x) {
@@ -130,7 +124,7 @@ class PlayerController extends GetxController {
         val.buffered = oldState.buffered;
       });
       if (mediaItem != null) {
-        print(mediaItem.title);
+        printINFO(mediaItem.title);
         _newSongFlag = true;
         isCurrentSongBuffered.value = false;
         currentSong.value = mediaItem;
@@ -140,7 +134,6 @@ class PlayerController extends GetxController {
     });
   }
 
-  
   void _listenForPlaylistChange() {
     _audioHandler.queue.listen((queue) {
       currentQueue.value = queue;
@@ -161,7 +154,6 @@ class PlayerController extends GetxController {
       cacheQueueitemsUrl(upNextSongList.sublist(1));
     });
     //open player panel,set current song and push first song into playing list,
-    final init = _initFlagForPlayer;
     currentSong.value = mediaItem;
     _playerPanelCheck();
     _audioHandler.customAction("setSourceNPlay", {'mediaItem': mediaItem});
@@ -177,6 +169,12 @@ class PlayerController extends GetxController {
   ///enqueueSongList method add song List to current queue
   ///if queue is empty,song start playing automatically
   Future<void> enqueueSongList(List<MediaItem> mediaItems) async {}
+  Future<void> playASong(MediaItem mediaItem) async {
+    currentSong.value = mediaItem;
+    _playerPanelCheck();
+    await _audioHandler
+        .customAction("setSourceNPlay", {'mediaItem': mediaItem});
+  }
 
   Future<void> playPlayListSong(List<MediaItem> mediaItems, int index) async {
     //open player pane,set current song and push first song into playing list,

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 class ThemeController extends GetxController {
-  final primaryColor = Colors.purple[500].obs;
+  final primaryColor = Colors.deepPurple[400].obs;
   final textColor = Colors.white24.obs;
   final themedata = Rxn<ThemeData>();
 
@@ -56,9 +56,17 @@ class ThemeController extends GetxController {
                 fontSize: 20,
                 color: textColor ?? primarySwatch[50]),
             labelSmall: TextStyle(
-              fontSize: 15,
-                color: titleColorSwatch!=null? titleColorSwatch[900] : primarySwatch[100],letterSpacing: 1,fontWeight: FontWeight.bold),
+                fontSize: 15,
+                color: titleColorSwatch != null
+                    ? titleColorSwatch[900]
+                    : primarySwatch[100],
+                letterSpacing: 1,
+                fontWeight: FontWeight.bold),
           ),
+          progressIndicatorTheme: ProgressIndicatorThemeData(
+              linearTrackColor: (primarySwatch[300])!.computeLuminance() > 0.179
+                  ? Colors.black54
+                  : Colors.white60),
           navigationRailTheme: NavigationRailThemeData(
               backgroundColor: primarySwatch[600],
               selectedLabelTextStyle: TextStyle(

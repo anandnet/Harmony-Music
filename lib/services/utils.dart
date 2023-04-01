@@ -11,7 +11,7 @@ int getDatestamp() {
   return days;
 }
 
-int? parseDuration(String duration) {
+int? parseDuration(String? duration) {
   if (duration == null) {
     return null;
   }
@@ -37,8 +37,8 @@ int sumTotalDuration(Map<String, dynamic> item) {
   int totalDuration = 0;
 
   for (var track in tracks) {
-    if (track.containsKey('duration_seconds')) {
-      totalDuration += track['duration_seconds'] as int;
+    if (track.extras.containsKey('duration_seconds')) {
+      totalDuration += track.extras['duration_seconds'] as int;
     }
   }
 
@@ -47,7 +47,7 @@ int sumTotalDuration(Map<String, dynamic> item) {
 
 String? getItemText(Map<String, dynamic> item, int index,
     {int runIndex = 0, bool noneIfAbsent = false}) {
-  Map<String, dynamic>? column = getFlexColumnItem(item, index);
+  dynamic column = getFlexColumnItem(item, index);
   if (column == null) {
     return noneIfAbsent ? null : "";
   }
@@ -79,7 +79,7 @@ bool isExpired({String? url, int? epoch}) {
   }
 
   if (epoch != null &&
-      DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800 < epoch!) {
+      DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800 < epoch) {
     printINFO(
         "${DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800}  $epoch");
     printINFO("Url or epoch is not Expired");
@@ -91,27 +91,27 @@ bool isExpired({String? url, int? epoch}) {
 
 void parseMenuPlaylists(
     Map<String, dynamic> data, Map<String, dynamic> result) {
-  var watch_menu = findObjectsByKey(
+  var watchMenu = findObjectsByKey(
       nav(data, ['menu', 'menuRenderer', 'items']),
       'menuNavigationItemRenderer');
-  for (var item in watch_menu
+  for (var item in watchMenu
       .map((item) => item['menuNavigationItemRenderer'])
       .toList()) {
-    var watch_key;
+    String watchKey;
     var icon = nav(item, ['icon', 'iconType']);
     if (icon == 'MUSIC_SHUFFLE') {
-      watch_key = 'shuffleId';
+      watchKey = 'shuffleId';
     } else if (icon == 'MIX') {
-      watch_key = 'radioId';
+      watchKey = 'radioId';
     } else {
       continue;
     }
-    var watch_id = nav(
+    var watchId = nav(
         item, ['navigationEndpoint', 'watchPlaylistEndpoint', 'playlistId']);
-    watch_id ??=
+    watchId ??=
         nav(item, ['navigationEndpoint', 'watchEndpoint', 'playlistId']);
-    if (watch_id != null) {
-      result[watch_key] = watch_id;
+    if (watchId != null) {
+      result[watchKey] = watchId;
     }
   }
 }

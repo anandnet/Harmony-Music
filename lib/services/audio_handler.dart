@@ -1,8 +1,6 @@
 import 'dart:io';
-import 'dart:isolate';
 
 import 'package:audio_service/audio_service.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/media_Item_builder.dart';
@@ -13,7 +11,6 @@ import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../ui/utils/home_library_controller.dart';
-import 'background_task.dart';
 import 'music_service.dart';
 
 Future<AudioHandler> initAudioService() async {
@@ -29,8 +26,10 @@ Future<AudioHandler> initAudioService() async {
 }
 
 class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
+  // ignore: prefer_typing_uninitialized_variables
   late final _cacheDir;
   final _player = AudioPlayer();
+  // ignore: prefer_typing_uninitialized_variables
   var currentIndex;
   late String currentSongUrl;
 
@@ -59,7 +58,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     try {
       _player.setAudioSource(_playList);
     } catch (r) {
-      print(r);
+      printERROR(r.toString());
     }
   }
 
@@ -249,7 +248,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
           .map<MediaItem>((item) => MediaItemBuilder.fromJson(item))
           .toList();
       await updateQueue(upNextSongList);
-      print("here");
+     
     } else if (name == 'playByIndex') {
       await _playList.clear();
       currentIndex = extras!['index'];
@@ -270,7 +269,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         songsCacheBox.put(song.id, MediaItemBuilder.toJson(song));
         if (!homeLibrayController.isClosed) {
           homeLibrayController.cachedSongsList.value =
-              homeLibrayController.cachedSongsList.value + [song];
+              homeLibrayController.cachedSongsList + [song];
         }
       }
     } else if (name == 'setSourceNPlay') {

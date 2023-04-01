@@ -4,6 +4,7 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
 import 'package:harmonymusic/ui/widgets/marqwee_widget.dart';
@@ -16,7 +17,7 @@ class Player extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("player");
+    printINFO("player");
     final size = MediaQuery.of(context).size;
     final PlayerController playerController = Get.find<PlayerController>();
     final ThemeController themeController = Get.find<ThemeController>();
@@ -102,7 +103,7 @@ class Player extends StatelessWidget {
                       ? CachedNetworkImage(
                           memCacheHeight: 200,
                           imageBuilder: (context, imageProvider) {
-                            //themeController.setTheme(imageProvider);
+                            themeController.setTheme(imageProvider);
                             return Image(
                               image: imageProvider,
                               fit: BoxFit.fitHeight,

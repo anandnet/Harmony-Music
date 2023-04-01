@@ -26,6 +26,7 @@ class QuickPicksWidget extends StatelessWidget {
           const SizedBox(height: 10),
           Expanded(
             child: GridView.builder(
+                physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemCount: content.songList.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

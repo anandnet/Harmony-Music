@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     SystemChannels.lifecycle.setMessageHandler((msg) async {
       if (msg == "AppLifecycleState.resumed") {
         SystemChrome.setSystemUIOverlayStyle(
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
         );
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       }
-    });
+      return null;
+    });  
     return GetX<ThemeController>(builder: (controller) {
       return GetMaterialApp(
         title: 'Harmony Music',
@@ -65,7 +67,7 @@ class MyApp extends StatelessWidget {
 }
 
 Future<void> startApplicationServices() async {
-  Get.lazyPut(() => MusicServices(true),fenix: true);
+  Get.lazyPut(() => MusicServices(true), fenix: true);
   Get.lazyPut(() => ThemeController(), fenix: true);
   Get.lazyPut(() => PlayerController(), fenix: true);
   Get.lazyPut(() => HomeScreenController());

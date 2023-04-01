@@ -24,18 +24,33 @@ class SearchResultScreenController extends GetxController {
     if (value != 0 &&
         !separatedResultContent.containsKey(railItems[value - 1])) {
       final tabName = railItems[value - 1];
-      final itemCount = (tabName == 'Songs' || tabName =='Videos')?25:10;
+      final itemCount = (tabName == 'Songs' || tabName == 'Videos') ? 25 : 10;
       separatedResultContent.addAll(await musicServices.search(
           queryString.value,
-          filter: tabName.replaceAll(" ", "_").toLowerCase(),limit: itemCount));
+          filter: tabName.replaceAll(" ", "_").toLowerCase(),
+          limit: itemCount));
+      isSeparatedResultContentFetced.value = true;
       printINFO(separatedResultContent.keys.first);
     }
+    isSeparatedResultContentFetced.value = true;
+  }
+
+  void viewAllCallback(String text) {
+    onDestinationSelected(railItems.indexOf(text) + 1);
   }
 
   Future<void> _getInitSearchResult() async {
     queryString.value = Get.arguments;
     resultContent.value = await musicServices.search(queryString.value);
-    railItems.value = List<String>.from(resultContent.keys);
+    final allKeys = resultContent.keys.where((element) => ([
+          "Songs",
+          "Videos",
+          "Albums",
+          "Featured playlists",
+          "Community playlists",
+          "Artists"
+        ]).contains(element));
+    railItems.value = List<String>.from(allKeys);
     isResultContentFetced.value = true;
   }
 }

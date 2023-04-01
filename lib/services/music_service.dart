@@ -11,6 +11,7 @@ import 'constant.dart';
 import 'continuations.dart';
 import 'nav_parser.dart';
 
+// ignore: constant_identifier_names
 enum AudioQuality { High, Medium, Low }
 
 class MusicServices extends getx.GetxService {
@@ -230,102 +231,106 @@ class MusicServices extends getx.GetxService {
     };
   }
 
-  Future<Map<String, dynamic>> getPlaylistSongs(String playlistId,
-      {int limit = 100, bool related = false, int suggestionsLimit = 0}) async {
-    String browseId =
-        playlistId.startsWith("VL") ? playlistId : "VL$playlistId";
+  Future<Map<String, dynamic>> getPlaylistOrAlbumSongs(
+      {String? playlistId,
+      String? albumId,
+      int limit = 100,
+      bool related = false,
+      int suggestionsLimit = 0}) async {
+    String browseId = playlistId != null
+        ? (playlistId.startsWith("VL") ? playlistId : "VL$playlistId")
+        : albumId!;
     final data = Map.from(_context);
     data['browseId'] = browseId;
     Map<String, dynamic> response = (await _sendRequest('browse', data)).data;
-    Map<String, dynamic> header = response['header'];
-    Map<String, dynamic> results = nav(response,
-        single_column_tab + section_list_item + ['musicPlaylistShelfRenderer']);
-    Map<String, dynamic> playlist = {'id': results['playlistId']};
+    if (playlistId != null) {
+      Map<String, dynamic> header = response['header'];
+      Map<String, dynamic> results = nav(
+          response,
+          single_column_tab +
+              section_list_item +
+              ['musicPlaylistShelfRenderer']);
+      Map<String, dynamic> playlist = {'id': results['playlistId']};
 
-    bool ownPlaylist =
-        header.containsKey('musicEditablePlaylistDetailHeaderRenderer');
-    if (!ownPlaylist) {
-      playlist['privacy'] = 'PUBLIC';
-      header = header['musicDetailHeaderRenderer'];
-    } else {
-      Map<String, dynamic> editableHeader =
-          header['musicEditablePlaylistDetailHeaderRenderer'];
-      playlist['privacy'] = editableHeader['editHeader']
-          ['musicPlaylistEditHeaderRenderer']['privacy'];
-      header = editableHeader['header']['musicDetailHeaderRenderer'];
-    }
-
-    playlist['title'] = nav(header, title_text);
-    playlist['thumbnails'] = nav(header, thumnail_cropped);
-    playlist["description"] = nav(header, description);
-    int runCount = header['subtitle']['runs'].length;
-    if (runCount > 1) {
-      playlist['author'] = {
-        'name': nav(header, subtitle2),
-        'id': nav(header, ['subtitle', 'runs', 2] + navigation_browse_id)
-      };
-      if (runCount == 5) {
-        playlist['year'] = nav(header, subtitle3);
+      bool ownPlaylist =
+          header.containsKey('musicEditablePlaylistDetailHeaderRenderer');
+      if (!ownPlaylist) {
+        playlist['privacy'] = 'PUBLIC';
+        header = header['musicDetailHeaderRenderer'];
+      } else {
+        Map<String, dynamic> editableHeader =
+            header['musicEditablePlaylistDetailHeaderRenderer'];
+        playlist['privacy'] = editableHeader['editHeader']
+            ['musicPlaylistEditHeaderRenderer']['privacy'];
+        header = editableHeader['header']['musicDetailHeaderRenderer'];
       }
-    }
 
-    int songCount = int.parse(RegExp(r'([\d,]+)')
-        .stringMatch(header['secondSubtitle']['runs'][0]['text'])!);
-    if (header['secondSubtitle']['runs'].length > 1) {
-      playlist['duration'] = header['secondSubtitle']['runs'][2]['text'];
-    }
-
-    playlist['trackCount'] = songCount;
-
-    requestFunc(additionalParams) async =>
-        (await _sendRequest("browse", data, additionalParams: additionalParams))
-            .data;
-
-    // // suggestions and related are missing e.g. on liked songs
-    // Map<String, dynamic> sectionList = nav(response, single_column_tab + ['sectionListRenderer']);
-//   if (sectionList.containsKey('continuations')) {
-//     String additionalParams = getContinuationParams(sectionList);
-//     if (ownPlaylist && (suggestionsLimit > 0 || related)) {
-//       parseFunc(results) => parsePlaylistItems(results);
-//       Map<String, dynamic> suggested = await requestFunc(additionalParams);
-//       Map<String, dynamic> continuation = nav(suggested, SECTION_LIST_CONTINUATION);
-//       additionalParams = getContinuationParams(continuation);
-//       Map<String, dynamic> suggestionsShelf = nav(continuation, CONTENT + MUSIC_SHELF);
-//       playlist['suggestions'] = getContinuationContents(suggestionsShelf, parseFunc);
-
-//       playlist['suggestions'].addAll(await getContinuations(suggestionsShelf,
-//                                                             'musicShelfContinuation',
-//                                                             suggestionsLimit - (playlist['suggestions']).length,
-//                                                             requestFunc,
-//                                                             parseFunc,
-//                                                             reloadable: true));
-
-//     }
-//      if (related) {
-//     var response = requestFunc(additionalParams);
-//     var continuation = nav(response, SECTION_LIST_CONTINUATION);
-//     parseFunc = (results) => parseContentList(results, parsePlaylist);
-//     playlist['related'] = getContinuationContents(nav(continuation, CONTENT + CAROUSEL), parseFunc);
-//   }
-// }
-
-    if (songCount > 0) {
-      playlist['tracks'] = parsePlaylistItems(results['contents']);
-      limit ??= songCount;
-      var songsToGet = min(limit, songCount);
-
-      List<dynamic> parseFunc(contents) => parsePlaylistItems(contents);
-      if (results.containsKey('continuations')) {
-        (playlist['tracks'] as List<dynamic>).addAll(await getContinuations(
-            results,
-            'musicPlaylistShelfContinuation',
-            songsToGet - (playlist['tracks']).length as int,
-            requestFunc,
-            parseFunc));
+      playlist['title'] = nav(header, title_text);
+      playlist['thumbnails'] = nav(header, thumnail_cropped);
+      playlist["description"] = nav(header, description);
+      int runCount = header['subtitle']['runs'].length;
+      if (runCount > 1) {
+        playlist['author'] = {
+          'name': nav(header, subtitle2),
+          'id': nav(header, ['subtitle', 'runs', 2] + navigation_browse_id)
+        };
+        if (runCount == 5) {
+          playlist['year'] = nav(header, subtitle3);
+        }
       }
+
+      int songCount = int.parse(RegExp(r'([\d,]+)')
+          .stringMatch(header['secondSubtitle']['runs'][0]['text'])!);
+      if (header['secondSubtitle']['runs'].length > 1) {
+        playlist['duration'] = header['secondSubtitle']['runs'][2]['text'];
+      }
+      playlist['trackCount'] = songCount;
+
+      requestFunc(additionalParams) async => (await _sendRequest("browse", data,
+              additionalParams: additionalParams))
+          .data;
+
+      if (songCount > 0) {
+        playlist['tracks'] = parsePlaylistItems(results['contents']);
+        limit = songCount;
+        var songsToGet = min(limit, songCount);
+
+        List<dynamic> parseFunc(contents) => parsePlaylistItems(contents);
+        if (results.containsKey('continuations')) {
+          (playlist['tracks'] as List<dynamic>).addAll(await getContinuations(
+              results,
+              'musicPlaylistShelfContinuation',
+              songsToGet - (playlist['tracks']).length as int,
+              requestFunc,
+              parseFunc));
+        }
+      }
+      playlist['duration_seconds'] = sumTotalDuration(playlist);
+      return playlist;
     }
-    playlist['duration_seconds'] = sumTotalDuration(playlist);
-    return playlist;
+
+    //album content
+    final album = parseAlbumHeader(response);
+    dynamic results = nav(
+      response,
+      [...single_column_tab, ...section_list_item, 'musicShelfRenderer'],
+    );
+    album['tracks'] = parsePlaylistItems(results['contents'],
+        artistsM: album['artists'], thumbnailsM: album["thumbnails"]);
+    results = nav(
+      response,
+      [...single_column_tab, ...section_list, 1, 'musicCarouselShelfRenderer'],
+    );
+    if (results != null) {
+      List contents = [];
+      for (dynamic result in results) {
+        contents.add(parseAlbum(result['musicTwoRowItemRenderer']));
+      }
+      album['other_versions'] = contents;
+    }
+    album['duration_seconds'] = sumTotalDuration(album);
+
+    return album;
   }
 
   Future<List<String>> getSearchSuggestion(String queryStr) async {
@@ -334,7 +339,7 @@ class MusicServices extends getx.GetxService {
     final res = nav(
             (await _sendRequest("music/get_search_suggestions", data)).data,
             ['contents', 0, 'searchSuggestionsSectionRenderer', 'contents']) ??
-        [] as List;
+        [];
     return res
         .map<String?>((item) {
           return (nav(item, [
@@ -427,7 +432,7 @@ class MusicServices extends getx.GetxService {
       return searchResults;
     }
 
-    var results;
+    dynamic results;
 
     if ((response['contents']).containsKey('tabbedSearchResultsRenderer')) {
       final tabIndex =
@@ -440,23 +445,21 @@ class MusicServices extends getx.GetxService {
 
     results = nav(results, ['sectionListRenderer', 'contents']);
 
-    if (results.length == 1 && results[0]['itemSectionRenderer']!=null) {
+    if (results.length == 1 && results[0]['itemSectionRenderer'] != null) {
       return searchResults;
     }
 
     String? type;
-    
 
     for (var res in results) {
-      var category;
+      String category;
       if (res.containsKey('musicCardShelfRenderer')) {
         //final topResult = parseTopResult(res['musicCardShelfRenderer'], ['artist', 'playlist', 'song', 'video', 'station']);
         //searchResults.add(topResult);
         results = nav(res, ['musicCardShelfRenderer', 'contents']);
-        if (results!=null) {
-          category = nav(results[0],
-              ['messageRenderer', ...text_run_text]);
-          results=results.sublist(1);
+        if (results != null) {
+          category = nav(results[0], ['messageRenderer', ...text_run_text]);
+          results = results.sublist(1);
           //type = null;
         } else {
           continue;
@@ -472,30 +475,32 @@ class MusicServices extends getx.GetxService {
           typeFilter = category;
         }
 
-        type =
-            typeFilter?.substring(0, typeFilter.length - 1).toLowerCase();
+        type = typeFilter?.substring(0, typeFilter.length - 1).toLowerCase();
       } else {
         continue;
       }
 
-      searchResults[category]= parseSearchResults(
-          results,
-          ['artist', 'playlist', 'song', 'video', 'station'],
-          type,
-          category);
+      searchResults[category] = parseSearchResults(results,
+          ['artist', 'playlist', 'song', 'video', 'station'], type, category);
 
-      if (filter !=null) {
+      if (filter != null) {
         requestFunc(additionalParams) async =>
-            (await _sendRequest("search", data, additionalParams: additionalParams)).data;
-        parseFunc(contents) => parseSearchResults(contents,['artist', 'playlist', 'song', 'video', 'station'], type, category);
+            (await _sendRequest("search", data,
+                    additionalParams: additionalParams))
+                .data;
+        parseFunc(contents) => parseSearchResults(contents,
+            ['artist', 'playlist', 'song', 'video', 'station'], type, category);
 
-        if(searchResults.containsKey(category)){
-          searchResults[category]= [...(searchResults[category] as List),...(await getContinuations(
-            res['musicShelfRenderer'],
-            'musicShelfContinuation',
-            limit - ((searchResults[category] as List).length),
-            requestFunc,
-            parseFunc))];
+        if (searchResults.containsKey(category)) {
+          searchResults[category] = [
+            ...(searchResults[category] as List),
+            ...(await getContinuations(
+                res['musicShelfRenderer'],
+                'musicShelfContinuation',
+                limit - ((searchResults[category] as List).length),
+                requestFunc,
+                parseFunc))
+          ];
         }
       }
     }

@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/ui/navigator.dart';
-import 'package:harmonymusic/ui/screens/playlist_screen_controller.dart';
-import 'package:harmonymusic/ui/utils/theme_controller.dart';
+import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
 import 'package:harmonymusic/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
 
 import '../../models/playlist.dart';
 import '../player/player_controller.dart';
 import '../widgets/image_widget.dart';
 
-class PlayListScreen extends StatelessWidget {
+class PlaylistNAlbumScreen extends StatelessWidget {
   ///PlaylistScreen renders playlist content
   ///
   ///Playlist title,image,songs
-  const PlayListScreen({super.key});
-  static const routeName = '/playlistScreen';
+  const PlaylistNAlbumScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    print(Navigator.of(context));
-    final Playlist playlist = Get.arguments as Playlist;
+    final args = Get.arguments as List;
+    final dynamic content =
+        args[0] as bool ? args[1] as Album : args[1] as Playlist;
     final PlayerController playerController = Get.find<PlayerController>();
-    final PlayListScreenController playListScreenController =
-        Get.put(PlayListScreenController(playlist.playlistId));
+    final PlayListNAlbumScreenController playListNAlbumScreenController =
+        Get.put(PlayListNAlbumScreenController(content, args[0]));
     return Container(
       child: Row(
         children: [
@@ -68,7 +68,7 @@ class PlayListScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  playlist.title,
+                  content.title,
                   style: Theme.of(context).textTheme.titleLarge,
                   textAlign: TextAlign.start,
                 ),
@@ -77,14 +77,22 @@ class PlayListScreen extends StatelessWidget {
                 ),
                 SizedBox.square(
                     dimension: 200,
-                    child: ImageWidget(
-                      playlist: playlist,
-                    )),
+                    child: playListNAlbumScreenController.isAlbum.isTrue
+                        ? ImageWidget(
+                            album: content,
+                            isLargeImage: true,
+                          )
+                        : ImageWidget(
+                            playlist: content,
+                            isLargeImage: true,
+                          )),
                 const SizedBox(
                   height: 10,
                 ),
                 Text(
-                  playlist.description ?? "",
+                  playListNAlbumScreenController.isAlbum.isTrue
+                      ? content.artists[0]['name'] ?? ""
+                      : content.description ?? "",
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 const Divider(),
@@ -96,15 +104,17 @@ class PlayListScreen extends StatelessWidget {
                   height: 10,
                 ),
                 Expanded(
-                    child: Obx(() => playListScreenController
+                    child: Obx(() => playListNAlbumScreenController
                             .isContentFetched.value
                         ? ListView.builder(
-                            itemCount: playListScreenController.songList.length,
+                            itemCount:
+                                playListNAlbumScreenController.songList.length,
                             padding: const EdgeInsets.only(left: 5, bottom: 85),
                             itemBuilder: (_, index) => ListTile(
                                   onTap: () {
                                     playerController.playPlayListSong([
-                                      ...playListScreenController.songList.value
+                                      ...playListNAlbumScreenController
+                                          .songList
                                     ], index);
                                   },
                                   contentPadding: const EdgeInsets.only(
@@ -112,25 +122,26 @@ class PlayListScreen extends StatelessWidget {
                                   leading: SizedBox.square(
                                       dimension: 50,
                                       child: ImageWidget(
-                                        song: playListScreenController
+                                        song: playListNAlbumScreenController
                                             .songList[index],
                                       )),
                                   title: Text(
-                                    playListScreenController
+                                    playListNAlbumScreenController
                                         .songList[index].title,
                                     maxLines: 1,
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
                                   ),
                                   subtitle: Text(
-                                    "${playListScreenController.songList[index].artist[0]["name"]}",
+                                    "${playListNAlbumScreenController.songList[index].artist}",
                                     maxLines: 1,
                                     style:
                                         Theme.of(context).textTheme.titleSmall,
                                   ),
                                   trailing: Text(
-                                    playListScreenController
-                                            .songList[index].length ??
+                                    playListNAlbumScreenController
+                                            .songList[index]
+                                            .extras!['length'] ??
                                         "",
                                     style:
                                         Theme.of(context).textTheme.titleSmall,

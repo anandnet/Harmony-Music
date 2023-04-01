@@ -26,8 +26,9 @@ class QuickPicksWidget extends StatelessWidget {
           const SizedBox(height: 10),
           Expanded(
             child: GridView.builder(
+                physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                itemCount: 20,
+                itemCount: content.songList.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
                   childAspectRatio: .26 / 1,
@@ -49,7 +50,7 @@ class QuickPicksWidget extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       subtitle: Text(
-                        "${content.songList[item].artist[0]["name"]}",
+                        "${content.songList[item].artist}",
                         maxLines: 1,
                         style: Theme.of(context).textTheme.titleSmall,
                       ),

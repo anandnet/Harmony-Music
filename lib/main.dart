@@ -12,15 +12,14 @@ import 'package:harmonymusic/ui/utils/theme_controller.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'models/song.dart';
 import 'ui/screens/home_screen_controller.dart';
 import 'ui/utils/home_library_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initHive();
-  Get.put<AudioHandler>(await initAudioService(), permanent: true);
   startApplicationServices();
+  Get.put<AudioHandler>(await initAudioService(), permanent: true);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.light,
@@ -41,6 +40,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     SystemChannels.lifecycle.setMessageHandler((msg) async {
       if (msg == "AppLifecycleState.resumed") {
         SystemChrome.setSystemUIOverlayStyle(
@@ -54,7 +54,8 @@ class MyApp extends StatelessWidget {
         );
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       }
-    });
+      return null;
+    });  
     return GetX<ThemeController>(builder: (controller) {
       return GetMaterialApp(
         title: 'Harmony Music',
@@ -66,23 +67,17 @@ class MyApp extends StatelessWidget {
 }
 
 Future<void> startApplicationServices() async {
+  Get.lazyPut(() => MusicServices(true), fenix: true);
   Get.lazyPut(() => ThemeController(), fenix: true);
   Get.lazyPut(() => PlayerController(), fenix: true);
   Get.lazyPut(() => HomeScreenController());
   Get.lazyPut(() => HomeLibrayController(), fenix: true);
-  Get.lazyPut(() => MusicServices(), fenix: true);
 }
 
 initHive() async {
-  if (GetPlatform.isWeb) {
-    await Hive.initFlutter();
-  } else {
-    Directory applicationDirectory = await getApplicationDocumentsDirectory();
-    await Hive.initFlutter(applicationDirectory.path);
-  }
-
-  Hive.registerAdapter(SongAdapter());
+  Directory applicationDirectory = await getApplicationDocumentsDirectory();
+  await Hive.initFlutter(applicationDirectory.path);
   await Hive.openBox("SongsCache");
   await Hive.openBox('SongsUrlCache');
-  await Hive.openBox("settings");
+  await Hive.openBox("AppPrefs");
 }

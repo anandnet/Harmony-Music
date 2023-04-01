@@ -13,6 +13,6 @@ class BasicShimmerContainer extends StatelessWidget {
       height: size.height,
       width: size.width,
     );
-    ;
+    
   }
 }

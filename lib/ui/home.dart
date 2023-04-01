@@ -1,21 +1,20 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/ui/navigator.dart';
-import 'package:harmonymusic/ui/player/Player.dart';
-import 'package:harmonymusic/ui/screens/home_screen.dart';
+import 'package:harmonymusic/ui/player/player.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'player/player_controller.dart';
-import 'screens/home_screen_controller.dart';
 import 'widgets/image_widget.dart';
+import 'widgets/mini_player_progress_bar.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
   static const routeName = '/appHome';
   @override
   Widget build(BuildContext context) {
-    print("Home");
+    printINFO("Home");
     var safePadding = MediaQuery.of(context).padding.bottom;
     final PlayerController playerController = Get.find<PlayerController>();
     final size = MediaQuery.of(context).size;
@@ -48,11 +47,19 @@ class Home extends StatelessWidget {
                           children: [
                             Container(
                               height: 3,
-                              color: Colors.cyan,
+                              color:
+                                  Theme.of(context).textTheme.titleSmall!.color,
+                              child: MiniPlayerProgressBar(
+                                current: playerController
+                                    .progressBarStatus.value.current,
+                                total: playerController
+                                    .progressBarStatus.value.total,
+                                progressBarColor:Theme.of(context).progressIndicatorTheme.linearTrackColor!
+                              ),
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 17.0, vertical: 10),
+                                  horizontal: 17.0, vertical: 7),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -86,8 +93,7 @@ class Home extends StatelessWidget {
                                           height: 20,
                                           child: Text(
                                             playerController
-                                                    .currentQueue
-                                                    .isNotEmpty
+                                                    .currentQueue.isNotEmpty
                                                 ? playerController
                                                     .currentSong.value!.title
                                                 : "",
@@ -101,10 +107,9 @@ class Home extends StatelessWidget {
                                           height: 20,
                                           child: Text(
                                             playerController
-                                                    .currentQueue
-                                                    .isNotEmpty
-                                                ? playerController.currentSong
-                                                    .value!.artist[0]['name']
+                                                    .currentQueue.isNotEmpty
+                                                ? playerController
+                                                    .currentSong.value!.artist!
                                                 : "",
                                             maxLines: 1,
                                             style: Theme.of(context)

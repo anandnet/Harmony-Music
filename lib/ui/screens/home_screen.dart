@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io' as io;
 
+import '../navigator.dart';
 import '../utils/home_library_controller.dart';
 import '../widgets/content_list_widget.dart';
 import '../widgets/image_widget.dart';
@@ -26,8 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Get.find<HomeScreenController>();
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    return Scaffold(
+    return  Scaffold(
       floatingActionButton: Visibility(
           visible: true,
           child: Obx(
@@ -42,29 +38,31 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   elevation: 0,
                   onPressed: () async {
+                    Get.toNamed(ScreenNavigationSetup.searchScreen,
+                        id: ScreenNavigationSetup.id);
                     // file:///data/user/0/com.example.harmonymusic/cache/libCachedImageData/
                     //file:///data/user/0/com.example.harmonymusic/cache/just_audio_cache/
-                    final cacheDir = (await getTemporaryDirectory()).path;
-                    if (io.Directory("$cacheDir/libCachedImageData/")
-                        .existsSync()) {
-                      final file =
-                          io.Directory("$cacheDir/cachedSongs").listSync();
-                      // inspect(file);
-                      final downloadedFiles =
-                          io.Directory("$cacheDir/cachedSongs")
-                              .listSync()
-                              .where((f) => !['mime', 'part'].contains(
-                                  f.path.replaceAll(RegExp(r'^.*\.'), '')));
-                      // print(downloadedFiles);
-                    }
-                    if (io.Directory("$cacheDir/libCachedImageData/")
-                        .existsSync()) {
-                      final audioFiles =
-                          io.Directory("$cacheDir/libCachedImageData/")
-                              .listSync();
+                    // final cacheDir = (await getTemporaryDirectory()).path;
+                    // if (io.Directory("$cacheDir/libCachedImageData/")
+                    //     .existsSync()) {
+                    //   final file =
+                    //       io.Directory("$cacheDir/cachedSongs").listSync();
+                    //   // inspect(file);
+                    //   final downloadedFiles =
+                    //       io.Directory("$cacheDir/cachedSongs")
+                    //           .listSync()
+                    //           .where((f) => !['mime', 'part'].contains(
+                    //               f.path.replaceAll(RegExp(r'^.*\.'), '')));
+                    //   // print(downloadedFiles);
+                    // }
+                    // if (io.Directory("$cacheDir/libCachedImageData/")
+                    //     .existsSync()) {
+                    //   final audioFiles =
+                    //       io.Directory("$cacheDir/libCachedImageData/")
+                    //           .listSync();
 
-                      //inspect(audioFiles);
-                    }
+                    //   //inspect(audioFiles);
+                    // }
                   },
                   child: const Icon(Icons.search)),
             ),
@@ -161,10 +159,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     return Material(
                                         child: Obx(() => ListTile(
                                               onTap: () {
-                                                playerController.playPlayListSong(
-                                                        [...controller
-                                                            .cachedSongsList.value], index)
-                                                    ;
+                                                playerController
+                                                    .playPlayListSong([
+                                                  ...controller
+                                                      .cachedSongsList.value
+                                                ], index);
                                               },
                                               contentPadding:
                                                   const EdgeInsets.only(
@@ -187,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     .titleMedium,
                                               ),
                                               subtitle: Text(
-                                                "${controller.cachedSongsList[index].artist[0]["name"]}",
+                                                "${controller.cachedSongsList[index].artist}",
                                                 maxLines: 1,
                                                 style: Theme.of(context)
                                                     .textTheme
@@ -196,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               trailing: Text(
                                                 controller
                                                         .cachedSongsList[index]
-                                                        .length ??
+                                                        .extras!['length'] ??
                                                     "",
                                                 style: Theme.of(context)
                                                     .textTheme

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:harmonymusic/helper.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_service/audio_service.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:get/get.dart';
 
@@ -38,6 +39,7 @@ class PlayerController extends GetxController {
   var _newSongFlag = true;
   final isCurrentSongBuffered = false.obs;
 
+
   PlayerController() {
     _init();
   }
@@ -49,6 +51,11 @@ class PlayerController extends GetxController {
     _listenForChangesInBufferedPosition();
     _listenForChangesInDuration();
     _listenForPlaylistChange();
+    _setAppDocDir();
+  }
+
+  Future<void> _setAppDocDir() async {
+    _appDocDir= (await getApplicationDocumentsDirectory()).path;
   }
 
   void panellistener(double x) {
@@ -153,6 +160,7 @@ class PlayerController extends GetxController {
       await _audioHandler.updateQueue(upNextSongList);
       cacheQueueitemsUrl(upNextSongList.sublist(1));
     });
+
     //open player panel,set current song and push first song into playing list,
     currentSong.value = mediaItem;
     _playerPanelCheck();

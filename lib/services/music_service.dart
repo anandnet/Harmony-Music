@@ -47,6 +47,7 @@ class MusicServices extends getx.GetxService {
   final dio = Dio();
 
   Future<void> init() async {
+    print("ibit");
     //check visitor id in data base, if not generate one , set lang code
     _context['context']['client']['hl'] = 'en';
     _context['context']['client']['gl'] = 'IN';
@@ -354,7 +355,7 @@ class MusicServices extends getx.GetxService {
   }
 
   Future<Uri?> getSongUri(String songId,
-      {AudioQuality quality = AudioQuality.Low}) async {
+      {AudioQuality quality = AudioQuality.High}) async {
     try {
       final songStreamManifest =
           await _yt.videos.streamsClient.getManifest(songId);
@@ -370,6 +371,7 @@ class MusicServices extends getx.GetxService {
       return null;
     }
   }
+
 
 //  Future<Uri> getSongUri(String songId) async {
 //     final response =
@@ -507,4 +509,5 @@ class MusicServices extends getx.GetxService {
 
     return searchResults;
   }
+
 }

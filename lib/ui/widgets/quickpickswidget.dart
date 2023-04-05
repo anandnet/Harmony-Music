@@ -16,6 +16,7 @@ class QuickPicksWidget extends StatelessWidget {
       height: 320,
       width: double.infinity,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Align(
               alignment: Alignment.centerLeft,
@@ -26,12 +27,13 @@ class QuickPicksWidget extends StatelessWidget {
           const SizedBox(height: 10),
           Expanded(
             child: GridView.builder(
+
                 physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemCount: content.songList.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
-                  childAspectRatio: .26 / 1,
+                  childAspectRatio: .27 / 1,
                   crossAxisSpacing: 1,
                   mainAxisSpacing: 5,
                 ),
@@ -41,6 +43,7 @@ class QuickPicksWidget extends StatelessWidget {
                       playerController.pushSongToQueue(content.songList[item]);
                     },
                     child: ListTile(
+                      contentPadding: EdgeInsets.zero,
                       leading: SizedBox(
                           width: 50,
                           child: ImageWidget(song: content.songList[item])),

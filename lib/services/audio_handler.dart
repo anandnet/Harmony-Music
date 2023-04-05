@@ -270,7 +270,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         songsCacheBox.put(song.id, MediaItemBuilder.toJson(song));
         if (!homeLibrayController.isClosed) {
           homeLibrayController.cachedSongsList.value =
-              homeLibrayController.cachedSongsList + [song];
+              homeLibrayController.cachedSongsList.value + [song];
         }
       }
     } else if (name == 'setSourceNPlay') {

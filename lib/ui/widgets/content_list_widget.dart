@@ -48,7 +48,7 @@ class ContentListWidget extends StatelessWidget {
             child: ListView.separated(
                 physics: const BouncingScrollPhysics(),
                 separatorBuilder: (context, index) => const SizedBox(
-                      width: 10,
+                      width: 15,
                     ),
                 scrollDirection: Axis.horizontal,
                 itemCount: isAlbumContent

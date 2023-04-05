@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/helper.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 class ThemeController extends GetxController {
@@ -21,11 +23,16 @@ class ThemeController extends GetxController {
         generator.lightMutedColor ??
         generator.lightVibrantColor;
     primaryColor.value = paletteColor!.color;
-    textColor.value = paletteColor.titleTextColor;
+    textColor.value = paletteColor.bodyTextColor;
+   // printINFO(paletteColor.color.computeLuminance().toString());
+    if (paletteColor.color.computeLuminance() > 0.11) {
+      primaryColor.value = paletteColor.color.withLightness(0.11);
+      textColor.value = Colors.white54;
+    }
     final primarySwatch = _createMaterialColor(primaryColor.value!);
     themedata.value = _createThemeData(primarySwatch, ThemeType.dynamic,
-        textColor: paletteColor.bodyTextColor,
-        titleColorSwatch: _createMaterialColor(paletteColor.bodyTextColor));
+        textColor: textColor.value,
+        titleColorSwatch: _createMaterialColor(textColor.value));
   }
 
   ThemeData _createThemeData(MaterialColor primarySwatch, ThemeType themeType,
@@ -64,7 +71,7 @@ class ThemeController extends GetxController {
                 fontWeight: FontWeight.bold),
           ),
           progressIndicatorTheme: ProgressIndicatorThemeData(
-              linearTrackColor: (primarySwatch[300])!.computeLuminance() > 0.179
+              linearTrackColor: (primarySwatch[300])!.computeLuminance() > 0.3
                   ? Colors.black54
                   : Colors.white60),
           navigationRailTheme: NavigationRailThemeData(
@@ -122,6 +129,22 @@ class ThemeController extends GetxController {
       );
     }
     return MaterialColor(color.value, swatch);
+  }
+}
+
+extension ColorWithHSL on Color {
+  HSLColor get hsl => HSLColor.fromColor(this);
+
+  Color withSaturation(double saturation) {
+    return hsl.withSaturation(clampDouble(saturation, 0.0, 1.0)).toColor();
+  }
+
+  Color withLightness(double lightness) {
+    return hsl.withLightness(clampDouble(lightness, 0.0, 1.0)).toColor();
+  }
+
+  Color withHue(double hue) {
+    return hsl.withHue(clampDouble(hue, 0.0, 360.0)).toColor();
   }
 }
 

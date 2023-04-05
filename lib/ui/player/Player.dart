@@ -122,8 +122,7 @@ class Player extends StatelessWidget {
                 () => BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                   child: Container(
-                      color: themeController.primaryColor.value!
-                          .withOpacity(0.90)),
+                      color: Theme.of(context).primaryColor.withOpacity(0.90)),
                 ),
               ),
 
@@ -137,6 +136,7 @@ class Player extends StatelessWidget {
                     ),
                     SizedBox(
                         height: 290,
+                        width: 290,
                         child:
                             Obx(() => playerController.currentSong.value != null
                                 ? ImageWidget(

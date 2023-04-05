@@ -47,7 +47,6 @@ class MusicServices extends getx.GetxService {
   final dio = Dio();
 
   Future<void> init() async {
-    print("ibit");
     //check visitor id in data base, if not generate one , set lang code
     _context['context']['client']['hl'] = 'en';
     _context['context']['client']['gl'] = 'IN';
@@ -298,12 +297,15 @@ class MusicServices extends getx.GetxService {
 
         List<dynamic> parseFunc(contents) => parsePlaylistItems(contents);
         if (results.containsKey('continuations')) {
-          (playlist['tracks'] as List<dynamic>).addAll(await getContinuations(
-              results,
-              'musicPlaylistShelfContinuation',
-              songsToGet - (playlist['tracks']).length as int,
-              requestFunc,
-              parseFunc));
+          playlist['tracks'] = [
+            ...(playlist['tracks']),
+            ...(await getContinuations(
+                results,
+                'musicPlaylistShelfContinuation',
+                songsToGet - (playlist['tracks']).length as int,
+                requestFunc,
+                parseFunc))
+          ];
         }
       }
       playlist['duration_seconds'] = sumTotalDuration(playlist);
@@ -324,8 +326,13 @@ class MusicServices extends getx.GetxService {
     );
     if (results != null) {
       List contents = [];
-      for (dynamic result in results) {
-        contents.add(parseAlbum(result['musicTwoRowItemRenderer']));
+      if (results.runtimeType.toString().contains("Iterable") ||
+          results.runtimeType.toString().contains("List")) {
+        for (dynamic result in results) {
+          contents.add(parseAlbum(result['musicTwoRowItemRenderer']));
+        }
+      } else {
+        contents.add(parseAlbum(results['contents'][0]['musicTwoRowItemRenderer']));
       }
       album['other_versions'] = contents;
     }
@@ -355,7 +362,7 @@ class MusicServices extends getx.GetxService {
   }
 
   Future<Uri?> getSongUri(String songId,
-      {AudioQuality quality = AudioQuality.High}) async {
+      {AudioQuality quality = AudioQuality.Medium}) async {
     try {
       final songStreamManifest =
           await _yt.videos.streamsClient.getManifest(songId);
@@ -368,10 +375,10 @@ class MusicServices extends getx.GetxService {
         return streamUriList[0].url;
       }
     } catch (e) {
+      printERROR(e.toString());
       return null;
     }
   }
-
 
 //  Future<Uri> getSongUri(String songId) async {
 //     final response =
@@ -460,8 +467,10 @@ class MusicServices extends getx.GetxService {
         //searchResults.add(topResult);
         results = nav(res, ['musicCardShelfRenderer', 'contents']);
         if (results != null) {
-          category = nav(results[0], ['messageRenderer', ...text_run_text]);
-          results = results.sublist(1);
+          if ((results[0]).containsKey("messageRenderer")) {
+            category = nav(results[0], ['messageRenderer', ...text_run_text]);
+            results = results.sublist(1);
+          }
           //type = null;
         } else {
           continue;
@@ -510,4 +519,56 @@ class MusicServices extends getx.GetxService {
     return searchResults;
   }
 
+  Future<Map<String, dynamic>> getArtist(String channelId) async {
+    if (channelId.startsWith("MPLA")) {
+      channelId = channelId.substring(4);
+    }
+    final data = Map.from(_context);
+    data['browseId'] = channelId;
+    dynamic response = (await _sendRequest("browse", data)).data;
+    dynamic results = nav(response, [...single_column_tab, ...section_list]);
+
+    Map<String, dynamic> artist = {'description': null, 'views': null};
+    Map<String, dynamic> header =
+        response['header']['musicImmersiveHeaderRenderer'];
+    artist['name'] = nav(header, title_text);
+    var descriptionShelf =
+        findObjectByKey(results, description_shelf[0], isKey: true);
+    if (descriptionShelf != null) {
+      artist['description'] = nav(descriptionShelf, description);
+      artist['views'] = descriptionShelf['subheader'] == null
+          ? null
+          : descriptionShelf['subheader']['runs'][0]['text'];
+    }
+    Map<String, dynamic> subscriptionButton =
+        header['subscriptionButton']['subscribeButtonRenderer'];
+    artist['channelId'] = subscriptionButton['channelId'];
+    artist['shuffleId'] = nav(header,
+        ['playButton', 'buttonRenderer', ...navigation_watch_playlist_id]);
+    artist['radioId'] = nav(
+      header,
+      ['startRadioButton', 'buttonRenderer'] + navigation_watch_playlist_id,
+    );
+    artist['subscribers'] = nav(
+      subscriptionButton,
+      ['subscriberCountText', 'runs', 0, 'text'],
+    );
+    artist['subscribed'] = subscriptionButton['subscribed'];
+    artist['thumbnails'] = nav(header, thumbnails);
+    artist['songs'] = {};
+    if (results[0].containsKey('musicShelfRenderer')) {
+      // API sometimes does not return songs
+      Map<String, dynamic> musicShelf = nav(results[0], ['musicShelfRenderer']);
+      if (nav(musicShelf, ['title', 'runs', 0])
+          .containsKey('navigationEndpoint')) {
+        final x =
+            nav(musicShelf, ['title', 'runs', 0, ...navigation_browse_id]);
+        artist['songs']['browseId'] = x;
+      }
+      artist['songs']['results'] = parsePlaylistItems(musicShelf['contents']);
+    }
+
+    artist.addAll(parseArtistContents(results));
+    return artist;
+  }
 }

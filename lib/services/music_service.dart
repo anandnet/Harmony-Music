@@ -332,7 +332,8 @@ class MusicServices extends getx.GetxService {
           contents.add(parseAlbum(result['musicTwoRowItemRenderer']));
         }
       } else {
-        contents.add(parseAlbum(results['contents'][0]['musicTwoRowItemRenderer']));
+        contents
+            .add(parseAlbum(results['contents'][0]['musicTwoRowItemRenderer']));
       }
       album['other_versions'] = contents;
     }
@@ -367,6 +368,10 @@ class MusicServices extends getx.GetxService {
       final songStreamManifest =
           await _yt.videos.streamsClient.getManifest(songId);
       final streamUriList = songStreamManifest.audioOnly.sortByBitrate();
+      // printINFO("${songStreamManifest.audioOnly.withHighestBitrate().size} aize");
+      // for (var element in streamUriList) {
+      //     printINFO("${element.tag} - ${element.size}");
+      // }
       if (quality == AudioQuality.High) {
         return songStreamManifest.audioOnly.withHighestBitrate().url;
       } else if (quality == AudioQuality.Medium) {
@@ -380,18 +385,24 @@ class MusicServices extends getx.GetxService {
     }
   }
 
-//  Future<Uri> getSongUri(String songId) async {
-//     final response =
-//         await Dio().get("https://watchapi.whatever.social/streams/$songId");
-//     if (response.statusCode == 200) {
-//       final responseUrl = ((response.data["audioStreams"])
-//           .firstWhere((val) => val["quality"] == "48 kbps"))["url"];
-//           print("hello");
-//       return Uri.parse(responseUrl);
-//     } else {
-//       return getSongUri(songId);
-//     }
-//   }
+  // Future<Uri?> getSongUri1(String songId) async {
+  //   final response =
+  //       await dio.get("https://watchapi.whatever.social/streams/$songId");
+  //   if (response.statusCode == 200) {
+  //   final x=  ((response.data["audioStreams"]).map((item) {
+  //       if (item['format'] == "M4A") {
+  //         //printINFO(item);
+  //         return Map<dynamic,dynamic>.from(item);
+  //       }
+  //       return null;
+  //     }).whereType<Map<dynamic,dynamic>>().toList());
+  //     //printINFO();
+
+  //     return Uri.parse(x[1]['url']);
+  //   } else {
+  //     return getSongUri(songId);
+  //   }
+  // }
 
   Future<Map<String, dynamic>> search(String query,
       {String? filter,

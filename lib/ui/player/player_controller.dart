@@ -14,6 +14,7 @@ import '/services/music_service.dart';
 
 class PlayerController extends GetxController {
   final _audioHandler = Get.find<AudioHandler>();
+  final _musicServices = Get.find<MusicServices>();
   final currentQueue = <MediaItem>[].obs;
 
   final playerPaneOpacity = (1.0).obs;
@@ -39,7 +40,6 @@ class PlayerController extends GetxController {
   var _newSongFlag = true;
   final isCurrentSongBuffered = false.obs;
 
-
   PlayerController() {
     _init();
   }
@@ -52,7 +52,6 @@ class PlayerController extends GetxController {
     _listenForChangesInDuration();
     _listenForPlaylistChange();
   }
-
 
   void panellistener(double x) {
     if (x >= 0 && x <= 0.2) {
@@ -147,20 +146,19 @@ class PlayerController extends GetxController {
   ///pushSongToPlaylist method clear previous song queue, plays the tapped song and push related
   ///songs into Queue
   Future<void> pushSongToQueue(MediaItem mediaItem) async {
-    final musicServices = Get.find<MusicServices>();
-    ReceivePort receivePort = ReceivePort();
-    Isolate.spawn(
-        getUpNextSong, [receivePort.sendPort, musicServices, mediaItem.id]);
-    receivePort.first.then((value) async {
-      final upNextSongList = value as List<MediaItem>;
-      await _audioHandler.updateQueue(upNextSongList);
-      cacheQueueitemsUrl(upNextSongList.sublist(1));
-    });
-
     //open player panel,set current song and push first song into playing list,
     currentSong.value = mediaItem;
     _playerPanelCheck();
     _audioHandler.customAction("setSourceNPlay", {'mediaItem': mediaItem});
+
+    ReceivePort receivePort = ReceivePort();
+    await Isolate.spawn(
+        getUpNextSong, [receivePort.sendPort, _musicServices, mediaItem.id]);
+    receivePort.first.then((value) async {
+      final upNextSongList = value as List<MediaItem>;
+      await _audioHandler.updateQueue(upNextSongList);
+      //cacheQueueitemsUrl(upNextSongList.sublist(1));
+    });
   }
 
   ///enqueueSong   append a song to current queue
@@ -189,7 +187,7 @@ class PlayerController extends GetxController {
         ? await _audioHandler.updateQueue(mediaItems)
         : _audioHandler.addQueueItems(mediaItems);
     await _audioHandler.customAction("playByIndex", {"index": index});
-    cacheQueueitemsUrl(mediaItems);
+    //cacheQueueitemsUrl(mediaItems);
   }
 
   void _playerPanelCheck() {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
 
+import '../navigator.dart';
 import '../widgets/search_related_widgets.dart';
 import 'search_result_screen_controller.dart';
 
@@ -14,22 +15,57 @@ class SearchResultScreen extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          Obx(
-            () => NavigationRail(
-              onDestinationSelected:
-                  searchResScrController.onDestinationSelected,
-              minWidth: 60,
-              destinations: searchResScrController.isResultContentFetced.value
-                  ? [
-                      railDestination("Results"),
-                      ...(searchResScrController.railItems
-                          .map((element) => railDestination(element))),
-                    ]
-                  : [railDestination("Results"), railDestination("")],
-              leading: const SizedBox(height: 60),
-              labelType: NavigationRailLabelType.all,
-              selectedIndex:
-                  searchResScrController.navigationRailCurrentIndex.value,
+          SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints:
+                  BoxConstraints(minHeight: MediaQuery.of(context).size.height+195),
+              child: IntrinsicHeight(
+                child: Obx(
+                  () => NavigationRail(
+                    onDestinationSelected:
+                        searchResScrController.onDestinationSelected,
+                    minWidth: 60,
+                    destinations: searchResScrController
+                            .isResultContentFetced.value
+                        ? [
+                            railDestination("Results"),
+                            ...(searchResScrController.railItems
+                                .map((element) => railDestination(element))),
+                          ]
+                        : [railDestination("Results"), railDestination("")],
+                    leading: Column(
+                      children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .color,
+                            ),
+                            onPressed: () {
+                              Get.nestedKey(ScreenNavigationSetup.id)!
+                                  .currentState!
+                                  .pop();
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                    labelType: NavigationRailLabelType.all,
+                    selectedIndex:
+                        searchResScrController.navigationRailCurrentIndex.value,
+                  ),
+                ),
+              ),
             ),
           ),
           Expanded(

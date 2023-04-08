@@ -41,7 +41,7 @@ class Player extends StatelessWidget {
                 ],
               )),
           panelBuilder: (ScrollController sc) {
-            playerController.scrollController=sc;
+            playerController.scrollController = sc;
             return Container(
                 color: Theme.of(context).bottomSheetTheme.backgroundColor,
                 child: Obx(() {
@@ -118,13 +118,10 @@ class Player extends StatelessWidget {
                 ),
               ),
 
-              Obx(
-                () => BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                  child: Container(
-                      color: themeController.primaryColor.value!
-                          .withOpacity(0.90)),
-                ),
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                child: Container(
+                    color: Theme.of(context).primaryColor.withOpacity(0.90)),
               ),
 
               //Player Top content
@@ -136,7 +133,8 @@ class Player extends StatelessWidget {
                       height: 120,
                     ),
                     SizedBox(
-                        height: 290,
+                        height: size.width - 60,
+                        width: size.width - 60,
                         child:
                             Obx(() => playerController.currentSong.value != null
                                 ? ImageWidget(

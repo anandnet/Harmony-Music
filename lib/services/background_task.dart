@@ -31,12 +31,12 @@ Future<void> checkNPutUrl(String songId, dynamic songsCacheBox,
     if (songsUrlCacheBox.containsKey(songId)) {
       if (isExpired(url: songsUrlCacheBox.get(songId))) {
         final url = (await musicServices.getSongUri(songId)).toString();
-        songsUrlCacheBox.put(songId, url);
+        if (url.toString() != 'null') songsUrlCacheBox.put(songId, url);
       }
       return;
     } else {
       final url = (await musicServices.getSongUri(songId)).toString();
-      songsUrlCacheBox.put(songId, url);
+      if (url.toString() != 'null') songsUrlCacheBox.put(songId, url);
       printINFO("Song Url cached $songId", tag: "Isolate");
     }
   }
@@ -46,7 +46,7 @@ void getUpNextSong(List args) async {
   SendPort sendPort = args[0] as SendPort;
   final res =
       await (args[1] as MusicServices).getWatchPlaylist(videoId: args[2]);
-      List<MediaItem> upNextSongList = (res['tracks'])
+  List<MediaItem> upNextSongList = (res['tracks'])
       .map<MediaItem>((item) => MediaItemBuilder.fromJson(item))
       .toList();
   sendPort.send(upNextSongList);

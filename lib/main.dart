@@ -21,10 +21,10 @@ Future<void> main() async {
   startApplicationServices();
   Get.put<AudioHandler>(await initAudioService(), permanent: true);
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
+     SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.light,
         statusBarColor: Colors.transparent,
-        systemNavigationBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.white.withOpacity(0.002),
         systemNavigationBarDividerColor: Colors.transparent,
         systemNavigationBarIconBrightness: Brightness.light,
         systemNavigationBarContrastEnforced: true),
@@ -44,12 +44,13 @@ class MyApp extends StatelessWidget {
     SystemChannels.lifecycle.setMessageHandler((msg) async {
       if (msg == "AppLifecycleState.resumed") {
         SystemChrome.setSystemUIOverlayStyle(
-          const SystemUiOverlayStyle(
+           SystemUiOverlayStyle(
               statusBarIconBrightness: Brightness.light,
               statusBarColor: Colors.transparent,
-              systemNavigationBarColor: Colors.transparent,
+              systemNavigationBarColor: Colors.white.withOpacity(0.002),
               systemNavigationBarDividerColor: Colors.transparent,
               systemNavigationBarIconBrightness: Brightness.light,
+              systemStatusBarContrastEnforced: false,
               systemNavigationBarContrastEnforced: true),
         );
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);

@@ -1,5 +1,8 @@
 import 'dart:math';
 
+
+import 'package:flutter/foundation.dart';
+
 import '../helper.dart';
 import 'nav_parser.dart';
 
@@ -91,12 +94,10 @@ bool isExpired({String? url, int? epoch}) {
 
 void parseMenuPlaylists(
     Map<String, dynamic> data, Map<String, dynamic> result) {
-  var watchMenu = findObjectsByKey(
-      nav(data, ['menu', 'menuRenderer', 'items']),
+  var watchMenu = findObjectsByKey(nav(data, ['menu', 'menuRenderer', 'items']),
       'menuNavigationItemRenderer');
-  for (var item in watchMenu
-      .map((item) => item['menuNavigationItemRenderer'])
-      .toList()) {
+  for (var item
+      in watchMenu.map((item) => item['menuNavigationItemRenderer']).toList()) {
     String watchKey;
     var icon = nav(item, ['icon', 'iconType']);
     if (icon == 'MUSIC_SHUFFLE') {
@@ -114,6 +115,19 @@ void parseMenuPlaylists(
       result[watchKey] = watchId;
     }
   }
+}
+
+dynamic findObjectByKey(List objectList, dynamic key,
+    {String? nested, bool isKey = false}) {
+  for (var item in objectList) {
+    if (nested != null) {
+      item = item[nested];
+    }
+    if (item.containsKey(key)) {
+      return isKey ? item[key] : item;
+    }
+  }
+  return null;
 }
 
 List<dynamic> findObjectsByKey(List<dynamic> objectList, String key,
@@ -202,4 +216,8 @@ String? _getParam2(String filter) {
     'playlists': 'o'
   };
   return filterParams[filter];
+}
+
+dynamic getDotSeparatorIndex(List<dynamic> runs) {
+    return runs.indexWhere(((element) =>({'text': " • "}).toString()==element.toString()));
 }

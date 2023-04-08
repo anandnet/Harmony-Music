@@ -29,7 +29,9 @@ Future<AudioHandler> initAudioService() async {
 class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   // ignore: prefer_typing_uninitialized_variables
   late final _cacheDir;
-  final _player = AudioPlayer();
+  final _player = AudioPlayer(
+      audioLoadConfiguration:
+          AudioLoadConfiguration(androidLoadControl: AndroidLoadControl()));
   // ignore: prefer_typing_uninitialized_variables
   var currentIndex;
   late String currentSongUrl;
@@ -99,12 +101,14 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       ));
 
       //print("set ${playbackState.value.queueIndex},${event.currentIndex}");
-    }, onError: (Object e, StackTrace st) {
+    }, onError: (Object e, StackTrace st) async {
       if (e is PlayerException) {
         printERROR('Error code: ${e.code}');
         printERROR('Error message: ${e.message}');
       } else {
         printERROR('An error occurred: $e');
+        // await _player.load();
+        // await _player.play();
       }
     });
   }
@@ -249,7 +253,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
           .map<MediaItem>((item) => MediaItemBuilder.fromJson(item))
           .toList();
       await updateQueue(upNextSongList);
-     
     } else if (name == 'playByIndex') {
       await _playList.clear();
       currentIndex = extras!['index'];
@@ -270,7 +273,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         songsCacheBox.put(song.id, MediaItemBuilder.toJson(song));
         if (!homeLibrayController.isClosed) {
           homeLibrayController.cachedSongsList.value =
-              homeLibrayController.cachedSongsList + [song];
+              homeLibrayController.cachedSongsList.value + [song];
         }
       }
     } else if (name == 'setSourceNPlay') {
@@ -281,7 +284,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       queue.add([currMed]);
       currentSongUrl = (await checkNGetUrl(currMed.id))!;
       currMed.extras!['url'] = currentSongUrl;
+      printINFO("song urk got");
       await _playList.add(_createAudioSource(currMed));
+      _player.load();
       await _player.play();
     }
   }

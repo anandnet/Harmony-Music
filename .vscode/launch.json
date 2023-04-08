@@ -7,19 +7,28 @@
         {
             "name": "harmonymusic",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "toolArgs": [
+                "--enable-impeller",
+            ],
         },
         {
             "name": "harmonymusic (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "toolArgs": [
+                "--enable-impeller",
+            ],
         },
         {
             "name": "harmonymusic (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "toolArgs": [
+                "--enable-impeller",
+            ],
         }
     ]
 }

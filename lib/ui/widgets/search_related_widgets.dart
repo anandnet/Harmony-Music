@@ -144,12 +144,11 @@ class SeparateSearchItemWidget extends StatelessWidget {
             );
     } else if (title.contains("playlists")) {
       return listViewPlaylists(items);
-    } else if (title == "Albums") {
+    } else if (title == "Albums" || title == "Singles" ) {
       return listViewAlbums(items);
     } else if (title == 'Artists') {
       return listViewArtists(items);
     }
-
     return const SizedBox.shrink();
   }
 
@@ -199,9 +198,9 @@ class SeparateSearchItemWidget extends StatelessWidget {
                 visualDensity: const VisualDensity(vertical: 4.0),
                 isThreeLine: true,
                 onTap: () {
-                  Get.toNamed("/playlistScreen",
+                  Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
                       id: ScreenNavigationSetup.id,
-                      arguments: playlists[index]);
+                      arguments: [false, playlists[index]]);
                 },
                 contentPadding:
                     const EdgeInsets.only(top: 0, bottom: 0, left: 10),
@@ -243,7 +242,11 @@ class SeparateSearchItemWidget extends StatelessWidget {
           return ListTile(
             visualDensity: const VisualDensity(vertical: 4.0),
             isThreeLine: true,
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
+                  id: ScreenNavigationSetup.id,
+                  arguments: [true, albums[index]]);
+            },
             contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 10),
             leading: SizedBox.square(
                 dimension: 100,
@@ -277,7 +280,10 @@ class SeparateSearchItemWidget extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) => ListTile(
                 visualDensity: const VisualDensity(horizontal: -2, vertical: 2),
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed(ScreenNavigationSetup.artistScreen,
+                      id: ScreenNavigationSetup.id, arguments: artists[index]);
+                },
                 contentPadding:
                     const EdgeInsets.only(top: 0, bottom: 0, left: 5),
                 leading: Container(

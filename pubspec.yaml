@@ -39,7 +39,7 @@ dependencies:
   audio_video_progress_bar: ^1.0.0
   get: ^4.6.5
   http: ^0.13.5
-  dio: ^5.0.3
+  dio: ^5.1.1
   cached_network_image: ^3.2.3
   youtube_explode_dart: ^1.12.4
   sliding_up_panel: ^2.0.0+1

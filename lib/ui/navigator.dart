@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/screens/artist_screen.dart';
 import 'package:harmonymusic/ui/screens/home_screen.dart';
 import 'package:harmonymusic/ui/screens/playlistnalbum_screen.dart';
 import 'package:harmonymusic/ui/screens/search_screen.dart';
@@ -14,6 +15,7 @@ class ScreenNavigationSetup {
   static const playlistNAlbumScreen = '/playlistNAlbumScreen';
   static const searchScreen = '/searchScreen';
   static const searchResultScreen = '/searchResultScreen';
+  static const artistScreen = '/artistScreen';
 }
 
 class ScreenNavigation extends StatelessWidget {
@@ -34,6 +36,9 @@ class ScreenNavigation extends StatelessWidget {
             return GetPageRoute(page: () => const SearchScreen());
           } else if (settings.name == ScreenNavigationSetup.searchResultScreen) {
             return GetPageRoute(page: () => const SearchResultScreen());
+          } else if (settings.name ==
+              ScreenNavigationSetup.artistScreen) {
+            return GetPageRoute(page: () => const ArtistScreen());
           }
           return null;
         });

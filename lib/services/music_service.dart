@@ -363,24 +363,21 @@ class MusicServices extends getx.GetxService {
   }
 
   Future<Uri?> getSongUri(String songId,
-      {AudioQuality quality = AudioQuality.Medium}) async {
+      {AudioQuality quality = AudioQuality.High}) async {
     try {
       final songStreamManifest =
           await _yt.videos.streamsClient.getManifest(songId);
       final streamUriList = songStreamManifest.audioOnly.sortByBitrate();
-      // printINFO("${songStreamManifest.audioOnly.withHighestBitrate().size} aize");
-      // for (var element in streamUriList) {
-      //     printINFO("${element.tag} - ${element.size}");
-      // }
       if (quality == AudioQuality.High) {
         return songStreamManifest.audioOnly.withHighestBitrate().url;
       } else if (quality == AudioQuality.Medium) {
+        printINFO(streamUriList[streamUriList.length ~/ 2].url);
         return streamUriList[streamUriList.length ~/ 2].url;
       } else {
         return streamUriList[0].url;
       }
     } catch (e) {
-      printERROR(e.toString());
+      printERROR("Error $e");
       return null;
     }
   }

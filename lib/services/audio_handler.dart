@@ -168,7 +168,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   LockCachingAudioSource _createAudioSource(MediaItem mediaItem) {
     return LockCachingAudioSource(
-      Uri.parse(mediaItem.extras!['url'] as String),
+      Uri.tryParse(mediaItem.extras!['url'] as String)!,
       cacheFile: File("$_cacheDir/cachedSongs/${mediaItem.id}.mp3"),
       tag: mediaItem,
     );
@@ -286,7 +286,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       currMed.extras!['url'] = currentSongUrl;
       printINFO("song urk got");
       await _playList.add(_createAudioSource(currMed));
-      _player.load();
       await _player.play();
     }
   }

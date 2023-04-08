@@ -360,18 +360,20 @@ class MusicServices extends getx.GetxService {
       final songStreamManifest =
           await _yt.videos.streamsClient.getManifest(songId);
       final streamUriList = songStreamManifest.audioOnly.sortByBitrate();
-      if (quality == AudioQuality.High) {
-        return songStreamManifest.audioOnly.withHighestBitrate().url;
+      final high = streamUriList.firstWhere((element) => element.audioCodec.contains("mp4a")).url;
+      printINFO(high.toString());
+      if (quality == AudioQuality.High && high!=null) {
+        return high;
+        
       } else if (quality == AudioQuality.Medium) {
         return streamUriList[streamUriList.length ~/ 2].url;
       } else {
-        return streamUriList[0].url;
+        return streamUriList.lastWhere((element) => element.audioCodec.contains("mp4a")).url;
       }
     } catch (e) {
       return null;
     }
   }
-
 
 //  Future<Uri> getSongUri(String songId) async {
 //     final response =
@@ -509,5 +511,4 @@ class MusicServices extends getx.GetxService {
 
     return searchResults;
   }
-
 }

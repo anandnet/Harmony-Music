@@ -51,12 +51,9 @@ class PlayerController extends GetxController {
     _listenForChangesInBufferedPosition();
     _listenForChangesInDuration();
     _listenForPlaylistChange();
-    _setAppDocDir();
   }
 
-  Future<void> _setAppDocDir() async {
-    _appDocDir= (await getApplicationDocumentsDirectory()).path;
-  }
+  
 
   void panellistener(double x) {
     if (x >= 0 && x <= 0.2) {

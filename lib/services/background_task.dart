@@ -42,13 +42,13 @@ Future<void> checkNPutUrl(String songId, dynamic songsCacheBox,
   }
 }
 
-Future<List<MediaItem>> getUpNextSong(List args) async {
-  //SendPort sendPort = args[0] as SendPort;
+Future<void> getUpNextSong(List args) async {
+  SendPort sendPort = args[0] as SendPort;
   final res =
       await (args[1] as MusicServices).getWatchPlaylist(videoId: args[2]);
   List<MediaItem> upNextSongList = (res['tracks'])
       .map<MediaItem>((item) => MediaItemBuilder.fromJson(item))
       .toList();
-  //sendPort.send(upNextSongList);
-  return upNextSongList;
+  sendPort.send(upNextSongList);
+  //return upNextSongList;
 }

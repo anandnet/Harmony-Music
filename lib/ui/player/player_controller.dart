@@ -146,21 +146,21 @@ class PlayerController extends GetxController {
   ///pushSongToPlaylist method clear previous song queue, plays the tapped song and push related
   ///songs into Queue
   Future<void> pushSongToQueue(MediaItem mediaItem) async {
-    //open player panel,set current song and push first song into playing list,
-    //currentSong.value = mediaItem;
-    _playerPanelCheck();
-    await _audioHandler.customAction("setSourceNPlay", {'mediaItem': mediaItem});
-
     ReceivePort receivePort = ReceivePort();
     printINFO("$receivePort $_musicServices ${mediaItem.id} all checked");
-    getUpNextSong([receivePort.sendPort, _musicServices, mediaItem.id])
-    // await Isolate.spawn(
-    //     getUpNextSong, [receivePort.sendPort, _musicServices, mediaItem.id]);
-    .then((value) async {
+    await Isolate.spawn(
+        getUpNextSong, [receivePort.sendPort, _musicServices, mediaItem.id]);
+    receivePort.first.then((value) async {
       final upNextSongList = value;
       await _audioHandler.updateQueue(upNextSongList);
       //cacheQueueitemsUrl(upNextSongList.sublist(1));
     });
+
+    //open player panel,set current song and push first song into playing list,
+    currentSong.value = mediaItem;
+    _playerPanelCheck();
+    await _audioHandler
+        .customAction("setSourceNPlay", {'mediaItem': mediaItem});
   }
 
   ///enqueueSong   append a song to current queue

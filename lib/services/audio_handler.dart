@@ -317,7 +317,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       } else {
         url = (await musicServices.getSongUri(songId)).toString();
         songsUrlCacheBox.put(songId, url);
-        printINFO("Url is cached in Box for songId $songId");
+        printINFO("Url cached in Box for songId $songId");
       }
       return url;
     }

@@ -77,15 +77,44 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                 ),
                 SizedBox.square(
                     dimension: 200,
-                    child: playListNAlbumScreenController.isAlbum.isTrue
-                        ? ImageWidget(
-                            album: content,
-                            isLargeImage: true,
-                          )
-                        : ImageWidget(
-                            playlist: content,
-                            isLargeImage: true,
-                          )),
+                    child: Stack(
+                      children: [
+                        playListNAlbumScreenController.isAlbum.isTrue
+                            ? ImageWidget(
+                                album: content,
+                                isLargeImage: true,
+                              )
+                            : ImageWidget(
+                                playlist: content,
+                                isLargeImage: true,
+                              ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: InkWell(
+                              onTap: () {
+                                playListNAlbumScreenController
+                                    .addNremoveFromLibrary(content,
+                                        add: playListNAlbumScreenController
+                                            .isAddedToLibrary.isFalse);
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .canvasColor
+                                        .withOpacity(.7),
+                                    borderRadius: const BorderRadius.only(
+                                        bottomLeft: Radius.circular(10))),
+                                child: Obx(() => Icon(
+                                    playListNAlbumScreenController
+                                            .isAddedToLibrary.isFalse
+                                        ? Icons.add
+                                        : Icons.check)),
+                              )),
+                        ),
+                      ],
+                    )),
                 const SizedBox(
                   height: 10,
                 ),
@@ -113,8 +142,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                             itemBuilder: (_, index) => ListTile(
                                   onTap: () {
                                     playerController.playPlayListSong([
-                                      ...playListNAlbumScreenController
-                                          .songList
+                                      ...playListNAlbumScreenController.songList
                                     ], index);
                                   },
                                   contentPadding: const EdgeInsets.only(

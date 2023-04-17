@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:android_power_manager/android_power_manager.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/services/audio_handler.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/ui/home.dart';
@@ -21,7 +23,7 @@ Future<void> main() async {
   startApplicationServices();
   Get.put<AudioHandler>(await initAudioService(), permanent: true);
   SystemChrome.setSystemUIOverlayStyle(
-     SystemUiOverlayStyle(
+    SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.light,
         statusBarColor: Colors.transparent,
         systemNavigationBarColor: Colors.white.withOpacity(0.002),
@@ -44,7 +46,7 @@ class MyApp extends StatelessWidget {
     SystemChannels.lifecycle.setMessageHandler((msg) async {
       if (msg == "AppLifecycleState.resumed") {
         SystemChrome.setSystemUIOverlayStyle(
-           SystemUiOverlayStyle(
+          SystemUiOverlayStyle(
               statusBarIconBrightness: Brightness.light,
               statusBarColor: Colors.transparent,
               systemNavigationBarColor: Colors.white.withOpacity(0.002),
@@ -56,7 +58,7 @@ class MyApp extends StatelessWidget {
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       }
       return null;
-    });  
+    });
     return GetX<ThemeController>(builder: (controller) {
       return GetMaterialApp(
         title: 'Harmony Music',
@@ -72,7 +74,14 @@ Future<void> startApplicationServices() async {
   Get.lazyPut(() => ThemeController(), fenix: true);
   Get.lazyPut(() => PlayerController(), fenix: true);
   Get.lazyPut(() => HomeScreenController());
-  Get.lazyPut(() => HomeLibrayController(), fenix: true);
+  Get.lazyPut(() => LibrarySongsController(), fenix: true);
+  Get.lazyPut(() => LibraryPlaylistsController(), fenix: true);
+  Get.lazyPut(() => LibraryAlbumsController(), fenix: true);
+  Get.lazyPut(() => LibraryArtistsController(), fenix: true);
+  final success = await AndroidPowerManager.requestIgnoreBatteryOptimizations();
+  (success != null && success)
+      ? printINFO("Power manager Activated")
+      : printERROR("Power manager Activation Failed");
 }
 
 initHive() async {

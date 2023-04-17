@@ -5,10 +5,11 @@ import '../navigator.dart';
 import 'image_widget.dart';
 
 class ContentListItem extends StatelessWidget {
-  const ContentListItem({super.key, required this.content});
+  const ContentListItem({super.key, required this.content,this.isLibraryItem=false});
 
   ///content will be of Type class Album or Playlist
   final dynamic content;
+  final bool isLibraryItem;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class ContentListItem extends StatelessWidget {
             Text(
               isAlbum
                   ? content.artists[0]['name'] ?? ""
-                  : content.description ?? "",
+                  :isLibraryItem?"": content.description ?? "",
               maxLines: 1,
               style: Theme.of(context).textTheme.titleSmall,
             ),

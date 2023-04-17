@@ -5,10 +5,10 @@ import 'package:harmonymusic/helper.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:get/get.dart';
 
 import '../../services/background_task.dart';
+import '../widgets/sliding_up_panel.dart';
 import '/models/durationstate.dart';
 import '/services/music_service.dart';
 
@@ -148,7 +148,7 @@ class PlayerController extends GetxController {
   Future<void> pushSongToQueue(MediaItem mediaItem) async {
     ReceivePort receivePort = ReceivePort();
     printINFO("$receivePort $_musicServices ${mediaItem.id} all checked");
-    await Isolate.spawn(
+    Isolate.spawn(
         getUpNextSong, [receivePort.sendPort, _musicServices, mediaItem.id]);
     receivePort.first.then((value) async {
       final upNextSongList = value;

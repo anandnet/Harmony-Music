@@ -8,9 +8,9 @@ import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
 import 'package:harmonymusic/ui/widgets/marqwee_widget.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../widgets/image_widget.dart';
+import '../widgets/sliding_up_panel.dart';
 
 class Player extends StatelessWidget {
   const Player({super.key});
@@ -63,7 +63,9 @@ class Player extends StatelessWidget {
                                 tileColor:
                                     playerController.currentSongIndex.value ==
                                             index
-                                        ? Colors.blueAccent
+                                        ? Theme.of(context)
+                                            .primaryColor
+                                            .withLightness(.2)
                                         : Theme.of(context)
                                             .bottomSheetTheme
                                             .backgroundColor,
@@ -82,14 +84,35 @@ class Player extends StatelessWidget {
                                 subtitle: Text(
                                   "${playerController.currentQueue[index].artist}",
                                   maxLines: 1,
-                                  style: Theme.of(context).textTheme.titleSmall,
+                                  style: playerController
+                                              .currentSongIndex.value ==
+                                          index
+                                      ? Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
+                                          .copyWith(
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .color!
+                                                  .withOpacity(0.35))
+                                      : Theme.of(context).textTheme.titleSmall,
                                 ),
-                                trailing: Text(
-                                  playerController.currentQueue[index]
-                                          .extras!['length'] ??
-                                      "",
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
+                                trailing:
+                                    playerController.currentSongIndex.value ==
+                                            index
+                                        ? const Icon(
+                                            Icons.equalizer,
+                                            color: Colors.white,
+                                          )
+                                        : Text(
+                                            playerController.currentQueue[index]
+                                                    .extras!['length'] ??
+                                                "",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall,
+                                          ),
                               )));
                     },
                   );

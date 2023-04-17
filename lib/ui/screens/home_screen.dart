@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
 
 import '../navigator.dart';
 import '../utils/home_library_controller.dart';
 import '../widgets/content_list_widget.dart';
-import '../widgets/image_widget.dart';
+import '../widgets/list_widget.dart';
 import '../widgets/quickpickswidget.dart';
 import '../widgets/shimmer_widgets/home_shimmer.dart';
 import 'home_screen_controller.dart';
@@ -23,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Get.find<HomeScreenController>();
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       floatingActionButton: Visibility(
           visible: true,
           child: Obx(
@@ -64,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         //   final audioFiles =
                         //       io.Directory("$cacheDir/libCachedImageData/")
                         //           .listSync();
-                              
+
                         //   //inspect(audioFiles);
                         // }
                       },
@@ -153,68 +154,27 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Expanded(child:
-                            GetX<HomeLibrayController>(builder: (controller) {
-                          return controller.isSongFetched.value
-                              ? ListView.builder(
-                                  itemCount: controller.cachedSongsList.length,
-                                  padding: const EdgeInsets.only(top: 5),
-                                  physics:
-                                      const AlwaysScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return Material(
-                                        child: Obx(() => ListTile(
-                                              onTap: () {
-                                                playerController
-                                                    .playPlayListSong([
-                                                  ...controller
-                                                      .cachedSongsList.value
-                                                ], index);
-                                              },
-                                              contentPadding:
-                                                  const EdgeInsets.only(
-                                                      top: 0,
-                                                      left: 10,
-                                                      right: 30),
-                                              leading: SizedBox.square(
-                                                  dimension: 50,
-                                                  child: ImageWidget(
-                                                    song: controller
-                                                        .cachedSongsList[index],
-                                                  )),
-                                              title: Text(
-                                                controller
-                                                    .cachedSongsList[index]
-                                                    .title,
-                                                maxLines: 1,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium,
-                                              ),
-                                              subtitle: Text(
-                                                "${controller.cachedSongsList[index].artist}",
-                                                maxLines: 1,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall,
-                                              ),
-                                              trailing: Text(
-                                                controller
-                                                        .cachedSongsList[index]
-                                                        .extras!['length'] ??
-                                                    "",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall,
-                                              ),
-                                            )));
-                                  },
-                                )
-                              : const SizedBox.shrink();
-                        }))
+                        GetX<LibrarySongsController>(builder: (controller) {
+                          return controller.cachedSongsList.isNotEmpty
+                              ? ListWidget(controller.cachedSongsList,
+                                  "Library Songs", true)
+                              : Center(
+                                  child: Text(
+                                  "No data!",
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ));
+                        })
                       ],
                     ),
                   );
+                } else if (homeScreenController.tabIndex.value == 2) {
+                  return const PlaylistNAlbumLibraryWidget(
+                      isAlbumContent: false);
+                } else if (homeScreenController.tabIndex.value == 3) {
+                  return const PlaylistNAlbumLibraryWidget();
+                } else if (homeScreenController.tabIndex.value == 4) {
+                  return const LibraryArtistWidget();
                 } else {
                   return Center(
                     child: Text("${homeScreenController.tabIndex.value}"),
@@ -234,6 +194,105 @@ class _HomeScreenState extends State<HomeScreen> {
       label: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: RotatedBox(quarterTurns: -1, child: Text(label))),
+    );
+  }
+}
+
+class LibraryArtistWidget extends StatelessWidget {
+  const LibraryArtistWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cntrller = Get.find<LibraryArtistsController>();
+    return Padding(
+      padding: const EdgeInsets.only(left: 5, top: 90.0),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Library Artists",
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Obx(() => cntrller.libraryArtists.isNotEmpty
+              ? ListWidget(cntrller.libraryArtists, "Library Artists", true)
+              : Expanded(
+                  child: Center(
+                      child: Text(
+                  "No data!",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ))))
+        ],
+      ),
+    );
+  }
+}
+
+class PlaylistNAlbumLibraryWidget extends StatelessWidget {
+  const PlaylistNAlbumLibraryWidget({super.key, this.isAlbumContent = true});
+  final bool isAlbumContent;
+
+  @override
+  Widget build(BuildContext context) {
+    final libralbumCntrller = Get.find<LibraryAlbumsController>();
+    final librplstCntrller = Get.find<LibraryPlaylistsController>();
+    var size = MediaQuery.of(context).size;
+
+    const double itemHeight = 220;
+    const double itemWidth = 180;
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 90.0),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                isAlbumContent ? "Library Albums" : "Library Playlists",
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Expanded(
+            child: Obx(
+              () => (isAlbumContent
+                      ? libralbumCntrller.libraryAlbums.isNotEmpty
+                      : librplstCntrller.libraryPlaylists.isNotEmpty)
+                  ? GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: (size.width / itemWidth).ceil(),
+                        childAspectRatio: (itemWidth / itemHeight),
+                      ),
+                      controller: ScrollController(keepScrollOffset: false),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: isAlbumContent
+                          ? libralbumCntrller.libraryAlbums.length
+                          : librplstCntrller.libraryPlaylists.length,
+                      itemBuilder: (context, index) => Center(
+                            child: ContentListItem(
+                              content: isAlbumContent
+                                  ? libralbumCntrller.libraryAlbums[index]
+                                  : librplstCntrller.libraryPlaylists[index],
+                              isLibraryItem: true,
+                            ),
+                          ))
+                  : Center(
+                      child: Text(
+                      "No data!",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    )),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

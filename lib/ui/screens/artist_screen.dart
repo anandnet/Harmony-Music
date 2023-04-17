@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/models/artist.dart';
 import 'package:harmonymusic/ui/screens/artist_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/image_widget.dart';
 import 'package:harmonymusic/ui/widgets/search_related_widgets.dart';
 
 import '../navigator.dart';
@@ -64,7 +65,83 @@ class ArtistScreen extends StatelessWidget {
               switch (artistScreenController.navigationRailCurrentIndex.value) {
                 case 0:
                   {
-                    return SizedBox.shrink();
+                    return Align(
+                      alignment: Alignment.topCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SingleChildScrollView(
+                          padding: const EdgeInsets.only(bottom: 90, top: 70),
+                          child: artistScreenController
+                                  .isArtistContentFetced.value
+                              ? Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 200,
+                                      width: 250,
+                                      child: Stack(
+                                        children: [
+                                          Center(
+                                            child: ClipOval(
+                                              child: SizedBox(
+                                                height: 200,
+                                                width: 200,
+                                                child: ImageWidget(
+                                                    artist:
+                                                        artistScreenController
+                                                            .artist_,
+                                                    isLargeImage: true),
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.topRight,
+                                            child: InkWell(
+                                              onTap: () {
+                                                artistScreenController.addNremoveFromLibrary(
+                                                  add: artistScreenController.isAddedToLibrary.isFalse
+                                                );
+                                              },
+                                              child: artistScreenController
+                                                      .isArtistContentFetced
+                                                      .isFalse
+                                                  ? const SizedBox.shrink()
+                                                  : Icon(artistScreenController
+                                                          .isAddedToLibrary
+                                                          .isTrue
+                                                      ? Icons.bookmark
+                                                      : Icons.bookmark_outline),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 10),
+                                      child: Text(
+                                        artistScreenController.artist_.name,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge,
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        content.containsKey("description")
+                                            ? "\"${content["description"]}\""
+                                            : "",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox.shrink(),
+                        ),
+                      ),
+                    );
                   }
                 case 1:
                   {

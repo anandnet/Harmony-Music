@@ -10,6 +10,7 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final searchScreenController = Get.put(SearchScreenController());
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           Container(
@@ -17,6 +18,7 @@ class SearchScreen extends StatelessWidget {
             child: TextField(
               controller: searchScreenController.textInputController,
               onChanged: searchScreenController.onChanged,
+              
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Enter a search term',

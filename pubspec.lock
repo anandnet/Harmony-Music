@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.10.0"
+  android_power_manager:
+    dependency: "direct main"
+    description:
+      name: android_power_manager
+      sha256: "7c9e6374dc44c8fce28277fe0f7682cbfda35240ce7c81a664bc7f3c2710adf1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   args:
     dependency: transitive
     description:
@@ -701,14 +709,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  sliding_up_panel:
-    dependency: "direct main"
-    description:
-      name: sliding_up_panel
-      sha256: "578e90956a6212d1e406373250b2436a0f3afece29aee3c24c8360094d6cf968"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0+1"
   source_gen:
     dependency: transitive
     description:

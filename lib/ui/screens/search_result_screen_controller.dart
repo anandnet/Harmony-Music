@@ -30,7 +30,7 @@ class SearchResultScreenController extends GetxController {
           filter: tabName.replaceAll(" ", "_").toLowerCase(),
           limit: itemCount));
       isSeparatedResultContentFetced.value = true;
-      printINFO(separatedResultContent.keys.first);
+      //printINFO(separatedResultContent.keys.first);
     }
     isSeparatedResultContentFetced.value = true;
   }

@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/ui/navigator.dart';
 import 'package:harmonymusic/ui/player/player.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'player/player_controller.dart';
 import 'widgets/image_widget.dart';
 import 'widgets/mini_player_progress_bar.dart';
+import 'widgets/sliding_up_panel.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});

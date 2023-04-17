@@ -39,7 +39,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   final _playList = ConcatenatingAudioSource(
     children: [],
   );
-  HomeLibrayController homeLibrayController = Get.find<HomeLibrayController>();
+  LibrarySongsController librarySongsController = Get.find<LibrarySongsController>();
 
   MyAudioHandler() {
     _createCacheDir();
@@ -107,8 +107,10 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         printERROR('Error message: ${e.message}');
       } else {
         printERROR('An error occurred: $e');
-        // await _player.load();
-        // await _player.play();
+        Duration curPos = _player.position;
+        await _player.stop();
+        await _player.seek(curPos,index:0);
+        await _player.play();
       }
     });
   }
@@ -271,9 +273,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       if (!songsCacheBox.containsKey(song.id)) {
         song.extras!['url'] = currentSongUrl;
         songsCacheBox.put(song.id, MediaItemBuilder.toJson(song));
-        if (!homeLibrayController.isClosed) {
-          homeLibrayController.cachedSongsList.value =
-              homeLibrayController.cachedSongsList.value + [song];
+        if (!librarySongsController.isClosed) {
+          librarySongsController.cachedSongsList.value =
+              librarySongsController.cachedSongsList.value + [song];
         }
       }
     } else if (name == 'setSourceNPlay') {

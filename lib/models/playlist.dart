@@ -24,12 +24,14 @@ class Playlist {
       required this.playlistId,
       this.description,
       required this.thumbnailUrl,
-      this.songCount});
+      this.songCount,
+      this.isCloudPlaylist = true});
   final String playlistId;
   final String title;
   final String? description;
   final String thumbnailUrl;
   final String? songCount;
+  final bool isCloudPlaylist;
 
   factory Playlist.fromJson(Map<dynamic, dynamic> json) => Playlist(
       title: json["title"],
@@ -37,4 +39,13 @@ class Playlist {
       thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).high,
       description: json["description"],
       songCount: json['itemCount']);
+
+  Map<String,dynamic> toJson() =>{
+    "title":title,
+    "playlistId":playlistId,
+    "description":description,
+    'thumbnails':[{'url':thumbnailUrl}],
+    "itemCount":songCount,
+    "isCloudPlaylist":isCloudPlaylist
+  };
 }

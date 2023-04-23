@@ -29,9 +29,7 @@ Future<AudioHandler> initAudioService() async {
 class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   // ignore: prefer_typing_uninitialized_variables
   late final _cacheDir;
-  final _player = AudioPlayer(
-      audioLoadConfiguration:
-          AudioLoadConfiguration(androidLoadControl: AndroidLoadControl()));
+  final _player = AudioPlayer();
   // ignore: prefer_typing_uninitialized_variables
   var currentIndex;
   late String currentSongUrl;
@@ -116,7 +114,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
   void _listenToPlaybackForNextSong() {
-    _player.positionStream.listen((value) {
+    _player.positionStream.listen((value) { 
       if (_player.duration != null &&
           value.inMilliseconds >= _player.duration!.inMilliseconds) {
         skipToNext();
@@ -168,10 +166,10 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     queue.add(newQueue);
   }
 
-  LockCachingAudioSource _createAudioSource(MediaItem mediaItem) {
-    return LockCachingAudioSource(
+  AudioSource _createAudioSource(MediaItem mediaItem) {
+    return AudioSource.uri(
       Uri.tryParse(mediaItem.extras!['url'] as String)!,
-      cacheFile: File("$_cacheDir/cachedSongs/${mediaItem.id}.mp3"),
+     // cacheFile: File("$_cacheDir/cachedSongs/${mediaItem.id}.mp3"),
       tag: mediaItem,
     );
   }
@@ -301,7 +299,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   Future<String?> checkNGetUrl(String songId) async {
     final songsCacheBox = Hive.box("SongsCache");
     if (songsCacheBox.containsKey(songId)) {
-      printINFO("Song is cached ($songId)");
+      printINFO("Got Song from cachedbox ($songId)");
       return songsCacheBox.get(songId)['url'];
     } else {
       //check if song stream url is cached and allocate url accordingly

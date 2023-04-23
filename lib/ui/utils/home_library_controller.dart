@@ -27,7 +27,24 @@ class LibrarySongsController extends GetxController {
 }
 
 class LibraryPlaylistsController extends GetxController {
-  late RxList<Playlist> libraryPlaylists = RxList();
+  final initPlst = [
+   Playlist(
+        title: "Recently Played",
+        playlistId: "LIBRP",
+        thumbnailUrl: "",
+        isCloudPlaylist: false),
+    Playlist(
+        title: "Favourite",
+        playlistId: "LIBFAV",
+        thumbnailUrl: "",
+        isCloudPlaylist: false),
+    Playlist(
+        title: "Cached/Offline",
+        playlistId: "LIBCAC",
+        thumbnailUrl: "",
+        isCloudPlaylist: false)
+  ];
+  late RxList<Playlist> libraryPlaylists = RxList(initPlst);
   final isContentFetched = false.obs;
 
   @override
@@ -38,10 +55,10 @@ class LibraryPlaylistsController extends GetxController {
 
   void refreshLib() async {
     final box = await Hive.openBox("LibraryPlaylists");
-    libraryPlaylists.value = box.values
+    libraryPlaylists.value=[ ...initPlst,...(box.values
         .map<Playlist?>((item) => Playlist.fromJson(item))
         .whereType<Playlist>()
-        .toList();
+        .toList())];
     isContentFetched.value = true;
     await box.close();
   }

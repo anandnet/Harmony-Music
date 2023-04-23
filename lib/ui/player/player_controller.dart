@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:harmonymusic/helper.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_service/audio_service.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
 
 import '../../services/background_task.dart';
@@ -153,7 +152,7 @@ class PlayerController extends GetxController {
     receivePort.first.then((value) async {
       final upNextSongList = value;
       await _audioHandler.updateQueue(upNextSongList);
-      //cacheQueueitemsUrl(upNextSongList.sublist(1));
+      cacheQueueitemsUrl(upNextSongList.sublist(1));
     });
 
     //open player panel,set current song and push first song into playing list,
@@ -189,7 +188,7 @@ class PlayerController extends GetxController {
         ? await _audioHandler.updateQueue(mediaItems)
         : _audioHandler.addQueueItems(mediaItems);
     await _audioHandler.customAction("playByIndex", {"index": index});
-    //cacheQueueitemsUrl(mediaItems);
+    cacheQueueitemsUrl(mediaItems);
   }
 
   void _playerPanelCheck() {

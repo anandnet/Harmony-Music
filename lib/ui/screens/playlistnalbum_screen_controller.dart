@@ -1,7 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/models/album.dart';
 import 'package:hive/hive.dart';
 import '../../services/music_service.dart';
 import '../utils/home_library_controller.dart';
@@ -10,6 +9,13 @@ class PlayListNAlbumScreenController extends GetxController {
   PlayListNAlbumScreenController(dynamic content, bool isAlbum) {
     this.isAlbum.value = isAlbum;
     final id = isAlbum ? content.browseId : content.playlistId;
+    if(!isAlbum && !content.isCloudPlaylist){
+      if(content.playlistId == 'LIBCAC'){
+        songList.value = Get.find<LibrarySongsController>().cachedSongsList;
+        isContentFetched.value=true;
+      }
+        return;
+    }
     _checkIfAddedToLibrary(id);
     _fetchSong(id);
   }

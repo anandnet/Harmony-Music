@@ -78,10 +78,10 @@ Future<void> startApplicationServices() async {
   Get.lazyPut(() => LibraryPlaylistsController(), fenix: true);
   Get.lazyPut(() => LibraryAlbumsController(), fenix: true);
   Get.lazyPut(() => LibraryArtistsController(), fenix: true);
-  final success = await AndroidPowerManager.requestIgnoreBatteryOptimizations();
-  (success != null && success)
-      ? printINFO("Power manager Activated")
-      : printERROR("Power manager Activation Failed");
+  // final success = await AndroidPowerManager.requestIgnoreBatteryOptimizations();
+  // (success != null && success)
+  //     ? printINFO("Power manager Activated")
+  //     : printERROR("Power manager Activation Failed");
 }
 
 initHive() async {

@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/ui/navigator.dart';
 import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
-import 'package:harmonymusic/ui/utils/theme_controller.dart';
+import 'package:harmonymusic/ui/utils/home_library_controller.dart';
+import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
 import 'package:harmonymusic/ui/widgets/list_widget.dart';
 import 'package:harmonymusic/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
 
 import '../../models/playlist.dart';
 import '../player/player_controller.dart';
@@ -19,12 +21,18 @@ class PlaylistNAlbumScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args = Get.arguments as List;
-    final dynamic content =
-        args[0] as bool ? args[1] as Album : args[1] as Playlist;
-    final PlayerController playerController = Get.find<PlayerController>();
+    final args = Get.arguments;
+
+    final dynamic content = args != null
+        ? (args[0] as bool ? args[1] : args[1] as Playlist)
+        : Get.find<PlayListNAlbumScreenController>().contentRenderer;
+
     final PlayListNAlbumScreenController playListNAlbumScreenController =
-        Get.put(PlayListNAlbumScreenController(content, args[0]));
+        (args == null)
+            ? Get.find<PlayListNAlbumScreenController>()
+            : Get.put(
+                PlayListNAlbumScreenController(content, args[0], args[2]));
+
     return Container(
       child: Row(
         children: [
@@ -62,105 +70,229 @@ class PlaylistNAlbumScreen extends StatelessWidget {
             ],
             // selectedIconTheme: IconThemeData(color: Colors.white)
           ),
-          Expanded(
-              child: Container(
-            color: Theme.of(context).canvasColor,
-            padding: const EdgeInsets.only(top: 90, left: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  content.title,
-                  style: Theme.of(context).textTheme.titleLarge,
-                  textAlign: TextAlign.start,
-                ),
-                (playListNAlbumScreenController.isAlbum.isFalse &&
-                        !content.isCloudPlaylist)
-                    ? const SizedBox.shrink()
-                    : Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: SizedBox.square(
-                            dimension: 200,
-                            child: Stack(
-                              children: [
-                                playListNAlbumScreenController.isAlbum.isTrue
-                                    ? ImageWidget(
-                                        album: content,
-                                        isLargeImage: true,
-                                      )
-                                    : ImageWidget(
-                                        playlist: content,
-                                        isLargeImage: true,
+
+          ///Todo loading widget
+          Obx(() => playListNAlbumScreenController.isContentFetched.isFalse
+              ? const SizedBox.shrink()
+              : Expanded(
+                  child: Container(
+                  color: Theme.of(context).canvasColor,
+                  padding: const EdgeInsets.only(top: 73, left: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width - 120,
+                            child: Text(
+                              playListNAlbumScreenController
+                                  .contentRenderer.title,
+                              style: Theme.of(context).textTheme.titleLarge,
+                              textAlign: TextAlign.start,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          (playListNAlbumScreenController.isAlbum.isFalse &&
+                                  !content.isCloudPlaylist &&
+                                  content.playlistId != "LIBFAV" &&
+                                  content.playlistId != "SongsCache" &&
+                                  content.playlistId != "LIBRP")
+                              ? IconButton(
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      context: Get.find<PlayerController>()
+                                          .homeScaffoldkey
+                                          .currentState!
+                                          .context,
+                                      barrierColor:
+                                          Colors.transparent.withAlpha(100),
+                                      builder: (context) => SizedBox(
+                                        height: 140,
+                                        child: Column(
+                                          children: [
+                                            ListTile(
+                                              leading: const Icon(Icons.edit),
+                                              title:
+                                                  const Text("Rename playlist"),
+                                              onTap: () {
+                                                Navigator.of(context).pop();
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      CreateNRenamePlaylistPopup(
+                                                          renamePlaylist: true,
+                                                          playlist: content),
+                                                );
+                                              },
+                                            ),
+                                            ListTile(
+                                              leading: const Icon(
+                                                  Icons.delete_rounded),
+                                              title:
+                                                  const Text("Remove playlist"),
+                                              onTap: () {
+                                                Navigator.of(context).pop();
+                                                Get.nestedKey(
+                                                        ScreenNavigationSetup
+                                                            .id)!
+                                                    .currentState!
+                                                    .pop();
+                                                playListNAlbumScreenController
+                                                    .addNremoveFromLibrary(
+                                                        content,
+                                                        add: false)
+                                                    .then((value) => ScaffoldMessenger
+                                                            .of(context)
+                                                        .showSnackBar(snackbar(
+                                                            context,
+                                                            value
+                                                                ? "Playlist removed!"
+                                                                : "Operation failed",
+                                                            200)));
+                                              },
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                Align(
-                                  alignment: Alignment.topRight,
-                                  child: InkWell(
-                                      onTap: () {
-                                        playListNAlbumScreenController
-                                            .addNremoveFromLibrary(content,
-                                                add:
-                                                    playListNAlbumScreenController
-                                                        .isAddedToLibrary
-                                                        .isFalse);
-                                      },
-                                      child: Container(
-                                        height: 40,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .canvasColor
-                                                .withOpacity(.7),
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(10))),
-                                        child: Obx(() => Icon(
-                                            playListNAlbumScreenController
-                                                    .isAddedToLibrary.isFalse
-                                                ? Icons.add
-                                                : Icons.check)),
-                                      )),
-                                ),
-                              ],
-                            )),
+                                    );
+                                  },
+                                  icon: const Icon(Icons.more_vert))
+                              : const SizedBox.shrink()
+                        ],
                       ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: (playListNAlbumScreenController.isAlbum.isFalse &&
+                      (playListNAlbumScreenController.isAlbum.isFalse &&
                               !content.isCloudPlaylist)
-                          ? 0
-                          : 10.0),
-                  child: Text(
-                    playListNAlbumScreenController.isAlbum.isTrue
-                        ? content.artists[0]['name'] ?? ""
-                        : content.description ?? "",
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                ),
-                (playListNAlbumScreenController.isAlbum.isFalse &&
-                        !content.isCloudPlaylist)
-                    ? const SizedBox.shrink()
-                    : const Divider(),
-                (playListNAlbumScreenController.isAlbum.isFalse &&
-                        !content.isCloudPlaylist)
-                    ? const SizedBox.shrink()
-                    : Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
+                          ? const SizedBox.shrink()
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: SizedBox.square(
+                                  dimension: 200,
+                                  child: Stack(
+                                    children: [
+                                      playListNAlbumScreenController
+                                              .isAlbum.isTrue
+                                          ? ImageWidget(
+                                              album:
+                                                  playListNAlbumScreenController
+                                                      .contentRenderer,
+                                              isLargeImage: true,
+                                            )
+                                          : ImageWidget(
+                                              playlist: content,
+                                              isLargeImage: true,
+                                            ),
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                        child: InkWell(
+                                            onTap: () {
+                                              final add =
+                                                  playListNAlbumScreenController
+                                                      .isAddedToLibrary.isFalse;
+                                              playListNAlbumScreenController
+                                                  .addNremoveFromLibrary(
+                                                      content,
+                                                      add: add)
+                                                  .then((value) => ScaffoldMessenger
+                                                          .of(context)
+                                                      .showSnackBar(snackbar(
+                                                          context,
+                                                          value
+                                                              ? add
+                                                                  ? playListNAlbumScreenController
+                                                                          .isAlbum
+                                                                          .isTrue
+                                                                      ? "Album bookmarked !"
+                                                                      : "Playlist bookmarked!"
+                                                                  : playListNAlbumScreenController
+                                                                          .isAlbum
+                                                                          .isTrue
+                                                                      ? "Album bookmark removed!"
+                                                                      : "Playlist bookmark removed!"
+                                                              : "Operation failed",
+                                                          200)));
+                                            },
+                                            child: Container(
+                                              height: 40,
+                                              width: 40,
+                                              decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .canvasColor
+                                                      .withOpacity(.7),
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                          bottomLeft:
+                                                              Radius.circular(
+                                                                  10))),
+                                              child: Obx(() => Icon(
+                                                  playListNAlbumScreenController
+                                                          .isAddedToLibrary
+                                                          .isFalse
+                                                      ? Icons.bookmark_add
+                                                      : Icons.bookmark_added)),
+                                            )),
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: (playListNAlbumScreenController
+                                        .isAlbum.isFalse &&
+                                    !content.isCloudPlaylist)
+                                ? 0
+                                : 10.0),
                         child: Text(
-                          "Songs",
-                          style: Theme.of(context).textTheme.titleMedium,
+                          playListNAlbumScreenController.isAlbum.isTrue
+                              ? playListNAlbumScreenController
+                                      .contentRenderer.artists[0]['name'] ??
+                                  ""
+                              : content.description ?? "",
+                          style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ),
-                Obx(() =>
-                    playListNAlbumScreenController.isContentFetched.value
-                        ? ListWidget(
-                            playListNAlbumScreenController.songList,
-                            "Songs",
-                            true)
-                        : const Expanded(child: SongListShimmer()))
-              ],
-            ),
-          ))
+                      (playListNAlbumScreenController.isAlbum.isFalse &&
+                              !content.isCloudPlaylist)
+                          ? const SizedBox.shrink()
+                          : const Divider(),
+                      (playListNAlbumScreenController.isAlbum.isFalse &&
+                              !content.isCloudPlaylist)
+                          ? const SizedBox.shrink()
+                          : Padding(
+                              padding: const EdgeInsets.only(bottom: 10.0),
+                              child: Text(
+                                "Songs",
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                      Obx(() => playListNAlbumScreenController
+                              .isContentFetched.value
+                          ? Obx(() =>
+                              playListNAlbumScreenController.songList.isNotEmpty
+                                  ? ListWidget(
+                                      playListNAlbumScreenController.songList
+                                          .toList(),
+                                      "Songs",
+                                      true,
+                                      isPlaylist: true,
+                                      playlist: playListNAlbumScreenController
+                                              .isAlbum.isFalse
+                                          ? content as Playlist
+                                          : null,
+                                    )
+                                  : Expanded(
+                                      child: Center(
+                                        child: Text("Empty playlist !",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall),
+                                      ),
+                                    ))
+                          : const Expanded(child: SongListShimmer()))
+                    ],
+                  ),
+                )))
         ],
       ),
     );

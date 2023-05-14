@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
 import 'package:harmonymusic/ui/widgets/marqwee_widget.dart';
 
@@ -64,8 +65,7 @@ class Player extends StatelessWidget {
                                     playerController.currentSongIndex.value ==
                                             index
                                         ? Theme.of(context)
-                                            .primaryColor
-                                            .withLightness(.2)
+                                            .colorScheme.secondary
                                         : Theme.of(context)
                                             .bottomSheetTheme
                                             .backgroundColor,
@@ -126,7 +126,12 @@ class Player extends StatelessWidget {
                       ? CachedNetworkImage(
                           memCacheHeight: 200,
                           imageBuilder: (context, imageProvider) {
-                            themeController.setTheme(imageProvider);
+                            Get.find<SettingsScreenController>()
+                                        .themeModetype
+                                        .value ==
+                                    ThemeType.dynamic
+                                ? themeController.setTheme(imageProvider)
+                                : null;
                             return Image(
                               image: imageProvider,
                               fit: BoxFit.fitHeight,
@@ -217,24 +222,26 @@ class Player extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.favorite_border,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .color,
-                            )),
+                            onPressed: playerController.toggleFavourite,
+                            icon: Obx(() => Icon(
+                                  playerController.isCurrentSongFav.isFalse
+                                      ? Icons.favorite_border
+                                      : Icons.favorite,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .color,
+                                ))),
                         _previousButton(playerController, context),
                         CircleAvatar(radius: 35, child: _playButton()),
                         _nextButton(playerController, context),
                         Obx(() {
                           return IconButton(
-                              onPressed: playerController.toggleShuffleMode,
+                              onPressed: playerController.toggleLoopMode,
                               icon: Icon(
-                                Icons.shuffle,
+                                Icons.all_inclusive,
                                 color:
-                                    playerController.isShuffleModeEnabled.value
+                                    playerController.isLoopModeEnabled.value
                                         ? Colors.green
                                         : Theme.of(context)
                                             .textTheme

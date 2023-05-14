@@ -12,9 +12,9 @@ class ArtistScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final artist = Get.arguments as Artist;
-    final ArtistScreenController artistScreenController =
-        Get.put(ArtistScreenController(artist));
+    final args = Get.arguments;
+    final ArtistScreenController artistScreenController = args!=null?
+        Get.put(ArtistScreenController(args[0],args[1])):Get.find<ArtistScreenController>();
     return Scaffold(
       body: Row(
         children: [
@@ -107,9 +107,9 @@ class ArtistScreen extends StatelessWidget {
                                                   ? const SizedBox.shrink()
                                                   : Icon(artistScreenController
                                                           .isAddedToLibrary
-                                                          .isTrue
-                                                      ? Icons.bookmark
-                                                      : Icons.bookmark_outline),
+                                                          .isFalse
+                                                      ? Icons.bookmark_add
+                                                      : Icons.bookmark_added),
                                             ),
                                           )
                                         ],
@@ -147,17 +147,19 @@ class ArtistScreen extends StatelessWidget {
                   {
                     if (content.containsKey('songs')) {
                       return SeparateSearchItemWidget(
+                        isResultWidget: false,
                         items: content['songs']['results'],
                         title: "Songs",
                         topPadding: 75,
                       );
                     }
-                    return SizedBox.shrink();
+                    return const SizedBox.shrink();
                   }
                 case 2:
                   {
                     if (content.containsKey('videos')) {
                       return SeparateSearchItemWidget(
+                        isResultWidget: false,
                         items: content['videos']['results'],
                         title: "Videos",
                         topPadding: 75,
@@ -169,6 +171,7 @@ class ArtistScreen extends StatelessWidget {
                   {
                     if (content.containsKey('albums')) {
                       return SeparateSearchItemWidget(
+                        isResultWidget: false,
                         items: content['albums']['results'],
                         title: "Albums",
                         topPadding: 75,
@@ -180,6 +183,7 @@ class ArtistScreen extends StatelessWidget {
                   {
                     if (content.containsKey('singles')) {
                       return SeparateSearchItemWidget(
+                        isResultWidget: false,
                         items: content['singles']['results'],
                         title: "Singles",
                         topPadding: 75,

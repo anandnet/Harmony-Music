@@ -83,12 +83,8 @@ bool isExpired({String? url, int? epoch}) {
 
   if (epoch != null &&
       DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800 < epoch) {
-    printINFO(
-        "${DateTime.now().millisecondsSinceEpoch ~/ 1000 + 1800}  $epoch");
-    printINFO("Url or epoch is not Expired");
     return false;
   }
-  printINFO("Url or epoch is Expired");
   return true;
 }
 

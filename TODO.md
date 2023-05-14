@@ -4,8 +4,8 @@
 * [Done] <s> Playlist screen for items </s>
 * [Partialy_completed] Search screen
 * [Done] <s>Search result screen</s>
-* Artist Screen
-* App Settings
+* [Done] Artist Screen
+* [Partialy_completed] App Settings
 * Housekeeping work
 * Battery optimization disable option
 * Album/Playlist Screen Modification (Bookmark, other playlist/Album details)
@@ -30,3 +30,10 @@ Fix Required:
 * [Done] <s>Pushing song to playlist</s>
 * Code refactor
 
+Priority Work:
+* [done] Playlist remove & rename feature
+* [done] Enqueue Song fix
+* [done] Go to Album & View Artist Fix
+* [done] Empty Playlist representation
+* [done] Search header fix
+* [done] Search artist list

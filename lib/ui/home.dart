@@ -32,6 +32,7 @@ class Home extends StatelessWidget {
         }
       },
       child: Scaffold(
+        key: playerController.homeScaffoldkey,
           body: Obx(() => SlidingUpPanel(
               header: Obx(() {
                 return Visibility(
@@ -48,13 +49,15 @@ class Home extends StatelessWidget {
                             Container(
                               height: 3,
                               color:
-                                  Theme.of(context).textTheme.titleSmall!.color,
+                                  Theme.of(context).progressIndicatorTheme
+                                  .color,
                               child: MiniPlayerProgressBar(
                                 current: playerController
                                     .progressBarStatus.value.current,
                                 total: playerController
                                     .progressBarStatus.value.total,
-                                progressBarColor:Theme.of(context).progressIndicatorTheme.linearTrackColor!
+                              //need to check
+                                progressBarColor:Theme.of(context).progressIndicatorTheme.linearTrackColor?? Colors.white
                               ),
                             ),
                             Padding(

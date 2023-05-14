@@ -2,26 +2,30 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../models/playlist.dart';
 import '../navigator.dart';
 import '../player/player_controller.dart';
 import 'image_widget.dart';
+import 'songinfo_bottom_sheet.dart';
 
 class ListWidget extends StatelessWidget {
-  const ListWidget(
-    this.items,
-    this.title,
-    this.isCompleteList, {
-    super.key,
-  });
+  const ListWidget(this.items, this.title, this.isCompleteList,
+      {super.key, this.isPlaylist = false,this.playlist});
   final List<dynamic> items;
   final String title;
   final bool isCompleteList;
+
+  /// Valid for songlist
+  final bool isPlaylist;
+  final Playlist? playlist;
 
   @override
   Widget build(BuildContext context) {
     if (title == "Videos" || title.contains("Songs")) {
       return isCompleteList
-          ? Expanded(child: listViewSongVid(items, isCompleteList))
+          ? Expanded(
+              child: listViewSongVid(items, isCompleteList,
+                  isPlaylist: isPlaylist,playlist: playlist))
           : SizedBox(
               height: items.length * 75.0,
               child: listViewSongVid(items, isCompleteList),
@@ -31,22 +35,42 @@ class ListWidget extends StatelessWidget {
     } else if (title == "Albums" || title == "Singles") {
       return listViewAlbums(items);
     } else if (title.contains('Artists')) {
-      return listViewArtists(items);
+      return isCompleteList? Expanded(child: listViewArtists(items)): SizedBox(
+              height: items.length * 95.0,
+              child: listViewArtists(items),
+            );
     }
     return const SizedBox.shrink();
   }
 
-  Widget listViewSongVid(List<dynamic> items, bool isCompleteList) {
+  Widget listViewSongVid(List<dynamic> items, bool isCompleteList,
+      {bool isPlaylist = false, Playlist? playlist}) {
     final playerController = Get.find<PlayerController>();
     return ListView.builder(
-        padding: EdgeInsets.zero,
+         padding: const EdgeInsets.only(top: 10),
         itemCount: items.length,
         physics: isCompleteList
             ? const BouncingScrollPhysics()
             : const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) => ListTile(
               onTap: () {
-                playerController.pushSongToQueue(items[index] as MediaItem);
+                isPlaylist
+                    ? playerController.playPlayListSong(
+                        List<MediaItem>.from(items), index)
+                    : playerController
+                        .pushSongToQueue(items[index] as MediaItem);
+              },
+              onLongPress: () async {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  context:
+                      playerController.homeScaffoldkey.currentState!.context,
+                  //constraints: BoxConstraints(maxHeight:Get.height),
+                  barrierColor: Colors.transparent.withAlpha(100),
+                  builder: (context) => SongInfoBottomSheet(
+                      items[index] as MediaItem,
+                      playlist: playlist,),
+                ).whenComplete(() => Get.delete<SongInfoController>());
               },
               contentPadding: const EdgeInsets.only(top: 0, left: 5, right: 30),
               leading: SizedBox.square(
@@ -74,7 +98,7 @@ class ListWidget extends StatelessWidget {
   Widget listViewPlaylists(List<dynamic> playlists) {
     return Expanded(
       child: ListView.builder(
-          padding: EdgeInsets.zero,
+           padding: const EdgeInsets.only(top: 10),
           itemCount: playlists.length,
           itemExtent: 100,
           physics: const BouncingScrollPhysics(),
@@ -84,7 +108,7 @@ class ListWidget extends StatelessWidget {
                 onTap: () {
                   Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
                       id: ScreenNavigationSetup.id,
-                      arguments: [false, playlists[index]]);
+                      arguments: [false, playlists[index],false]);
                 },
                 contentPadding:
                     const EdgeInsets.only(top: 0, bottom: 0, left: 10),
@@ -112,7 +136,7 @@ class ListWidget extends StatelessWidget {
   Widget listViewAlbums(List<dynamic> albums) {
     return Expanded(
       child: ListView.builder(
-        padding: EdgeInsets.zero,
+         padding: const EdgeInsets.only(top: 10),
         itemCount: albums.length,
         itemExtent: 100,
         physics: const BouncingScrollPhysics(),
@@ -129,7 +153,7 @@ class ListWidget extends StatelessWidget {
             onTap: () {
               Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
                   id: ScreenNavigationSetup.id,
-                  arguments: [true, albums[index]]);
+                  arguments: [true, albums[index],false]);
             },
             contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 10),
             leading: SizedBox.square(
@@ -156,40 +180,38 @@ class ListWidget extends StatelessWidget {
   }
 
   Widget listViewArtists(List<dynamic> artists) {
-    return Expanded(
-      child: ListView.builder(
-          padding: EdgeInsets.zero,
-          itemCount: artists.length,
-          itemExtent: 90,
-          physics: const BouncingScrollPhysics(),
-          itemBuilder: (context, index) => ListTile(
-                visualDensity: const VisualDensity(horizontal: -2, vertical: 2),
-                onTap: () {
-                  Get.toNamed(ScreenNavigationSetup.artistScreen,
-                      id: ScreenNavigationSetup.id, arguments: artists[index]);
-                },
-                contentPadding:
-                    const EdgeInsets.only(top: 0, bottom: 0, left: 5),
-                leading: Container(
-                    height: 90,
-                    width: 90,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: const BoxDecoration(shape: BoxShape.circle),
-                    child: ImageWidget(
-                      artist: artists[index],
-                      isMediumImage: true,
-                    )),
-                title: Text(
-                  artists[index].name,
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                subtitle: Text(
-                  artists[index].subscribers,
-                  maxLines: 2,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              )),
-    );
+    return ListView.builder(
+        padding: const EdgeInsets.only(top:10),
+        itemCount: artists.length,
+        itemExtent: 90,
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, index) => ListTile(
+              visualDensity: const VisualDensity(horizontal: -2, vertical: 2),
+              onTap: () {
+                Get.toNamed(ScreenNavigationSetup.artistScreen,
+                    id: ScreenNavigationSetup.id, arguments: [false,artists[index]]);
+              },
+              contentPadding:
+                  const EdgeInsets.only(top: 0, bottom: 0, left: 5),
+              leading: Container(
+                  height: 90,
+                  width: 90,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  child: ImageWidget(
+                    artist: artists[index],
+                    isMediumImage: true,
+                  )),
+              title: Text(
+                artists[index].name,
+                maxLines: 1,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              subtitle: Text(
+                artists[index].subscribers,
+                maxLines: 2,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ));
   }
 }

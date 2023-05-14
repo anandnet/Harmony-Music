@@ -1,4 +1,5 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/models/artist.dart';
@@ -28,7 +29,7 @@ class LibrarySongsController extends GetxController {
 
 class LibraryPlaylistsController extends GetxController {
   final initPlst = [
-   Playlist(
+    Playlist(
         title: "Recently Played",
         playlistId: "LIBRP",
         thumbnailUrl: "",
@@ -40,12 +41,13 @@ class LibraryPlaylistsController extends GetxController {
         isCloudPlaylist: false),
     Playlist(
         title: "Cached/Offline",
-        playlistId: "LIBCAC",
+        playlistId: "SongsCache",
         thumbnailUrl: "",
         isCloudPlaylist: false)
   ];
   late RxList<Playlist> libraryPlaylists = RxList(initPlst);
   final isContentFetched = false.obs;
+  final textInputController = TextEditingController();
 
   @override
   void onInit() {
@@ -55,12 +57,53 @@ class LibraryPlaylistsController extends GetxController {
 
   void refreshLib() async {
     final box = await Hive.openBox("LibraryPlaylists");
-    libraryPlaylists.value=[ ...initPlst,...(box.values
-        .map<Playlist?>((item) => Playlist.fromJson(item))
-        .whereType<Playlist>()
-        .toList())];
+    libraryPlaylists.value = [
+      ...initPlst,
+      ...(box.values
+          .map<Playlist?>((item) => Playlist.fromJson(item))
+          .whereType<Playlist>()
+          .toList())
+    ];
     isContentFetched.value = true;
     await box.close();
+  }
+
+  Future<bool> renamePlaylist(Playlist playlist) async {
+    String title = textInputController.text;
+    if (title != "") {
+      final box = await Hive.openBox("LibraryPlaylists");
+      title = "${title[0].toUpperCase()}${title.substring(1).toLowerCase()}";
+      playlist.newTitle = title;
+      box.put(playlist.playlistId, playlist.toJson());
+      refreshLib();
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> createNewPlaylist(
+      {bool createPlaylistNaddSong = false, MediaItem? songItem}) async {
+    String title = textInputController.text;
+    if (title != "") {
+      title = "${title[0].toUpperCase()}${title.substring(1).toLowerCase()}";
+      final newplst = Playlist(
+          title: title,
+          playlistId: "LIB${DateTime.now().millisecondsSinceEpoch}",
+          thumbnailUrl: "",
+          description: "Library Playlist",
+          isCloudPlaylist: false);
+      final box = await Hive.openBox("LibraryPlaylists");
+      box.put(newplst.playlistId, newplst.toJson());
+      libraryPlaylists.add(newplst);
+      if (createPlaylistNaddSong) {
+        final plastbox = await Hive.openBox(newplst.playlistId);
+        plastbox.put(songItem?.id, MediaItemBuilder.toJson(songItem!));
+        plastbox.close();
+      }
+      await box.close();
+      return true;
+    }
+    return false;
   }
 }
 

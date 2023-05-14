@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
 
 import '../navigator.dart';
 import '../widgets/search_related_widgets.dart';
@@ -17,8 +16,8 @@ class SearchResultScreen extends StatelessWidget {
         children: [
           SingleChildScrollView(
             child: ConstrainedBox(
-              constraints:
-                  BoxConstraints(minHeight: MediaQuery.of(context).size.height+195),
+              constraints: BoxConstraints(
+                  minHeight: MediaQuery.of(context).size.height + 195),
               child: IntrinsicHeight(
                 child: Obx(
                   () => NavigationRail(
@@ -83,55 +82,38 @@ class SearchResultScreen extends StatelessWidget {
                     case "Songs":
                     case "Videos":
                       {
-                        return searchResScrController
-                                .isSeparatedResultContentFetced.isTrue
-                            ? SeparateSearchItemWidget(
-                                items: searchResScrController
-                                    .separatedResultContent[name],
-                                title: name,
-                                isCompleteList: true,
-                                topPadding: 75,
-                              )
-                            : const SongListShimmer(
-                                topPadding: 140,
-                              );
+                        return SeparateSearchItemWidget(
+                          isResultWidget: true,
+                          items: [],
+                          title: name,
+                          isCompleteList: true,
+                          topPadding: 75,
+                        );
                       }
                     case "Featured playlists":
                     case "Community playlists":
                       {
-                        return searchResScrController
-                                .isSeparatedResultContentFetced.isTrue
-                            ? SeparateSearchItemWidget(
-                                title: name,
-                                items: searchResScrController
-                                    .separatedResultContent[name],
-                                topPadding: 75,
-                              )
-                            : const SizedBox.shrink();
+                        return SeparateSearchItemWidget(
+                          title: name,
+                          items: [],
+                          topPadding: 75,
+                        );
                       }
                     case "Albums":
                       {
-                        return searchResScrController
-                                .isSeparatedResultContentFetced.isTrue
-                            ? SeparateSearchItemWidget(
-                                title: name,
-                                items: searchResScrController
-                                    .separatedResultContent[name],
-                                topPadding: 75,
-                              )
-                            : const SizedBox.shrink();
+                        return SeparateSearchItemWidget(
+                          title: name,
+                          items: [],
+                          topPadding: 75,
+                        );
                       }
                     case "Artists":
                       {
-                        return searchResScrController
-                                .isSeparatedResultContentFetced.isTrue
-                            ? SeparateSearchItemWidget(
-                                title: name,
-                                items: searchResScrController
-                                    .separatedResultContent[name],
-                                topPadding: 75,
-                              )
-                            : const SizedBox.shrink();
+                        return SeparateSearchItemWidget(
+                          title: name,
+                          items: [],
+                          topPadding: 75,
+                        );
                       }
                   }
                 }

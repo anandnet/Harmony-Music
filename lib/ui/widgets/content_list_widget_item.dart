@@ -17,9 +17,11 @@ class ContentListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final isAlbum = content.runtimeType.toString() == "Album";
     return InkWell(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
       onTap: () {
         Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
-            id: ScreenNavigationSetup.id, arguments: [isAlbum, content]);
+            id: ScreenNavigationSetup.id, arguments: [isAlbum, content,false]);
       },
       child: Container(
         width: 120,
@@ -42,9 +44,7 @@ class ContentListItem extends StatelessWidget {
                         )
                       : Container(
                           decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .canvasColor
-                                  .withLightness(0.6),
+                              color: Theme.of(context).primaryColorLight,
                               borderRadius: BorderRadius.circular(10)),
                           child: Center(
                               child: Icon(
@@ -52,7 +52,10 @@ class ContentListItem extends StatelessWidget {
                                 ? Icons.history_rounded
                                 : content.playlistId == 'LIBFAV'
                                     ? Icons.favorite
-                                    : Icons.flight,color: Colors.white,
+                                    : content.playlistId == 'SongsCache'
+                                        ? Icons.flight
+                                        : Icons.playlist_play_rounded,
+                            color: Colors.white,
                             size: 40,
                           ))),
             ),
@@ -65,7 +68,7 @@ class ContentListItem extends StatelessWidget {
             ),
             Text(
               isAlbum
-                  ? content.artists[0]['name'] ?? ""
+                  ? isLibraryItem ? "":"${content.artists[0]['name'] ?? ""} | ${content.year ?? ""}"
                   : isLibraryItem
                       ? ""
                       : content.description ?? "",

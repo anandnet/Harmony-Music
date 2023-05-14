@@ -12,7 +12,10 @@ import 'continuations.dart';
 import 'nav_parser.dart';
 
 // ignore: constant_identifier_names
-enum AudioQuality { High, Medium, Low }
+enum AudioQuality {
+  Low,
+  High,
+}
 
 class MusicServices extends getx.GetxService {
   late YoutubeExplode _yt;
@@ -362,55 +365,71 @@ class MusicServices extends getx.GetxService {
         .toList();
   }
 
-  // Future<Uri?> getSongUri(String songId,
-  //     {AudioQuality quality = AudioQuality.High}) async {
-  //   try {
-  //     final songStreamManifest =
-  //         await _yt.videos.streamsClient.getManifest(songId);
-  //     final streamUriList = songStreamManifest.audioOnly.sortByBitrate();
-  //     if (quality == AudioQuality.High) {
-  //       return streamUriList
-  //           .firstWhere((element) => element.audioCodec.contains("mp4a"))
-  //           .url;
-  //     } else if (quality == AudioQuality.Medium) {
-  //       printINFO(streamUriList[streamUriList.length ~/ 2].url);
-  //       return streamUriList[streamUriList.length ~/ 2].url;
-  //     } else {
-  //       return streamUriList
-  //           .lastWhere((element) => element.audioCodec.contains("mp4a"))
-  //           .url;
-  //     }
-  //   } catch (e) {
-  //     printERROR("Error $e");
-  //     return null;
-  //   }
-  // }
-
-  Future<Uri?> getSongUri(String songId,
-      {String defaultUrl = "https://pipedapi.in.projectsegfau.lt"}) async {
+  Future<List<String>?> getSongUri(String songId,
+      {AudioQuality quality = AudioQuality.High}) async {
     try {
-      final response = await dio.get("$defaultUrl/streams/$songId");
-      if (response.statusCode == 200) {
-        final x = ((response.data["audioStreams"])
-            .map((item) {
-              if (item['format'] == "M4A") {
-                //printINFO(item);
-                return Map<dynamic, dynamic>.from(item);
-              }
-              return null;
-            })
-            .whereType<Map<dynamic, dynamic>>()
-            .toList());
-        //printINFO();
+      final songStreamManifest =
+          await _yt.videos.streamsClient.getManifest(songId);
+      final streamUriList = songStreamManifest.audioOnly.sortByBitrate();
 
-        return Uri.parse(x[1]['url']);
-      } else {
-        return getSongUri(songId, defaultUrl: "https://pipedapi.kavin.rocks");
+      for (AudioOnlyStreamInfo x in streamUriList) {
+        printINFO("${x.audioCodec} ${x.size} ${x.tag}");
       }
+
+      return [
+        streamUriList
+            .lastWhere((element) => element.audioCodec.contains("mp4a"))
+            .url
+            .toString(),
+        streamUriList
+            .firstWhere((element) => element.audioCodec.contains("mp4a"))
+            .url
+            .toString()
+      ];
+
+      // if (quality == AudioQuality.High) {
+      //   return streamUriList
+      //       .firstWhere((element) => element.audioCodec.contains("mp4a"))
+      //       .url;
+      // } else if (quality == AudioQuality.Medium) {
+      //   printINFO(streamUriList[streamUriList.length ~/ 2].url);
+      //   return streamUriList[streamUriList.length ~/ 2].url;
+      // } else {
+      //   return streamUriList
+      //       .lastWhere((element) => element.audioCodec.contains("mp4a"))
+      //       .url;
+      // }
     } catch (e) {
-      return getSongUri(songId, defaultUrl: "https://pipedapi.kavin.rocks");
+      printERROR("Error $e");
+      return null;
     }
   }
+
+  // Future<Uri?> getSongUri(String songId,
+  //     {String defaultUrl = "https://pipedapi.in.projectsegfau.lt"}) async {
+  //   try {
+  //     final response = await dio.get("$defaultUrl/streams/$songId");
+  //     if (response.statusCode == 200) {
+  //       final x = ((response.data["audioStreams"])
+  //           .map((item) {
+  //             if (item['format'] == "M4A") {
+  //               //printINFO(item);
+  //               return Map<dynamic, dynamic>.from(item);
+  //             }
+  //             return null;
+  //           })
+  //           .whereType<Map<dynamic, dynamic>>()
+  //           .toList());
+  //       printINFO("Url$defaultUrl");
+
+  //       return Uri.parse(x[1]['url']);
+  //     } else {
+  //       return getSongUri(songId, defaultUrl: "https://pipedapi.kavin.rocks");
+  //     }
+  //   } catch (e) {
+  //     return getSongUri(songId, defaultUrl: "https://pipedapi.kavin.rocks");
+  //   }
+  // }
 
   Future<Map<String, dynamic>> search(String query,
       {String? filter,

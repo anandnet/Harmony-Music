@@ -48,14 +48,12 @@ dependencies:
   shimmer: ^2.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  android_power_manager: ^1.0.0
+  flutter_keyboard_visibility: ^5.4.1
       #ref: main
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  hive_generator: ^2.0.0
-  build_runner: ^2.3.3
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

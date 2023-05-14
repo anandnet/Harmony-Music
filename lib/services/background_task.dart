@@ -18,13 +18,13 @@ Future<void> cacheQueueitemsUrl(List<MediaItem> mediaitems) async {
   for (MediaItem item in mediaitems) {
     await checkNPutUrl(item.id, songsCacheBox, songsUrlCacheBox, musicServices);
   }
-  printINFO("All url Cached");
+  printINFO("All SteamUrls Cached in box");
 }
 
 Future<void> checkNPutUrl(String songId, dynamic songsCacheBox,
     dynamic songsUrlCacheBox, MusicServices musicServices) async {
   if (songsCacheBox.containsKey(songId)) {
-    printINFO("Song alredy cached $songId", tag: "Isolate");
+    printINFO("StreamUrl has alredy been cached in box $songId", tag: "UrlCaching");
     return;
   } else {
     //check if song stream url is cached and allocate url accordingly
@@ -37,7 +37,7 @@ Future<void> checkNPutUrl(String songId, dynamic songsCacheBox,
     } else {
       final url = (await musicServices.getSongUri(songId)).toString();
       if (url.toString() != 'null') songsUrlCacheBox.put(songId, url);
-      printINFO("Song Url cached $songId", tag: "Isolate");
+      printINFO("StreamUrl has cached $songId", tag: "Isolate");
     }
   }
 }

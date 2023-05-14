@@ -16,10 +16,10 @@ class ArtistScreenController extends GetxController {
   final artistData = <String, dynamic>{}.obs;
   final isAddedToLibrary = false.obs;
   late Artist artist_;
-  ArtistScreenController(Artist artist) {
-    artist_ = artist;
-    _checkIfAddedToLibrary(artist.browseId);
-    _fetchArtistContent(artist.browseId);
+  ArtistScreenController(bool isIdOnly, dynamic artist) {
+    if (!isIdOnly) artist_ = artist as Artist;
+    _checkIfAddedToLibrary(isIdOnly ? artist as String : artist.browseId);
+    _fetchArtistContent(isIdOnly ? artist as String : artist.browseId);
   }
 
   Future<void> _checkIfAddedToLibrary(String id) async {
@@ -32,6 +32,8 @@ class ArtistScreenController extends GetxController {
     artistData.value = await musicServices.getArtist(id);
     isArtistContentFetced.value = true;
     //inspect(artistData.value);
+    final data = artistData;
+    artist_ = Artist(browseId: id,name: data['name'],thumbnailUrl: data['thumbnails'][0]['url'],subscribers: "${data['subscribers']} subscribers",radioId: data["radioId"]);
   }
 
   Future<void> addNremoveFromLibrary({bool add = true}) async {

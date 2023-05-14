@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:android_power_manager/android_power_manager.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +9,7 @@ import 'package:harmonymusic/services/audio_handler.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/ui/home.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,19 +20,10 @@ import 'ui/utils/home_library_controller.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initHive();
+  _setAppInitPrefs();
   startApplicationServices();
   Get.put<AudioHandler>(await initAudioService(), permanent: true);
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.light,
-        statusBarColor: Colors.transparent,
-        systemNavigationBarColor: Colors.white.withOpacity(0.002),
-        systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.light,
-        systemNavigationBarContrastEnforced: true),
-  );
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-
   runApp(const MyApp());
 }
 
@@ -45,16 +36,16 @@ class MyApp extends StatelessWidget {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     SystemChannels.lifecycle.setMessageHandler((msg) async {
       if (msg == "AppLifecycleState.resumed") {
-        SystemChrome.setSystemUIOverlayStyle(
-          SystemUiOverlayStyle(
-              statusBarIconBrightness: Brightness.light,
-              statusBarColor: Colors.transparent,
-              systemNavigationBarColor: Colors.white.withOpacity(0.002),
-              systemNavigationBarDividerColor: Colors.transparent,
-              systemNavigationBarIconBrightness: Brightness.light,
-              systemStatusBarContrastEnforced: false,
-              systemNavigationBarContrastEnforced: true),
-        );
+        // SystemChrome.setSystemUIOverlayStyle(
+        //   SystemUiOverlayStyle(
+        //       statusBarIconBrightness: Brightness.light,
+        //       statusBarColor: Colors.transparent,
+        //       systemNavigationBarColor: Colors.white.withOpacity(0.002),
+        //       systemNavigationBarDividerColor: Colors.transparent,
+        //       systemNavigationBarIconBrightness: Brightness.light,
+        //       systemStatusBarContrastEnforced: false,
+        //       systemNavigationBarContrastEnforced: true),
+        // );
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       }
       return null;
@@ -78,6 +69,7 @@ Future<void> startApplicationServices() async {
   Get.lazyPut(() => LibraryPlaylistsController(), fenix: true);
   Get.lazyPut(() => LibraryAlbumsController(), fenix: true);
   Get.lazyPut(() => LibraryArtistsController(), fenix: true);
+  Get.lazyPut(() => SettingsScreenController(), fenix: true);
   // final success = await AndroidPowerManager.requestIgnoreBatteryOptimizations();
   // (success != null && success)
   //     ? printINFO("Power manager Activated")
@@ -90,4 +82,17 @@ initHive() async {
   await Hive.openBox("SongsCache");
   await Hive.openBox('SongsUrlCache');
   await Hive.openBox("AppPrefs");
+}
+
+void _setAppInitPrefs() {
+  final appPrefs = Hive.box("AppPrefs");
+  if (appPrefs.isEmpty) {
+    appPrefs.putAll({
+      'themeModeType': 0,
+      "cacheSongs": false,
+      "skipSilenceEnabled": false,
+      'streamingQuality': 1,
+      'themePrimaryColor': 4278199603
+    });
+  }
 }

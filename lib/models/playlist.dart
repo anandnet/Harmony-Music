@@ -27,7 +27,7 @@ class Playlist {
       this.songCount,
       this.isCloudPlaylist = true});
   final String playlistId;
-  final String title;
+  String title;
   final String? description;
   final String thumbnailUrl;
   final String? songCount;
@@ -38,14 +38,21 @@ class Playlist {
       playlistId: json["playlistId"] ?? json["browseId"],
       thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).high,
       description: json["description"],
-      songCount: json['itemCount']);
+      songCount: json['itemCount'],
+      isCloudPlaylist: json["isCloudPlaylist"] ?? true);
 
-  Map<String,dynamic> toJson() =>{
-    "title":title,
-    "playlistId":playlistId,
-    "description":description,
-    'thumbnails':[{'url':thumbnailUrl}],
-    "itemCount":songCount,
-    "isCloudPlaylist":isCloudPlaylist
-  };
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "playlistId": playlistId,
+        "description": description,
+        'thumbnails': [
+          {'url': thumbnailUrl}
+        ],
+        "itemCount": songCount,
+        "isCloudPlaylist": isCloudPlaylist
+      };
+
+  set newTitle(String title){
+    this.title = title;
+  }
 }

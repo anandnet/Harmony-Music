@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/album.dart';
+import 'package:harmonymusic/models/artist.dart';
 import 'package:harmonymusic/models/playlist.dart';
+import 'package:harmonymusic/ui/screens/artist_screen_controller.dart';
 import 'package:harmonymusic/ui/screens/search_result_screen_controller.dart';
 import 'package:harmonymusic/ui/widgets/content_list_widget.dart';
-
+import 'package:harmonymusic/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
 
 import 'list_widget.dart';
 
@@ -20,9 +22,9 @@ class ResultWidget extends StatelessWidget {
     return Obx(
       () => Center(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(0.0),
           child: SingleChildScrollView(
-            padding: const EdgeInsets.only(bottom: 90, top: 70),
+            padding: const EdgeInsets.only(bottom: 84, top: 70),
             child: searchResScrController.isResultContentFetced.value
                 ? Column(children: [
                     Align(
@@ -42,7 +44,7 @@ class ResultWidget extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    ...generateWidgetList(searchResScrController)
+                    ...generateWidgetList(searchResScrController),
                   ])
                 : const SizedBox.shrink(),
           ),
@@ -76,6 +78,12 @@ class ResultWidget extends StatelessWidget {
           ),
           isHomeContent: false,
         ));
+      } else if (item.key.contains("Artist")) {
+        list.add(SeparateSearchItemWidget(
+          items: List<Artist>.from(item.value),
+          title: item.key,
+          isCompleteList: false,
+        ));
       }
     }
 
@@ -89,15 +97,16 @@ class SeparateSearchItemWidget extends StatelessWidget {
       required this.items,
       required this.title,
       this.isCompleteList = true,
+      this.isResultWidget = true,
       this.topPadding = 0});
   final List<dynamic> items;
   final String title;
   final bool isCompleteList;
   final double topPadding;
+  final bool isResultWidget;
 
   @override
   Widget build(BuildContext context) {
-    final scresController = Get.find<SearchResultScreenController>();
     return Padding(
       padding: EdgeInsets.only(top: topPadding, left: 5),
       child: Column(
@@ -115,7 +124,8 @@ class SeparateSearchItemWidget extends StatelessWidget {
                     ? const SizedBox.shrink()
                     : TextButton(
                         onPressed: () {
-                          scresController.viewAllCallback(title);
+                          Get.find<SearchResultScreenController>()
+                              .viewAllCallback(title);
                         },
                         child: Text("View all",
                             style: Theme.of(Get.context!).textTheme.titleSmall))
@@ -127,7 +137,25 @@ class SeparateSearchItemWidget extends StatelessWidget {
                   height: 20,
                 )
               : const SizedBox.shrink(),
-          ListWidget(items, title, isCompleteList),
+          isCompleteList
+              ? isResultWidget
+                  ? GetX<SearchResultScreenController>(builder: (controller) {
+                      if (controller.isSeparatedResultContentFetced.isTrue) {
+                        return ListWidget(
+                            Get.find<SearchResultScreenController>()
+                                .separatedResultContent[title],
+                            title,
+                            isCompleteList);
+                      } else {
+                        return const Expanded(child: SongListShimmer());
+                      }
+                    })
+                  : (Get.find<ArtistScreenController>()
+                          .isArtistContentFetced
+                          .isTrue
+                      ? ListWidget(items, title, isCompleteList)
+                      : const Expanded(child: SongListShimmer()))
+              : ListWidget(items, title, isCompleteList),
         ],
       ),
     );

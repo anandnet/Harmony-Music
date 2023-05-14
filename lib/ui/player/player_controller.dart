@@ -1,7 +1,14 @@
+import 'dart:async';
 import 'dart:isolate';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:harmonymusic/helper.dart';
+import 'package:harmonymusic/models/media_Item_builder.dart';
+import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
+import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
+import 'package:hive/hive.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
@@ -30,14 +37,18 @@ class PlayerController extends GetxController {
   final currentSongIndex = (0).obs;
   final isFirstSong = true;
   final isLastSong = true;
-  final isShuffleModeEnabled = false.obs;
+  final isLoopModeEnabled = false.obs;
   final currentSong = Rxn<MediaItem>();
+  final isCurrentSongFav = false.obs;
   ScrollController scrollController = ScrollController();
+  final GlobalKey<ScaffoldState> homeScaffoldkey = GlobalKey<ScaffoldState>();
 
   final buttonState = PlayButtonState.paused.obs;
 
   var _newSongFlag = true;
   final isCurrentSongBuffered = false.obs;
+
+  late StreamSubscription<bool> keyboardSubscription;
 
   PlayerController() {
     _init();
@@ -50,6 +61,7 @@ class PlayerController extends GetxController {
     _listenForChangesInBufferedPosition();
     _listenForChangesInDuration();
     _listenForPlaylistChange();
+    _listenForKeyboardActivity();
   }
 
   void panellistener(double x) {
@@ -65,6 +77,14 @@ class PlayerController extends GetxController {
     } else {
       isPlayerPaneDraggable.value = true;
     }
+  }
+
+  void _listenForKeyboardActivity() {
+    var keyboardVisibilityController = KeyboardVisibilityController();
+    keyboardSubscription =
+        keyboardVisibilityController.onChange.listen((bool visible) {
+      visible?playerPanelController.hide():playerPanelController.show();
+    });
   }
 
   void _listenForChangesInPlayerState() {
@@ -117,7 +137,7 @@ class PlayerController extends GetxController {
   }
 
   void _listenForChangesInDuration() {
-    _audioHandler.mediaItem.listen((mediaItem) {
+    _audioHandler.mediaItem.listen((mediaItem) async {
       final oldState = progressBarStatus.value;
       progressBarStatus.update((val) {
         val!.total = mediaItem?.duration ?? Duration.zero;
@@ -131,6 +151,8 @@ class PlayerController extends GetxController {
         currentSong.value = mediaItem;
         currentSongIndex.value = currentQueue
             .indexWhere((element) => element.id == currentSong.value!.id);
+        await _checkFav();
+        await _addToRP(currentSong.value!);
       }
     });
   }
@@ -152,14 +174,14 @@ class PlayerController extends GetxController {
     receivePort.first.then((value) async {
       final upNextSongList = value;
       await _audioHandler.updateQueue(upNextSongList);
-      cacheQueueitemsUrl(upNextSongList.sublist(1));
+      //cacheQueueitemsUrl(upNextSongList.sublist(1));
     });
 
     //open player panel,set current song and push first song into playing list,
     currentSong.value = mediaItem;
     _playerPanelCheck();
-    await _audioHandler
-        .customAction("setSourceNPlay", {'mediaItem': mediaItem});
+    await _audioHandler.customAction(
+        "setSourceNPlay", {'mediaItem': mediaItem, 'retry': false});
   }
 
   ///enqueueSong   append a song to current queue
@@ -175,8 +197,8 @@ class PlayerController extends GetxController {
   Future<void> playASong(MediaItem mediaItem) async {
     currentSong.value = mediaItem;
     _playerPanelCheck();
-    await _audioHandler
-        .customAction("setSourceNPlay", {'mediaItem': mediaItem});
+    await _audioHandler.customAction(
+        "setSourceNPlay", {'mediaItem': mediaItem, 'retry': false});
   }
 
   Future<void> playPlayListSong(List<MediaItem> mediaItems, int index) async {
@@ -188,7 +210,7 @@ class PlayerController extends GetxController {
         ? await _audioHandler.updateQueue(mediaItems)
         : _audioHandler.addQueueItems(mediaItems);
     await _audioHandler.customAction("playByIndex", {"index": index});
-    cacheQueueitemsUrl(mediaItems);
+    //cacheQueueitemsUrl(mediaItems);
   }
 
   void _playerPanelCheck() {
@@ -226,17 +248,65 @@ class PlayerController extends GetxController {
     _audioHandler.customAction("playByIndex", {"index": index});
   }
 
-  void toggleShuffleMode() {
-    isShuffleModeEnabled.value
-        ? _audioHandler.setShuffleMode(AudioServiceShuffleMode.all)
-        : _audioHandler.setShuffleMode(AudioServiceShuffleMode.none);
-    isShuffleModeEnabled.value = !isShuffleModeEnabled.value;
+  void toggleSkipSilence(bool enable) {
+    _audioHandler.customAction("toggleSkipSilence", {"enable": enable});
   }
 
-  void clearPlaylist() {
-    for (int i = 0; i < _audioHandler.queue.value.length; i++) {
-      _audioHandler.removeQueueItemAt(i);
+  void toggleLoopMode() {
+    isLoopModeEnabled.isFalse
+        ? _audioHandler.setRepeatMode(AudioServiceRepeatMode.one)
+        : _audioHandler.setRepeatMode(AudioServiceRepeatMode.none);
+    isLoopModeEnabled.value = !isLoopModeEnabled.value;
+  }
+
+  Future<void> _checkFav() async {
+    isCurrentSongFav.value =
+        (await Hive.openBox("LIBFAV")).containsKey(currentSong.value!.id);
+  }
+
+  Future<void> toggleFavourite() async {
+    final currMediaItem = currentSong.value!;
+    final box = await Hive.openBox("LIBFAV");
+    isCurrentSongFav.isFalse
+        ? box.put(currMediaItem.id, MediaItemBuilder.toJson(currMediaItem))
+        : box.delete(currMediaItem.id);
+    try {
+      final playlistController = Get.find<PlayListNAlbumScreenController>();
+      if (playlistController.isAlbum.isFalse &&
+          playlistController.id == "LIBFAV") {
+        isCurrentSongFav.isFalse
+            ? playlistController.addNRemoveItemsinList(currMediaItem,
+                action: 'add', index: 0)
+            : playlistController.addNRemoveItemsinList(currMediaItem,
+                action: 'remove');
+      }
+    } catch (e) {}
+    isCurrentSongFav.value = !isCurrentSongFav.value;
+  }
+
+  var recentItem;
+
+  /// This function is used to add a mediaItem/Song to Recently played playlist
+  Future<void> _addToRP(MediaItem mediaItem) async {
+    final box = await Hive.openBox("LIBRP");
+    if (box.keys.length > 20) box.deleteAt(0);
+    if (recentItem != mediaItem) {
+      box.add(MediaItemBuilder.toJson(mediaItem));
+      try {
+        final playlistController = Get.find<PlayListNAlbumScreenController>();
+        if (playlistController.isAlbum.isFalse &&
+            playlistController.id == "LIBRP") {
+          if (playlistController.songList.length > 20) {
+            playlistController.addNRemoveItemsinList(null,
+                action: 'remove',
+                index: playlistController.songList.length - 1);
+          }
+          playlistController.addNRemoveItemsinList(mediaItem,
+              action: 'add', index: 0);
+        }
+      } catch (e) {}
     }
+    recentItem = mediaItem;
   }
 
   void replay() {
@@ -246,6 +316,7 @@ class PlayerController extends GetxController {
   @override
   void dispose() {
     _audioHandler.customAction('dispose');
+    keyboardSubscription.cancel();
     super.dispose();
   }
 }

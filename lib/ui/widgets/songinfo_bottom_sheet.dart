@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +7,7 @@ import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
 import 'package:harmonymusic/ui/widgets/add_to_playlist.dart';
 import 'package:harmonymusic/ui/widgets/snackbar.dart';
 import 'package:hive/hive.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../models/media_Item_builder.dart';
 import '../../models/playlist.dart';
@@ -16,14 +15,17 @@ import '../navigator.dart';
 import 'image_widget.dart';
 
 class SongInfoBottomSheet extends StatelessWidget {
-  const SongInfoBottomSheet(this.song, {super.key, this.playlist});
+  const SongInfoBottomSheet(this.song,
+      {super.key, this.playlist, this.calledFromPlayer = false});
   final MediaItem song;
   final Playlist? playlist;
+  final bool calledFromPlayer;
 
   @override
   Widget build(BuildContext context) {
     printINFO(playlist);
-    final songInfoController = Get.put(SongInfoController(song));
+    final songInfoController =
+        Get.put(SongInfoController(song, calledFromPlayer));
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -62,7 +64,7 @@ class SongInfoBottomSheet extends StatelessWidget {
             ).whenComplete(() => Get.delete<AddToPlaylistController>());
           },
         ),
-        ListTile(
+       calledFromPlayer?const SizedBox.shrink(): ListTile(
           visualDensity: const VisualDensity(vertical: -1),
           leading: const Icon(Icons.merge),
           title: const Text("Enqueue this song"),
@@ -79,10 +81,14 @@ class SongInfoBottomSheet extends StatelessWidget {
                 visualDensity: const VisualDensity(vertical: -1),
                 leading: const Icon(Icons.album),
                 title: const Text("Go to album"),
-                onTap: (){
+                onTap: () {
                   Navigator.of(context).pop();
-                    Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
-                      id: ScreenNavigationSetup.id, arguments: [true, song.extras!['album']['id'] ,true]);
+                  if (calledFromPlayer) {
+                    Get.find<PlayerController>().playerPanelController.close();
+                  }
+                  Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
+                      id: ScreenNavigationSetup.id,
+                      arguments: [true, song.extras!['album']['id'], true]);
                 },
               )
             : const SizedBox.shrink(),
@@ -105,11 +111,12 @@ class SongInfoBottomSheet extends StatelessWidget {
                 },
               )
             : const SizedBox.shrink(),
-        const ListTile(
-          contentPadding: EdgeInsets.only(bottom: 20, left: 15),
-          visualDensity: VisualDensity(vertical: -1),
-          leading: Icon(Icons.share),
-          title: Text("Share this song"),
+        ListTile(
+          contentPadding: const EdgeInsets.only(bottom: 20, left: 15),
+          visualDensity: const VisualDensity(vertical: -1),
+          leading: const Icon(Icons.share),
+          title: const Text("Share this song"),
+          onTap: () => Share.share("https://youtube.com/watch?v=${song.id}"),
         ),
       ],
     );
@@ -128,10 +135,15 @@ class SongInfoBottomSheet extends StatelessWidget {
             .map((e) => ListTile(
                   onTap: () {
                     Navigator.of(context).pop();
+                    if (calledFromPlayer) {
+                      Get.find<PlayerController>()
+                          .playerPanelController
+                          .close();
+                    }
                     Get.toNamed(ScreenNavigationSetup.artistScreen,
                         id: ScreenNavigationSetup.id,
                         arguments: [true, e['id']]);
-                   // 
+                    //
                   },
                   tileColor: Colors.transparent,
                   leading: const Icon(Icons.person),
@@ -145,9 +157,9 @@ class SongInfoBottomSheet extends StatelessWidget {
 class SongInfoController extends GetxController {
   final isCurrentSongFav = false.obs;
   final MediaItem song;
+  final bool calledFromPlayer;
   List artistList = [].obs;
-  SongInfoController(this.song) {
-    final x = MediaItemBuilder.toJson(song).toString();
+  SongInfoController(this.song, this.calledFromPlayer) {
     _setInitStatus(song);
   }
   _setInitStatus(MediaItem song) async {
@@ -171,6 +183,14 @@ class SongInfoController extends GetxController {
   }
 
   Future<void> toggleFav() async {
+    if (calledFromPlayer) {
+      final cntrl = Get.find<PlayerController>();
+      if (cntrl.currentSong.value == song) {
+        cntrl.toggleFavourite();
+        isCurrentSongFav.value = !isCurrentSongFav.value;
+        return;
+      }
+    }
     final box = await Hive.openBox("LIBFAV");
     isCurrentSongFav.isFalse
         ? box.put(song.id, MediaItemBuilder.toJson(song))

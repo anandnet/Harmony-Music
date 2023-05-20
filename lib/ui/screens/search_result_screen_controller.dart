@@ -1,5 +1,5 @@
+
 import 'package:get/get.dart';
-import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/services/music_service.dart';
 
 class SearchResultScreenController extends GetxController {
@@ -11,6 +11,7 @@ class SearchResultScreenController extends GetxController {
   final musicServices = Get.find<MusicServices>();
   final queryString = ''.obs;
   final railItems = <String>[].obs;
+  final railitemHeight = Get.size.height.obs;
 
   @override
   void onInit() {
@@ -51,6 +52,11 @@ class SearchResultScreenController extends GetxController {
           "Artists"
         ]).contains(element));
     railItems.value = List<String>.from(allKeys);
+    final len = railItems
+        .where((element) => element.contains("playlists"))
+        .length;
+    final calH = 30 + (railItems.length+1-len)*123 + len*150.0;
+    railitemHeight.value = calH >= railitemHeight.value ? calH : railitemHeight.value;
     isResultContentFetced.value = true;
   }
 }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/ui/navigator.dart';
 import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
-import 'package:harmonymusic/ui/utils/home_library_controller.dart';
 import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
 import 'package:harmonymusic/ui/widgets/list_widget.dart';
 import 'package:harmonymusic/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
@@ -33,7 +31,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
             : Get.put(
                 PlayListNAlbumScreenController(content, args[0], args[2]));
 
-    return Container(
+    return SizedBox(
       child: Row(
         children: [
           NavigationRail(
@@ -73,7 +71,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
 
           ///Todo loading widget
           Obx(() => playListNAlbumScreenController.isContentFetched.isFalse
-              ? const SizedBox.shrink()
+              ? const Expanded(child: Center(child: RefreshProgressIndicator(),))
               : Expanded(
                   child: Container(
                   color: Theme.of(context).canvasColor,

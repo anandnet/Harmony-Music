@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:math';
@@ -11,7 +13,6 @@ import 'constant.dart';
 import 'continuations.dart';
 import 'nav_parser.dart';
 
-// ignore: constant_identifier_names
 enum AudioQuality {
   Low,
   High,
@@ -181,8 +182,7 @@ class MusicServices extends getx.GetxService {
 
     playlistId = validatePlaylistId(playlistId);
     data['playlistId'] = playlistId;
-    final isPlaylist =
-        playlistId.startsWith('PL') || playlistId.startsWith('OLA');
+    //final isPlaylist =playlistId.startsWith('PL') || playlistId.startsWith('OLA');
     if (shuffle) {
       data['params'] = "wAEB8gECKAE%3D";
     }
@@ -378,11 +378,11 @@ class MusicServices extends getx.GetxService {
 
       return [
         streamUriList
-            .lastWhere((element) => element.audioCodec.contains("mp4a"))
+            .lastWhere((element) => element.audioCodec.contains("mp4a") && element.tag != 140)
             .url
             .toString(),
         streamUriList
-            .firstWhere((element) => element.audioCodec.contains("mp4a"))
+            .firstWhere((element) => element.tag == 251|| element.tag == 140)
             .url
             .toString()
       ];
@@ -401,6 +401,9 @@ class MusicServices extends getx.GetxService {
       // }
     } catch (e) {
       printERROR("Error $e");
+      if(e.toString() =="Error Connection closed before full header was received"){
+        return getSongUri(songId);
+      }
       return null;
     }
   }
@@ -567,8 +570,9 @@ class MusicServices extends getx.GetxService {
     dynamic results = nav(response, [...single_column_tab, ...section_list]);
 
     Map<String, dynamic> artist = {'description': null, 'views': null};
-    Map<String, dynamic> header =
-        response['header']['musicImmersiveHeaderRenderer'];
+    Map<String, dynamic> header = (response['header']
+            ['musicImmersiveHeaderRenderer']) ??
+        response['header']['musicVisualHeaderRenderer'];
     artist['name'] = nav(header, title_text);
     var descriptionShelf =
         findObjectByKey(results, description_shelf[0], isKey: true);
@@ -578,22 +582,23 @@ class MusicServices extends getx.GetxService {
           ? null
           : descriptionShelf['subheader']['runs'][0]['text'];
     }
-    Map<String, dynamic> subscriptionButton =
-        header['subscriptionButton']['subscribeButtonRenderer'];
-    artist['channelId'] = subscriptionButton['channelId'];
+    dynamic subscriptionButton = header['subscriptionButton']!=null?
+        header['subscriptionButton']['subscribeButtonRenderer']:null;
+    artist['channelId'] = channelId;
     artist['shuffleId'] = nav(header,
         ['playButton', 'buttonRenderer', ...navigation_watch_playlist_id]);
     artist['radioId'] = nav(
       header,
       ['startRadioButton', 'buttonRenderer'] + navigation_watch_playlist_id,
     );
-    artist['subscribers'] = nav(
+    artist['subscribers'] = subscriptionButton!=null ?nav(
       subscriptionButton,
       ['subscriberCountText', 'runs', 0, 'text'],
-    );
-    artist['subscribed'] = subscriptionButton['subscribed'];
+    ): null;
+    
     artist['thumbnails'] = nav(header, thumbnails);
     artist['songs'] = {};
+    artist['songs']['results'] =[];
     if (results[0].containsKey('musicShelfRenderer')) {
       // API sometimes does not return songs
       Map<String, dynamic> musicShelf = nav(results[0], ['musicShelfRenderer']);

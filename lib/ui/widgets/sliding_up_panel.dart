@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 /*
 Copyright: © 2020, Akshath Jain. All rights reserved.
 Licensing: More information can be found here: https://github.com/akshathjain/sliding_up_panel/blob/master/LICENSE
@@ -156,7 +158,7 @@ class SlidingUpPanel extends StatefulWidget {
   /// by default the Panel is open and must be swiped closed by the user.
   final PanelState defaultPanelState;
 
-  SlidingUpPanel(
+  const SlidingUpPanel(
       {Key? key,
       this.panel,
       this.panelBuilder,
@@ -199,7 +201,7 @@ class SlidingUpPanel extends StatefulWidget {
         super(key: key);
 
   @override
-  _SlidingUpPanelState createState() => _SlidingUpPanelState();
+  State<SlidingUpPanel> createState() => _SlidingUpPanelState();
 }
 
 class _SlidingUpPanelState extends State<SlidingUpPanel>
@@ -391,7 +393,7 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                             (widget.padding != null
                                 ? widget.padding!.horizontal
                                 : 0),
-                        child: Container(
+                        child: SizedBox(
                           height: widget.minHeight,
                           child: widget.collapsed == null
                               ? Container()
@@ -650,7 +652,7 @@ class PanelController {
   _SlidingUpPanelState? _panelState;
 
   void _addState(_SlidingUpPanelState panelState) {
-    this._panelState = panelState;
+    _panelState = panelState;
   }
 
   /// Determine if the panelController is attached to an instance

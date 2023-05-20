@@ -19,6 +19,7 @@ Future<AudioHandler> initAudioService() async {
   return await AudioService.init(
     builder: () => MyAudioHandler(),
     config: const AudioServiceConfig(
+      androidNotificationIcon: 'mipmap/ic_launcher_monochrome',
       androidNotificationChannelId: 'com.mycompany.myapp.audio',
       androidNotificationChannelName: 'Harmony Music Notification',
       androidNotificationOngoing: true,
@@ -283,7 +284,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         songsCacheBox.put(song.id, MediaItemBuilder.toJson(song));
         if (!librarySongsController.isClosed) {
           librarySongsController.cachedSongsList.value =
-              librarySongsController.cachedSongsList.value + [song];
+              librarySongsController.cachedSongsList.toList() + [song];
         }
       }
     } else if (name == 'setSourceNPlay') {
@@ -304,6 +305,15 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       final enable = (extras!['enable'] as bool);
       await _player.setSkipSilenceEnabled(enable);
       printINFO(enable);
+    }else if(name == "shuffleQueue"){
+     final currentQueue = queue.value;
+      final currentItem = currentQueue[currentIndex];
+      currentQueue.remove(currentItem);
+      currentQueue.shuffle();
+      currentQueue.insert(0, currentItem);
+      queue.add(currentQueue);
+      mediaItem.add(currentItem);
+      currentIndex=0;
     }
   }
 

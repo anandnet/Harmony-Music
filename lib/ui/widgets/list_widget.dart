@@ -10,7 +10,7 @@ import 'songinfo_bottom_sheet.dart';
 
 class ListWidget extends StatelessWidget {
   const ListWidget(this.items, this.title, this.isCompleteList,
-      {super.key, this.isPlaylist = false,this.playlist});
+      {super.key, this.isPlaylist = false, this.playlist});
   final List<dynamic> items;
   final String title;
   final bool isCompleteList;
@@ -21,11 +21,20 @@ class ListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (title == "Videos" || title.contains("Songs")) {
+    if (items.isEmpty) {
+      return Expanded(
+        child: Center(
+          child: Text(
+            "No ${title.toLowerCase()}!",
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ),
+      );
+    } else if (title == "Videos" || title.contains("Songs")) {
       return isCompleteList
           ? Expanded(
               child: listViewSongVid(items, isCompleteList,
-                  isPlaylist: isPlaylist,playlist: playlist))
+                  isPlaylist: isPlaylist, playlist: playlist))
           : SizedBox(
               height: items.length * 75.0,
               child: listViewSongVid(items, isCompleteList),
@@ -35,7 +44,9 @@ class ListWidget extends StatelessWidget {
     } else if (title == "Albums" || title == "Singles") {
       return listViewAlbums(items);
     } else if (title.contains('Artists')) {
-      return isCompleteList? Expanded(child: listViewArtists(items)): SizedBox(
+      return isCompleteList
+          ? Expanded(child: listViewArtists(items))
+          : SizedBox(
               height: items.length * 95.0,
               child: listViewArtists(items),
             );
@@ -47,7 +58,7 @@ class ListWidget extends StatelessWidget {
       {bool isPlaylist = false, Playlist? playlist}) {
     final playerController = Get.find<PlayerController>();
     return ListView.builder(
-         padding: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10),
         itemCount: items.length,
         physics: isCompleteList
             ? const BouncingScrollPhysics()
@@ -68,8 +79,9 @@ class ListWidget extends StatelessWidget {
                   //constraints: BoxConstraints(maxHeight:Get.height),
                   barrierColor: Colors.transparent.withAlpha(100),
                   builder: (context) => SongInfoBottomSheet(
-                      items[index] as MediaItem,
-                      playlist: playlist,),
+                    items[index] as MediaItem,
+                    playlist: playlist,
+                  ),
                 ).whenComplete(() => Get.delete<SongInfoController>());
               },
               contentPadding: const EdgeInsets.only(top: 0, left: 5, right: 30),
@@ -98,7 +110,7 @@ class ListWidget extends StatelessWidget {
   Widget listViewPlaylists(List<dynamic> playlists) {
     return Expanded(
       child: ListView.builder(
-           padding: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 10),
           itemCount: playlists.length,
           itemExtent: 100,
           physics: const BouncingScrollPhysics(),
@@ -108,7 +120,7 @@ class ListWidget extends StatelessWidget {
                 onTap: () {
                   Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
                       id: ScreenNavigationSetup.id,
-                      arguments: [false, playlists[index],false]);
+                      arguments: [false, playlists[index], false]);
                 },
                 contentPadding:
                     const EdgeInsets.only(top: 0, bottom: 0, left: 10),
@@ -136,7 +148,7 @@ class ListWidget extends StatelessWidget {
   Widget listViewAlbums(List<dynamic> albums) {
     return Expanded(
       child: ListView.builder(
-         padding: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10),
         itemCount: albums.length,
         itemExtent: 100,
         physics: const BouncingScrollPhysics(),
@@ -153,7 +165,7 @@ class ListWidget extends StatelessWidget {
             onTap: () {
               Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
                   id: ScreenNavigationSetup.id,
-                  arguments: [true, albums[index],false]);
+                  arguments: [true, albums[index], false]);
             },
             contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 10),
             leading: SizedBox.square(
@@ -181,7 +193,7 @@ class ListWidget extends StatelessWidget {
 
   Widget listViewArtists(List<dynamic> artists) {
     return ListView.builder(
-        padding: const EdgeInsets.only(top:10),
+        padding: const EdgeInsets.only(top: 10),
         itemCount: artists.length,
         itemExtent: 90,
         physics: const BouncingScrollPhysics(),
@@ -189,10 +201,10 @@ class ListWidget extends StatelessWidget {
               visualDensity: const VisualDensity(horizontal: -2, vertical: 2),
               onTap: () {
                 Get.toNamed(ScreenNavigationSetup.artistScreen,
-                    id: ScreenNavigationSetup.id, arguments: [false,artists[index]]);
+                    id: ScreenNavigationSetup.id,
+                    arguments: [false, artists[index]]);
               },
-              contentPadding:
-                  const EdgeInsets.only(top: 0, bottom: 0, left: 5),
+              contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 5),
               leading: Container(
                   height: 90,
                   width: 90,

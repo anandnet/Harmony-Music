@@ -2,12 +2,10 @@ import 'dart:async';
 import 'dart:isolate';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/media_Item_builder.dart';
 import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
-import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:audio_service/audio_service.dart';
@@ -224,6 +222,10 @@ class PlayerController extends GetxController {
     }
   }
 
+  void shuffleQueue(){
+    _audioHandler.customAction("shuffleQueue");
+  }
+
   void play() {
     _audioHandler.play();
   }
@@ -280,10 +282,12 @@ class PlayerController extends GetxController {
             : playlistController.addNRemoveItemsinList(currMediaItem,
                 action: 'remove');
       }
+    // ignore: empty_catches
     } catch (e) {}
     isCurrentSongFav.value = !isCurrentSongFav.value;
   }
 
+  // ignore: prefer_typing_uninitialized_variables
   var recentItem;
 
   /// This function is used to add a mediaItem/Song to Recently played playlist
@@ -304,6 +308,7 @@ class PlayerController extends GetxController {
           playlistController.addNRemoveItemsinList(mediaItem,
               action: 'add', index: 0);
         }
+      // ignore: empty_catches
       } catch (e) {}
     }
     recentItem = mediaItem;

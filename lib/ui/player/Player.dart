@@ -9,6 +9,7 @@ import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
 import 'package:harmonymusic/ui/widgets/marqwee_widget.dart';
+import 'package:harmonymusic/ui/widgets/songinfo_bottom_sheet.dart';
 
 import '../widgets/image_widget.dart';
 import '../widgets/sliding_up_panel.dart';
@@ -22,6 +23,7 @@ class Player extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final PlayerController playerController = Get.find<PlayerController>();
     final ThemeController themeController = Get.find<ThemeController>();
+    printINFO(size);
     return Scaffold(
       body: SlidingUpPanel(
           minHeight: 65 + Get.mediaQuery.padding.bottom,
@@ -43,63 +45,70 @@ class Player extends StatelessWidget {
               )),
           panelBuilder: (ScrollController sc) {
             playerController.scrollController = sc;
-            return Container(
-                color: Theme.of(context).bottomSheetTheme.backgroundColor,
-                child: Obx(() {
-                  return ListView.builder(
-                    controller: playerController.scrollController,
-                    itemCount: playerController.currentQueue.length,
-                    padding: EdgeInsets.only(
-                        top: 55, bottom: Get.mediaQuery.padding.bottom),
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      //print("${playerController.currentSongIndex.value == index} $index");
-                      return Material(
-                          child: Obx(() => ListTile(
-                                onTap: () {
-                                  playerController.seekByIndex(index);
-                                },
-                                contentPadding: const EdgeInsets.only(
-                                    top: 0, left: 30, right: 30),
-                                tileColor:
-                                    playerController.currentSongIndex.value ==
+            return Stack(
+              children: [
+                Container(
+                    color: Theme.of(context).bottomSheetTheme.backgroundColor,
+                    child: Obx(() {
+                      return ListView.builder(
+                        controller: playerController.scrollController,
+                        itemCount: playerController.currentQueue.length,
+                        padding: EdgeInsets.only(
+                            top: 55, bottom: Get.mediaQuery.padding.bottom),
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          //print("${playerController.currentSongIndex.value == index} $index");
+                          return Material(
+                              child: Obx(() => ListTile(
+                                    onTap: () {
+                                      playerController.seekByIndex(index);
+                                    },
+                                    contentPadding: const EdgeInsets.only(
+                                        top: 0, left: 30, right: 30),
+                                    tileColor: playerController
+                                                .currentSongIndex.value ==
                                             index
                                         ? Theme.of(context)
-                                            .colorScheme.secondary
+                                            .colorScheme
+                                            .secondary
                                         : Theme.of(context)
                                             .bottomSheetTheme
                                             .backgroundColor,
-                                leading: SizedBox.square(
-                                    dimension: 50,
-                                    child: ImageWidget(
-                                      song:
-                                          playerController.currentQueue[index],
-                                    )),
-                                title: Text(
-                                  playerController.currentQueue[index].title,
-                                  maxLines: 1,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                                subtitle: Text(
-                                  "${playerController.currentQueue[index].artist}",
-                                  maxLines: 1,
-                                  style: playerController
-                                              .currentSongIndex.value ==
-                                          index
-                                      ? Theme.of(context)
+                                    leading: SizedBox.square(
+                                        dimension: 50,
+                                        child: ImageWidget(
+                                          song: playerController
+                                              .currentQueue[index],
+                                        )),
+                                    title: Text(
+                                      playerController
+                                          .currentQueue[index].title,
+                                      maxLines: 1,
+                                      style: Theme.of(context)
                                           .textTheme
-                                          .titleSmall!
-                                          .copyWith(
-                                              color: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium!
-                                                  .color!
-                                                  .withOpacity(0.35))
-                                      : Theme.of(context).textTheme.titleSmall,
-                                ),
-                                trailing:
-                                    playerController.currentSongIndex.value ==
+                                          .titleMedium,
+                                    ),
+                                    subtitle: Text(
+                                      "${playerController.currentQueue[index].artist}",
+                                      maxLines: 1,
+                                      style: playerController
+                                                  .currentSongIndex.value ==
+                                              index
+                                          ? Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .titleMedium!
+                                                      .color!
+                                                      .withOpacity(0.35))
+                                          : Theme.of(context)
+                                              .textTheme
+                                              .titleSmall,
+                                    ),
+                                    trailing: playerController
+                                                .currentSongIndex.value ==
                                             index
                                         ? const Icon(
                                             Icons.equalizer,
@@ -113,10 +122,27 @@ class Player extends StatelessWidget {
                                                 .textTheme
                                                 .titleSmall,
                                           ),
-                              )));
-                    },
-                  );
-                }));
+                                  )));
+                        },
+                      );
+                    })),
+                Positioned(
+                    bottom: 60,
+                    right: 15,
+                    child: SizedBox(
+                        height: 60,
+                        width: 60,
+                        child: FittedBox(
+                            child: FloatingActionButton(
+                              focusElevation: 0,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(14))),
+                                elevation: 0,
+                                onPressed: playerController.shuffleQueue,
+                              child: const Icon(Icons.shuffle))))),
+              ],
+            );
           },
           body: Stack(
             children: [
@@ -157,19 +183,32 @@ class Player extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 25, right: 25),
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 120,
+                    SizedBox(
+                      height: size.height < 750 ? 80 : 120,
                     ),
                     SizedBox(
-                        height: size.width - 60,
-                        width: size.width - 60,
-                        child:
-                            Obx(() => playerController.currentSong.value != null
-                                ? ImageWidget(
-                                    song: playerController.currentSong.value!,
-                                    isLargeImage: true,
-                                  )
-                                : Container())),
+                        height: size.width - ((size.height < 750) ? 90 : 60),
+                        width: size.width - ((size.height < 750) ? 90 : 60),
+                        child: Obx(() => playerController.currentSong.value !=
+                                null
+                            ? InkWell(
+                                onLongPress: () {
+                                  showModalBottomSheet(
+                                    barrierColor:
+                                        Colors.transparent.withAlpha(100),
+                                    context: context,
+                                    builder: (context) => SongInfoBottomSheet(
+                                        playerController.currentSong.value!,
+                                        calledFromPlayer: true),
+                                  ).whenComplete(
+                                      () => Get.delete<SongInfoController>());
+                                },
+                                child: ImageWidget(
+                                  song: playerController.currentSong.value!,
+                                  isLargeImage: true,
+                                ),
+                              )
+                            : Container())),
                     Expanded(child: Container()),
                     Obx(() {
                       return MarqueeWidget(
@@ -240,13 +279,16 @@ class Player extends StatelessWidget {
                               onPressed: playerController.toggleLoopMode,
                               icon: Icon(
                                 Icons.all_inclusive,
-                                color:
-                                    playerController.isLoopModeEnabled.value
-                                        ? Colors.green
-                                        : Theme.of(context)
-                                            .textTheme
-                                            .titleMedium!
-                                            .color,
+                                color: playerController.isLoopModeEnabled.value
+                                    ? Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .color
+                                    : Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .color!
+                                        .withOpacity(0.2),
                               ));
                         }),
                       ],

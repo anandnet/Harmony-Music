@@ -18,3 +18,17 @@ SnackBar snackbar(BuildContext context, String text, double width) {
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
   );
 }
+
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
+
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}

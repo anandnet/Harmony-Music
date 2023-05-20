@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/services/music_service.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'settings_screen_controller.dart';
 
@@ -14,6 +16,7 @@ class SettingsScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 90.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Align(
             alignment: Alignment.centerLeft,
@@ -24,6 +27,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           Expanded(
               child: ListView(
+            padding: EdgeInsets.zero,
             children: [
               ListTile(
                 title: const Text("Theme mode"),
@@ -45,8 +49,9 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               ListTile(
-                  title: const Text("Caching songs"),
-                  subtitle: const Text("Caching songs while playing"),
+                  title: const Text("Cache songs"),
+                  subtitle: const Text(
+                      "Caching songs while playing for future/offline playback, it will take additional space on your device"),
                   trailing: Obx(
                     () => Switch(
                         value: settingsController.cacheSongs.value,
@@ -80,9 +85,27 @@ class SettingsScreen extends StatelessWidget {
                     onChanged: settingsController.setStreamingQuality,
                   ),
                 ),
+              ),
+              ListTile(
+                title: const Text("Github"),
+                subtitle: Text(
+                    "View Github source code \nif you like this project please give a ⭐${((Get.find<PlayerController>().playerPanelMinHeight.value) == 0) ? "" : "\n\nV 1.0.0 by anandnet"}"),
+                isThreeLine: true,
+                onTap: () {
+                  launchUrl(
+                    Uri.parse(
+                      'https://github.com/anandnet/Harmony-Music',
+                    ),
+                    mode: LaunchMode.externalApplication,
+                  );
+                },
               )
             ],
-          ))
+          )),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 20.0),
+            child: Text("V 1.0.0 by anandnet"),
+          ),
         ],
       ),
     );

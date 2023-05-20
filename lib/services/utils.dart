@@ -1,9 +1,5 @@
 import 'dart:math';
 
-
-import 'package:flutter/foundation.dart';
-
-import '../helper.dart';
 import 'nav_parser.dart';
 
 int getDatestamp() {
@@ -215,5 +211,6 @@ String? _getParam2(String filter) {
 }
 
 dynamic getDotSeparatorIndex(List<dynamic> runs) {
-    return runs.indexWhere(((element) =>({'text': " • "}).toString()==element.toString()));
+  return runs.indexWhere(
+      ((element) => ({'text': " • "}).toString() == element.toString()));
 }

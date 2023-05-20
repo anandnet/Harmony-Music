@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
-import 'package:harmonymusic/ui/utils/theme_controller.dart';
 import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
 import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
 
@@ -184,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   : Expanded(
                       child: Center(
                           child: Text(
-                        "No Songs!",
+                        "No Offline Songs!",
                         style: Theme.of(context).textTheme.titleMedium,
                       )),
                     );
@@ -309,7 +308,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                   ? GridView.builder(
                     physics: const BouncingScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: (size.width / itemWidth).ceil(),
+                        crossAxisCount: ((size.width-60) / itemWidth).ceil(),
                         childAspectRatio: (itemWidth / itemHeight),
                       ),
                       controller: ScrollController(keepScrollOffset: false),

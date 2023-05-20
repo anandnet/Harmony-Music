@@ -4,7 +4,6 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/services/audio_handler.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/ui/home.dart';

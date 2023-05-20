@@ -15,9 +15,9 @@ class SearchResultScreen extends StatelessWidget {
       body: Row(
         children: [
           SingleChildScrollView(
-            child: ConstrainedBox(
+            child:Obx(() =>ConstrainedBox(
               constraints: BoxConstraints(
-                  minHeight: MediaQuery.of(context).size.height + 195),
+                  minHeight: searchResScrController.railitemHeight.value),
               child: IntrinsicHeight(
                 child: Obx(
                   () => NavigationRail(
@@ -65,14 +65,18 @@ class SearchResultScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+            ),),
           ),
           Expanded(
             child: Obx(
               () {
                 if (searchResScrController.navigationRailCurrentIndex.value ==
                     0) {
+                      if(searchResScrController.isResultContentFetced.isTrue){
                   return const ResultWidget();
+                      }else{
+                        return const Center(child: RefreshProgressIndicator(),);
+                      }
                 }
                 if (searchResScrController.isResultContentFetced.isTrue) {
                   final name = searchResScrController.railItems[
@@ -84,7 +88,7 @@ class SearchResultScreen extends StatelessWidget {
                       {
                         return SeparateSearchItemWidget(
                           isResultWidget: true,
-                          items: [],
+                          items: const [],
                           title: name,
                           isCompleteList: true,
                           topPadding: 75,
@@ -95,7 +99,7 @@ class SearchResultScreen extends StatelessWidget {
                       {
                         return SeparateSearchItemWidget(
                           title: name,
-                          items: [],
+                          items: const [],
                           topPadding: 75,
                         );
                       }
@@ -103,7 +107,7 @@ class SearchResultScreen extends StatelessWidget {
                       {
                         return SeparateSearchItemWidget(
                           title: name,
-                          items: [],
+                          items: const [],
                           topPadding: 75,
                         );
                       }
@@ -111,7 +115,7 @@ class SearchResultScreen extends StatelessWidget {
                       {
                         return SeparateSearchItemWidget(
                           title: name,
-                          items: [],
+                          items: const [],
                           topPadding: 75,
                         );
                       }

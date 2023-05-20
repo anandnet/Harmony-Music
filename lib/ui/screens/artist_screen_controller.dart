@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/services/music_service.dart';
@@ -33,7 +31,12 @@ class ArtistScreenController extends GetxController {
     isArtistContentFetced.value = true;
     //inspect(artistData.value);
     final data = artistData;
-    artist_ = Artist(browseId: id,name: data['name'],thumbnailUrl: data['thumbnails'][0]['url'],subscribers: "${data['subscribers']} subscribers",radioId: data["radioId"]);
+    artist_ = Artist(
+        browseId: id,
+        name: data['name'],
+        thumbnailUrl: data['thumbnails'][0]['url'],
+        subscribers: "${data['subscribers']} subscribers",
+        radioId: data["radioId"]);
   }
 
   Future<void> addNremoveFromLibrary({bool add = true}) async {

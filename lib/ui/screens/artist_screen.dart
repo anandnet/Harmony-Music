@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/models/artist.dart';
 import 'package:harmonymusic/ui/screens/artist_screen_controller.dart';
 import 'package:harmonymusic/ui/widgets/image_widget.dart';
 import 'package:harmonymusic/ui/widgets/search_related_widgets.dart';
@@ -13,8 +12,9 @@ class ArtistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final args = Get.arguments;
-    final ArtistScreenController artistScreenController = args!=null?
-        Get.put(ArtistScreenController(args[0],args[1])):Get.find<ArtistScreenController>();
+    final ArtistScreenController artistScreenController = args != null
+        ? Get.put(ArtistScreenController(args[0], args[1]))
+        : Get.find<ArtistScreenController>();
     return Scaffold(
       body: Row(
         children: [
@@ -97,9 +97,11 @@ class ArtistScreen extends StatelessWidget {
                                             alignment: Alignment.topRight,
                                             child: InkWell(
                                               onTap: () {
-                                                artistScreenController.addNremoveFromLibrary(
-                                                  add: artistScreenController.isAddedToLibrary.isFalse
-                                                );
+                                                artistScreenController
+                                                    .addNremoveFromLibrary(
+                                                        add: artistScreenController
+                                                            .isAddedToLibrary
+                                                            .isFalse);
                                               },
                                               child: artistScreenController
                                                       .isArtistContentFetced
@@ -125,17 +127,28 @@ class ArtistScreen extends StatelessWidget {
                                             .titleLarge,
                                       ),
                                     ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        content.containsKey("description")
-                                            ? "\"${content["description"]}\""
-                                            : "",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall,
-                                      ),
-                                    ),
+                                    (content.containsKey("description") &&
+                                            content["description"] != null)
+                                        ? Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "\"${content["description"]}\"",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall,
+                                            ),
+                                          )
+                                        : SizedBox(
+                                            height: 300,
+                                            child: Center(
+                                              child: Text(
+                                                "No description available!",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall,
+                                              ),
+                                            ),
+                                          ),
                                   ],
                                 )
                               : const SizedBox.shrink(),
@@ -145,51 +158,47 @@ class ArtistScreen extends StatelessWidget {
                   }
                 case 1:
                   {
-                    if (content.containsKey('songs')) {
-                      return SeparateSearchItemWidget(
-                        isResultWidget: false,
-                        items: content['songs']['results'],
-                        title: "Songs",
-                        topPadding: 75,
-                      );
-                    }
-                    return const SizedBox.shrink();
+                    return SeparateSearchItemWidget(
+                      isResultWidget: false,
+                      items: content.containsKey('songs')
+                          ? content['songs']['results']
+                          : [],
+                      title: "Songs",
+                      topPadding: 75,
+                    );
                   }
                 case 2:
                   {
-                    if (content.containsKey('videos')) {
-                      return SeparateSearchItemWidget(
-                        isResultWidget: false,
-                        items: content['videos']['results'],
-                        title: "Videos",
-                        topPadding: 75,
-                      );
-                    }
-                    return SizedBox.shrink();
+                    return SeparateSearchItemWidget(
+                      isResultWidget: false,
+                      items: content.containsKey('videos')
+                          ? content['videos']['results']
+                          : [],
+                      title: "Videos",
+                      topPadding: 75,
+                    );
                   }
                 case 3:
                   {
-                    if (content.containsKey('albums')) {
-                      return SeparateSearchItemWidget(
-                        isResultWidget: false,
-                        items: content['albums']['results'],
-                        title: "Albums",
-                        topPadding: 75,
-                      );
-                    }
-                    return SizedBox.shrink();
+                    return SeparateSearchItemWidget(
+                      isResultWidget: false,
+                      items: content.containsKey('albums')
+                          ? content['albums']['results']
+                          : [],
+                      title: "Albums",
+                      topPadding: 75,
+                    );
                   }
                 case 4:
                   {
-                    if (content.containsKey('singles')) {
-                      return SeparateSearchItemWidget(
-                        isResultWidget: false,
-                        items: content['singles']['results'],
-                        title: "Singles",
-                        topPadding: 75,
-                      );
-                    }
-                    return SizedBox.shrink();
+                    return SeparateSearchItemWidget(
+                      isResultWidget: false,
+                      items: content.containsKey('singles')
+                          ? content['singles']['results']
+                          : [],
+                      title: "Singles",
+                      topPadding: 75,
+                    );
                   }
               }
               return const SizedBox.shrink();

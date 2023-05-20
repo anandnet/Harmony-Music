@@ -674,7 +674,7 @@ dynamic parseSearchResult(Map<String, dynamic> data,
         ['musicResponsiveListItemFlexColumnRenderer']['text']['runs'];
     searchResult['subscribers'] = list.length < 2 ? "" : list[2];
     ['text'];
-    final x = parseMenuPlaylists(data, searchResult);
+    //final x = parseMenuPlaylists(data, searchResult);
   } else if (resultType == 'album') {
     searchResult['type'] = getItemText(data, 1);
   } else if (resultType.contains('playlist')) {

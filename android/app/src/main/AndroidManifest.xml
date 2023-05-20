@@ -2,7 +2,7 @@
         xmlns:tools="http://schemas.android.com/tools"
     package="com.anandnet.harmonymusic">
    <application
-        android:label="harmonymusic"
+        android:label="Harmony Music"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">

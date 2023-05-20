@@ -2,9 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/helper.dart';
-import 'package:harmonymusic/ui/screens/settings_screen.dart';
-import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:palette_generator/palette_generator.dart';
 
@@ -137,12 +134,12 @@ class ThemeController extends GetxController {
           navigationRailTheme: NavigationRailThemeData(
               backgroundColor: primarySwatch[600],
               selectedIconTheme:
-                  const IconThemeData(color: Colors.white, size: 25),
+                  const IconThemeData(color: Colors.white),
               unselectedIconTheme: IconThemeData(color: primarySwatch[100]),
               selectedLabelTextStyle: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 17),
+                  fontSize: 15),
               unselectedLabelTextStyle: TextStyle(
                   color: primarySwatch[100], fontWeight: FontWeight.bold)),
           sliderTheme: SliderThemeData(
@@ -191,12 +188,12 @@ class ThemeController extends GetxController {
           ),
           navigationRailTheme: const NavigationRailThemeData(
               backgroundColor: Colors.black,
-              selectedIconTheme: IconThemeData(color: Colors.white, size: 25),
+              selectedIconTheme: IconThemeData(color: Colors.white,),
               unselectedIconTheme: IconThemeData(color: Colors.white38),
               selectedLabelTextStyle: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 17),
+                  fontSize: 15),
               unselectedLabelTextStyle: TextStyle(
                   color: Colors.white38, fontWeight: FontWeight.bold)),
           bottomSheetTheme: const BottomSheetThemeData(
@@ -256,10 +253,10 @@ class ThemeController extends GetxController {
         navigationRailTheme: NavigationRailThemeData(
             backgroundColor: Colors.white,
             selectedIconTheme:
-                const IconThemeData(color: Colors.black, size: 25),
+                const IconThemeData(color: Colors.black),
             unselectedIconTheme: IconThemeData(color: Colors.grey[800]),
             selectedLabelTextStyle: const TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
             unselectedLabelTextStyle: TextStyle(
                 color: Colors.grey[800], fontWeight: FontWeight.bold)),
         bottomSheetTheme: const BottomSheetThemeData(

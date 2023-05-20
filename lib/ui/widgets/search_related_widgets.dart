@@ -8,7 +8,6 @@ import 'package:harmonymusic/models/playlist.dart';
 import 'package:harmonymusic/ui/screens/artist_screen_controller.dart';
 import 'package:harmonymusic/ui/screens/search_result_screen_controller.dart';
 import 'package:harmonymusic/ui/widgets/content_list_widget.dart';
-import 'package:harmonymusic/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
 
 import 'list_widget.dart';
 
@@ -147,14 +146,14 @@ class SeparateSearchItemWidget extends StatelessWidget {
                             title,
                             isCompleteList);
                       } else {
-                        return const Expanded(child: SongListShimmer());
+                        return const Expanded(child: Center(child: RefreshProgressIndicator()));
                       }
                     })
                   : (Get.find<ArtistScreenController>()
                           .isArtistContentFetced
                           .isTrue
                       ? ListWidget(items, title, isCompleteList)
-                      : const Expanded(child: SongListShimmer()))
+                      : const Expanded(child: Center(child: RefreshProgressIndicator())))
               : ListWidget(items, title, isCompleteList),
         ],
       ),

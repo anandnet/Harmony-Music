@@ -166,7 +166,6 @@ class PlayerController extends GetxController {
   ///songs into Queue
   Future<void> pushSongToQueue(MediaItem mediaItem) async {
     ReceivePort receivePort = ReceivePort();
-    printINFO("$receivePort $_musicServices ${mediaItem.id} all checked");
     Isolate.spawn(
         getUpNextSong, [receivePort.sendPort, _musicServices, mediaItem.id]);
     receivePort.first.then((value) async {

@@ -34,7 +34,7 @@ class ImageWidget extends StatelessWidget {
                 ? album!.thumbnailUrl
                 : artist != null
                     ? artist!.thumbnailUrl
-                : "";
+                    : "";
     String cacheKey = song != null
         ? "${song!.id}_song"
         : playlist != null
@@ -50,28 +50,34 @@ class ImageWidget extends StatelessWidget {
             fit: BoxFit.fitHeight,
           )
         : ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: CachedNetworkImage(
-                  memCacheHeight: isLargeImage
-                      ? 500
-                      : isMediumImage
-                          ? 300
-                          : 150,
-                  cacheKey: cacheKey,
-                  imageUrl: imageUrl,
-                  fit: BoxFit.cover,
-                  progressIndicatorBuilder: ((_, __, ___) => Shimmer.fromColors(
-                      baseColor: Colors.grey[500]!,
-                      highlightColor: Colors.grey[300]!,
-                      enabled: true,
-                      direction: ShimmerDirection.ltr,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white54,
-                        ),
-                      ))),
-                ),
-              );
+            borderRadius: BorderRadius.circular(5),
+            child: CachedNetworkImage(
+              memCacheHeight: isLargeImage
+                  ? 500
+                  : isMediumImage
+                      ? 300
+                      : 150,
+              cacheKey: cacheKey,
+              imageUrl: imageUrl,
+              fit: BoxFit.cover,
+              errorWidget: (context, url, error) => Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Image.asset("assets/icons/${song!=null?"song":artist!=null?"artist":"album"}.png")),
+              progressIndicatorBuilder: ((_, __, ___) => Shimmer.fromColors(
+                  baseColor: Colors.grey[500]!,
+                  highlightColor: Colors.grey[300]!,
+                  enabled: true,
+                  direction: ShimmerDirection.ltr,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white54,
+                    ),
+                  ))),
+            ),
+          );
   }
 }

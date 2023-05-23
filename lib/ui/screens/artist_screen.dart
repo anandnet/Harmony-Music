@@ -5,6 +5,7 @@ import 'package:harmonymusic/ui/widgets/image_widget.dart';
 import 'package:harmonymusic/ui/widgets/search_related_widgets.dart';
 
 import '../navigator.dart';
+import '../widgets/snackbar.dart';
 
 class ArtistScreen extends StatelessWidget {
   const ArtistScreen({super.key});
@@ -97,11 +98,23 @@ class ArtistScreen extends StatelessWidget {
                                             alignment: Alignment.topRight,
                                             child: InkWell(
                                               onTap: () {
+                                                final bool add =
+                                                    artistScreenController
+                                                        .isAddedToLibrary
+                                                        .isFalse;
                                                 artistScreenController
                                                     .addNremoveFromLibrary(
-                                                        add: artistScreenController
-                                                            .isAddedToLibrary
-                                                            .isFalse);
+                                                        add: add)
+                                                    .then((value) => ScaffoldMessenger
+                                                            .of(context)
+                                                        .showSnackBar(snackbar(
+                                                            context,
+                                                            value
+                                                                ? add
+                                                                    ? "Artist bookmarked !"
+                                                                    : "Artist bookmark removed!"
+                                                                : "Operation failed",
+                                                            200)));
                                               },
                                               child: artistScreenController
                                                       .isArtistContentFetced

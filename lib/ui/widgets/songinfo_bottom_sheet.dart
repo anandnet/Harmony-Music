@@ -1,9 +1,9 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
+import 'package:harmonymusic/ui/utils/home_library_controller.dart';
 import 'package:harmonymusic/ui/widgets/add_to_playlist.dart';
 import 'package:harmonymusic/ui/widgets/snackbar.dart';
 import 'package:hive/hive.dart';
@@ -23,7 +23,6 @@ class SongInfoBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    printINFO(playlist);
     final songInfoController =
         Get.put(SongInfoController(song, calledFromPlayer));
     return Column(
@@ -170,15 +169,19 @@ class SongInfoController extends GetxController {
       for (dynamic each in artists) {
         if (each.containsKey("id") && each['id'] != null) artistList.add(each);
       }
-      printINFO(song.extras!['artists']);
     }
   }
 
   Future<void> removeSongFromPlaylist(MediaItem item, Playlist playlist) async {
     final box = await Hive.openBox(playlist.playlistId);
     box.delete(item.id);
-    Get.find<PlayListNAlbumScreenController>()
+    final plstCntroller = Get.find<PlayListNAlbumScreenController>();
+    plstCntroller
         .addNRemoveItemsinList(item, action: 'remove');
+    //Updating Library song list in frontend
+    if(playlist.playlistId == "SongsCache"){
+      Get.find<LibrarySongsController>().cachedSongsList = plstCntroller.songList;
+    }
     box.close();
   }
 

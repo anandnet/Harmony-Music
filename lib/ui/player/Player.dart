@@ -23,7 +23,6 @@ class Player extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final PlayerController playerController = Get.find<PlayerController>();
     final ThemeController themeController = Get.find<ThemeController>();
-    printINFO(size);
     return Scaffold(
       body: SlidingUpPanel(
           minHeight: 65 + Get.mediaQuery.padding.bottom,
@@ -134,13 +133,13 @@ class Player extends StatelessWidget {
                         width: 60,
                         child: FittedBox(
                             child: FloatingActionButton(
-                              focusElevation: 0,
+                                focusElevation: 0,
                                 shape: const RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(14))),
                                 elevation: 0,
                                 onPressed: playerController.shuffleQueue,
-                              child: const Icon(Icons.shuffle))))),
+                                child: const Icon(Icons.shuffle))))),
               ],
             );
           },

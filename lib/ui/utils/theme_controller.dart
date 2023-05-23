@@ -115,6 +115,7 @@ class ThemeController extends GetxController {
                 fontWeight: FontWeight.bold,
                 color: textColor ?? primarySwatch[50]),
             titleSmall: TextStyle(color: primarySwatch[300]),
+            bodyMedium: TextStyle(color: primarySwatch[200]),
             labelMedium: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -130,11 +131,11 @@ class ThemeController extends GetxController {
           progressIndicatorTheme: ProgressIndicatorThemeData(
               linearTrackColor: (primarySwatch[300])!.computeLuminance() > 0.3
                   ? Colors.black54
-                  : Colors.white70,color:textColor),
+                  : Colors.white70,
+              color: textColor),
           navigationRailTheme: NavigationRailThemeData(
               backgroundColor: primarySwatch[600],
-              selectedIconTheme:
-                  const IconThemeData(color: Colors.white),
+              selectedIconTheme: const IconThemeData(color: Colors.white),
               unselectedIconTheme: IconThemeData(color: primarySwatch[100]),
               selectedLabelTextStyle: const TextStyle(
                   color: Colors.white,
@@ -167,28 +168,31 @@ class ThemeController extends GetxController {
           primaryColor: Colors.black,
           primaryColorDark: Colors.black,
           primaryColorLight: Colors.grey[850],
-          colorScheme: ColorScheme.fromSwatch(accentColor: Colors.grey[700  ],brightness: Brightness.dark),
+          colorScheme: ColorScheme.fromSwatch(
+              accentColor: Colors.grey[700], brightness: Brightness.dark),
           progressIndicatorTheme: ProgressIndicatorThemeData(
               color: Colors.grey[700], linearTrackColor: Colors.white),
           textTheme: const TextTheme(
-            titleLarge: TextStyle(
-              fontSize: 23,
-              fontWeight: FontWeight.bold,
-            ),
-            titleMedium: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-            titleSmall: TextStyle(),
-            labelMedium: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-            labelSmall: TextStyle(
-                fontSize: 15, letterSpacing: 1, fontWeight: FontWeight.bold),
-          ),
+              titleLarge: TextStyle(
+                fontSize: 23,
+                fontWeight: FontWeight.bold,
+              ),
+              titleMedium: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+              titleSmall: TextStyle(),
+              labelMedium: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+              labelSmall: TextStyle(
+                  fontSize: 15, letterSpacing: 1, fontWeight: FontWeight.bold),
+              bodyMedium: TextStyle(color: Colors.grey)),
           navigationRailTheme: const NavigationRailThemeData(
               backgroundColor: Colors.black,
-              selectedIconTheme: IconThemeData(color: Colors.white,),
+              selectedIconTheme: IconThemeData(
+                color: Colors.white,
+              ),
               unselectedIconTheme: IconThemeData(color: Colors.white38),
               selectedLabelTextStyle: TextStyle(
                   color: Colors.white,
@@ -223,58 +227,58 @@ class ThemeController extends GetxController {
             systemNavigationBarContrastEnforced: false),
       );
       return ThemeData(
-        brightness: Brightness.light,
-        canvasColor: Colors.white,
-        colorScheme: ColorScheme.fromSwatch(
-            accentColor: Colors.grey[400],
-            backgroundColor: Colors.white,
-            cardColor: Colors.white,
-            brightness: Brightness.light),
-        primaryColor: Colors.white,
-        primaryColorLight: Colors.grey[300],
-        progressIndicatorTheme:
-            ProgressIndicatorThemeData(linearTrackColor: Colors.grey[700],color: Colors.grey[400]),
-        textTheme: const TextTheme(
-          titleLarge: TextStyle(
-            fontSize: 23,
-            fontWeight: FontWeight.bold,
+          brightness: Brightness.light,
+          canvasColor: Colors.white,
+          colorScheme: ColorScheme.fromSwatch(
+              accentColor: Colors.grey[400],
+              backgroundColor: Colors.white,
+              cardColor: Colors.white,
+              brightness: Brightness.light),
+          primaryColor: Colors.white,
+          primaryColorLight: Colors.grey[300],
+          progressIndicatorTheme: ProgressIndicatorThemeData(
+              linearTrackColor: Colors.grey[700], color: Colors.grey[400]),
+          textTheme:TextTheme(
+              titleLarge: const TextStyle(
+                fontSize: 23,
+                fontWeight: FontWeight.bold,
+              ),
+              titleMedium: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+              titleSmall: const TextStyle(),
+              labelMedium: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+              labelSmall: const TextStyle(
+                  fontSize: 15, letterSpacing: 1, fontWeight: FontWeight.bold),
+              bodyMedium: TextStyle(color: Colors.grey[700])),
+          navigationRailTheme: NavigationRailThemeData(
+              backgroundColor: Colors.white,
+              selectedIconTheme: const IconThemeData(color: Colors.black),
+              unselectedIconTheme: IconThemeData(color: Colors.grey[800]),
+              selectedLabelTextStyle: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15),
+              unselectedLabelTextStyle: TextStyle(
+                  color: Colors.grey[800], fontWeight: FontWeight.bold)),
+          bottomSheetTheme: const BottomSheetThemeData(
+              backgroundColor: Colors.white, modalBarrierColor: Colors.white),
+          sliderTheme: SliderThemeData(
+            //base bar color
+            inactiveTrackColor: Colors.black38,
+            //buffered progress
+            activeTrackColor: Colors.white38,
+            //progress bar color
+            valueIndicatorColor: Colors.grey[800],
+            thumbColor: Colors.grey[800],
           ),
-          titleMedium: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-          titleSmall: TextStyle(),
-          labelMedium: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-          labelSmall: TextStyle(
-              fontSize: 15, letterSpacing: 1, fontWeight: FontWeight.bold),
-        ),
-        navigationRailTheme: NavigationRailThemeData(
-            backgroundColor: Colors.white,
-            selectedIconTheme:
-                const IconThemeData(color: Colors.black),
-            unselectedIconTheme: IconThemeData(color: Colors.grey[800]),
-            selectedLabelTextStyle: const TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
-            unselectedLabelTextStyle: TextStyle(
-                color: Colors.grey[800], fontWeight: FontWeight.bold)),
-        bottomSheetTheme: const BottomSheetThemeData(
-            backgroundColor: Colors.white, modalBarrierColor: Colors.white),
-        sliderTheme: SliderThemeData(
-          //base bar color
-          inactiveTrackColor: Colors.black38,
-          //buffered progress
-          activeTrackColor: Colors.white38,
-          //progress bar color
-          valueIndicatorColor: Colors.grey[800],
-          thumbColor: Colors.grey[800],
-        ),
-        inputDecorationTheme: const InputDecorationTheme(
+          inputDecorationTheme: const InputDecorationTheme(
               focusColor: Colors.black,
               focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black)))
-      );
+                  borderSide: BorderSide(color: Colors.black))));
     }
   }
 

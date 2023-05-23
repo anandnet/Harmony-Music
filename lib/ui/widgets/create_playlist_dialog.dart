@@ -78,7 +78,7 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                             .then((value) {
                           if (value) {
                             Navigator.of(context).pop();
-                             ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                            ScaffoldMessenger.of(context).showSnackBar(snackbar(
                                 context, "Renamed successfully!", 200));
                           }
                         });
@@ -90,7 +90,11 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                             .then((value) {
                           if (value) {
                             ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                                context, "Playlist created & Song added", 200));
+                                context,
+                                isCreateNadd
+                                    ? "Playlist created & Song added"
+                                    : "Playlist created",
+                                200));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 snackbar(context, "Some error occured!", 150));

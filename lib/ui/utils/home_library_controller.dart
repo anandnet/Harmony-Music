@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +8,7 @@ import 'package:harmonymusic/models/artist.dart';
 import 'package:harmonymusic/models/media_Item_builder.dart';
 import 'package:harmonymusic/models/playlist.dart';
 import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
 class LibrarySongsController extends GetxController {
   late RxList<MediaItem> cachedSongsList = RxList();
@@ -17,8 +20,33 @@ class LibrarySongsController extends GetxController {
     super.onInit();
   }
 
-  void init() {
+  Future<void> init() async {
+
+    // Make sure that song cached in system or not cleared by system
+    // if cleared then it will remove from database as well
+    List<String> songsList = [];
+    final cacheDir = (await getTemporaryDirectory()).path;
+    if (Directory("$cacheDir/cachedSongs/").existsSync()) {
+      final downloadedFiles = Directory("$cacheDir/cachedSongs")
+          .listSync()
+          .where((f) => !['mime', 'part']
+              .contains(f.path.replaceAll(RegExp(r'^.*\.'), '')));
+      songsList.addAll(downloadedFiles.map((e) {
+        RegExpMatch? match = RegExp(".cachedSongs/([^#]*)?.mp3").firstMatch(e.path);
+        if (match != null) {
+          return match[1]!;
+        }
+      }).whereType<String>().toList());
+       //printINFO("all files: $downloadedFiles \n $songsList");
+    }
+
     final box = Hive.box("SongsCache");
+    for (var element in box.keys) {
+      if(!songsList.contains(element)){
+        box.delete(element);
+      }
+     }
+
     cachedSongsList.value = box.values
         .map<MediaItem?>((item) => MediaItemBuilder.fromJson(item))
         .whereType<MediaItem>()

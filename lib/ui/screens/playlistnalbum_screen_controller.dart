@@ -1,6 +1,5 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/models/thumbnail.dart';
 import 'package:hive/hive.dart';
@@ -91,7 +90,6 @@ class PlayListNAlbumScreenController extends GetxController {
           ? Get.find<LibraryAlbumsController>().refreshLib()
           : Get.find<LibraryPlaylistsController>().refreshLib();
       if (isAlbum.isFalse && !content.isCloudPlaylist && !add) {
-        printINFO("here");
         final plstbox = await Hive.openBox(content.playlistId);
         plstbox.deleteFromDisk();
       }

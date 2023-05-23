@@ -56,7 +56,6 @@ class ResultWidget extends StatelessWidget {
       SearchResultScreenController searchResScrController) {
     List<Widget> list = [];
     for (dynamic item in searchResScrController.resultContent.entries) {
-      printINFO(item.key);
       if (item.key == "Songs" || item.key == "Videos") {
         list.add(SeparateSearchItemWidget(
           items: List<MediaItem>.from(item.value),

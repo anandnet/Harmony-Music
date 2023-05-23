@@ -41,7 +41,8 @@ class SettingsScreen extends StatelessWidget {
                           : settingsController.themeModetype.value ==
                                   ThemeType.dark
                               ? "dark"
-                              : "light"),
+                              : "light",
+                      style: Theme.of(context).textTheme.bodyMedium),
                 ),
                 onTap: () => showDialog(
                   context: context,
@@ -50,8 +51,9 @@ class SettingsScreen extends StatelessWidget {
               ),
               ListTile(
                   title: const Text("Cache songs"),
-                  subtitle: const Text(
-                      "Caching songs while playing for future/offline playback, it will take additional space on your device"),
+                  subtitle: Text(
+                      "Caching songs while playing for future/offline playback, it will take additional space on your device",
+                      style: Theme.of(context).textTheme.bodyMedium),
                   trailing: Obx(
                     () => Switch(
                         value: settingsController.cacheSongs.value,
@@ -60,7 +62,7 @@ class SettingsScreen extends StatelessWidget {
               ListTile(
                   title: const Text("Skip Silence"),
                   subtitle:
-                      const Text("Silence will be skipped in music playback."),
+                      Text("Silence will be skipped in music playback.",style: Theme.of(context).textTheme.bodyMedium),
                   trailing: Obx(
                     () => Switch(
                         value: settingsController.skipSilenceEnabled.value,
@@ -68,7 +70,7 @@ class SettingsScreen extends StatelessWidget {
                   )),
               ListTile(
                 title: const Text("Streaming Quality"),
-                subtitle: const Text("Quality of music stream"),
+                subtitle:  Text("Quality of music stream",style: Theme.of(context).textTheme.bodyMedium),
                 trailing: Obx(
                   () => DropdownButton(
                     dropdownColor: Theme.of(context).cardColor,
@@ -89,7 +91,7 @@ class SettingsScreen extends StatelessWidget {
               ListTile(
                 title: const Text("Github"),
                 subtitle: Text(
-                    "View Github source code \nif you like this project please give a ⭐${((Get.find<PlayerController>().playerPanelMinHeight.value) == 0) ? "" : "\n\nV 1.0.0 by anandnet"}"),
+                    "View Github source code \nif you like this project, don't forget to give a ⭐${((Get.find<PlayerController>().playerPanelMinHeight.value) == 0) ? "" : "\n\nV 1.0.0 by anandnet"}",style: Theme.of(context).textTheme.bodyMedium,),
                 isThreeLine: true,
                 onTap: () {
                   launchUrl(
@@ -102,9 +104,9 @@ class SettingsScreen extends StatelessWidget {
               )
             ],
           )),
-          const Padding(
-            padding: EdgeInsets.only(bottom: 20.0),
-            child: Text("V 1.0.0 by anandnet"),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20.0),
+            child: Text("V 1.0.0 by anandnet",style: Theme.of(context).textTheme.bodySmall,),
           ),
         ],
       ),
@@ -119,9 +121,10 @@ class ThemeSelectorDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final settingsController = Get.find<SettingsScreenController>();
     return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Container(
         height: 280,
-        color: Theme.of(context).cardColor,
+        //color: Theme.of(context).cardColor,
         padding: const EdgeInsets.only(top: 30, left: 5, right: 30, bottom: 10),
         child: Column(children: [
           Padding(
@@ -170,6 +173,7 @@ class ThemeSelectorDialog extends StatelessWidget {
       required value}) {
     return Obx(() => ListTile(
           visualDensity: const VisualDensity(vertical: -4),
+          onTap: (){controller.onThemeChange(value);},
           leading: Radio(
               value: value,
               groupValue: controller.themeModetype.value,

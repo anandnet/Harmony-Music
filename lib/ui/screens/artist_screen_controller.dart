@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:hive/hive.dart';
@@ -39,7 +38,7 @@ class ArtistScreenController extends GetxController {
         radioId: data["radioId"]);
   }
 
-  Future<void> addNremoveFromLibrary({bool add = true}) async {
+  Future<bool> addNremoveFromLibrary({bool add = true}) async {
     try {
       final box = await Hive.openBox("LibraryArtists");
       add
@@ -48,16 +47,9 @@ class ArtistScreenController extends GetxController {
       isAddedToLibrary.value = add;
       //Update frontend
       Get.find<LibraryArtistsController>().refreshLib();
-
-      Get.snackbar(
-          "Info", add ? "Artist Bookmarked" : "Artist Removed from Library",
-          duration: const Duration(milliseconds: 1250),
-          animationDuration: const Duration(microseconds: 700),
-          colorText: Colors.white);
+      return true;
     } catch (e) {
-      Get.snackbar("Info", "Operation Failed",
-          duration: const Duration(milliseconds: 1250),
-          animationDuration: const Duration(seconds: 1));
+      return false;
     }
   }
 

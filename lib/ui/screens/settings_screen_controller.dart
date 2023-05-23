@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
@@ -30,6 +31,7 @@ class SettingsScreenController extends GetxController {
   }
 
   void onThemeChange(dynamic val) {
+    printERROR("hereee");
     setBox.put('themeModeType', ThemeType.values.indexOf(val));
     themeModetype.value = val;
     Get.find<ThemeController>().changeThemeModeType(val);

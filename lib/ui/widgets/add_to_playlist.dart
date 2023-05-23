@@ -53,7 +53,7 @@ class AddToPlaylist extends StatelessWidget {
             height: 250,
             //color: Colors.green,
             child: Obx(
-              () => ListView.builder(
+              () =>addToPlaylistController.playlists.isNotEmpty? ListView.builder(
                 itemCount: addToPlaylistController.playlists.length,
                 itemBuilder: (context, index) => ListTile(
                   leading: const Icon(Icons.playlist_play_rounded),
@@ -80,7 +80,7 @@ class AddToPlaylist extends StatelessWidget {
                     });
                   },
                 ),
-              ),
+              ):const Center(child: Text("You don't have lib playlists!"),),
             ),
           )
         ]),
@@ -110,7 +110,6 @@ class AddToPlaylistController extends GetxController {
     final plstBox = await Hive.openBox(playlistId);
     if (!plstBox.containsKey(song.id)) {
       plstBox.put(song.id, MediaItemBuilder.toJson(song));
-      printINFO("Success");
       plstBox.close();
       return true;
     } else {

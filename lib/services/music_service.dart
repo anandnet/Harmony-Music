@@ -372,9 +372,9 @@ class MusicServices extends getx.GetxService {
           await _yt.videos.streamsClient.getManifest(songId);
       final streamUriList = songStreamManifest.audioOnly.sortByBitrate();
 
-      for (AudioOnlyStreamInfo x in streamUriList) {
-        printINFO("${x.audioCodec} ${x.size} ${x.tag}");
-      }
+      // for (AudioOnlyStreamInfo x in streamUriList) {
+      //   printINFO("${x.audioCodec} ${x.size} ${x.tag}");
+      // }
 
       return [
         streamUriList
@@ -400,7 +400,7 @@ class MusicServices extends getx.GetxService {
       //       .url;
       // }
     } catch (e) {
-      printERROR("Error $e");
+      printERROR("Error $e.");
       if(e.toString() =="Error Connection closed before full header was received"){
         return getSongUri(songId);
       }

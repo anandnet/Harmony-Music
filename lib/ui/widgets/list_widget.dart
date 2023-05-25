@@ -58,7 +58,12 @@ class ListWidget extends StatelessWidget {
       {bool isPlaylist = false, Playlist? playlist}) {
     final playerController = Get.find<PlayerController>();
     return ListView.builder(
-        padding: const EdgeInsets.only(top: 10),
+        padding: EdgeInsets.only(
+          top: 0,
+          bottom: Get.find<PlayerController>().isPlayerpanelTopVisible.isTrue
+              ? 80
+              : 0,
+        ),
         itemCount: items.length,
         physics: isCompleteList
             ? const BouncingScrollPhysics()
@@ -110,7 +115,12 @@ class ListWidget extends StatelessWidget {
   Widget listViewPlaylists(List<dynamic> playlists) {
     return Expanded(
       child: ListView.builder(
-          padding: const EdgeInsets.only(top: 10),
+          padding: EdgeInsets.only(
+            top: 0,
+            bottom: Get.find<PlayerController>().isPlayerpanelTopVisible.isTrue
+                ? 80
+                : 0,
+          ),
           itemCount: playlists.length,
           itemExtent: 100,
           physics: const BouncingScrollPhysics(),
@@ -148,7 +158,12 @@ class ListWidget extends StatelessWidget {
   Widget listViewAlbums(List<dynamic> albums) {
     return Expanded(
       child: ListView.builder(
-        padding: const EdgeInsets.only(top: 10),
+        padding: EdgeInsets.only(
+          top: 0,
+          bottom: Get.find<PlayerController>().isPlayerpanelTopVisible.isTrue
+              ? 80
+              : 0,
+        ),
         itemCount: albums.length,
         itemExtent: 100,
         physics: const BouncingScrollPhysics(),
@@ -193,7 +208,12 @@ class ListWidget extends StatelessWidget {
 
   Widget listViewArtists(List<dynamic> artists) {
     return ListView.builder(
-        padding: const EdgeInsets.only(top: 10),
+        padding: EdgeInsets.only(
+          top: 5,
+          bottom: Get.find<PlayerController>().isPlayerpanelTopVisible.isTrue
+              ? 80
+              : 0,
+        ),
         itemCount: artists.length,
         itemExtent: 90,
         physics: const BouncingScrollPhysics(),

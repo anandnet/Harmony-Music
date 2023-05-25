@@ -276,6 +276,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       await _playList.add(_createAudioSource(currentSong));
 
       await _player.play();
+      cacheNextSongUrl();
     } else if (name == "checkWithCacheDb" && isPlayingUsingLockCachingSource) {
       final song = extras!['mediaItem'] as MediaItem;
       final songsCacheBox = Hive.box("SongsCache");
@@ -301,6 +302,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       currMed.extras!['url'] = currentSongUrl;
       await _playList.add(_createAudioSource(currMed));
       await _player.play();
+      cacheNextSongUrl();
     } else if (name == 'toggleSkipSilence') {
       final enable = (extras!['enable'] as bool);
       await _player.setSkipSilenceEnabled(enable);
@@ -313,6 +315,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       queue.add(currentQueue);
       mediaItem.add(currentItem);
       currentIndex = 0;
+      cacheNextSongUrl();
     }
   }
 
@@ -320,6 +323,13 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   Future<void> stop() async {
     await _player.stop();
     return super.stop();
+  }
+
+  Future<void> cacheNextSongUrl() async {
+    if (queue.value.length > currentIndex + 1) {
+      await checkNGetUrl((queue.value[currentIndex+1]).id);
+      printINFO("Next Song Url Cached");
+    }
   }
 
   Future<String?> checkNGetUrl(String songId,

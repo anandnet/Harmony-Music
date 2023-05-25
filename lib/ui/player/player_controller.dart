@@ -171,7 +171,6 @@ class PlayerController extends GetxController {
     receivePort.first.then((value) async {
       final upNextSongList = value;
       await _audioHandler.updateQueue(upNextSongList);
-      //cacheQueueitemsUrl(upNextSongList.sublist(1));
     });
 
     //open player panel,set current song and push first song into playing list,
@@ -207,7 +206,6 @@ class PlayerController extends GetxController {
         ? await _audioHandler.updateQueue(mediaItems)
         : _audioHandler.addQueueItems(mediaItems);
     await _audioHandler.customAction("playByIndex", {"index": index});
-    //cacheQueueitemsUrl(mediaItems);
   }
 
   void _playerPanelCheck() {

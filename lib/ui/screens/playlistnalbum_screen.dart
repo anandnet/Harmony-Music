@@ -69,9 +69,11 @@ class PlaylistNAlbumScreen extends StatelessWidget {
             // selectedIconTheme: IconThemeData(color: Colors.white)
           ),
 
-          ///Todo loading widget
           Obx(() => playListNAlbumScreenController.isContentFetched.isFalse
-              ? const Expanded(child: Center(child: RefreshProgressIndicator(),))
+              ? const Expanded(
+                  child: Center(
+                  child: RefreshProgressIndicator(),
+                ))
               : Expanded(
                   child: Container(
                   color: Theme.of(context).canvasColor,

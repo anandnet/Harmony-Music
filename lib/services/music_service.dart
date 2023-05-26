@@ -52,8 +52,9 @@ class MusicServices extends getx.GetxService {
 
   Future<void> init() async {
     //check visitor id in data base, if not generate one , set lang code
-    _context['context']['client']['hl'] = 'en';
-    _context['context']['client']['gl'] = 'IN';
+    final date = DateTime.now();
+    _context['context']['client']['clientVersion'] =
+        "1.${date.year}${date.month.toString().padLeft(2, '0')}${date.day.toString().padLeft(2, '0')}.01.00";
     final signatureTimestamp = getDatestamp() - 1;
     _context['playbackContext'] = {
       'contentPlaybackContext': {'signatureTimestamp': signatureTimestamp},
@@ -190,7 +191,6 @@ class MusicServices extends getx.GetxService {
       data['params'] = "wAEB";
     }
     final response = (await _sendRequest("next", data)).data;
-    inspect(response);
     final watchNextRenderer = nav(response, [
       'contents',
       'singleColumnMusicWatchNextResultsRenderer',
@@ -378,11 +378,12 @@ class MusicServices extends getx.GetxService {
 
       return [
         streamUriList
-            .lastWhere((element) => element.audioCodec.contains("mp4a") && element.tag != 140)
+            .lastWhere((element) =>
+                element.audioCodec.contains("mp4a") && element.tag != 140)
             .url
             .toString(),
         streamUriList
-            .firstWhere((element) => element.tag == 251|| element.tag == 140)
+            .firstWhere((element) => element.tag == 251 || element.tag == 140)
             .url
             .toString()
       ];
@@ -401,7 +402,8 @@ class MusicServices extends getx.GetxService {
       // }
     } catch (e) {
       printERROR("Error $e.");
-      if(e.toString() =="Error Connection closed before full header was received"){
+      if (e.toString() ==
+          "Error Connection closed before full header was received") {
         return getSongUri(songId);
       }
       return null;
@@ -582,8 +584,9 @@ class MusicServices extends getx.GetxService {
           ? null
           : descriptionShelf['subheader']['runs'][0]['text'];
     }
-    dynamic subscriptionButton = header['subscriptionButton']!=null?
-        header['subscriptionButton']['subscribeButtonRenderer']:null;
+    dynamic subscriptionButton = header['subscriptionButton'] != null
+        ? header['subscriptionButton']['subscribeButtonRenderer']
+        : null;
     artist['channelId'] = channelId;
     artist['shuffleId'] = nav(header,
         ['playButton', 'buttonRenderer', ...navigation_watch_playlist_id]);
@@ -591,14 +594,16 @@ class MusicServices extends getx.GetxService {
       header,
       ['startRadioButton', 'buttonRenderer'] + navigation_watch_playlist_id,
     );
-    artist['subscribers'] = subscriptionButton!=null ?nav(
-      subscriptionButton,
-      ['subscriberCountText', 'runs', 0, 'text'],
-    ): null;
-    
+    artist['subscribers'] = subscriptionButton != null
+        ? nav(
+            subscriptionButton,
+            ['subscriberCountText', 'runs', 0, 'text'],
+          )
+        : null;
+
     artist['thumbnails'] = nav(header, thumbnails);
     artist['songs'] = {};
-    artist['songs']['results'] =[];
+    artist['songs']['results'] = [];
     if (results[0].containsKey('musicShelfRenderer')) {
       // API sometimes does not return songs
       Map<String, dynamic> musicShelf = nav(results[0], ['musicShelfRenderer']);

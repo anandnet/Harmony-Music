@@ -319,6 +319,7 @@ class PlayerController extends GetxController {
   void dispose() {
     _audioHandler.customAction('dispose');
     keyboardSubscription.cancel();
+    scrollController.dispose();
     super.dispose();
   }
 }

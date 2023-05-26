@@ -35,16 +35,6 @@ class MyApp extends StatelessWidget {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     SystemChannels.lifecycle.setMessageHandler((msg) async {
       if (msg == "AppLifecycleState.resumed") {
-        // SystemChrome.setSystemUIOverlayStyle(
-        //   SystemUiOverlayStyle(
-        //       statusBarIconBrightness: Brightness.light,
-        //       statusBarColor: Colors.transparent,
-        //       systemNavigationBarColor: Colors.white.withOpacity(0.002),
-        //       systemNavigationBarDividerColor: Colors.transparent,
-        //       systemNavigationBarIconBrightness: Brightness.light,
-        //       systemStatusBarContrastEnforced: false,
-        //       systemNavigationBarContrastEnforced: true),
-        // );
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       }
       return null;
@@ -69,10 +59,6 @@ Future<void> startApplicationServices() async {
   Get.lazyPut(() => LibraryAlbumsController(), fenix: true);
   Get.lazyPut(() => LibraryArtistsController(), fenix: true);
   Get.lazyPut(() => SettingsScreenController(), fenix: true);
-  // final success = await AndroidPowerManager.requestIgnoreBatteryOptimizations();
-  // (success != null && success)
-  //     ? printINFO("Power manager Activated")
-  //     : printERROR("Power manager Activation Failed");
 }
 
 initHive() async {

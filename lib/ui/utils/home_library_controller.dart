@@ -133,6 +133,11 @@ class LibraryPlaylistsController extends GetxController {
     }
     return false;
   }
+  @override
+  void dispose() {
+    textInputController.dispose();
+    super.dispose();
+  }
 }
 
 class LibraryAlbumsController extends GetxController {

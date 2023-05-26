@@ -49,27 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             id: ScreenNavigationSetup.id);
                         // file:///data/user/0/com.example.harmonymusic/cache/libCachedImageData/
                         //file:///data/user/0/com.example.harmonymusic/cache/just_audio_cache/
-                        // final cacheDir = (await getTemporaryDirectory()).path;
-                        // if (io.Directory("$cacheDir/libCachedImageData/")
-                        //     .existsSync()) {
-                        //   final file =
-                        //       io.Directory("$cacheDir/cachedSongs").listSync();
-                        //   // inspect(file);
-                        //   final downloadedFiles =
-                        //       io.Directory("$cacheDir/cachedSongs")
-                        //           .listSync()
-                        //           .where((f) => !['mime', 'part'].contains(
-                        //               f.path.replaceAll(RegExp(r'^.*\.'), '')));
-                        //   // print(downloadedFiles);
-                        // }
-                        // if (io.Directory("$cacheDir/libCachedImageData/")
-                        //     .existsSync()) {
-                        //   final audioFiles =
-                        //       io.Directory("$cacheDir/libCachedImageData/")
-                        //           .listSync();
-
-                        //   //inspect(audioFiles);
-                        // }
                       },
                       child: const Icon(Icons.search)),
                 ),

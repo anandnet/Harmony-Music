@@ -16,26 +16,28 @@ class SearchScreen extends StatelessWidget {
           Container(
             width: 60,
             color: Theme.of(context).navigationRailTheme.backgroundColor,
-             child:Column(
-               children: [
-                 Padding(
-                  padding: const EdgeInsets.only(left: 10,top: 80),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 80),
                   child: IconButton(
                     icon: Icon(
                       Icons.arrow_back_ios,
                       color: Theme.of(context).textTheme.titleMedium!.color,
                     ),
                     onPressed: () {
-                      Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
+                      Get.nestedKey(ScreenNavigationSetup.id)!
+                          .currentState!
+                          .pop();
                     },
                   ),
+                ),
+              ],
             ),
-               ],
-             ),
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(top: 90,left: 5),
+              padding: const EdgeInsets.only(top: 90, left: 5),
               child: Column(
                 children: [
                   Align(
@@ -45,33 +47,44 @@ class SearchScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   TextField(
                     controller: searchScreenController.textInputController,
                     onChanged: searchScreenController.onChanged,
-                     autofocus: true,
-                     cursorColor: Theme.of(context).textTheme.bodySmall!.color,
+                    autofocus: true,
+                    cursorColor: Theme.of(context).textTheme.bodySmall!.color,
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.only(left: 5),
-                      
                       focusColor: Colors.white,
                       hintText: 'Enter a search term',
                     ),
                   ),
                   Expanded(
                       child: Obx(() => ListView.builder(
+                          padding: const EdgeInsets.only(top: 5),
                             physics: const BouncingScrollPhysics(
                                 parent: AlwaysScrollableScrollPhysics()),
-                            itemCount: searchScreenController.suggestionList.length,
+                            itemCount:
+                                searchScreenController.suggestionList.length,
                             itemBuilder: (context, index) => ListTile(
+                              contentPadding: const EdgeInsets.only(left: 10,right: 20),
                               onTap: () {
-                                Get.toNamed(ScreenNavigationSetup.searchResultScreen,
+                                Get.toNamed(
+                                    ScreenNavigationSetup.searchResultScreen,
                                     id: ScreenNavigationSetup.id,
-                                    arguments:
-                                        searchScreenController.suggestionList[index]);
+                                    arguments: searchScreenController
+                                        .suggestionList[index]);
                               },
-                              title:
-                                  Text(searchScreenController.suggestionList[index]),
+                              title: Text(
+                                  searchScreenController.suggestionList[index]),
+                              trailing: InkWell(
+                                onTap: () {
+                                  searchScreenController.suggestionInput(searchScreenController.suggestionList[index]);
+                                },
+                                child: Icon(Icons.north_west_rounded,color: Theme.of(context).textTheme.titleMedium!.color,),
+                              ),
                             ),
                           )))
                 ],

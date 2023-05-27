@@ -69,11 +69,11 @@ class AddToPlaylist extends StatelessWidget {
                         .then((value) {
                       if (value) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            snackbar(context, "Song added to playlist!", 180));
+                            snackbar(context, "Song added to playlist!", size: SanckBarSize.MEDIUM));
                         Navigator.of(context).pop();
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            snackbar(context, "Song already exists!", 160));
+                            snackbar(context, "Song already exists!", size: SanckBarSize.MEDIUM));
                         Navigator.of(context).pop();
                       }
                     });

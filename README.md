@@ -19,8 +19,8 @@ An app for music streaming made with Flutter(Currently support Android only).
 
 # To Do
 * Radio feature
-* Queue management improvement
 * list countinuation
+* list sorting
 * Backup & Restore
 * Lyrics support
 * Equalizer support
@@ -35,7 +35,7 @@ from the use of the songs and other content available through this app.
 
 # Learning References & Credits
 <a href = 'https://docs.flutter.dev/'>Flutter documentation</a> - a best guide to learn cross platform Ui/app developemnt<br/>
-<a href = 'https://suragch.medium.com/'>Suragch</a>'s Article related Just audio & state management,architectural style<br/>
+<a href = 'https://suragch.medium.com/'>Suragch</a>'s Article related to Just audio & state management,architectural style<br/>
 <a href = 'https://github.com/sigma67'>sigma67</a>'s unofficial ytmusic api project<br/>
 App UI inspired by <a href = 'https://github.com/vfsfitvnm'>vfsfitvnm</a>'s ViMusic<br/>
 

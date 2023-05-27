@@ -66,7 +66,7 @@ class ArtistScreen extends StatelessWidget {
               switch (artistScreenController.navigationRailCurrentIndex.value) {
                 case 0:
                   {
-                    return Align(
+                    return artistScreenController.isArtistContentFetced.isTrue? Align(
                       alignment: Alignment.topCenter,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -114,7 +114,7 @@ class ArtistScreen extends StatelessWidget {
                                                                     ? "Artist bookmarked !"
                                                                     : "Artist bookmark removed!"
                                                                 : "Operation failed",
-                                                            200)));
+                                                            size: SanckBarSize.MEDIUM)));
                                               },
                                               child: artistScreenController
                                                       .isArtistContentFetced
@@ -167,7 +167,7 @@ class ArtistScreen extends StatelessWidget {
                               : const SizedBox.shrink(),
                         ),
                       ),
-                    );
+                    ):const Center(child: RefreshProgressIndicator(),);
                   }
                 case 1:
                   {

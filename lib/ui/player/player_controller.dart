@@ -189,8 +189,14 @@ class PlayerController extends GetxController {
   }
 
   ///enqueueSongList method add song List to current queue
-  ///if queue is empty,song start playing automatically
-  Future<void> enqueueSongList(List<MediaItem> mediaItems) async {}
+  Future<void> enqueueSongList(List<MediaItem> mediaItems) async {
+    for(MediaItem item in mediaItems){
+      if(!currentQueue.contains(item)){
+        _audioHandler.addQueueItem(item);
+      }
+    }
+  }
+
   Future<void> playASong(MediaItem mediaItem) async {
     currentSong.value = mediaItem;
     _playerPanelCheck();

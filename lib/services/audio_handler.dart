@@ -214,6 +214,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
   @override
+  // ignore: avoid_renaming_method_parameters
   Future<void> removeQueueItem(MediaItem mediaItem_) async {
     final currentQueue = queue.value;
     final currentSong = mediaItem.value;

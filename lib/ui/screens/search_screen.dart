@@ -51,6 +51,7 @@ class SearchScreen extends StatelessWidget {
                     height: 10,
                   ),
                   TextField(
+                    textCapitalization: TextCapitalization.sentences,
                     controller: searchScreenController.textInputController,
                     onChanged: searchScreenController.onChanged,
                     autofocus: true,

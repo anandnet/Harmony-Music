@@ -68,7 +68,6 @@ class PlaylistNAlbumScreen extends StatelessWidget {
             ],
             // selectedIconTheme: IconThemeData(color: Colors.white)
           ),
-
           Obx(() => playListNAlbumScreenController.isContentFetched.isFalse
               ? const Expanded(
                   child: Center(
@@ -150,7 +149,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                             value
                                                                 ? "Playlist removed!"
                                                                 : "Operation failed",
-                                                            200)));
+                                                           size: SanckBarSize
+                                                                .MEDIUM)));
                                               },
                                             )
                                           ],
@@ -211,7 +211,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                                       ? "Album bookmark removed!"
                                                                       : "Playlist bookmark removed!"
                                                               : "Operation failed",
-                                                          200)));
+                                                         size: SanckBarSize
+                                                              .MEDIUM)));
                                             },
                                             child: Container(
                                               height: 40,
@@ -233,6 +234,47 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                       : Icons.bookmark_added)),
                                             )),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Align(
+                                          alignment: Alignment.bottomLeft,
+                                          child: Container(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, right: 10),
+                                            decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .canvasColor
+                                                    .withOpacity(.7),
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
+                                            height: 27,
+                                            width: 110,
+                                            child: InkWell(
+                                              onTap: () {
+                                                Get.find<PlayerController>()
+                                                    .enqueueSongList(
+                                                        playListNAlbumScreenController
+                                                            .songList
+                                                            .toList())
+                                                    .whenComplete(() =>
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(snackbar(
+                                                                context,
+                                                                "Songs enqueued!",
+                                                                size: SanckBarSize
+                                                                    .MEDIUM)));
+                                              },
+                                              child: const Center(
+                                                  child: Text(
+                                                "Enqueue all",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )),
+                                            ),
+                                          ),
+                                        ),
+                                      )
                                     ],
                                   )),
                             ),

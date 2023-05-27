@@ -39,6 +39,7 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
             ),
           ),
           TextField(
+              textCapitalization: TextCapitalization.sentences,
               autofocus: true,
               cursorColor: Theme.of(context).textTheme.titleSmall!.color,
               controller: librPlstCntrller.textInputController),
@@ -79,7 +80,8 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                           if (value) {
                             Navigator.of(context).pop();
                             ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                                context, "Renamed successfully!", 200));
+                                context, "Renamed successfully!",
+                                size: SanckBarSize.MEDIUM));
                           }
                         });
                       } else {
@@ -94,10 +96,11 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                                 isCreateNadd
                                     ? "Playlist created & Song added"
                                     : "Playlist created",
-                                200));
+                                size: SanckBarSize.MEDIUM));
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                snackbar(context, "Some error occured!", 150));
+                            ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                                context, "Some error occured!",
+                                size: SanckBarSize.MEDIUM));
                           }
                           Navigator.of(context).pop();
                         });

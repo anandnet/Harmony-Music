@@ -1,6 +1,17 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
-SnackBar snackbar(BuildContext context, String text, double width) {
+enum SanckBarSize { BIG, MEDIUM, SMALL }
+
+SnackBar snackbar(BuildContext context, String text,
+    {SanckBarSize size = SanckBarSize.MEDIUM}) {
+  final scrWidth = MediaQuery.of(context).size.width;
+  final hrMargin = size == SanckBarSize.BIG
+      ? (scrWidth - 300) / 2
+      : size == SanckBarSize.MEDIUM
+          ? (scrWidth - 200) / 2
+          : (scrWidth - 100) / 2;
   return SnackBar(
     backgroundColor: Theme.of(context).colorScheme.secondary,
     content: Center(
@@ -14,7 +25,7 @@ SnackBar snackbar(BuildContext context, String text, double width) {
     ),
     //width: width,
 
-    margin: const EdgeInsets.only(bottom: 100.0, left: 40, right: 40),
+    margin: EdgeInsets.only(bottom: 100.0, left: hrMargin, right: hrMargin),
     behavior: SnackBarBehavior.floating,
     duration: const Duration(seconds: 1),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

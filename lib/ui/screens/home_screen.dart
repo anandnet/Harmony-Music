@@ -4,6 +4,7 @@ import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
 import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
 
+import '../../models/playlist.dart';
 import '../navigator.dart';
 import '../utils/home_library_controller.dart';
 import '../widgets/content_list_widget.dart';
@@ -158,6 +159,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       "Library Songs",
                       true,
                       isPlaylist: true,
+                      playlist: Playlist(
+                          title: "Cached/Offline",
+                          playlistId: "SongsCache",
+                          thumbnailUrl: "",
+                          isCloudPlaylist: false),
                     )
                   : Expanded(
                       child: Center(

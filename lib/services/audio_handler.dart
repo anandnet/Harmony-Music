@@ -214,6 +214,19 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
   @override
+  Future<void> removeQueueItem(MediaItem mediaItem_) async {
+    final currentQueue = queue.value;
+    final currentSong = mediaItem.value;
+    final itemIndex = currentQueue.indexOf(mediaItem_);
+    if(currentIndex>itemIndex){
+      currentIndex -=1;
+    }
+    currentQueue.remove(mediaItem_);
+    queue.add(currentQueue);
+    mediaItem.add(currentSong);
+  }
+
+  @override
   Future<void> play() => _player.play();
 
   @override
@@ -316,6 +329,24 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       mediaItem.add(currentItem);
       currentIndex = 0;
       cacheNextSongUrl();
+    }else if(name == "reorderQueue"){
+      printINFO("Reorder queue");
+      final oldIndex = extras!['oldIndex'];
+      int newIndex = extras['newIndex'];
+
+      if (oldIndex < newIndex) {
+        newIndex--;
+      }
+      
+      final currentQueue = queue.value;
+      final currentItem = currentQueue[currentIndex];
+      final item = currentQueue.removeAt(
+        oldIndex,
+      );
+      currentQueue.insert(newIndex, item);
+      currentIndex = currentQueue.indexOf(currentItem);
+      queue.add(currentQueue);
+      mediaItem.add(currentItem);
     }
   }
 

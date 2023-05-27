@@ -33,7 +33,8 @@ class SlidingUpPanel extends StatefulWidget {
   /// the panel position with the scroll position. Useful for implementing an
   /// infinite scroll behavior. If [panel] and [panelBuilder] are both non-null,
   /// [panel] will be used.
-  final Widget Function(ScrollController sc)? panelBuilder;
+  final Widget Function(ScrollController sc, Function(int) onListReorderStart,
+      Function(int) onListReorderEnd)? panelBuilder;
 
   /// The Widget displayed overtop the [panel] when collapsed.
   /// This fades out as the panel is opened.
@@ -235,6 +236,7 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
         if (widget.onPanelClosed != null && _ac.value == 0.0) {
           widget.onPanelClosed!();
         }
+        //printINFO("offset :${_sc.offset}");
       });
 
     // prevent the panel content from being scrolled only if the widget is
@@ -348,7 +350,9 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                                   : 0),
                           child: SizedBox(
                             height: widget.maxHeight,
-                            child: widget.panel ?? widget.panelBuilder!(_sc),
+                            child: widget.panel ??
+                                widget.panelBuilder!(
+                                    _sc, onListReorderStart, onListReorderEnd),
                           )),
 
                       // header
@@ -361,7 +365,9 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                                   widget.slideDirection == SlideDirection.DOWN
                                       ? 0.0
                                       : null,
-                              child: widget.header ?? const SizedBox(),
+                              child: IgnorePointer(
+                                  ignoring: _isPanelOpen,
+                                  child: widget.header ?? const SizedBox()),
                             )
                           : Container(),
 
@@ -423,6 +429,15 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
     super.dispose();
   }
 
+  bool isListReorderInProgress = false;
+  void onListReorderStart(int index) {
+    isListReorderInProgress = true;
+  }
+
+  void onListReorderEnd(int index) {
+    isListReorderInProgress = false;
+  }
+
   double _getParallax() {
     if (widget.slideDirection == SlideDirection.UP) {
       return -_ac.value *
@@ -470,7 +485,9 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
     // only slide the panel if scrolling is not enabled
     if (!_scrollingEnabled) {
       if (widget.slideDirection == SlideDirection.UP) {
-        _ac.value -= dy / (widget.maxHeight - widget.minHeight);
+        if (!isListReorderInProgress) {
+          _ac.value -= dy / (widget.maxHeight - widget.minHeight);
+        }
       } else {
         _ac.value += dy / (widget.maxHeight - widget.minHeight);
       }

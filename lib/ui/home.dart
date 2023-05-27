@@ -32,133 +32,138 @@ class Home extends StatelessWidget {
         }
       },
       child: Scaffold(
-        key: playerController.homeScaffoldkey,
+          key: playerController.homeScaffoldkey,
           body: Obx(() => SlidingUpPanel(
-              header: Obx(() {
-                return Visibility(
-                  visible: playerController.isPlayerpanelTopVisible.value,
-                  child: Opacity(
-                    opacity: playerController.playerPaneOpacity.value,
-                    child: Container(
-                      height: 75 + safePadding,
-                      width: size.width,
-                      color: Theme.of(context).bottomSheetTheme.backgroundColor,
-                      child: Center(
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 3,
-                              color:
-                                  Theme.of(context).progressIndicatorTheme
-                                  .color,
-                              child: MiniPlayerProgressBar(
-                                current: playerController
-                                    .progressBarStatus.value.current,
-                                total: playerController
-                                    .progressBarStatus.value.total,
-                              //need to check
-                                progressBarColor:Theme.of(context).progressIndicatorTheme.linearTrackColor?? Colors.white
+                onPanelSlide: playerController.panellistener,
+                controller: playerController.playerPanelController,
+                minHeight: playerController.playerPanelMinHeight.value,
+                maxHeight: size.height,
+                panel: const Player(),
+                body: const ScreenNavigation(),
+                header: Obx(() {
+                  return Visibility(
+                    visible: playerController.isPlayerpanelTopVisible.value,
+                    child: Opacity(
+                      opacity: playerController.playerPaneOpacity.value,
+                      child: Container(
+                        height: 75 + safePadding,
+                        width: size.width,
+                        color:
+                            Theme.of(context).bottomSheetTheme.backgroundColor,
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 3,
+                                color: Theme.of(context)
+                                    .progressIndicatorTheme
+                                    .color,
+                                child: MiniPlayerProgressBar(
+                                    current: playerController
+                                        .progressBarStatus.value.current,
+                                    total: playerController
+                                        .progressBarStatus.value.total,
+                                    //need to check
+                                    progressBarColor: Theme.of(context)
+                                            .progressIndicatorTheme
+                                            .linearTrackColor ??
+                                        Colors.white),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 17.0, vertical: 7),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox.square(
-                                    dimension: 50,
-                                    //width: 40,
-                                    child: playerController.currentSong.value !=
-                                            null
-                                        ? ImageWidget(
-                                            song: playerController
-                                                .currentSong.value!,
-                                          )
-                                        : const SizedBox(
-                                            height: 50,
-                                            width: 50,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 17.0, vertical: 7),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox.square(
+                                      dimension: 50,
+                                      //width: 40,
+                                      child:
+                                          playerController.currentSong.value !=
+                                                  null
+                                              ? ImageWidget(
+                                                  song: playerController
+                                                      .currentSong.value!,
+                                                )
+                                              : const SizedBox(
+                                                  height: 50,
+                                                  width: 50,
+                                                ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 20,
+                                            child: Text(
+                                              playerController
+                                                      .currentQueue.isNotEmpty
+                                                  ? playerController
+                                                      .currentSong.value!.title
+                                                  : "",
+                                              maxLines: 1,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium,
+                                            ),
                                           ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          SizedBox(
+                                            height: 20,
+                                            child: Text(
+                                              playerController
+                                                      .currentQueue.isNotEmpty
+                                                  ? playerController.currentSong
+                                                      .value!.artist!
+                                                  : "",
+                                              maxLines: 1,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Row(
                                       children: [
                                         SizedBox(
-                                          height: 20,
-                                          child: Text(
-                                            playerController
-                                                    .currentQueue.isNotEmpty
-                                                ? playerController
-                                                    .currentSong.value!.title
-                                                : "",
-                                            maxLines: 1,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium,
-                                          ),
-                                        ),
+                                            width: 45,
+                                            child: _playButton(context)),
                                         SizedBox(
-                                          height: 20,
-                                          child: Text(
-                                            playerController
-                                                    .currentQueue.isNotEmpty
-                                                ? playerController
-                                                    .currentSong.value!.artist!
-                                                : "",
-                                            maxLines: 1,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall,
-                                          ),
-                                        ),
+                                            width: 40,
+                                            child: InkWell(
+                                              onTap: playerController.next,
+                                              child: Icon(
+                                                Icons.skip_next_rounded,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .titleMedium!
+                                                    .color,
+                                                size: 35,
+                                              ),
+                                            ))
                                       ],
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                          width: 45,
-                                          child: _playButton(context)),
-                                      SizedBox(
-                                          width: 40,
-                                          child: InkWell(
-                                            onTap: playerController.next,
-                                            child: Icon(
-                                              Icons.skip_next_rounded,
-                                              color: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium!
-                                                  .color,
-                                              size: 35,
-                                            ),
-                                          ))
-                                    ],
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              }),
-              onPanelSlide: playerController.panellistener,
-              controller: playerController.playerPanelController,
-              minHeight: playerController.playerPanelMinHeight.value,
-              maxHeight: size.height,
-              panel: const Player(),
-              body: const ScreenNavigation()))),
+                  );
+                }),
+              ))),
     );
   }
 
@@ -190,7 +195,7 @@ class Home extends StatelessWidget {
             color: Theme.of(context).textTheme.titleMedium!.color,
           ),
           iconSize: 35.0,
-          onPressed: () => controller.replay,
+          onPressed: (){},
         );
       }
     });

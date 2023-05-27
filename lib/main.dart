@@ -23,6 +23,7 @@ Future<void> main() async {
   startApplicationServices();
   Get.put<AudioHandler>(await initAudioService(), permanent: true);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
 
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         title: 'Harmony Music',
         theme: controller.themedata.value,
         home: const Home(),
+        debugShowCheckedModeBanner: false,
       );
     });
   }

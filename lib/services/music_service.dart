@@ -403,7 +403,7 @@ class MusicServices extends getx.GetxService {
     } catch (e) {
       printERROR("Error $e.");
       if (e.toString() ==
-          "Error Connection closed before full header was received") {
+          "Connection closed before full header was received") {
         return getSongUri(songId);
       }
       return null;

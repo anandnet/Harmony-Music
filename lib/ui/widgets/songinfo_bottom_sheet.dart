@@ -16,10 +16,14 @@ import 'image_widget.dart';
 
 class SongInfoBottomSheet extends StatelessWidget {
   const SongInfoBottomSheet(this.song,
-      {super.key, this.playlist, this.calledFromPlayer = false});
+      {super.key,
+      this.playlist,
+      this.calledFromPlayer = false,
+      this.calledFromQueue = false});
   final MediaItem song;
   final Playlist? playlist;
   final bool calledFromPlayer;
+  final bool calledFromQueue;
 
   @override
   Widget build(BuildContext context) {
@@ -63,18 +67,20 @@ class SongInfoBottomSheet extends StatelessWidget {
             ).whenComplete(() => Get.delete<AddToPlaylistController>());
           },
         ),
-       calledFromPlayer?const SizedBox.shrink(): ListTile(
-          visualDensity: const VisualDensity(vertical: -1),
-          leading: const Icon(Icons.merge),
-          title: const Text("Enqueue this song"),
-          onTap: () {
-            final playerCntrller = Get.find<PlayerController>();
-            playerCntrller.currentQueue.isEmpty
-                ? playerCntrller.pushSongToQueue(song)
-                : playerCntrller.enqueueSong(song);
-            Navigator.of(context).pop();
-          },
-        ),
+        (calledFromPlayer || calledFromQueue)
+            ? const SizedBox.shrink()
+            : ListTile(
+                visualDensity: const VisualDensity(vertical: -1),
+                leading: const Icon(Icons.merge),
+                title: const Text("Enqueue this song"),
+                onTap: () {
+                  final playerCntrller = Get.find<PlayerController>();
+                  playerCntrller.currentQueue.isEmpty
+                      ? playerCntrller.pushSongToQueue(song)
+                      : playerCntrller.enqueueSong(song);
+                  Navigator.of(context).pop();
+                },
+              ),
         song.extras!['album'] != null
             ? ListTile(
                 visualDensity: const VisualDensity(vertical: -1),
@@ -84,6 +90,10 @@ class SongInfoBottomSheet extends StatelessWidget {
                   Navigator.of(context).pop();
                   if (calledFromPlayer) {
                     Get.find<PlayerController>().playerPanelController.close();
+                  }
+                  if (calledFromQueue) {
+                    final playerController = Get.find<PlayerController>();
+                    playerController.playerPanelController.close();
                   }
                   Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
                       id: ScreenNavigationSetup.id,
@@ -109,6 +119,24 @@ class SongInfoBottomSheet extends StatelessWidget {
                               "Removed from ${playlist!.title}", 200)));
                 },
               )
+            : const SizedBox.shrink(),
+        (calledFromQueue)
+            ? ListTile(
+                visualDensity: const VisualDensity(vertical: -1),
+                leading: const Icon(Icons.delete_rounded),
+                title: const Text("Remove form Queue"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  final plarcntr = Get.find<PlayerController>();
+                  if (plarcntr.currentSong.value!.id == song.id) {
+                    ScaffoldMessenger.of(context).showSnackBar(snackbar(context,
+                        "You can't remove currently playing song", 200));
+                  } else {
+                    Get.find<PlayerController>().removeFromQueue(song);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        snackbar(context, "Removed from queue !", 200));
+                  }
+                })
             : const SizedBox.shrink(),
         ListTile(
           contentPadding: const EdgeInsets.only(bottom: 20, left: 15),
@@ -138,6 +166,10 @@ class SongInfoBottomSheet extends StatelessWidget {
                       Get.find<PlayerController>()
                           .playerPanelController
                           .close();
+                    }
+                    if (calledFromQueue) {
+                      final playerController = Get.find<PlayerController>();
+                      playerController.playerPanelController.close();
                     }
                     Get.toNamed(ScreenNavigationSetup.artistScreen,
                         id: ScreenNavigationSetup.id,
@@ -175,12 +207,14 @@ class SongInfoController extends GetxController {
   Future<void> removeSongFromPlaylist(MediaItem item, Playlist playlist) async {
     final box = await Hive.openBox(playlist.playlistId);
     box.delete(item.id);
-    final plstCntroller = Get.find<PlayListNAlbumScreenController>();
-    plstCntroller
-        .addNRemoveItemsinList(item, action: 'remove');
+    try {
+      final plstCntroller = Get.find<PlayListNAlbumScreenController>();
+      plstCntroller.addNRemoveItemsinList(item, action: 'remove');
+    } catch (e) {}
     //Updating Library song list in frontend
-    if(playlist.playlistId == "SongsCache"){
-      Get.find<LibrarySongsController>().cachedSongsList = plstCntroller.songList;
+    if (playlist.playlistId == "SongsCache") {
+      Get.find<LibrarySongsController>().cachedSongsList.remove(item);
+      return;
     }
     box.close();
   }

@@ -26,6 +26,7 @@ class PlayerController extends GetxController {
   final isPlayerPaneDraggable = true.obs;
   final playerPanelMinHeight = 0.0.obs;
   bool _initFlagForPlayer = true;
+  final isQueueReorderingInProcess = false.obs;
   PanelController playerPanelController = PanelController();
 
   final progressBarStatus = ProgressBarState(
@@ -219,8 +220,27 @@ class PlayerController extends GetxController {
     }
   }
 
+  void removeFromQueue(MediaItem song){
+    _audioHandler.removeQueueItem(song);
+  }
+
   void shuffleQueue(){
     _audioHandler.customAction("shuffleQueue");
+  }
+
+  void onReorder(int oldIndex,int newIndex){
+    printINFO("Reorder");
+    _audioHandler.customAction("reorderQueue",{"oldIndex":oldIndex,"newIndex":newIndex});
+  }
+
+  void onReorderStart(int index){
+    printINFO("Reordering started");
+    isQueueReorderingInProcess.value = true;
+  }
+
+  void onReorderEnd(int index){
+     printINFO("Reordering ended");
+    isQueueReorderingInProcess.value = false;
   }
 
   void play() {
@@ -311,9 +331,6 @@ class PlayerController extends GetxController {
     recentItem = mediaItem;
   }
 
-  void replay() {
-    _audioHandler;
-  }
 
   @override
   void dispose() {

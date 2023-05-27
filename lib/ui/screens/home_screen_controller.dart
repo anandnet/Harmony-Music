@@ -24,7 +24,7 @@ class HomeScreenController extends GetxController {
   void _setHomeContentList(List<dynamic> contents) {
     for (var content in contents) {
       if ((content["title"]).contains("Videos") ||
-          (content["title"]).contains("videos")) {
+          (content["title"]).contains("videos") || content["contents"][1]==null) {
       } else if (content["title"] == "Quick picks") {
         homeContentList.add(QuickPicks.fromJson(content));
       } else if (content["contents"][0].containsKey("playlistId")) {

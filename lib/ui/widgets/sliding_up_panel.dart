@@ -365,9 +365,7 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
                                   widget.slideDirection == SlideDirection.DOWN
                                       ? 0.0
                                       : null,
-                              child: IgnorePointer(
-                                  ignoring: _isPanelOpen,
-                                  child: widget.header ?? const SizedBox()),
+                              child: widget.header ?? const SizedBox(),
                             )
                           : Container(),
 

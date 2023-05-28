@@ -1,4 +1,4 @@
-<img src="cover.png" width="1200" >
+<img src="https://github.com/anandnet/Harmony-Music/blob/main/cover.png" width="1200" >
 
 # Harmony Music
 An app for music streaming made with Flutter(Currently support Android only).
@@ -16,6 +16,7 @@ An app for music streaming made with Flutter(Currently support Android only).
 * No permission required
 
 # Download
+<a href="https://github.com/anandnet/Harmony-Music/releases/latest"><img src ="https://github.com/anandnet/Harmony-Music/blob/main/don_github.png" width = "300"></a>
 
 # To Do
 * Radio feature
@@ -28,6 +29,7 @@ An app for music streaming made with Flutter(Currently support Android only).
 # Disclaimer
 ```
 This project has been created while learning & learing is the main intention.
+This project is not sponsured or affiliated with, funded, authorized, endorsed by any content provider.
 Any Song, content, trademark used in this app are intellectual property of their respective owners.
 Harmony music is not responsible for any infringement of copyright or other intellectual property rights that may result
 from the use of the songs and other content available through this app.

@@ -7,7 +7,6 @@ import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/media_Item_builder.dart';
 import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
 import 'package:hive/hive.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
 
@@ -90,12 +89,12 @@ class PlayerController extends GetxController {
     _audioHandler.playbackState.listen((playerState) {
       final isPlaying = playerState.playing;
       final processingState = playerState.processingState;
-      if (processingState == ProcessingState.loading ||
-          processingState == ProcessingState.buffering) {
+      if (processingState == AudioProcessingState.loading ||
+          processingState == AudioProcessingState.buffering) {
         buttonState.value = PlayButtonState.loading;
       } else if (!isPlaying) {
         buttonState.value = PlayButtonState.paused;
-      } else if (processingState != ProcessingState.completed) {
+      } else if (processingState != AudioProcessingState.completed) {
         buttonState.value = PlayButtonState.playing;
       } else {
         _audioHandler.seek(Duration.zero);

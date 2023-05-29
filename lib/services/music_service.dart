@@ -365,7 +365,7 @@ class MusicServices extends getx.GetxService {
   }
 
   Future<List<String>?> getSongUri(String songId,
-      {AudioQuality quality = AudioQuality.High}) async {
+      {AudioQuality quality = AudioQuality.High,int attempt = 1}) async {
     try {
       final songStreamManifest =
           await _yt.videos.streamsClient.getManifest(songId);
@@ -402,8 +402,9 @@ class MusicServices extends getx.GetxService {
     } catch (e) {
       printERROR("Error $e.");
       if (e.toString() ==
-          "Connection closed before full header was received") {
-        return getSongUri(songId);
+          "Connection closed before full header was received" && attempt<2) {
+        attempt = attempt+1;
+        return getSongUri(songId,attempt: attempt);
       }
       return null;
     }

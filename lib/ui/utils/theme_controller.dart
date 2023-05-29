@@ -12,7 +12,7 @@ class ThemeController extends GetxController {
   late Brightness systemBrightness;
 
   ThemeController() {
-    systemBrightness = WidgetsBinding.instance.window.platformBrightness;
+    systemBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
     primaryColor.value = Color(Hive.box('appPrefs').get("themePrimaryColor"));
 
@@ -25,9 +25,9 @@ class ThemeController extends GetxController {
   }
 
   void _listenSystemBrightness() {
-    final window = WidgetsBinding.instance.window;
-    window.onPlatformBrightnessChanged = () {
-      systemBrightness = window.platformBrightness;
+    final platformDispatcher = WidgetsBinding.instance.platformDispatcher;
+    platformDispatcher.onPlatformBrightnessChanged = () {
+      systemBrightness = platformDispatcher.platformBrightness;
       changeThemeModeType(
           ThemeType.values[Hive.box('appPrefs').get("themeModeType")],
           sysCall: true);

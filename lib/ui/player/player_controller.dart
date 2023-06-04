@@ -177,18 +177,22 @@ class PlayerController extends GetxController {
     currentSong.value = mediaItem;
     _playerPanelCheck();
     await _audioHandler.customAction(
-        "setSourceNPlay", {'mediaItem': mediaItem, 'retry': false});
+        "setSourceNPlay", {'mediaItem': mediaItem});
   }
 
   ///enqueueSong   append a song to current queue
   ///if current queue is empty, push the song into Queue and play that song
   Future<void> enqueueSong(MediaItem mediaItem) async {
     //check if song is available in cache and allocate
-    await _audioHandler.addQueueItem(mediaItem);
+    await enqueueSongList([mediaItem]);
   }
 
   ///enqueueSongList method add song List to current queue
   Future<void> enqueueSongList(List<MediaItem> mediaItems) async {
+    if(currentQueue.isEmpty){
+     await playPlayListSong(mediaItems, 0);
+      return;
+    }
     for(MediaItem item in mediaItems){
       if(!currentQueue.contains(item)){
         _audioHandler.addQueueItem(item);
@@ -200,7 +204,7 @@ class PlayerController extends GetxController {
     currentSong.value = mediaItem;
     _playerPanelCheck();
     await _audioHandler.customAction(
-        "setSourceNPlay", {'mediaItem': mediaItem, 'retry': false});
+        "setSourceNPlay", {'mediaItem': mediaItem});
   }
 
   Future<void> playPlayListSong(List<MediaItem> mediaItems, int index) async {

@@ -53,7 +53,12 @@ class SearchScreen extends StatelessWidget {
                   TextField(
                     textCapitalization: TextCapitalization.sentences,
                     controller: searchScreenController.textInputController,
+                    textInputAction: TextInputAction.search,
                     onChanged: searchScreenController.onChanged,
+                    onSubmitted: (val) {
+                      Get.toNamed(ScreenNavigationSetup.searchResultScreen,
+                          id: ScreenNavigationSetup.id, arguments: val);
+                    },
                     autofocus: true,
                     cursorColor: Theme.of(context).textTheme.bodySmall!.color,
                     decoration: const InputDecoration(
@@ -64,13 +69,14 @@ class SearchScreen extends StatelessWidget {
                   ),
                   Expanded(
                       child: Obx(() => ListView.builder(
-                          padding: const EdgeInsets.only(top: 5),
+                            padding: const EdgeInsets.only(top: 5),
                             physics: const BouncingScrollPhysics(
                                 parent: AlwaysScrollableScrollPhysics()),
                             itemCount:
                                 searchScreenController.suggestionList.length,
                             itemBuilder: (context, index) => ListTile(
-                              contentPadding: const EdgeInsets.only(left: 10,right: 20),
+                              contentPadding:
+                                  const EdgeInsets.only(left: 10, right: 20),
                               onTap: () {
                                 Get.toNamed(
                                     ScreenNavigationSetup.searchResultScreen,
@@ -82,9 +88,17 @@ class SearchScreen extends StatelessWidget {
                                   searchScreenController.suggestionList[index]),
                               trailing: InkWell(
                                 onTap: () {
-                                  searchScreenController.suggestionInput(searchScreenController.suggestionList[index]);
+                                  searchScreenController.suggestionInput(
+                                      searchScreenController
+                                          .suggestionList[index]);
                                 },
-                                child: Icon(Icons.north_west_rounded,color: Theme.of(context).textTheme.titleMedium!.color,),
+                                child: Icon(
+                                  Icons.north_west_rounded,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .color,
+                                ),
                               ),
                             ),
                           )))

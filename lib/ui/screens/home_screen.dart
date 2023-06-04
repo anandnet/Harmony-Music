@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
 import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
@@ -27,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Get.find<HomeScreenController>();
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButton: Visibility(
           visible: true,
@@ -66,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   homeScreenController.tabIndex.value, //_selectedIndex,
               onDestinationSelected: homeScreenController.onTabSelected,
               minWidth: 60,
-              leading: const SizedBox(height: 60),
+              leading: SizedBox(height: size.height < 750 ? 30 : 60),
               labelType: NavigationRailLabelType.all,
               //backgroundColor: Colors.green,
               destinations: <NavigationRailDestination>[
@@ -104,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     currentChild!,
                 child: Center(
                   key: ValueKey<int>(homeScreenController.tabIndex.value),
-                  child: bodyItem(),
+                  child: const Body(),
                 ),
               ),
             ),
@@ -114,28 +116,100 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget bodyItem() {
+  NavigationRailDestination railDestination(String label) {
+    return NavigationRailDestination(
+      icon: const SizedBox.shrink(),
+      label: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: RotatedBox(quarterTurns: -1, child: Text(label))),
+    );
+  }
+}
+
+class Body extends StatelessWidget {
+  const Body({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final homeScreenController = Get.find<HomeScreenController>();
+    final size = MediaQuery.of(context).size;
+    final topPadding = size.height < 750 ? 80.0 : 85.0;
     if (homeScreenController.tabIndex.value == 0) {
       return Padding(
         padding: const EdgeInsets.only(left: 5.0),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.only(bottom: 90, top: 90),
-          child: Obx(() {
-            return Column(
-              children: homeScreenController.isContentFetched.value
-                  ? (homeScreenController.homeContentList).map((element) {
-                      if (element.runtimeType.toString() == "QuickPicks") {
-                        //return contentWidget();
-                        return QuickPicksWidget(content: element);
-                      } else {
-                        return ContentListWidget(
-                          content: element,
-                        );
-                      }
-                    }).toList()
-                  : [const HomeShimmer()],
-            );
-          }),
+          padding:
+              EdgeInsets.only(bottom: 90, top:topPadding ),
+          child: homeScreenController.networkError.isTrue
+              ? SizedBox(
+                  height: MediaQuery.of(context).size.height - 180,
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Home",
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Oops Network Error!",
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 10),
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .color,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: InkWell(
+                                    onTap: () {
+                                      homeScreenController.init();
+                                    },
+                                    child: Text(
+                                      "Retry!",
+                                      style: TextStyle(
+                                          color: Theme.of(context).canvasColor),
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              : Obx(() {
+                  return Column(
+                    children: homeScreenController.isContentFetched.value
+                        ? (homeScreenController.homeContentList).map((element) {
+                            if (element.runtimeType.toString() ==
+                                "QuickPicks") {
+                              //return contentWidget();
+                              return QuickPicksWidget(content: element);
+                            } else {
+                              return ContentListWidget(
+                                content: element,
+                              );
+                            }
+                          }).toList()
+                        : [const HomeShimmer()],
+                  );
+                }),
         ),
       );
     } else if (homeScreenController.tabIndex.value == 1) {
@@ -189,15 +263,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Text("${homeScreenController.tabIndex.value}"),
       );
     }
-  }
-
-  NavigationRailDestination railDestination(String label) {
-    return NavigationRailDestination(
-      icon: const SizedBox.shrink(),
-      label: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5),
-          child: RotatedBox(quarterTurns: -1, child: Text(label))),
-    );
   }
 }
 
@@ -291,15 +356,15 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                       ? libralbumCntrller.libraryAlbums.isNotEmpty
                       : librplstCntrller.libraryPlaylists.isNotEmpty)
                   ? GridView.builder(
-                    physics: const BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: ((size.width-60) / itemWidth).ceil(),
+                        crossAxisCount: ((size.width - 60) / itemWidth).ceil(),
                         childAspectRatio: (itemWidth / itemHeight),
                       ),
                       controller: ScrollController(keepScrollOffset: false),
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
-                      padding: const EdgeInsets.only(bottom: 70,top:10),
+                      padding: const EdgeInsets.only(bottom: 70, top: 10),
                       itemCount: isAlbumContent
                           ? libralbumCntrller.libraryAlbums.length
                           : librplstCntrller.libraryPlaylists.length,

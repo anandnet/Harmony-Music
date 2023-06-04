@@ -356,7 +356,8 @@ class Player extends StatelessWidget {
           iconSize: 40.0,
           onPressed: controller.play,
         );
-      } else if (buttonState == PlayButtonState.playing) {
+      } else if (buttonState == PlayButtonState.playing ||
+          buttonState == PlayButtonState.loading) {
         return IconButton(
           icon: const Icon(Icons.pause_rounded),
           iconSize: 40.0,
@@ -386,14 +387,16 @@ class Player extends StatelessWidget {
 }
 
 Widget _nextButton(PlayerController playerController, BuildContext context) {
-  return IconButton(
-    icon: Icon(
-      Icons.skip_next_rounded,
-      color: Theme.of(context).textTheme.titleMedium!.color,
-    ),
-    iconSize: 30,
-    onPressed: () async {
-      await playerController.next();
-    },
-  );
+  return Obx(() {
+    final isLastSong = playerController.currentQueue.isEmpty ||
+        (playerController.currentQueue.last.id ==
+            playerController.currentSong.value!.id);
+    return IconButton(
+        icon: Icon(
+          Icons.skip_next_rounded,
+          color: Theme.of(context).textTheme.titleMedium!.color,
+        ),
+        iconSize: 30,
+        onPressed: isLastSong ? null : playerController.next);
+  });
 }

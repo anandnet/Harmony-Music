@@ -141,7 +141,15 @@ class Home extends StatelessWidget {
                                         SizedBox(
                                             width: 40,
                                             child: InkWell(
-                                              onTap: playerController.next,
+                                              onTap: (playerController
+                                                          .currentQueue.isEmpty || (playerController
+                                                          .currentQueue
+                                                          .last
+                                                          .id ==
+                                                      playerController
+                                                          .currentSong.value!.id))
+                                                  ? null
+                                                  : playerController.next,
                                               child: Icon(
                                                 Icons.skip_next_rounded,
                                                 color: Theme.of(context)
@@ -179,7 +187,8 @@ class Home extends StatelessWidget {
           iconSize: 35.0,
           onPressed: controller.play,
         );
-      } else if (buttonState == PlayButtonState.playing) {
+      } else if (buttonState == PlayButtonState.playing ||
+          buttonState == PlayButtonState.loading) {
         return IconButton(
           icon: Icon(
             Icons.pause_rounded,
@@ -195,7 +204,7 @@ class Home extends StatelessWidget {
             color: Theme.of(context).textTheme.titleMedium!.color,
           ),
           iconSize: 35.0,
-          onPressed: (){},
+          onPressed: () {},
         );
       }
     });

@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:harmonymusic/services/music_service.dart';
 
@@ -41,22 +40,25 @@ class SearchResultScreenController extends GetxController {
   }
 
   Future<void> _getInitSearchResult() async {
-    queryString.value = Get.arguments;
-    resultContent.value = await musicServices.search(queryString.value);
-    final allKeys = resultContent.keys.where((element) => ([
-          "Songs",
-          "Videos",
-          "Albums",
-          "Featured playlists",
-          "Community playlists",
-          "Artists"
-        ]).contains(element));
-    railItems.value = List<String>.from(allKeys);
-    final len = railItems
-        .where((element) => element.contains("playlists"))
-        .length;
-    final calH = 30 + (railItems.length+1-len)*123 + len*150.0;
-    railitemHeight.value = calH >= railitemHeight.value ? calH : railitemHeight.value;
-    isResultContentFetced.value = true;
+    final args = Get.arguments;
+    if (args != null) {
+      queryString.value = args;
+      resultContent.value = await musicServices.search(args);
+      final allKeys = resultContent.keys.where((element) => ([
+            "Songs",
+            "Videos",
+            "Albums",
+            "Featured playlists",
+            "Community playlists",
+            "Artists"
+          ]).contains(element));
+      railItems.value = List<String>.from(allKeys);
+      final len =
+          railItems.where((element) => element.contains("playlists")).length;
+      final calH = 30 + (railItems.length + 1 - len) * 123 + len * 150.0;
+      railitemHeight.value =
+          calH >= railitemHeight.value ? calH : railitemHeight.value;
+      isResultContentFetced.value = true;
+    }
   }
 }

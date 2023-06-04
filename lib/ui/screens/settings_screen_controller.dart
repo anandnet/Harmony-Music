@@ -1,3 +1,4 @@
+import 'package:android_power_manager/android_power_manager.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/services/music_service.dart';
@@ -11,18 +12,22 @@ class SettingsScreenController extends GetxController {
   final themeModetype = ThemeType.dynamic.obs;
   final skipSilenceEnabled = false.obs;
   final streamingQuality = AudioQuality.High.obs;
+  final isIgnoringBatteryOptimizations = false.obs;
   @override
   void onInit() {
     _setInitValue();
     super.onInit();
   }
 
-  void _setInitValue() {
+  Future<void> _setInitValue() async {
     cacheSongs.value = setBox.get('cacheSongs');
     themeModetype.value = ThemeType.values[setBox.get('themeModeType')];
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
+    isIgnoringBatteryOptimizations.value =
+        (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
+    printINFO(isIgnoringBatteryOptimizations);
   }
 
   void setStreamingQuality(dynamic val) {
@@ -31,7 +36,6 @@ class SettingsScreenController extends GetxController {
   }
 
   void onThemeChange(dynamic val) {
-    printERROR("hereee");
     setBox.put('themeModeType', ThemeType.values.indexOf(val));
     themeModetype.value = val;
     Get.find<ThemeController>().changeThemeModeType(val);
@@ -46,5 +50,10 @@ class SettingsScreenController extends GetxController {
     Get.find<PlayerController>().toggleSkipSilence(val);
     setBox.put('skipSilenceEnabled', val);
     skipSilenceEnabled.value = val;
+  }
+
+  Future<void> enableIgnoringBatteryOptimizations() async {
+    await AndroidPowerManager.requestIgnoreBatteryOptimizations();
+    isIgnoringBatteryOptimizations.value = (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
   }
 }

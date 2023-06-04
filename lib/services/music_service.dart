@@ -106,6 +106,7 @@ class MusicServices extends getx.GetxService {
   Future<Response> _sendRequest(String action, Map<dynamic, dynamic> data,
       {additionalParams = ""}) async {
     //print("$baseUrl$action$fixedParms$additionalParams          data:$data");
+    try{
     final response =
         await dio.post("$baseUrl$action$fixedParms$additionalParams",
             options: Options(
@@ -117,6 +118,9 @@ class MusicServices extends getx.GetxService {
       return response;
     } else {
       return _sendRequest(action, data, additionalParams: additionalParams);
+    }
+    }on DioError{
+      throw NetworkError();
     }
   }
 
@@ -619,4 +623,8 @@ class MusicServices extends getx.GetxService {
     artist.addAll(parseArtistContents(results));
     return artist;
   }
+}
+
+class NetworkError extends Error{
+ final message = "Network Error !";
 }

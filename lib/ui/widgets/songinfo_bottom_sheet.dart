@@ -74,10 +74,10 @@ class SongInfoBottomSheet extends StatelessWidget {
                 leading: const Icon(Icons.merge),
                 title: const Text("Enqueue this song"),
                 onTap: () {
-                  final playerCntrller = Get.find<PlayerController>();
-                  playerCntrller.currentQueue.isEmpty
-                      ? playerCntrller.pushSongToQueue(song)
-                      : playerCntrller.enqueueSong(song);
+                  Get.find<PlayerController>().enqueueSong(song).whenComplete(
+                      () => ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                          context, "Song enqueued!",
+                          size: SanckBarSize.MEDIUM)));
                   Navigator.of(context).pop();
                 },
               ),
@@ -115,8 +115,9 @@ class SongInfoBottomSheet extends StatelessWidget {
                   songInfoController
                       .removeSongFromPlaylist(song, playlist!)
                       .whenComplete(() => ScaffoldMessenger.of(context)
-                          .showSnackBar(snackbar(context,
-                              "Removed from ${playlist!.title}", size: SanckBarSize.MEDIUM)));
+                          .showSnackBar(snackbar(
+                              context, "Removed from ${playlist!.title}",
+                              size: SanckBarSize.MEDIUM)));
                 },
               )
             : const SizedBox.shrink(),
@@ -129,12 +130,14 @@ class SongInfoBottomSheet extends StatelessWidget {
                   Navigator.of(context).pop();
                   final plarcntr = Get.find<PlayerController>();
                   if (plarcntr.currentSong.value!.id == song.id) {
-                    ScaffoldMessenger.of(context).showSnackBar(snackbar(context,
-                        "You can't remove currently playing song", size: SanckBarSize.BIG));
+                    ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                        context, "You can't remove currently playing song",
+                        size: SanckBarSize.BIG));
                   } else {
                     Get.find<PlayerController>().removeFromQueue(song);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        snackbar(context, "Removed from queue !", size: SanckBarSize.MEDIUM));
+                    ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                        context, "Removed from queue !",
+                        size: SanckBarSize.MEDIUM));
                   }
                 })
             : const SizedBox.shrink(),
@@ -210,7 +213,7 @@ class SongInfoController extends GetxController {
     try {
       final plstCntroller = Get.find<PlayListNAlbumScreenController>();
       plstCntroller.addNRemoveItemsinList(item, action: 'remove');
-    // ignore: empty_catches
+      // ignore: empty_catches
     } catch (e) {}
     //Updating Library song list in frontend
     if (playlist.playlistId == "SongsCache") {

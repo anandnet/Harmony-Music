@@ -1,5 +1,6 @@
 
 import 'package:get/get.dart';
+import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/models/playlist.dart';
 import 'package:harmonymusic/models/quick_picks.dart';
@@ -10,21 +11,30 @@ class HomeScreenController extends GetxController {
   final isContentFetched = false.obs;
   final homeContentList = [].obs;
   final tabIndex = 0.obs;
+  final networkError = false.obs;
   HomeScreenController() {
-    _init();
+    init();
   }
 
-  Future<void> _init() async {
-    final homeContentListMap = await _musicServices.getHome(limit: 10);
-    //debugPrint(homeContentListMap,wrapWidth: 1024);
-    _setHomeContentList(homeContentListMap);
-    isContentFetched.value = true;
+  Future<void> init() async {
+    networkError.value = false;
+    try {
+      final homeContentListMap = await _musicServices.getHome(limit: 10);
+      _setHomeContentList(homeContentListMap);
+      isContentFetched.value = true;
+    // ignore: unused_catch_stack
+    } on NetworkError catch (_, e) {
+      printERROR("Home Content not loaded due to ${_.message}");
+      await Future.delayed(const Duration(seconds: 1));
+      networkError.value = true;
+    }
   }
 
   void _setHomeContentList(List<dynamic> contents) {
     for (var content in contents) {
       if ((content["title"]).contains("Videos") ||
-          (content["title"]).contains("videos") || content["contents"][1]==null) {
+          (content["title"]).contains("videos") ||
+          content["contents"][1] == null) {
       } else if (content["title"] == "Quick picks") {
         homeContentList.add(QuickPicks.fromJson(content));
       } else if (content["contents"][0].containsKey("playlistId")) {
@@ -41,9 +51,9 @@ class HomeScreenController extends GetxController {
     }
   }
 
-  void onTabSelected(int index){
+  void onTabSelected(int index) {
     tabIndex.value = index;
   }
-  void getRelatedArtist() {}
 
+  void getRelatedArtist() {}
 }

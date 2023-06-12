@@ -106,20 +106,20 @@ class MusicServices extends getx.GetxService {
   Future<Response> _sendRequest(String action, Map<dynamic, dynamic> data,
       {additionalParams = ""}) async {
     //print("$baseUrl$action$fixedParms$additionalParams          data:$data");
-    try{
-    final response =
-        await dio.post("$baseUrl$action$fixedParms$additionalParams",
-            options: Options(
-              headers: _headers,
-            ),
-            data: data);
+    try {
+      final response =
+          await dio.post("$baseUrl$action$fixedParms$additionalParams",
+              options: Options(
+                headers: _headers,
+              ),
+              data: data);
 
-    if (response.statusCode == 200) {
-      return response;
-    } else {
-      return _sendRequest(action, data, additionalParams: additionalParams);
-    }
-    }on DioError{
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        return _sendRequest(action, data, additionalParams: additionalParams);
+      }
+    } on DioError {
       throw NetworkError();
     }
   }
@@ -369,7 +369,7 @@ class MusicServices extends getx.GetxService {
   }
 
   Future<List<String>?> getSongUri(String songId,
-      {AudioQuality quality = AudioQuality.High,int attempt = 1}) async {
+      {AudioQuality quality = AudioQuality.High, int attempt = 1}) async {
     try {
       final songStreamManifest =
           await _yt.videos.streamsClient.getManifest(songId);
@@ -405,10 +405,10 @@ class MusicServices extends getx.GetxService {
       // }
     } catch (e) {
       printERROR("Error $e.");
-      if (e.toString() ==
-          "Connection closed before full header was received" && attempt<2) {
-        attempt = attempt+1;
-        return getSongUri(songId,attempt: attempt);
+      if (e.toString() == "Connection closed before full header was received" &&
+          attempt < 3) {
+        attempt = attempt + 1;
+        return getSongUri(songId, attempt: attempt);
       }
       return null;
     }
@@ -623,8 +623,12 @@ class MusicServices extends getx.GetxService {
     artist.addAll(parseArtistContents(results));
     return artist;
   }
+
+  void closeYtClient() {
+    _yt.close();
+  }
 }
 
-class NetworkError extends Error{
- final message = "Network Error !";
+class NetworkError extends Error {
+  final message = "Network Error !";
 }

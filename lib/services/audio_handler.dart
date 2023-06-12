@@ -340,7 +340,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       currentIndex = 0;
       mediaItem.add(currMed);
       queue.add([currMed]);
-      final url = (await checkNGetUrl(currMed.id,useNewInstanceOfExplode: true));
+      final url =
+          (await checkNGetUrl(currMed.id, useNewInstanceOfExplode: true));
       currentSongUrl = url;
       if (url == null) {
         return;
@@ -409,11 +410,13 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       final songsUrlCacheBox = Hive.box("SongsUrlCache");
       final qualityIndex = Hive.box('AppPrefs').get('streamingQuality');
       final musicServices = Get.find<MusicServices>();
+      final newMusicServicesIns =
+          useNewInstanceOfExplode ? MusicServices(false) : null;
       dynamic url;
       if (songsUrlCacheBox.containsKey(songId)) {
         if (isExpired(url: songsUrlCacheBox.get(songId)[qualityIndex])) {
           url = useNewInstanceOfExplode
-              ? await MusicServices(false).getSongUri(songId)
+              ? await newMusicServicesIns!.getSongUri(songId)
               : (await musicServices.getSongUri(songId));
           if (url != null) songsUrlCacheBox.put(songId, url);
         } else {
@@ -421,12 +424,15 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         }
       } else {
         url = useNewInstanceOfExplode
-            ? await MusicServices(false).getSongUri(songId)
+            ? await newMusicServicesIns!.getSongUri(songId)
             : (await musicServices.getSongUri(songId));
         if (url != null) {
           songsUrlCacheBox.put(songId, url);
           printINFO("Url cached in Box for songId $songId");
         }
+      }
+      if (useNewInstanceOfExplode) {
+        newMusicServicesIns!.closeYtClient();
       }
       return url != null ? url[qualityIndex] : null;
     }

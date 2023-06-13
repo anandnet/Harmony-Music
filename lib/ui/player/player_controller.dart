@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:isolate';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -10,7 +9,6 @@ import 'package:hive/hive.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
 
-import '../../services/background_task.dart';
 import '../widgets/sliding_up_panel.dart';
 import '/models/durationstate.dart';
 import '/services/music_service.dart';
@@ -27,6 +25,9 @@ class PlayerController extends GetxController {
   bool _initFlagForPlayer = true;
   final isQueueReorderingInProcess = false.obs;
   PanelController playerPanelController = PanelController();
+  bool isRadioModeOn = false;
+  String? radioContinuationParam;
+  dynamic radioInitiatorItem;
 
   final progressBarStatus = ProgressBarState(
           buffered: Duration.zero, current: Duration.zero, total: Duration.zero)
@@ -81,7 +82,7 @@ class PlayerController extends GetxController {
     var keyboardVisibilityController = KeyboardVisibilityController();
     keyboardSubscription =
         keyboardVisibilityController.onChange.listen((bool visible) {
-      visible?playerPanelController.hide():playerPanelController.show();
+      visible ? playerPanelController.hide() : playerPanelController.show();
     });
   }
 
@@ -151,6 +152,9 @@ class PlayerController extends GetxController {
             .indexWhere((element) => element.id == currentSong.value!.id);
         await _checkFav();
         await _addToRP(currentSong.value!);
+        if (isRadioModeOn && (currentSong.value!.id == currentQueue.last.id)) {
+          await _addRadioContinuation(radioInitiatorItem!);
+        }
       }
     });
   }
@@ -164,20 +168,65 @@ class PlayerController extends GetxController {
 
   ///pushSongToPlaylist method clear previous song queue, plays the tapped song and push related
   ///songs into Queue
-  Future<void> pushSongToQueue(MediaItem mediaItem) async {
-    ReceivePort receivePort = ReceivePort();
-    Isolate.spawn(
-        getUpNextSong, [receivePort.sendPort, _musicServices, mediaItem.id]);
-    receivePort.first.then((value) async {
-      final upNextSongList = value;
-      await _audioHandler.updateQueue(upNextSongList);
+  Future<void> pushSongToQueue(MediaItem? mediaItem, 
+      {String? playlistid, bool radio = false}) async {
+    isRadioModeOn = radio;
+
+    Future.delayed(
+      Duration.zero,
+      () async {
+        final content = await _musicServices.getWatchPlaylist(
+            videoId: mediaItem != null ? mediaItem.id : "",
+            radio: radio,
+            playlistId: playlistid);
+        radioContinuationParam = content['additionalParamsForNext'];
+        await _audioHandler
+            .updateQueue(List<MediaItem>.from(content['tracks']));
+      },
+    ).then((value) async {
+      if (playlistid != null) {
+        _playerPanelCheck();
+        await _audioHandler.customAction("playByIndex", {"index": 0});
+      }
     });
 
-    //open player panel,set current song and push first song into playing list,
+    if (playlistid != null) {
+      return;
+    }
+
     currentSong.value = mediaItem;
     _playerPanelCheck();
-    await _audioHandler.customAction(
-        "setSourceNPlay", {'mediaItem': mediaItem});
+    await _audioHandler
+        .customAction("setSourceNPlay", {'mediaItem': mediaItem});
+  }
+
+  Future<void> playPlayListSong(List<MediaItem> mediaItems, int index) async {
+    isRadioModeOn = false;
+    //open player pane,set current song and push first song into playing list,
+    final init = _initFlagForPlayer;
+    currentSong.value = mediaItems[index];
+    _playerPanelCheck();
+    !init
+        ? await _audioHandler.updateQueue(mediaItems)
+        : _audioHandler.addQueueItems(mediaItems);
+    await _audioHandler.customAction("playByIndex", {"index": index});
+  }
+
+  Future<void> startRadio(MediaItem? mediaItem, {String? playlistid}) async {
+    radioInitiatorItem = mediaItem?? playlistid;
+    await pushSongToQueue(mediaItem,playlistid:playlistid,radio: true);
+  }
+
+  Future<void> _addRadioContinuation(dynamic item) async {
+    final isSong = item.runtimeType.toString() == "MediaItem";
+    final content = await _musicServices.getWatchPlaylist(
+        videoId:isSong? item.id:"",
+        radio: true,
+        limit: 24,
+        playlistId: isSong?null:item,
+        additionalParamsNext: radioContinuationParam);
+    radioContinuationParam = content['additionalParamsForNext'];
+    await enqueueSongList(List<MediaItem>.from(content['tracks']));
   }
 
   ///enqueueSong   append a song to current queue
@@ -189,33 +238,15 @@ class PlayerController extends GetxController {
 
   ///enqueueSongList method add song List to current queue
   Future<void> enqueueSongList(List<MediaItem> mediaItems) async {
-    if(currentQueue.isEmpty){
-     await playPlayListSong(mediaItems, 0);
+    if (currentQueue.isEmpty) {
+      await playPlayListSong(mediaItems, 0);
       return;
     }
-    for(MediaItem item in mediaItems){
-      if(!currentQueue.contains(item)){
+    for (MediaItem item in mediaItems) {
+      if (!currentQueue.contains(item)) {
         _audioHandler.addQueueItem(item);
       }
     }
-  }
-
-  Future<void> playASong(MediaItem mediaItem) async {
-    currentSong.value = mediaItem;
-    _playerPanelCheck();
-    await _audioHandler.customAction(
-        "setSourceNPlay", {'mediaItem': mediaItem});
-  }
-
-  Future<void> playPlayListSong(List<MediaItem> mediaItems, int index) async {
-    //open player pane,set current song and push first song into playing list,
-    final init = _initFlagForPlayer;
-    currentSong.value = mediaItems[index];
-    _playerPanelCheck();
-    !init
-        ? await _audioHandler.updateQueue(mediaItems)
-        : _audioHandler.addQueueItems(mediaItems);
-    await _audioHandler.customAction("playByIndex", {"index": index});
   }
 
   void _playerPanelCheck() {
@@ -229,26 +260,27 @@ class PlayerController extends GetxController {
     }
   }
 
-  void removeFromQueue(MediaItem song){
+  void removeFromQueue(MediaItem song) {
     _audioHandler.removeQueueItem(song);
   }
 
-  void shuffleQueue(){
+  void shuffleQueue() {
     _audioHandler.customAction("shuffleQueue");
   }
 
-  void onReorder(int oldIndex,int newIndex){
+  void onReorder(int oldIndex, int newIndex) {
     printINFO("Reorder");
-    _audioHandler.customAction("reorderQueue",{"oldIndex":oldIndex,"newIndex":newIndex});
+    _audioHandler.customAction(
+        "reorderQueue", {"oldIndex": oldIndex, "newIndex": newIndex});
   }
 
-  void onReorderStart(int index){
+  void onReorderStart(int index) {
     printINFO("Reordering started");
     isQueueReorderingInProcess.value = true;
   }
 
-  void onReorderEnd(int index){
-     printINFO("Reordering ended");
+  void onReorderEnd(int index) {
+    printINFO("Reordering ended");
     isQueueReorderingInProcess.value = false;
   }
 
@@ -308,7 +340,7 @@ class PlayerController extends GetxController {
             : playlistController.addNRemoveItemsinList(currMediaItem,
                 action: 'remove');
       }
-    // ignore: empty_catches
+      // ignore: empty_catches
     } catch (e) {}
     isCurrentSongFav.value = !isCurrentSongFav.value;
   }
@@ -334,12 +366,11 @@ class PlayerController extends GetxController {
           playlistController.addNRemoveItemsinList(mediaItem,
               action: 'add', index: 0);
         }
-      // ignore: empty_catches
+        // ignore: empty_catches
       } catch (e) {}
     }
     recentItem = mediaItem;
   }
-
 
   @override
   void dispose() {

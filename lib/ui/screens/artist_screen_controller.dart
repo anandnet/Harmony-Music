@@ -15,8 +15,8 @@ class ArtistScreenController extends GetxController {
   late Artist artist_;
   ArtistScreenController(bool isIdOnly, dynamic artist) {
     if (!isIdOnly) artist_ = artist as Artist;
-    _checkIfAddedToLibrary(isIdOnly ? artist as String : artist.browseId);
     _fetchArtistContent(isIdOnly ? artist as String : artist.browseId);
+    _checkIfAddedToLibrary(isIdOnly ? artist as String : artist.browseId);
   }
 
   Future<void> _checkIfAddedToLibrary(String id) async {

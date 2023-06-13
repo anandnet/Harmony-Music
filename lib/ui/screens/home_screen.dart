@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
 import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
@@ -30,34 +29,32 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      floatingActionButton: Visibility(
-          visible: true,
-          child: Obx(
-            () => Padding(
-              padding: EdgeInsets.only(
-                  bottom: playerController.playerPanelMinHeight.value == 0
-                      ? 20
-                      : 75),
-              child: SizedBox(
-                height: 60,
-                width: 60,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                      focusElevation: 0,
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(14))),
-                      elevation: 0,
-                      onPressed: () async {
-                        Get.toNamed(ScreenNavigationSetup.searchScreen,
-                            id: ScreenNavigationSetup.id);
-                        // file:///data/user/0/com.example.harmonymusic/cache/libCachedImageData/
-                        //file:///data/user/0/com.example.harmonymusic/cache/just_audio_cache/
-                      },
-                      child: const Icon(Icons.search)),
-                ),
-              ),
+      floatingActionButton: Obx(
+        () => Padding(
+          padding: EdgeInsets.only(
+              bottom: playerController.playerPanelMinHeight.value == 0
+                  ? 20
+                  : 75),
+          child: SizedBox(
+            height: 60,
+            width: 60,
+            child: FittedBox(
+              child: FloatingActionButton(
+                  focusElevation: 0,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(14))),
+                  elevation: 0,
+                  onPressed: () async {
+                    Get.toNamed(ScreenNavigationSetup.searchScreen,
+                        id: ScreenNavigationSetup.id);
+                    // file:///data/user/0/com.example.harmonymusic/cache/libCachedImageData/
+                    //file:///data/user/0/com.example.harmonymusic/cache/just_audio_cache/
+                  },
+                  child: const Icon(Icons.search)),
             ),
-          )),
+          ),
+        ),
+      ),
       body: Row(
         children: <Widget>[
           // create a navigation rail

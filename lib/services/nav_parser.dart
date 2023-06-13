@@ -157,7 +157,7 @@ List<Map<String, dynamic>> parseMixedContent(List<dynamic> rows) {
               content = parseSong(data);
             }
           } else if (pageType == "MUSIC_PAGE_TYPE_ALBUM") {
-            content = parseAlbum(data,reqAlbumObj: false);
+            content = parseAlbum(data, reqAlbumObj: false);
           } else if (pageType == "MUSIC_PAGE_TYPE_ARTIST") {
             content = parseRelatedArtist(data);
           } else if (pageType == "MUSIC_PAGE_TYPE_PLAYLIST") {
@@ -180,21 +180,23 @@ List<Map<String, dynamic>> parseMixedContent(List<dynamic> rows) {
 dynamic parseVideo(dynamic result) {
   final runs = nav(result, ['subtitle', 'runs']);
   final runsLength = runs.length;
-  final artistsLen =runsLength==3?1:  getDotSeparatorIndex(runs);
+  final artistsLen = runsLength == 3 ? 1 : getDotSeparatorIndex(runs);
   return MediaItemBuilder.fromJson({
     'title': nav(result, title_text),
     'videoId': nav(result, navigation_video_id),
-    'artists':parseSongArtistsRuns(runs.sublist(0, artistsLen)),
+    'artists': parseSongArtistsRuns(runs.sublist(0, artistsLen)),
     'playlistId': nav(result, navigation_playlist_id),
     'thumbnails': nav(result, thumbnail_renderer),
-    'views': runs[runs.length-1]['text'].split(' ')[0]
+    'views': runs[runs.length - 1]['text'].split(' ')[0]
   });
 }
 
 dynamic parseSingle(dynamic result) {
   return Album.fromJson({
     'title': nav(result, title_text),
-    'artists':[{'name':'Single'}],
+    'artists': [
+      {'name': 'Single'}
+    ],
     'year': nav(result, subtitle),
     'browseId': nav(result, ['title', 'runs', 0, ...navigation_browse_id]),
     'thumbnails': nav(result, thumbnail_renderer)
@@ -260,7 +262,7 @@ Map<String, dynamic> parseSongRuns(List<dynamic> runs) {
   return parsed;
 }
 
-dynamic parseAlbum(Map<dynamic, dynamic> result,{bool reqAlbumObj=true}) {
+dynamic parseAlbum(Map<dynamic, dynamic> result, {bool reqAlbumObj = true}) {
   final List runs = nav(result, ['subtitle', 'runs']);
   final Map<String, dynamic> artistInfo = parseSongRuns(runs);
   Map albumMap = {
@@ -270,8 +272,7 @@ dynamic parseAlbum(Map<dynamic, dynamic> result,{bool reqAlbumObj=true}) {
     //'isExplicit': nav(result, subtitle_badge_label, noneIfAbsent: true) != null,
   };
   albumMap.addAll(artistInfo);
-  if(reqAlbumObj)
-  {
+  if (reqAlbumObj) {
     return Album.fromJson(albumMap);
   }
   return albumMap;
@@ -303,7 +304,7 @@ Map<String, dynamic> parsePlaylist(Map<String, dynamic> data) {
     }
   }
 
-  return  playlist;
+  return playlist;
 }
 
 List<dynamic> parseSongArtistsRuns(List<dynamic> runs) {
@@ -383,7 +384,7 @@ Map<String, dynamic> parseWatchPlaylistHome(Map<dynamic, dynamic> data) {
 //For Song Watch Playlist
 
 List<dynamic> parseWatchPlaylist(List<dynamic> results) {
-  final tracks = <Map<String, dynamic>>[];
+  final tracks = [];
   const PPVWR = 'playlistPanelVideoWrapperRenderer';
   const PPVR = 'playlistPanelVideoRenderer';
   for (var result in results) {
@@ -404,7 +405,7 @@ List<dynamic> parseWatchPlaylist(List<dynamic> results) {
     if (counterpart != null) {
       track['counterpart'] = parseWatchTrack(counterpart);
     }
-    tracks.add(track);
+    tracks.add(MediaItemBuilder.fromJson(track));
   }
   return tracks;
 }
@@ -648,7 +649,8 @@ List<dynamic> parseSearchResults(List<dynamic> results,
 
 dynamic parseSearchResult(Map<String, dynamic> data,
     List<String> searchResultTypes, String? resultType, String category) {
-  if ((resultType != null && resultType.contains("playlist"))|| category.contains("playlists")) {
+  if ((resultType != null && resultType.contains("playlist")) ||
+      category.contains("playlists")) {
     resultType = 'playlist';
   }
   int defaultOffset = (resultType == null) ? 2 : 0;
@@ -817,7 +819,7 @@ Map<String, dynamic> parseArtistContents(List results) {
     dynamic data = {};
     for (int j = 0; j < results.length; j++) {
       final item = results[j];
-      
+
       if (item.containsKey('musicCarouselShelfRenderer') &&
           nav(item, [
                 'musicCarouselShelfRenderer',
@@ -842,8 +844,8 @@ Map<String, dynamic> parseArtistContents(List results) {
             categories[i] == 'singles' ||
             categories[i] == 'playlists') {
           artist[categories[i]]['params'] =
-              nav(data, carousel_title)['navigationEndpoint']
-                  ['browseEndpoint']['params'];
+              nav(data, carousel_title)['navigationEndpoint']['browseEndpoint']
+                  ['params'];
         }
       }
 

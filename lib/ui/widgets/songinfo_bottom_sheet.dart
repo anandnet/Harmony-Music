@@ -57,6 +57,15 @@ class SongInfoBottomSheet extends StatelessWidget {
         const Divider(),
         ListTile(
           visualDensity: const VisualDensity(vertical: -1),
+          leading: const Icon(Icons.sensors_rounded),
+          title: const Text("Start Radio"),
+          onTap: () {
+            Navigator.of(context).pop();
+            Get.find<PlayerController>().startRadio(song);
+          },
+        ),
+        ListTile(
+          visualDensity: const VisualDensity(vertical: -1),
           leading: const Icon(Icons.playlist_add),
           title: const Text("Add to playlist"),
           onTap: () {

@@ -153,26 +153,24 @@ class MusicServices extends getx.GetxService {
     return home;
   }
 
-  Future<Map<String, dynamic>> getWatchPlaylist({
-    String videoId = "",
-    String playlistId = "",
-    int limit = 25,
-    bool radio = false,
-    bool shuffle = false,
-  }) async {
+  Future<Map<String, dynamic>> getWatchPlaylist(
+      {String videoId = "",
+      String? playlistId,
+      int limit = 25,
+      bool radio = false,
+      bool shuffle = false,
+      String? additionalParamsNext}) async {
     final data = Map.from(_context);
     data['enablePersistentPlaylistPanel'] = true;
     data['isAudioOnly'] = true;
     data['tunerSettingValue'] = 'AUTOMIX_SETTING_NORMAL';
-    if (videoId == "" && playlistId == "") {
+    if (videoId == "" && playlistId == null) {
       throw Exception(
           "You must provide either a video id, a playlist id, or both");
     }
     if (videoId != "") {
       data['videoId'] = videoId;
-      if (playlistId == "") {
-        playlistId = "RDAMVM$videoId";
-      }
+      playlistId ??= "RDAMVM$videoId";
 
       if (!(radio || shuffle)) {
         data['watchEndpointMusicSupportedConfigs'] = {
@@ -184,56 +182,69 @@ class MusicServices extends getx.GetxService {
       }
     }
 
-    playlistId = validatePlaylistId(playlistId);
+    playlistId = validatePlaylistId(playlistId!);
     data['playlistId'] = playlistId;
-    //final isPlaylist =playlistId.startsWith('PL') || playlistId.startsWith('OLA');
+    final isPlaylist =
+        playlistId.startsWith('PL') || playlistId.startsWith('OLA');
     if (shuffle) {
       data['params'] = "wAEB8gECKAE%3D";
     }
     if (radio) {
       data['params'] = "wAEB";
     }
-    final response = (await _sendRequest("next", data)).data;
-    final watchNextRenderer = nav(response, [
-      'contents',
-      'singleColumnMusicWatchNextResultsRenderer',
-      'tabbedRenderer',
-      'watchNextTabbedResultsRenderer'
-    ]);
 
-    final lyricsBrowseId = getTabBrowseId(watchNextRenderer, 1);
-    final relatedBrowseId = getTabBrowseId(watchNextRenderer, 2);
+    final List<dynamic> tracks = [];
+    dynamic lyricsBrowseId, relatedBrowseId, playlist;
+    final results = {};
 
-    final results = nav(watchNextRenderer, [
-      ...tab_content,
-      'musicQueueRenderer',
-      'content',
-      'playlistPanelRenderer'
-    ]);
-    final playlist = results['contents']
-        .map((content) => nav(
-            content, ['playlistPanelVideoRenderer', ...navigation_playlist_id]))
-        .where((e) => e != null)
-        .toList()
-        .first;
-    final tracks = parseWatchPlaylist(results['contents']);
+    if (additionalParamsNext == null) {
+      final response = (await _sendRequest("next", data)).data;
+      final watchNextRenderer = nav(response, [
+        'contents',
+        'singleColumnMusicWatchNextResultsRenderer',
+        'tabbedRenderer',
+        'watchNextTabbedResultsRenderer'
+      ]);
 
-    // if (results.containsKey('continuations')) {
-    //   requestFunc(additionalParams) async =>
-    //       (await _sendRequest("next", data, additionalParams: additionalParams))
-    //           .data;
-    //   parseFunc(contents) => parseWatchPlaylist(contents);
-    //   final x = await getContinuations(results, 'playlistPanelContinuation',
-    //       limit - tracks.length, requestFunc, parseFunc,
-    //       ctokenPath: isPlaylist ? '' : 'Radio');
-    //   tracks.addAll([...x]);
-    // }
+      lyricsBrowseId = getTabBrowseId(watchNextRenderer, 1);
+      relatedBrowseId = getTabBrowseId(watchNextRenderer, 2);
+
+      results.addAll(nav(watchNextRenderer, [
+        ...tab_content,
+        'musicQueueRenderer',
+        'content',
+        'playlistPanelRenderer'
+      ]));
+      playlist = results['contents']
+          .map((content) => nav(content,
+              ['playlistPanelVideoRenderer', ...navigation_playlist_id]))
+          .where((e) => e != null)
+          .toList()
+          .first;
+      tracks.addAll(parseWatchPlaylist(results['contents']));
+    }
+
+    dynamic additionalParamsForNext;
+    if (results.containsKey('continuations') || additionalParamsNext != null) {
+      requestFunc(additionalParams) async =>
+          (await _sendRequest("next", data, additionalParams: additionalParams))
+              .data;
+      parseFunc(contents) => parseWatchPlaylist(contents);
+      final x = await getContinuations(results, 'playlistPanelContinuation',
+          limit - tracks.length, requestFunc, parseFunc,
+          ctokenPath: isPlaylist ? '' : 'Radio',
+          isAdditionparamReturnReq: true,
+          additionalParams_: additionalParamsNext);
+      additionalParamsForNext = x[1];
+      tracks.addAll(List<dynamic>.from(x[0]));
+    }
 
     return {
       'tracks': tracks,
       'playlistId': playlist,
       'lyrics': lyricsBrowseId,
-      'related': relatedBrowseId
+      'related': relatedBrowseId,
+      'additionalParamsForNext': additionalParamsForNext
     };
   }
 
@@ -596,7 +607,7 @@ class MusicServices extends getx.GetxService {
         ['playButton', 'buttonRenderer', ...navigation_watch_playlist_id]);
     artist['radioId'] = nav(
       header,
-      ['startRadioButton', 'buttonRenderer'] + navigation_watch_playlist_id,
+      ['startRadioButton', 'buttonRenderer'] + navigation_playlist_id,
     );
     artist['subscribers'] = subscriptionButton != null
         ? nav(

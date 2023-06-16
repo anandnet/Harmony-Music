@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:hive/hive.dart';
 
+import '../../helper.dart';
 import '../../models/artist.dart';
 import '../utils/home_library_controller.dart';
 
@@ -11,7 +13,12 @@ class ArtistScreenController extends GetxController {
   final musicServices = Get.find<MusicServices>();
   final railItems = <String>[].obs;
   final artistData = <String, dynamic>{}.obs;
+  final sepataredContent = <String, dynamic>{}.obs;
+  final isSeparatedArtistContentFetced = false.obs;
   final isAddedToLibrary = false.obs;
+  final songScrollController = ScrollController();
+  final videoScrollController = ScrollController();
+  bool continuationInProgress = false;
   late Artist artist_;
   ArtistScreenController(bool isIdOnly, dynamic artist) {
     if (!isIdOnly) artist_ = artist as Artist;
@@ -33,7 +40,8 @@ class ArtistScreenController extends GetxController {
     artist_ = Artist(
         browseId: id,
         name: data['name'],
-        thumbnailUrl: data['thumbnails'][0]['url'],
+        thumbnailUrl:
+            data['thumbnails'] != null ? data['thumbnails'][0]['url'] : "",
         subscribers: "${data['subscribers']} subscribers",
         radioId: data["radioId"]);
   }
@@ -53,7 +61,56 @@ class ArtistScreenController extends GetxController {
     }
   }
 
-  void onDestinationSelected(int val) {
+  Future<void> onDestinationSelected(int val) async {
     navigationRailCurrentIndex.value = val;
+    final tabName = ["About", "Songs", "Videos", "Albums", "Singles"][val];
+
+    if (val == 0 || sepataredContent.containsKey(tabName)) return;
+    if(artistData[tabName] == null){
+      isSeparatedArtistContentFetced.value = true;
+      return;
+    }
+    isSeparatedArtistContentFetced.value = false;
+    sepataredContent[tabName] = await musicServices.getArtistRealtedContent(
+        artistData[tabName], tabName);
+    if (val == 1 || val == 2) {
+      final scrollController =
+          val == 1 ? songScrollController : videoScrollController;
+
+      scrollController.addListener(() {
+        double maxScroll = scrollController.position.maxScrollExtent;
+        double currentScroll = scrollController.position.pixels;
+        double delta = 300.0;
+        if (maxScroll - currentScroll <= delta) {
+          if (!continuationInProgress) {
+            printINFO("InProgrss");
+            continuationInProgress = true;
+            getContinuationContents(artistData[tabName], tabName);
+          }
+        }
+      });
+    }
+    isSeparatedArtistContentFetced.value = true;
+  }
+
+  Future<void> getContinuationContents(browseEndpoint, tabName) async {
+    if (sepataredContent[tabName]['additionalParams'] !=
+        '&ctoken=null&continuation=null') {
+      final x = await musicServices.getArtistRealtedContent(
+          browseEndpoint, tabName,
+          additionalParams: sepataredContent[tabName]['additionalParams']);
+      (sepataredContent[tabName]['results']).addAll(x['results']);
+      sepataredContent[tabName]['additionalParams'] = x['additionalParams'];
+      sepataredContent.refresh();
+    }
+
+    continuationInProgress = false;
+  }
+
+  @override
+  void onClose() {
+    songScrollController.dispose();
+    videoScrollController.dispose();
+    super.onClose();
   }
 }

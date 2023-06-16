@@ -128,6 +128,7 @@ class ThemeController extends GetxController {
                 letterSpacing: 1,
                 fontWeight: FontWeight.bold),
           ),
+          indicatorColor: Colors.white,
           progressIndicatorTheme: ProgressIndicatorThemeData(
               linearTrackColor: (primarySwatch[300])!.computeLuminance() > 0.3
                   ? Colors.black54

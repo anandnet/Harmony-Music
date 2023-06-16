@@ -94,7 +94,14 @@ class ArtistScreen extends StatelessWidget {
           ),
           Expanded(child: Obx(
             () {
-              final content = artistScreenController.artistData;
+              final artistData = artistScreenController.artistData;
+              final separatedContent = artistScreenController.sepataredContent;
+
+              if(artistScreenController.isSeparatedArtistContentFetced.isFalse &&
+                  artistScreenController.navigationRailCurrentIndex.value !=0){
+                return const Center(child: RefreshProgressIndicator());
+              }
+
               switch (artistScreenController.navigationRailCurrentIndex.value) {
                 case 0:
                   {
@@ -177,14 +184,14 @@ class ArtistScreen extends StatelessWidget {
                                                   .titleLarge,
                                             ),
                                           ),
-                                          (content.containsKey("description") &&
-                                                  content["description"] !=
+                                          (artistData.containsKey("description") &&
+                                                  artistData["description"] !=
                                                       null)
                                               ? Align(
                                                   alignment:
                                                       Alignment.centerLeft,
                                                   child: Text(
-                                                    "\"${content["description"]}\"",
+                                                    "\"${artistData["description"]}\"",
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .titleSmall,
@@ -215,30 +222,32 @@ class ArtistScreen extends StatelessWidget {
                   {
                     return SeparateSearchItemWidget(
                       isResultWidget: false,
-                      items: content.containsKey('songs')
-                          ? content['songs']['results']
+                      items: separatedContent.containsKey('Songs')
+                          ? separatedContent['Songs']['results']
                           : [],
                       title: "Songs",
                       topPadding: 75,
+                      scrollController: artistScreenController.songScrollController,
                     );
                   }
                 case 2:
                   {
                     return SeparateSearchItemWidget(
                       isResultWidget: false,
-                      items: content.containsKey('videos')
-                          ? content['videos']['results']
+                      items: separatedContent.containsKey('Videos')
+                          ? separatedContent['Videos']['results']
                           : [],
                       title: "Videos",
                       topPadding: 75,
+                      scrollController: artistScreenController.videoScrollController,
                     );
                   }
                 case 3:
                   {
                     return SeparateSearchItemWidget(
                       isResultWidget: false,
-                      items: content.containsKey('albums')
-                          ? content['albums']['results']
+                      items: separatedContent.containsKey('Albums')
+                          ? separatedContent['Albums']['results']
                           : [],
                       title: "Albums",
                       topPadding: 75,
@@ -248,8 +257,8 @@ class ArtistScreen extends StatelessWidget {
                   {
                     return SeparateSearchItemWidget(
                       isResultWidget: false,
-                      items: content.containsKey('singles')
-                          ? content['singles']['results']
+                      items: separatedContent.containsKey('Singles')
+                          ? separatedContent['Singles']['results']
                           : [],
                       title: "Singles",
                       topPadding: 75,

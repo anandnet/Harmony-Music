@@ -808,52 +808,54 @@ Map<String, dynamic> parseAlbumHeader(Map<String, dynamic> response) {
 }
 
 Map<String, dynamic> parseArtistContents(List results) {
-  List<String> categories = ['albums', 'singles', 'videos'];
-  List<Function> categoriesParser = [
-    parseAlbum,
-    parseSingle,
-    parseVideo,
-  ];
-  Map<String, dynamic> artist = {};
-  for (int i = 0; i < categories.length; i++) {
-    dynamic data = {};
-    for (int j = 0; j < results.length; j++) {
-      final item = results[j];
+  final Map<String, dynamic> navigationEndpoints = {
+    'Songs': null,
+    'Videos': null,
+    'Albums': null,
+    'Singles': null
+  };
 
-      if (item.containsKey('musicCarouselShelfRenderer') &&
-          nav(item, [
-                'musicCarouselShelfRenderer',
-                'header',
-                'musicCarouselShelfBasicHeaderRenderer',
-                'title',
-                'runs',
-                0
-              ])['text']
-                  .toLowerCase() ==
-              categories[i]) {
-        data = item['musicCarouselShelfRenderer'];
-      }
-    }
+  for (dynamic result in results) {
+    if (result.containsKey('musicShelfRenderer')) {
+      final title =
+          nav(result, ['musicShelfRenderer', 'title', 'runs', 0])['text'];
+      final browseEndpoint = nav(
+          result, ['musicShelfRenderer', 'bottomEndpoint', 'browseEndpoint']);
 
-    if (data.isNotEmpty) {
-      artist[categories[i]] = {'browseId': "", 'results': []};
-      if (nav(data, [...carousel_title, 'navigationEndpoint']) != null) {
-        artist[categories[i]]['browseId'] =
-            nav(data, [...carousel_title, ...navigation_browse_id]);
-        if (categories[i] == 'albums' ||
-            categories[i] == 'singles' ||
-            categories[i] == 'playlists') {
-          artist[categories[i]]['params'] =
-              nav(data, carousel_title)['navigationEndpoint']['browseEndpoint']
-                  ['params'];
-        }
-      }
+      navigationEndpoints[title] = browseEndpoint!=null?{
+        'browseId': browseEndpoint['browseId'],
+        'params': browseEndpoint['params']
+      }:null;
+    } else if (result.containsKey('musicCarouselShelfRenderer')) {
+      final browseEndpoint = nav(result, [
+        'musicCarouselShelfRenderer',
+        'header',
+        'musicCarouselShelfBasicHeaderRenderer',
+        'moreContentButton',
+        'buttonRenderer',
+        'navigationEndpoint',
+        'browseEndpoint'
+      ]);
 
-      artist[categories[i]]['results'] =
-          parseContentList(data['contents'], categoriesParser[i]);
+      if(browseEndpoint==null) continue;
+
+      final title = nav(result, [
+        'musicCarouselShelfRenderer',
+        'header',
+        'musicCarouselShelfBasicHeaderRenderer',
+        'title',
+        'runs',
+        0
+      ])['text'];
+      
+
+      navigationEndpoints[title] = {
+        'browseId': browseEndpoint['browseId'],
+        'params': browseEndpoint['params']
+      };
     }
   }
-  return artist;
+  return navigationEndpoints;
 }
 
 dynamic parseContentList(results, Function parseFunc) {

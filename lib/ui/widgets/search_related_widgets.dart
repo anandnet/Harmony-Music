@@ -95,12 +95,13 @@ class SeparateSearchItemWidget extends StatelessWidget {
       required this.title,
       this.isCompleteList = true,
       this.isResultWidget = true,
-      this.topPadding = 0});
+      this.topPadding = 0,this.scrollController});
   final List<dynamic> items;
   final String title;
   final bool isCompleteList;
   final double topPadding;
   final bool isResultWidget;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -142,7 +143,7 @@ class SeparateSearchItemWidget extends StatelessWidget {
                             Get.find<SearchResultScreenController>()
                                 .separatedResultContent[title],
                             title,
-                            isCompleteList);
+                            isCompleteList,scrollController: scrollController,);
                       } else {
                         return const Expanded(child: Center(child: RefreshProgressIndicator()));
                       }
@@ -150,9 +151,9 @@ class SeparateSearchItemWidget extends StatelessWidget {
                   : (Get.find<ArtistScreenController>()
                           .isArtistContentFetced
                           .isTrue
-                      ? ListWidget(items, title, isCompleteList)
+                      ? ListWidget(items, title, isCompleteList,scrollController: scrollController,)
                       : const Expanded(child: Center(child: RefreshProgressIndicator())))
-              : ListWidget(items, title, isCompleteList),
+              : ListWidget(items, title, isCompleteList,scrollController: scrollController,),
         ],
       ),
     );

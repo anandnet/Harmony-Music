@@ -14,27 +14,20 @@ import '../widgets/shimmer_widgets/home_shimmer.dart';
 import 'home_screen_controller.dart';
 import 'settings_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final PlayerController playerController = Get.find<PlayerController>();
-  final HomeScreenController homeScreenController =
-      Get.find<HomeScreenController>();
   @override
   Widget build(BuildContext context) {
+    final PlayerController playerController = Get.find<PlayerController>();
+    final HomeScreenController homeScreenController =
+        Get.find<HomeScreenController>();
     final size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButton: Obx(
         () => Padding(
           padding: EdgeInsets.only(
-              bottom: playerController.playerPanelMinHeight.value == 0
-                  ? 20
-                  : 75),
+              bottom:
+                  playerController.playerPanelMinHeight.value == 0 ? 20 : 75),
           child: SizedBox(
             height: 60,
             width: 60,
@@ -137,8 +130,7 @@ class Body extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.only(left: 5.0),
         child: SingleChildScrollView(
-          padding:
-              EdgeInsets.only(bottom: 90, top:topPadding ),
+          padding: EdgeInsets.only(bottom: 90, top: topPadding),
           child: homeScreenController.networkError.isTrue
               ? SizedBox(
                   height: MediaQuery.of(context).size.height - 180,

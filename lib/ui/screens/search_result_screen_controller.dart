@@ -1,7 +1,12 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/helper.dart';
+import 'package:harmonymusic/models/album.dart';
+import 'package:harmonymusic/models/artist.dart';
 import 'package:harmonymusic/services/music_service.dart';
+
+import '../../models/playlist.dart';
 
 class SearchResultScreenController extends GetxController {
   final navigationRailCurrentIndex = 0.obs;
@@ -26,10 +31,10 @@ class SearchResultScreenController extends GetxController {
   }
 
   Future<void> onDestinationSelected(int value) async {
-    if(railItems.isEmpty){
+    if (railItems.isEmpty) {
       return;
     }
-    
+
     isSeparatedResultContentFetced.value = false;
     navigationRailCurrentIndex.value = value;
     if (value != 0 &&
@@ -102,6 +107,31 @@ class SearchResultScreenController extends GetxController {
         scrollControllers[item] = ScrollController();
       }
       isResultContentFetced.value = true;
+    }
+  }
+
+  void onSort(bool sortByName, bool sortByDate, bool sortByDuration,
+      bool isAscending, String title) {
+    if (title == "Songs" || title == "Videos") {
+      final songList = separatedResultContent[title].toList();
+      sortSongsNVideos(
+          songList, sortByName, sortByDate, sortByDuration, isAscending);
+      separatedResultContent[title] = songList;
+    } else if (title.contains('playlists')) {
+      final playlists =
+          separatedResultContent[title].toList();
+      sortPlayLists(playlists, sortByName, isAscending);
+      separatedResultContent[title] = playlists;
+    } else if (title == "Artists") {
+      final artistList =
+          separatedResultContent[title].toList();
+      sortArtist(artistList, sortByName, isAscending);
+      separatedResultContent[title] = artistList;
+    } else if (title == "Albums") {
+      final albumList =
+          separatedResultContent[title].toList();
+      sortAlbumNSingles(albumList, sortByName, sortByDate, isAscending);
+      separatedResultContent[title] = albumList;
     }
   }
 

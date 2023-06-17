@@ -6,6 +6,7 @@ import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
 import 'package:harmonymusic/ui/widgets/list_widget.dart';
 import 'package:harmonymusic/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
 import 'package:harmonymusic/ui/widgets/snackbar.dart';
+import 'package:harmonymusic/ui/widgets/sort_widget.dart';
 
 import '../../models/playlist.dart';
 import '../player/player_controller.dart';
@@ -149,7 +150,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                             value
                                                                 ? "Playlist removed!"
                                                                 : "Operation failed",
-                                                           size: SanckBarSize
+                                                            size: SanckBarSize
                                                                 .MEDIUM)));
                                               },
                                             )
@@ -211,7 +212,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                                       ? "Album bookmark removed!"
                                                                       : "Playlist bookmark removed!"
                                                               : "Operation failed",
-                                                         size: SanckBarSize
+                                                          size: SanckBarSize
                                                               .MEDIUM)));
                                             },
                                             child: Container(
@@ -279,21 +280,37 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                   )),
                             ),
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: (playListNAlbumScreenController
-                                        .isAlbum.isFalse &&
-                                    !content.isCloudPlaylist)
-                                ? 0
-                                : 10.0),
-                        child: Text(
-                          playListNAlbumScreenController.isAlbum.isTrue
-                              ? playListNAlbumScreenController
-                                      .contentRenderer.artists[0]['name'] ??
-                                  ""
-                              : content.description ?? "",
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ),
+                          padding: EdgeInsets.only(
+                              top: (playListNAlbumScreenController
+                                          .isAlbum.isFalse &&
+                                      !content.isCloudPlaylist)
+                                  ? 0
+                                  : 10.0),
+                          child: (playListNAlbumScreenController
+                                      .isAlbum.isTrue ||
+                                  (playListNAlbumScreenController
+                                          .isAlbum.isFalse &&
+                                      content.isCloudPlaylist))
+                              ? Text(
+                                  playListNAlbumScreenController.isAlbum.isTrue
+                                      ? playListNAlbumScreenController
+                                              .contentRenderer
+                                              .artists[0]['name'] ??
+                                          ""
+                                      : content.description ?? "",
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                )
+                              : Obx(
+                                  () => SortWidget(
+                                      itemCountTitle:
+                                          "${playListNAlbumScreenController.songList.length} songs",
+                                      titleLeftPadding: 9,
+                                      isDurationOptionRequired: true,
+                                      onSort: (a, b, c, d) {
+                                        playListNAlbumScreenController.onSort(
+                                            a, c, d);
+                                      }),
+                                )),
                       (playListNAlbumScreenController.isAlbum.isFalse &&
                               !content.isCloudPlaylist)
                           ? const SizedBox.shrink()
@@ -301,11 +318,16 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                       (playListNAlbumScreenController.isAlbum.isFalse &&
                               !content.isCloudPlaylist)
                           ? const SizedBox.shrink()
-                          : Padding(
-                              padding: const EdgeInsets.only(bottom: 10.0),
-                              child: Text(
-                                "Songs",
-                                style: Theme.of(context).textTheme.titleMedium,
+                          : Obx(
+                              () => SortWidget(
+                                itemCountTitle:
+                                    "${playListNAlbumScreenController.songList.length} songs",
+                                titleLeftPadding: 9,
+                                isDurationOptionRequired: true,
+                                onSort: (a,b,c,d) {
+                                  playListNAlbumScreenController.onSort(
+                                      a, c, d);
+                                },
                               ),
                             ),
                       Obx(() => playListNAlbumScreenController

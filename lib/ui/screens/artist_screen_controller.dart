@@ -1,5 +1,7 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:hive/hive.dart';
 
@@ -66,7 +68,7 @@ class ArtistScreenController extends GetxController {
     final tabName = ["About", "Songs", "Videos", "Albums", "Singles"][val];
 
     if (val == 0 || sepataredContent.containsKey(tabName)) return;
-    if(artistData[tabName] == null){
+    if (artistData[tabName] == null) {
       isSeparatedArtistContentFetced.value = true;
       return;
     }
@@ -105,6 +107,24 @@ class ArtistScreenController extends GetxController {
     }
 
     continuationInProgress = false;
+  }
+
+  void onSort(bool sortByName, bool sortByDate, bool sortByDuration,
+      bool isAscending, String title) {
+    if (sepataredContent[title] == null) {
+      return;
+    }
+    if (title == "Songs" || title == "Videos") {
+      final songlist = sepataredContent[title]['results'].toList();
+      sortSongsNVideos(
+          songlist, sortByName, sortByDate, sortByDuration, isAscending);
+      sepataredContent[title]['results'] = songlist;
+    } else if (title == "Albums" || title == "Singles") {
+      final albumList = sepataredContent[title]['results'].toList();
+      sortAlbumNSingles(albumList, sortByName, sortByDate, isAscending);
+      sepataredContent[title]['results'] = albumList;
+    }
+    sepataredContent.refresh();
   }
 
   @override

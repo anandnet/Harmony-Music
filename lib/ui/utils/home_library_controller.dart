@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/models/artist.dart';
 import 'package:harmonymusic/models/media_Item_builder.dart';
@@ -21,7 +22,6 @@ class LibrarySongsController extends GetxController {
   }
 
   Future<void> init() async {
-
     // Make sure that song cached in system or not cleared by system
     // if cleared then it will remove from database as well
     List<String> songsList = [];
@@ -31,27 +31,39 @@ class LibrarySongsController extends GetxController {
           .listSync()
           .where((f) => !['mime', 'part']
               .contains(f.path.replaceAll(RegExp(r'^.*\.'), '')));
-      songsList.addAll(downloadedFiles.map((e) {
-        RegExpMatch? match = RegExp(".cachedSongs/([^#]*)?.mp3").firstMatch(e.path);
-        if (match != null) {
-          return match[1]!;
-        }
-      }).whereType<String>().toList());
-       //printINFO("all files: $downloadedFiles \n $songsList");
+      songsList.addAll(downloadedFiles
+          .map((e) {
+            RegExpMatch? match =
+                RegExp(".cachedSongs/([^#]*)?.mp3").firstMatch(e.path);
+            if (match != null) {
+              return match[1]!;
+            }
+          })
+          .whereType<String>()
+          .toList());
+      //printINFO("all files: $downloadedFiles \n $songsList");
     }
 
     final box = Hive.box("SongsCache");
     for (var element in box.keys) {
-      if(!songsList.contains(element)){
+      if (!songsList.contains(element)) {
         box.delete(element);
       }
-     }
+    }
 
     cachedSongsList.value = box.values
         .map<MediaItem?>((item) => MediaItemBuilder.fromJson(item))
         .whereType<MediaItem>()
         .toList();
     isSongFetched.value = true;
+  }
+
+  void onSort(
+      bool sortByName, bool sortByDate, bool sortByDuration, bool isAscending) {
+    final songlist = cachedSongsList.toList();
+    sortSongsNVideos(
+        songlist, sortByName, sortByDate, sortByDuration, isAscending);
+    cachedSongsList.value = songlist;
   }
 }
 
@@ -133,6 +145,15 @@ class LibraryPlaylistsController extends GetxController {
     }
     return false;
   }
+
+  void onSort(bool sortByName, bool isAscending) {
+    final playlists = libraryPlaylists.toList();
+    playlists.removeRange(0, 3);
+    sortPlayLists(playlists, sortByName, isAscending);
+    playlists.insertAll(0, initPlst);
+    libraryPlaylists.value = playlists;
+  }
+
   @override
   void dispose() {
     textInputController.dispose();
@@ -160,6 +181,12 @@ class LibraryAlbumsController extends GetxController {
     isContentFetched.value = true;
     box.close();
   }
+
+  void onSort(bool sortByName, bool sortByDate, bool isAscending) {
+    final albumList = libraryAlbums.toList();
+    sortAlbumNSingles(albumList, sortByName, sortByDate, isAscending);
+    libraryAlbums.value = albumList;
+  }
 }
 
 class LibraryArtistsController extends GetxController {
@@ -180,5 +207,11 @@ class LibraryArtistsController extends GetxController {
         .toList();
     isContentFetched.value = true;
     box.close();
+  }
+
+  void onSort(bool sortByName, bool isAscending) {
+    final artistList = libraryArtists.toList();
+    sortArtist(artistList, sortByName, isAscending);
+    libraryArtists.value = artistList;
   }
 }

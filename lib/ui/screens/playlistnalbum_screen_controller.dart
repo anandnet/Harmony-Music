@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/models/thumbnail.dart';
 import 'package:hive/hive.dart';
@@ -14,7 +15,7 @@ class PlayListNAlbumScreenController extends GetxController {
   final isAlbum = false.obs;
   final isAddedToLibrary = false.obs;
   late final String id;
-  late dynamic contentRenderer ;
+  late dynamic contentRenderer;
 
   PlayListNAlbumScreenController(dynamic content, bool isAlbum, bool isIdOnly) {
     this.isAlbum.value = isAlbum;
@@ -67,7 +68,7 @@ class PlayListNAlbumScreenController extends GetxController {
     if (isIdOnly) {
       final album = Album(
           browseId: id,
-          artists:List<Map<dynamic, dynamic>>.from(content['artists']),
+          artists: List<Map<dynamic, dynamic>>.from(content['artists']),
           thumbnailUrl: Thumbnail(content['thumbnails'][0]['url']).high,
           title: content['title'],
           year: content['year']);
@@ -97,5 +98,11 @@ class PlayListNAlbumScreenController extends GetxController {
     } catch (e) {
       return false;
     }
+  }
+
+  void onSort(bool sortByName, bool sortByDuration, bool isAscending) {
+    final songlist_ = songList.toList();
+    sortSongsNVideos(songlist_, sortByName, false, sortByDuration, isAscending);
+    songList.value = songlist_;
   }
 }

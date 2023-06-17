@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
 import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
@@ -11,6 +12,7 @@ import '../widgets/content_list_widget.dart';
 import '../widgets/list_widget.dart';
 import '../widgets/quickpickswidget.dart';
 import '../widgets/shimmer_widgets/home_shimmer.dart';
+import '../widgets/sort_widget.dart';
 import 'home_screen_controller.dart';
 import 'settings_screen.dart';
 
@@ -214,7 +216,18 @@ class Body extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
-            const SizedBox(height: 10),
+            Obx(
+              () => SortWidget(
+                itemCountTitle:
+                    "${Get.find<LibrarySongsController>().cachedSongsList.length} items",
+                titleLeftPadding: 9,
+                isDateOptionRequired: true,
+                isDurationOptionRequired: true,
+                onSort: (p0, p1, p2, p3) {
+                  Get.find<LibrarySongsController>().onSort(p0, p1, p2, p3);
+                },
+              ),
+            ),
             GetX<LibrarySongsController>(builder: (controller) {
               return controller.cachedSongsList.isNotEmpty
                   ? ListWidget(
@@ -274,7 +287,14 @@ class LibraryArtistWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          const SizedBox(height: 10),
+          Obx(
+            () => SortWidget(
+              itemCountTitle: "${cntrller.libraryArtists.length} items",
+              onSort: (sortByName, sortByDate, sortByDuration, isAscending) {
+                cntrller.onSort(sortByName, isAscending);
+              },
+            ),
+          ),
           Obx(() => cntrller.libraryArtists.isNotEmpty
               ? ListWidget(cntrller.libraryArtists, "Library Artists", true)
               : Expanded(
@@ -338,7 +358,19 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 10),
+          Obx(
+            () => SortWidget(
+              itemCountTitle:
+                  "${isAlbumContent ? libralbumCntrller.libraryAlbums.length : librplstCntrller.libraryPlaylists.length} items",
+              isDateOptionRequired: isAlbumContent,
+              onSort: (a, b, c, d) {
+                isAlbumContent
+                    ? libralbumCntrller.onSort(a, b, d)
+                    : librplstCntrller.onSort(a, d);
+                printINFO("byName : $a, isAscending: $d");
+              },
+            ),
+          ),
           Expanded(
             child: Obx(
               () => (isAlbumContent

@@ -1,7 +1,5 @@
-import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:hive/hive.dart';
 
@@ -85,7 +83,6 @@ class ArtistScreenController extends GetxController {
         double delta = 300.0;
         if (maxScroll - currentScroll <= delta) {
           if (!continuationInProgress) {
-            printINFO("InProgrss");
             continuationInProgress = true;
             getContinuationContents(artistData[tabName], tabName);
           }

@@ -1,9 +1,5 @@
-import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
 
-import 'models/album.dart';
-import 'models/artist.dart';
-import 'models/playlist.dart';
 
 void printERROR(dynamic text, {String tag = "Harmony Music"}) {
   debugPrint("\x1B[31m[$tag]: $text");

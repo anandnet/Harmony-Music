@@ -13,15 +13,16 @@ class MediaItemBuilder {
     return MediaItem(
         id: json["videoId"],
         title: json["title"],
-        duration:toDuration(json['length'] ?? json['duration']),
+        duration:json['duration']!=null?Duration(seconds:json['duration']):toDuration(json['length'] ),
         album: json['album']!=null ? json['album']['name']:null ,
         artist: artistName==""?artistName: artistName.substring(0,artistName.length-2),
         artUri: Uri.parse(Thumbnail(json["thumbnails"][0]['url']).high),
         extras: {
           'url': json['url'] ?? url,
-          'length': json['length']?? json['duration'],
+          'length': json['length'],
           'album': json['album'],
           'artists': json['artists'],
+          'date':json['date']
         });
   }
 
@@ -49,6 +50,8 @@ static Duration? toDuration(String? time){
         'album': mediaItem.extras!['album'],
         'artists': mediaItem.extras!['artists'],
         'length': mediaItem.extras!['length'],
+        'duration': mediaItem.duration!=null? mediaItem.duration!.inSeconds:null,
+        'date':mediaItem.extras!['date'],
         'thumbnails': [
           {'url': mediaItem.artUri.toString()}
         ],

@@ -249,7 +249,7 @@ Map<String, dynamic> parseSongRuns(List<dynamic> runs) {
       if (regExp.hasMatch(text) && i > 0) {
         parsed['views'] = text.split(' ')[0];
       } else if (RegExp(r"^(\d+:)*\d+:\d+$").hasMatch(text)) {
-        parsed['duration'] = text;
+        parsed['length'] = text;
         parsed['duration_seconds'] = parseDuration(text);
       } else if (RegExp(r"^\d{4}$").hasMatch(text)) {
         parsed['year'] = text;
@@ -735,7 +735,7 @@ dynamic parseSearchResult(Map<String, dynamic> data,
   }
 
   if ((['song', 'video', 'album']).contains(resultType)) {
-    searchResult['duration'] = null;
+    searchResult['length'] = null;
     searchResult['year'] = null;
     final flexItem = getFlexColumnItem(data, 1);
     final runs = (flexItem['text']['runs']);

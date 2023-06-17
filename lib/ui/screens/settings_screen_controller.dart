@@ -27,7 +27,6 @@ class SettingsScreenController extends GetxController {
         AudioQuality.values[setBox.get('streamingQuality')];
     isIgnoringBatteryOptimizations.value =
         (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
-    printINFO(isIgnoringBatteryOptimizations);
   }
 
   void setStreamingQuality(dynamic val) {

@@ -367,7 +367,6 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                 isAlbumContent
                     ? libralbumCntrller.onSort(a, b, d)
                     : librplstCntrller.onSort(a, d);
-                printINFO("byName : $a, isAscending: $d");
               },
             ),
           ),

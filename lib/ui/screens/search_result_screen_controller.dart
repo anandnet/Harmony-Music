@@ -1,12 +1,7 @@
-import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/helper.dart';
-import 'package:harmonymusic/models/album.dart';
-import 'package:harmonymusic/models/artist.dart';
 import 'package:harmonymusic/services/music_service.dart';
-
-import '../../models/playlist.dart';
 
 class SearchResultScreenController extends GetxController {
   final navigationRailCurrentIndex = 0.obs;
@@ -46,7 +41,6 @@ class SearchResultScreenController extends GetxController {
       separatedResultContent[tabName] = x[tabName];
       additionalParamNext[tabName] = x['params'];
       isSeparatedResultContentFetced.value = true;
-      //printINFO(separatedResultContent.keys.first);
       final scrollController = scrollControllers[tabName];
       (scrollController)!.addListener(() {
         double maxScroll = scrollController.position.maxScrollExtent;
@@ -118,18 +112,15 @@ class SearchResultScreenController extends GetxController {
           songList, sortByName, sortByDate, sortByDuration, isAscending);
       separatedResultContent[title] = songList;
     } else if (title.contains('playlists')) {
-      final playlists =
-          separatedResultContent[title].toList();
+      final playlists = separatedResultContent[title].toList();
       sortPlayLists(playlists, sortByName, isAscending);
       separatedResultContent[title] = playlists;
     } else if (title == "Artists") {
-      final artistList =
-          separatedResultContent[title].toList();
+      final artistList = separatedResultContent[title].toList();
       sortArtist(artistList, sortByName, isAscending);
       separatedResultContent[title] = artistList;
     } else if (title == "Albums") {
-      final albumList =
-          separatedResultContent[title].toList();
+      final albumList = separatedResultContent[title].toList();
       sortAlbumNSingles(albumList, sortByName, sortByDate, isAscending);
       separatedResultContent[title] = albumList;
     }

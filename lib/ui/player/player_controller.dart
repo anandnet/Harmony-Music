@@ -269,18 +269,15 @@ class PlayerController extends GetxController {
   }
 
   void onReorder(int oldIndex, int newIndex) {
-    printINFO("Reorder");
     _audioHandler.customAction(
         "reorderQueue", {"oldIndex": oldIndex, "newIndex": newIndex});
   }
 
   void onReorderStart(int index) {
-    printINFO("Reordering started");
     isQueueReorderingInProcess.value = true;
   }
 
   void onReorderEnd(int index) {
-    printINFO("Reordering ended");
     isQueueReorderingInProcess.value = false;
   }
 

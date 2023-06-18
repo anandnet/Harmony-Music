@@ -125,7 +125,7 @@ class SettingsScreen extends StatelessWidget {
                 contentPadding: const EdgeInsets.only(left: 5, right: 10),
                 title: const Text("Github"),
                 subtitle: Text(
-                  "View Github source code \nif you like this project, don't forget to give a ⭐${((Get.find<PlayerController>().playerPanelMinHeight.value) == 0) ? "" : "\n\nV 1.0.1 by anandnet"}",
+                  "View Github source code \nif you like this project, don't forget to give a ⭐${((Get.find<PlayerController>().playerPanelMinHeight.value) == 0) ? "" : "\n\nV 1.1.0 by anandnet"}",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 isThreeLine: true,
@@ -143,7 +143,7 @@ class SettingsScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 20.0),
             child: Text(
-              "V 1.0.1 by anandnet",
+              "V 1.1.0 by anandnet",
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),

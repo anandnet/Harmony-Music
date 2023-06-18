@@ -45,10 +45,11 @@ class SearchResultScreenController extends GetxController {
       (scrollController)!.addListener(() {
         double maxScroll = scrollController.position.maxScrollExtent;
         double currentScroll = scrollController.position.pixels;
-        double delta = 300.0;
-        if (maxScroll - currentScroll <= delta) {
+        if (currentScroll >= maxScroll / 2 &&
+            additionalParamNext[tabName]['additionalParams'] !=
+                '&ctoken=null&continuation=null') {
           if (!continuationInProgress) {
-            printINFO("InProgrss");
+            printINFO("Acchhsk");
             continuationInProgress = true;
             getContinuationContents();
           }
@@ -60,14 +61,13 @@ class SearchResultScreenController extends GetxController {
 
   Future<void> getContinuationContents() async {
     final tabName = railItems[navigationRailCurrentIndex.value - 1];
-    if (additionalParamNext[tabName]['additionalParams'] !=
-        "&ctoken=null&continuation=null") {
-      final x = await musicServices
-          .getSearchContinuation(additionalParamNext[tabName]);
-      (separatedResultContent[tabName]).addAll(x[tabName]);
-      additionalParamNext[tabName] = x['params'];
-      separatedResultContent.refresh();
-    }
+
+    final x =
+        await musicServices.getSearchContinuation(additionalParamNext[tabName]);
+    (separatedResultContent[tabName]).addAll(x[tabName]);
+    additionalParamNext[tabName] = x['params'];
+    separatedResultContent.refresh();
+
     continuationInProgress = false;
   }
 

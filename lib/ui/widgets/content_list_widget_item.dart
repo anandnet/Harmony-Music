@@ -50,9 +50,9 @@ class ContentListItem extends StatelessWidget {
                             content.playlistId == 'LIBRP'
                                 ? Icons.history_rounded
                                 : content.playlistId == 'LIBFAV'
-                                    ? Icons.favorite
+                                    ? Icons.favorite_rounded
                                     : content.playlistId == 'SongsCache'
-                                        ? Icons.flight
+                                        ? Icons.flight_rounded
                                         : Icons.playlist_play_rounded,
                             color: Colors.white,
                             size: 40,

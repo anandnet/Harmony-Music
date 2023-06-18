@@ -168,7 +168,7 @@ class PlayerController extends GetxController {
 
   ///pushSongToPlaylist method clear previous song queue, plays the tapped song and push related
   ///songs into Queue
-  Future<void> pushSongToQueue(MediaItem? mediaItem, 
+  Future<void> pushSongToQueue(MediaItem? mediaItem,
       {String? playlistid, bool radio = false}) async {
     isRadioModeOn = radio;
 
@@ -213,17 +213,17 @@ class PlayerController extends GetxController {
   }
 
   Future<void> startRadio(MediaItem? mediaItem, {String? playlistid}) async {
-    radioInitiatorItem = mediaItem?? playlistid;
-    await pushSongToQueue(mediaItem,playlistid:playlistid,radio: true);
+    radioInitiatorItem = mediaItem ?? playlistid;
+    await pushSongToQueue(mediaItem, playlistid: playlistid, radio: true);
   }
 
   Future<void> _addRadioContinuation(dynamic item) async {
     final isSong = item.runtimeType.toString() == "MediaItem";
     final content = await _musicServices.getWatchPlaylist(
-        videoId:isSong? item.id:"",
+        videoId: isSong ? item.id : "",
         radio: true,
         limit: 24,
-        playlistId: isSong?null:item,
+        playlistId: isSong ? null : item,
         additionalParamsNext: radioContinuationParam);
     radioContinuationParam = content['additionalParamsForNext'];
     await enqueueSongList(List<MediaItem>.from(content['tracks']));
@@ -246,6 +246,36 @@ class PlayerController extends GetxController {
       if (!currentQueue.contains(item)) {
         _audioHandler.addQueueItem(item);
       }
+    }
+  }
+
+  void playNext(MediaItem song) {
+    if (currentQueue.isEmpty) {
+      enqueueSong(song);
+      return;
+    }
+    int index = -1;
+    for (int i = 0; i < currentQueue.length; i++) {
+      if (song.id == (currentQueue[i]).id) {
+        index = i;
+        break;
+      }
+    }
+    final currentIndx = currentSongIndex.value;
+    if (index == currentIndx) {
+      return;
+    }
+    if (index != -1) {
+      if (currentQueue.length == 1 ||
+          (currentQueue.length == 2 && index == 1)) {
+        return;
+      }
+      onReorder(index, currentSongIndex.value + 1);
+    } else {
+      //Will add song just below the current song
+      (currentIndx == currentQueue.length - 1)
+          ? enqueueSong(song)
+          : _audioHandler.customAction("addPlayNextItem", {"mediaItem": song});
     }
   }
 

@@ -328,9 +328,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       if (!songsCacheBox.containsKey(song.id) &&
           await File("$_cacheDir/cachedSongs/${song.id}.mp3").exists()) {
         song.extras!['url'] = currentSongUrl;
+        song.extras!['date'] = DateTime.now().millisecondsSinceEpoch;
         final jsonData = MediaItemBuilder.toJson(song);
-        jsonData['duration']=_player.duration!.inSeconds;
-        jsonData['date'] = DateTime.now().millisecondsSinceEpoch;
+        jsonData['duration'] = _player.duration!.inSeconds;
         songsCacheBox.put(song.id, jsonData);
         if (!librarySongsController.isClosed) {
           librarySongsController.cachedSongsList.value =
@@ -384,6 +384,11 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       currentIndex = currentQueue.indexOf(currentItem);
       queue.add(currentQueue);
       mediaItem.add(currentItem);
+    } else if (name == 'addPlayNextItem') {
+      final song = extras!['mediaItem'] as MediaItem;
+      final currentQueue = queue.value;
+      currentQueue.insert(currentIndex+1, song);
+      queue.add(currentQueue);
     }
   }
 

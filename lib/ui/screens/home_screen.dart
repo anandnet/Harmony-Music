@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
 import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
@@ -45,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                     // file:///data/user/0/com.example.harmonymusic/cache/libCachedImageData/
                     //file:///data/user/0/com.example.harmonymusic/cache/just_audio_cache/
                   },
-                  child: const Icon(Icons.search)),
+                  child: const Icon(Icons.search_rounded)),
             ),
           ),
         ),
@@ -72,9 +71,9 @@ class HomeScreen extends StatelessWidget {
                 //railDestination("Settings")
                 const NavigationRailDestination(
                   padding: EdgeInsets.only(top: 10, bottom: 10),
-                  icon: Icon(Icons.settings),
+                  icon: Icon(Icons.settings_rounded),
                   label: SizedBox.shrink(),
-                  selectedIcon: Icon(Icons.settings),
+                  selectedIcon: Icon(Icons.settings_rounded),
                 )
               ],
             ),

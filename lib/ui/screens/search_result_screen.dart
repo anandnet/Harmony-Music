@@ -39,22 +39,19 @@ class SearchResultScreen extends StatelessWidget {
                           const SizedBox(
                             height: 30,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium!
-                                    .color,
-                              ),
-                              onPressed: () {
-                                Get.nestedKey(ScreenNavigationSetup.id)!
-                                    .currentState!
-                                    .pop();
-                              },
+                          IconButton(
+                            icon: Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .color,
                             ),
+                            onPressed: () {
+                              Get.nestedKey(ScreenNavigationSetup.id)!
+                                  .currentState!
+                                  .pop();
+                            },
                           ),
                           const SizedBox(
                             height: 10,

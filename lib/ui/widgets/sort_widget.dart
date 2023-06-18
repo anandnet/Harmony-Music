@@ -76,7 +76,7 @@ class _SortWidgetState extends State<SortWidget> {
                 : const SizedBox.shrink(),
             widget.isDurationOptionRequired
                 ? IconButton(
-                    icon: const Icon(Icons.timer),
+                    icon: const Icon(Icons.timer_rounded),
                     iconSize: 20,
                     splashRadius: 20,
                     visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
@@ -98,8 +98,8 @@ class _SortWidgetState extends State<SortWidget> {
             ),
             IconButton(
               icon: isAscending
-                  ? const Icon(Icons.arrow_downward)
-                  : const Icon(Icons.arrow_upward),
+                  ? const Icon(Icons.arrow_downward_rounded)
+                  : const Icon(Icons.arrow_upward_rounded),
               iconSize: 20,
               splashRadius: 20,
               visualDensity: const VisualDensity(horizontal: -3, vertical: -3),

@@ -49,8 +49,8 @@ class SongInfoBottomSheet extends StatelessWidget {
               onPressed: songInfoController.toggleFav,
               icon: Obx(() => Icon(
                     songInfoController.isCurrentSongFav.isFalse
-                        ? Icons.favorite_border
-                        : Icons.favorite,
+                        ? Icons.favorite_border_rounded
+                        : Icons.favorite_rounded,
                     color: Theme.of(context).textTheme.titleMedium!.color,
                   ))),
         ),
@@ -64,9 +64,19 @@ class SongInfoBottomSheet extends StatelessWidget {
             Get.find<PlayerController>().startRadio(song);
           },
         ),
+       
+       (calledFromPlayer||calledFromQueue)?const SizedBox.shrink(): ListTile(
+          visualDensity: const VisualDensity(vertical: -1),
+          leading: const Icon(Icons.playlist_play_rounded),
+          title: const Text("Play next"),
+          onTap: () {
+            Navigator.of(context).pop();
+            Get.find<PlayerController>().playNext(song);
+          },
+        ),
         ListTile(
           visualDensity: const VisualDensity(vertical: -1),
-          leading: const Icon(Icons.playlist_add),
+          leading: const Icon(Icons.playlist_add_rounded),
           title: const Text("Add to playlist"),
           onTap: () {
             Navigator.of(context).pop();
@@ -80,7 +90,7 @@ class SongInfoBottomSheet extends StatelessWidget {
             ? const SizedBox.shrink()
             : ListTile(
                 visualDensity: const VisualDensity(vertical: -1),
-                leading: const Icon(Icons.merge),
+                leading: const Icon(Icons.merge_rounded),
                 title: const Text("Enqueue this song"),
                 onTap: () {
                   Get.find<PlayerController>().enqueueSong(song).whenComplete(
@@ -93,7 +103,7 @@ class SongInfoBottomSheet extends StatelessWidget {
         song.extras!['album'] != null
             ? ListTile(
                 visualDensity: const VisualDensity(vertical: -1),
-                leading: const Icon(Icons.album),
+                leading: const Icon(Icons.album_rounded),
                 title: const Text("Go to album"),
                 onTap: () {
                   Navigator.of(context).pop();
@@ -104,9 +114,24 @@ class SongInfoBottomSheet extends StatelessWidget {
                     final playerController = Get.find<PlayerController>();
                     playerController.playerPanelController.close();
                   }
-                  Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
-                      id: ScreenNavigationSetup.id,
-                      arguments: [true, song.extras!['album']['id'], true]);
+
+                  if (getCurrentRouteName() ==
+                      ScreenNavigationSetup.playlistNAlbumScreen) {
+                    Get.nestedKey(ScreenNavigationSetup.id)
+                        ?.currentState!
+                        .pop();
+
+                    Future.delayed(const Duration(milliseconds: 500), () async {
+                      await Get.toNamed(
+                          ScreenNavigationSetup.playlistNAlbumScreen,
+                          id: ScreenNavigationSetup.id,
+                          arguments: [true, song.extras!['album']['id'], true]);
+                    });
+                  } else {
+                    Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
+                        id: ScreenNavigationSetup.id,
+                        arguments: [true, song.extras!['album']['id'], true]);
+                  }
                 },
               )
             : const SizedBox.shrink(),
@@ -153,7 +178,7 @@ class SongInfoBottomSheet extends StatelessWidget {
         ListTile(
           contentPadding: const EdgeInsets.only(bottom: 20, left: 15),
           visualDensity: const VisualDensity(vertical: -1),
-          leading: const Icon(Icons.share),
+          leading: const Icon(Icons.share_rounded),
           title: const Text("Share this song"),
           onTap: () => Share.share("https://youtube.com/watch?v=${song.id}"),
         ),
@@ -172,7 +197,7 @@ class SongInfoBottomSheet extends StatelessWidget {
     return artistList.isNotEmpty
         ? artistList
             .map((e) => ListTile(
-                  onTap: () {
+                  onTap: () async {
                     Navigator.of(context).pop();
                     if (calledFromPlayer) {
                       Get.find<PlayerController>()
@@ -183,17 +208,41 @@ class SongInfoBottomSheet extends StatelessWidget {
                       final playerController = Get.find<PlayerController>();
                       playerController.playerPanelController.close();
                     }
-                    Get.toNamed(ScreenNavigationSetup.artistScreen,
-                        id: ScreenNavigationSetup.id,
-                        arguments: [true, e['id']]);
-                    //
+
+                    if (getCurrentRouteName() ==
+                        ScreenNavigationSetup.artistScreen) {
+                      Get.nestedKey(ScreenNavigationSetup.id)
+                          ?.currentState!
+                          .pop();
+
+                      Future.delayed(const Duration(milliseconds: 500),
+                          () async {
+                        await Get.toNamed(ScreenNavigationSetup.artistScreen,
+                            id: ScreenNavigationSetup.id,
+                            arguments: [true, e['id']]);
+                      });
+                    } else {
+                      await Get.toNamed(ScreenNavigationSetup.artistScreen,
+                          id: ScreenNavigationSetup.id,
+                          preventDuplicates: true,
+                          arguments: [true, e['id']]);
+                    }
                   },
                   tileColor: Colors.transparent,
-                  leading: const Icon(Icons.person),
+                  leading: const Icon(Icons.person_rounded),
                   title: Text("View Artist (${e['name']})"),
                 ))
             .toList()
         : [const SizedBox.shrink()];
+  }
+
+  String? getCurrentRouteName() {
+    String? currentPath;
+    Get.nestedKey(ScreenNavigationSetup.id)?.currentState?.popUntil((route) {
+      currentPath = route.settings.name;
+      return true;
+    });
+    return currentPath;
   }
 }
 

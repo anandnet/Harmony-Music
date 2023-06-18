@@ -80,8 +80,9 @@ class ArtistScreenController extends GetxController {
       scrollController.addListener(() {
         double maxScroll = scrollController.position.maxScrollExtent;
         double currentScroll = scrollController.position.pixels;
-        double delta = 300.0;
-        if (maxScroll - currentScroll <= delta) {
+        if (currentScroll >= maxScroll / 2 &&
+            sepataredContent[tabName]['additionalParams'] !=
+                '&ctoken=null&continuation=null') {
           if (!continuationInProgress) {
             continuationInProgress = true;
             getContinuationContents(artistData[tabName], tabName);
@@ -93,15 +94,12 @@ class ArtistScreenController extends GetxController {
   }
 
   Future<void> getContinuationContents(browseEndpoint, tabName) async {
-    if (sepataredContent[tabName]['additionalParams'] !=
-        '&ctoken=null&continuation=null') {
-      final x = await musicServices.getArtistRealtedContent(
-          browseEndpoint, tabName,
-          additionalParams: sepataredContent[tabName]['additionalParams']);
-      (sepataredContent[tabName]['results']).addAll(x['results']);
-      sepataredContent[tabName]['additionalParams'] = x['additionalParams'];
-      sepataredContent.refresh();
-    }
+    final x = await musicServices.getArtistRealtedContent(
+        browseEndpoint, tabName,
+        additionalParams: sepataredContent[tabName]['additionalParams']);
+    (sepataredContent[tabName]['results']).addAll(x['results']);
+    sepataredContent[tabName]['additionalParams'] = x['additionalParams'];
+    sepataredContent.refresh();
 
     continuationInProgress = false;
   }

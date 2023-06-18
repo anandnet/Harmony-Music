@@ -19,10 +19,10 @@ class SearchScreen extends StatelessWidget {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 10, top: 80),
+                  padding: const EdgeInsets.only(top: 80),
                   child: IconButton(
                     icon: Icon(
-                      Icons.arrow_back_ios,
+                      Icons.arrow_back_ios_new_rounded,
                       color: Theme.of(context).textTheme.titleMedium!.color,
                     ),
                     onPressed: () {

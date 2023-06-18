@@ -44,7 +44,7 @@ class ArtistScreen extends StatelessWidget {
                     playerController.startRadio(null,
                         playlistid: artistScreenController.artist_.radioId);
                   },
-                  child: const Icon(Icons.sensors_outlined)),
+                  child: const Icon(Icons.sensors_rounded)),
             ),
           ),
         ),
@@ -68,19 +68,16 @@ class ArtistScreen extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.arrow_back_ios,
-                        color: Theme.of(context).textTheme.titleMedium!.color,
-                      ),
-                      onPressed: () {
-                        Get.nestedKey(ScreenNavigationSetup.id)!
-                            .currentState!
-                            .pop();
-                      },
+                  IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: Theme.of(context).textTheme.titleMedium!.color,
                     ),
+                    onPressed: () {
+                      Get.nestedKey(ScreenNavigationSetup.id)!
+                          .currentState!
+                          .pop();
+                    },
                   ),
                   const SizedBox(
                     height: 10,
@@ -165,9 +162,9 @@ class ArtistScreen extends StatelessWidget {
                                                         : Icon(artistScreenController
                                                                 .isAddedToLibrary
                                                                 .isFalse
-                                                            ? Icons.bookmark_add
+                                                            ? Icons.bookmark_add_rounded
                                                             : Icons
-                                                                .bookmark_added),
+                                                                .bookmark_added_rounded),
                                                   ),
                                                 )
                                               ],

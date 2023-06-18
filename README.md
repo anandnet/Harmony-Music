@@ -27,7 +27,7 @@ An app for music streaming made with Flutter(Currently support Android only).
 
 # Disclaimer
 ```
-This project has been created while learning & learing is the main intention.
+This project has been created while learning & learning is the main intention.
 This project is not sponsured or affiliated with, funded, authorized, endorsed by any content provider.
 Any Song, content, trademark used in this app are intellectual property of their respective owners.
 Harmony music is not responsible for any infringement of copyright or other intellectual property rights that may result

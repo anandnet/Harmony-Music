@@ -1,6 +1,5 @@
 import 'package:android_power_manager/android_power_manager.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
@@ -27,7 +26,6 @@ class SettingsScreenController extends GetxController {
         AudioQuality.values[setBox.get('streamingQuality')];
     isIgnoringBatteryOptimizations.value =
         (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
-    printINFO(isIgnoringBatteryOptimizations);
   }
 
   void setStreamingQuality(dynamic val) {

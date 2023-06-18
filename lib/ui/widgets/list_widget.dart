@@ -10,10 +10,14 @@ import 'songinfo_bottom_sheet.dart';
 
 class ListWidget extends StatelessWidget {
   const ListWidget(this.items, this.title, this.isCompleteList,
-      {super.key, this.isPlaylist = false, this.playlist});
+      {super.key,
+      this.isPlaylist = false,
+      this.playlist,
+      this.scrollController});
   final List<dynamic> items;
   final String title;
   final bool isCompleteList;
+  final ScrollController? scrollController;
 
   /// Valid for songlist
   final bool isPlaylist;
@@ -33,19 +37,21 @@ class ListWidget extends StatelessWidget {
     } else if (title == "Videos" || title.contains("Songs")) {
       return isCompleteList
           ? Expanded(
-              child: listViewSongVid(items, isCompleteList,
-                  isPlaylist: isPlaylist, playlist: playlist))
+              child: listViewSongVid(items,
+                  isPlaylist: isPlaylist,
+                  playlist: playlist,
+                  sc: scrollController))
           : SizedBox(
               height: items.length * 75.0,
-              child: listViewSongVid(items, isCompleteList),
+              child: listViewSongVid(items),
             );
     } else if (title.contains("playlists")) {
-      return listViewPlaylists(items);
+      return listViewPlaylists(items, sc: scrollController);
     } else if (title == "Albums" || title == "Singles") {
-      return listViewAlbums(items);
+      return listViewAlbums(items, sc: scrollController);
     } else if (title.contains('Artists')) {
       return isCompleteList
-          ? Expanded(child: listViewArtists(items))
+          ? Expanded(child: listViewArtists(items, sc: scrollController))
           : SizedBox(
               height: items.length * 95.0,
               child: listViewArtists(items),
@@ -54,10 +60,11 @@ class ListWidget extends StatelessWidget {
     return const SizedBox.shrink();
   }
 
-  Widget listViewSongVid(List<dynamic> items, bool isCompleteList,
-      {bool isPlaylist = false, Playlist? playlist}) {
+  Widget listViewSongVid(List<dynamic> items,
+      {bool isPlaylist = false, Playlist? playlist, ScrollController? sc}) {
     final playerController = Get.find<PlayerController>();
     return ListView.builder(
+        controller: sc,
         padding: EdgeInsets.only(
           top: 0,
           bottom: Get.find<PlayerController>().isPlayerpanelTopVisible.isTrue
@@ -112,9 +119,10 @@ class ListWidget extends StatelessWidget {
             ));
   }
 
-  Widget listViewPlaylists(List<dynamic> playlists) {
+  Widget listViewPlaylists(List<dynamic> playlists, {ScrollController? sc}) {
     return Expanded(
       child: ListView.builder(
+          controller: sc,
           padding: EdgeInsets.only(
             top: 0,
             bottom: Get.find<PlayerController>().isPlayerpanelTopVisible.isTrue
@@ -155,9 +163,10 @@ class ListWidget extends StatelessWidget {
     );
   }
 
-  Widget listViewAlbums(List<dynamic> albums) {
+  Widget listViewAlbums(List<dynamic> albums, {ScrollController? sc}) {
     return Expanded(
       child: ListView.builder(
+        controller: sc,
         padding: EdgeInsets.only(
           top: 0,
           bottom: Get.find<PlayerController>().isPlayerpanelTopVisible.isTrue
@@ -206,8 +215,9 @@ class ListWidget extends StatelessWidget {
     );
   }
 
-  Widget listViewArtists(List<dynamic> artists) {
+  Widget listViewArtists(List<dynamic> artists, {ScrollController? sc}) {
     return ListView.builder(
+        controller: sc,
         padding: EdgeInsets.only(
           top: 5,
           bottom: Get.find<PlayerController>().isPlayerpanelTopVisible.isTrue
@@ -216,7 +226,9 @@ class ListWidget extends StatelessWidget {
         ),
         itemCount: artists.length,
         itemExtent: 90,
-        physics: const BouncingScrollPhysics(),
+        physics: isCompleteList
+            ? const BouncingScrollPhysics()
+            : const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) => ListTile(
               visualDensity: const VisualDensity(horizontal: -2, vertical: 2),
               onTap: () {

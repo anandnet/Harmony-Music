@@ -7,6 +7,7 @@ import 'package:harmonymusic/models/playlist.dart';
 import 'package:harmonymusic/ui/screens/artist_screen_controller.dart';
 import 'package:harmonymusic/ui/screens/search_result_screen_controller.dart';
 import 'package:harmonymusic/ui/widgets/content_list_widget.dart';
+import 'package:harmonymusic/ui/widgets/sort_widget.dart';
 
 import 'list_widget.dart';
 
@@ -95,15 +96,23 @@ class SeparateSearchItemWidget extends StatelessWidget {
       required this.title,
       this.isCompleteList = true,
       this.isResultWidget = true,
-      this.topPadding = 0});
+      this.topPadding = 0,
+      this.scrollController});
   final List<dynamic> items;
   final String title;
   final bool isCompleteList;
   final double topPadding;
   final bool isResultWidget;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
+    final artistController = Get.isRegistered<ArtistScreenController>()
+        ? Get.find<ArtistScreenController>()
+        : null;
+    final searchResController = Get.isRegistered<SearchResultScreenController>()
+        ? Get.find<SearchResultScreenController>()
+        : null;
     return Padding(
       padding: EdgeInsets.only(top: topPadding, left: 5),
       child: Column(
@@ -121,7 +130,7 @@ class SeparateSearchItemWidget extends StatelessWidget {
                     ? const SizedBox.shrink()
                     : TextButton(
                         onPressed: () {
-                          Get.find<SearchResultScreenController>()
+                          searchResController!
                               .viewAllCallback(title);
                         },
                         child: Text("View all",
@@ -130,29 +139,54 @@ class SeparateSearchItemWidget extends StatelessWidget {
             ),
           ),
           isCompleteList
-              ? const SizedBox(
-                  height: 20,
-                )
+              ? Obx(() => SortWidget(
+                  titleLeftPadding: 9,
+                  itemCountTitle:
+                      "${isResultWidget ? (searchResController?.separatedResultContent[title] ?? []).length : (artistController?.sepataredContent[title] != null ? artistController?.sepataredContent[title]['results'] : []).length} items",
+                  isDurationOptionRequired:
+                      title == "Songs" || title == "Videos",
+                  isDateOptionRequired: title == 'Albums' || title == "Singles",
+                  onSort: (a, b, c, d) {
+                    isResultWidget
+                        ? searchResController!
+                            .onSort(a, b, c, d, title)
+                        : artistController!
+                            .onSort(a, b, c, d, title);
+                  }))
               : const SizedBox.shrink(),
           isCompleteList
               ? isResultWidget
                   ? GetX<SearchResultScreenController>(builder: (controller) {
                       if (controller.isSeparatedResultContentFetced.isTrue) {
                         return ListWidget(
-                            Get.find<SearchResultScreenController>()
-                                .separatedResultContent[title],
-                            title,
-                            isCompleteList);
+                         controller
+                              .separatedResultContent[title],
+                          title,
+                          isCompleteList,
+                          scrollController: scrollController,
+                        );
                       } else {
-                        return const Expanded(child: Center(child: RefreshProgressIndicator()));
+                        return const Expanded(
+                            child: Center(child: RefreshProgressIndicator()));
                       }
                     })
-                  : (Get.find<ArtistScreenController>()
+                  : (artistController!
                           .isArtistContentFetced
                           .isTrue
-                      ? ListWidget(items, title, isCompleteList)
-                      : const Expanded(child: Center(child: RefreshProgressIndicator())))
-              : ListWidget(items, title, isCompleteList),
+                      ? ListWidget(
+                          items,
+                          title,
+                          isCompleteList,
+                          scrollController: scrollController,
+                        )
+                      : const Expanded(
+                          child: Center(child: RefreshProgressIndicator())))
+              : ListWidget(
+                  items,
+                  title,
+                  isCompleteList,
+                  scrollController: scrollController,
+                ),
         ],
       ),
     );

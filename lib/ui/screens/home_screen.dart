@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
 import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
@@ -12,52 +11,44 @@ import '../widgets/content_list_widget.dart';
 import '../widgets/list_widget.dart';
 import '../widgets/quickpickswidget.dart';
 import '../widgets/shimmer_widgets/home_shimmer.dart';
+import '../widgets/sort_widget.dart';
 import 'home_screen_controller.dart';
 import 'settings_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final PlayerController playerController = Get.find<PlayerController>();
-  final HomeScreenController homeScreenController =
-      Get.find<HomeScreenController>();
   @override
   Widget build(BuildContext context) {
+    final PlayerController playerController = Get.find<PlayerController>();
+    final HomeScreenController homeScreenController =
+        Get.find<HomeScreenController>();
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      floatingActionButton: Visibility(
-          visible: true,
-          child: Obx(
-            () => Padding(
-              padding: EdgeInsets.only(
-                  bottom: playerController.playerPanelMinHeight.value == 0
-                      ? 20
-                      : 75),
-              child: SizedBox(
-                height: 60,
-                width: 60,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                      focusElevation: 0,
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(14))),
-                      elevation: 0,
-                      onPressed: () async {
-                        Get.toNamed(ScreenNavigationSetup.searchScreen,
-                            id: ScreenNavigationSetup.id);
-                        // file:///data/user/0/com.example.harmonymusic/cache/libCachedImageData/
-                        //file:///data/user/0/com.example.harmonymusic/cache/just_audio_cache/
-                      },
-                      child: const Icon(Icons.search)),
-                ),
-              ),
+      floatingActionButton: Obx(
+        () => Padding(
+          padding: EdgeInsets.only(
+              bottom:
+                  playerController.playerPanelMinHeight.value == 0 ? 20 : 75),
+          child: SizedBox(
+            height: 60,
+            width: 60,
+            child: FittedBox(
+              child: FloatingActionButton(
+                  focusElevation: 0,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(14))),
+                  elevation: 0,
+                  onPressed: () async {
+                    Get.toNamed(ScreenNavigationSetup.searchScreen,
+                        id: ScreenNavigationSetup.id);
+                    // file:///data/user/0/com.example.harmonymusic/cache/libCachedImageData/
+                    //file:///data/user/0/com.example.harmonymusic/cache/just_audio_cache/
+                  },
+                  child: const Icon(Icons.search_rounded)),
             ),
-          )),
+          ),
+        ),
+      ),
       body: Row(
         children: <Widget>[
           // create a navigation rail
@@ -80,9 +71,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 //railDestination("Settings")
                 const NavigationRailDestination(
                   padding: EdgeInsets.only(top: 10, bottom: 10),
-                  icon: Icon(Icons.settings),
+                  icon: Icon(Icons.settings_rounded),
                   label: SizedBox.shrink(),
-                  selectedIcon: Icon(Icons.settings),
+                  selectedIcon: Icon(Icons.settings_rounded),
                 )
               ],
             ),
@@ -140,8 +131,7 @@ class Body extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.only(left: 5.0),
         child: SingleChildScrollView(
-          padding:
-              EdgeInsets.only(bottom: 90, top:topPadding ),
+          padding: EdgeInsets.only(bottom: 90, top: topPadding),
           child: homeScreenController.networkError.isTrue
               ? SizedBox(
                   height: MediaQuery.of(context).size.height - 180,
@@ -225,7 +215,18 @@ class Body extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
-            const SizedBox(height: 10),
+            Obx(
+              () => SortWidget(
+                itemCountTitle:
+                    "${Get.find<LibrarySongsController>().cachedSongsList.length} items",
+                titleLeftPadding: 9,
+                isDateOptionRequired: true,
+                isDurationOptionRequired: true,
+                onSort: (p0, p1, p2, p3) {
+                  Get.find<LibrarySongsController>().onSort(p0, p1, p2, p3);
+                },
+              ),
+            ),
             GetX<LibrarySongsController>(builder: (controller) {
               return controller.cachedSongsList.isNotEmpty
                   ? ListWidget(
@@ -285,7 +286,14 @@ class LibraryArtistWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          const SizedBox(height: 10),
+          Obx(
+            () => SortWidget(
+              itemCountTitle: "${cntrller.libraryArtists.length} items",
+              onSort: (sortByName, sortByDate, sortByDuration, isAscending) {
+                cntrller.onSort(sortByName, isAscending);
+              },
+            ),
+          ),
           Obx(() => cntrller.libraryArtists.isNotEmpty
               ? ListWidget(cntrller.libraryArtists, "Library Artists", true)
               : Expanded(
@@ -349,7 +357,18 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 10),
+          Obx(
+            () => SortWidget(
+              itemCountTitle:
+                  "${isAlbumContent ? libralbumCntrller.libraryAlbums.length : librplstCntrller.libraryPlaylists.length} items",
+              isDateOptionRequired: isAlbumContent,
+              onSort: (a, b, c, d) {
+                isAlbumContent
+                    ? libralbumCntrller.onSort(a, b, d)
+                    : librplstCntrller.onSort(a, d);
+              },
+            ),
+          ),
           Expanded(
             child: Obx(
               () => (isAlbumContent

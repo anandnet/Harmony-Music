@@ -29,16 +29,16 @@ class ScreenNavigation extends StatelessWidget {
         onGenerateRoute: (settings) {
           Get.routing.args = settings.arguments;
           if (settings.name == ScreenNavigationSetup.homeScreen) {
-            return GetPageRoute(page: () => const HomeScreen());
+            return GetPageRoute(page: () => const HomeScreen(),settings: settings);
           } else if (settings.name == ScreenNavigationSetup.playlistNAlbumScreen) {
-            return GetPageRoute(page: () => const PlaylistNAlbumScreen());
+            return GetPageRoute(page: () => const PlaylistNAlbumScreen(), settings: settings);
           } else if (settings.name == ScreenNavigationSetup.searchScreen) {
-            return GetPageRoute(page: () => const SearchScreen());
+            return GetPageRoute(page: () => const SearchScreen(), settings: settings);
           } else if (settings.name == ScreenNavigationSetup.searchResultScreen) {
-            return GetPageRoute(page: () => const SearchResultScreen());
+            return GetPageRoute(page: () => const SearchResultScreen(), settings: settings);
           } else if (settings.name ==
               ScreenNavigationSetup.artistScreen) {
-            return GetPageRoute(page: () => const ArtistScreen());
+            return GetPageRoute(page: () => const ArtistScreen(), settings: settings);
           }
           return null;
         });

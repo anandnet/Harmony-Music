@@ -199,7 +199,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     final url = mediaItem.extras!['url'] as String;
     if (url.contains('file') ||
         Get.find<SettingsScreenController>().cacheSongs.isTrue) {
-      printINFO("Play Using LockCaching");
+      printINFO("Playing Using LockCaching");
       isPlayingUsingLockCachingSource = true;
       return LockCachingAudioSource(
         Uri.parse(url),
@@ -208,7 +208,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       );
     }
 
-    printINFO("Play Using AudioSource.uri");
+    printINFO("Playing Using AudioSource.uri");
     isPlayingUsingLockCachingSource = false;
     return AudioSource.uri(
       Uri.tryParse(url)!,
@@ -328,7 +328,10 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       if (!songsCacheBox.containsKey(song.id) &&
           await File("$_cacheDir/cachedSongs/${song.id}.mp3").exists()) {
         song.extras!['url'] = currentSongUrl;
-        songsCacheBox.put(song.id, MediaItemBuilder.toJson(song));
+        song.extras!['date'] = DateTime.now().millisecondsSinceEpoch;
+        final jsonData = MediaItemBuilder.toJson(song);
+        jsonData['duration'] = _player.duration!.inSeconds;
+        songsCacheBox.put(song.id, jsonData);
         if (!librarySongsController.isClosed) {
           librarySongsController.cachedSongsList.value =
               librarySongsController.cachedSongsList.toList() + [song];
@@ -365,7 +368,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       currentIndex = 0;
       cacheNextSongUrl();
     } else if (name == "reorderQueue") {
-      printINFO("Reorder queue");
       final oldIndex = extras!['oldIndex'];
       int newIndex = extras['newIndex'];
 
@@ -382,6 +384,11 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       currentIndex = currentQueue.indexOf(currentItem);
       queue.add(currentQueue);
       mediaItem.add(currentItem);
+    } else if (name == 'addPlayNextItem') {
+      final song = extras!['mediaItem'] as MediaItem;
+      final currentQueue = queue.value;
+      currentQueue.insert(currentIndex+1, song);
+      queue.add(currentQueue);
     }
   }
 

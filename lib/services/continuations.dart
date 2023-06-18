@@ -3,21 +3,23 @@ import 'dart:math';
 import 'nav_parser.dart';
 
 Future<List<dynamic>> getContinuations(
-    Map<String, dynamic> results,
+    dynamic results,
     String continuationType,
     int limit,
     Future<dynamic> Function(String additionalParams) requestFunc,
     dynamic Function(Map<String, dynamic> continuationContents) parseFunc,
     {String ctokenPath = "",
-    bool reloadable = false}) async {
-
+    bool reloadable = false,
+    String? additionalParams_,
+    bool isAdditionparamReturnReq = false}) async {
   List<dynamic> items = [];
 
-  while (results.containsKey('continuations') && (limit == 0 || items.length < limit)) {
-
-    String additionalParams = reloadable
-        ? getReloadableContinuationParams(results)
-        : getContinuationParams(results, ctokenPath:ctokenPath);
+  while ((additionalParams_ != null || results.containsKey('continuations')) &&
+      (limit > 0 && items.length < limit)) {
+    String additionalParams = additionalParams_ ??
+        (reloadable
+            ? getReloadableContinuationParams(results)
+            : getContinuationParams(results, ctokenPath: ctokenPath));
     //print(additionalParams);
 
     Map<String, dynamic> response = await requestFunc(additionalParams);
@@ -35,7 +37,14 @@ Future<List<dynamic>> getContinuations(
     }
     items.addAll(contents);
   }
-  return items;
+  if (isAdditionparamReturnReq) {
+    String additionalParam = (reloadable
+        ? getReloadableContinuationParams(results)
+        : getContinuationParams(results, ctokenPath: ctokenPath));
+    return [items,additionalParam];
+  } else {
+    return items;
+  }
 }
 
 Future<List<dynamic>> getValidatedContinuations(
@@ -43,19 +52,17 @@ Future<List<dynamic>> getValidatedContinuations(
     String continuationType,
     int limit,
     int perPage,
-    Future<dynamic> Function(dynamic additionalParams)
-        requestFunc,
+    Future<dynamic> Function(dynamic additionalParams) requestFunc,
     List<dynamic> Function(Map<String, dynamic> continuationContents) parseFunc,
     {String ctokenPath = ""}) async {
-
-      
-
   List<dynamic> items = [];
 
   while (results.containsKey('continuations') && items.length < limit) {
-    String additionalParams = getContinuationParams(results, ctokenPath:ctokenPath);
-   
-    Map<String, dynamic> response = await resendRequestUntilParsedResponseIsValid(
+    String additionalParams =
+        getContinuationParams(results, ctokenPath: ctokenPath);
+
+    Map<String, dynamic> response =
+        await resendRequestUntilParsedResponseIsValid(
             requestFunc,
             additionalParams,
             (response) => getParsedContinuationItems(
@@ -81,7 +88,8 @@ Map<String, dynamic> getParsedContinuationItems(
   };
 }
 
-String getContinuationParams(Map<String, dynamic> results,{String ctokenPath = ''}) {
+String getContinuationParams(dynamic results,
+    {String ctokenPath = ''}) {
   final ctoken = nav(results, [
     'continuations',
     0,
@@ -91,8 +99,7 @@ String getContinuationParams(Map<String, dynamic> results,{String ctokenPath = '
   return getContinuationString(ctoken);
 }
 
-String getReloadableContinuationParams(
-    Map<String, dynamic> results) {
+String getReloadableContinuationParams(dynamic results) {
   final ctoken = nav(
       results, ['continuations', 0, 'reloadContinuationData', 'continuation']);
   return getContinuationString(ctoken);

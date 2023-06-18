@@ -37,7 +37,7 @@ class Player extends StatelessWidget {
                     child: Center(
                         child: Icon(
                       color: Theme.of(context).textTheme.titleMedium!.color,
-                      Icons.keyboard_arrow_up,
+                      Icons.keyboard_arrow_up_rounded,
                       size: 40,
                     )),
                   ),
@@ -148,7 +148,7 @@ class Player extends StatelessWidget {
                                                         .value ==
                                                     index
                                                 ? const Icon(
-                                                    Icons.equalizer,
+                                                    Icons.equalizer_rounded,
                                                     color: Colors.white,
                                                   )
                                                 : Text(
@@ -307,8 +307,8 @@ class Player extends StatelessWidget {
                             onPressed: playerController.toggleFavourite,
                             icon: Obx(() => Icon(
                                   playerController.isCurrentSongFav.isFalse
-                                      ? Icons.favorite_border
-                                      : Icons.favorite,
+                                      ? Icons.favorite_border_rounded
+                                      : Icons.favorite_rounded,
                                   color: Theme.of(context)
                                       .textTheme
                                       .titleMedium!

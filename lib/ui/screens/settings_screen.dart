@@ -14,7 +14,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final settingsController = Get.find<SettingsScreenController>();
     return Padding(
-      padding: const EdgeInsets.only(top: 90.0,left: 5),
+      padding: const EdgeInsets.only(top: 90.0, left: 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -27,11 +27,11 @@ class SettingsScreen extends StatelessWidget {
           ),
           Expanded(
               child: ListView(
-                physics: const BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.only(bottom: 90),
             children: [
               ListTile(
-                contentPadding: const EdgeInsets.only(left:5,right:10),
+                contentPadding: const EdgeInsets.only(left: 5, right: 10),
                 title: const Text("Theme mode"),
                 subtitle: Obx(
                   () => Text(
@@ -53,7 +53,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               ListTile(
-                contentPadding: const EdgeInsets.only(left:5,right:10),
+                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
                   title: const Text("Cache songs"),
                   subtitle: Text(
                       "Caching songs while playing for future/offline playback, it will take additional space on your device",
@@ -64,7 +64,7 @@ class SettingsScreen extends StatelessWidget {
                         onChanged: settingsController.toggleCachingSongsValue),
                   )),
               ListTile(
-                contentPadding: const EdgeInsets.only(left:5,right:10),
+                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
                   title: const Text("Skip Silence"),
                   subtitle: Text("Silence will be skipped in music playback.",
                       style: Theme.of(context).textTheme.bodyMedium),
@@ -74,7 +74,7 @@ class SettingsScreen extends StatelessWidget {
                         onChanged: settingsController.toggleSkipSilence),
                   )),
               ListTile(
-                contentPadding: const EdgeInsets.only(left:5,right:10),
+                contentPadding: const EdgeInsets.only(left: 5, right: 10),
                 title: const Text("Streaming Quality"),
                 subtitle: Text("Quality of music stream",
                     style: Theme.of(context).textTheme.bodyMedium),
@@ -95,34 +95,37 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              ListTile(
-                contentPadding: const EdgeInsets.only(left:5,right:10),
-                title: const Text("Ignore battery optimization"),
-                onTap: settingsController.isIgnoringBatteryOptimizations.isFalse
-                    ? settingsController.enableIgnoringBatteryOptimizations
-                    : null,
-                subtitle: Obx(() => RichText(
-                      text: TextSpan(
-                        text:
-                            "Status: ${settingsController.isIgnoringBatteryOptimizations.isTrue ? "Enabled" : "Disblaled"}\n",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(fontWeight: FontWeight.bold),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text:
-                                  "If you are facing notification issues or playback stopped by system optimization, please enable this option",
-                              style: Theme.of(context).textTheme.bodyMedium),
-                        ],
-                      ),
-                    )),
+              Obx(
+                () => ListTile(
+                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                  title: const Text("Ignore battery optimization"),
+                  onTap: settingsController
+                          .isIgnoringBatteryOptimizations.isFalse
+                      ? settingsController.enableIgnoringBatteryOptimizations
+                      : null,
+                  subtitle: Obx(() => RichText(
+                        text: TextSpan(
+                          text:
+                              "Status: ${settingsController.isIgnoringBatteryOptimizations.isTrue ? "Enabled" : "Disblaled"}\n",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text:
+                                    "If you are facing notification issues or playback stopped by system optimization, please enable this option",
+                                style: Theme.of(context).textTheme.bodyMedium),
+                          ],
+                        ),
+                      )),
+                ),
               ),
               ListTile(
-                contentPadding: const EdgeInsets.only(left:5,right:10),
+                contentPadding: const EdgeInsets.only(left: 5, right: 10),
                 title: const Text("Github"),
                 subtitle: Text(
-                  "View Github source code \nif you like this project, don't forget to give a ⭐${((Get.find<PlayerController>().playerPanelMinHeight.value) == 0) ? "" : "\n\nV 1.0.1 by anandnet"}",
+                  "View Github source code \nif you like this project, don't forget to give a ⭐${((Get.find<PlayerController>().playerPanelMinHeight.value) == 0) ? "" : "\n\nV 1.1.0 by anandnet"}",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 isThreeLine: true,
@@ -140,7 +143,7 @@ class SettingsScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 20.0),
             child: Text(
-              "V 1.0.1 by anandnet",
+              "V 1.1.0 by anandnet",
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),

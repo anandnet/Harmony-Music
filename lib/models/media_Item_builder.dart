@@ -9,20 +9,40 @@ class MediaItemBuilder {
     for (dynamic artist in json['artists']) {
       artistName += "${artist['name']} • ";
     }
+    
     return MediaItem(
         id: json["videoId"],
         title: json["title"],
+        duration:json['duration']!=null?Duration(seconds:json['duration']):toDuration(json['length'] ),
         album: json['album']!=null ? json['album']['name']:null ,
         artist: artistName==""?artistName: artistName.substring(0,artistName.length-2),
         artUri: Uri.parse(Thumbnail(json["thumbnails"][0]['url']).high),
         extras: {
           'url': json['url'] ?? url,
-          'length': json['length']?? json['duration'],
+          'length': json['length'],
           'album': json['album'],
           'artists': json['artists'],
-          'duration_seconds':json['duration_seconds']
+          'date':json['date']
         });
   }
+
+static Duration? toDuration(String? time){
+
+    if(time == null){
+      return null;
+    }
+
+    int sec = 0;
+    final splitted = time.split(":");
+    if(splitted.length==3){
+      sec += int.parse(splitted[0])*3600 + int.parse(splitted[1])*60+int.parse(splitted[2]);
+    }else if(splitted.length ==2){
+      sec += int.parse(splitted[0])*60+int.parse(splitted[1]);
+    }else if(splitted.length ==1){
+      sec+=int.parse(splitted[0]);
+    }
+    return Duration(seconds: sec);
+ }
 
   static Map<String, dynamic> toJson(MediaItem mediaItem) => {
         "videoId": mediaItem.id,
@@ -30,6 +50,8 @@ class MediaItemBuilder {
         'album': mediaItem.extras!['album'],
         'artists': mediaItem.extras!['artists'],
         'length': mediaItem.extras!['length'],
+        'duration': mediaItem.duration!=null? mediaItem.duration!.inSeconds:null,
+        'date':mediaItem.extras!['date'],
         'thumbnails': [
           {'url': mediaItem.artUri.toString()}
         ],

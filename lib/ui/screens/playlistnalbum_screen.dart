@@ -6,6 +6,7 @@ import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
 import 'package:harmonymusic/ui/widgets/list_widget.dart';
 import 'package:harmonymusic/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
 import 'package:harmonymusic/ui/widgets/snackbar.dart';
+import 'package:harmonymusic/ui/widgets/sort_widget.dart';
 
 import '../../models/playlist.dart';
 import '../player/player_controller.dart';
@@ -40,19 +41,16 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                 const SizedBox(
                   height: 40,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: Theme.of(context).textTheme.titleMedium!.color,
-                    ),
-                    onPressed: () {
-                      Get.nestedKey(ScreenNavigationSetup.id)!
-                          .currentState!
-                          .pop();
-                    },
+                IconButton(
+                  icon: Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    color: Theme.of(context).textTheme.titleMedium!.color,
                   ),
+                  onPressed: () {
+                    Get.nestedKey(ScreenNavigationSetup.id)!
+                        .currentState!
+                        .pop();
+                  },
                 ),
                 const SizedBox(
                   height: 10,
@@ -112,7 +110,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                         child: Column(
                                           children: [
                                             ListTile(
-                                              leading: const Icon(Icons.edit),
+                                              leading: const Icon(Icons.edit_rounded),
                                               title:
                                                   const Text("Rename playlist"),
                                               onTap: () {
@@ -149,7 +147,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                             value
                                                                 ? "Playlist removed!"
                                                                 : "Operation failed",
-                                                           size: SanckBarSize
+                                                            size: SanckBarSize
                                                                 .MEDIUM)));
                                               },
                                             )
@@ -158,7 +156,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                       ),
                                     );
                                   },
-                                  icon: const Icon(Icons.more_vert))
+                                  icon: const Icon(Icons.more_vert_rounded))
                               : const SizedBox.shrink()
                         ],
                       ),
@@ -211,7 +209,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                                       ? "Album bookmark removed!"
                                                                       : "Playlist bookmark removed!"
                                                               : "Operation failed",
-                                                         size: SanckBarSize
+                                                          size: SanckBarSize
                                                               .MEDIUM)));
                                             },
                                             child: Container(
@@ -230,8 +228,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                   playListNAlbumScreenController
                                                           .isAddedToLibrary
                                                           .isFalse
-                                                      ? Icons.bookmark_add
-                                                      : Icons.bookmark_added)),
+                                                      ? Icons.bookmark_add_rounded
+                                                      : Icons.bookmark_added_rounded)),
                                             )),
                                       ),
                                       Padding(
@@ -279,21 +277,37 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                   )),
                             ),
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: (playListNAlbumScreenController
-                                        .isAlbum.isFalse &&
-                                    !content.isCloudPlaylist)
-                                ? 0
-                                : 10.0),
-                        child: Text(
-                          playListNAlbumScreenController.isAlbum.isTrue
-                              ? playListNAlbumScreenController
-                                      .contentRenderer.artists[0]['name'] ??
-                                  ""
-                              : content.description ?? "",
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ),
+                          padding: EdgeInsets.only(
+                              top: (playListNAlbumScreenController
+                                          .isAlbum.isFalse &&
+                                      !content.isCloudPlaylist)
+                                  ? 0
+                                  : 10.0),
+                          child: (playListNAlbumScreenController
+                                      .isAlbum.isTrue ||
+                                  (playListNAlbumScreenController
+                                          .isAlbum.isFalse &&
+                                      content.isCloudPlaylist))
+                              ? Text(
+                                  playListNAlbumScreenController.isAlbum.isTrue
+                                      ? playListNAlbumScreenController
+                                              .contentRenderer
+                                              .artists[0]['name'] ??
+                                          ""
+                                      : content.description ?? "",
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                )
+                              : Obx(
+                                  () => SortWidget(
+                                      itemCountTitle:
+                                          "${playListNAlbumScreenController.songList.length} songs",
+                                      titleLeftPadding: 9,
+                                      isDurationOptionRequired: true,
+                                      onSort: (a, b, c, d) {
+                                        playListNAlbumScreenController.onSort(
+                                            a, c, d);
+                                      }),
+                                )),
                       (playListNAlbumScreenController.isAlbum.isFalse &&
                               !content.isCloudPlaylist)
                           ? const SizedBox.shrink()
@@ -301,11 +315,16 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                       (playListNAlbumScreenController.isAlbum.isFalse &&
                               !content.isCloudPlaylist)
                           ? const SizedBox.shrink()
-                          : Padding(
-                              padding: const EdgeInsets.only(bottom: 10.0),
-                              child: Text(
-                                "Songs",
-                                style: Theme.of(context).textTheme.titleMedium,
+                          : Obx(
+                              () => SortWidget(
+                                itemCountTitle:
+                                    "${playListNAlbumScreenController.songList.length} songs",
+                                titleLeftPadding: 9,
+                                isDurationOptionRequired: true,
+                                onSort: (a,b,c,d) {
+                                  playListNAlbumScreenController.onSort(
+                                      a, c, d);
+                                },
                               ),
                             ),
                       Obx(() => playListNAlbumScreenController

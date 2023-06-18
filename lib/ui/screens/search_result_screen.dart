@@ -15,33 +15,33 @@ class SearchResultScreen extends StatelessWidget {
       body: Row(
         children: [
           SingleChildScrollView(
-            child:Obx(() =>ConstrainedBox(
-              constraints: BoxConstraints(
-                  minHeight: searchResScrController.railitemHeight.value),
-              child: IntrinsicHeight(
-                child: Obx(
-                  () => NavigationRail(
-                    onDestinationSelected:
-                        searchResScrController.onDestinationSelected,
-                    minWidth: 60,
-                    destinations: searchResScrController
-                            .isResultContentFetced.value
-                        ? [
-                            railDestination("Results"),
-                            ...(searchResScrController.railItems
-                                .map((element) => railDestination(element))),
-                          ]
-                        : [railDestination("Results"), railDestination("")],
-                    leading: Column(
-                      children: [
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: IconButton(
+            child: Obx(
+              () => ConstrainedBox(
+                constraints: BoxConstraints(
+                    minHeight: searchResScrController.railitemHeight.value),
+                child: IntrinsicHeight(
+                  child: Obx(
+                    () => NavigationRail(
+                      onDestinationSelected:
+                          searchResScrController.onDestinationSelected,
+                      minWidth: 60,
+                      destinations: (searchResScrController
+                                  .isResultContentFetced.value &&
+                              searchResScrController.railItems.isNotEmpty)
+                          ? [
+                              railDestination("Results"),
+                              ...(searchResScrController.railItems
+                                  .map((element) => railDestination(element))),
+                            ]
+                          : [railDestination("Results"), railDestination("")],
+                      leading: Column(
+                        children: [
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          IconButton(
                             icon: Icon(
-                              Icons.arrow_back_ios,
+                              Icons.arrow_back_ios_new_rounded,
                               color: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
@@ -53,30 +53,44 @@ class SearchResultScreen extends StatelessWidget {
                                   .pop();
                             },
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                      labelType: NavigationRailLabelType.all,
+                      selectedIndex: searchResScrController
+                          .navigationRailCurrentIndex.value,
                     ),
-                    labelType: NavigationRailLabelType.all,
-                    selectedIndex:
-                        searchResScrController.navigationRailCurrentIndex.value,
                   ),
                 ),
               ),
-            ),),
+            ),
           ),
           Expanded(
             child: Obx(
               () {
                 if (searchResScrController.navigationRailCurrentIndex.value ==
                     0) {
-                      if(searchResScrController.isResultContentFetced.isTrue){
-                  return const ResultWidget();
-                      }else{
-                        return const Center(child: RefreshProgressIndicator(),);
-                      }
+                  if (searchResScrController.isResultContentFetced.isTrue &&
+                      searchResScrController.railItems.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("No Match found for",style: Theme.of(context).textTheme.titleMedium,),
+                          Text("'${searchResScrController.queryString.value}'"),
+                        ],
+                      ),
+                    );
+                  } else if (searchResScrController
+                      .isResultContentFetced.isTrue) {
+                    return const ResultWidget();
+                  } else {
+                    return const Center(
+                      child: RefreshProgressIndicator(),
+                    );
+                  }
                 }
                 if (searchResScrController.isResultContentFetced.isTrue) {
                   final name = searchResScrController.railItems[
@@ -92,6 +106,8 @@ class SearchResultScreen extends StatelessWidget {
                           title: name,
                           isCompleteList: true,
                           topPadding: 75,
+                          scrollController:
+                              searchResScrController.scrollControllers[name],
                         );
                       }
                     case "Featured playlists":
@@ -101,6 +117,8 @@ class SearchResultScreen extends StatelessWidget {
                           title: name,
                           items: const [],
                           topPadding: 75,
+                          scrollController:
+                              searchResScrController.scrollControllers[name],
                         );
                       }
                     case "Albums":
@@ -109,6 +127,8 @@ class SearchResultScreen extends StatelessWidget {
                           title: name,
                           items: const [],
                           topPadding: 75,
+                          scrollController:
+                              searchResScrController.scrollControllers[name],
                         );
                       }
                     case "Artists":
@@ -117,6 +137,8 @@ class SearchResultScreen extends StatelessWidget {
                           title: name,
                           items: const [],
                           topPadding: 75,
+                          scrollController:
+                              searchResScrController.scrollControllers[name],
                         );
                       }
                   }

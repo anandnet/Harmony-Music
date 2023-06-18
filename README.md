@@ -6,6 +6,8 @@ An app for music streaming made with Flutter(Currently support Android only).
 # Features
 * Ability to play song from Ytube/Ytube Music.
 * Song cache while playing
+* Radio feature support
+* Background music
 * Playlist creation & bookmark support
 * Artist & Album bookmark support
 * Streaming quality control
@@ -19,9 +21,6 @@ An app for music streaming made with Flutter(Currently support Android only).
 <a href="https://github.com/anandnet/Harmony-Music/releases/latest"><img src ="https://github.com/anandnet/Harmony-Music/blob/main/don_github.png" width = "300"></a>
 
 # To Do
-* Radio feature
-* list countinuation
-* list sorting
 * Backup & Restore
 * Lyrics support
 * Equalizer support

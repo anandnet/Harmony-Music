@@ -95,7 +95,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Obx(
+              GetPlatform.isAndroid? Obx(
                 () => ListTile(
                   contentPadding: const EdgeInsets.only(left: 5, right: 10),
                   title: const Text("Ignore battery optimization"),
@@ -120,7 +120,7 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       )),
                 ),
-              ),
+              ):const SizedBox.shrink(),
               ListTile(
                 contentPadding: const EdgeInsets.only(left: 5, right: 10),
                 title: const Text("Github"),

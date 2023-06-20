@@ -24,8 +24,10 @@ class SettingsScreenController extends GetxController {
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
-    isIgnoringBatteryOptimizations.value =
-        (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
+    if (GetPlatform.isAndroid) {
+      isIgnoringBatteryOptimizations.value =
+          (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
+    }
   }
 
   void setStreamingQuality(dynamic val) {
@@ -52,6 +54,7 @@ class SettingsScreenController extends GetxController {
 
   Future<void> enableIgnoringBatteryOptimizations() async {
     await AndroidPowerManager.requestIgnoreBatteryOptimizations();
-    isIgnoringBatteryOptimizations.value = (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
+    isIgnoringBatteryOptimizations.value =
+        (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
   }
 }

@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  media_kit_libs_windows_audio
   share_plus
   url_launcher_windows
 )

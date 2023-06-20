@@ -52,7 +52,8 @@ dependencies:
   url_launcher: ^6.1.11
   share_plus: ^7.0.1
   android_power_manager: ^1.0.0
-
+  just_audio_libwinmedia:
+    git: "https://github.com/anandnet/just_audio_libwinmedia.git"
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
+import 'package:get/get_utils/get_utils.dart';
 import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/services/utils.dart';
 import 'package:hive/hive.dart';
@@ -398,7 +399,7 @@ class MusicServices extends getx.GetxService {
             .url
             .toString(),
         streamUriList
-            .firstWhere((element) => element.tag == 251 || element.tag == 140)
+            .firstWhere((element) => GetPlatform.isWindows ? (element.tag == 140):(element.tag == 251) || element.tag == 140)
             .url
             .toString()
       ];

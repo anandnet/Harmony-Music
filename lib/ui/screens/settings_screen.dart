@@ -57,7 +57,7 @@ class SettingsScreen extends StatelessWidget {
                 title: const Text("Set Discover content"),
                 subtitle: Obx(() => Text(
                     settingsController.discoverContentType.value == "QP"
-                        ? "Quick Pics"
+                        ? "Quick Picks"
                         : settingsController.discoverContentType.value == "TMV"
                             ? "Top Music Videos"
                             : settingsController.discoverContentType.value ==
@@ -256,7 +256,7 @@ class DiscoverContentSelectorDialog extends StatelessWidget {
             ),
           ),
           radioWidget(
-              label: "Quick Pics", controller: settingsController, value: "QP"),
+              label: "Quick Picks", controller: settingsController, value: "QP"),
           radioWidget(
               label: "Top Music Videos",
               controller: settingsController,

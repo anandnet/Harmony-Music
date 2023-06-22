@@ -75,7 +75,7 @@ class LibraryPlaylistsController extends GetxController {
         thumbnailUrl: "",
         isCloudPlaylist: false),
     Playlist(
-        title: "Favourite",
+        title: "Favorites",
         playlistId: "LIBFAV",
         thumbnailUrl: "",
         isCloudPlaylist: false),

@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
-import 'package:get/get_utils/get_utils.dart';
 import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/services/utils.dart';
 import 'package:hive/hive.dart';

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/media_Item_builder.dart';
+import 'package:harmonymusic/ui/screens/home_screen_controller.dart';
 import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:audio_service/audio_service.dart';
@@ -187,6 +188,11 @@ class PlayerController extends GetxController {
       if (playlistid != null) {
         _playerPanelCheck();
         await _audioHandler.customAction("playByIndex", {"index": 0});
+      } else {
+        if (Hive.box("AppPrefs").get("discoverContentType") == "BOLI") {
+          Get.find<HomeScreenController>()
+              .changeDiscoverContent("BOLI", songId: mediaItem!.id);
+        }
       }
     });
 
@@ -205,6 +211,15 @@ class PlayerController extends GetxController {
     //open player pane,set current song and push first song into playing list,
     final init = _initFlagForPlayer;
     currentSong.value = mediaItems[index];
+
+    //for changing home content based on last interation
+    Future.delayed(const Duration(seconds: 3), () {
+      if (Hive.box("AppPrefs").get("discoverContentType") == "BOLI") {
+        Get.find<HomeScreenController>()
+            .changeDiscoverContent("BOLI", songId: mediaItems[index].id);
+      }
+    });
+
     _playerPanelCheck();
     !init
         ? await _audioHandler.updateQueue(mediaItems)

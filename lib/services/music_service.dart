@@ -155,13 +155,31 @@ class MusicServices extends getx.GetxService {
     return home;
   }
 
+  Future<List<Map<String, dynamic>>> getCharts({String? countryCode}) async {
+    final List<Map<String,dynamic>> charts = [];
+    final data = Map.from(_context);
+
+    data['browseId'] = 'FEmusic_charts';
+    if(countryCode!=null){
+      data['formData']= {'selectedValues': [countryCode]};
+    }
+    final response = (await _sendRequest('browse', data)).data;
+    final results = nav(response,single_column_tab+section_list);
+    results.removeAt(0);
+    for(dynamic result in results){
+      charts.add(parseChartsItem(result));
+    }
+          
+  return charts;
+  }
+
   Future<Map<String, dynamic>> getWatchPlaylist(
       {String videoId = "",
       String? playlistId,
       int limit = 25,
       bool radio = false,
       bool shuffle = false,
-      String? additionalParamsNext}) async {
+      String? additionalParamsNext,bool onlyRelated = false}) async {
     final data = Map.from(_context);
     data['enablePersistentPlaylistPanel'] = true;
     data['isAudioOnly'] = true;
@@ -210,6 +228,12 @@ class MusicServices extends getx.GetxService {
 
       lyricsBrowseId = getTabBrowseId(watchNextRenderer, 1);
       relatedBrowseId = getTabBrowseId(watchNextRenderer, 2);
+      if(onlyRelated){
+       return {
+          'lyrics': lyricsBrowseId,
+          'related': relatedBrowseId,
+        };
+      }
 
       results.addAll(nav(watchNextRenderer, [
         ...tab_content,
@@ -249,6 +273,17 @@ class MusicServices extends getx.GetxService {
       'additionalParamsForNext': additionalParamsForNext
     };
   }
+
+  dynamic getContentRelatedToSong(String videoId) async {
+    final params = await getWatchPlaylist(videoId: videoId,onlyRelated: true);
+    final data = Map.from(_context);
+    data['browseId'] = params['related'];
+    final response = (await _sendRequest('browse', data)).data;
+    final sections = nav(response, ['contents'] + section_list);
+    final x= parseMixedContent(sections);
+    return x;
+  }
+
 
   Future<Map<String, dynamic>> getPlaylistOrAlbumSongs(
       {String? playlistId,
@@ -399,7 +434,7 @@ class MusicServices extends getx.GetxService {
             .url
             .toString(),
         streamUriList
-            .firstWhere((element) => GetPlatform.isWindows ? (element.tag == 140):(element.tag == 251) || element.tag == 140)
+            .firstWhere((element) => (element.tag == 251) || element.tag == 140)
             .url
             .toString()
       ];

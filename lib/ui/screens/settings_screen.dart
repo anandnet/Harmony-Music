@@ -53,6 +53,24 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               ListTile(
+                contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                title: const Text("Set Discover content"),
+                subtitle: Obx(() => Text(
+                    settingsController.discoverContentType.value == "QP"
+                        ? "Quick Pics"
+                        : settingsController.discoverContentType.value == "TMV"
+                            ? "Top Music Videos"
+                            : settingsController.discoverContentType.value ==
+                                    "TR"
+                                ? "Trending"
+                                : "Based on last interaction",
+                    style: Theme.of(context).textTheme.bodyMedium)),
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => const DiscoverContentSelectorDialog(),
+                ),
+              ),
+              ListTile(
                   contentPadding: const EdgeInsets.only(left: 5, right: 10),
                   title: const Text("Cache songs"),
                   subtitle: Text(
@@ -95,32 +113,38 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              GetPlatform.isAndroid? Obx(
-                () => ListTile(
-                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                  title: const Text("Ignore battery optimization"),
-                  onTap: settingsController
-                          .isIgnoringBatteryOptimizations.isFalse
-                      ? settingsController.enableIgnoringBatteryOptimizations
-                      : null,
-                  subtitle: Obx(() => RichText(
-                        text: TextSpan(
-                          text:
-                              "Status: ${settingsController.isIgnoringBatteryOptimizations.isTrue ? "Enabled" : "Disblaled"}\n",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            TextSpan(
+              GetPlatform.isAndroid
+                  ? Obx(
+                      () => ListTile(
+                        contentPadding:
+                            const EdgeInsets.only(left: 5, right: 10),
+                        title: const Text("Ignore battery optimization"),
+                        onTap: settingsController
+                                .isIgnoringBatteryOptimizations.isFalse
+                            ? settingsController
+                                .enableIgnoringBatteryOptimizations
+                            : null,
+                        subtitle: Obx(() => RichText(
+                              text: TextSpan(
                                 text:
-                                    "If you are facing notification issues or playback stopped by system optimization, please enable this option",
-                                style: Theme.of(context).textTheme.bodyMedium),
-                          ],
-                        ),
-                      )),
-                ),
-              ):const SizedBox.shrink(),
+                                    "Status: ${settingsController.isIgnoringBatteryOptimizations.isTrue ? "Enabled" : "Disblaled"}\n",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text:
+                                          "If you are facing notification issues or playback stopped by system optimization, please enable this option",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium),
+                                ],
+                              ),
+                            )),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
               ListTile(
                 contentPadding: const EdgeInsets.only(left: 5, right: 10),
                 title: const Text("Github"),
@@ -177,9 +201,10 @@ class ThemeSelectorDialog extends StatelessWidget {
             ),
           ),
           radioWidget(
-              label: "Dynamic",
-              controller: settingsController,
-              value: ThemeType.dynamic),
+            label: "Dynamic",
+            controller: settingsController,
+            value: ThemeType.dynamic,
+          ),
           radioWidget(
               label: "System default",
               controller: settingsController,
@@ -205,21 +230,80 @@ class ThemeSelectorDialog extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget radioWidget(
-      {required String label,
-      required SettingsScreenController controller,
-      required value}) {
-    return Obx(() => ListTile(
-          visualDensity: const VisualDensity(vertical: -4),
-          onTap: () {
-            controller.onThemeChange(value);
-          },
-          leading: Radio(
-              value: value,
-              groupValue: controller.themeModetype.value,
-              onChanged: controller.onThemeChange),
-          title: Text(label),
-        ));
+class DiscoverContentSelectorDialog extends StatelessWidget {
+  const DiscoverContentSelectorDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final settingsController = Get.find<SettingsScreenController>();
+    return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Container(
+        height: 280,
+        //color: Theme.of(context).cardColor,
+        padding: const EdgeInsets.only(top: 30, left: 5, right: 30, bottom: 10),
+        child: Column(children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, bottom: 5),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Set Discover content",
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
+          ),
+          radioWidget(
+              label: "Quick Pics", controller: settingsController, value: "QP"),
+          radioWidget(
+              label: "Top Music Videos",
+              controller: settingsController,
+              value: "TMV"),
+          radioWidget(
+              label: "Trending", controller: settingsController, value: "TR"),
+          radioWidget(
+              label: "Based on last interaction",
+              controller: settingsController,
+              value: "BOLI"),
+          Align(
+              alignment: Alignment.centerRight,
+              child: InkWell(
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("Cancel"),
+                ),
+                onTap: () => Navigator.of(context).pop(),
+              ))
+        ]),
+      ),
+    );
   }
+}
+
+Widget radioWidget(
+    {required String label,
+    required SettingsScreenController controller,
+    required value}) {
+  return Obx(() => ListTile(
+        visualDensity: const VisualDensity(vertical: -4),
+        onTap: () {
+          if (value.runtimeType == ThemeType) {
+            controller.onThemeChange(value);
+          } else {
+            controller.onContentChange(value);
+            Navigator.of(Get.context!).pop();
+          }
+        },
+        leading: Radio(
+            value: value,
+            groupValue: value.runtimeType == ThemeType
+                ? controller.themeModetype.value
+                : controller.discoverContentType.value,
+            onChanged: value.runtimeType == ThemeType
+                ? controller.onThemeChange
+                : controller.onContentChange),
+        title: Text(label),
+      ));
 }

@@ -79,7 +79,8 @@ void _setAppInitPrefs() {
       "cacheSongs": false,
       "skipSilenceEnabled": false,
       'streamingQuality': 1,
-      'themePrimaryColor': 4278199603
+      'themePrimaryColor': 4278199603,
+      'discoverContentType': "QP",
     });
   }
 }

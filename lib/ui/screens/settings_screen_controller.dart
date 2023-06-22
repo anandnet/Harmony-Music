@@ -2,6 +2,7 @@ import 'package:android_power_manager/android_power_manager.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/screens/home_screen_controller.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -12,6 +13,7 @@ class SettingsScreenController extends GetxController {
   final skipSilenceEnabled = false.obs;
   final streamingQuality = AudioQuality.High.obs;
   final isIgnoringBatteryOptimizations = false.obs;
+  final discoverContentType = "QP".obs;
   @override
   void onInit() {
     _setInitValue();
@@ -24,6 +26,7 @@ class SettingsScreenController extends GetxController {
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
+    discoverContentType.value = setBox.get('discoverContentType');
     if (GetPlatform.isAndroid) {
       isIgnoringBatteryOptimizations.value =
           (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
@@ -39,6 +42,12 @@ class SettingsScreenController extends GetxController {
     setBox.put('themeModeType', ThemeType.values.indexOf(val));
     themeModetype.value = val;
     Get.find<ThemeController>().changeThemeModeType(val);
+  }
+
+  void onContentChange(dynamic value){
+    setBox.put('discoverContentType', value);
+    discoverContentType.value = value;
+    Get.find<HomeScreenController>().changeDiscoverContent(value);
   }
 
   void toggleCachingSongsValue(bool value) {

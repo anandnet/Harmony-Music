@@ -22,7 +22,7 @@ class QuickPicksWidget extends StatelessWidget {
           Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Discover",
+                content.title,
                 style: Theme.of(context).textTheme.titleLarge,
               )),
           const SizedBox(height: 10),

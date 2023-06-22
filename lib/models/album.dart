@@ -4,16 +4,6 @@ class AlbumContent {
   AlbumContent({required this.title, required this.albumList});
   final String title;
   final List<Album> albumList;
-  factory AlbumContent.fromJson(Map<dynamic, dynamic> json) => AlbumContent(
-      title: json["title"],
-      albumList: (json["contents"])
-          .map<Album?>((item) {
-            if (item.containsKey('browseId') && !item.containsKey('videoId')) {
-              return Album.fromJson(item);
-            }
-          })
-          .whereType<Album>()
-          .toList());
 }
 
 class Album {

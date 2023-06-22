@@ -130,76 +130,79 @@ class Body extends StatelessWidget {
     if (homeScreenController.tabIndex.value == 0) {
       return Padding(
         padding: const EdgeInsets.only(left: 5.0),
-        child: SingleChildScrollView(
-          padding: EdgeInsets.only(bottom: 90, top: topPadding),
-          child: homeScreenController.networkError.isTrue
-              ? SizedBox(
-                  height: MediaQuery.of(context).size.height - 180,
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "Home",
-                          style: Theme.of(context).textTheme.titleLarge,
+        child: Obx(
+          () => SingleChildScrollView(
+            padding: EdgeInsets.only(bottom: 90, top: topPadding),
+            child: homeScreenController.networkError.isTrue
+                ? SizedBox(
+                    height: MediaQuery.of(context).size.height - 180,
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "Home",
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Center(
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Oops Network Error!",
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 10),
-                                  decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge!
-                                          .color,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: InkWell(
-                                    onTap: () {
-                                      homeScreenController.init();
-                                    },
-                                    child: Text(
-                                      "Retry!",
-                                      style: TextStyle(
-                                          color: Theme.of(context).canvasColor),
+                        Expanded(
+                          child: Center(
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Oops Network Error!",
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 10),
+                                    decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge!
+                                            .color,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: InkWell(
+                                      onTap: () {
+                                        homeScreenController.init();
+                                      },
+                                      child: Text(
+                                        "Retry!",
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).canvasColor),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ]),
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              : Obx(() {
-                  return Column(
-                    children: homeScreenController.isContentFetched.value
-                        ? (homeScreenController.homeContentList).map((element) {
-                            if (element.runtimeType.toString() ==
-                                "QuickPicks") {
-                              //return contentWidget();
-                              return QuickPicksWidget(content: element);
-                            } else {
-                              return ContentListWidget(
-                                content: element,
-                              );
-                            }
-                          }).toList()
-                        : [const HomeShimmer()],
-                  );
-                }),
+                                ]),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                : Obx(() {
+                    return Column(
+                      children: homeScreenController.isContentFetched.value
+                          ? [
+                              Obx(() => QuickPicksWidget(
+                                  content:
+                                      homeScreenController.quickPicks.value)),
+                               ...getWidgetList(
+                                  homeScreenController.middleContent),
+                              ...getWidgetList(
+                                homeScreenController.fixedContent,
+                              )
+                            ]
+                          : [const HomeShimmer()],
+                    );
+                  }),
+          ),
         ),
       );
     } else if (homeScreenController.tabIndex.value == 1) {
@@ -264,6 +267,13 @@ class Body extends StatelessWidget {
         child: Text("${homeScreenController.tabIndex.value}"),
       );
     }
+  }
+
+  List<Widget> getWidgetList(dynamic list) {
+    return list
+        .map((content) => ContentListWidget(content: content))
+        .whereType<Widget>()
+        .toList();
   }
 }
 

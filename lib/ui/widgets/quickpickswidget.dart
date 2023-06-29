@@ -40,9 +40,7 @@ class QuickPicksWidget extends StatelessWidget {
                 itemBuilder: (_, item) {
                   return ListTile(
                     contentPadding: const EdgeInsets.only(left: 5),
-                    leading: SizedBox(
-                        width: 50,
-                        child: ImageWidget(song: content.songList[item])),
+                    leading: ImageWidget(song: content.songList[item],size: 55,),
                     title: Text(
                       content.songList[item].title,
                       overflow: TextOverflow.ellipsis,

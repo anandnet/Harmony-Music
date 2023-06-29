@@ -35,11 +35,10 @@ class SongInfoBottomSheet extends StatelessWidget {
         ListTile(
           contentPadding:
               const EdgeInsets.only(left: 15, top: 7, right: 10, bottom: 0),
-          leading: SizedBox.square(
-              dimension: 50,
-              child: ImageWidget(
-                song: song,
-              )),
+          leading: ImageWidget(
+            song: song,
+            size: 50,
+          ),
           title: Text(
             song.title,
             maxLines: 1,

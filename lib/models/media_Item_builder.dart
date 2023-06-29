@@ -22,7 +22,7 @@ class MediaItemBuilder {
         artist: artistName == ""
             ? artistName
             : artistName.substring(0, artistName.length - 2),
-        artUri: Uri.parse(Thumbnail(json["thumbnails"][0]['url']).high),
+        artUri: Uri.parse(Thumbnail(json["thumbnails"][0]['url']).low),
         extras: {
           'url': json['url'] ?? url,
           'length': json['length'],

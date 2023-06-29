@@ -28,36 +28,34 @@ class ContentListItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 120,
-              width: 120,
-              child: isAlbum
-                  ? ImageWidget(
-                      album: content,
-                      isMediumImage: true,
-                    )
-                  : content.isCloudPlaylist
-                      ? ImageWidget(
-                          playlist: content,
-                          isMediumImage: true,
-                        )
-                      : Container(
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColorLight,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Center(
-                              child: Icon(
-                            content.playlistId == 'LIBRP'
-                                ? Icons.history_rounded
-                                : content.playlistId == 'LIBFAV'
-                                    ? Icons.favorite_rounded
-                                    : content.playlistId == 'SongsCache'
-                                        ? Icons.flight_rounded
-                                        : Icons.playlist_play_rounded,
-                            color: Colors.white,
-                            size: 40,
-                          ))),
-            ),
+            isAlbum
+                ? ImageWidget(
+                    size: 120,
+                    album: content,
+                  )
+                : content.isCloudPlaylist
+                    ? ImageWidget(
+                      size: 120,
+                        playlist: content,
+                      )
+                    : Container(
+                      height: 120,
+                        width: 120,
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColorLight,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                            child: Icon(
+                          content.playlistId == 'LIBRP'
+                              ? Icons.history_rounded
+                              : content.playlistId == 'LIBFAV'
+                                  ? Icons.favorite_rounded
+                                  : content.playlistId == 'SongsCache'
+                                      ? Icons.flight_rounded
+                                      : Icons.playlist_play_rounded,
+                          color: Colors.white,
+                          size: 40,
+                        ))),
             const SizedBox(height: 5),
             Text(
               content.title,

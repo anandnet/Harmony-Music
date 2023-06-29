@@ -24,7 +24,7 @@ class Playlist {
   factory Playlist.fromJson(Map<dynamic, dynamic> json) => Playlist(
       title: json["title"],
       playlistId: json["playlistId"] ?? json["browseId"],
-      thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).high,
+      thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).medium,
       description: json["description"],
       songCount: json['itemCount'],
       isCloudPlaylist: json["isCloudPlaylist"] ?? true);

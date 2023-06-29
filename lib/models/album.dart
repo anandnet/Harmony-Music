@@ -27,7 +27,7 @@ class Album {
       artists:json["artists"]!=null? List<Map<dynamic, dynamic>>.from(json["artists"]):[{'name':''}],
       year: json['year'],
       
-      thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).high);
+      thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).medium);
 
    Map<String,dynamic> toJson()=>{
     "title":title,

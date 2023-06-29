@@ -23,6 +23,7 @@ class Player extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final PlayerController playerController = Get.find<PlayerController>();
     final ThemeController themeController = Get.find<ThemeController>();
+    final playerArtImageSize = size.width - ((size.height < 750) ? 90 : 60);
     return Scaffold(
       body: SlidingUpPanel(
           minHeight: 65 + Get.mediaQuery.padding.bottom,
@@ -98,12 +99,11 @@ class Player extends StatelessWidget {
                                         : Theme.of(homeScaffoldContext)
                                             .bottomSheetTheme
                                             .backgroundColor,
-                                    leading: SizedBox.square(
-                                        dimension: 50,
-                                        child: ImageWidget(
-                                          song: playerController
-                                              .currentQueue[index],
-                                        )),
+                                    leading: ImageWidget(
+                                      size: 50,
+                                      song:
+                                          playerController.currentQueue[index],
+                                    ),
                                     title: Text(
                                       playerController
                                           .currentQueue[index].title,
@@ -229,13 +229,13 @@ class Player extends StatelessWidget {
                     SizedBox(
                       height: size.height < 750 ? 80 : 120,
                     ),
-                    SizedBox(
-                        height: size.width - ((size.height < 750) ? 90 : 60),
-                        width: size.width - ((size.height < 750) ? 90 : 60),
-                        child: Obx(() => playerController.currentSong.value !=
-                                null
-                            ? InkWell(
+                    Obx(() => playerController.currentSong.value != null
+                        ? Stack(
+                            children: [
+                              InkWell(
                                 onLongPress: () {
+                                  // printINFO(
+                                  //     "${size.width - ((size.height < 750) ? 90 : 60)}");
                                   showModalBottomSheet(
                                     barrierColor:
                                         Colors.transparent.withAlpha(100),
@@ -246,12 +246,108 @@ class Player extends StatelessWidget {
                                   ).whenComplete(
                                       () => Get.delete<SongInfoController>());
                                 },
+                                onTap: () {
+                                  playerController.showLyrics();
+                                },
                                 child: ImageWidget(
+                                  size: playerArtImageSize,
                                   song: playerController.currentSong.value!,
-                                  isLargeImage: true,
+                                  isPlayerArtImage: true,
                                 ),
-                              )
-                            : Container())),
+                              ),
+                              Obx(() => playerController.showLyricsflag.isTrue
+                                  ? InkWell(
+                                      onTap: () {
+                                        playerController.showLyrics();
+                                      },
+                                      child: Container(
+                                        height: playerArtImageSize,
+                                        width: playerArtImageSize,
+                                        decoration: BoxDecoration(
+                                          color: Colors.black.withOpacity(0.8),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: Stack(
+                                          children: [
+                                            Center(
+                                              child: SingleChildScrollView(
+                                                physics:
+                                                    const BouncingScrollPhysics(),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 0,
+                                                    vertical:
+                                                        playerArtImageSize /
+                                                            3.5),
+                                                child: Obx(
+                                                  () => playerController
+                                                          .isLyricsLoading
+                                                          .isFalse
+                                                      ? Text(
+                                                          playerController
+                                                                      .lyrics
+                                                                      .value ==
+                                                                  "NA"
+                                                              ? "Lyrics not available!"
+                                                              : playerController
+                                                                  .lyrics.value,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .titleMedium!
+                                                              .copyWith(
+                                                                  color: Colors
+                                                                      .white),
+                                                        )
+                                                      : const Center(
+                                                          child: RefreshProgressIndicator(
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent),
+                                                        ),
+                                                ),
+                                              ),
+                                            ),
+                                            IgnorePointer(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  gradient: LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                    colors: [
+                                                      Theme.of(context)
+                                                          .primaryColor
+                                                          .withOpacity(0.90),
+                                                      Colors.transparent,
+                                                      Colors.transparent,
+                                                      Colors.transparent,
+                                                      Theme.of(context)
+                                                          .primaryColor
+                                                          .withOpacity(0.90)
+                                                    ],
+                                                    stops: const [
+                                                      0,
+                                                      0.2,
+                                                      0.5,
+                                                      0.8,
+                                                      1
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox.shrink()),
+                            ],
+                          )
+                        : Container()),
                     Expanded(child: Container()),
                     Obx(() {
                       return MarqueeWidget(

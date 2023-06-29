@@ -87,14 +87,14 @@ class HomeScreenController extends GetxController {
     for (var content in contents) {
       if ((content["contents"][0]).runtimeType == Playlist) {
         final tmp = PlaylistContent(
-            playlistList: List<Playlist>.from(content["contents"]),
+            playlistList: (content["contents"]).whereType<Playlist>().toList(),
             title: content["title"]);
         if (tmp.playlistList.length >= 2) {
           contentTemp.add(tmp);
         }
       } else if ((content["contents"][0]).runtimeType == Album) {
         final tmp = AlbumContent(
-            albumList: List<Album>.from(content["contents"]),
+            albumList: (content["contents"]).whereType<Album>().toList(),
             title: content["title"]);
         if (tmp.albumList.length >= 2) {
           contentTemp.add(tmp);

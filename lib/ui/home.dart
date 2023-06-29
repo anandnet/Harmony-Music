@@ -77,21 +77,17 @@ class Home extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SizedBox.square(
-                                      dimension: 50,
-                                      //width: 40,
-                                      child:
-                                          playerController.currentSong.value !=
-                                                  null
-                                              ? ImageWidget(
-                                                  song: playerController
-                                                      .currentSong.value!,
-                                                )
-                                              : const SizedBox(
-                                                  height: 50,
-                                                  width: 50,
-                                                ),
-                                    ),
+                                    playerController.currentSong.value !=
+                                            null
+                                        ? ImageWidget(
+                                          size: 50,
+                                            song: playerController
+                                                .currentSong.value!,
+                                          )
+                                        : const SizedBox(
+                                            height: 50,
+                                            width: 50,
+                                          ),
                                     const SizedBox(
                                       width: 10,
                                     ),

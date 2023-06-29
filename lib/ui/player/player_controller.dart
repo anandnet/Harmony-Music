@@ -40,6 +40,9 @@ class PlayerController extends GetxController {
   final isLoopModeEnabled = false.obs;
   final currentSong = Rxn<MediaItem>();
   final isCurrentSongFav = false.obs;
+  final showLyricsflag = false.obs;
+  final isLyricsLoading = false.obs;
+  final lyrics = "".obs;
   ScrollController scrollController = ScrollController();
   final GlobalKey<ScaffoldState> homeScaffoldkey = GlobalKey<ScaffoldState>();
 
@@ -156,6 +159,8 @@ class PlayerController extends GetxController {
         if (isRadioModeOn && (currentSong.value!.id == currentQueue.last.id)) {
           await _addRadioContinuation(radioInitiatorItem!);
         }
+        lyrics.value = "";
+        showLyricsflag.value = false;
       }
     });
   }
@@ -412,6 +417,23 @@ class PlayerController extends GetxController {
       } catch (e) {}
     }
     recentItem = mediaItem;
+  }
+
+  Future<void> showLyrics() async {
+    showLyricsflag.value = !showLyricsflag.value;
+    if (lyrics.isEmpty && showLyricsflag.value) {
+      isLyricsLoading.value = true;
+      final related = await _musicServices.getWatchPlaylist(
+          videoId: currentSong.value!.id, onlyRelated: true);
+      final relatedLyricsId = related['lyrics'];
+      if (relatedLyricsId != null) {
+        final lyrics_ = await _musicServices.getLyrics(relatedLyricsId);
+        lyrics.value = lyrics_ as String;
+      }else{
+        lyrics.value = "NA";
+      }
+      isLyricsLoading.value = false;
+    }
   }
 
   @override

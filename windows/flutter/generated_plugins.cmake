@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  device_equalizer
   share_plus
   url_launcher_windows
 )

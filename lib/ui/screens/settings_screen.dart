@@ -30,6 +30,43 @@ class SettingsScreen extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.only(bottom: 90),
             children: [
+              Obx(
+                () => settingsController.isNewVersionAvailable.value
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 8.0, right: 10),
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: ListTile(
+                            onTap: () {
+                              launchUrl(
+                                Uri.parse(
+                                  'https://github.com/anandnet/Harmony-Music/releases/latest',
+                                ),
+                                mode: LaunchMode.externalApplication,
+                              );
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            tileColor: Theme.of(context).colorScheme.secondary,
+                            contentPadding:
+                                const EdgeInsets.only(left: 8, right: 10),
+                            leading: const CircleAvatar(
+                                child: Icon(Icons.download_rounded)),
+                            title: const Text("New Version available!"),
+                            visualDensity: const VisualDensity(horizontal: -2),
+                            subtitle: Text(
+                              "Click here to go to download page",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                      color: Colors.white70, fontSize: 13),
+                            ),
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+              ),
               ListTile(
                 contentPadding: const EdgeInsets.only(left: 5, right: 10),
                 title: const Text("Theme mode"),
@@ -113,6 +150,15 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              ListTile(
+                contentPadding: const EdgeInsets.only(left: 5, right: 10,top: 0),
+                title: const Text("Equalizer"),
+                subtitle: Text("Open system euqalizer",
+                    style: Theme.of(context).textTheme.bodyMedium),
+                onTap: () async {
+                  await Get.find<PlayerController>().openEqualizer();
+                },
+              ),
               GetPlatform.isAndroid
                   ? Obx(
                       () => ListTile(
@@ -149,7 +195,7 @@ class SettingsScreen extends StatelessWidget {
                 contentPadding: const EdgeInsets.only(left: 5, right: 10),
                 title: const Text("Github"),
                 subtitle: Text(
-                  "View Github source code \nif you like this project, don't forget to give a ⭐${((Get.find<PlayerController>().playerPanelMinHeight.value) == 0) ? "" : "\n\nV 1.1.0 by anandnet"}",
+                  "View Github source code \nif you like this project, don't forget to give a ⭐${((Get.find<PlayerController>().playerPanelMinHeight.value) == 0) ? "" : "\n\n${settingsController.currentVersion} by anandnet"}",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 isThreeLine: true,
@@ -167,7 +213,7 @@ class SettingsScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 20.0),
             child: Text(
-              "V 1.1.0 by anandnet",
+              "${settingsController.currentVersion} by anandnet",
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
@@ -256,7 +302,9 @@ class DiscoverContentSelectorDialog extends StatelessWidget {
             ),
           ),
           radioWidget(
-              label: "Quick Picks", controller: settingsController, value: "QP"),
+              label: "Quick Picks",
+              controller: settingsController,
+              value: "QP"),
           radioWidget(
               label: "Top Music Videos",
               controller: settingsController,

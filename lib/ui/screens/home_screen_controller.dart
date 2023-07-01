@@ -1,10 +1,13 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/models/playlist.dart';
 import 'package:harmonymusic/models/quick_picks.dart';
 import 'package:harmonymusic/services/music_service.dart';
+import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/new_version_dialog.dart';
 import 'package:hive/hive.dart';
 
 class HomeScreenController extends GetxController {
@@ -15,8 +18,11 @@ class HomeScreenController extends GetxController {
   final quickPicks = QuickPicks([]).obs;
   final middleContent = [].obs;
   final fixedContent = [].obs;
+  final showVersionDialog = true.obs;
+
   HomeScreenController() {
     init();
+    _checkNewVersion();
   }
 
   Future<void> init() async {
@@ -25,13 +31,15 @@ class HomeScreenController extends GetxController {
 
     networkError.value = false;
     try {
-      List middleContentTemp =[];
+      List middleContentTemp = [];
       final homeContentListMap = await _musicServices.getHome(limit: 10);
       if (contentType == "TR") {
         final index = homeContentListMap
             .indexWhere((element) => element['title'] == "Trending");
         if (index != -1 && index != 0) {
-          quickPicks.value = QuickPicks(List<MediaItem>.from(homeContentListMap[index]["contents"]),title: "Trending");
+          quickPicks.value = QuickPicks(
+              List<MediaItem>.from(homeContentListMap[index]["contents"]),
+              title: "Trending");
         } else if (index == -1) {
           List charts = await _musicServices.getCharts();
           final con =
@@ -45,7 +53,8 @@ class HomeScreenController extends GetxController {
             .indexWhere((element) => element['title'] == "Top music videos");
         if (index != -1 && index != 0) {
           final con = homeContentListMap.removeAt(index);
-          quickPicks.value = QuickPicks(List<MediaItem>.from(con["contents"]),title: con["title"] );
+          quickPicks.value = QuickPicks(List<MediaItem>.from(con["contents"]),
+              title: con["title"]);
         } else if (index == -1) {
           List charts = await _musicServices.getCharts();
           quickPicks.value = QuickPicks(
@@ -113,9 +122,13 @@ class HomeScreenController extends GetxController {
           title: homeContentListMap[0]["title"]);
     } else if (val == "TMV" || val == 'TR') {
       final charts = await _musicServices.getCharts();
-      final index =val == "TMV" ?0: charts.length == 4 ?3:2;
-      quickPicks_ =
-          QuickPicks(List<MediaItem>.from(charts[index]["contents"]), title: charts[index]["title"]);
+      final index = val == "TMV"
+          ? 0
+          : charts.length == 4
+              ? 3
+              : 2;
+      quickPicks_ = QuickPicks(List<MediaItem>.from(charts[index]["contents"]),
+          title: charts[index]["title"]);
     } else {
       songId ??= Hive.box("AppPrefs").get("recentSongId");
       if (songId != null) {
@@ -128,13 +141,31 @@ class HomeScreenController extends GetxController {
       }
     }
     if (quickPicks_ == null) return;
-    
-   quickPicks.value = quickPicks_;
+
+    quickPicks.value = quickPicks_;
   }
 
   void onTabSelected(int index) {
     tabIndex.value = index;
   }
 
-  void getRelatedArtist() {}
+  void _checkNewVersion() {
+    showVersionDialog.value =
+        Hive.box("AppPrefs").get("newVersionVisibility") ?? true;
+    if (showVersionDialog.isTrue) {
+      newVersionCheck(Get.find<SettingsScreenController>().currentVersion)
+          .then((value) {
+        if (value) {
+          showDialog(
+              context: Get.context!,
+              builder: (context) => const NewVersionDialog());
+        }
+      });
+    }
+  }
+
+  void onChangeVersionVisibility(bool val) {
+    Hive.box("AppPrefs").put("newVersionVisibility", !val);
+    showVersionDialog.value = !val;
+  }
 }

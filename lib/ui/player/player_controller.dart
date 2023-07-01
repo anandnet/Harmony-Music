@@ -436,6 +436,10 @@ class PlayerController extends GetxController {
     }
   }
 
+  Future<void> openEqualizer() async {
+    await _audioHandler.customAction("openEqualizer");
+  }
+
   @override
   void dispose() {
     _audioHandler.customAction('dispose');

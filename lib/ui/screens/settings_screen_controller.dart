@@ -1,5 +1,6 @@
 import 'package:android_power_manager/android_power_manager.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/screens/home_screen_controller.dart';
@@ -14,10 +15,19 @@ class SettingsScreenController extends GetxController {
   final streamingQuality = AudioQuality.High.obs;
   final isIgnoringBatteryOptimizations = false.obs;
   final discoverContentType = "QP".obs;
+  final isNewVersionAvailable = false.obs;
+  final currentVersion = "V1.1.0";
   @override
   void onInit() {
     _setInitValue();
+    _checkNewVersion();
     super.onInit();
+  }
+
+  get currentVision=>currentVersion;
+
+  _checkNewVersion() {
+    newVersionCheck(currentVersion).then((value) => isNewVersionAvailable.value = value);
   }
 
   Future<void> _setInitValue() async {
@@ -44,7 +54,7 @@ class SettingsScreenController extends GetxController {
     Get.find<ThemeController>().changeThemeModeType(val);
   }
 
-  void onContentChange(dynamic value){
+  void onContentChange(dynamic value) {
     setBox.put('discoverContentType', value);
     discoverContentType.value = value;
     Get.find<HomeScreenController>().changeDiscoverContent(value);

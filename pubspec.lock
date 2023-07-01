@@ -137,6 +137,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.17.3"
+  device_equalizer:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "4b87c8a307559d204f0f0d70c2096a41ec34ab7c"
+      url: "https://github.com/anandnet/device_equalizer.git"
+    source: git
+    version: "0.0.1"
   dio:
     dependency: "direct main"
     description:
@@ -734,5 +743,5 @@ packages:
     source: hosted
     version: "1.12.4"
 sdks:
-  dart: ">=3.0.0 <4.0.0"
+  dart: ">=3.0.5 <4.0.0"
   flutter: ">=3.3.0"

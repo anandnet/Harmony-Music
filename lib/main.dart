@@ -81,6 +81,7 @@ void _setAppInitPrefs() {
       'streamingQuality': 1,
       'themePrimaryColor': 4278199603,
       'discoverContentType': "QP",
+      'newVersionVisibility':true
     });
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:device_equalizer/device_equalizer.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/media_Item_builder.dart';
@@ -401,6 +402,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       final currentQueue = queue.value;
       currentQueue.insert(currentIndex + 1, song);
       queue.add(currentQueue);
+    }else if (name == 'openEqualizer') {
+      await DeviceEqualizer().open(_player.androidAudioSessionId!);
     }
   }
 

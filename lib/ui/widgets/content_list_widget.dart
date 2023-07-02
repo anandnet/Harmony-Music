@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:harmonymusic/ui/screens/search_result_screen_controller.dart';
 import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
 
@@ -24,7 +25,9 @@ class ContentListWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                   content.title.length>12 ?"${content.title.substring(0,12)}...":content.title,
+                  content.title.length > 12
+                      ? "${content.title.substring(0, 12)}..."
+                      : content.title,
                   //maxLines: 2,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
@@ -46,6 +49,8 @@ class ContentListWidget extends StatelessWidget {
             height: 200,
             //color: Colors.blueAccent,
             child: ListView.separated(
+                addAutomaticKeepAlives: false, //Testing going 
+                addRepaintBoundaries: false,   //on this
                 physics: const BouncingScrollPhysics(),
                 separatorBuilder: (context, index) => const SizedBox(
                       width: 15,

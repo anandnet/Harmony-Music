@@ -1,17 +1,15 @@
 import 'dart:io';
-
-import 'package:audio_service/audio_service.dart';
+import 'package:hive/hive.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:audio_service/audio_service.dart';
+import 'package:device_equalizer/device_equalizer.dart';
+
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/media_Item_builder.dart';
 import 'package:harmonymusic/services/utils.dart';
 import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
-import 'package:hive/hive.dart';
-
-import 'package:just_audio/just_audio.dart';
-
-import 'package:path_provider/path_provider.dart';
-
 import '../ui/utils/home_library_controller.dart';
 import 'music_service.dart';
 
@@ -116,6 +114,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         final box = Hive.box("songsUrlCache");
         if (box.containsKey(mediaItem.value!.id)) {
           if (isExpired(url: box.get(mediaItem.value!.id)[1])) {
+            await _player.stop();
             await customAction("playByIndex", {'index': currentIndex});
             return;
           }
@@ -127,8 +126,17 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
           await _player.seek(curPos, index: 0);
           await _player.play();
         }
-        await _player.stop();
-        networkErrorPause = true;
+
+        //Workaround when 403 error encountered
+        customAction("playByIndex", {'index': currentIndex, 'newUrl': true})
+            .whenComplete(() async {
+          await _player.stop();
+          if (currentSongUrl == null) {
+            networkErrorPause = true;
+          } else {
+            _player.play();
+          }
+        });
       }
     });
   }
@@ -308,9 +316,11 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     } else if (name == 'playByIndex') {
       await _playList.clear();
       currentIndex = extras!['index'];
+      final isNewUrlReq = extras['newUrl'] ?? false;
       final currentSong = queue.value[currentIndex];
       mediaItem.add(currentSong);
-      final url = await checkNGetUrl(currentSong.id);
+      final url =
+          await checkNGetUrl(currentSong.id, generateNewUrl: isNewUrlReq);
       currentSongUrl = url;
       if (url == null) {
         return;
@@ -387,8 +397,10 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     } else if (name == 'addPlayNextItem') {
       final song = extras!['mediaItem'] as MediaItem;
       final currentQueue = queue.value;
-      currentQueue.insert(currentIndex+1, song);
+      currentQueue.insert(currentIndex + 1, song);
       queue.add(currentQueue);
+    }else if (name == 'openEqualizer') {
+      await DeviceEqualizer().open(_player.androidAudioSessionId!);
     }
   }
 
@@ -407,7 +419,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
 // Work around used [useNewInstanceOfExplode = false] to Fix Connection closed before full header was received issue
   Future<String?> checkNGetUrl(String songId,
-      {bool useNewInstanceOfExplode = false}) async {
+      {bool useNewInstanceOfExplode = false,
+      bool generateNewUrl = false}) async {
     final songsCacheBox = Hive.box("SongsCache");
     if (songsCacheBox.containsKey(songId)) {
       printINFO("Got Song from cachedbox ($songId)");
@@ -420,7 +433,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       final newMusicServicesIns =
           useNewInstanceOfExplode ? MusicServices(false) : null;
       dynamic url;
-      if (songsUrlCacheBox.containsKey(songId)) {
+      if (songsUrlCacheBox.containsKey(songId) && !generateNewUrl) {
         if (isExpired(url: songsUrlCacheBox.get(songId)[qualityIndex])) {
           url = useNewInstanceOfExplode
               ? await newMusicServicesIns!.getSongUri(songId)

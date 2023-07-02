@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:harmonymusic/ui/screens/artist_screen.dart';
 import 'package:harmonymusic/ui/screens/home_screen.dart';
 import 'package:harmonymusic/ui/screens/playlistnalbum_screen.dart';
 import 'package:harmonymusic/ui/screens/search_screen.dart';
-
 import 'screens/search_result_screen.dart';
 
 class ScreenNavigationSetup {

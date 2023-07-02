@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/screens/artist_screen_controller.dart';
 import 'package:harmonymusic/ui/widgets/image_widget.dart';
 import 'package:harmonymusic/ui/widgets/search_related_widgets.dart';
-
 import '../navigator.dart';
 import '../widgets/snackbar.dart';
 
@@ -37,9 +37,10 @@ class ArtistScreen extends StatelessWidget {
                   onPressed: () async {
                     final radioId = artistScreenController.artist_.radioId;
                     if (radioId == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          snackbar(context, "Radio not available for this artist!", size: SanckBarSize.BIG));
-                          return;
+                      ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                          context, "Radio not available for this artist!",
+                          size: SanckBarSize.BIG));
+                      return;
                     }
                     playerController.startRadio(null,
                         playlistid: artistScreenController.artist_.radioId);
@@ -94,8 +95,10 @@ class ArtistScreen extends StatelessWidget {
               final artistData = artistScreenController.artistData;
               final separatedContent = artistScreenController.sepataredContent;
 
-              if(artistScreenController.isSeparatedArtistContentFetced.isFalse &&
-                  artistScreenController.navigationRailCurrentIndex.value !=0){
+              if (artistScreenController
+                      .isSeparatedArtistContentFetced.isFalse &&
+                  artistScreenController.navigationRailCurrentIndex.value !=
+                      0) {
                 return const Center(child: RefreshProgressIndicator());
               }
 
@@ -120,16 +123,11 @@ class ArtistScreen extends StatelessWidget {
                                             child: Stack(
                                               children: [
                                                 Center(
-                                                  child: ClipOval(
-                                                    child: SizedBox(
-                                                      height: 200,
-                                                      width: 200,
-                                                      child: ImageWidget(
-                                                          artist:
-                                                              artistScreenController
-                                                                  .artist_,
-                                                          isLargeImage: true),
-                                                    ),
+                                                  child: ImageWidget(
+                                                    size: 200,
+                                                    artist:
+                                                        artistScreenController
+                                                            .artist_,
                                                   ),
                                                 ),
                                                 Align(
@@ -162,7 +160,8 @@ class ArtistScreen extends StatelessWidget {
                                                         : Icon(artistScreenController
                                                                 .isAddedToLibrary
                                                                 .isFalse
-                                                            ? Icons.bookmark_add_rounded
+                                                            ? Icons
+                                                                .bookmark_add_rounded
                                                             : Icons
                                                                 .bookmark_added_rounded),
                                                   ),
@@ -181,7 +180,8 @@ class ArtistScreen extends StatelessWidget {
                                                   .titleLarge,
                                             ),
                                           ),
-                                          (artistData.containsKey("description") &&
+                                          (artistData.containsKey(
+                                                      "description") &&
                                                   artistData["description"] !=
                                                       null)
                                               ? Align(
@@ -224,7 +224,8 @@ class ArtistScreen extends StatelessWidget {
                           : [],
                       title: "Songs",
                       topPadding: 75,
-                      scrollController: artistScreenController.songScrollController,
+                      scrollController:
+                          artistScreenController.songScrollController,
                     );
                   }
                 case 2:
@@ -236,7 +237,8 @@ class ArtistScreen extends StatelessWidget {
                           : [],
                       title: "Videos",
                       topPadding: 75,
-                      scrollController: artistScreenController.videoScrollController,
+                      scrollController:
+                          artistScreenController.videoScrollController,
                     );
                   }
                 case 3:

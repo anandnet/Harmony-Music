@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:harmonymusic/ui/navigator.dart';
 import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
 import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
@@ -7,7 +8,6 @@ import 'package:harmonymusic/ui/widgets/list_widget.dart';
 import 'package:harmonymusic/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
 import 'package:harmonymusic/ui/widgets/snackbar.dart';
 import 'package:harmonymusic/ui/widgets/sort_widget.dart';
-
 import '../../models/playlist.dart';
 import '../player/player_controller.dart';
 import '../widgets/image_widget.dart';
@@ -110,7 +110,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                         child: Column(
                                           children: [
                                             ListTile(
-                                              leading: const Icon(Icons.edit_rounded),
+                                              leading: const Icon(
+                                                  Icons.edit_rounded),
                                               title:
                                                   const Text("Rename playlist"),
                                               onTap: () {
@@ -172,14 +173,14 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                       playListNAlbumScreenController
                                               .isAlbum.isTrue
                                           ? ImageWidget(
+                                            size: 200,
                                               album:
                                                   playListNAlbumScreenController
                                                       .contentRenderer,
-                                              isLargeImage: true,
                                             )
                                           : ImageWidget(
+                                            size: 200,
                                               playlist: content,
-                                              isLargeImage: true,
                                             ),
                                       Align(
                                         alignment: Alignment.topRight,
@@ -228,8 +229,10 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                   playListNAlbumScreenController
                                                           .isAddedToLibrary
                                                           .isFalse
-                                                      ? Icons.bookmark_add_rounded
-                                                      : Icons.bookmark_added_rounded)),
+                                                      ? Icons
+                                                          .bookmark_add_rounded
+                                                      : Icons
+                                                          .bookmark_added_rounded)),
                                             )),
                                       ),
                                       Padding(
@@ -321,7 +324,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                     "${playListNAlbumScreenController.songList.length} songs",
                                 titleLeftPadding: 9,
                                 isDurationOptionRequired: true,
-                                onSort: (a,b,c,d) {
+                                onSort: (a, b, c, d) {
                                   playListNAlbumScreenController.onSort(
                                       a, c, d);
                                 },

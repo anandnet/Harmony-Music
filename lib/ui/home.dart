@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/ui/navigator.dart';
 import 'package:harmonymusic/ui/player/player.dart';
-
 import 'player/player_controller.dart';
 import 'widgets/image_widget.dart';
 import 'widgets/mini_player_progress_bar.dart';
@@ -77,21 +77,17 @@ class Home extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    SizedBox.square(
-                                      dimension: 50,
-                                      //width: 40,
-                                      child:
-                                          playerController.currentSong.value !=
-                                                  null
-                                              ? ImageWidget(
-                                                  song: playerController
-                                                      .currentSong.value!,
-                                                )
-                                              : const SizedBox(
-                                                  height: 50,
-                                                  width: 50,
-                                                ),
-                                    ),
+                                    playerController.currentSong.value !=
+                                            null
+                                        ? ImageWidget(
+                                          size: 50,
+                                            song: playerController
+                                                .currentSong.value!,
+                                          )
+                                        : const SizedBox(
+                                            height: 50,
+                                            width: 50,
+                                          ),
                                     const SizedBox(
                                       width: 10,
                                     ),

@@ -4,18 +4,6 @@ class PlaylistContent {
   PlaylistContent({required this.title, required this.playlistList});
   final String title;
   final List<Playlist> playlistList;
-  factory PlaylistContent.fromJson(Map<dynamic, dynamic> json) =>
-      PlaylistContent(
-          title: json["title"],
-          playlistList: (json["contents"])
-              .map<Playlist?>((item) {
-                if (item.containsKey('playlistId') &&
-                    !item.containsKey('videoId')) {
-                  return Playlist.fromJson(item);
-                }
-              })
-              .whereType<Playlist>()
-              .toList());
 }
 
 class Playlist {
@@ -36,7 +24,7 @@ class Playlist {
   factory Playlist.fromJson(Map<dynamic, dynamic> json) => Playlist(
       title: json["title"],
       playlistId: json["playlistId"] ?? json["browseId"],
-      thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).high,
+      thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).medium,
       description: json["description"],
       songCount: json['itemCount'],
       isCloudPlaylist: json["isCloudPlaylist"] ?? true);

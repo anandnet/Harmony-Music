@@ -1,15 +1,16 @@
 import 'dart:io';
-
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
+
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/models/artist.dart';
 import 'package:harmonymusic/models/media_Item_builder.dart';
 import 'package:harmonymusic/models/playlist.dart';
-import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
+
 
 class LibrarySongsController extends GetxController {
   late RxList<MediaItem> cachedSongsList = RxList();
@@ -65,6 +66,15 @@ class LibrarySongsController extends GetxController {
         songlist, sortByName, sortByDate, sortByDuration, isAscending);
     cachedSongsList.value = songlist;
   }
+  
+  Future<void> removeSong(MediaItem item) async {
+    cachedSongsList.remove(item);
+    final cacheDir = (await getTemporaryDirectory()).path;
+    if(await File("$cacheDir/cachedSongs/${item.id}.mp3").exists()){
+      await (File("$cacheDir/cachedSongs/${item.id}.mp3")).delete();
+    }
+
+  }
 }
 
 class LibraryPlaylistsController extends GetxController {
@@ -75,7 +85,7 @@ class LibraryPlaylistsController extends GetxController {
         thumbnailUrl: "",
         isCloudPlaylist: false),
     Playlist(
-        title: "Favourite",
+        title: "Favorites",
         playlistId: "LIBFAV",
         thumbnailUrl: "",
         isCloudPlaylist: false),

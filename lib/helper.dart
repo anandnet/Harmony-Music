@@ -1,5 +1,5 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-
 
 void printERROR(dynamic text, {String tag = "Harmony Music"}) {
   debugPrint("\x1B[31m[$tag]: $text");
@@ -76,4 +76,25 @@ void sortArtist(
 ) {
   artistList.sort((a, b) =>
       isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+}
+
+/// Return true if new version available
+Future<bool> newVersionCheck(String currentVersion) async {
+  final tags = (await Dio()
+          .get("https://api.github.com/repos/anandnet/Harmony-Music/tags"))
+      .data;
+  final availableVersion = tags[0]['name'] as String;
+  List currentVersion_ = currentVersion.substring(1).split(".");
+  List availableVersion_ = availableVersion.substring(1).split(".");
+  if (int.parse(availableVersion_[0]) > int.parse(currentVersion_[0])) {
+    return true;
+  } else if (int.parse(availableVersion_[1]) > int.parse(currentVersion_[1]) &&
+      int.parse(availableVersion_[0]) == int.parse(currentVersion_[0])) {
+    return true;
+  } else if (int.parse(availableVersion_[2]) > int.parse(currentVersion_[2]) &&
+      int.parse(availableVersion_[0]) == int.parse(currentVersion_[0]) &&
+      int.parse(availableVersion_[1]) == int.parse(currentVersion_[1])) {
+    return true;
+  }
+  return false;
 }

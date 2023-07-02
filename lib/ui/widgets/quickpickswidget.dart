@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/models/quick_picks.dart';
 
+import 'package:harmonymusic/models/quick_picks.dart';
 import '../player/player_controller.dart';
 import 'image_widget.dart';
 import 'songinfo_bottom_sheet.dart';
@@ -22,7 +22,7 @@ class QuickPicksWidget extends StatelessWidget {
           Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Discover",
+                content.title,
                 style: Theme.of(context).textTheme.titleLarge,
               )),
           const SizedBox(height: 10),
@@ -40,9 +40,7 @@ class QuickPicksWidget extends StatelessWidget {
                 itemBuilder: (_, item) {
                   return ListTile(
                     contentPadding: const EdgeInsets.only(left: 5),
-                    leading: SizedBox(
-                        width: 50,
-                        child: ImageWidget(song: content.songList[item])),
+                    leading: ImageWidget(song: content.songList[item],size: 55,),
                     title: Text(
                       content.songList[item].title,
                       overflow: TextOverflow.ellipsis,

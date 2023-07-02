@@ -1,14 +1,14 @@
 import 'dart:async';
-
+import 'package:hive/hive.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/media_Item_builder.dart';
+import 'package:harmonymusic/ui/screens/home_screen_controller.dart';
 import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
-import 'package:hive/hive.dart';
-import 'package:audio_service/audio_service.dart';
-import 'package:get/get.dart';
-
 import '../widgets/sliding_up_panel.dart';
 import '/models/durationstate.dart';
 import '/services/music_service.dart';
@@ -39,6 +39,9 @@ class PlayerController extends GetxController {
   final isLoopModeEnabled = false.obs;
   final currentSong = Rxn<MediaItem>();
   final isCurrentSongFav = false.obs;
+  final showLyricsflag = false.obs;
+  final isLyricsLoading = false.obs;
+  final lyrics = "".obs;
   ScrollController scrollController = ScrollController();
   final GlobalKey<ScaffoldState> homeScaffoldkey = GlobalKey<ScaffoldState>();
 
@@ -155,6 +158,8 @@ class PlayerController extends GetxController {
         if (isRadioModeOn && (currentSong.value!.id == currentQueue.last.id)) {
           await _addRadioContinuation(radioInitiatorItem!);
         }
+        lyrics.value = "";
+        showLyricsflag.value = false;
       }
     });
   }
@@ -187,6 +192,11 @@ class PlayerController extends GetxController {
       if (playlistid != null) {
         _playerPanelCheck();
         await _audioHandler.customAction("playByIndex", {"index": 0});
+      } else {
+        if (Hive.box("AppPrefs").get("discoverContentType") == "BOLI") {
+          Get.find<HomeScreenController>()
+              .changeDiscoverContent("BOLI", songId: mediaItem!.id);
+        }
       }
     });
 
@@ -205,6 +215,15 @@ class PlayerController extends GetxController {
     //open player pane,set current song and push first song into playing list,
     final init = _initFlagForPlayer;
     currentSong.value = mediaItems[index];
+
+    //for changing home content based on last interation
+    Future.delayed(const Duration(seconds: 3), () {
+      if (Hive.box("AppPrefs").get("discoverContentType") == "BOLI") {
+        Get.find<HomeScreenController>()
+            .changeDiscoverContent("BOLI", songId: mediaItems[index].id);
+      }
+    });
+
     _playerPanelCheck();
     !init
         ? await _audioHandler.updateQueue(mediaItems)
@@ -397,6 +416,27 @@ class PlayerController extends GetxController {
       } catch (e) {}
     }
     recentItem = mediaItem;
+  }
+
+  Future<void> showLyrics() async {
+    showLyricsflag.value = !showLyricsflag.value;
+    if (lyrics.isEmpty && showLyricsflag.value) {
+      isLyricsLoading.value = true;
+      final related = await _musicServices.getWatchPlaylist(
+          videoId: currentSong.value!.id, onlyRelated: true);
+      final relatedLyricsId = related['lyrics'];
+      if (relatedLyricsId != null) {
+        final lyrics_ = await _musicServices.getLyrics(relatedLyricsId);
+        lyrics.value = lyrics_ as String;
+      }else{
+        lyrics.value = "NA";
+      }
+      isLyricsLoading.value = false;
+    }
+  }
+
+  Future<void> openEqualizer() async {
+    await _audioHandler.customAction("openEqualizer");
   }
 
   @override

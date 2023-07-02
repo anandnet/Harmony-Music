@@ -1,14 +1,14 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:share_plus/share_plus.dart';
+
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
 import 'package:harmonymusic/ui/utils/home_library_controller.dart';
 import 'package:harmonymusic/ui/widgets/add_to_playlist.dart';
 import 'package:harmonymusic/ui/widgets/snackbar.dart';
-import 'package:hive/hive.dart';
-import 'package:share_plus/share_plus.dart';
-
 import '../../models/media_Item_builder.dart';
 import '../../models/playlist.dart';
 import '../navigator.dart';
@@ -35,11 +35,10 @@ class SongInfoBottomSheet extends StatelessWidget {
         ListTile(
           contentPadding:
               const EdgeInsets.only(left: 15, top: 7, right: 10, bottom: 0),
-          leading: SizedBox.square(
-              dimension: 50,
-              child: ImageWidget(
-                song: song,
-              )),
+          leading: ImageWidget(
+            song: song,
+            size: 50,
+          ),
           title: Text(
             song.title,
             maxLines: 1,
@@ -64,16 +63,17 @@ class SongInfoBottomSheet extends StatelessWidget {
             Get.find<PlayerController>().startRadio(song);
           },
         ),
-       
-       (calledFromPlayer||calledFromQueue)?const SizedBox.shrink(): ListTile(
-          visualDensity: const VisualDensity(vertical: -1),
-          leading: const Icon(Icons.playlist_play_rounded),
-          title: const Text("Play next"),
-          onTap: () {
-            Navigator.of(context).pop();
-            Get.find<PlayerController>().playNext(song);
-          },
-        ),
+        (calledFromPlayer || calledFromQueue)
+            ? const SizedBox.shrink()
+            : ListTile(
+                visualDensity: const VisualDensity(vertical: -1),
+                leading: const Icon(Icons.playlist_play_rounded),
+                title: const Text("Play next"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Get.find<PlayerController>().playNext(song);
+                },
+              ),
         ListTile(
           visualDensity: const VisualDensity(vertical: -1),
           leading: const Icon(Icons.playlist_add_rounded),
@@ -138,12 +138,12 @@ class SongInfoBottomSheet extends StatelessWidget {
         ...artistWidgetList(song, context),
         (playlist != null &&
                 !playlist!.isCloudPlaylist &&
-                !(playlist!.playlistId == "LIBCAC") &&
                 !(playlist!.playlistId == "LIBRP"))
             ? ListTile(
                 visualDensity: const VisualDensity(vertical: -1),
                 leading: const Icon(Icons.delete_rounded),
-                title: const Text("Remove form playlist"),
+                title: playlist!.playlistId == "SongsCache"? const Text("Remove from cache")
+                    : const Text("Remove from playlist"),
                 onTap: () {
                   Navigator.of(context).pop();
                   songInfoController
@@ -275,7 +275,7 @@ class SongInfoController extends GetxController {
     } catch (e) {}
     //Updating Library song list in frontend
     if (playlist.playlistId == "SongsCache") {
-      Get.find<LibrarySongsController>().cachedSongsList.remove(item);
+      Get.find<LibrarySongsController>().removeSong(item);
       return;
     }
     box.close();

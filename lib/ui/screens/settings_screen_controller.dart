@@ -1,9 +1,12 @@
 import 'package:android_power_manager/android_power_manager.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/screens/home_screen_controller.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class SettingsScreenController extends GetxController {
   final cacheSongs = false.obs;
@@ -12,10 +15,21 @@ class SettingsScreenController extends GetxController {
   final skipSilenceEnabled = false.obs;
   final streamingQuality = AudioQuality.High.obs;
   final isIgnoringBatteryOptimizations = false.obs;
+  final discoverContentType = "QP".obs;
+  final isNewVersionAvailable = false.obs;
+  final currentVersion = "V1.2.0";
   @override
   void onInit() {
     _setInitValue();
+    _checkNewVersion();
     super.onInit();
+  }
+
+  get currentVision => currentVersion;
+
+  _checkNewVersion() {
+    newVersionCheck(currentVersion)
+        .then((value) => isNewVersionAvailable.value = value);
   }
 
   Future<void> _setInitValue() async {
@@ -24,6 +38,7 @@ class SettingsScreenController extends GetxController {
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
+    discoverContentType.value = setBox.get('discoverContentType');
     if (GetPlatform.isAndroid) {
       isIgnoringBatteryOptimizations.value =
           (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
@@ -39,6 +54,12 @@ class SettingsScreenController extends GetxController {
     setBox.put('themeModeType', ThemeType.values.indexOf(val));
     themeModetype.value = val;
     Get.find<ThemeController>().changeThemeModeType(val);
+  }
+
+  void onContentChange(dynamic value) {
+    setBox.put('discoverContentType', value);
+    discoverContentType.value = value;
+    Get.find<HomeScreenController>().changeDiscoverContent(value);
   }
 
   void toggleCachingSongsValue(bool value) {

@@ -64,6 +64,8 @@ class ListWidget extends StatelessWidget {
       {bool isPlaylist = false, Playlist? playlist, ScrollController? sc}) {
     final playerController = Get.find<PlayerController>();
     return ListView.builder(
+      addRepaintBoundaries: false,
+      addAutomaticKeepAlives: false,
         controller: sc,
         padding: EdgeInsets.only(
           top: 0,
@@ -97,11 +99,10 @@ class ListWidget extends StatelessWidget {
                 ).whenComplete(() => Get.delete<SongInfoController>());
               },
               contentPadding: const EdgeInsets.only(top: 0, left: 5, right: 30),
-              leading: SizedBox.square(
-                  dimension: 50,
-                  child: ImageWidget(
-                    song: items[index],
-                  )),
+              leading: ImageWidget(
+                size: 55,
+                song: items[index],
+              ),
               title: Text(
                 items[index].title,
                 maxLines: 1,
@@ -142,12 +143,10 @@ class ListWidget extends StatelessWidget {
                 },
                 contentPadding:
                     const EdgeInsets.only(top: 0, bottom: 0, left: 10),
-                leading: SizedBox.square(
-                    dimension: 100,
-                    child: ImageWidget(
-                      playlist: playlists[index],
-                      isMediumImage: true,
-                    )),
+                leading: ImageWidget(
+                  size: 100,
+                  playlist: playlists[index],
+                ),
                 title: Text(
                   playlists[index].title,
                   maxLines: 1,
@@ -192,12 +191,10 @@ class ListWidget extends StatelessWidget {
                   arguments: [true, albums[index], false]);
             },
             contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 10),
-            leading: SizedBox.square(
-                dimension: 100,
-                child: ImageWidget(
-                  album: albums[index],
-                  isMediumImage: true,
-                )),
+            leading: ImageWidget(
+              size: 100,
+              album: albums[index],
+            ),
             title: Text(
               albums[index].title,
               maxLines: 1,
@@ -237,15 +234,10 @@ class ListWidget extends StatelessWidget {
                     arguments: [false, artists[index]]);
               },
               contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 5),
-              leading: Container(
-                  height: 90,
-                  width: 90,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(shape: BoxShape.circle),
-                  child: ImageWidget(
-                    artist: artists[index],
-                    isMediumImage: true,
-                  )),
+              leading: ImageWidget(
+                size: 90,
+                artist: artists[index],
+              ),
               title: Text(
                 artists[index].name,
                 maxLines: 1,

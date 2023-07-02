@@ -4,11 +4,11 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
-import 'package:get/get_utils/get_utils.dart';
-import 'package:harmonymusic/models/album.dart';
-import 'package:harmonymusic/services/utils.dart';
 import 'package:hive/hive.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+
+import 'package:harmonymusic/models/album.dart';
+import 'package:harmonymusic/services/utils.dart';
 import '../helper.dart';
 import 'constant.dart';
 import 'continuations.dart';
@@ -155,13 +155,34 @@ class MusicServices extends getx.GetxService {
     return home;
   }
 
+  Future<List<Map<String, dynamic>>> getCharts({String? countryCode}) async {
+    final List<Map<String, dynamic>> charts = [];
+    final data = Map.from(_context);
+
+    data['browseId'] = 'FEmusic_charts';
+    if (countryCode != null) {
+      data['formData'] = {
+        'selectedValues': [countryCode]
+      };
+    }
+    final response = (await _sendRequest('browse', data)).data;
+    final results = nav(response, single_column_tab + section_list);
+    results.removeAt(0);
+    for (dynamic result in results) {
+      charts.add(parseChartsItem(result));
+    }
+
+    return charts;
+  }
+
   Future<Map<String, dynamic>> getWatchPlaylist(
       {String videoId = "",
       String? playlistId,
       int limit = 25,
       bool radio = false,
       bool shuffle = false,
-      String? additionalParamsNext}) async {
+      String? additionalParamsNext,
+      bool onlyRelated = false}) async {
     final data = Map.from(_context);
     data['enablePersistentPlaylistPanel'] = true;
     data['isAudioOnly'] = true;
@@ -210,6 +231,12 @@ class MusicServices extends getx.GetxService {
 
       lyricsBrowseId = getTabBrowseId(watchNextRenderer, 1);
       relatedBrowseId = getTabBrowseId(watchNextRenderer, 2);
+      if (onlyRelated) {
+        return {
+          'lyrics': lyricsBrowseId,
+          'related': relatedBrowseId,
+        };
+      }
 
       results.addAll(nav(watchNextRenderer, [
         ...tab_content,
@@ -248,6 +275,26 @@ class MusicServices extends getx.GetxService {
       'related': relatedBrowseId,
       'additionalParamsForNext': additionalParamsForNext
     };
+  }
+
+  dynamic getContentRelatedToSong(String videoId) async {
+    final params = await getWatchPlaylist(videoId: videoId, onlyRelated: true);
+    final data = Map.from(_context);
+    data['browseId'] = params['related'];
+    final response = (await _sendRequest('browse', data)).data;
+    final sections = nav(response, ['contents'] + section_list);
+    final x = parseMixedContent(sections);
+    return x;
+  }
+
+  dynamic getLyrics(String browseId) async {
+    final data = Map.from(_context);
+    data['browseId'] = browseId;
+    final response = (await _sendRequest('browse', data)).data;
+    return nav(
+      response,
+      ['contents', ...section_list_item, ...description_shelf, ...description],
+    );
   }
 
   Future<Map<String, dynamic>> getPlaylistOrAlbumSongs(
@@ -399,7 +446,7 @@ class MusicServices extends getx.GetxService {
             .url
             .toString(),
         streamUriList
-            .firstWhere((element) => GetPlatform.isWindows ? (element.tag == 140):(element.tag == 251) || element.tag == 140)
+            .firstWhere((element) => (element.tag == 251) || element.tag == 140)
             .url
             .toString()
       ];

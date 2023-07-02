@@ -1,18 +1,17 @@
 import 'dart:io';
-
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
+
 import 'package:harmonymusic/services/audio_handler.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/ui/home.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
-
 import 'ui/screens/home_screen_controller.dart';
 import 'ui/utils/home_library_controller.dart';
 
@@ -42,11 +41,18 @@ class MyApp extends StatelessWidget {
     });
     return GetX<ThemeController>(builder: (controller) {
       return GetMaterialApp(
-        title: 'Harmony Music',
-        theme: controller.themedata.value,
-        home: const Home(),
-        debugShowCheckedModeBanner: false,
-      );
+          title: 'Harmony Music',
+          theme: controller.themedata.value,
+          home: const Home(),
+          debugShowCheckedModeBanner: false,
+          builder: (context, child) {
+            final scale =
+                MediaQuery.of(context).textScaleFactor.clamp(1.0, 1.3);
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(textScaleFactor: scale),
+              child: child!,
+            );
+          });
     });
   }
 }
@@ -81,7 +87,7 @@ void _setAppInitPrefs() {
       'streamingQuality': 1,
       'themePrimaryColor': 4278199603,
       'discoverContentType': "QP",
-      'newVersionVisibility':true
+      'newVersionVisibility': true
     });
   }
 }

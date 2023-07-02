@@ -2,10 +2,10 @@ import 'package:audio_service/audio_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/models/artist.dart';
-import 'package:harmonymusic/models/thumbnail.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'package:harmonymusic/models/artist.dart';
+import 'package:harmonymusic/models/thumbnail.dart';
 import '../../models/album.dart';
 import '../../models/playlist.dart';
 

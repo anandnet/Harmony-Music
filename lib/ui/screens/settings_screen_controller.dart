@@ -1,11 +1,12 @@
 import 'package:android_power_manager/android_power_manager.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/screens/home_screen_controller.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class SettingsScreenController extends GetxController {
   final cacheSongs = false.obs;
@@ -24,10 +25,11 @@ class SettingsScreenController extends GetxController {
     super.onInit();
   }
 
-  get currentVision=>currentVersion;
+  get currentVision => currentVersion;
 
   _checkNewVersion() {
-    newVersionCheck(currentVersion).then((value) => isNewVersionAvailable.value = value);
+    newVersionCheck(currentVersion)
+        .then((value) => isNewVersionAvailable.value = value);
   }
 
   Future<void> _setInitValue() async {

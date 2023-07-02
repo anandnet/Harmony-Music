@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/screens/home_screen_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:harmonymusic/ui/screens/home_screen_controller.dart';
 
 class NewVersionDialog extends StatelessWidget {
   const NewVersionDialog({super.key});
@@ -11,7 +12,7 @@ class NewVersionDialog extends StatelessWidget {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Container(
-        height: 330,
+        height: 320,
         padding: const EdgeInsets.only(top: 40, bottom: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,8 +49,8 @@ class NewVersionDialog extends StatelessWidget {
                   GetX<HomeScreenController>(builder: (controller) {
                     return Checkbox(
                         value: controller.showVersionDialog.isFalse,
-                        onChanged: (val){
-                          controller.onChangeVersionVisibility(val??false);
+                        onChanged: (val) {
+                          controller.onChangeVersionVisibility(val ?? false);
                         },
                         shape: const CircleBorder());
                   }),
@@ -57,7 +58,19 @@ class NewVersionDialog extends StatelessWidget {
                 ],
               ),
             ),
-            FilledButton(onPressed: ()=>Navigator.of(context).pop(), child: const Text("Dismiss"))
+            Container(
+                decoration: BoxDecoration(
+                    color: Theme.of(context).textTheme.titleLarge!.color,
+                    borderRadius: BorderRadius.circular(10)),
+                child: InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0, vertical: 10),
+                    child: Text("Dismiss",
+                        style: TextStyle(color: Theme.of(context).canvasColor)),
+                  ),
+                  onTap: () => Navigator.of(context).pop(),
+                ))
           ],
         ),
       ),

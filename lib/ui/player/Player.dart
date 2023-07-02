@@ -1,16 +1,15 @@
 import 'dart:ui';
-
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
 import 'package:harmonymusic/ui/widgets/marqwee_widget.dart';
 import 'package:harmonymusic/ui/widgets/songinfo_bottom_sheet.dart';
-
 import '../widgets/image_widget.dart';
 import '../widgets/sliding_up_panel.dart';
 

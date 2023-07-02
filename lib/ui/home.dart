@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/ui/navigator.dart';
 import 'package:harmonymusic/ui/player/player.dart';
-
 import 'player/player_controller.dart';
 import 'widgets/image_widget.dart';
 import 'widgets/mini_player_progress_bar.dart';

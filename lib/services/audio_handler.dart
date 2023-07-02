@@ -1,18 +1,15 @@
 import 'dart:io';
-
+import 'package:hive/hive.dart';
+import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:device_equalizer/device_equalizer.dart';
-import 'package:get/get.dart';
+
 import 'package:harmonymusic/helper.dart';
 import 'package:harmonymusic/models/media_Item_builder.dart';
 import 'package:harmonymusic/services/utils.dart';
 import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
-import 'package:hive/hive.dart';
-
-import 'package:just_audio/just_audio.dart';
-
-import 'package:path_provider/path_provider.dart';
-
 import '../ui/utils/home_library_controller.dart';
 import 'music_service.dart';
 

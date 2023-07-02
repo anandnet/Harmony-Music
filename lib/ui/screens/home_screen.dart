@@ -25,29 +25,34 @@ class HomeScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButton: Obx(
-        () => Padding(
-          padding: EdgeInsets.only(
-              bottom:
-                  playerController.playerPanelMinHeight.value == 0 ? 20 : 75),
-          child: SizedBox(
-            height: 60,
-            width: 60,
-            child: FittedBox(
-              child: FloatingActionButton(
-                  focusElevation: 0,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(14))),
-                  elevation: 0,
-                  onPressed: () async {
-                    Get.toNamed(ScreenNavigationSetup.searchScreen,
-                        id: ScreenNavigationSetup.id);
-                    // file:///data/user/0/com.example.harmonymusic/cache/libCachedImageData/
-                    //file:///data/user/0/com.example.harmonymusic/cache/just_audio_cache/
-                  },
-                  child: const Icon(Icons.search_rounded)),
+        () => homeScreenController.tabIndex.value != 5?
+           Obx(
+            () => Padding(
+              padding: EdgeInsets.only(
+                  bottom: playerController.playerPanelMinHeight.value == 0
+                      ? 20
+                      : 75),
+              child: SizedBox(
+                height: 60,
+                width: 60,
+                child: FittedBox(
+                  child: FloatingActionButton(
+                      focusElevation: 0,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(14))),
+                      elevation: 0,
+                      onPressed: () async {
+                        Get.toNamed(ScreenNavigationSetup.searchScreen,
+                            id: ScreenNavigationSetup.id);
+                        // file:///data/user/0/com.example.harmonymusic/cache/libCachedImageData/
+                        //file:///data/user/0/com.example.harmonymusic/cache/just_audio_cache/
+                      },
+                      child: const Icon(Icons.search_rounded)),
+                ),
+              ),
             ),
-          ),
-        ),
+          
+        ):const SizedBox.shrink(),
       ),
       body: Row(
         children: <Widget>[
@@ -193,7 +198,7 @@ class Body extends StatelessWidget {
                               Obx(() => QuickPicksWidget(
                                   content:
                                       homeScreenController.quickPicks.value)),
-                               ...getWidgetList(
+                              ...getWidgetList(
                                   homeScreenController.middleContent),
                               ...getWidgetList(
                                 homeScreenController.fixedContent,

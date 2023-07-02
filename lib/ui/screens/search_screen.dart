@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:harmonymusic/ui/navigator.dart';
 import 'package:harmonymusic/ui/screens/search_screen_controller.dart';
 

@@ -13,6 +13,8 @@ An app for music streaming made with Flutter(Currently support Android only).
 * Streaming quality control
 * Skip silence
 * Dynamic Theme
+* Equalizer support
+* Lyrics support
 * No Advertisment
 * No Login required
 * No permission required
@@ -22,8 +24,9 @@ An app for music streaming made with Flutter(Currently support Android only).
 
 # To Do
 * Backup & Restore
-* Lyrics support
-* Equalizer support
+
+# Troubleshoot
+* if you are facing Notification control issue or music playpack stopped by system optimization, please enable ignore battery optimization option from settings
 
 # Disclaimer
 ```

@@ -26,7 +26,7 @@ An app for music streaming made with Flutter(Currently support Android only).
 * Backup & Restore
 
 # Troubleshoot
-* if you are facing Notification control issue or music playpack stopped by system optimization, please enable ignore battery optimization option from settings
+* if you are facing Notification control issue or music playback stopped by system optimization, please enable ignore battery optimization option from settings
 
 # Disclaimer
 ```

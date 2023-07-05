@@ -54,21 +54,17 @@ class Home extends StatelessWidget {
                           child: Column(
                             children: [
                               Container(
-                                height: 3,
-                                color: Theme.of(context)
-                                    .progressIndicatorTheme
-                                    .color,
-                                child: MiniPlayerProgressBar(
-                                    current: playerController
-                                        .progressBarStatus.value.current,
-                                    total: playerController
-                                        .progressBarStatus.value.total,
-                                    //need to check
-                                    progressBarColor: Theme.of(context)
-                                            .progressIndicatorTheme
-                                            .linearTrackColor ??
-                                        Colors.white),
-                              ),
+                                  height: 3,
+                                  color: Theme.of(context)
+                                      .progressIndicatorTheme
+                                      .color,
+                                  child: MiniPlayerProgressBar(
+                                      progressBarStatus: playerController
+                                          .progressBarStatus.value,
+                                      progressBarColor: Theme.of(context)
+                                              .progressIndicatorTheme
+                                              .linearTrackColor ??
+                                          Colors.white)),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 17.0, vertical: 7),
@@ -77,10 +73,9 @@ class Home extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    playerController.currentSong.value !=
-                                            null
+                                    playerController.currentSong.value != null
                                         ? ImageWidget(
-                                          size: 50,
+                                            size: 50,
                                             song: playerController
                                                 .currentSong.value!,
                                           )
@@ -138,12 +133,16 @@ class Home extends StatelessWidget {
                                             width: 40,
                                             child: InkWell(
                                               onTap: (playerController
-                                                          .currentQueue.isEmpty || (playerController
                                                           .currentQueue
-                                                          .last
-                                                          .id ==
-                                                      playerController
-                                                          .currentSong.value!.id))
+                                                          .isEmpty ||
+                                                      (playerController
+                                                              .currentQueue
+                                                              .last
+                                                              .id ==
+                                                          playerController
+                                                              .currentSong
+                                                              .value!
+                                                              .id))
                                                   ? null
                                                   : playerController.next,
                                               child: Icon(

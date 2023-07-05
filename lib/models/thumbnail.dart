@@ -3,7 +3,7 @@ class Thumbnail {
   final String _url;
   String sizewith(int size) => "${_url.split("=")[0]}=w$size-h$size-l90-rj";
   String get url => _url;
-  String get high => sizewith(450);
-  String get medium => sizewith(350);
-  String get low => sizewith(150);
+  String get high => sizewith(400); //450
+  String get medium => sizewith(250); //350
+  String get low => sizewith(150); //150
 }

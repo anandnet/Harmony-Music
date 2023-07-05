@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:harmonymusic/models/durationstate.dart';
 
 class MiniPlayerProgressBar extends StatelessWidget {
   const MiniPlayerProgressBar(
       {super.key,
-      required this.total,
-      required this.current,
+      required this.progressBarStatus,
       required this.progressBarColor});
-  final Duration current;
-  final Duration total;
+  final ProgressBarState progressBarStatus;
   final Color progressBarColor;
 
   @override
@@ -15,7 +14,7 @@ class MiniPlayerProgressBar extends StatelessWidget {
     return CustomPaint(
       size: Size(MediaQuery.of(context).size.width, 3),
       painter: ProgressBarPainter(
-          current: current, total: total, progressBarColor: progressBarColor),
+          current: progressBarStatus.current, total: progressBarStatus.total, progressBarColor: progressBarColor),
     );
   }
 }
@@ -45,6 +44,6 @@ class ProgressBarPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
+    return true;
   }
 }

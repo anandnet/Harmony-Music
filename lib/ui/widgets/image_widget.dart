@@ -55,20 +55,22 @@ class ImageWidget extends StatelessWidget {
             imageUrl,
             fit: BoxFit.fill,
           )
-        : SizedBox.square(
-            dimension: size,
+        : Container(
+            height: size,
+            width: size,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              shape: artist != null ? BoxShape.circle : BoxShape.rectangle,
+              borderRadius: artist != null ? null : BorderRadius.circular(5),
+            ),
             child: CachedNetworkImage(
+              height: size,
+              width: size,
+              memCacheHeight: (song != null && !isPlayerArtImage) ? 140 : null,
+              memCacheWidth: (song != null && !isPlayerArtImage)? 140 : null,
               cacheKey: cacheKey,
               imageUrl: imageUrl,
-              imageBuilder: (context, imageProvider) => Container(
-                decoration: BoxDecoration(
-                  shape: artist != null ? BoxShape.circle : BoxShape.rectangle,
-                  borderRadius:
-                      artist != null ? null : BorderRadius.circular(5),
-                  image:
-                      DecorationImage(image: imageProvider, fit: BoxFit.cover),
-                ),
-              ),
+              fit: BoxFit.cover,
               errorWidget: (context, url, error) => Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(

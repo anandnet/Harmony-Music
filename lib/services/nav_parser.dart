@@ -44,6 +44,12 @@ const navigation_watch_playlist_id = [
   'watchPlaylistEndpoint',
   'playlistId'
 ];
+const audio_watch_playlist_id = [
+      ...menu_items,
+      0,
+      'menuNavigationItemRenderer',
+      ...navigation_watch_playlist_id
+    ];
 const title_text = ['title', 'runs', 0, 'text'];
 const thumbnail_renderer = [
   'thumbnailRenderer',
@@ -152,7 +158,7 @@ List<Map<String, dynamic>> parseMixedContent(List<dynamic> rows) {
               noneIfAbsent: true, funName: "mixed1");
           if (pageType == null) {
             if (nav(data, navigation_watch_playlist_id) != null) {
-            //  content = parseWatchPlaylistHome(data);
+              //  content = parseWatchPlaylistHome(data);
             } else {
               content = parseSong(data);
             }
@@ -197,6 +203,7 @@ dynamic parseSingle(dynamic result) {
     'artists': [
       {'name': 'Single'}
     ],
+    'audioPlaylistId': nav(result,audio_watch_playlist_id ),
     'year': nav(result, subtitle),
     'browseId': nav(result, ['title', 'runs', 0, ...navigation_browse_id]),
     'thumbnails': nav(result, thumbnail_renderer)
@@ -269,6 +276,7 @@ Album parseAlbum(Map<dynamic, dynamic> result, {bool reqAlbumObj = true}) {
     'title': nav(result, title_text),
     'browseId': nav(result, n_title + navigation_browse_id),
     'thumbnails': nav(result, thumbnail_renderer),
+    'audioPlaylistId': nav(result,audio_watch_playlist_id )
     //'isExplicit': nav(result, subtitle_badge_label, noneIfAbsent: true) != null,
   };
   albumMap.addAll(artistInfo);
@@ -276,7 +284,7 @@ Album parseAlbum(Map<dynamic, dynamic> result, {bool reqAlbumObj = true}) {
 }
 
 Artist parseRelatedArtist(Map<String, dynamic> data) {
- return Artist.fromJson({
+  return Artist.fromJson({
     'artist': nav(data, title_text),
     'browseId': nav(data, n_title + navigation_browse_id),
     'thumbnails': nav(data, thumbnail_renderer),
@@ -676,6 +684,7 @@ dynamic parseSearchResult(Map<String, dynamic> data,
     //final x = parseMenuPlaylists(data, searchResult);
   } else if (resultType == 'album') {
     searchResult['type'] = getItemText(data, 1);
+    searchResult['audioPlaylistId'] = nav(data, audio_watch_playlist_id);
   } else if (resultType.contains('playlist')) {
     List<dynamic> flexItem = getFlexColumnItem(data, 1)['text']['runs'];
     bool hasAuthor = (flexItem.length == defaultOffset + 3);
@@ -865,7 +874,7 @@ dynamic parseContentList(results, Function parseFunc) {
   return contents;
 }
 
-Map<String,dynamic> parseChartsItem(dynamic result) {
+Map<String, dynamic> parseChartsItem(dynamic result) {
   final contentList = nav(result, ['musicCarouselShelfRenderer', 'contents']);
   final String category = nav(result, [
     'musicCarouselShelfRenderer',
@@ -889,17 +898,14 @@ Map<String,dynamic> parseChartsItem(dynamic result) {
     final playlists = contentList
         .map((playlist) => parsePlaylist(playlist['musicTwoRowItemRenderer']))
         .toList();
-    return {
-      'title':category,
-      'contents': playlists};
+    return {'title': category, 'contents': playlists};
   } else if (category.contains('Trending')) {
     final videoList = contentList
         .map((video) =>
-            parseChartsTrending(video['musicResponsiveListItemRenderer'])).whereType<MediaItem>()
+            parseChartsTrending(video['musicResponsiveListItemRenderer']))
+        .whereType<MediaItem>()
         .toList();
-    return {
-      'title':category,
-      'contents': videoList};
+    return {'title': category, 'contents': videoList};
   }
   return {};
 }
@@ -935,7 +941,7 @@ MediaItem? parseChartsTrending(dynamic data) {
     'artists': artists,
     'thumbnails': nav(data, thumbnails),
   };
-  if(video['videoId']==null){
+  if (video['videoId'] == null) {
     return null;
   }
   return MediaItemBuilder.fromJson(video);

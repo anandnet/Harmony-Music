@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/playlist.dart';
 import 'package:hive/hive.dart';
 
 import 'package:harmonymusic/helper.dart';
@@ -13,16 +14,19 @@ class PlayListNAlbumScreenController extends GetxController {
   final MusicServices _musicServices = Get.find<MusicServices>();
   late RxList<MediaItem> songList = RxList();
   final isContentFetched = false.obs;
-  final isAlbum = false.obs;
   final isAddedToLibrary = false.obs;
   late final String id;
   late dynamic contentRenderer;
+  bool isAlbum;
 
-  PlayListNAlbumScreenController(dynamic content, bool isAlbum, bool isIdOnly) {
-    this.isAlbum.value = isAlbum;
+  PlayListNAlbumScreenController(dynamic content, this.isAlbum, bool isIdOnly) {
     if (!isIdOnly) contentRenderer = content;
-    id = isAlbum ? (isIdOnly ? content : content.browseId) : content.playlistId;
-    if (!isAlbum && !content.isCloudPlaylist) {
+    id = (isIdOnly
+        ? content
+        : isAlbum
+            ? content.browseId
+            : content.playlistId);
+    if (!isIdOnly && !isAlbum && !content.isCloudPlaylist) {
       fetchSongsfromDatabase(id);
       return;
     }
@@ -32,7 +36,7 @@ class PlayListNAlbumScreenController extends GetxController {
 
   Future<void> _checkIfAddedToLibrary(String id) async {
     //check
-    final box = isAlbum.isTrue
+    final box = isAlbum
         ? await Hive.openBox("LibraryAlbums")
         : await Hive.openBox("LibraryPlaylists");
     isAddedToLibrary.value = box.containsKey(id);
@@ -63,17 +67,30 @@ class PlayListNAlbumScreenController extends GetxController {
   Future<void> _fetchSong(String id, bool isIdOnly) async {
     isContentFetched.value = false;
 
-    final content = isAlbum.isTrue
+    final content = isAlbum
         ? await _musicServices.getPlaylistOrAlbumSongs(albumId: id)
         : await _musicServices.getPlaylistOrAlbumSongs(playlistId: id);
+
     if (isIdOnly) {
-      final album = Album(
-          browseId: id,
-          artists: List<Map<dynamic, dynamic>>.from(content['artists']),
-          thumbnailUrl: Thumbnail(content['thumbnails'][0]['url']).high,
-          title: content['title'],
-          year: content['year']);
-      contentRenderer = album;
+      if (isAlbum) {
+        final album = Album(
+            browseId: id,
+            artists: List<Map<dynamic, dynamic>>.from(content['artists']),
+            thumbnailUrl: Thumbnail(content['thumbnails'][0]['url']).high,
+            title: content['title'],
+            audioPlaylistId: content['audioPlaylistId'],
+            year: content['year']);
+        contentRenderer = album;
+      } else {
+        final playlist = Playlist(
+            title: content['title'],
+            playlistId: id,
+            thumbnailUrl: Thumbnail(content['thumbnails'][0]['url']).high,
+            description: content['description'],
+            isCloudPlaylist: true,
+            songCount: (content['trackCount']).toString());
+        contentRenderer = playlist;
+      }
     }
     songList.value = List<MediaItem>.from(content['tracks']);
     isContentFetched.value = true;
@@ -81,17 +98,17 @@ class PlayListNAlbumScreenController extends GetxController {
 
   Future<bool> addNremoveFromLibrary(dynamic content, {bool add = true}) async {
     try {
-      final box = isAlbum.isTrue
+      final box = isAlbum
           ? await Hive.openBox("LibraryAlbums")
           : await Hive.openBox("LibraryPlaylists");
-      final id = isAlbum.isTrue ? content.browseId : content.playlistId;
+      final id = isAlbum ? content.browseId : content.playlistId;
       add ? box.put(id, content.toJson()) : box.delete(id);
       isAddedToLibrary.value = add;
       //Update frontend
-      isAlbum.isTrue
+      isAlbum
           ? Get.find<LibraryAlbumsController>().refreshLib()
           : Get.find<LibraryPlaylistsController>().refreshLib();
-      if (isAlbum.isFalse && !content.isCloudPlaylist && !add) {
+      if (!isAlbum && !content.isCloudPlaylist && !add) {
         final plstbox = await Hive.openBox(content.playlistId);
         plstbox.deleteFromDisk();
       }

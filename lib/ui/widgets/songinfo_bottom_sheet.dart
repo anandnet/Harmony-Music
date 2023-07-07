@@ -9,6 +9,7 @@ import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
 import 'package:harmonymusic/ui/utils/home_library_controller.dart';
 import 'package:harmonymusic/ui/widgets/add_to_playlist.dart';
 import 'package:harmonymusic/ui/widgets/snackbar.dart';
+import '../../helper.dart';
 import '../../models/media_Item_builder.dart';
 import '../../models/playlist.dart';
 import '../navigator.dart';
@@ -236,14 +237,7 @@ class SongInfoBottomSheet extends StatelessWidget {
         : [const SizedBox.shrink()];
   }
 
-  String? getCurrentRouteName() {
-    String? currentPath;
-    Get.nestedKey(ScreenNavigationSetup.id)?.currentState?.popUntil((route) {
-      currentPath = route.settings.name;
-      return true;
-    });
-    return currentPath;
-  }
+  
 }
 
 class SongInfoController extends GetxController {

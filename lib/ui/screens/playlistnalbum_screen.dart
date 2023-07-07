@@ -8,6 +8,7 @@ import 'package:harmonymusic/ui/widgets/list_widget.dart';
 import 'package:harmonymusic/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
 import 'package:harmonymusic/ui/widgets/snackbar.dart';
 import 'package:harmonymusic/ui/widgets/sort_widget.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../models/playlist.dart';
 import '../player/player_controller.dart';
 import '../widgets/image_widget.dart';
@@ -22,15 +23,11 @@ class PlaylistNAlbumScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final args = Get.arguments;
 
-    final dynamic content = args != null
-        ? (args[0] as bool ? args[1] : args[1] as Playlist)
-        : Get.find<PlayListNAlbumScreenController>().contentRenderer;
-
     final PlayListNAlbumScreenController playListNAlbumScreenController =
         (args == null)
             ? Get.find<PlayListNAlbumScreenController>()
             : Get.put(
-                PlayListNAlbumScreenController(content, args[0], args[2]));
+                PlayListNAlbumScreenController(args[1], args[0], args[2]));
 
     return SizedBox(
       child: Row(
@@ -66,13 +63,16 @@ class PlaylistNAlbumScreen extends StatelessWidget {
             ],
             // selectedIconTheme: IconThemeData(color: Colors.white)
           ),
-          Obx(() => playListNAlbumScreenController.isContentFetched.isFalse
-              ? const Expanded(
+          Obx(() {
+            if (playListNAlbumScreenController.isContentFetched.isFalse) {
+              return const Expanded(
                   child: Center(
-                  child: RefreshProgressIndicator(),
-                ))
-              : Expanded(
-                  child: Container(
+                child: RefreshProgressIndicator(),
+              ));
+            } else {
+              final content = playListNAlbumScreenController.contentRenderer;
+              return Expanded(
+                child: Container(
                   color: Theme.of(context).canvasColor,
                   padding: const EdgeInsets.only(top: 73, left: 10),
                   child: Column(
@@ -84,14 +84,13 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                           SizedBox(
                             width: MediaQuery.of(context).size.width - 120,
                             child: Text(
-                              playListNAlbumScreenController
-                                  .contentRenderer.title,
+                              content.title,
                               style: Theme.of(context).textTheme.titleLarge,
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          (playListNAlbumScreenController.isAlbum.isFalse &&
+                          (!playListNAlbumScreenController.isAlbum &&
                                   !content.isCloudPlaylist &&
                                   content.playlistId != "LIBFAV" &&
                                   content.playlistId != "SongsCache" &&
@@ -161,7 +160,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                               : const SizedBox.shrink()
                         ],
                       ),
-                      (playListNAlbumScreenController.isAlbum.isFalse &&
+                      (!playListNAlbumScreenController.isAlbum &&
                               !content.isCloudPlaylist)
                           ? const SizedBox.shrink()
                           : Padding(
@@ -170,70 +169,100 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                   dimension: 200,
                                   child: Stack(
                                     children: [
-                                      playListNAlbumScreenController
-                                              .isAlbum.isTrue
+                                      playListNAlbumScreenController.isAlbum
                                           ? ImageWidget(
-                                            size: 200,
-                                              album:
-                                                  playListNAlbumScreenController
-                                                      .contentRenderer,
+                                              size: 200,
+                                              album: content,
                                             )
                                           : ImageWidget(
-                                            size: 200,
+                                              size: 200,
                                               playlist: content,
                                             ),
                                       Align(
                                         alignment: Alignment.topRight,
-                                        child: InkWell(
-                                            onTap: () {
-                                              final add =
-                                                  playListNAlbumScreenController
-                                                      .isAddedToLibrary.isFalse;
-                                              playListNAlbumScreenController
-                                                  .addNremoveFromLibrary(
-                                                      content,
-                                                      add: add)
-                                                  .then((value) => ScaffoldMessenger
-                                                          .of(context)
-                                                      .showSnackBar(snackbar(
-                                                          context,
-                                                          value
-                                                              ? add
-                                                                  ? playListNAlbumScreenController
-                                                                          .isAlbum
-                                                                          .isTrue
-                                                                      ? "Album bookmarked !"
-                                                                      : "Playlist bookmarked!"
-                                                                  : playListNAlbumScreenController
-                                                                          .isAlbum
-                                                                          .isTrue
-                                                                      ? "Album bookmark removed!"
-                                                                      : "Playlist bookmark removed!"
-                                                              : "Operation failed",
-                                                          size: SanckBarSize
-                                                              .MEDIUM)));
-                                            },
-                                            child: Container(
-                                              height: 40,
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                  color: Theme.of(context)
-                                                      .canvasColor
-                                                      .withOpacity(.7),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  10))),
-                                              child: Obx(() => Icon(
-                                                  playListNAlbumScreenController
+                                        child: Container(
+                                          height: 72,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .canvasColor
+                                                  .withOpacity(.7),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                      bottomLeft:
+                                                          Radius.circular(10))),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  final add =
+                                                      playListNAlbumScreenController
                                                           .isAddedToLibrary
-                                                          .isFalse
-                                                      ? Icons
-                                                          .bookmark_add_rounded
-                                                      : Icons
-                                                          .bookmark_added_rounded)),
-                                            )),
+                                                          .isFalse;
+                                                  playListNAlbumScreenController
+                                                      .addNremoveFromLibrary(
+                                                          content,
+                                                          add: add)
+                                                      .then((value) => ScaffoldMessenger
+                                                              .of(context)
+                                                          .showSnackBar(snackbar(
+                                                              context,
+                                                              value
+                                                                  ? add
+                                                                      ? playListNAlbumScreenController.isAlbum
+                                                                          ? "Album bookmarked !"
+                                                                          : "Playlist bookmarked!"
+                                                                      : playListNAlbumScreenController.isAlbum
+                                                                          ? "Album bookmark removed!"
+                                                                          : "Playlist bookmark removed!"
+                                                                  : "Operation failed",
+                                                              size: SanckBarSize.MEDIUM)));
+                                                },
+                                                child: Obx(() => Icon(
+                                                    playListNAlbumScreenController
+                                                            .isAddedToLibrary
+                                                            .isFalse
+                                                        ? Icons
+                                                            .bookmark_add_rounded
+                                                        : Icons
+                                                            .bookmark_added_rounded)),
+                                              ),
+                                              IconButton(
+                                                  visualDensity:
+                                                      const VisualDensity(
+                                                          vertical: -3),
+                                                  splashRadius: 10,
+                                                  onPressed: () {
+                                                    if (playListNAlbumScreenController
+                                                        .isAlbum) {
+                                                      Share.share(
+                                                          "https://youtube.com/playlist?list=${content.audioPlaylistId}");
+                                                    } else {
+                                                      final isPlaylistIdPrefixAvlbl =
+                                                          content.playlistId
+                                                                  .substring(
+                                                                      0, 2) ==
+                                                              "VL";
+                                                      String url =
+                                                          "https://youtube.com/playlist?list=";
+
+                                                      url = isPlaylistIdPrefixAvlbl
+                                                          ? url +
+                                                              content.playlistId
+                                                                  .substring(2)
+                                                          : content.playlistId;
+                                                      Share.share(url);
+                                                    }
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.share,
+                                                    size: 20,
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -281,22 +310,16 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                             ),
                       Padding(
                           padding: EdgeInsets.only(
-                              top: (playListNAlbumScreenController
-                                          .isAlbum.isFalse &&
+                              top: (!playListNAlbumScreenController.isAlbum &&
                                       !content.isCloudPlaylist)
                                   ? 0
                                   : 10.0),
-                          child: (playListNAlbumScreenController
-                                      .isAlbum.isTrue ||
-                                  (playListNAlbumScreenController
-                                          .isAlbum.isFalse &&
+                          child: (playListNAlbumScreenController.isAlbum ||
+                                  (!playListNAlbumScreenController.isAlbum &&
                                       content.isCloudPlaylist))
                               ? Text(
-                                  playListNAlbumScreenController.isAlbum.isTrue
-                                      ? playListNAlbumScreenController
-                                              .contentRenderer
-                                              .artists[0]['name'] ??
-                                          ""
+                                  playListNAlbumScreenController.isAlbum
+                                      ? content.artists[0]['name'] ?? ""
                                       : content.description ?? "",
                                   style: Theme.of(context).textTheme.titleSmall,
                                 )
@@ -311,11 +334,11 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                             a, c, d);
                                       }),
                                 )),
-                      (playListNAlbumScreenController.isAlbum.isFalse &&
+                      (!playListNAlbumScreenController.isAlbum &&
                               !content.isCloudPlaylist)
                           ? const SizedBox.shrink()
                           : const Divider(),
-                      (playListNAlbumScreenController.isAlbum.isFalse &&
+                      (!playListNAlbumScreenController.isAlbum &&
                               !content.isCloudPlaylist)
                           ? const SizedBox.shrink()
                           : Obx(
@@ -340,8 +363,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                       "Songs",
                                       true,
                                       isPlaylist: true,
-                                      playlist: playListNAlbumScreenController
-                                              .isAlbum.isFalse
+                                      playlist: !playListNAlbumScreenController
+                                              .isAlbum
                                           ? content as Playlist
                                           : null,
                                     )
@@ -356,7 +379,10 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                           : const Expanded(child: SongListShimmer()))
                     ],
                   ),
-                )))
+                ),
+              );
+            }
+          })
         ],
       ),
     );

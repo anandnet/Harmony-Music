@@ -252,7 +252,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                           ? url +
                                                               content.playlistId
                                                                   .substring(2)
-                                                          : content.playlistId;
+                                                          :url + content.playlistId;
                                                       Share.share(url);
                                                     }
                                                   },

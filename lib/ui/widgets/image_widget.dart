@@ -67,7 +67,7 @@ class ImageWidget extends StatelessWidget {
               height: size,
               width: size,
               memCacheHeight: (song != null && !isPlayerArtImage) ? 140 : null,
-              memCacheWidth: (song != null && !isPlayerArtImage)? 140 : null,
+              //memCacheWidth: (song != null && !isPlayerArtImage)? 140 : null,
               cacheKey: cacheKey,
               imageUrl: imageUrl,
               fit: BoxFit.cover,

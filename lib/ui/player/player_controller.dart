@@ -378,7 +378,7 @@ class PlayerController extends GetxController {
         : box.delete(currMediaItem.id);
     try {
       final playlistController = Get.find<PlayListNAlbumScreenController>();
-      if (playlistController.isAlbum.isFalse &&
+      if (!playlistController.isAlbum &&
           playlistController.id == "LIBFAV") {
         isCurrentSongFav.isFalse
             ? playlistController.addNRemoveItemsinList(currMediaItem,
@@ -402,7 +402,7 @@ class PlayerController extends GetxController {
       box.add(MediaItemBuilder.toJson(mediaItem));
       try {
         final playlistController = Get.find<PlayListNAlbumScreenController>();
-        if (playlistController.isAlbum.isFalse &&
+        if (!playlistController.isAlbum &&
             playlistController.id == "LIBRP") {
           if (playlistController.songList.length > 20) {
             playlistController.addNRemoveItemsinList(null,

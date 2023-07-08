@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+
+import 'package:harmonymusic/ui/navigator.dart';
 
 void printERROR(dynamic text, {String tag = "Harmony Music"}) {
   debugPrint("\x1B[31m[$tag]: $text");
@@ -11,6 +14,15 @@ void printWarning(dynamic text, {String tag = 'Harmony Music'}) {
 
 void printINFO(dynamic text, {String tag = 'Harmony Music'}) {
   debugPrint("\x1B[32m[$tag]: $text");
+}
+
+String? getCurrentRouteName() {
+  String? currentPath;
+  Get.nestedKey(ScreenNavigationSetup.id)?.currentState?.popUntil((route) {
+    currentPath = route.settings.name;
+    return true;
+  });
+  return currentPath;
 }
 
 void sortSongsNVideos(

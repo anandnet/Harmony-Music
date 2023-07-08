@@ -9,6 +9,7 @@ import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
 import 'package:harmonymusic/ui/utils/home_library_controller.dart';
 import 'package:harmonymusic/ui/widgets/add_to_playlist.dart';
 import 'package:harmonymusic/ui/widgets/snackbar.dart';
+import '../../helper.dart';
 import '../../models/media_Item_builder.dart';
 import '../../models/playlist.dart';
 import '../navigator.dart';
@@ -44,7 +45,12 @@ class SongInfoBottomSheet extends StatelessWidget {
             maxLines: 1,
           ),
           subtitle: Text(song.artist!),
-          trailing: IconButton(
+          trailing:calledFromPlayer? IconButton(
+                  onPressed: () => Share.share("https://youtube.com/watch?v=${song.id}"),
+                  icon:  Icon(
+                         Icons.share_rounded,
+                        color: Theme.of(context).textTheme.titleMedium!.color,
+                      )) :IconButton(
               onPressed: songInfoController.toggleFav,
               icon: Obx(() => Icon(
                     songInfoController.isCurrentSongFav.isFalse
@@ -175,7 +181,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                   }
                 })
             : const SizedBox.shrink(),
-        ListTile(
+        calledFromPlayer ? const SizedBox(height: 10,): ListTile(
           contentPadding: const EdgeInsets.only(bottom: 20, left: 15),
           visualDensity: const VisualDensity(vertical: -1),
           leading: const Icon(Icons.share_rounded),
@@ -236,14 +242,7 @@ class SongInfoBottomSheet extends StatelessWidget {
         : [const SizedBox.shrink()];
   }
 
-  String? getCurrentRouteName() {
-    String? currentPath;
-    Get.nestedKey(ScreenNavigationSetup.id)?.currentState?.popUntil((route) {
-      currentPath = route.settings.name;
-      return true;
-    });
-    return currentPath;
-  }
+  
 }
 
 class SongInfoController extends GetxController {

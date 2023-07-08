@@ -5,6 +5,7 @@ import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/screens/artist_screen_controller.dart';
 import 'package:harmonymusic/ui/widgets/image_widget.dart';
 import 'package:harmonymusic/ui/widgets/search_related_widgets.dart';
+import 'package:share_plus/share_plus.dart';
 import '../navigator.dart';
 import '../widgets/snackbar.dart';
 
@@ -113,101 +114,117 @@ class ArtistScreen extends StatelessWidget {
                               child: SingleChildScrollView(
                                 padding:
                                     const EdgeInsets.only(bottom: 90, top: 70),
-                                child: artistScreenController
-                                        .isArtistContentFetced.value
-                                    ? Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 200,
-                                            width: 250,
-                                            child: Stack(
-                                              children: [
-                                                Center(
-                                                  child: ImageWidget(
-                                                    size: 200,
-                                                    artist:
-                                                        artistScreenController
-                                                            .artist_,
-                                                  ),
-                                                ),
-                                                Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      final bool add =
-                                                          artistScreenController
-                                                              .isAddedToLibrary
-                                                              .isFalse;
-                                                      artistScreenController
-                                                          .addNremoveFromLibrary(
-                                                              add: add)
-                                                          .then((value) => ScaffoldMessenger
-                                                                  .of(context)
-                                                              .showSnackBar(snackbar(
-                                                                  context,
-                                                                  value
-                                                                      ? add
-                                                                          ? "Artist bookmarked !"
-                                                                          : "Artist bookmark removed!"
-                                                                      : "Operation failed",
-                                                                  size: SanckBarSize.MEDIUM)));
-                                                    },
-                                                    child: artistScreenController
-                                                            .isArtistContentFetced
-                                                            .isFalse
-                                                        ? const SizedBox
-                                                            .shrink()
-                                                        : Icon(artistScreenController
-                                                                .isAddedToLibrary
-                                                                .isFalse
-                                                            ? Icons
-                                                                .bookmark_add_rounded
-                                                            : Icons
-                                                                .bookmark_added_rounded),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 10, bottom: 10),
-                                            child: Text(
-                                              artistScreenController
-                                                  .artist_.name,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleLarge,
-                                            ),
-                                          ),
-                                          (artistData.containsKey(
-                                                      "description") &&
-                                                  artistData["description"] !=
-                                                      null)
-                                              ? Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: Text(
-                                                    "\"${artistData["description"]}\"",
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .titleSmall,
-                                                  ),
-                                                )
-                                              : SizedBox(
-                                                  height: 300,
-                                                  child: Center(
-                                                    child: Text(
-                                                      "No description available!",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall,
+                                child:
+                                    artistScreenController
+                                            .isArtistContentFetced.value
+                                        ? Column(
+                                            children: [
+                                              SizedBox(
+                                                height: 200,
+                                                width: 260,
+                                                child: Stack(
+                                                  children: [
+                                                    Center(
+                                                      child: ImageWidget(
+                                                        size: 200,
+                                                        artist:
+                                                            artistScreenController
+                                                                .artist_,
+                                                      ),
                                                     ),
-                                                  ),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topRight,
+                                                      child: Column(
+                                                        children: [
+                                                          InkWell(
+                                                            onTap: () {
+                                                              final bool add =
+                                                                  artistScreenController
+                                                                      .isAddedToLibrary
+                                                                      .isFalse;
+                                                              artistScreenController
+                                                                  .addNremoveFromLibrary(
+                                                                      add: add)
+                                                                  .then((value) => ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                                                                      context,
+                                                                      value
+                                                                          ? add
+                                                                              ? "Artist bookmarked !"
+                                                                              : "Artist bookmark removed!"
+                                                                          : "Operation failed",
+                                                                      size: SanckBarSize.MEDIUM)));
+                                                            },
+                                                            child: artistScreenController
+                                                                    .isArtistContentFetced
+                                                                    .isFalse
+                                                                ? const SizedBox
+                                                                    .shrink()
+                                                                : Icon(artistScreenController
+                                                                        .isAddedToLibrary
+                                                                        .isFalse
+                                                                    ? Icons
+                                                                        .bookmark_add_rounded
+                                                                    : Icons
+                                                                        .bookmark_added_rounded),
+                                                          ),
+                                                          IconButton(
+                                                            icon:const Icon(
+                                                              Icons.share,
+                                                              size: 20,
+                                                            ),
+                                                            splashRadius: 18,
+                                                            onPressed: () =>
+                                                                  Share.share(
+                                                                      "https://music.youtube.com/channel/${artistScreenController.artist_.browseId}")
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
-                                        ],
-                                      )
-                                    : const SizedBox.shrink(),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 10, bottom: 10),
+                                                child: Text(
+                                                  artistScreenController
+                                                      .artist_.name,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge,
+                                                ),
+                                              ),
+                                              (artistData.containsKey(
+                                                          "description") &&
+                                                      artistData[
+                                                              "description"] !=
+                                                          null)
+                                                  ? Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Text(
+                                                        "\"${artistData["description"]}\"",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleSmall,
+                                                      ),
+                                                    )
+                                                  : SizedBox(
+                                                      height: 300,
+                                                      child: Center(
+                                                        child: Text(
+                                                          "No description available!",
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall,
+                                                        ),
+                                                      ),
+                                                    ),
+                                            ],
+                                          )
+                                        : const SizedBox.shrink(),
                               ),
                             ),
                           )

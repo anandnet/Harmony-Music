@@ -277,6 +277,20 @@ class MusicServices extends getx.GetxService {
     };
   }
 
+  Future<String> getAlbumBrowseId(String audioPlaylistId) async {
+    final response = await dio.get("${domain}playlist",
+        options: Options(headers: _headers),
+        queryParameters: {"list": audioPlaylistId});
+    final reg = RegExp(r'\"MPRE.+?\"');
+    final matchs = reg.firstMatch(response.data.toString());
+    if(matchs!=null){
+      final x = (matchs[0])!;
+      final res = (x.substring(1)).split("\\")[0];
+      return res;
+    }
+    return audioPlaylistId;
+  }
+
   dynamic getContentRelatedToSong(String videoId) async {
     final params = await getWatchPlaylist(videoId: videoId, onlyRelated: true);
     final data = Map.from(_context);
@@ -306,6 +320,9 @@ class MusicServices extends getx.GetxService {
     String browseId = playlistId != null
         ? (playlistId.startsWith("VL") ? playlistId : "VL$playlistId")
         : albumId!;
+    if (albumId != null && albumId.contains("OLAK5uy")) {
+     browseId = await getAlbumBrowseId(browseId);
+    }
     final data = Map.from(_context);
     data['browseId'] = browseId;
     Map<String, dynamic> response = (await _sendRequest('browse', data)).data;
@@ -426,6 +443,19 @@ class MusicServices extends getx.GetxService {
         })
         .whereType<String>()
         .toList();
+  }
+
+  ///Specially created for deep-links
+  Future<List> getSongWithId(String songId) async {
+    final data = Map.of(_context);
+    data['videoId'] = songId;
+    final response = (await _sendRequest("player", data)).data;
+    final videoDetails = response["videoDetails"];
+    if (videoDetails.containsKey("musicVideoType")) {
+      final list = await getWatchPlaylist(videoId: songId);
+      return [true, list['tracks']];
+    }
+    return [false, null];
   }
 
   Future<List<String>?> getSongUri(String songId,

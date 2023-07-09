@@ -25,34 +25,35 @@ class HomeScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButton: Obx(
-        () => homeScreenController.tabIndex.value != 5?
-           Obx(
-            () => Padding(
-              padding: EdgeInsets.only(
-                  bottom: playerController.playerPanelMinHeight.value == 0
-                      ? 20
-                      : 75),
-              child: SizedBox(
-                height: 60,
-                width: 60,
-                child: FittedBox(
-                  child: FloatingActionButton(
-                      focusElevation: 0,
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(14))),
-                      elevation: 0,
-                      onPressed: () async {
-                        Get.toNamed(ScreenNavigationSetup.searchScreen,
-                            id: ScreenNavigationSetup.id);
-                        // file:///data/user/0/com.example.harmonymusic/cache/libCachedImageData/
-                        //file:///data/user/0/com.example.harmonymusic/cache/just_audio_cache/
-                      },
-                      child: const Icon(Icons.search_rounded)),
+        () => homeScreenController.tabIndex.value != 5
+            ? Obx(
+                () => Padding(
+                  padding: EdgeInsets.only(
+                      bottom: playerController.playerPanelMinHeight.value == 0
+                          ? 20
+                          : 75),
+                  child: SizedBox(
+                    height: 60,
+                    width: 60,
+                    child: FittedBox(
+                      child: FloatingActionButton(
+                          focusElevation: 0,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(14))),
+                          elevation: 0,
+                          onPressed: () async {
+                            Get.toNamed(ScreenNavigationSetup.searchScreen,
+                                id: ScreenNavigationSetup.id);
+                            // file:///data/user/0/com.example.harmonymusic/cache/libCachedImageData/
+                            //file:///data/user/0/com.example.harmonymusic/cache/just_audio_cache/
+                          },
+                          child: const Icon(Icons.search_rounded)),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          
-        ):const SizedBox.shrink(),
+              )
+            : const SizedBox.shrink(),
       ),
       body: Row(
         children: <Widget>[
@@ -136,78 +137,78 @@ class Body extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.only(left: 5.0),
         child: Obx(
-          () => SingleChildScrollView(
-            padding: EdgeInsets.only(bottom: 90, top: topPadding),
-            child: homeScreenController.networkError.isTrue
-                ? SizedBox(
-                    height: MediaQuery.of(context).size.height - 180,
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "Home",
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
+          () => homeScreenController.networkError.isTrue
+              ? SizedBox(
+                  height: MediaQuery.of(context).size.height - 180,
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Home",
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
-                        Expanded(
-                          child: Center(
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Oops Network Error!",
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 10),
-                                    decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge!
-                                            .color,
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: InkWell(
-                                      onTap: () {
-                                        homeScreenController.init();
-                                      },
-                                      child: Text(
-                                        "Retry!",
-                                        style: TextStyle(
-                                            color:
-                                                Theme.of(context).canvasColor),
-                                      ),
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Oops Network Error!",
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 10),
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .color,
+                                      borderRadius:
+                                          BorderRadius.circular(10)),
+                                  child: InkWell(
+                                    onTap: () {
+                                      homeScreenController.init();
+                                    },
+                                    child: Text(
+                                      "Retry!",
+                                      style: TextStyle(
+                                          color:
+                                              Theme.of(context).canvasColor),
                                     ),
                                   ),
-                                ]),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                : Obx(() {
-                    return Column(
-                      children: homeScreenController.isContentFetched.value
-                          ? [
-                              Obx(() => QuickPicksWidget(
-                                  content:
-                                      homeScreenController.quickPicks.value)),
-                              ...getWidgetList(
-                                  homeScreenController.middleContent),
-                              ...getWidgetList(
-                                homeScreenController.fixedContent,
-                              )
-                            ]
-                          : [const HomeShimmer()],
-                    );
-                  }),
-          ),
+                                ),
+                              ]),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              : Obx(() {
+                  final items = homeScreenController.isContentFetched.value
+                      ? [
+                          Obx(() => QuickPicksWidget(
+                              content:
+                                  homeScreenController.quickPicks.value)),
+                          ...getWidgetList(
+                              homeScreenController.middleContent),
+                          ...getWidgetList(
+                            homeScreenController.fixedContent,
+                          )
+                        ]
+                      : [const HomeShimmer()];
+                  return ListView.builder(
+                    padding: EdgeInsets.only(bottom: 90, top: topPadding),
+                    itemCount: items.length,
+                    itemBuilder: (context, index) => items[index],
+                  );
+                }),
         ),
       );
     } else if (homeScreenController.tabIndex.value == 1) {

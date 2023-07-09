@@ -46,7 +46,7 @@ class AppLinksController extends GetxController {
         uri.host == "youtu.be") {
       //printINFO("pathsegmet: ${uri.pathSegments} params:${uri.queryParameters}");
       if (uri.pathSegments[0] == "playlist" &&
-          !uri.queryParameters.containsKey("playnext")) {
+          (!uri.queryParameters.containsKey("playnext") || uri.host == "music.youtube.com")) {
         final browseId = uri.queryParameters['list'];
         await openPlaylistOrAlbum(browseId!);
       } else if (uri.pathSegments[0] == "shorts") {

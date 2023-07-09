@@ -10,6 +10,7 @@ An app for music streaming made with Flutter(Currently support Android only).
 * Background music
 * Playlist creation & bookmark support
 * Artist & Album bookmark support
+* Import song,Playlist,Album,Artist via sharing from Ytube/Ytube Music.
 * Streaming quality control
 * Skip silence
 * Dynamic Theme

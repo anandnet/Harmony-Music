@@ -65,14 +65,25 @@ class ArtistScreenController extends GetxController {
     navigationRailCurrentIndex.value = val;
     final tabName = ["About", "Songs", "Videos", "Albums", "Singles"][val];
 
+    //skip for about page
     if (val == 0 || sepataredContent.containsKey(tabName)) return;
     if (artistData[tabName] == null) {
       isSeparatedArtistContentFetced.value = true;
       return;
     }
     isSeparatedArtistContentFetced.value = false;
+
+  //check if params available for continuation
+   if((artistData[tabName]).containsKey("params")){
     sepataredContent[tabName] = await musicServices.getArtistRealtedContent(
         artistData[tabName], tabName);
+   }else{
+    sepataredContent[tabName] ={"results": artistData[tabName]['content']};
+    isSeparatedArtistContentFetced.value =true;
+    return;
+   }
+
+   // observered - continuation available only for song & vid
     if (val == 1 || val == 2) {
       final scrollController =
           val == 1 ? songScrollController : videoScrollController;

@@ -45,11 +45,11 @@ const navigation_watch_playlist_id = [
   'playlistId'
 ];
 const audio_watch_playlist_id = [
-      ...menu_items,
-      0,
-      'menuNavigationItemRenderer',
-      ...navigation_watch_playlist_id
-    ];
+  ...menu_items,
+  0,
+  'menuNavigationItemRenderer',
+  ...navigation_watch_playlist_id
+];
 const title_text = ['title', 'runs', 0, 'text'];
 const thumbnail_renderer = [
   'thumbnailRenderer',
@@ -203,7 +203,7 @@ dynamic parseSingle(dynamic result) {
     'artists': [
       {'name': 'Single'}
     ],
-    'audioPlaylistId': nav(result,audio_watch_playlist_id ),
+    'audioPlaylistId': nav(result, audio_watch_playlist_id),
     'year': nav(result, subtitle),
     'browseId': nav(result, ['title', 'runs', 0, ...navigation_browse_id]),
     'thumbnails': nav(result, thumbnail_renderer)
@@ -276,7 +276,7 @@ Album parseAlbum(Map<dynamic, dynamic> result, {bool reqAlbumObj = true}) {
     'title': nav(result, title_text),
     'browseId': nav(result, n_title + navigation_browse_id),
     'thumbnails': nav(result, thumbnail_renderer),
-    'audioPlaylistId': nav(result,audio_watch_playlist_id )
+    'audioPlaylistId': nav(result, audio_watch_playlist_id)
     //'isExplicit': nav(result, subtitle_badge_label, noneIfAbsent: true) != null,
   };
   albumMap.addAll(artistInfo);
@@ -814,7 +814,7 @@ Map<String, dynamic> parseAlbumHeader(Map<String, dynamic> response) {
 }
 
 Map<String, dynamic> parseArtistContents(List results) {
-  final Map<String, dynamic> navigationEndpoints = {
+  final Map<String, dynamic> navigationEndpointsNContent = {
     'Songs': null,
     'Videos': null,
     'Albums': null,
@@ -828,12 +828,19 @@ Map<String, dynamic> parseArtistContents(List results) {
       final browseEndpoint = nav(
           result, ['musicShelfRenderer', 'bottomEndpoint', 'browseEndpoint']);
 
-      navigationEndpoints[title] = browseEndpoint != null
-          ? {
-              'browseId': browseEndpoint['browseId'],
-              'params': browseEndpoint['params']
-            }
-          : null;
+      final contentList = nav(result, ['musicShelfRenderer', 'contents']);
+      final content = parsePlaylistItems(contentList);
+
+      if (browseEndpoint == null) {
+        navigationEndpointsNContent[title] = {"content": content};
+      } else {
+        navigationEndpointsNContent[title] = {
+          'browseId': browseEndpoint['browseId'],
+          'params': browseEndpoint['params'],
+          "content": content
+        };
+      }
+
     } else if (result.containsKey('musicCarouselShelfRenderer')) {
       final browseEndpoint = nav(result, [
         'musicCarouselShelfRenderer',
@@ -845,8 +852,6 @@ Map<String, dynamic> parseArtistContents(List results) {
         'browseEndpoint'
       ]);
 
-      if (browseEndpoint == null) continue;
-
       final title = nav(result, [
         'musicCarouselShelfRenderer',
         'header',
@@ -856,13 +861,35 @@ Map<String, dynamic> parseArtistContents(List results) {
         0
       ])['text'];
 
-      navigationEndpoints[title] = {
-        'browseId': browseEndpoint['browseId'],
-        'params': browseEndpoint['params']
-      };
+      final contentList =
+          nav(result, ['musicCarouselShelfRenderer', 'contents']);
+      dynamic content = [];
+      if (title == "Videos") {
+        content = contentList
+            .map((video) => parseVideo(video['musicTwoRowItemRenderer']))
+            .toList();
+      } else if (title == "Albums") {
+        content = contentList
+            .map((album) => parseAlbum(album['musicTwoRowItemRenderer']))
+            .toList();
+      } else if (title == "Singles") {
+        content = contentList
+            .map((single) => parseSingle(single['musicTwoRowItemRenderer']))
+            .toList();
+      }
+
+      if (browseEndpoint != null) {
+        navigationEndpointsNContent[title] = {
+          'browseId': browseEndpoint['browseId'],
+          'params': browseEndpoint['params'],
+          'content': content
+        };
+      } else {
+        navigationEndpointsNContent[title] = {'content': content};
+      }
     }
   }
-  return navigationEndpoints;
+  return navigationEndpointsNContent;
 }
 
 dynamic parseContentList(results, Function parseFunc) {

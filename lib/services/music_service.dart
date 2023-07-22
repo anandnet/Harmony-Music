@@ -749,6 +749,8 @@ class MusicServices extends getx.GetxService {
       "results": [],
     };
     final data = Map.of(_context);
+    browseEndpoint.remove("content");
+    if (browseEndpoint.isEmpty) return result;
     data.addAll(browseEndpoint);
     dynamic response =
         (await _sendRequest("browse", data, additionalParams: additionalParams))

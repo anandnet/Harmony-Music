@@ -274,10 +274,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   @override
   Future<void> skipToQueueItem(int index) async {
     if (index < 0 || index >= queue.value.length) return;
-    if (_player.shuffleModeEnabled) {
-      index = _player.shuffleIndices![index];
-    }
-    _player.seek(Duration.zero, index: index);
+    await customAction("playByIndex",{'index': index});
   }
 
   @override
@@ -399,7 +396,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       final currentQueue = queue.value;
       currentQueue.insert(currentIndex + 1, song);
       queue.add(currentQueue);
-    }else if (name == 'openEqualizer') {
+    } else if (name == 'openEqualizer') {
       await DeviceEqualizer().open(_player.androidAudioSessionId!);
     }
   }

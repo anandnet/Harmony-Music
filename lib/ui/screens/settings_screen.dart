@@ -74,14 +74,14 @@ class SettingsScreen extends StatelessWidget {
                   () => Text(
                       settingsController.themeModetype.value ==
                               ThemeType.dynamic
-                          ? "dynamic"
+                          ? "Dynamic"
                           : settingsController.themeModetype.value ==
                                   ThemeType.system
-                              ? "system default"
+                              ? "System Default"
                               : settingsController.themeModetype.value ==
                                       ThemeType.dark
-                                  ? "dark"
-                                  : "light",
+                                  ? "Dark"
+                                  : "Light",
                       style: Theme.of(context).textTheme.bodyMedium),
                 ),
                 onTap: () => showDialog(
@@ -173,7 +173,7 @@ class SettingsScreen extends StatelessWidget {
                         subtitle: Obx(() => RichText(
                               text: TextSpan(
                                 text:
-                                    "Status: ${settingsController.isIgnoringBatteryOptimizations.isTrue ? "Enabled" : "Disblaled"}\n",
+                                    "Status: ${settingsController.isIgnoringBatteryOptimizations.isTrue ? "Enabled" : "Disabled"}\n",
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -252,7 +252,7 @@ class ThemeSelectorDialog extends StatelessWidget {
             value: ThemeType.dynamic,
           ),
           radioWidget(
-              label: "System default",
+              label: "System Default",
               controller: settingsController,
               value: ThemeType.system),
           radioWidget(

@@ -7,8 +7,8 @@ import 'package:get/get.dart' as getx;
 import 'package:hive/hive.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
-import 'package:harmonymusic/models/album.dart';
-import 'package:harmonymusic/services/utils.dart';
+import '/models/album.dart';
+import '/services/utils.dart';
 import '../helper.dart';
 import 'constant.dart';
 import 'continuations.dart';

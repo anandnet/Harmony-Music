@@ -3,8 +3,8 @@
 
 import 'package:audio_service/audio_service.dart';
 
-import 'package:harmonymusic/models/media_Item_builder.dart';
-import 'package:harmonymusic/services/utils.dart';
+import '/models/media_Item_builder.dart';
+import '/services/utils.dart';
 import '../models/album.dart';
 import '../models/artist.dart';
 import '../models/playlist.dart';

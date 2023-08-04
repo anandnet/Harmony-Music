@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
-import 'package:harmonymusic/helper.dart';
-import 'package:harmonymusic/models/media_Item_builder.dart';
-import 'package:harmonymusic/ui/screens/home_screen_controller.dart';
-import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
+import '/helper.dart';
+import '/models/media_Item_builder.dart';
+import '/ui/screens/home_screen_controller.dart';
+import '/ui/screens/playlistnalbum_screen_controller.dart';
 import '../widgets/sliding_up_panel.dart';
 import '/models/durationstate.dart';
 import '/services/music_service.dart';

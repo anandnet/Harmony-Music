@@ -6,10 +6,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:device_equalizer/device_equalizer.dart';
 
-import 'package:harmonymusic/helper.dart';
-import 'package:harmonymusic/models/media_Item_builder.dart';
-import 'package:harmonymusic/services/utils.dart';
-import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
+import '/helper.dart';
+import '/models/media_Item_builder.dart';
+import '/services/utils.dart';
+import '/ui/screens/settings_screen_controller.dart';
 import '../ui/utils/home_library_controller.dart';
 import 'music_service.dart';
 

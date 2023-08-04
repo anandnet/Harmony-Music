@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-import 'package:harmonymusic/helper.dart';
-import 'package:harmonymusic/ui/player/player_controller.dart';
-import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
-import 'package:harmonymusic/ui/utils/theme_controller.dart';
-import 'package:harmonymusic/ui/widgets/marqwee_widget.dart';
-import 'package:harmonymusic/ui/widgets/songinfo_bottom_sheet.dart';
+import '/helper.dart';
+import '/ui/player/player_controller.dart';
+import '/ui/screens/settings_screen_controller.dart';
+import '/ui/utils/theme_controller.dart';
+import '/ui/widgets/marqwee_widget.dart';
+import '/ui/widgets/songinfo_bottom_sheet.dart';
 import '../widgets/image_widget.dart';
 import '../widgets/sliding_up_panel.dart';
 

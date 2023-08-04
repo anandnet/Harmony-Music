@@ -74,6 +74,7 @@ class ArtistScreenController extends GetxController {
     isSeparatedArtistContentFetced.value = false;
 
   //check if params available for continuation
+  //tab browse endpoint & top result stored in [artistData], tabContent & addtionalParams for continuation stored in Separated Content 
    if((artistData[tabName]).containsKey("params")){
     sepataredContent[tabName] = await musicServices.getArtistRealtedContent(
         artistData[tabName], tabName);

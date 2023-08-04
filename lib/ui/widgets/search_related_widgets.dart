@@ -2,13 +2,13 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:harmonymusic/models/album.dart';
-import 'package:harmonymusic/models/artist.dart';
-import 'package:harmonymusic/models/playlist.dart';
-import 'package:harmonymusic/ui/screens/artist_screen_controller.dart';
-import 'package:harmonymusic/ui/screens/search_result_screen_controller.dart';
-import 'package:harmonymusic/ui/widgets/content_list_widget.dart';
-import 'package:harmonymusic/ui/widgets/sort_widget.dart';
+import '/models/album.dart';
+import '/models/artist.dart';
+import '/models/playlist.dart';
+import '/ui/screens/artist_screen_controller.dart';
+import '/ui/screens/search_result_screen_controller.dart';
+import '/ui/widgets/content_list_widget.dart';
+import '/ui/widgets/sort_widget.dart';
 import 'list_widget.dart';
 
 class ResultWidget extends StatelessWidget {

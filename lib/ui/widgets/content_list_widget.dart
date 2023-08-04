@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:harmonymusic/ui/screens/search_result_screen_controller.dart';
-import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
+import '/ui/screens/search_result_screen_controller.dart';
+import '/ui/widgets/content_list_widget_item.dart';
 
 class ContentListWidget extends StatelessWidget {
   ///ContentListWidget is used to render a section of Content like a list of Albums or Playlists in HomeScreen

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:harmonymusic/models/artist.dart';
-import 'package:harmonymusic/models/thumbnail.dart';
+import '/models/artist.dart';
+import '/models/thumbnail.dart';
 import '../../models/album.dart';
 import '../../models/playlist.dart';
 

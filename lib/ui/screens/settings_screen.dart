@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:harmonymusic/services/music_service.dart';
-import 'package:harmonymusic/ui/player/player_controller.dart';
-import 'package:harmonymusic/ui/utils/theme_controller.dart';
+import '/services/music_service.dart';
+import '/ui/player/player_controller.dart';
+import '/ui/utils/theme_controller.dart';
 import 'settings_screen_controller.dart';
 
 class SettingsScreen extends StatelessWidget {

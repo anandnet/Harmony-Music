@@ -5,7 +5,7 @@ import 'package:hive/hive.dart';
 import '../../helper.dart';
 import '../../models/artist.dart';
 import '../utils/home_library_controller.dart';
-import 'package:harmonymusic/services/music_service.dart';
+import '/services/music_service.dart';
 
 class ArtistScreenController extends GetxController {
   final isArtistContentFetced = false.obs;

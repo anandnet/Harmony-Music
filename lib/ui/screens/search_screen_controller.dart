@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:harmonymusic/services/music_service.dart';
+import '/services/music_service.dart';
 
 class SearchScreenController extends GetxController {
   final textInputController = TextEditingController();

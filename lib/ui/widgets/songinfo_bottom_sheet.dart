@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:share_plus/share_plus.dart';
 
-import 'package:harmonymusic/ui/player/player_controller.dart';
-import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
-import 'package:harmonymusic/ui/utils/home_library_controller.dart';
-import 'package:harmonymusic/ui/widgets/add_to_playlist.dart';
-import 'package:harmonymusic/ui/widgets/snackbar.dart';
+import '/ui/player/player_controller.dart';
+import '/ui/screens/playlistnalbum_screen_controller.dart';
+import '/ui/utils/home_library_controller.dart';
+import '/ui/widgets/add_to_playlist.dart';
+import '/ui/widgets/snackbar.dart';
 import '../../helper.dart';
 import '../../models/media_Item_builder.dart';
 import '../../models/playlist.dart';

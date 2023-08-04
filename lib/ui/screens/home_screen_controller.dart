@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-import 'package:harmonymusic/helper.dart';
-import 'package:harmonymusic/models/album.dart';
-import 'package:harmonymusic/models/playlist.dart';
-import 'package:harmonymusic/models/quick_picks.dart';
-import 'package:harmonymusic/services/music_service.dart';
-import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
-import 'package:harmonymusic/ui/widgets/new_version_dialog.dart';
+import '/helper.dart';
+import '/models/album.dart';
+import '/models/playlist.dart';
+import '/models/quick_picks.dart';
+import '/services/music_service.dart';
+import '/ui/screens/settings_screen_controller.dart';
+import '/ui/widgets/new_version_dialog.dart';
 
 
 class HomeScreenController extends GetxController {

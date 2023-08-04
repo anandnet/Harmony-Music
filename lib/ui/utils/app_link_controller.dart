@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/helper.dart';
-import 'package:harmonymusic/services/music_service.dart';
-import 'package:harmonymusic/ui/player/player_controller.dart';
 
+import '/helper.dart';
+import '/services/music_service.dart';
+import '/ui/player/player_controller.dart';
 import '../navigator.dart';
 import '../widgets/snackbar.dart';
 

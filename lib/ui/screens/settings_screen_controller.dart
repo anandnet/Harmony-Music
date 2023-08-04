@@ -2,11 +2,11 @@ import 'package:android_power_manager/android_power_manager.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'package:harmonymusic/helper.dart';
-import 'package:harmonymusic/services/music_service.dart';
-import 'package:harmonymusic/ui/player/player_controller.dart';
-import 'package:harmonymusic/ui/screens/home_screen_controller.dart';
-import 'package:harmonymusic/ui/utils/theme_controller.dart';
+import '/helper.dart';
+import '/services/music_service.dart';
+import '/ui/player/player_controller.dart';
+import '/ui/screens/home_screen_controller.dart';
+import '/ui/utils/theme_controller.dart';
 
 class SettingsScreenController extends GetxController {
   final cacheSongs = false.obs;

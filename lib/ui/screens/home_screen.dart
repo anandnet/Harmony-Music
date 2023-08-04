@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/player/player_controller.dart';
-import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
-import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
 
+import '/ui/player/player_controller.dart';
+import '/ui/widgets/content_list_widget_item.dart';
+import '/ui/widgets/create_playlist_dialog.dart';
 import '../../models/playlist.dart';
 import '../navigator.dart';
 import '../utils/home_library_controller.dart';

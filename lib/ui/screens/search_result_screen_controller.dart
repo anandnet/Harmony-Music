@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:harmonymusic/helper.dart';
-import 'package:harmonymusic/services/music_service.dart';
+import '/helper.dart';
+import '/services/music_service.dart';
 
 class SearchResultScreenController extends GetxController {
   final navigationRailCurrentIndex = 0.obs;

@@ -283,7 +283,7 @@ class MusicServices extends getx.GetxService {
         queryParameters: {"list": audioPlaylistId});
     final reg = RegExp(r'\"MPRE.+?\"');
     final matchs = reg.firstMatch(response.data.toString());
-    if(matchs!=null){
+    if (matchs != null) {
       final x = (matchs[0])!;
       final res = (x.substring(1)).split("\\")[0];
       return res;
@@ -321,7 +321,7 @@ class MusicServices extends getx.GetxService {
         ? (playlistId.startsWith("VL") ? playlistId : "VL$playlistId")
         : albumId!;
     if (albumId != null && albumId.contains("OLAK5uy")) {
-     browseId = await getAlbumBrowseId(browseId);
+      browseId = await getAlbumBrowseId(browseId);
     }
     final data = Map.from(_context);
     data['browseId'] = browseId;
@@ -772,6 +772,11 @@ class MusicServices extends getx.GetxService {
         final x = parsePlaylistItems(response['continuationContents']
             ['musicPlaylistShelfContinuation']['contents']);
         result['results'] = x;
+        result['additionalParams'] = "&ctoken=${null}&continuation=${null}";
+      } else if (contents.containsKey("gridRenderer")) {
+        result['results'] = (contents['gridRenderer']['items'])
+            .map((video) => parseVideo(video['musicTwoRowItemRenderer']))
+            .toList();
         result['additionalParams'] = "&ctoken=${null}&continuation=${null}";
       } else {
         final continuationKey = nav(contents, [

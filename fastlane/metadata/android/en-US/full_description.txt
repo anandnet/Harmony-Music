@@ -1,0 +1,17 @@
+# Features
+
+* Ability to play song from Ytube/Ytube Music.
+* Song cache while playing
+* Radio feature support
+* Background music
+* Playlist creation & bookmark support
+* Artist & Album bookmark support
+* Import song,Playlist,Album,Artist via sharing from Ytube/Ytube Music.
+* Streaming quality control
+* Skip silence
+* Dynamic Theme
+* Equalizer support
+* Lyrics support
+* Android Auto support
+* No Advertisment
+* No Login required

@@ -1,4 +1,4 @@
-import 'package:harmonymusic/models/thumbnail.dart';
+import '../models/thumbnail.dart';
 
 class AlbumContent {
   AlbumContent({required this.title, required this.albumList});

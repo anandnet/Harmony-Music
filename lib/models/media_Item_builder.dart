@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:audio_service/audio_service.dart';
-import 'package:harmonymusic/models/thumbnail.dart';
+import '../models/thumbnail.dart';
 
 class MediaItemBuilder {
   static MediaItem fromJson(dynamic json, {String? url}) {

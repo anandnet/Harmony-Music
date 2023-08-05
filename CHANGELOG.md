@@ -1,3 +1,12 @@
+## 1.3.1
+* Android Auto support
+* Fixed Artist content
+
+## 1.3.0
+* App Link/Deep link support
+* Miniplayer progressbar fixed 
+* Home Content list changed from column to listView
+
 ## 1.2.0
 * Discover content selecter added in settings
 * Equalizer support added

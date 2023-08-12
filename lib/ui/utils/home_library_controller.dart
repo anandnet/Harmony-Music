@@ -5,12 +5,12 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '/services/piped_service.dart';
 import '/helper.dart';
 import '/models/album.dart';
 import '/models/artist.dart';
 import '/models/media_Item_builder.dart';
 import '/models/playlist.dart';
-
 
 class LibrarySongsController extends GetxController {
   late RxList<MediaItem> cachedSongsList = RxList();
@@ -66,14 +66,13 @@ class LibrarySongsController extends GetxController {
         songlist, sortByName, sortByDate, sortByDuration, isAscending);
     cachedSongsList.value = songlist;
   }
-  
+
   Future<void> removeSong(MediaItem item) async {
     cachedSongsList.remove(item);
     final cacheDir = (await getTemporaryDirectory()).path;
-    if(await File("$cacheDir/cachedSongs/${item.id}.mp3").exists()){
+    if (await File("$cacheDir/cachedSongs/${item.id}.mp3").exists()) {
       await (File("$cacheDir/cachedSongs/${item.id}.mp3")).delete();
     }
-
   }
 }
 
@@ -114,8 +113,71 @@ class LibraryPlaylistsController extends GetxController {
           .whereType<Playlist>()
           .toList())
     ];
+
+    final appPrefsBox = Hive.box("AppPrefs");
+    if (appPrefsBox.containsKey("piped")) {
+      if (appPrefsBox.get("piped")['isLoggedIn']) await _getPipedPlaylist();
+    }
+
     isContentFetched.value = true;
     await box.close();
+  }
+
+  Future<void> _getPipedPlaylist() async {
+    final res = await Get.find<PipedServices>().getAllPlaylists();
+    if (res.code == 1) {
+      for (dynamic playlist in res.response) {
+        final plst = Playlist(
+          title: playlist['name'],
+          playlistId: playlist['id'],
+          thumbnailUrl: playlist['thumbnail'],
+          isPipedPlaylist: true,
+        );
+        libraryPlaylists.add(plst);
+      }
+    }
+  }
+
+  Future<void> syncPipedPlaylis() async {
+    final res = await Get.find<PipedServices>().getAllPlaylists();
+    final libPipedPlaylistsId = libraryPlaylists
+        .toList()
+        .map((e) {
+          if (e.isPipedPlaylist) {
+            return e.playlistId;
+          }
+        })
+        .whereType<String>()
+        .toList();
+
+    if (res.code == 1) {
+      final cloudpipedPlaylistsId = res.response
+          .map((e) {
+            return e['id'];
+          })
+          .whereType<String>()
+          .toList();
+      //add new playlist from cloud
+      for (dynamic playlist in res.response) {
+        if (!libPipedPlaylistsId.contains(playlist['id'])) {
+          final plst = Playlist(
+            title: playlist['name'],
+            playlistId: playlist['id'],
+            thumbnailUrl: playlist['thumbnail'],
+            isPipedPlaylist: true,
+          );
+          libraryPlaylists.add(plst);
+        }
+      }
+
+      //remove playist if removed from cloud
+      for (Playlist playlist in libraryPlaylists.toList()) {
+        if (!cloudpipedPlaylistsId.contains(playlist.playlistId)) {
+          libraryPlaylists.removeWhere(
+              (element) => element.playlistId == playlist.playlistId);
+        }
+      }
+    }
   }
 
   Future<bool> renamePlaylist(Playlist playlist) async {

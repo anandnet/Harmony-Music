@@ -1,7 +1,10 @@
 import 'package:android_power_manager/android_power_manager.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/services/piped_service.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../widgets/snackbar.dart';
 import '/helper.dart';
 import '/services/music_service.dart';
 import '/ui/player/player_controller.dart';
@@ -17,6 +20,7 @@ class SettingsScreenController extends GetxController {
   final isIgnoringBatteryOptimizations = false.obs;
   final discoverContentType = "QP".obs;
   final isNewVersionAvailable = false.obs;
+  final isLinkedWithPiped = false.obs;
   final currentVersion = "V1.3.1";
   @override
   void onInit() {
@@ -39,6 +43,9 @@ class SettingsScreenController extends GetxController {
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
     discoverContentType.value = setBox.get('discoverContentType');
+    if(setBox.containsKey("piped")){
+      isLinkedWithPiped.value = setBox.get("piped")['isLoggedIn'];
+    }
     if (GetPlatform.isAndroid) {
       isIgnoringBatteryOptimizations.value =
           (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
@@ -77,5 +84,16 @@ class SettingsScreenController extends GetxController {
     await AndroidPowerManager.requestIgnoreBatteryOptimizations();
     isIgnoringBatteryOptimizations.value =
         (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
+  }
+
+  void unlinkPiped(){
+    Get.find<PipedServices>().logout().then((res) {
+      if(res.code==1){
+        isLinkedWithPiped.value = false;
+      }
+      ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
+          Get.context!, res.code==1 ? "Unlinked successfully!":res.errorMessage??"Error occured!",
+          size: SanckBarSize.MEDIUM));
+    });
   }
 }

@@ -195,40 +195,42 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceAround,
                                             children: [
-                                              InkWell(
-                                                onTap: () {
-                                                  final add =
-                                                      playListNAlbumScreenController
-                                                          .isAddedToLibrary
-                                                          .isFalse;
-                                                  playListNAlbumScreenController
-                                                      .addNremoveFromLibrary(
-                                                          content,
-                                                          add: add)
-                                                      .then((value) => ScaffoldMessenger
-                                                              .of(context)
-                                                          .showSnackBar(snackbar(
-                                                              context,
-                                                              value
-                                                                  ? add
-                                                                      ? playListNAlbumScreenController.isAlbum
-                                                                          ? "Album bookmarked !"
-                                                                          : "Playlist bookmarked!"
-                                                                      : playListNAlbumScreenController.isAlbum
-                                                                          ? "Album bookmark removed!"
-                                                                          : "Playlist bookmark removed!"
-                                                                  : "Operation failed",
-                                                              size: SanckBarSize.MEDIUM)));
-                                                },
-                                                child: Obx(() => Icon(
-                                                    playListNAlbumScreenController
-                                                            .isAddedToLibrary
-                                                            .isFalse
-                                                        ? Icons
-                                                            .bookmark_add_rounded
-                                                        : Icons
-                                                            .bookmark_added_rounded)),
-                                              ),
+                                              (!playListNAlbumScreenController
+                                                          .isAlbum &&
+                                                      content.isPipedPlaylist)
+                                                  ? const SizedBox.shrink()
+                                                  : InkWell(
+                                                      onTap: () {
+                                                        final add =
+                                                            playListNAlbumScreenController
+                                                                .isAddedToLibrary
+                                                                .isFalse;
+                                                        playListNAlbumScreenController
+                                                            .addNremoveFromLibrary(
+                                                                content,
+                                                                add: add)
+                                                            .then((value) => ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                                                                context,
+                                                                value
+                                                                    ? add
+                                                                        ? playListNAlbumScreenController.isAlbum
+                                                                            ? "Album bookmarked !"
+                                                                            : "Playlist bookmarked!"
+                                                                        : playListNAlbumScreenController.isAlbum
+                                                                            ? "Album bookmark removed!"
+                                                                            : "Playlist bookmark removed!"
+                                                                    : "Operation failed",
+                                                                size: SanckBarSize.MEDIUM)));
+                                                      },
+                                                      child: Obx(() => Icon(
+                                                          playListNAlbumScreenController
+                                                                  .isAddedToLibrary
+                                                                  .isFalse
+                                                              ? Icons
+                                                                  .bookmark_add_rounded
+                                                              : Icons
+                                                                  .bookmark_added_rounded)),
+                                                    ),
                                               IconButton(
                                                   visualDensity:
                                                       const VisualDensity(
@@ -252,8 +254,11 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                           ? url +
                                                               content.playlistId
                                                                   .substring(2)
-                                                          :url + content.playlistId;
+                                                          : url +
+                                                              content
+                                                                  .playlistId;
                                                       Share.share(url);
+                                                      //TODO url for piped playlist
                                                     }
                                                   },
                                                   icon: const Icon(

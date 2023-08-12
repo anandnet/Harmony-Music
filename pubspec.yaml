@@ -41,7 +41,7 @@ dependencies:
   #http: ^0.13.5
   dio: ^5.1.1
   cached_network_image: ^3.2.3
-  youtube_explode_dart: ^1.12.4
+  youtube_explode_dart: ^2.0.1
   audio_service: ^0.18.9
   palette_generator: ^0.3.3+2
   path_provider: ^2.0.13

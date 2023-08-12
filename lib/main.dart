@@ -3,10 +3,11 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/utils/app_link_controller.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '/services/piped_service.dart';
+import '/ui/utils/app_link_controller.dart';
 import '/services/audio_handler.dart';
 import '/services/music_service.dart';
 import '/ui/home.dart';
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
 }
 
 Future<void> startApplicationServices() async {
+  Get.lazyPut(() => PipedServices(), fenix: true);
   Get.lazyPut(() => MusicServices(true), fenix: true);
   Get.lazyPut(() => ThemeController(), fenix: true);
   Get.lazyPut(() => PlayerController(), fenix: true);

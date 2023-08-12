@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/services/piped_service.dart';
 import 'package:hive/hive.dart';
 
 import '/helper.dart';
@@ -20,18 +21,23 @@ class PlayListNAlbumScreenController extends GetxController {
   bool isAlbum;
 
   PlayListNAlbumScreenController(dynamic content, this.isAlbum, bool isIdOnly) {
+    bool isPipedPlaylist = false;
     if (!isIdOnly) contentRenderer = content;
     id = (isIdOnly
         ? content
         : isAlbum
             ? content.browseId
             : content.playlistId);
-    if (!isIdOnly && !isAlbum && !content.isCloudPlaylist) {
+    if (!isIdOnly && !isAlbum) {
+      isPipedPlaylist = content.isPipedPlaylist;
+      if(!content.isCloudPlaylist){
       fetchSongsfromDatabase(id);
       return;
+      }
     }
+  
     _checkIfAddedToLibrary(id);
-    _fetchSong(id, isIdOnly);
+    _fetchSong(id, isIdOnly,isPipedPlaylist);
   }
 
   Future<void> _checkIfAddedToLibrary(String id) async {
@@ -64,8 +70,14 @@ class PlayListNAlbumScreenController extends GetxController {
     //await box.close();
   }
 
-  Future<void> _fetchSong(String id, bool isIdOnly) async {
+  Future<void> _fetchSong(String id, bool isIdOnly,bool isPipedPlaylist) async {
     isContentFetched.value = false;
+
+    if(isPipedPlaylist){
+      songList.value = (await Get.find<PipedServices>().getPlaylistSongs(id));
+      isContentFetched.value = true;
+      return;
+    }
 
     final content = isAlbum
         ? await _musicServices.getPlaylistOrAlbumSongs(albumId: id)

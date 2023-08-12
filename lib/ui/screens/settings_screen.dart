@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '/ui/widgets/link_piped.dart';
 import '/services/music_service.dart';
 import '/ui/player/player_controller.dart';
 import '/ui/utils/theme_controller.dart';
@@ -151,13 +152,37 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               ListTile(
-                contentPadding: const EdgeInsets.only(left: 5, right: 10,top: 0),
+                contentPadding:
+                    const EdgeInsets.only(left: 5, right: 10, top: 0),
                 title: const Text("Equalizer"),
                 subtitle: Text("Open system euqalizer",
                     style: Theme.of(context).textTheme.bodyMedium),
                 onTap: () async {
                   await Get.find<PlayerController>().openEqualizer();
                 },
+              ),
+              ListTile(
+                contentPadding:
+                    const EdgeInsets.only(left: 5, right: 10, top: 0),
+                title: const Text("Piped"),
+                subtitle: Text("Link with piped for playlist backup",
+                    style: Theme.of(context).textTheme.bodyMedium),
+                trailing: TextButton(
+                    child: Obx(() => Text(
+                        settingsController.isLinkedWithPiped.value
+                            ? "Unlink"
+                            : "link")),
+                    onPressed: () {
+                      if (settingsController.isLinkedWithPiped.isFalse) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => const LinkPiped(),
+                        ).whenComplete(
+                            () => Get.delete<PipedLinkedController>());
+                      } else {
+                        settingsController.unlinkPiped();
+                      }
+                    }),
               ),
               GetPlatform.isAndroid
                   ? Obx(

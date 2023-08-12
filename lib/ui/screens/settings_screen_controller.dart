@@ -17,7 +17,7 @@ class SettingsScreenController extends GetxController {
   final isIgnoringBatteryOptimizations = false.obs;
   final discoverContentType = "QP".obs;
   final isNewVersionAvailable = false.obs;
-  final currentVersion = "V1.3.1";
+  final currentVersion = "V1.3.2";
   @override
   void onInit() {
     _setInitValue();

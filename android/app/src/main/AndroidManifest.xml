@@ -38,7 +38,6 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:scheme="" />
                 <data android:scheme="http" />
                 <data android:scheme="https" />
                 
@@ -57,7 +56,6 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:scheme="" />
                 <data android:scheme="http" />
                 <data android:scheme="https" />
                 <data android:host="*"/>

@@ -22,7 +22,8 @@ class SettingsScreenController extends GetxController {
   final discoverContentType = "QP".obs;
   final isNewVersionAvailable = false.obs;
   final isLinkedWithPiped = false.obs;
-  final currentVersion = "V1.3.1";
+  final currentVersion = "V1.3.2";
+
   @override
   void onInit() {
     _setInitValue();

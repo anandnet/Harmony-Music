@@ -1,3 +1,7 @@
+## 1.3.2
+* Patch version for issue #34
+* Upgarded packages & update kotlin version
+
 ## 1.3.1
 * Android Auto support
 * Fixed Artist content

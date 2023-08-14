@@ -224,7 +224,7 @@ class SettingsScreen extends StatelessWidget {
                         subtitle: Obx(() => RichText(
                               text: TextSpan(
                                 text:
-                                    "Status: ${settingsController.isIgnoringBatteryOptimizations.isTrue ? "Enabled" : "Disblaled"}\n",
+                                    "Status: ${settingsController.isIgnoringBatteryOptimizations.isTrue ? "Enabled" : "Disabled"}\n",
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!

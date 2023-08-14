@@ -10,7 +10,7 @@
     "libAlbums": "Библиотека Альбомы",
     "libArtists": "Библиотека Артисты",
     "items": "детали",
-    "networkError1": "Oops ошибка сети!",
+    "networkError1": "Ой, ошибка сети!",
     "retry": "Повторно!",
     "noOfflineSong": "Никаких оффлайн песен!",
     "recentlyPlayed": "Недавно играли",

@@ -105,8 +105,8 @@ class LibraryPlaylistsController extends GetxController
 
   @override
   void onInit() {
-    controller = AnimationController(
-        vsync: this, duration: const Duration(seconds: 5));
+    controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 5));
     refreshLib();
     super.onInit();
   }
@@ -140,15 +140,18 @@ class LibraryPlaylistsController extends GetxController
 
   Future<void> syncPipedPlaylist() async {
     final res = await Get.find<PipedServices>().getAllPlaylists();
+    final box = await Hive.openBox('blacklistedPlaylist');
+    final blacklistedPlaylist = box.values.whereType<String>().toList();
     final libPipedPlaylistsId = libraryPlaylists
-        .toList()
-        .map((e) {
-          if (e.isPipedPlaylist) {
-            return e.playlistId;
-          }
-        })
-        .whereType<String>()
-        .toList();
+            .toList()
+            .map((e) {
+              if (e.isPipedPlaylist) {
+                return e.playlistId;
+              }
+            })
+            .whereType<String>()
+            .toList() +
+        blacklistedPlaylist;
 
     if (res.code == 1) {
       final cloudpipedPlaylistsId = res.response
@@ -180,6 +183,7 @@ class LibraryPlaylistsController extends GetxController
         }
       }
     }
+    box.close();
   }
 
   Future<bool> renamePlaylist(Playlist playlist) async {
@@ -254,6 +258,19 @@ class LibraryPlaylistsController extends GetxController
       return true;
     }
     return false;
+  }
+
+  Future<void> blacklistPipedPlaylist(Playlist playlist) async {
+    final box = await Hive.openBox('blacklistedPlaylist');
+    box.add(playlist.playlistId);
+    libraryPlaylists.remove(playlist);
+    box.close();
+  }
+
+  Future<void> resetBlacklistedPlaylist() async {
+    final box = await Hive.openBox('blacklistedPlaylist');
+    box.clear();
+    syncPipedPlaylist();
   }
 
   void onSort(bool sortByName, bool isAscending) {

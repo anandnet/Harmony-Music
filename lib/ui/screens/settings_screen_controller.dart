@@ -87,12 +87,15 @@ class SettingsScreenController extends GetxController {
         (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
   }
 
-  void unlinkPiped() {
+  Future<void> unlinkPiped() async {
     Get.find<PipedServices>().logout();
     isLinkedWithPiped.value = false;
     Get.find<LibraryPlaylistsController>().removePipedPlaylists();
+    final box = await Hive.openBox('blacklistedPlaylist');
+    box.clear();
     ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
         Get.context!, "Unlinked successfully!",
         size: SanckBarSize.MEDIUM));
+    box.close();
   }
 }

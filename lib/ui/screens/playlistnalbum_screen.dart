@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '/ui/utils/home_library_controller.dart';
 import '/ui/navigator.dart';
 import '/ui/screens/playlistnalbum_screen_controller.dart';
 import '/ui/widgets/create_playlist_dialog.dart';
@@ -138,12 +139,13 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                         content,
                                                         add: false)
                                                     .then((value) {
-                                                 Get.nestedKey(
+                                                  Get.nestedKey(
                                                           ScreenNavigationSetup
                                                               .id)!
                                                       .currentState!
                                                       .pop();
-                                                  ScaffoldMessenger.of(Get.context!)
+                                                  ScaffoldMessenger.of(
+                                                          Get.context!)
                                                       .showSnackBar(snackbar(
                                                           Get.context!,
                                                           value
@@ -251,7 +253,25 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                         const VisualDensity(
                                                             vertical: -4),
                                                     splashRadius: 10,
-                                                    onPressed: () {}),
+                                                    onPressed: () {
+                                                      Get.nestedKey(
+                                                              ScreenNavigationSetup
+                                                                  .id)!
+                                                          .currentState!
+                                                          .pop();
+                                                      Get.find<
+                                                              LibraryPlaylistsController>()
+                                                          .blacklistPipedPlaylist(
+                                                              content
+                                                                  as Playlist);
+                                                      ScaffoldMessenger.of(
+                                                              Get.context!)
+                                                          .showSnackBar(snackbar(
+                                                              Get.context!,
+                                                              "Playlist blacklisted!",
+                                                              size: SanckBarSize
+                                                                  .MEDIUM));
+                                                    }),
                                               IconButton(
                                                   visualDensity:
                                                       const VisualDensity(

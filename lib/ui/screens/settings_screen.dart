@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '/ui/utils/home_library_controller.dart';
+import '../widgets/snackbar.dart';
 import '/ui/widgets/link_piped.dart';
 import '/services/music_service.dart';
 import '/ui/player/player_controller.dart';
@@ -165,13 +167,15 @@ class SettingsScreen extends StatelessWidget {
                 contentPadding:
                     const EdgeInsets.only(left: 5, right: 10, top: 0),
                 title: const Text("Piped"),
-                subtitle: Text("Link with piped for playlist",
+                subtitle: Text("Link with piped for playlists",
                     style: Theme.of(context).textTheme.bodyMedium),
                 trailing: TextButton(
                     child: Obx(() => Text(
-                        settingsController.isLinkedWithPiped.value
-                            ? "Unlink"
-                            : "link",style: Theme.of(context).textTheme.titleMedium,)),
+                          settingsController.isLinkedWithPiped.value
+                              ? "Unlink"
+                              : "link",
+                          style: Theme.of(context).textTheme.titleMedium,
+                        )),
                     onPressed: () {
                       if (settingsController.isLinkedWithPiped.isFalse) {
                         showDialog(
@@ -184,6 +188,28 @@ class SettingsScreen extends StatelessWidget {
                       }
                     }),
               ),
+              Obx(() => (settingsController.isLinkedWithPiped.isTrue)
+                  ? ListTile(
+                      contentPadding:
+                          const EdgeInsets.only(left: 5, right: 10, top: 0),
+                      title: const Text("Reset blacklisted playlists"),
+                      subtitle: Text(
+                          "Reset all the piped blacklisted playlists",
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      trailing: TextButton(
+                          child: Text(
+                            "Reset",
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          onPressed: () async {
+                            await Get.find<LibraryPlaylistsController>()
+                                .resetBlacklistedPlaylist();
+                            ScaffoldMessenger.of(Get.context!).showSnackBar(
+                                snackbar(Get.context!, "Reset successfully!",
+                                    size: SanckBarSize.MEDIUM));
+                          }),
+                    )
+                  : const SizedBox.shrink()),
               GetPlatform.isAndroid
                   ? Obx(
                       () => ListTile(

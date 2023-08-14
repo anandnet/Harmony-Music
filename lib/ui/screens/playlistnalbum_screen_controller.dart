@@ -1,8 +1,8 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/services/piped_service.dart';
 import 'package:hive/hive.dart';
 
+import '/services/piped_service.dart';
 import '/helper.dart';
 import '/models/playlist.dart';
 import '/models/album.dart';
@@ -30,14 +30,14 @@ class PlayListNAlbumScreenController extends GetxController {
             : content.playlistId);
     if (!isIdOnly && !isAlbum) {
       isPipedPlaylist = content.isPipedPlaylist;
-      if(!content.isCloudPlaylist){
-      fetchSongsfromDatabase(id);
-      return;
+      if (!content.isCloudPlaylist) {
+        fetchSongsfromDatabase(id);
+        return;
       }
     }
-  
+
     _checkIfAddedToLibrary(id);
-    _fetchSong(id, isIdOnly,isPipedPlaylist);
+    _fetchSong(id, isIdOnly, isPipedPlaylist);
   }
 
   Future<void> _checkIfAddedToLibrary(String id) async {
@@ -70,10 +70,11 @@ class PlayListNAlbumScreenController extends GetxController {
     //await box.close();
   }
 
-  Future<void> _fetchSong(String id, bool isIdOnly,bool isPipedPlaylist) async {
+  Future<void> _fetchSong(
+      String id, bool isIdOnly, bool isPipedPlaylist) async {
     isContentFetched.value = false;
 
-    if(isPipedPlaylist){
+    if (isPipedPlaylist) {
       songList.value = (await Get.find<PipedServices>().getPlaylistSongs(id));
       isContentFetched.value = true;
       return;
@@ -108,14 +109,23 @@ class PlayListNAlbumScreenController extends GetxController {
     isContentFetched.value = true;
   }
 
+  /// Function for bookmark & add playlist to library
   Future<bool> addNremoveFromLibrary(dynamic content, {bool add = true}) async {
     try {
-      final box = isAlbum
-          ? await Hive.openBox("LibraryAlbums")
-          : await Hive.openBox("LibraryPlaylists");
-      final id = isAlbum ? content.browseId : content.playlistId;
-      add ? box.put(id, content.toJson()) : box.delete(id);
-      isAddedToLibrary.value = add;
+      if (!isAlbum && content.isPipedPlaylist && !add) {
+        //remove piped playlist from lib
+        final res =
+            await Get.find<PipedServices>().deletePlaylist(content.playlistId);
+        Get.find<LibraryPlaylistsController>().syncPipedPlaylist();
+        return (res.code == 1);
+      } else {
+        final box = isAlbum
+            ? await Hive.openBox("LibraryAlbums")
+            : await Hive.openBox("LibraryPlaylists");
+        final id = isAlbum ? content.browseId : content.playlistId;
+        add ? box.put(id, content.toJson()) : box.delete(id);
+        isAddedToLibrary.value = add;
+      }
       //Update frontend
       isAlbum
           ? Get.find<LibraryAlbumsController>().refreshLib()

@@ -165,13 +165,13 @@ class SettingsScreen extends StatelessWidget {
                 contentPadding:
                     const EdgeInsets.only(left: 5, right: 10, top: 0),
                 title: const Text("Piped"),
-                subtitle: Text("Link with piped for playlist backup",
+                subtitle: Text("Link with piped for playlist",
                     style: Theme.of(context).textTheme.bodyMedium),
                 trailing: TextButton(
                     child: Obx(() => Text(
                         settingsController.isLinkedWithPiped.value
                             ? "Unlink"
-                            : "link")),
+                            : "link",style: Theme.of(context).textTheme.titleMedium,)),
                     onPressed: () {
                       if (settingsController.isLinkedWithPiped.isFalse) {
                         showDialog(

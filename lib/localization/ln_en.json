@@ -99,5 +99,14 @@
     "dismiss":"Dismiss",
     "notaSongVideo":"Not a Song/Music-Video!",
     "notaValidLink":"Not a valid link!",
-    "operationFailed":"Operation failed"
+    "operationFailed":"Operation failed",
+    "goToDownloadPage":"Click here to go to download page",
+    "local":"Local",
+    "link":"Link",
+    "unLink":"Unlink",
+    "selectAuthIns":"Select Auth Instance",
+    "username":"Username",
+    "password":"Password",
+    "linkAlert":"Linked successfully!",
+    "unlinkAlert":"Unlinked successfully!"
 }

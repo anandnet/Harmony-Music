@@ -1,25 +1,28 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/helper.dart';
 import 'package:hive/hive.dart';
+
+import '/helper.dart';
 
 class PipedServices extends GetxService {
   final Map<String, dynamic> _headers = {};
   final _dio = Dio();
   String _insApiUrl = "";
-  bool isLoggedIn = false;
+  bool _isLoggedIn = false;
 
   PipedServices() {
     final appPrefsBox = Hive.box('AppPrefs');
     final piped = appPrefsBox.get('piped') ??
         {"isLoggedIn": false, "token": "", "instApiUrl": ""};
-    isLoggedIn = piped["isLoggedIn"];
+    _isLoggedIn = piped["isLoggedIn"];
     if (isLoggedIn) {
       _headers["Authorization"] = piped['token'];
       _insApiUrl = piped["instApiUrl"];
     }
   }
+
+  bool get isLoggedIn => _isLoggedIn;
 
   Future<Res> login(String insApiUrl, String userName, String password) async {
     final url = "$insApiUrl/login";
@@ -34,9 +37,15 @@ class PipedServices extends GetxService {
         "instApiUrl": insApiUrl
       });
       _headers["Authorization"] = data['token'];
-      isLoggedIn = true;
+      _isLoggedIn = true;
       _insApiUrl = insApiUrl;
-      printINFO("Login successful!");
+
+      if (response.data.runtimeType.toString() == "_Map<String, dynamic>" &&
+          response.data.containsKey("error")) {
+        return Res(0, errorMessage: response.data['error']);
+      }
+
+      printINFO("Login successful! topken : ${data['token']}");
       return Res(1, response: response.data);
     } on DioError catch (e) {
       printERROR("Login Failed! => ${e.response?.data['error']}");
@@ -44,17 +53,13 @@ class PipedServices extends GetxService {
     }
   }
 
-  Future<Res> logout() async {
-    final res = await _sendRequest("/logout");
-    if (res.code == 1) {
-      final appPrefsBox = Hive.box('AppPrefs');
-      appPrefsBox
-          .put("piped", {"isLoggedIn": false, "token": "", "instApiUrl": ""});
-      _headers["Authorization"] = "";
-      isLoggedIn = false;
-      _insApiUrl = "";
-    }
-    return res;
+  void logout() {
+    final appPrefsBox = Hive.box('AppPrefs');
+    appPrefsBox
+        .put("piped", {"isLoggedIn": false, "token": "", "instApiUrl": ""});
+    _headers["Authorization"] = "";
+    _isLoggedIn = false;
+    _insApiUrl = "";
   }
 
   Future<Res> _sendRequest(String endpoint,
@@ -92,6 +97,10 @@ class PipedServices extends GetxService {
                     PipedInstance(name: data['name'], apiUrl: data['api_url']))
                 .toList());
       } else {
+        if (response.data.runtimeType.toString() == "_Map<String, dynamic>" &&
+            response.data.containsKey("error")) {
+          return Res(0, errorMessage: response.data['error']);
+        }
         return Res(1, response: response.data);
       }
     } on DioError catch (e) {

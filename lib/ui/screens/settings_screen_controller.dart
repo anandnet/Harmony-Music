@@ -1,9 +1,10 @@
 import 'package:android_power_manager/android_power_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/services/piped_service.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '/services/piped_service.dart';
+import '/ui/utils/home_library_controller.dart';
 import '../widgets/snackbar.dart';
 import '/helper.dart';
 import '/services/music_service.dart';
@@ -43,7 +44,7 @@ class SettingsScreenController extends GetxController {
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
     discoverContentType.value = setBox.get('discoverContentType');
-    if(setBox.containsKey("piped")){
+    if (setBox.containsKey("piped")) {
       isLinkedWithPiped.value = setBox.get("piped")['isLoggedIn'];
     }
     if (GetPlatform.isAndroid) {
@@ -86,14 +87,12 @@ class SettingsScreenController extends GetxController {
         (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
   }
 
-  void unlinkPiped(){
-    Get.find<PipedServices>().logout().then((res) {
-      if(res.code==1){
-        isLinkedWithPiped.value = false;
-      }
-      ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-          Get.context!, res.code==1 ? "Unlinked successfully!":res.errorMessage??"Error occured!",
-          size: SanckBarSize.MEDIUM));
-    });
+  void unlinkPiped() {
+    Get.find<PipedServices>().logout();
+    isLinkedWithPiped.value = false;
+    Get.find<LibraryPlaylistsController>().removePipedPlaylists();
+    ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
+        Get.context!, "Unlinked successfully!",
+        size: SanckBarSize.MEDIUM));
   }
 }

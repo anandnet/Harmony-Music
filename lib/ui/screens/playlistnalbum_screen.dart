@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:harmonymusic/ui/navigator.dart';
-import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
-import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
-import 'package:harmonymusic/ui/widgets/list_widget.dart';
-import 'package:harmonymusic/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
-import 'package:harmonymusic/ui/widgets/snackbar.dart';
-import 'package:harmonymusic/ui/widgets/sort_widget.dart';
+import '/ui/navigator.dart';
+import '/ui/screens/playlistnalbum_screen_controller.dart';
+import '/ui/widgets/create_playlist_dialog.dart';
+import '/ui/widgets/list_widget.dart';
+import '/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
+import '/ui/widgets/snackbar.dart';
+import '/ui/widgets/sort_widget.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../models/playlist.dart';
 import '../player/player_controller.dart';
@@ -90,11 +90,13 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          (!playListNAlbumScreenController.isAlbum &&
-                                  !content.isCloudPlaylist &&
-                                  content.playlistId != "LIBFAV" &&
-                                  content.playlistId != "SongsCache" &&
-                                  content.playlistId != "LIBRP")
+                          ((!playListNAlbumScreenController.isAlbum &&
+                                      !content.isCloudPlaylist &&
+                                      content.playlistId != "LIBFAV" &&
+                                      content.playlistId != "SongsCache" &&
+                                      content.playlistId != "LIBRP") ||
+                                  (!playListNAlbumScreenController.isAlbum &&
+                                      content.isPipedPlaylist))
                               ? IconButton(
                                   onPressed: () {
                                     showModalBottomSheet(
@@ -131,24 +133,25 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                   const Text("Remove playlist"),
                                               onTap: () {
                                                 Navigator.of(context).pop();
-                                                Get.nestedKey(
-                                                        ScreenNavigationSetup
-                                                            .id)!
-                                                    .currentState!
-                                                    .pop();
                                                 playListNAlbumScreenController
                                                     .addNremoveFromLibrary(
                                                         content,
                                                         add: false)
-                                                    .then((value) => ScaffoldMessenger
-                                                            .of(context)
-                                                        .showSnackBar(snackbar(
-                                                            context,
-                                                            value
-                                                                ? "Playlist removed!"
-                                                                : "Operation failed",
-                                                            size: SanckBarSize
-                                                                .MEDIUM)));
+                                                    .then((value) {
+                                                 Get.nestedKey(
+                                                          ScreenNavigationSetup
+                                                              .id)!
+                                                      .currentState!
+                                                      .pop();
+                                                  ScaffoldMessenger.of(Get.context!)
+                                                      .showSnackBar(snackbar(
+                                                          Get.context!,
+                                                          value
+                                                              ? "Playlist removed!"
+                                                              : "Operation failed",
+                                                          size: SanckBarSize
+                                                              .MEDIUM));
+                                                });
                                               },
                                             )
                                           ],
@@ -181,7 +184,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                       Align(
                                         alignment: Alignment.topRight,
                                         child: Container(
-                                          height: 72,
+                                          height: 80,
                                           width: 40,
                                           decoration: BoxDecoration(
                                               color: Theme.of(context)
@@ -199,8 +202,12 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                           .isAlbum &&
                                                       content.isPipedPlaylist)
                                                   ? const SizedBox.shrink()
-                                                  : InkWell(
-                                                      onTap: () {
+                                                  : IconButton(
+                                                      visualDensity:
+                                                          const VisualDensity(
+                                                              vertical: -4),
+                                                      splashRadius: 10,
+                                                      onPressed: () {
                                                         final add =
                                                             playListNAlbumScreenController
                                                                 .isAddedToLibrary
@@ -222,7 +229,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                                     : "Operation failed",
                                                                 size: SanckBarSize.MEDIUM)));
                                                       },
-                                                      child: Obx(() => Icon(
+                                                      icon: Obx(() => Icon(
+                                                          size: 20,
                                                           playListNAlbumScreenController
                                                                   .isAddedToLibrary
                                                                   .isFalse
@@ -231,6 +239,19 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                               : Icons
                                                                   .bookmark_added_rounded)),
                                                     ),
+                                              if (!playListNAlbumScreenController
+                                                      .isAlbum &&
+                                                  content.isPipedPlaylist)
+                                                IconButton(
+                                                    icon: const Icon(
+                                                      Icons.block,
+                                                      size: 20,
+                                                    ),
+                                                    visualDensity:
+                                                        const VisualDensity(
+                                                            vertical: -4),
+                                                    splashRadius: 10,
+                                                    onPressed: () {}),
                                               IconButton(
                                                   visualDensity:
                                                       const VisualDensity(
@@ -241,6 +262,10 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                         .isAlbum) {
                                                       Share.share(
                                                           "https://youtube.com/playlist?list=${content.audioPlaylistId}");
+                                                    } else if (content
+                                                        .isPipedPlaylist) {
+                                                      Share.share(
+                                                          "https://piped.video/playlist?list=${content.playlistId}");
                                                     } else {
                                                       final isPlaylistIdPrefixAvlbl =
                                                           content.playlistId
@@ -258,7 +283,6 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                               content
                                                                   .playlistId;
                                                       Share.share(url);
-                                                      //TODO url for piped playlist
                                                     }
                                                   },
                                                   icon: const Icon(

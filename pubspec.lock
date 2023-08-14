@@ -53,10 +53,10 @@ packages:
     dependency: "direct main"
     description:
       name: audio_service
-      sha256: "7e86d7ce23caad605199f7b25e548fe7b618fb0c150fa0585f47a910fe7e7a67"
+      sha256: "8b719ac7982fdea1a54a528f19e345907295489c53709ba4cdee65a2955c0f4d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.18.9"
+    version: "0.18.10"
   audio_service_platform_interface:
     dependency: transitive
     description:
@@ -405,10 +405,10 @@ packages:
     dependency: "direct main"
     description:
       name: just_audio
-      sha256: d7ff71169927a2237c902aef6baf2f69d063d4c427590dee479d279d4d57c984
+      sha256: "890cd0fc41a1a4530c171e375a2a3fb6a09d84e9d508c5195f40bcff54330327"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.33"
+    version: "0.9.34"
   just_audio_platform_interface:
     dependency: transitive
     description:
@@ -605,18 +605,18 @@ packages:
     dependency: "direct main"
     description:
       name: share_plus
-      sha256: ed3fcea4f789ed95913328e629c0c53e69e80e08b6c24542f1b3576046c614e8
+      sha256: "6cec740fa0943a826951223e76218df002804adb588235a8910dc3d6b0654e11"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.2"
+    version: "7.1.0"
   share_plus_platform_interface:
     dependency: transitive
     description:
       name: share_plus_platform_interface
-      sha256: "0c6e61471bd71b04a138b8b588fa388e66d8b005e6f2deda63371c5c505a0981"
+      sha256: "357412af4178d8e11d14f41723f80f12caea54cf0d5cd29af9dcdab85d58aea7"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.1"
+    version: "3.3.0"
   shimmer:
     dependency: "direct main"
     description:

@@ -4,6 +4,7 @@ import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../widgets/loader.dart';
 import '/helper.dart';
 import '/services/music_service.dart';
 import '/ui/player/player_controller.dart';
@@ -97,7 +98,7 @@ class AppLinksController extends GetxController {
     showDialog(
         context: Get.context!,
         builder: (context) => const Center(
-                child: RefreshProgressIndicator(
+                child: LoadingIndicator(
               strokeWidth: 5,
             )),
         barrierDismissible: false);

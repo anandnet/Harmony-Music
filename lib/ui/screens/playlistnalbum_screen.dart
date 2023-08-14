@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../widgets/loader.dart';
 import '/ui/utils/home_library_controller.dart';
 import '/ui/navigator.dart';
 import '/ui/screens/playlistnalbum_screen_controller.dart';
@@ -25,7 +26,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
     final args = Get.arguments;
 
     final PlayListNAlbumScreenController playListNAlbumScreenController =
-        (args == null)
+        (args == null || Get.isRegistered<PlayListNAlbumScreenController>())
             ? Get.find<PlayListNAlbumScreenController>()
             : Get.put(
                 PlayListNAlbumScreenController(args[1], args[0], args[2]));
@@ -68,7 +69,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
             if (playListNAlbumScreenController.isContentFetched.isFalse) {
               return const Expanded(
                   child: Center(
-                child: RefreshProgressIndicator(),
+                child: LoadingIndicator(),
               ));
             } else {
               final content = playListNAlbumScreenController.contentRenderer;

@@ -314,7 +314,7 @@ class MusicServices extends getx.GetxService {
   Future<Map<String, dynamic>> getPlaylistOrAlbumSongs(
       {String? playlistId,
       String? albumId,
-      int limit = 100,
+      int limit = 1000,
       bool related = false,
       int suggestionsLimit = 0}) async {
     String browseId = playlistId != null
@@ -362,10 +362,11 @@ class MusicServices extends getx.GetxService {
         }
       }
 
+      int secondSubtitleRunCount = header['secondSubtitle']['runs'].length;
       int songCount = int.parse(RegExp(r'([\d,]+)')
-          .stringMatch(header['secondSubtitle']['runs'][0]['text'])!);
+          .stringMatch(header['secondSubtitle']['runs'][secondSubtitleRunCount%3]['text'])!);
       if (header['secondSubtitle']['runs'].length > 1) {
-        playlist['duration'] = header['secondSubtitle']['runs'][2]['text'];
+        playlist['duration'] = header['secondSubtitle']['runs'][(secondSubtitleRunCount % 3)+2]['text'];
       }
       playlist['trackCount'] = songCount;
 

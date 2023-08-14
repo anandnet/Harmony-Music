@@ -10,6 +10,7 @@ import '/ui/screens/search_result_screen_controller.dart';
 import '/ui/widgets/content_list_widget.dart';
 import '/ui/widgets/sort_widget.dart';
 import 'list_widget.dart';
+import 'loader.dart';
 
 class ResultWidget extends StatelessWidget {
   const ResultWidget({super.key});
@@ -130,8 +131,7 @@ class SeparateSearchItemWidget extends StatelessWidget {
                     ? const SizedBox.shrink()
                     : TextButton(
                         onPressed: () {
-                          searchResController!
-                              .viewAllCallback(title);
+                          searchResController!.viewAllCallback(title);
                         },
                         child: Text("View all",
                             style: Theme.of(Get.context!).textTheme.titleSmall))
@@ -148,10 +148,8 @@ class SeparateSearchItemWidget extends StatelessWidget {
                   isDateOptionRequired: title == 'Albums' || title == "Singles",
                   onSort: (a, b, c, d) {
                     isResultWidget
-                        ? searchResController!
-                            .onSort(a, b, c, d, title)
-                        : artistController!
-                            .onSort(a, b, c, d, title);
+                        ? searchResController!.onSort(a, b, c, d, title)
+                        : artistController!.onSort(a, b, c, d, title);
                   }))
               : const SizedBox.shrink(),
           isCompleteList
@@ -159,20 +157,17 @@ class SeparateSearchItemWidget extends StatelessWidget {
                   ? GetX<SearchResultScreenController>(builder: (controller) {
                       if (controller.isSeparatedResultContentFetced.isTrue) {
                         return ListWidget(
-                         controller
-                              .separatedResultContent[title],
+                          controller.separatedResultContent[title],
                           title,
                           isCompleteList,
                           scrollController: scrollController,
                         );
                       } else {
                         return const Expanded(
-                            child: Center(child: RefreshProgressIndicator()));
+                            child: Center(child: LoadingIndicator()));
                       }
                     })
-                  : (artistController!
-                          .isArtistContentFetced
-                          .isTrue
+                  : (artistController!.isArtistContentFetced.isTrue
                       ? ListWidget(
                           items,
                           title,
@@ -180,7 +175,7 @@ class SeparateSearchItemWidget extends StatelessWidget {
                           scrollController: scrollController,
                         )
                       : const Expanded(
-                          child: Center(child: RefreshProgressIndicator())))
+                          child: Center(child: LoadingIndicator())))
               : ListWidget(
                   items,
                   title,

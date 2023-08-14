@@ -420,7 +420,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   Future<String?> checkNGetUrl(String songId,
       {bool useNewInstanceOfExplode = false,
       bool generateNewUrl = false}) async {
-    final songsCacheBox = Hive.box("SongsCache");
+    final songsCacheBox = await Hive.openBox("SongsCache");
     if (songsCacheBox.containsKey(songId)) {
       printINFO("Got Song from cachedbox ($songId)");
       return "file://$_cacheDir/cachedSongs/$songId.mp3";

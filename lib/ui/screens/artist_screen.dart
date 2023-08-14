@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../widgets/loader.dart';
 import '/ui/player/player_controller.dart';
 import '/ui/screens/artist_screen_controller.dart';
 import '/ui/widgets/image_widget.dart';
@@ -100,7 +101,7 @@ class ArtistScreen extends StatelessWidget {
                       .isSeparatedArtistContentFetced.isFalse &&
                   artistScreenController.navigationRailCurrentIndex.value !=
                       0) {
-                return const Center(child: RefreshProgressIndicator());
+                return const Center(child: LoadingIndicator());
               }
 
               switch (artistScreenController.navigationRailCurrentIndex.value) {
@@ -169,15 +170,14 @@ class ArtistScreen extends StatelessWidget {
                                                                         .bookmark_added_rounded),
                                                           ),
                                                           IconButton(
-                                                            icon:const Icon(
-                                                              Icons.share,
-                                                              size: 20,
-                                                            ),
-                                                            splashRadius: 18,
-                                                            onPressed: () =>
+                                                              icon: const Icon(
+                                                                Icons.share,
+                                                                size: 20,
+                                                              ),
+                                                              splashRadius: 18,
+                                                              onPressed: () =>
                                                                   Share.share(
-                                                                      "https://music.youtube.com/channel/${artistScreenController.artist_.browseId}")
-                                                          ),
+                                                                      "https://music.youtube.com/channel/${artistScreenController.artist_.browseId}")),
                                                         ],
                                                       ),
                                                     )
@@ -229,7 +229,7 @@ class ArtistScreen extends StatelessWidget {
                             ),
                           )
                         : const Center(
-                            child: RefreshProgressIndicator(),
+                            child: LoadingIndicator(),
                           );
                   }
                 case 1:

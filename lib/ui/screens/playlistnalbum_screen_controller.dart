@@ -19,6 +19,7 @@ class PlayListNAlbumScreenController extends GetxController {
   late final String id;
   late dynamic contentRenderer;
   bool isAlbum;
+  dynamic box;
 
   PlayListNAlbumScreenController(dynamic content, this.isAlbum, bool isIdOnly) {
     bool isPipedPlaylist = false;
@@ -42,11 +43,10 @@ class PlayListNAlbumScreenController extends GetxController {
 
   Future<void> _checkIfAddedToLibrary(String id) async {
     //check
-    final box = isAlbum
+    box = isAlbum
         ? await Hive.openBox("LibraryAlbums")
         : await Hive.openBox("LibraryPlaylists");
     isAddedToLibrary.value = box.containsKey(id);
-    box.close();
   }
 
   void addNRemoveItemsinList(MediaItem? item,
@@ -59,7 +59,7 @@ class PlayListNAlbumScreenController extends GetxController {
   }
 
   Future<void> fetchSongsfromDatabase(id) async {
-    final box = await Hive.openBox(id);
+    box = await Hive.openBox(id);
     songList.value = box.values
         .map<MediaItem?>((item) => MediaItemBuilder.fromJson(item))
         .whereType<MediaItem>()
@@ -67,7 +67,6 @@ class PlayListNAlbumScreenController extends GetxController {
         .reversed
         .toList();
     isContentFetched.value = true;
-    //await box.close();
   }
 
   Future<void> _fetchSong(
@@ -144,5 +143,11 @@ class PlayListNAlbumScreenController extends GetxController {
     final songlist_ = songList.toList();
     sortSongsNVideos(songlist_, sortByName, false, sortByDuration, isAscending);
     songList.value = songlist_;
+  }
+
+  @override
+  void onClose() {
+     box.close();
+    super.onClose();
   }
 }

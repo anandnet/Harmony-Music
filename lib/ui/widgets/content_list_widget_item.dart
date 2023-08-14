@@ -20,7 +20,7 @@ class ContentListItem extends StatelessWidget {
       highlightColor: Colors.transparent,
       onTap: () {
         Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
-            id: ScreenNavigationSetup.id, arguments: [isAlbum, content,false]);
+            id: ScreenNavigationSetup.id, arguments: [isAlbum, content, false]);
       },
       child: Container(
         width: 120,
@@ -34,12 +34,34 @@ class ContentListItem extends StatelessWidget {
                     album: content,
                   )
                 : content.isCloudPlaylist
-                    ? ImageWidget(
-                      size: 120,
-                        playlist: content,
+                    ? SizedBox.square(
+                        dimension: 120,
+                        child: Stack(
+                          children: [
+                            ImageWidget(
+                              size: 120,
+                              playlist: content,
+                            ),
+                           if (content.isPipedPlaylist) Align(
+                              alignment: Alignment.bottomRight,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 18,
+                                  width: 18,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Theme.of(context).colorScheme.secondary,
+                                  ),
+                                  child: Center(child:Text( "P",style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 14),)),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       )
                     : Container(
-                      height: 120,
+                        height: 120,
                         width: 120,
                         decoration: BoxDecoration(
                             color: Theme.of(context).primaryColorLight,
@@ -65,7 +87,9 @@ class ContentListItem extends StatelessWidget {
             ),
             Text(
               isAlbum
-                  ? isLibraryItem ? "":"${content.artists[0]['name'] ?? ""} | ${content.year ?? ""}"
+                  ? isLibraryItem
+                      ? ""
+                      : "${content.artists[0]['name'] ?? ""} | ${content.year ?? ""}"
                   : isLibraryItem
                       ? ""
                       : content.description ?? "",

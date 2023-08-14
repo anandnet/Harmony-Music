@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '/helper.dart';
+import '/ui/screens/settings_screen_controller.dart';
 import '/ui/player/player_controller.dart';
 import '/ui/widgets/content_list_widget_item.dart';
 import '/ui/widgets/create_playlist_dialog.dart';
@@ -25,7 +27,8 @@ class HomeScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       floatingActionButton: Obx(
-        () => homeScreenController.tabIndex.value != 5
+        () => homeScreenController.tabIndex.value == 0 ||
+                homeScreenController.tabIndex.value == 2
             ? Obx(
                 () => Padding(
                   padding: EdgeInsets.only(
@@ -43,12 +46,21 @@ class HomeScreen extends StatelessWidget {
                                   BorderRadius.all(Radius.circular(14))),
                           elevation: 0,
                           onPressed: () async {
-                            Get.toNamed(ScreenNavigationSetup.searchScreen,
-                                id: ScreenNavigationSetup.id);
+                            if (homeScreenController.tabIndex.value == 2) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      const CreateNRenamePlaylistPopup());
+                            } else {
+                              Get.toNamed(ScreenNavigationSetup.searchScreen,
+                                  id: ScreenNavigationSetup.id);
+                            }
                             // file:///data/user/0/com.example.harmonymusic/cache/libCachedImageData/
                             //file:///data/user/0/com.example.harmonymusic/cache/just_audio_cache/
                           },
-                          child: const Icon(Icons.search_rounded)),
+                          child: Icon(homeScreenController.tabIndex.value == 2
+                              ? Icons.add
+                              : Icons.search_rounded)),
                     ),
                   ),
                 ),
@@ -170,8 +182,7 @@ class Body extends StatelessWidget {
                                           .textTheme
                                           .titleLarge!
                                           .color,
-                                      borderRadius:
-                                          BorderRadius.circular(10)),
+                                      borderRadius: BorderRadius.circular(10)),
                                   child: InkWell(
                                     onTap: () {
                                       homeScreenController.init();
@@ -179,8 +190,7 @@ class Body extends StatelessWidget {
                                     child: Text(
                                       "Retry!",
                                       style: TextStyle(
-                                          color:
-                                              Theme.of(context).canvasColor),
+                                          color: Theme.of(context).canvasColor),
                                     ),
                                   ),
                                 ),
@@ -194,10 +204,8 @@ class Body extends StatelessWidget {
                   final items = homeScreenController.isContentFetched.value
                       ? [
                           Obx(() => QuickPicksWidget(
-                              content:
-                                  homeScreenController.quickPicks.value)),
-                          ...getWidgetList(
-                              homeScreenController.middleContent),
+                              content: homeScreenController.quickPicks.value)),
+                          ...getWidgetList(homeScreenController.middleContent),
                           ...getWidgetList(
                             homeScreenController.fixedContent,
                           )
@@ -332,6 +340,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final libralbumCntrller = Get.find<LibraryAlbumsController>();
     final librplstCntrller = Get.find<LibraryPlaylistsController>();
+    final settingscrnController = Get.find<SettingsScreenController>();
     var size = MediaQuery.of(context).size;
 
     const double itemHeight = 220;
@@ -353,21 +362,27 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
-                isAlbumContent
+                (isAlbumContent ||
+                        settingscrnController.isLinkedWithPiped.isFalse)
                     ? const SizedBox.shrink()
                     : Padding(
                         padding: EdgeInsets.only(right: size.width * .05),
-                        child: InkWell(
-                          onTap: () => showDialog(
-                              context: context,
-                              builder: (context) =>
-                                  const CreateNRenamePlaylistPopup()),
-                          child: Icon(
-                            Icons.playlist_add_rounded,
-                            color:
-                                Theme.of(context).textTheme.titleLarge!.color,
-                            size: 25,
-                          ),
+                        child: RotationTransition(
+                          turns: Tween(begin: 0.0, end: 1.0)
+                              .animate(librplstCntrller.controller),
+                          child: IconButton(
+                            splashRadius: 20,
+                            iconSize: 20,
+                            visualDensity: const VisualDensity(vertical: -4),
+                              icon: const Icon(Icons.sync,), // <-- Icon
+                              onPressed: () async {
+                                printINFO(librplstCntrller.controller.status);
+                                librplstCntrller.controller.forward();
+                                librplstCntrller.controller.repeat();
+                                await librplstCntrller.syncPipedPlaylist();
+                                librplstCntrller.controller.stop();
+                                librplstCntrller.controller.reset();
+                              }),
                         ),
                       )
               ],

@@ -1,7 +1,11 @@
 import 'package:android_power_manager/android_power_manager.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '/services/piped_service.dart';
+import '/ui/utils/home_library_controller.dart';
+import '../widgets/snackbar.dart';
 import '/helper.dart';
 import '/services/music_service.dart';
 import '/ui/player/player_controller.dart';
@@ -17,7 +21,9 @@ class SettingsScreenController extends GetxController {
   final isIgnoringBatteryOptimizations = false.obs;
   final discoverContentType = "QP".obs;
   final isNewVersionAvailable = false.obs;
+  final isLinkedWithPiped = false.obs;
   final currentVersion = "V1.3.2";
+
   @override
   void onInit() {
     _setInitValue();
@@ -39,6 +45,9 @@ class SettingsScreenController extends GetxController {
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
     discoverContentType.value = setBox.get('discoverContentType');
+    if (setBox.containsKey("piped")) {
+      isLinkedWithPiped.value = setBox.get("piped")['isLoggedIn'];
+    }
     if (GetPlatform.isAndroid) {
       isIgnoringBatteryOptimizations.value =
           (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
@@ -77,5 +86,17 @@ class SettingsScreenController extends GetxController {
     await AndroidPowerManager.requestIgnoreBatteryOptimizations();
     isIgnoringBatteryOptimizations.value =
         (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
+  }
+
+  Future<void> unlinkPiped() async {
+    Get.find<PipedServices>().logout();
+    isLinkedWithPiped.value = false;
+    Get.find<LibraryPlaylistsController>().removePipedPlaylists();
+    final box = await Hive.openBox('blacklistedPlaylist');
+    box.clear();
+    ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
+        Get.context!, "Unlinked successfully!",
+        size: SanckBarSize.MEDIUM));
+    box.close();
   }
 }

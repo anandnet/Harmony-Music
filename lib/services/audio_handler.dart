@@ -274,7 +274,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   @override
   Future<void> skipToQueueItem(int index) async {
     if (index < 0 || index >= queue.value.length) return;
-    await customAction("playByIndex",{'index': index});
+    await customAction("playByIndex", {'index': index});
   }
 
   @override
@@ -311,7 +311,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       await _player.dispose();
       super.stop();
     } else if (name == 'playByIndex') {
-      await _playList.clear();
+      if (_playList.children.isNotEmpty) {
+        await _playList.clear();
+      }
       currentIndex = extras!['index'];
       final isNewUrlReq = extras['newUrl'] ?? false;
       final currentSong = queue.value[currentIndex];

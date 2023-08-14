@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '/services/piped_service.dart';
 import '/ui/player/player_controller.dart';
 import '/ui/screens/playlistnalbum_screen_controller.dart';
 import '/ui/utils/home_library_controller.dart';
@@ -144,7 +145,7 @@ class SongInfoBottomSheet extends StatelessWidget {
         ...artistWidgetList(song, context),
         (playlist != null &&
                 !playlist!.isCloudPlaylist &&
-                !(playlist!.playlistId == "LIBRP"))
+                !(playlist!.playlistId == "LIBRP")) || (playlist != null && playlist!.isPipedPlaylist)
             ? ListTile(
                 visualDensity: const VisualDensity(vertical: -1),
                 leading: const Icon(Icons.delete_rounded),
@@ -154,9 +155,9 @@ class SongInfoBottomSheet extends StatelessWidget {
                   Navigator.of(context).pop();
                   songInfoController
                       .removeSongFromPlaylist(song, playlist!)
-                      .whenComplete(() => ScaffoldMessenger.of(context)
+                      .whenComplete(() => ScaffoldMessenger.of(Get.context!)
                           .showSnackBar(snackbar(
-                              context, "Removed from ${playlist!.title}",
+                              Get.context!, "Removed from ${playlist!.title}",
                               size: SanckBarSize.MEDIUM)));
                 },
               )
@@ -265,10 +266,23 @@ class SongInfoController extends GetxController {
   }
 
   Future<void> removeSongFromPlaylist(MediaItem item, Playlist playlist) async {
+    final plstCntroller = Get.find<PlayListNAlbumScreenController>();
+    if(playlist.isPipedPlaylist){
+      final res = await Get.find<PipedServices>().getPlaylistSongs(playlist.playlistId);
+      final songIndex = res.indexWhere((element) => element.id == item.id);
+      if(songIndex != -1){
+        final res = await Get.find<PipedServices>()
+            .removeFromPlaylist(playlist.playlistId, songIndex);
+        if (res.code == 1) {
+          plstCntroller.addNRemoveItemsinList(item, action: 'remove');
+        }
+      }
+      return;
+    }
+
     final box = await Hive.openBox(playlist.playlistId);
     box.delete(item.id);
     try {
-      final plstCntroller = Get.find<PlayListNAlbumScreenController>();
       plstCntroller.addNRemoveItemsinList(item, action: 'remove');
       // ignore: empty_catches
     } catch (e) {}

@@ -210,6 +210,16 @@ class SettingsScreen extends StatelessWidget {
                           }),
                     )
                   : const SizedBox.shrink()),
+              ListTile(
+                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                  title: const Text("Stop music on task clear"),
+                  subtitle: Text("Music playback will stop when App being swiped away from the task manager",
+                      style: Theme.of(context).textTheme.bodyMedium),
+                  trailing: Obx(
+                    () => Switch(
+                        value: settingsController.stopPlyabackOnSwipeAway.value,
+                        onChanged: settingsController.toggleStopPlyabackOnSwipeAway),
+                  )),
               GetPlatform.isAndroid
                   ? Obx(
                       () => ListTile(

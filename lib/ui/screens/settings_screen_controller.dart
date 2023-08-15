@@ -22,6 +22,7 @@ class SettingsScreenController extends GetxController {
   final discoverContentType = "QP".obs;
   final isNewVersionAvailable = false.obs;
   final isLinkedWithPiped = false.obs;
+  final stopPlyabackOnSwipeAway = false.obs;
   final currentVersion = "V1.3.2";
 
   @override
@@ -48,6 +49,8 @@ class SettingsScreenController extends GetxController {
     if (setBox.containsKey("piped")) {
       isLinkedWithPiped.value = setBox.get("piped")['isLoggedIn'];
     }
+    stopPlyabackOnSwipeAway.value =
+        setBox.get('stopPlyabackOnSwipeAway') ?? false;
     if (GetPlatform.isAndroid) {
       isIgnoringBatteryOptimizations.value =
           (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
@@ -98,5 +101,10 @@ class SettingsScreenController extends GetxController {
         Get.context!, "Unlinked successfully!",
         size: SanckBarSize.MEDIUM));
     box.close();
+  }
+
+  void toggleStopPlyabackOnSwipeAway(bool val) {
+    setBox.put('stopPlyabackOnSwipeAway', val);
+    stopPlyabackOnSwipeAway.value = val;
   }
 }

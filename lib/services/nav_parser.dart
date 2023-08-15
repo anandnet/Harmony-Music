@@ -443,7 +443,10 @@ String? getTabBrowseId(Map<String, dynamic> watchNextRenderer, int tabId) {
 ///
 ///[dynamic album,dynamic artists] used in Album case
 List<dynamic> parsePlaylistItems(List<dynamic> results,
-    {List<List<dynamic>>? menuEntries, dynamic thumbnailsM, dynamic artistsM}) {
+    {List<List<dynamic>>? menuEntries,
+    dynamic thumbnailsM,
+    dynamic artistsM,
+    bool isAlbum = false}) {
   List<MediaItem> songs = [];
 
   //int count = 1;
@@ -514,7 +517,7 @@ List<dynamic> parsePlaylistItems(List<dynamic> results,
       'title': title,
       'album': album,
       'artists': artists ?? artistsM,
-      'thumbnails': thumbnails_ ?? thumbnailsM,
+      'thumbnails': isAlbum ? thumbnailsM : thumbnails_ ?? thumbnailsM,
       'isAvailable': isAvailable,
     };
 
@@ -840,7 +843,6 @@ Map<String, dynamic> parseArtistContents(List results) {
           "content": content
         };
       }
-
     } else if (result.containsKey('musicCarouselShelfRenderer')) {
       final browseEndpoint = nav(result, [
         'musicCarouselShelfRenderer',

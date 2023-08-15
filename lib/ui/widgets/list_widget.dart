@@ -2,6 +2,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '/ui/widgets/marqwee_widget.dart';
 import '../../models/playlist.dart';
 import '../navigator.dart';
 import '../player/player_controller.dart';
@@ -103,11 +104,12 @@ class ListWidget extends StatelessWidget {
                 size: 55,
                 song: items[index],
               ),
-              title: Text(
-                items[index].title,
+              title:MarqueeWidget(
+                child:Text(
+                items[index].title.length>50?items[index].title.substring(0,50): items[index].title,
                 maxLines: 1,
                 style: Theme.of(context).textTheme.titleMedium,
-              ),
+              ),),
               subtitle: Text(
                 "${items[index].artist}",
                 maxLines: 1,

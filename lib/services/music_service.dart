@@ -403,7 +403,7 @@ class MusicServices extends getx.GetxService {
       [...single_column_tab, ...section_list_item, 'musicShelfRenderer'],
     );
     album['tracks'] = parsePlaylistItems(results['contents'],
-        artistsM: album['artists'], thumbnailsM: album["thumbnails"]);
+        artistsM: album['artists'], thumbnailsM: album["thumbnails"],isAlbum: true);
     results = nav(
       response,
       [...single_column_tab, ...section_list, 1, 'musicCarouselShelfRenderer'],

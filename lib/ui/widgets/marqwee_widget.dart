@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MarqueeWidget extends StatefulWidget {
   final Widget child;
   final Axis direction;
-  final Duration animationDuration, backDuration, pauseDuration;
+  final Duration animationDuration, backDuration, pauseDuration, endPauseDuration;
 
   const MarqueeWidget({super.key, 
     required this.child,
@@ -11,6 +11,7 @@ class MarqueeWidget extends StatefulWidget {
     this.animationDuration= const Duration(milliseconds: 5000),
     this.backDuration = const Duration(milliseconds: 3000),
     this.pauseDuration= const Duration(milliseconds: 3000),
+    this.endPauseDuration = const Duration(milliseconds: 2000),
   });
 
   @override
@@ -22,7 +23,7 @@ class _MarqueeWidgetState extends State<MarqueeWidget> {
 
   @override
   void initState() {
-    scrollController = ScrollController(initialScrollOffset: 50.0);
+    scrollController = ScrollController(initialScrollOffset: 1.0);
     WidgetsBinding.instance.addPostFrameCallback(scroll);
     super.initState();
   }
@@ -51,7 +52,7 @@ class _MarqueeWidgetState extends State<MarqueeWidget> {
             duration: widget.animationDuration,
             curve: Curves.ease);
       }
-      await Future.delayed(widget.pauseDuration);
+      await Future.delayed(widget.endPauseDuration);
       if (scrollController.hasClients) {
         await scrollController.animateTo(0.0,
             duration: widget.backDuration, curve: Curves.easeOut);

@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:device_equalizer/device_equalizer.dart';
 
-import '/helper.dart';
+import '../utils/helper.dart';
 import '/models/media_Item_builder.dart';
 import '/services/utils.dart';
 import '/ui/screens/settings_screen_controller.dart';

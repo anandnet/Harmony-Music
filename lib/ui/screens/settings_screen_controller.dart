@@ -1,13 +1,13 @@
 import 'package:android_power_manager/android_power_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/updateCheckFlagFile.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import '../../utils/update_check_flag_file.dart';
 import '/services/piped_service.dart';
 import '/ui/utils/home_library_controller.dart';
 import '../widgets/snackbar.dart';
-import '/helper.dart';
+import '../../utils/helper.dart';
 import '/services/music_service.dart';
 import '/ui/player/player_controller.dart';
 import '/ui/screens/home_screen_controller.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-import '../../helper.dart';
+import '../../utils/helper.dart';
 import '../../models/artist.dart';
 import '../utils/home_library_controller.dart';
 import '/services/music_service.dart';

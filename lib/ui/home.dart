@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../helper.dart';
+import '../utils/helper.dart';
 import '../ui/navigator.dart';
 import '../ui/player/player.dart';
 import 'player/player_controller.dart';

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 import '/services/piped_service.dart';
-import '/helper.dart';
+import '../../utils/helper.dart';
 import '/models/playlist.dart';
 import '/models/album.dart';
 import '/models/thumbnail.dart';

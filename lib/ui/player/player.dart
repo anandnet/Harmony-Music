@@ -5,7 +5,7 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../widgets/loader.dart';
-import '/helper.dart';
+import '../../utils/helper.dart';
 import '/ui/player/player_controller.dart';
 import '/ui/screens/settings_screen_controller.dart';
 import '/ui/utils/theme_controller.dart';

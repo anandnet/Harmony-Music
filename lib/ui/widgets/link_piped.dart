@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '/helper.dart';
+import '../../utils/helper.dart';
 import '/services/piped_service.dart';
 import '/ui/screens/settings_screen_controller.dart';
 import '/ui/utils/home_library_controller.dart';

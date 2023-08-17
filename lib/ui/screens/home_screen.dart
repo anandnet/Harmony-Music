@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '/helper.dart';
+import '../../utils/helper.dart';
 import '/ui/screens/settings_screen_controller.dart';
 import '/ui/player/player_controller.dart';
 import '/ui/widgets/content_list_widget_item.dart';

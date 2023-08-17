@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '/updateCheckFlagFile.dart';
 import '/services/piped_service.dart';
 import '/ui/utils/app_link_controller.dart';
 import '/services/audio_handler.dart';
@@ -17,6 +16,7 @@ import '/ui/screens/settings_screen_controller.dart';
 import '/ui/utils/theme_controller.dart';
 import 'ui/screens/home_screen_controller.dart';
 import 'ui/utils/home_library_controller.dart';
+import 'utils/update_check_flag_file.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

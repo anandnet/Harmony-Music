@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '/helper.dart';
+import '../../utils/helper.dart';
 import '/services/music_service.dart';
 
 class SearchResultScreenController extends GetxController {

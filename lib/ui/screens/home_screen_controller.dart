@@ -1,10 +1,10 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/updateCheckFlagFile.dart';
 import 'package:hive/hive.dart';
 
-import '/helper.dart';
+import '../../utils/update_check_flag_file.dart';
+import '../../utils/helper.dart';
 import '/models/album.dart';
 import '/models/playlist.dart';
 import '/models/quick_picks.dart';

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
-import '/helper.dart';
+import '../../utils/helper.dart';
 import '/models/media_Item_builder.dart';
 import '/ui/screens/home_screen_controller.dart';
 import '/ui/screens/playlistnalbum_screen_controller.dart';

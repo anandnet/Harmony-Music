@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../widgets/loader.dart';
-import '/helper.dart';
+import '../../utils/helper.dart';
 import '/services/music_service.dart';
 import '/ui/player/player_controller.dart';
 import '../navigator.dart';

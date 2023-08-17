@@ -99,5 +99,20 @@
     "newVersionAvailable": "Nouvelle version disponible !",
     "dontShowInfoAgain": "Ne plus afficher cette info",
     "notaSongVideo": "Pas un Song/Music-Video !",
-    "notaValidLink": "Pas un lien valable !"
+    "notaValidLink": "Pas un lien valable !",
+    "local": "Local",
+    "link": "Lien",
+    "unlinkAlert": "Dissociation réussie!",
+    "playlistBlacklistAlert": "Playlist sur liste noire !",
+    "reset": "Réinitialiser",
+    "blacklistPlstResetAlert": "Réinitialiser avec succès!",
+    "resetblacklistedplaylistDes": "Réinitialiser toutes les listes de lecture de la liste noire de Piped",
+    "goToDownloadPage": "Cliquez ici pour accéder à la page de téléchargement",
+    "unLink": "séparer",
+    "linkPipedDes": "Lien avec piped pour les playlists",
+    "selectAuthIns": "Sélectionnez Auth Instance",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "linkAlert": "Liée avec succès!",
+    "resetblacklistedplaylist": "Réinitialiser les platlistes sur liste noire"
 }

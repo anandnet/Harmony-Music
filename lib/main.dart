@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '/updateCheckFlagFile.dart';
 import '/services/piped_service.dart';
 import '/ui/utils/app_link_controller.dart';
 import '/services/audio_handler.dart';
@@ -91,7 +92,7 @@ void _setAppInitPrefs() {
       'streamingQuality': 1,
       'themePrimaryColor': 4278199603,
       'discoverContentType': "QP",
-      'newVersionVisibility': true
+      'newVersionVisibility': updateCheckFlag,
     });
   }
 }

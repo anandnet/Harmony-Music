@@ -1,6 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/updateCheckFlagFile.dart';
 import 'package:hive/hive.dart';
 
 import '/helper.dart';
@@ -24,7 +25,7 @@ class HomeScreenController extends GetxController {
 
   HomeScreenController() {
     init();
-    _checkNewVersion();
+    if(updateCheckFlag) _checkNewVersion();
   }
 
   Future<void> init() async {

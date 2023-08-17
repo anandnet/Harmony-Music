@@ -1,6 +1,7 @@
 import 'package:android_power_manager/android_power_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/updateCheckFlagFile.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '/services/piped_service.dart';
@@ -28,7 +29,7 @@ class SettingsScreenController extends GetxController {
   @override
   void onInit() {
     _setInitValue();
-    _checkNewVersion();
+     if(updateCheckFlag) _checkNewVersion();
     super.onInit();
   }
 

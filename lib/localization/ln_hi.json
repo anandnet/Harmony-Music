@@ -99,5 +99,20 @@
     "dismiss": "बंद करें",
     "notaValidLink": "एक वैध लिंक नहीं!",
     "notaSongVideo": "एक गीत / संगीत वीडियो नहीं!",
-    "nomatch": "कोई मैच नहीं मिला"
+    "nomatch": "कोई मैच नहीं मिला",
+    "reset": "रिसेट",
+    "blacklistPlstResetAlert": "सफलतापूर्वक रिसेट हुआ!",
+    "goToDownloadPage": "डाउनलोड पेज पर जाने के लिए यहाँ दबाएं",
+    "local": "लोकल",
+    "link": "जोड़ें",
+    "unLink": "हटाएँ",
+    "linkPipedDes": "पाइप्ड के साथ प्लेलिस्ट्स के लिए जोड़ें",
+    "username": "यूज़रनेम",
+    "password": "पासवर्ड",
+    "selectAuthIns": "Auth इंस्टैंस चुने",
+    "linkAlert": "सफलतापूर्वक जुड़ गया!",
+    "unlinkAlert": "सफलतापूर्वक हट गया!",
+    "playlistBlacklistAlert": "प्लेलिस्ट ब्लैकलिस्ट हो गया!",
+    "resetblacklistedplaylist": "ब्लैकलिस्टेड प्लेलिस्ट रिसेट",
+    "resetblacklistedplaylistDes": "सभी पाइप्ड ब्लैकलिस्टेड प्लेलिस्ट्स को रिसेट करें"
 }

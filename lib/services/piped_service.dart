@@ -48,8 +48,8 @@ class PipedServices extends GetxService {
       printINFO("Login successful! topken : ${data['token']}");
       return Res(1, response: response.data);
     } on DioError catch (e) {
-      printERROR("Login Failed! => ${e.response?.data['error']}");
-      return Res(0, errorMessage: e.response?.data['error']);
+      printERROR("Login Failed! => ${e.response?.statusMessage ?? e.message}");
+      return Res(0, errorMessage: e.response?.statusMessage ?? e.message);
     }
   }
 
@@ -104,8 +104,8 @@ class PipedServices extends GetxService {
         return Res(1, response: response.data);
       }
     } on DioError catch (e) {
-      printERROR("Login Failed! => ${e.response?.data['error']}");
-      return Res(0, errorMessage: e.response?.data['error']);
+      printERROR("Error ! => ${e.response?.statusMessage ?? e.message}");
+      return Res(0, errorMessage: e.response?.statusMessage ?? e.message);
     }
   }
 

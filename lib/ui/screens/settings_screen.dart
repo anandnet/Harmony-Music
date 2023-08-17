@@ -174,7 +174,8 @@ class SettingsScreen extends StatelessWidget {
                           settingsController.isLinkedWithPiped.value
                               ? "Unlink"
                               : "link",
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context).textTheme.titleMedium!
+                              .copyWith(fontSize: 15),
                         )),
                     onPressed: () {
                       if (settingsController.isLinkedWithPiped.isFalse) {
@@ -199,7 +200,7 @@ class SettingsScreen extends StatelessWidget {
                       trailing: TextButton(
                           child: Text(
                             "Reset",
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize:15 ),
                           ),
                           onPressed: () async {
                             await Get.find<LibraryPlaylistsController>()

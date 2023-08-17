@@ -15,7 +15,7 @@
     "noOfflineSong": "No offline songs!",
     "recentlyPlayed": "Recently Played",
     "favorites": "Favorites",
-    "cachedOrOffline": "Cached/Oflline",
+    "cachedOrOffline": "Cached/Offline",
     "emptyPlaylist": "Empty playlist!",
     "enqueueAll": "Enqueue all",
     "renamePlaylist": "Rename Playlist",
@@ -61,8 +61,8 @@
     "status": "Status",
     "enabled": "Enabled",
     "disabled": "Disabled",
-    "github": "Github",
-    "githubDes": "View Github source code \nif you like this project, don't forget to give a ⭐",
+    "github": "GitHub",
+    "githubDes": "View GitHub source code \nif you like this project, don't forget to give a ⭐",
     "by": "by",
     "search": "Search",
     "searchDes": "Songs,Playlist,Album or Artist",
@@ -113,6 +113,8 @@
     "playlistBlacklistAlert": "Playlist blacklisted!",
     "reset": "Reset",
     "blacklistPlstResetAlert": "Reset successfully!",
-    "resetblacklistedplaylist": "Reset blacklisted platlists",
-    "resetblacklistedplaylistDes": "Reset all the piped blacklisted playlists"
+    "resetblacklistedplaylist": "Reset blacklisted playlists",
+    "resetblacklistedplaylistDes": "Reset all the piped blacklisted playlists",
+    "stopMusicOnTaskClear": "Stop music on task clear",
+    "stopMusicOnTaskClearDes": "Music playback will stop when App being swiped away from the task manager"
 }

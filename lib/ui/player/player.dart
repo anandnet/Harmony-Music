@@ -104,13 +104,15 @@ class Player extends StatelessWidget {
                                       song:
                                           playerController.currentQueue[index],
                                     ),
-                                    title: Text(
-                                      playerController
-                                          .currentQueue[index].title,
-                                      maxLines: 1,
-                                      style: Theme.of(homeScaffoldContext)
-                                          .textTheme
-                                          .titleMedium,
+                                    title: MarqueeWidget(
+                                      child: Text(
+                                        playerController
+                                            .currentQueue[index].title,
+                                        maxLines: 1,
+                                        style: Theme.of(homeScaffoldContext)
+                                            .textTheme
+                                            .titleMedium,
+                                      ),
                                     ),
                                     subtitle: Text(
                                       "${playerController.currentQueue[index].artist}",

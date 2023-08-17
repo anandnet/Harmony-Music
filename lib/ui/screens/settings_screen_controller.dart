@@ -45,7 +45,7 @@ class SettingsScreenController extends GetxController {
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
-    discoverContentType.value = setBox.get('discoverContentType');
+    discoverContentType.value = setBox.get('discoverContentType') ?? "QP";
     if (setBox.containsKey("piped")) {
       isLinkedWithPiped.value = setBox.get("piped")['isLoggedIn'];
     }

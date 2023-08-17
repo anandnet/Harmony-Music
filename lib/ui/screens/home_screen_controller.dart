@@ -29,7 +29,7 @@ class HomeScreenController extends GetxController {
 
   Future<void> init() async {
     final box = Hive.box("AppPrefs");
-    String contentType = box.get("discoverContentType") as String;
+    String contentType = box.get("discoverContentType") ?? "QP";
 
     networkError.value = false;
     try {

@@ -31,7 +31,6 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-/lib/updateCheckFlagFile.dart
 
 # macOS
 **/Flutter/ephemeral/

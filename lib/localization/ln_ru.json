@@ -114,5 +114,7 @@
     "password": "Пароль",
     "playlistBlacklistAlert": "Плейлист занесен в черный список!",
     "blacklistPlstResetAlert": "Сброс выполнен успешно!",
-    "resetblacklistedplaylist": "Сбросить плейлисты из черного списка"
+    "resetblacklistedplaylist": "Сбросить плейлисты из черного списка",
+    "stopMusicOnTaskClear": "Остановить музыку",
+    "stopMusicOnTaskClearDes": "Воспроизведение музыки остановится, когда приложение будет удалено из диспетчера задач."
 }

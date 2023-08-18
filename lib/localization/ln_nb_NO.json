@@ -99,5 +99,22 @@
     "noOfflineSong": "Ingen frakoblede spor",
     "emptyPlaylist": "Tom spilleliste",
     "networkError1": "Nettverksfeil",
-    "cachedOrOffline": "Hurtiglagret/frakoblet"
+    "cachedOrOffline": "Hurtiglagret/frakoblet",
+    "goToDownloadPage": "Klikk her for å gå til nedlastingssiden",
+    "local": "Lokalt",
+    "link": "Link",
+    "unLink": "Koble fra",
+    "linkPipedDes": "Link med piped for spillelister",
+    "linkAlert": "Tilknyttet vellykket!",
+    "unlinkAlert": "Koblet fra!",
+    "playlistBlacklistAlert": "Spilleliste svartelistet!",
+    "resetblacklistedplaylistDes": "Tilbakestill alle svartelistede spillelister",
+    "stopMusicOnTaskClearDes": "Musikkavspilling stopper når appen sveipes bort fra oppgavebehandlingen",
+    "selectAuthIns": "Velg Auth Instance",
+    "stopMusicOnTaskClear": "Stopp musikk",
+    "username": "Brukernavn",
+    "reset": "Nullstille",
+    "blacklistPlstResetAlert": "Tilbakestill vellykket!",
+    "password": "Passord",
+    "resetblacklistedplaylist": "Tilbakestill svartelistede spillelister"
 }

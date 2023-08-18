@@ -114,5 +114,7 @@
     "username": "Nom d'utilisateur",
     "password": "Mot de passe",
     "linkAlert": "Liée avec succès!",
-    "resetblacklistedplaylist": "Réinitialiser les platlistes sur liste noire"
+    "resetblacklistedplaylist": "Réinitialiser les platlistes sur liste noire",
+    "stopMusicOnTaskClearDes": "La lecture de musique s'arrêtera quand App sera écarté du gestionnaire de tâches",
+    "stopMusicOnTaskClear": "arrêter la musique"
 }

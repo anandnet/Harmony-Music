@@ -114,5 +114,7 @@
     "linkPipedDes": "Link z potokiem dla list odtwarzania",
     "subscribers": "subskrybentów",
     "resetblacklistedplaylistDes": "Zresetuj wszystkie potokowane playlisty z czarnej listy",
-    "blacklistPlstResetAlert": "Zresetowano pomyślnie!"
+    "blacklistPlstResetAlert": "Zresetowano pomyślnie!",
+    "stopMusicOnTaskClearDes": "Odtwarzanie muzyki zostanie zatrzymane, gdy aplikacja zostanie usunięta z menedżera zadań",
+    "stopMusicOnTaskClear": "Zatrzymaj muzykę"
 }

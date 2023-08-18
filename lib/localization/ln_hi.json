@@ -114,5 +114,7 @@
     "unlinkAlert": "सफलतापूर्वक हट गया!",
     "playlistBlacklistAlert": "प्लेलिस्ट ब्लैकलिस्ट हो गया!",
     "resetblacklistedplaylist": "ब्लैकलिस्टेड प्लेलिस्ट रिसेट",
-    "resetblacklistedplaylistDes": "सभी पाइप्ड ब्लैकलिस्टेड प्लेलिस्ट्स को रिसेट करें"
+    "resetblacklistedplaylistDes": "सभी पाइप्ड ब्लैकलिस्टेड प्लेलिस्ट्स को रिसेट करें",
+    "stopMusicOnTaskClear": "म्यूजिक बंद करें",
+    "stopMusicOnTaskClearDes": "इस ऐप को टास्क मैनेजर से स्वाइप करने पर म्यूजिक बंद हो जायेगा"
 }

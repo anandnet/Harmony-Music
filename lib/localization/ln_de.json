@@ -114,5 +114,7 @@
     "blacklistPlstResetAlert": "Erfolgreich zurückgesetzt!",
     "resetblacklistedplaylistDes": "Setzen Sie alle Piped Wiedergabelisten auf der schwarzen Liste zurück",
     "resetblacklistedplaylist": "Auf die schwarze Liste gesetzte Wiedergabelisten zurücksetzen",
-    "setDiscoverContent": "Legen Sie „Inhalte entdecken“ fest"
+    "setDiscoverContent": "Legen Sie „Inhalte entdecken“ fest",
+    "stopMusicOnTaskClear": "Stopp Musik auf Task klar",
+    "stopMusicOnTaskClearDes": "Musik Playback will stoppen als seiend #dreinschlagen #App abseits den Task Manager"
 }

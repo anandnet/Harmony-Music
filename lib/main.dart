@@ -16,6 +16,7 @@ import '/ui/screens/settings_screen_controller.dart';
 import '/ui/utils/theme_controller.dart';
 import 'ui/screens/home_screen_controller.dart';
 import 'ui/utils/home_library_controller.dart';
+import 'utils/house_keeping.dart';
 import 'utils/update_check_flag_file.dart';
 
 Future<void> main() async {
@@ -23,6 +24,7 @@ Future<void> main() async {
   await initHive();
   _setAppInitPrefs();
   startApplicationServices();
+  startHouseKeeping();
   Get.put<AudioHandler>(await initAudioService(), permanent: true);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

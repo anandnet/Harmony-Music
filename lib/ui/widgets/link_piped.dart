@@ -152,13 +152,15 @@ class PipedLinkedController extends GetxController {
     }
     if (userName.isEmpty ||
         password.isEmpty ||
-        (instApiUrlInputController.text.isEmpty)) {
+        // ignore: invalid_use_of_protected_member
+        (instApiUrlInputController.hasListeners &&
+            instApiUrlInputController.text.isEmpty)) {
       errorText.value = "All fields required";
       return;
     }
     _pipedServices
         .login(
-            instApiUrlInputController.text.isNotEmpty
+            instApiUrlInputController.text == 'custom'
                 ? instApiUrlInputController.text
                 : selectedInst.toString(),
             userName,
@@ -176,5 +178,13 @@ class PipedLinkedController extends GetxController {
         errorText.value = res.errorMessage ?? "Error occurred!";
       }
     });
+  }
+
+  @override
+  void onClose() {
+    instApiUrlInputController.dispose();
+    usernameInputController.dispose();
+    passwordInputController.dispose();
+    super.onClose();
   }
 }

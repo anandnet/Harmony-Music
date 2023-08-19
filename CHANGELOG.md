@@ -1,3 +1,10 @@
+## 1.4.0
+* Piped playlist integration - Feature requested in #28 
+* Option added  in settings to stop music on app cleared from ram/task #30
+* Fixed full song name in playlists #32
+* Fixed not appearing all songs in bookmarked platlist #37
+* Fixed - not able to scroll till the last song #44 
+
 ## 1.3.2
 * Patch version for issue #34
 * Upgarded packages & update kotlin version

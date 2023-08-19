@@ -24,7 +24,7 @@ class SettingsScreenController extends GetxController {
   final isNewVersionAvailable = false.obs;
   final isLinkedWithPiped = false.obs;
   final stopPlyabackOnSwipeAway = false.obs;
-  final currentVersion = "V1.3.2";
+  final currentVersion = "V1.4.0";
 
   @override
   void onInit() {

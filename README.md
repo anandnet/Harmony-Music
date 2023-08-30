@@ -18,10 +18,11 @@ An app for music streaming made with Flutter(Currently support Android only).
 * Lyrics support
 * No Advertisment
 * No Login required
-* No permission required
+* Piped playlist integration
+
 
 # Download
-<a href="https://github.com/anandnet/Harmony-Music/releases/latest"><img src ="https://github.com/anandnet/Harmony-Music/blob/main/don_github.png" width = "300"></a> <a href= "https://apt.izzysoft.de/fdroid/index/apk/com.anandnet.harmonymusic"><img src = "https://github.com/anandnet/Harmony-Music/blob/main/down_IzzyOnDroid.png" width = '300'></a>
+<a href="https://github.com/anandnet/Harmony-Music/releases/latest"><img src ="https://github.com/anandnet/Harmony-Music/blob/main/don_github.png" width = "300"></a> <a href= "https://f-droid.org/packages/com.anandnet.harmonymusic"><img src = "https://github.com/anandnet/Harmony-Music/blob/main/down_fdroid.png" width = '300'></a></a> <a href= "https://apt.izzysoft.de/fdroid/index/apk/com.anandnet.harmonymusic"><img src = "https://github.com/anandnet/Harmony-Music/blob/main/down_IzzyOnDroid.png" width = '300'></a>
 
 # To Do
 

@@ -336,7 +336,10 @@ MediaItem parseSongFlat(Map<String, dynamic> data) {
   Map<String, dynamic> song = {
     'title': nav(columns[0], text_run_text),
     'videoId': nav(columns[0], text_run + navigation_video_id,
-        noneIfAbsent: true, funName: "parseSongFlat"),
+            noneIfAbsent: true, funName: "parseSongFlat") ??
+        nav(columns[0],
+            text_run + ["navigationEndpoint", "browseEndpoint", "browseId"],
+            noneIfAbsent: true, funName: "parseSongFlat"),
     'artists': parseSongArtists(data, 1),
     'thumbnails': nav(data, thumbnails),
     //'isExplicit': nav(data, badge_label, noneIfAbsent: true) != null

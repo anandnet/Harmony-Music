@@ -189,7 +189,11 @@ dynamic parseVideo(dynamic result) {
   final artistsLen = runsLength == 3 ? 1 : getDotSeparatorIndex(runs);
   return MediaItemBuilder.fromJson({
     'title': nav(result, title_text),
-    'videoId': nav(result, navigation_video_id),
+    'videoId': nav(result, navigation_video_id) ??
+        nav(
+          result,
+          navigation_browse_id,
+        ),
     'artists': parseSongArtistsRuns(runs.sublist(0, artistsLen)),
     'playlistId': nav(result, navigation_playlist_id),
     'thumbnails': nav(result, thumbnail_renderer),
@@ -214,7 +218,8 @@ MediaItem parseSong(Map<dynamic, dynamic> result) {
   //inspect(result);
   var song = {
     'title': nav(result, title_text),
-    'videoId': nav(result, navigation_video_id),
+    'videoId':
+        nav(result, navigation_video_id) ?? nav(result, navigation_browse_id),
     'playlistId': nav(result, navigation_playlist_id,
         noneIfAbsent: true, funName: "parseSong"),
     'thumbnails': nav(result, thumbnail_renderer),
@@ -337,8 +342,7 @@ MediaItem parseSongFlat(Map<String, dynamic> data) {
     'title': nav(columns[0], text_run_text),
     'videoId': nav(columns[0], text_run + navigation_video_id,
             noneIfAbsent: true, funName: "parseSongFlat") ??
-        nav(columns[0],
-            text_run + ["navigationEndpoint", "browseEndpoint", "browseId"],
+        nav(columns[0], text_run + navigation_browse_id,
             noneIfAbsent: true, funName: "parseSongFlat"),
     'artists': parseSongArtists(data, 1),
     'thumbnails': nav(data, thumbnails),
@@ -700,7 +704,8 @@ dynamic parseSearchResult(Map<String, dynamic> data,
     searchResult['description'] =
         hasAuthor ? nav(flexItem, [defaultOffset, 'text']) : null;
   } else if (resultType == 'station') {
-    searchResult['videoId'] = nav(data, navigation_video_id);
+    searchResult['videoId'] =
+        nav(data, navigation_video_id) ?? nav(data, navigation_browse_id);
     searchResult['playlistId'] = nav(data, navigation_playlist_id);
   } else if (resultType == 'song') {
     searchResult['album'] = null;
@@ -712,7 +717,8 @@ dynamic parseSearchResult(Map<String, dynamic> data,
         nav(getFlexColumnItem(data, 1), ['text', 'runs'])
       ];
       if (flexItems[0] != null) {
-        searchResult['videoId'] = nav(flexItems[0][0], navigation_video_id);
+        searchResult['videoId'] = nav(flexItems[0][0], navigation_video_id) ??
+            nav(flexItems[0][0], navigation_browse_id);
         searchResult['playlistId'] =
             nav(flexItems[0][0], navigation_playlist_id);
       }
@@ -966,9 +972,10 @@ MediaItem? parseChartsTrending(dynamic data) {
   final video = {
     'title': nav(flex_0, text_run_text),
     'videoId': nav(
-      flex_0,
-      text_run + navigation_video_id,
-    ),
+          flex_0,
+          text_run + navigation_video_id,
+        ) ??
+        nav(flex_0, text_run + navigation_browse_id),
     'playlistId': nav(flex_0, text_run + navigation_playlist_id),
     'artists': artists,
     'thumbnails': nav(data, thumbnails),

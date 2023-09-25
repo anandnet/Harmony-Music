@@ -18,10 +18,20 @@ class PlayListNAlbumScreenController extends GetxController {
   final isAddedToLibrary = false.obs;
   late final String id;
   late dynamic contentRenderer;
-  bool isAlbum;
+  late bool isAlbum;
   dynamic box;
 
-  PlayListNAlbumScreenController(dynamic content, this.isAlbum, bool isIdOnly) {
+  @override
+  void onReady() {
+    final args = Get.arguments;
+    if(args!=null){
+      isAlbum = args[0];
+      _init(args[1], args[0], args[2]);
+    }
+    super.onReady();
+  }
+
+  void _init(dynamic content, bool isAlbum, bool isIdOnly) {
     bool isPipedPlaylist = false;
     if (!isIdOnly) contentRenderer = content;
     id = (isIdOnly
@@ -147,7 +157,7 @@ class PlayListNAlbumScreenController extends GetxController {
 
   @override
   void onClose() {
-     box.close();
+    box.close();
     super.onClose();
   }
 }

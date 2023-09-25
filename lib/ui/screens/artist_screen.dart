@@ -16,11 +16,11 @@ class ArtistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final playerController = Get.find<PlayerController>();
-    final args = Get.arguments;
+    final tag = key.hashCode.toString();
     final ArtistScreenController artistScreenController =
-        Get.isRegistered<ArtistScreenController>()
-            ? Get.find<ArtistScreenController>()
-            : Get.put(ArtistScreenController(args[0], args[1]));
+        Get.isRegistered<ArtistScreenController>(tag: tag)
+            ? Get.find<ArtistScreenController>(tag: tag)
+            : Get.put(ArtistScreenController(), tag: tag);
     return Scaffold(
       floatingActionButton: Obx(
         () => Padding(
@@ -235,6 +235,7 @@ class ArtistScreen extends StatelessWidget {
                 case 1:
                   {
                     return SeparateSearchItemWidget(
+                      artistControllerTag: tag,
                       isResultWidget: false,
                       items: separatedContent.containsKey('Songs')
                           ? separatedContent['Songs']['results']
@@ -248,6 +249,7 @@ class ArtistScreen extends StatelessWidget {
                 case 2:
                   {
                     return SeparateSearchItemWidget(
+                      artistControllerTag: tag,
                       isResultWidget: false,
                       items: separatedContent.containsKey('Videos')
                           ? separatedContent['Videos']['results']
@@ -261,6 +263,7 @@ class ArtistScreen extends StatelessWidget {
                 case 3:
                   {
                     return SeparateSearchItemWidget(
+                      artistControllerTag: tag,
                       isResultWidget: false,
                       items: separatedContent.containsKey('Albums')
                           ? separatedContent['Albums']['results']
@@ -272,6 +275,7 @@ class ArtistScreen extends StatelessWidget {
                 case 4:
                   {
                     return SeparateSearchItemWidget(
+                      artistControllerTag: tag,
                       isResultWidget: false,
                       items: separatedContent.containsKey('Singles')
                           ? separatedContent['Singles']['results']

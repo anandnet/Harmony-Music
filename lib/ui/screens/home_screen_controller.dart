@@ -12,7 +12,6 @@ import '/services/music_service.dart';
 import '/ui/screens/settings_screen_controller.dart';
 import '/ui/widgets/new_version_dialog.dart';
 
-
 class HomeScreenController extends GetxController {
   final MusicServices _musicServices = Get.find<MusicServices>();
   final isContentFetched = false.obs;
@@ -23,9 +22,11 @@ class HomeScreenController extends GetxController {
   final fixedContent = [].obs;
   final showVersionDialog = true.obs;
 
-  HomeScreenController() {
+  @override
+  onInit() {
+    super.onInit();
     init();
-    if(updateCheckFlag) _checkNewVersion();
+    if (updateCheckFlag) _checkNewVersion();
   }
 
   Future<void> init() async {

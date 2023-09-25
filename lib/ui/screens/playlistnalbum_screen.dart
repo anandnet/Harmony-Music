@@ -23,13 +23,11 @@ class PlaylistNAlbumScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args = Get.arguments;
-
+    final tag = key.hashCode.toString();
     final PlayListNAlbumScreenController playListNAlbumScreenController =
-        (args == null || Get.isRegistered<PlayListNAlbumScreenController>())
-            ? Get.find<PlayListNAlbumScreenController>()
-            : Get.put(
-                PlayListNAlbumScreenController(args[1], args[0], args[2]));
+        (Get.isRegistered<PlayListNAlbumScreenController>(tag: tag))
+            ? Get.find<PlayListNAlbumScreenController>(tag: tag)
+            : Get.put(PlayListNAlbumScreenController(), tag: tag);
 
     return SizedBox(
       child: Row(

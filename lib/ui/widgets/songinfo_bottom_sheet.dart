@@ -10,7 +10,6 @@ import '/ui/screens/playlistnalbum_screen_controller.dart';
 import '/ui/utils/home_library_controller.dart';
 import '/ui/widgets/add_to_playlist.dart';
 import '/ui/widgets/snackbar.dart';
-import '../../utils/helper.dart';
 import '../../models/media_Item_builder.dart';
 import '../../models/playlist.dart';
 import '../navigator.dart';
@@ -46,19 +45,22 @@ class SongInfoBottomSheet extends StatelessWidget {
             maxLines: 1,
           ),
           subtitle: Text(song.artist!),
-          trailing:calledFromPlayer? IconButton(
-                  onPressed: () => Share.share("https://youtube.com/watch?v=${song.id}"),
-                  icon:  Icon(
-                         Icons.share_rounded,
-                        color: Theme.of(context).textTheme.titleMedium!.color,
-                      )) :IconButton(
-              onPressed: songInfoController.toggleFav,
-              icon: Obx(() => Icon(
-                    songInfoController.isCurrentSongFav.isFalse
-                        ? Icons.favorite_border_rounded
-                        : Icons.favorite_rounded,
+          trailing: calledFromPlayer
+              ? IconButton(
+                  onPressed: () =>
+                      Share.share("https://youtube.com/watch?v=${song.id}"),
+                  icon: Icon(
+                    Icons.share_rounded,
                     color: Theme.of(context).textTheme.titleMedium!.color,
-                  ))),
+                  ))
+              : IconButton(
+                  onPressed: songInfoController.toggleFav,
+                  icon: Obx(() => Icon(
+                        songInfoController.isCurrentSongFav.isFalse
+                            ? Icons.favorite_border_rounded
+                            : Icons.favorite_rounded,
+                        color: Theme.of(context).textTheme.titleMedium!.color,
+                      ))),
         ),
         const Divider(),
         ListTile(
@@ -121,35 +123,22 @@ class SongInfoBottomSheet extends StatelessWidget {
                     final playerController = Get.find<PlayerController>();
                     playerController.playerPanelController.close();
                   }
-
-                  if (getCurrentRouteName() ==
-                      ScreenNavigationSetup.playlistNAlbumScreen) {
-                    Get.nestedKey(ScreenNavigationSetup.id)
-                        ?.currentState!
-                        .pop();
-
-                    Future.delayed(const Duration(milliseconds: 500), () async {
-                      await Get.toNamed(
-                          ScreenNavigationSetup.playlistNAlbumScreen,
-                          id: ScreenNavigationSetup.id,
-                          arguments: [true, song.extras!['album']['id'], true]);
-                    });
-                  } else {
-                    Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
-                        id: ScreenNavigationSetup.id,
-                        arguments: [true, song.extras!['album']['id'], true]);
-                  }
+                  Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
+                      id: ScreenNavigationSetup.id,
+                      arguments: [true, song.extras!['album']['id'], true]);
                 },
               )
             : const SizedBox.shrink(),
         ...artistWidgetList(song, context),
         (playlist != null &&
-                !playlist!.isCloudPlaylist &&
-                !(playlist!.playlistId == "LIBRP")) || (playlist != null && playlist!.isPipedPlaylist)
+                    !playlist!.isCloudPlaylist &&
+                    !(playlist!.playlistId == "LIBRP")) ||
+                (playlist != null && playlist!.isPipedPlaylist)
             ? ListTile(
                 visualDensity: const VisualDensity(vertical: -1),
                 leading: const Icon(Icons.delete_rounded),
-                title: playlist!.playlistId == "SongsCache"? const Text("Remove from cache")
+                title: playlist!.playlistId == "SongsCache"
+                    ? const Text("Remove from cache")
                     : const Text("Remove from playlist"),
                 onTap: () {
                   Navigator.of(context).pop();
@@ -182,13 +171,18 @@ class SongInfoBottomSheet extends StatelessWidget {
                   }
                 })
             : const SizedBox.shrink(),
-        calledFromPlayer ? const SizedBox(height: 10,): ListTile(
-          contentPadding: const EdgeInsets.only(bottom: 20, left: 15),
-          visualDensity: const VisualDensity(vertical: -1),
-          leading: const Icon(Icons.share_rounded),
-          title: const Text("Share this song"),
-          onTap: () => Share.share("https://youtube.com/watch?v=${song.id}"),
-        ),
+        calledFromPlayer
+            ? const SizedBox(
+                height: 10,
+              )
+            : ListTile(
+                contentPadding: const EdgeInsets.only(bottom: 20, left: 15),
+                visualDensity: const VisualDensity(vertical: -1),
+                leading: const Icon(Icons.share_rounded),
+                title: const Text("Share this song"),
+                onTap: () =>
+                    Share.share("https://youtube.com/watch?v=${song.id}"),
+              ),
       ],
     );
   }
@@ -215,25 +209,10 @@ class SongInfoBottomSheet extends StatelessWidget {
                       final playerController = Get.find<PlayerController>();
                       playerController.playerPanelController.close();
                     }
-
-                    if (getCurrentRouteName() ==
-                        ScreenNavigationSetup.artistScreen) {
-                      Get.nestedKey(ScreenNavigationSetup.id)
-                          ?.currentState!
-                          .pop();
-
-                      Future.delayed(const Duration(milliseconds: 500),
-                          () async {
-                        await Get.toNamed(ScreenNavigationSetup.artistScreen,
-                            id: ScreenNavigationSetup.id,
-                            arguments: [true, e['id']]);
-                      });
-                    } else {
-                      await Get.toNamed(ScreenNavigationSetup.artistScreen,
-                          id: ScreenNavigationSetup.id,
-                          preventDuplicates: true,
-                          arguments: [true, e['id']]);
-                    }
+                    await Get.toNamed(ScreenNavigationSetup.artistScreen,
+                        id: ScreenNavigationSetup.id,
+                        preventDuplicates: true,
+                        arguments: [true, e['id']]);
                   },
                   tileColor: Colors.transparent,
                   leading: const Icon(Icons.person_rounded),
@@ -242,8 +221,6 @@ class SongInfoBottomSheet extends StatelessWidget {
             .toList()
         : [const SizedBox.shrink()];
   }
-
-  
 }
 
 class SongInfoController extends GetxController {
@@ -267,10 +244,11 @@ class SongInfoController extends GetxController {
 
   Future<void> removeSongFromPlaylist(MediaItem item, Playlist playlist) async {
     final plstCntroller = Get.find<PlayListNAlbumScreenController>();
-    if(playlist.isPipedPlaylist){
-      final res = await Get.find<PipedServices>().getPlaylistSongs(playlist.playlistId);
+    if (playlist.isPipedPlaylist) {
+      final res =
+          await Get.find<PipedServices>().getPlaylistSongs(playlist.playlistId);
       final songIndex = res.indexWhere((element) => element.id == item.id);
-      if(songIndex != -1){
+      if (songIndex != -1) {
         final res = await Get.find<PipedServices>()
             .removeFromPlaylist(playlist.playlistId, songIndex);
         if (res.code == 1) {

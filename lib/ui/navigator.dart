@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/album.dart';
+import 'package:harmonymusic/models/artist.dart';
+import 'package:harmonymusic/models/playlist.dart';
 
 import 'package:harmonymusic/ui/screens/artist_screen.dart';
 import 'package:harmonymusic/ui/screens/home_screen.dart';
@@ -31,14 +34,18 @@ class ScreenNavigation extends StatelessWidget {
           if (settings.name == ScreenNavigationSetup.homeScreen) {
             return GetPageRoute(page: () => const HomeScreen(),settings: settings);
           } else if (settings.name == ScreenNavigationSetup.playlistNAlbumScreen) {
-            return GetPageRoute(page: () => const PlaylistNAlbumScreen(), settings: settings);
+            final args = settings.arguments as List;
+            final id = args[2] ? args[1]: args[0] ? (args[1] as Album).browseId:(args[1] as Playlist).playlistId;
+            return GetPageRoute(page: () => PlaylistNAlbumScreen(key:Key(id)), settings: settings);
           } else if (settings.name == ScreenNavigationSetup.searchScreen) {
             return GetPageRoute(page: () => const SearchScreen(), settings: settings);
           } else if (settings.name == ScreenNavigationSetup.searchResultScreen) {
             return GetPageRoute(page: () => const SearchResultScreen(), settings: settings);
           } else if (settings.name ==
               ScreenNavigationSetup.artistScreen) {
-            return GetPageRoute(page: () => const ArtistScreen(), settings: settings);
+            final args = settings.arguments as List;
+            final id = args[0]?args[1]:(args[1] as Artist).browseId;
+            return GetPageRoute(page: () => ArtistScreen(key: Key(id),), settings: settings);
           }
           return null;
         });

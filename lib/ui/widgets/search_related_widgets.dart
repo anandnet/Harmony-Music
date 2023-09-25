@@ -98,7 +98,9 @@ class SeparateSearchItemWidget extends StatelessWidget {
       this.isCompleteList = true,
       this.isResultWidget = true,
       this.topPadding = 0,
-      this.scrollController});
+      this.scrollController,this.artistControllerTag});
+  /// tag for accessing Artist controller inst, [artistControllerTag] only valid for Artist screen
+  final String? artistControllerTag; 
   final List<dynamic> items;
   final String title;
   final bool isCompleteList;
@@ -108,8 +110,8 @@ class SeparateSearchItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final artistController = Get.isRegistered<ArtistScreenController>()
-        ? Get.find<ArtistScreenController>()
+    final artistController = Get.isRegistered<ArtistScreenController>(tag: artistControllerTag)
+        ? Get.find<ArtistScreenController>(tag: artistControllerTag)
         : null;
     final searchResController = Get.isRegistered<SearchResultScreenController>()
         ? Get.find<SearchResultScreenController>()

@@ -60,7 +60,7 @@ class AppLinksController extends GetxController {
       } else if (uri.pathSegments[0] == "channel") {
         final browseId = uri.pathSegments[1];
         await openArtist(browseId);
-      } else if (uri.queryParameters.isEmpty && uri.host == "youtu.be") {
+      } else if ((uri.queryParameters.isEmpty || uri.query.contains("si="))  && uri.host == "youtu.be") {
         final songId = uri.pathSegments[0];
         await playSong(songId);
       }
@@ -72,10 +72,6 @@ class AppLinksController extends GetxController {
   }
 
   Future<void> openPlaylistOrAlbum(String browseId) async {
-    if (getCurrentRouteName() == ScreenNavigationSetup.playlistNAlbumScreen) {
-      Get.nestedKey(ScreenNavigationSetup.id)?.currentState!.pop();
-      await Future.delayed(const Duration(milliseconds: 500));
-    }
     if (browseId.contains("OLAK5uy")) {
       Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
           id: ScreenNavigationSetup.id, arguments: [true, browseId, true]);
@@ -86,10 +82,6 @@ class AppLinksController extends GetxController {
   }
 
   Future<void> openArtist(String channelId) async {
-    if (getCurrentRouteName() == ScreenNavigationSetup.artistScreen) {
-      Get.nestedKey(ScreenNavigationSetup.id)?.currentState!.pop();
-      await Future.delayed(const Duration(milliseconds: 500));
-    }
     await Get.toNamed(ScreenNavigationSetup.artistScreen,
         id: ScreenNavigationSetup.id, arguments: [true, channelId]);
   }

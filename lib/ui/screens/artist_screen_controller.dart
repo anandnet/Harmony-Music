@@ -20,7 +20,15 @@ class ArtistScreenController extends GetxController {
   final videoScrollController = ScrollController();
   bool continuationInProgress = false;
   late Artist artist_;
-  ArtistScreenController(bool isIdOnly, dynamic artist) {
+
+  @override
+  void onReady(){
+    final args = Get.arguments;
+    _init(args[0], args[1]);
+    super.onReady();
+  }
+
+  _init(bool isIdOnly, dynamic artist) {
     if (!isIdOnly) artist_ = artist as Artist;
     _fetchArtistContent(isIdOnly ? artist as String : artist.browseId);
     _checkIfAddedToLibrary(isIdOnly ? artist as String : artist.browseId);

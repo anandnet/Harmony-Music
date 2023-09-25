@@ -364,10 +364,12 @@ class MusicServices extends getx.GetxService {
       }
 
       int secondSubtitleRunCount = header['secondSubtitle']['runs'].length;
-      int songCount = int.parse(RegExp(r'([\d,]+)')
-          .stringMatch(header['secondSubtitle']['runs'][secondSubtitleRunCount%3]['text'])!);
+      int songCount = int.parse(RegExp(r'([\d,]+)').stringMatch(
+          header['secondSubtitle']['runs'][secondSubtitleRunCount % 3]
+              ['text'])!);
       if (header['secondSubtitle']['runs'].length > 1) {
-        playlist['duration'] = header['secondSubtitle']['runs'][(secondSubtitleRunCount % 3)+2]['text'];
+        playlist['duration'] = header['secondSubtitle']['runs']
+            [(secondSubtitleRunCount % 3) + 2]['text'];
       }
       playlist['trackCount'] = songCount;
 
@@ -404,7 +406,9 @@ class MusicServices extends getx.GetxService {
       [...single_column_tab, ...section_list_item, 'musicShelfRenderer'],
     );
     album['tracks'] = parsePlaylistItems(results['contents'],
-        artistsM: album['artists'], thumbnailsM: album["thumbnails"],isAlbum: true);
+        artistsM: album['artists'],
+        thumbnailsM: album["thumbnails"],
+        isAlbum: true);
     results = nav(
       response,
       [...single_column_tab, ...section_list, 1, 'musicCarouselShelfRenderer'],
@@ -472,11 +476,7 @@ class MusicServices extends getx.GetxService {
       // }
 
       return [
-        streamUriList
-            .lastWhere((element) =>
-                element.audioCodec.contains("mp4a") && element.tag != 140)
-            .url
-            .toString(),
+        streamUriList.last.url.toString(),
         streamUriList
             .firstWhere((element) => (element.tag == 251) || element.tag == 140)
             .url

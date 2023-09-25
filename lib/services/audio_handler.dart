@@ -152,8 +152,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   Future<void> _triggerNext() async {
     if (loopModeEnabled) {
-      _player.seek(Duration.zero);
-      _player.play();
+     await _player.seek(Duration.zero);
       return;
     }
     skipToNext();

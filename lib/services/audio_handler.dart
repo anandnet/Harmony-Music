@@ -205,13 +205,19 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   AudioSource _createAudioSource(MediaItem mediaItem) {
     final url = mediaItem.extras!['url'] as String;
+    final settingsScreenController = Get.find<SettingsScreenController>();
+    // if proxy enabled Audio will be played using Lock Caching Audio Source (Work around for proxy)
     if (url.contains('file') ||
-        Get.find<SettingsScreenController>().cacheSongs.isTrue) {
+        settingsScreenController.cacheSongs.isTrue ||
+        settingsScreenController.isProxyEnabled.isTrue) {
       printINFO("Playing Using LockCaching");
       isPlayingUsingLockCachingSource = true;
       return LockCachingAudioSource(
         Uri.parse(url),
         cacheFile: File("$_cacheDir/cachedSongs/${mediaItem.id}.mp3"),
+        proxy: settingsScreenController.isProxyEnabled.isFalse
+            ? null
+            : settingsScreenController.proxy.value,
         tag: mediaItem,
       );
     }
@@ -320,6 +326,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       mediaItem.add(currentSong);
       final url =
           await checkNGetUrl(currentSong.id, generateNewUrl: isNewUrlReq);
+      printINFO(url);
       currentSongUrl = url;
       if (url == null) {
         return;
@@ -332,10 +339,18 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       await _player.play();
       cacheNextSongUrl();
     } else if (name == "checkWithCacheDb" && isPlayingUsingLockCachingSource) {
+      final settingsScreenController = Get.find<SettingsScreenController>();
       final song = extras!['mediaItem'] as MediaItem;
       final songsCacheBox = Hive.box("SongsCache");
       if (!songsCacheBox.containsKey(song.id) &&
           await File("$_cacheDir/cachedSongs/${song.id}.mp3").exists()) {
+        // Removed file cached due to LockCacheAudiosource used due to proxy (Workaround)
+        if (settingsScreenController.cacheSongs.isFalse &&
+            settingsScreenController.isProxyEnabled.isTrue) {
+          final proxyCachedSongs = await Hive.openBox("proxyCachedSongs");
+          proxyCachedSongs.add(song.id);
+          return;
+        }
         song.extras!['url'] = currentSongUrl;
         song.extras!['date'] = DateTime.now().millisecondsSinceEpoch;
         final jsonData = MediaItemBuilder.toJson(song);
@@ -353,7 +368,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       mediaItem.add(currMed);
       queue.add([currMed]);
       final url =
-          (await checkNGetUrl(currMed.id, useNewInstanceOfExplode: true));
+          (await checkNGetUrl(currMed.id, useNewInstanceOfExplode: false));
+      printINFO(url);
       currentSongUrl = url;
       if (url == null) {
         return;
@@ -405,7 +421,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   @override
   Future<void> onTaskRemoved() async {
-    final stopForegroundService = Get.find<SettingsScreenController>().stopPlyabackOnSwipeAway.value;
+    final stopForegroundService =
+        Get.find<SettingsScreenController>().stopPlyabackOnSwipeAway.value;
     if (stopForegroundService) {
       await stop();
     }

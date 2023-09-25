@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '/ui/widgets/proxy_dialog.dart';
 import '/ui/utils/home_library_controller.dart';
 import '../widgets/snackbar.dart';
 import '/ui/widgets/link_piped.dart';
@@ -174,7 +175,9 @@ class SettingsScreen extends StatelessWidget {
                           settingsController.isLinkedWithPiped.value
                               ? "Unlink"
                               : "link",
-                          style: Theme.of(context).textTheme.titleMedium!
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
                               .copyWith(fontSize: 15),
                         )),
                     onPressed: () {
@@ -182,8 +185,9 @@ class SettingsScreen extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (context) => const LinkPiped(),
-                        ).whenComplete(
-                            () => Get.delete<PipedLinkedController>());
+                        ).whenComplete(() => Future.delayed(
+                            const Duration(milliseconds: 100),
+                            () => Get.delete<PipedLinkedController>()));
                       } else {
                         settingsController.unlinkPiped();
                       }
@@ -200,7 +204,10 @@ class SettingsScreen extends StatelessWidget {
                       trailing: TextButton(
                           child: Text(
                             "Reset",
-                            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize:15 ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(fontSize: 15),
                           ),
                           onPressed: () async {
                             await Get.find<LibraryPlaylistsController>()
@@ -212,14 +219,49 @@ class SettingsScreen extends StatelessWidget {
                     )
                   : const SizedBox.shrink()),
               ListTile(
+                contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                title: const Text("Enable proxy"),
+                subtitle: Text("Enable HTTP proxy for all network request",
+                    style: Theme.of(context).textTheme.bodyMedium),
+                trailing: Obx(
+                  () => Switch(
+                      value: settingsController.isProxyEnabled.value,
+                      onChanged: settingsController.toggleProxy),
+                ),
+              ),
+              Obx(() => settingsController.isProxyEnabled.value
+                  ? ListTile(
+                      contentPadding:
+                          const EdgeInsets.only(left: 5, right: 10, top: 0),
+                      title: const Text("Configure proxy"),
+                      subtitle: Obx(() => Text(settingsController.proxy.value,
+                          style: Theme.of(context).textTheme.bodyMedium)),
+                      onTap: () async {
+                        showDialog(
+                          context: context,
+                          builder: (context) => const ProxyPopup(),
+                        ).whenComplete(() {
+                          Future.delayed(
+                              const Duration(
+                                milliseconds: 100,
+                              ), () {
+                            Get.delete<ProxyPopupController>();
+                          });
+                        });
+                      },
+                    )
+                  : const SizedBox.shrink()),
+              ListTile(
                   contentPadding: const EdgeInsets.only(left: 5, right: 10),
                   title: const Text("Stop music on task clear"),
-                  subtitle: Text("Music playback will stop when App being swiped away from the task manager",
+                  subtitle: Text(
+                      "Music playback will stop when App being swiped away from the task manager",
                       style: Theme.of(context).textTheme.bodyMedium),
                   trailing: Obx(
                     () => Switch(
                         value: settingsController.stopPlyabackOnSwipeAway.value,
-                        onChanged: settingsController.toggleStopPlyabackOnSwipeAway),
+                        onChanged:
+                            settingsController.toggleStopPlyabackOnSwipeAway),
                   )),
               GetPlatform.isAndroid
                   ? Obx(

@@ -1,10 +1,14 @@
 // ignore_for_file: constant_identifier_names
 
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:get/get.dart' as getx;
+import 'package:harmonymusic/ui/screens/settings_screen_controller.dart';
 import 'package:hive/hive.dart';
+import 'package:http/io_client.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '/models/album.dart';
@@ -61,7 +65,20 @@ class MusicServices extends getx.GetxService {
       'contentPlaybackContext': {'signatureTimestamp': signatureTimestamp},
     };
     _headers['X-Goog-Visitor-Id'] = 'CgszaE1mUm55NHNwayjXiamfBg%3D%3D';
-    _yt = YoutubeExplode();
+
+    //set proxy
+    (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) {
+        return true;
+      };
+      client.findProxy = findProxy;
+    };
+    final explodeClient = HttpClient();
+    explodeClient.findProxy = findProxy;
+    _yt = YoutubeExplode(YoutubeHttpClient(IOClient(explodeClient)));
+
     final appPrefsBox = Hive.box('AppPrefs');
     if (appPrefsBox.containsKey('visitorId')) {
       final visitorData = appPrefsBox.get("visitorId");
@@ -103,6 +120,14 @@ class MusicServices extends getx.GetxService {
     } catch (e) {
       return null;
     }
+  }
+
+  String findProxy(Uri url) {
+    final settingsScreenController = getx.Get.find<SettingsScreenController>();
+    printINFO(settingsScreenController.proxy);
+    return settingsScreenController.isProxyEnabled.isTrue
+        ? 'PROXY ${settingsScreenController.proxy.value}'
+        : 'DIRECT';
   }
 
   Future<Response> _sendRequest(String action, Map<dynamic, dynamic> data,
@@ -364,10 +389,12 @@ class MusicServices extends getx.GetxService {
       }
 
       int secondSubtitleRunCount = header['secondSubtitle']['runs'].length;
-      int songCount = int.parse(RegExp(r'([\d,]+)')
-          .stringMatch(header['secondSubtitle']['runs'][secondSubtitleRunCount%3]['text'])!);
+      int songCount = int.parse(RegExp(r'([\d,]+)').stringMatch(
+          header['secondSubtitle']['runs'][secondSubtitleRunCount % 3]
+              ['text'])!);
       if (header['secondSubtitle']['runs'].length > 1) {
-        playlist['duration'] = header['secondSubtitle']['runs'][(secondSubtitleRunCount % 3)+2]['text'];
+        playlist['duration'] = header['secondSubtitle']['runs']
+            [(secondSubtitleRunCount % 3) + 2]['text'];
       }
       playlist['trackCount'] = songCount;
 
@@ -404,7 +431,9 @@ class MusicServices extends getx.GetxService {
       [...single_column_tab, ...section_list_item, 'musicShelfRenderer'],
     );
     album['tracks'] = parsePlaylistItems(results['contents'],
-        artistsM: album['artists'], thumbnailsM: album["thumbnails"],isAlbum: true);
+        artistsM: album['artists'],
+        thumbnailsM: album["thumbnails"],
+        isAlbum: true);
     results = nav(
       response,
       [...single_column_tab, ...section_list, 1, 'musicCarouselShelfRenderer'],
@@ -462,11 +491,11 @@ class MusicServices extends getx.GetxService {
 
   Future<List<String>?> getSongUri(String songId,
       {AudioQuality quality = AudioQuality.High, int attempt = 1}) async {
+    printINFO(songId);
     try {
       final songStreamManifest =
           await _yt.videos.streamsClient.getManifest(songId);
       final streamUriList = songStreamManifest.audioOnly.sortByBitrate();
-
       // for (AudioOnlyStreamInfo x in streamUriList) {
       //   printINFO("${x.audioCodec} ${x.size} ${x.tag}");
       // }

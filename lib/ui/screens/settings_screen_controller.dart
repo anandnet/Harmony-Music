@@ -24,12 +24,14 @@ class SettingsScreenController extends GetxController {
   final isNewVersionAvailable = false.obs;
   final isLinkedWithPiped = false.obs;
   final stopPlyabackOnSwipeAway = false.obs;
+  final isProxyEnabled = false.obs;
+  final proxy = "00.00.00.00:00".obs;
   final currentVersion = "V1.4.0";
 
   @override
   void onInit() {
     _setInitValue();
-     if(updateCheckFlag) _checkNewVersion();
+    if (updateCheckFlag) _checkNewVersion();
     super.onInit();
   }
 
@@ -50,6 +52,8 @@ class SettingsScreenController extends GetxController {
     if (setBox.containsKey("piped")) {
       isLinkedWithPiped.value = setBox.get("piped")['isLoggedIn'];
     }
+    isProxyEnabled.value = setBox.get("isProxyEnabled") ?? false;
+    proxy.value = setBox.get("proxy") ?? proxy.value;
     stopPlyabackOnSwipeAway.value =
         setBox.get('stopPlyabackOnSwipeAway') ?? false;
     if (GetPlatform.isAndroid) {
@@ -102,6 +106,12 @@ class SettingsScreenController extends GetxController {
         Get.context!, "Unlinked successfully!",
         size: SanckBarSize.MEDIUM));
     box.close();
+  }
+
+  Future<void> toggleProxy(bool val) async {
+    await setBox.put("isProxyEnabled", val);
+    isProxyEnabled.value = val;
+    Get.find<HomeScreenController>().init();
   }
 
   void toggleStopPlyabackOnSwipeAway(bool val) {

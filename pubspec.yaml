@@ -57,6 +57,7 @@ dependencies:
       url: https://github.com/anandnet/device_equalizer.git
       ref: main
   app_links: ^3.4.3
+  http: ^1.1.0
   
 dev_dependencies:
   flutter_test:

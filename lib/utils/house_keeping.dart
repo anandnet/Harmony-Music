@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:harmonymusic/utils/helper.dart';
 import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../services/utils.dart';
 
@@ -21,4 +25,19 @@ Future<void> removeExpiredSongsUrlFromDb() async {
     }
   // ignore: empty_catches
   } catch (e) {}
+}
+
+void removeCachedFileCreatedUsingProxy() async {
+  final cacheDir = (await getTemporaryDirectory()).path;
+  final proxyCachedSongs = await Hive.openBox("proxyCachedSongs");
+  final allSongIdList = proxyCachedSongs.values.toList();
+  for(int i = 0;i< allSongIdList.length;i++){
+    printINFO(allSongIdList[i]);
+    if(await File("$cacheDir/cachedSongs/${allSongIdList[i]}.mp3").exists()){
+      await File("$cacheDir/cachedSongs/${allSongIdList[i]}.mp3").delete();
+    }
+  }
+  await proxyCachedSongs.clear();
+  proxyCachedSongs.close();
+  printINFO("All proxy cached File removed");
 }

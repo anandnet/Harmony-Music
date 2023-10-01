@@ -157,7 +157,7 @@ class SettingsScreen extends StatelessWidget {
                 contentPadding:
                     const EdgeInsets.only(left: 5, right: 10, top: 0),
                 title: const Text("Equalizer"),
-                subtitle: Text("Open system euqalizer",
+                subtitle: Text("Open system equalizer",
                     style: Theme.of(context).textTheme.bodyMedium),
                 onTap: () async {
                   await Get.find<PlayerController>().openEqualizer();

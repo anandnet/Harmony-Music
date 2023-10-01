@@ -975,7 +975,7 @@ MediaItem? parseChartsTrending(dynamic data) {
           flex_0,
           text_run + navigation_video_id,
         ) ??
-        nav(flex_0, text_run + navigation_browse_id),
+        nav(data, ['playlistItemData','videoId']),
     'playlistId': nav(flex_0, text_run + navigation_playlist_id),
     'artists': artists,
     'thumbnails': nav(data, thumbnails),

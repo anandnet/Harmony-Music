@@ -77,14 +77,14 @@ class SettingsScreen extends StatelessWidget {
                   () => Text(
                       settingsController.themeModetype.value ==
                               ThemeType.dynamic
-                          ? "dynamic"
+                          ? "Dynamic"
                           : settingsController.themeModetype.value ==
                                   ThemeType.system
-                              ? "system default"
+                              ? "System default"
                               : settingsController.themeModetype.value ==
                                       ThemeType.dark
-                                  ? "dark"
-                                  : "light",
+                                  ? "Dark"
+                                  : "Light",
                       style: Theme.of(context).textTheme.bodyMedium),
                 ),
                 onTap: () => showDialog(
@@ -173,7 +173,7 @@ class SettingsScreen extends StatelessWidget {
                     child: Obx(() => Text(
                           settingsController.isLinkedWithPiped.value
                               ? "Unlink"
-                              : "link",
+                              : "Link",
                           style: Theme.of(context).textTheme.titleMedium!
                               .copyWith(fontSize: 15),
                         )),

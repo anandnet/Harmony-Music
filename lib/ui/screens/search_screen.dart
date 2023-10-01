@@ -65,7 +65,7 @@ class SearchScreen extends StatelessWidget {
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.only(left: 5),
                       focusColor: Colors.white,
-                      hintText: 'Enter a search term',
+                      hintText: 'Songs,Playlist,Album or Artist',
                     ),
                   ),
                   Expanded(

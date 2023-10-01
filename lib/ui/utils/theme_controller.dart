@@ -107,15 +107,15 @@ class ThemeController extends GetxController {
               backgroundColor: primarySwatch[600],
               modalBarrierColor: primarySwatch[400]),
           textTheme: TextTheme(
-            titleLarge: TextStyle(
+            titleLarge: const TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.bold,
-                color: textColor ?? primarySwatch[50]),
-            titleMedium: TextStyle(
+                color:Colors.white),
+            titleMedium: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: textColor ?? primarySwatch[50]),
-            titleSmall: TextStyle(color: primarySwatch[300]),
-            bodyMedium: TextStyle(color: primarySwatch[200]),
+                color: Colors.white),
+            titleSmall: TextStyle(color: primarySwatch[100]),
+            bodyMedium: TextStyle(color: primarySwatch[100]),
             labelMedium: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,

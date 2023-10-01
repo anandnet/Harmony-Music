@@ -1,3 +1,11 @@
+## 1.5.0
+* Added search feature where required - Feature requested in #45 
+* Fixed - loop song does not work #49
+* Fixed - screen mismatching issue #57
+* Fixed - Home page not loading #59
+* Fixed - Some songs are not playing, it remains paused #60 
+* Fixed type #62 & made test more brighter #61
+
 ## 1.4.0
 * Piped playlist integration - Feature requested in #28 
 * Option added  in settings to stop music on app cleared from ram/task #30

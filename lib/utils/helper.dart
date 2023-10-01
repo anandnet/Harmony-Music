@@ -33,8 +33,9 @@ void sortSongsNVideos(
   bool isAscending,
 ) {
   if (sortByName) {
-    songlist.sort((a, b) =>
-        isAscending ? a.title.compareTo(b.title) : b.title.compareTo(a.title));
+    songlist.sort((a, b) => isAscending
+        ? a.title.toLowerCase().compareTo(b.title.toLowerCase())
+        : b.title.toLowerCase().compareTo(a.title.toLowerCase()));
   } else if (sortByDate) {
     songlist.sort((a, b) {
       if (a.extras!['date'] == null || b.extras!['date'] == null) {
@@ -58,8 +59,9 @@ void sortAlbumNSingles(
   bool isAscending,
 ) {
   if (sortByName) {
-    albumList.sort((a, b) =>
-        isAscending ? a.title.compareTo(b.title) : b.title.compareTo(a.title));
+    albumList.sort((a, b) => isAscending
+        ? a.title.toLowerCase().compareTo(b.title.toLowerCase())
+        : b.title.toLowerCase().compareTo(a.title.toLowerCase()));
   } else if (sortByDate) {
     albumList.sort((a, b) {
       if (a.year == null || b.year == null) {
@@ -77,8 +79,9 @@ void sortPlayLists(
   bool sortByName,
   bool isAscending,
 ) {
-  playlists.sort((a, b) =>
-      isAscending ? a.title.compareTo(b.title) : b.title.compareTo(a.title));
+  playlists.sort((a, b) => isAscending
+      ? a.title.toLowerCase().compareTo(b.title.toLowerCase())
+      : b.title.toLowerCase().compareTo(a.title.toLowerCase()));
 }
 
 void sortArtist(
@@ -86,8 +89,9 @@ void sortArtist(
   bool sortByName,
   bool isAscending,
 ) {
-  artistList.sort((a, b) =>
-      isAscending ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+  artistList.sort((a, b) => isAscending
+      ? a.name.toLowerCase().compareTo(b.name.toLowerCase())
+      : b.name.toLowerCase().compareTo(a.name.toLowerCase()));
 }
 
 /// Return true if new version available

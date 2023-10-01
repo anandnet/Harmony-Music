@@ -169,7 +169,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                           ? const SizedBox.shrink()
                           : Padding(
                               padding: const EdgeInsets.only(top: 10.0),
-                              child: SizedBox.square(
+                              child:Obx(() => !playListNAlbumScreenController.isSearchingOn.value ? SizedBox.square(
                                   dimension: 200,
                                   child: Stack(
                                     children: [
@@ -354,7 +354,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                         ),
                                       )
                                     ],
-                                  )),
+                                  )): const SizedBox.shrink()),
                             ),
                       Padding(
                           padding: EdgeInsets.only(
@@ -371,16 +371,30 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                       : content.description ?? "",
                                   style: Theme.of(context).textTheme.titleSmall,
                                 )
+                                
                               : Obx(
                                   () => SortWidget(
-                                      itemCountTitle:
-                                          "${playListNAlbumScreenController.songList.length} songs",
-                                      titleLeftPadding: 9,
-                                      isDurationOptionRequired: true,
-                                      onSort: (a, b, c, d) {
-                                        playListNAlbumScreenController.onSort(
-                                            a, c, d);
-                                      }),
+                                    tag: playListNAlbumScreenController.isAlbum
+                                        ? content.browseId
+                                        : content.playlistId,
+                                    isSearchFeatureRequired: true,
+                                    itemCountTitle:
+                                        "${playListNAlbumScreenController.songList.length} songs",
+                                    titleLeftPadding: 9,
+                                    isDurationOptionRequired: true,
+                                    onSort: (a, b, c, d) {
+                                      playListNAlbumScreenController.onSort(
+                                          a, c, d);
+                                    },
+                                    onSearch:
+                                        playListNAlbumScreenController.onSearch,
+                                    onSearchClose:
+                                        playListNAlbumScreenController
+                                            .onSearchClose,
+                                    onSearchStart:
+                                        playListNAlbumScreenController
+                                            .onSearchStart,
+                                  ),
                                 )),
                       (!playListNAlbumScreenController.isAlbum &&
                               !content.isCloudPlaylist)
@@ -391,6 +405,10 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                           ? const SizedBox.shrink()
                           : Obx(
                               () => SortWidget(
+                                tag: playListNAlbumScreenController.isAlbum
+                                    ? content.browseId
+                                    : content.playlistId,
+                                isSearchFeatureRequired: true,
                                 itemCountTitle:
                                     "${playListNAlbumScreenController.songList.length} songs",
                                 titleLeftPadding: 9,
@@ -399,6 +417,12 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                   playListNAlbumScreenController.onSort(
                                       a, c, d);
                                 },
+                                onSearch:
+                                    playListNAlbumScreenController.onSearch,
+                                onSearchClose: playListNAlbumScreenController
+                                    .onSearchClose,
+                                onSearchStart: playListNAlbumScreenController
+                                    .onSearchStart,
                               ),
                             ),
                       Obx(() => playListNAlbumScreenController

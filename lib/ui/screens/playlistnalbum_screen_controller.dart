@@ -16,9 +16,11 @@ class PlayListNAlbumScreenController extends GetxController {
   late RxList<MediaItem> songList = RxList();
   final isContentFetched = false.obs;
   final isAddedToLibrary = false.obs;
+  final isSearchingOn = false.obs;
   late final String id;
   late dynamic contentRenderer;
   late bool isAlbum;
+  List<MediaItem> tempListContainer = [];
   dynamic box;
 
   @override
@@ -155,8 +157,29 @@ class PlayListNAlbumScreenController extends GetxController {
     songList.value = songlist_;
   }
 
+  void onSearchStart(String? tag) {
+    isSearchingOn.value = true;
+    tempListContainer = songList.toList();
+  }
+
+  void onSearch(String value, String? tag) {
+    final songlist = tempListContainer
+        .where((element) =>
+            element.title.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    songList.value = songlist;
+  }
+
+  void onSearchClose(String? tag) {
+    isSearchingOn.value = false;
+    songList.value = tempListContainer.toList();
+    tempListContainer.clear();
+  }
+
+
   @override
   void onClose() {
+    tempListContainer.clear();
     box.close();
     super.onClose();
   }

@@ -15,6 +15,7 @@ import '/models/playlist.dart';
 class LibrarySongsController extends GetxController {
   late RxList<MediaItem> cachedSongsList = RxList();
   final isSongFetched = false.obs;
+  List<MediaItem> tempListContainer = [];
 
   @override
   void onInit() {
@@ -67,6 +68,23 @@ class LibrarySongsController extends GetxController {
     cachedSongsList.value = songlist;
   }
 
+  void onSearchStart(String? tag) {
+    tempListContainer = cachedSongsList.toList();
+  }
+
+  void onSearch(String value, String? tag) {
+    final songlist = tempListContainer
+        .where((element) =>
+            element.title.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    cachedSongsList.value = songlist;
+  }
+
+  void onSearchClose(String? tag) {
+    cachedSongsList.value = tempListContainer.toList();
+    tempListContainer.clear();
+  }
+
   Future<void> removeSong(MediaItem item) async {
     cachedSongsList.remove(item);
     final cacheDir = (await getTemporaryDirectory()).path;
@@ -102,6 +120,7 @@ class LibraryPlaylistsController extends GetxController
   final isContentFetched = false.obs;
   final creationInProgress = false.obs;
   final textInputController = TextEditingController();
+  List<Playlist> tempListContainer = [];
 
   @override
   void onInit() {
@@ -281,6 +300,23 @@ class LibraryPlaylistsController extends GetxController
     libraryPlaylists.value = playlists;
   }
 
+  void onSearchStart(String? tag) {
+    tempListContainer = libraryPlaylists.toList();
+  }
+
+  void onSearch(String value, String? tag) {
+    final songlist = tempListContainer
+        .where((element) =>
+            element.title.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    libraryPlaylists.value = songlist;
+  }
+
+  void onSearchClose(String? tag) {
+    libraryPlaylists.value = tempListContainer.toList();
+    tempListContainer.clear();
+  }
+
   @override
   void dispose() {
     textInputController.dispose();
@@ -292,6 +328,7 @@ class LibraryPlaylistsController extends GetxController
 class LibraryAlbumsController extends GetxController {
   late RxList<Album> libraryAlbums = RxList();
   final isContentFetched = false.obs;
+  List<Album> tempListContainer = [];
 
   @override
   void onInit() {
@@ -315,11 +352,29 @@ class LibraryAlbumsController extends GetxController {
     sortAlbumNSingles(albumList, sortByName, sortByDate, isAscending);
     libraryAlbums.value = albumList;
   }
+
+  void onSearchStart(String? tag) {
+    tempListContainer = libraryAlbums.toList();
+  }
+
+  void onSearch(String value, String? tag) {
+    final songlist = tempListContainer
+        .where((element) =>
+            element.title.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    libraryAlbums.value = songlist;
+  }
+
+  void onSearchClose(String? tag) {
+    libraryAlbums.value = tempListContainer.toList();
+    tempListContainer.clear();
+  }
 }
 
 class LibraryArtistsController extends GetxController {
   RxList<Artist> libraryArtists = RxList();
   final isContentFetched = false.obs;
+  List<Artist> tempListContainer = [];
 
   @override
   void onInit() {
@@ -341,5 +396,22 @@ class LibraryArtistsController extends GetxController {
     final artistList = libraryArtists.toList();
     sortArtist(artistList, sortByName, isAscending);
     libraryArtists.value = artistList;
+  }
+
+  void onSearchStart(String? tag) {
+    tempListContainer = libraryArtists.toList();
+  }
+
+  void onSearch(String value, String? tag) {
+    final songlist = tempListContainer
+        .where((element) =>
+            element.name.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    libraryArtists.value = songlist;
+  }
+
+  void onSearchClose(String? tag) {
+    libraryArtists.value = tempListContainer.toList();
+    tempListContainer.clear();
   }
 }

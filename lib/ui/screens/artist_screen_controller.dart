@@ -20,9 +20,10 @@ class ArtistScreenController extends GetxController {
   final videoScrollController = ScrollController();
   bool continuationInProgress = false;
   late Artist artist_;
+  Map<String, List> tempListContainer = {};
 
   @override
-  void onReady(){
+  void onReady() {
     final args = Get.arguments;
     _init(args[0], args[1]);
     super.onReady();
@@ -81,18 +82,18 @@ class ArtistScreenController extends GetxController {
     }
     isSeparatedArtistContentFetced.value = false;
 
-  //check if params available for continuation
-  //tab browse endpoint & top result stored in [artistData], tabContent & addtionalParams for continuation stored in Separated Content 
-   if((artistData[tabName]).containsKey("params")){
-    sepataredContent[tabName] = await musicServices.getArtistRealtedContent(
-        artistData[tabName], tabName);
-   }else{
-    sepataredContent[tabName] ={"results": artistData[tabName]['content']};
-    isSeparatedArtistContentFetced.value =true;
-    return;
-   }
+    //check if params available for continuation
+    //tab browse endpoint & top result stored in [artistData], tabContent & addtionalParams for continuation stored in Separated Content
+    if ((artistData[tabName]).containsKey("params")) {
+      sepataredContent[tabName] = await musicServices.getArtistRealtedContent(
+          artistData[tabName], tabName);
+    } else {
+      sepataredContent[tabName] = {"results": artistData[tabName]['content']};
+      isSeparatedArtistContentFetced.value = true;
+      return;
+    }
 
-   // observered - continuation available only for song & vid
+    // observered - continuation available only for song & vid
     if (val == 1 || val == 2) {
       final scrollController =
           val == 1 ? songScrollController : videoScrollController;
@@ -142,8 +143,31 @@ class ArtistScreenController extends GetxController {
     sepataredContent.refresh();
   }
 
+  void onSearchStart(String? tag) {
+    final title = tag?.split("_")[0];
+    tempListContainer[title!] = sepataredContent[title]['results'].toList();
+  }
+
+  void onSearch(String value, String? tag) {
+    final title = tag?.split("_")[0];
+    final list = tempListContainer[title]!
+        .where((element) =>
+            element.title.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+    sepataredContent[title]['results'] = list;
+    sepataredContent.refresh();
+  }
+
+  void onSearchClose(String? tag) {
+    final title = tag?.split("_")[0];
+    sepataredContent[title]['results'] = (tempListContainer[title]!).toList();
+    sepataredContent.refresh();
+    (tempListContainer[title]!).clear();
+  }
+
   @override
   void onClose() {
+    tempListContainer.clear();
     songScrollController.dispose();
     videoScrollController.dispose();
     super.onClose();

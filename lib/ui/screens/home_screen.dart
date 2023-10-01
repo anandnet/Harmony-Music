@@ -232,18 +232,24 @@ class Body extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
-            Obx(
-              () => SortWidget(
+            Obx(() {
+              final libSongsController = Get.find<LibrarySongsController>();
+              return SortWidget(
+                tag: "LibSongSort",
                 itemCountTitle:
-                    "${Get.find<LibrarySongsController>().cachedSongsList.length} items",
+                    "${libSongsController.cachedSongsList.length} items",
                 titleLeftPadding: 9,
                 isDateOptionRequired: true,
                 isDurationOptionRequired: true,
+                isSearchFeatureRequired: true,
                 onSort: (p0, p1, p2, p3) {
-                  Get.find<LibrarySongsController>().onSort(p0, p1, p2, p3);
+                  libSongsController.onSort(p0, p1, p2, p3);
                 },
-              ),
-            ),
+                onSearch: libSongsController.onSearch,
+                onSearchClose: libSongsController.onSearchClose,
+                onSearchStart: libSongsController.onSearchStart,
+              );
+            }),
             GetX<LibrarySongsController>(builder: (controller) {
               return controller.cachedSongsList.isNotEmpty
                   ? ListWidget(
@@ -312,10 +318,15 @@ class LibraryArtistWidget extends StatelessWidget {
           ),
           Obx(
             () => SortWidget(
+              tag: "LibArtistSort",
+              isSearchFeatureRequired: true,
               itemCountTitle: "${cntrller.libraryArtists.length} items",
               onSort: (sortByName, sortByDate, sortByDuration, isAscending) {
                 cntrller.onSort(sortByName, isAscending);
               },
+              onSearch: cntrller.onSearch,
+              onSearchClose: cntrller.onSearchClose,
+              onSearchStart: cntrller.onSearchStart,
             ),
           ),
           Obx(() => cntrller.libraryArtists.isNotEmpty
@@ -371,10 +382,12 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                           turns: Tween(begin: 0.0, end: 1.0)
                               .animate(librplstCntrller.controller),
                           child: IconButton(
-                            splashRadius: 20,
-                            iconSize: 20,
-                            visualDensity: const VisualDensity(vertical: -4),
-                              icon: const Icon(Icons.sync,), // <-- Icon
+                              splashRadius: 20,
+                              iconSize: 20,
+                              visualDensity: const VisualDensity(vertical: -4),
+                              icon: const Icon(
+                                Icons.sync,
+                              ), // <-- Icon
                               onPressed: () async {
                                 printINFO(librplstCntrller.controller.status);
                                 librplstCntrller.controller.forward();
@@ -389,16 +402,33 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
             ),
           ),
           Obx(
-            () => SortWidget(
-              itemCountTitle:
-                  "${isAlbumContent ? libralbumCntrller.libraryAlbums.length : librplstCntrller.libraryPlaylists.length} items",
-              isDateOptionRequired: isAlbumContent,
-              onSort: (a, b, c, d) {
-                isAlbumContent
-                    ? libralbumCntrller.onSort(a, b, d)
-                    : librplstCntrller.onSort(a, d);
-              },
-            ),
+            () => isAlbumContent
+                ? SortWidget(
+                  tag: "LibAlbumSort",
+                    isSearchFeatureRequired: true,
+                    itemCountTitle:
+                        "${libralbumCntrller.libraryAlbums.length} items",
+                    isDateOptionRequired: isAlbumContent,
+                    onSort: (a, b, c, d) {
+                      libralbumCntrller.onSort(a, b, d);
+                    },
+                    onSearch: libralbumCntrller.onSearch,
+                    onSearchClose: libralbumCntrller.onSearchClose,
+                    onSearchStart: libralbumCntrller.onSearchStart,
+                  )
+                : SortWidget(
+                  tag: "LibPlaylistSort",
+                    isSearchFeatureRequired: true,
+                    itemCountTitle:
+                        "${librplstCntrller.libraryPlaylists.length} items",
+                    isDateOptionRequired: isAlbumContent,
+                    onSort: (a, b, c, d) {
+                      librplstCntrller.onSort(a, d);
+                    },
+                    onSearch: librplstCntrller.onSearch,
+                    onSearchClose: librplstCntrller.onSearchClose,
+                    onSearchStart: librplstCntrller.onSearchStart,
+                  ),
           ),
           Expanded(
             child: Obx(

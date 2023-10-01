@@ -142,6 +142,8 @@ class SeparateSearchItemWidget extends StatelessWidget {
           ),
           isCompleteList
               ? Obx(() => SortWidget(
+                tag: "${title}_$artistControllerTag",
+                isSearchFeatureRequired: artistController!=null,
                   titleLeftPadding: 9,
                   itemCountTitle:
                       "${isResultWidget ? (searchResController?.separatedResultContent[title] ?? []).length : (artistController?.sepataredContent[title] != null ? artistController?.sepataredContent[title]['results'] : []).length} items",
@@ -151,8 +153,12 @@ class SeparateSearchItemWidget extends StatelessWidget {
                   onSort: (a, b, c, d) {
                     isResultWidget
                         ? searchResController!.onSort(a, b, c, d, title)
-                        : artistController!.onSort(a, b, c, d, title);
-                  }))
+                        : artistController?.onSort(a, b, c, d, title);
+                  },
+                  onSearch: artistController?.onSearch,
+                    onSearchClose: artistController?.onSearchClose,
+                    onSearchStart: artistController?.onSearchStart,
+                  ))
               : const SizedBox.shrink(),
           isCompleteList
               ? isResultWidget

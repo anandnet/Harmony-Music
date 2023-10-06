@@ -143,7 +143,7 @@ class SortWidget extends StatelessWidget {
                       contentPadding: const EdgeInsets.all(8),
                       filled: true,
                       border: const OutlineInputBorder(),
-                      hintText: "Search term",
+                      hintText: "search".tr,
                       suffixIconColor: Theme.of(context).colorScheme.secondary,
                       suffixIcon: IconButton(
                         splashRadius: 10,

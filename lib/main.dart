@@ -3,6 +3,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/utils/get_localization.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -51,6 +52,9 @@ class MyApp extends StatelessWidget {
           theme: controller.themedata.value,
           home: const Home(),
           debugShowCheckedModeBanner: false,
+          translations: Languages(),
+          locale:Locale (Hive.box("AppPrefs").get('currentAppLanguageCode') ?? "en"),
+          fallbackLocale: const Locale("en"),
           builder: (context, child) {
             final scale =
                 MediaQuery.of(context).textScaleFactor.clamp(1.0, 1.3);

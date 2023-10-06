@@ -24,12 +24,13 @@ class LinkPiped extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Piped",
+                    "Piped".tr,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15.0, bottom: 10),
                     child: Obx(() => DropdownButton(
+                        underline: const SizedBox.shrink(),
                         value: pipedLinkedController.selectedInst.value,
                         items: pipedLinkedController.pipedInstList
                             .map(
@@ -50,14 +51,14 @@ class LinkPiped extends StatelessWidget {
                               pipedLinkedController.instApiUrlInputController,
                           cursorColor:
                               Theme.of(context).textTheme.titleSmall!.color,
-                          decoration: const InputDecoration(
-                              hintText: "Piped instance api url"))
+                          decoration:
+                              InputDecoration(hintText: "hintApiUrl".tr))
                       : const SizedBox.shrink()),
                   TextField(
                       controller: pipedLinkedController.usernameInputController,
                       cursorColor:
                           Theme.of(context).textTheme.titleSmall!.color,
-                      decoration: const InputDecoration(hintText: "Username")),
+                      decoration: InputDecoration(hintText: "username".tr)),
                   const SizedBox(
                     height: 15,
                   ),
@@ -67,7 +68,7 @@ class LinkPiped extends StatelessWidget {
                         cursorColor:
                             Theme.of(context).textTheme.titleSmall!.color,
                         decoration: InputDecoration(
-                          hintText: "Password",
+                          hintText: "password".tr,
                           suffixIcon: IconButton(
                             color:
                                 Theme.of(context).textTheme.titleSmall!.color,
@@ -98,7 +99,7 @@ class LinkPiped extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20.0, vertical: 10),
                           child: Text(
-                            "Link",
+                            "link".tr,
                             style:
                                 TextStyle(color: Theme.of(context).canvasColor),
                           ),
@@ -114,9 +115,8 @@ class PipedLinkedController extends GetxController {
   final instApiUrlInputController = TextEditingController();
   final usernameInputController = TextEditingController();
   final passwordInputController = TextEditingController();
-  final pipedInstList = <PipedInstance>[
-    PipedInstance(name: "Select Auth Instance        ", apiUrl: "")
-  ].obs;
+  final pipedInstList =
+      <PipedInstance>[PipedInstance(name: "selectAuthIns".tr, apiUrl: "")].obs;
   final selectedInst = "".obs;
   final _pipedServices = Get.find<PipedServices>();
   final passwordVisible = false.obs;
@@ -132,12 +132,12 @@ class PipedLinkedController extends GetxController {
     _pipedServices.getAllInstanceList().then((res) {
       if (res.code == 1) {
         pipedInstList.addAll(List<PipedInstance>.from(res.response) +
-            [PipedInstance(name: "Custom Instance", apiUrl: "custom")]);
+            [PipedInstance(name: "customIns".tr, apiUrl: "custom")]);
       } else {
         errorText.value =
-            "${res.errorMessage ?? "Error occurred"}! please select Custom Instance";
+            "${res.errorMessage ?? "errorOccuredAlert".tr}! ${"customInsSelectMsg".tr}";
         pipedInstList
-            .add(PipedInstance(name: "Custom Instance", apiUrl: "custom"));
+            .add(PipedInstance(name: "customIns".tr, apiUrl: "custom"));
       }
     });
   }
@@ -147,7 +147,7 @@ class PipedLinkedController extends GetxController {
     final userName = usernameInputController.text;
     final password = passwordInputController.text;
     if (selectedInst.isEmpty) {
-      errorText.value = "Please select Authentication instance!";
+      errorText.value = "selectAuthInsMsg".tr;
       return;
     }
     if (userName.isEmpty ||
@@ -155,7 +155,7 @@ class PipedLinkedController extends GetxController {
         // ignore: invalid_use_of_protected_member
         (instApiUrlInputController.hasListeners &&
             instApiUrlInputController.text.isEmpty)) {
-      errorText.value = "All fields required";
+      errorText.value = "allFieldsReqMsg".tr;
       return;
     }
     _pipedServices
@@ -170,12 +170,11 @@ class PipedLinkedController extends GetxController {
         printINFO("Login Successfull");
         Get.find<SettingsScreenController>().isLinkedWithPiped.value = true;
         Navigator.of(Get.context!).pop();
-        ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-            Get.context!, "Linked successfully!",
-            size: SanckBarSize.MEDIUM));
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+            snackbar(Get.context!, "linkAlert".tr, size: SanckBarSize.MEDIUM));
         Get.find<LibraryPlaylistsController>().syncPipedPlaylist();
       } else {
-        errorText.value = res.errorMessage ?? "Error occurred!";
+        errorText.value = res.errorMessage ?? "errorOccuredAlert".tr;
       }
     });
   }

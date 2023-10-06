@@ -30,7 +30,7 @@ class ListWidget extends StatelessWidget {
       return Expanded(
         child: Center(
           child: Text(
-            "No ${title.toLowerCase()}!",
+            "No ${title.toLowerCase().tr}!",
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),

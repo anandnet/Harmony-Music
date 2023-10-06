@@ -38,7 +38,7 @@ class ContentListWidget extends StatelessWidget {
                               Get.find<SearchResultScreenController>();
                           scrresController.viewAllCallback(content.title);
                         },
-                        child: Text("View all",
+                        child: Text("viewAll".tr,
                             style: Theme.of(Get.context!).textTheme.titleSmall))
                     : const SizedBox.shrink()
               ],

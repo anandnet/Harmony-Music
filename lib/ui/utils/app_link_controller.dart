@@ -51,7 +51,7 @@ class AppLinksController extends GetxController {
         await openPlaylistOrAlbum(browseId!);
       } else if (uri.pathSegments[0] == "shorts") {
         ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-            Get.context!, "Not a Song/Music-Video !",
+            Get.context!, "notaSongVideo".tr,
             size: SanckBarSize.MEDIUM));
       } else if (uri.pathSegments[0] == "watch") {
         final songId = uri.queryParameters['v'];
@@ -65,7 +65,7 @@ class AppLinksController extends GetxController {
       }
     } else {
       ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-          Get.context!, "Not a valid link!",
+          Get.context!, "notaValidLink".tr,
           size: SanckBarSize.MEDIUM));
     }
   }
@@ -99,7 +99,7 @@ class AppLinksController extends GetxController {
       Get.find<PlayerController>().playPlayListSong(List.from(result[1]), 0);
     } else {
       ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-          Get.context!, "Not a Song/Music-Video !",
+          Get.context!, "notaSongVideo".tr,
           size: SanckBarSize.MEDIUM));
     }
   }

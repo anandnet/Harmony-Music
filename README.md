@@ -24,6 +24,13 @@ An app for music streaming made with Flutter(Currently support Android only).
 # Download
 <a href="https://github.com/anandnet/Harmony-Music/releases/latest"><img src ="https://github.com/anandnet/Harmony-Music/blob/main/don_github.png" width = "250"></a> <a href= "https://f-droid.org/packages/com.anandnet.harmonymusic"><img src = "https://github.com/anandnet/Harmony-Music/blob/main/down_fdroid.png" width = '250'></a></a> <a href= "https://apt.izzysoft.de/fdroid/index/apk/com.anandnet.harmonymusic"><img src = "https://github.com/anandnet/Harmony-Music/blob/main/down_IzzyOnDroid.png" width = '250'></a>
 
+# Translation
+<a href="https://hosted.weblate.org/engage/harmony-music/">
+<img src="https://hosted.weblate.org/widget/harmony-music/project-translations/multi-auto.svg" alt="Translation status" />
+</a>
+
+You can also help us in translation, click status image or <a href="https://hosted.weblate.org/projects/harmony-music/project-translations/"> here </a> to go to Weblate.
+
 # To Do
 
 * Backup & Restore

@@ -44,7 +44,7 @@ class SearchScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Search",
+                      "search".tr,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
@@ -62,10 +62,10 @@ class SearchScreen extends StatelessWidget {
                     },
                     autofocus: true,
                     cursorColor: Theme.of(context).textTheme.bodySmall!.color,
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 5),
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(left: 5),
                       focusColor: Colors.white,
-                      hintText: 'Songs,Playlist,Album or Artist',
+                      hintText: "searchDes".tr,
                     ),
                   ),
                   Expanded(

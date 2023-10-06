@@ -18,7 +18,7 @@ class NewVersionDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "New Version available!",
+              "newVersionAvailable".tr,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Padding(
@@ -54,7 +54,7 @@ class NewVersionDialog extends StatelessWidget {
                         },
                         shape: const CircleBorder());
                   }),
-                  const Text("Dont show this info again!")
+                  Text("dontShowInfoAgain".tr)
                 ],
               ),
             ),
@@ -66,7 +66,7 @@ class NewVersionDialog extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 15.0, vertical: 10),
-                    child: Text("Dismiss",
+                    child: Text("dismiss".tr,
                         style: TextStyle(color: Theme.of(context).canvasColor)),
                   ),
                   onTap: () => Navigator.of(context).pop(),

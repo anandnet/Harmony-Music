@@ -30,11 +30,11 @@ class SearchResultScreen extends StatelessWidget {
                                   .isResultContentFetced.value &&
                               searchResScrController.railItems.isNotEmpty)
                           ? [
-                              railDestination("Results"),
+                              railDestination("results".tr),
                               ...(searchResScrController.railItems
                                   .map((element) => railDestination(element))),
                             ]
-                          : [railDestination("Results"), railDestination("")],
+                          : [railDestination("results".tr), railDestination("")],
                       leading: Column(
                         children: [
                           const SizedBox(
@@ -159,7 +159,7 @@ class SearchResultScreen extends StatelessWidget {
   NavigationRailDestination railDestination(String label) {
     return NavigationRailDestination(
       icon: const SizedBox.shrink(),
-      label: RotatedBox(quarterTurns: -1, child: Text(label)),
+      label: RotatedBox(quarterTurns: -1, child: Text(label.toLowerCase().removeAllWhitespace.tr)),
     );
   }
 }

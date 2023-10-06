@@ -81,11 +81,11 @@ class HomeScreen extends StatelessWidget {
               labelType: NavigationRailLabelType.all,
               //backgroundColor: Colors.green,
               destinations: <NavigationRailDestination>[
-                railDestination("Home"),
-                railDestination("Songs"),
-                railDestination("Playlists"),
-                railDestination("Albums"),
-                railDestination("Artists"),
+                railDestination("home".tr),
+                railDestination("songs".tr),
+                railDestination("playlists".tr),
+                railDestination("albums".tr),
+                railDestination("artists".tr),
                 //railDestination("Settings")
                 const NavigationRailDestination(
                   padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -157,7 +157,7 @@ class Body extends StatelessWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "Home",
+                          "home".tr,
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
@@ -167,7 +167,7 @@ class Body extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Oops Network Error!",
+                                  "networkError1".tr,
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
                                 ),
@@ -188,7 +188,7 @@ class Body extends StatelessWidget {
                                       homeScreenController.init();
                                     },
                                     child: Text(
-                                      "Retry!",
+                                      "retry".tr,
                                       style: TextStyle(
                                           color: Theme.of(context).canvasColor),
                                     ),
@@ -228,7 +228,7 @@ class Body extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Library Songs",
+                "libSongs".tr,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
@@ -237,7 +237,7 @@ class Body extends StatelessWidget {
               return SortWidget(
                 tag: "LibSongSort",
                 itemCountTitle:
-                    "${libSongsController.cachedSongsList.length} items",
+                    "${libSongsController.cachedSongsList.length} ${"items".tr}",
                 titleLeftPadding: 9,
                 isDateOptionRequired: true,
                 isDurationOptionRequired: true,
@@ -254,7 +254,7 @@ class Body extends StatelessWidget {
               return controller.cachedSongsList.isNotEmpty
                   ? ListWidget(
                       controller.cachedSongsList,
-                      "Library Songs",
+                      "library Songs",
                       true,
                       isPlaylist: true,
                       playlist: Playlist(
@@ -266,7 +266,7 @@ class Body extends StatelessWidget {
                   : Expanded(
                       child: Center(
                           child: Text(
-                        "No Offline Songs!",
+                        "noOfflineSong".tr,
                         style: Theme.of(context).textTheme.titleMedium,
                       )),
                     );
@@ -312,7 +312,7 @@ class LibraryArtistWidget extends StatelessWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              "Library Artists",
+              "libArtists".tr,
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
@@ -320,7 +320,7 @@ class LibraryArtistWidget extends StatelessWidget {
             () => SortWidget(
               tag: "LibArtistSort",
               isSearchFeatureRequired: true,
-              itemCountTitle: "${cntrller.libraryArtists.length} items",
+              itemCountTitle: "${cntrller.libraryArtists.length} ${"items".tr}",
               onSort: (sortByName, sortByDate, sortByDuration, isAscending) {
                 cntrller.onSort(sortByName, isAscending);
               },
@@ -334,7 +334,7 @@ class LibraryArtistWidget extends StatelessWidget {
               : Expanded(
                   child: Center(
                       child: Text(
-                  "No Bookmarks!",
+                  "noBookmarks".tr,
                   style: Theme.of(context).textTheme.titleMedium,
                 ))))
         ],
@@ -369,7 +369,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    isAlbumContent ? "Library Albums" : "Library Playlists",
+                    isAlbumContent ? "libAlbums".tr : "libPlaylists".tr,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
@@ -407,7 +407,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                   tag: "LibAlbumSort",
                     isSearchFeatureRequired: true,
                     itemCountTitle:
-                        "${libralbumCntrller.libraryAlbums.length} items",
+                        "${libralbumCntrller.libraryAlbums.length} ${"items".tr}",
                     isDateOptionRequired: isAlbumContent,
                     onSort: (a, b, c, d) {
                       libralbumCntrller.onSort(a, b, d);
@@ -420,7 +420,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                   tag: "LibPlaylistSort",
                     isSearchFeatureRequired: true,
                     itemCountTitle:
-                        "${librplstCntrller.libraryPlaylists.length} items",
+                        "${librplstCntrller.libraryPlaylists.length} ${"items".tr}",
                     isDateOptionRequired: isAlbumContent,
                     onSort: (a, b, c, d) {
                       librplstCntrller.onSort(a, d);
@@ -458,7 +458,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                           ))
                   : Center(
                       child: Text(
-                      "No Bookmarks!",
+                      "noBookmarks".tr,
                       style: Theme.of(context).textTheme.titleMedium,
                     )),
             ),

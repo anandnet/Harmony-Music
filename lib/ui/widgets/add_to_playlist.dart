@@ -34,7 +34,7 @@ class AddToPlaylist extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
-                        "Create playlist",
+                        "CreateNewPlaylist".tr,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
@@ -65,7 +65,7 @@ class AddToPlaylist extends StatelessWidget {
                                   addToPlaylistController.playlistType.value,
                               onChanged:
                                   addToPlaylistController.changePlaylistType),
-                          const Text("Piped"),
+                          Text("Piped".tr),
                         ],
                       ),
                       const SizedBox(
@@ -79,7 +79,7 @@ class AddToPlaylist extends StatelessWidget {
                                   addToPlaylistController.playlistType.value,
                               onChanged:
                                   addToPlaylistController.changePlaylistType),
-                          const Text("Local"),
+                          Text("local".tr),
                         ],
                       )
                     ],
@@ -111,12 +111,12 @@ class AddToPlaylist extends StatelessWidget {
                                 if (value) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       snackbar(
-                                          context, "Song added to playlist!",
+                                          context, "songAddedToPlaylistAlert".tr,
                                           size: SanckBarSize.MEDIUM));
                                   Navigator.of(context).pop();
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                      snackbar(context, "Song already exists!",
+                                      snackbar(context, "songAlreadyExists".tr,
                                           size: SanckBarSize.MEDIUM));
                                   Navigator.of(context).pop();
                                 }
@@ -124,8 +124,8 @@ class AddToPlaylist extends StatelessWidget {
                             },
                           ),
                         )
-                      : const Center(
-                          child: Text("You don't have lib playlists!"),
+                      : Center(
+                          child: Text("noLibPlaylist".tr),
                         ),
                 ),
               )

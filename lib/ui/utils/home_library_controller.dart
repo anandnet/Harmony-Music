@@ -101,17 +101,17 @@ class LibraryPlaylistsController extends GetxController
   final playlistCreationMode = "local".obs;
   final initPlst = [
     Playlist(
-        title: "Recently Played",
+        title: "recentlyPlayed".tr,
         playlistId: "LIBRP",
         thumbnailUrl: "",
         isCloudPlaylist: false),
     Playlist(
-        title: "Favorites",
+        title: "favorites".tr,
         playlistId: "LIBFAV",
         thumbnailUrl: "",
         isCloudPlaylist: false),
     Playlist(
-        title: "Cached/Offline",
+        title: "cachedOrOffline".tr,
         playlistId: "SongsCache",
         thumbnailUrl: "",
         isCloudPlaylist: false)

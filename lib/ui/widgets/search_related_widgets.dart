@@ -30,14 +30,14 @@ class ResultWidget extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "Search Results",
+                        "searchRes".tr,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "for \"${searchResScrController.queryString.value}\"",
+                        "${"for1".tr} \"${searchResScrController.queryString.value}\"",
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
@@ -126,7 +126,7 @@ class SeparateSearchItemWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  title,
+                  title.toLowerCase().removeAllWhitespace.tr,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 isCompleteList
@@ -135,7 +135,7 @@ class SeparateSearchItemWidget extends StatelessWidget {
                         onPressed: () {
                           searchResController!.viewAllCallback(title);
                         },
-                        child: Text("View all",
+                        child: Text("viewAll".tr,
                             style: Theme.of(Get.context!).textTheme.titleSmall))
               ],
             ),
@@ -146,7 +146,7 @@ class SeparateSearchItemWidget extends StatelessWidget {
                 isSearchFeatureRequired: artistController!=null,
                   titleLeftPadding: 9,
                   itemCountTitle:
-                      "${isResultWidget ? (searchResController?.separatedResultContent[title] ?? []).length : (artistController?.sepataredContent[title] != null ? artistController?.sepataredContent[title]['results'] : []).length} items",
+                      "${isResultWidget ? (searchResController?.separatedResultContent[title] ?? []).length : (artistController?.sepataredContent[title] != null ? artistController?.sepataredContent[title]['results'] : []).length} ${"items".tr}",
                   isDurationOptionRequired:
                       title == "Songs" || title == "Videos",
                   isDateOptionRequired: title == 'Albums' || title == "Singles",

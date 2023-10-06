@@ -24,12 +24,13 @@ class SettingsScreenController extends GetxController {
   final isNewVersionAvailable = false.obs;
   final isLinkedWithPiped = false.obs;
   final stopPlyabackOnSwipeAway = false.obs;
+  final currentAppLanguageCode = "en".obs;
   final currentVersion = "V1.5.0";
 
   @override
   void onInit() {
     _setInitValue();
-     if(updateCheckFlag) _checkNewVersion();
+    if (updateCheckFlag) _checkNewVersion();
     super.onInit();
   }
 
@@ -41,6 +42,7 @@ class SettingsScreenController extends GetxController {
   }
 
   Future<void> _setInitValue() async {
+    currentAppLanguageCode.value = setBox.get('currentAppLanguageCode') ?? "en";
     cacheSongs.value = setBox.get('cacheSongs');
     themeModetype.value = ThemeType.values[setBox.get('themeModeType')];
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
@@ -56,6 +58,12 @@ class SettingsScreenController extends GetxController {
       isIgnoringBatteryOptimizations.value =
           (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
     }
+  }
+
+  void setAppLanguage(String? val) {
+    Get.updateLocale(Locale(val!));
+    currentAppLanguageCode.value = val;
+    setBox.put('currentAppLanguageCode',val);
   }
 
   void setStreamingQuality(dynamic val) {
@@ -98,9 +106,8 @@ class SettingsScreenController extends GetxController {
     Get.find<LibraryPlaylistsController>().removePipedPlaylists();
     final box = await Hive.openBox('blacklistedPlaylist');
     box.clear();
-    ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-        Get.context!, "Unlinked successfully!",
-        size: SanckBarSize.MEDIUM));
+    ScaffoldMessenger.of(Get.context!).showSnackBar(
+        snackbar(Get.context!, "unlinkAlert".tr, size: SanckBarSize.MEDIUM));
     box.close();
   }
 

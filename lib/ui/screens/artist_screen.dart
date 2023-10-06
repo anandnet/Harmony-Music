@@ -40,7 +40,7 @@ class ArtistScreen extends StatelessWidget {
                     final radioId = artistScreenController.artist_.radioId;
                     if (radioId == null) {
                       ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                          context, "Radio not available for this artist!",
+                          context, "radioNotAvailable".tr,
                           size: SanckBarSize.BIG));
                       return;
                     }
@@ -60,11 +60,11 @@ class ArtistScreen extends StatelessWidget {
                   artistScreenController.onDestinationSelected,
               minWidth: 60,
               destinations: [
-                railDestination("About"),
-                railDestination("Songs"),
-                railDestination('Videos'),
-                railDestination("Albums"),
-                railDestination("Singles"),
+                railDestination("about".tr),
+                railDestination("songs".tr),
+                railDestination('videos'.tr),
+                railDestination("albums".tr),
+                railDestination("singles".tr),
               ],
               leading: Column(
                 children: [
@@ -151,9 +151,9 @@ class ArtistScreen extends StatelessWidget {
                                                                       context,
                                                                       value
                                                                           ? add
-                                                                              ? "Artist bookmarked !"
-                                                                              : "Artist bookmark removed!"
-                                                                          : "Operation failed",
+                                                                              ? "artistBookmarkAddAlert".tr
+                                                                              : "artistBookmarkRemoveAlert".tr
+                                                                          : "operationFailed".tr,
                                                                       size: SanckBarSize.MEDIUM)));
                                                             },
                                                             child: artistScreenController
@@ -214,7 +214,7 @@ class ArtistScreen extends StatelessWidget {
                                                       height: 300,
                                                       child: Center(
                                                         child: Text(
-                                                          "No description available!",
+                                                          "artistDesNotAvailable".tr,
                                                           style:
                                                               Theme.of(context)
                                                                   .textTheme

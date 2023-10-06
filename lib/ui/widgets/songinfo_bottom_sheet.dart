@@ -66,7 +66,7 @@ class SongInfoBottomSheet extends StatelessWidget {
         ListTile(
           visualDensity: const VisualDensity(vertical: -1),
           leading: const Icon(Icons.sensors_rounded),
-          title: const Text("Start Radio"),
+          title: Text("startRadio".tr),
           onTap: () {
             Navigator.of(context).pop();
             Get.find<PlayerController>().startRadio(song);
@@ -77,7 +77,7 @@ class SongInfoBottomSheet extends StatelessWidget {
             : ListTile(
                 visualDensity: const VisualDensity(vertical: -1),
                 leading: const Icon(Icons.playlist_play_rounded),
-                title: const Text("Play next"),
+                title: Text("playNext".tr),
                 onTap: () {
                   Navigator.of(context).pop();
                   Get.find<PlayerController>().playNext(song);
@@ -86,7 +86,7 @@ class SongInfoBottomSheet extends StatelessWidget {
         ListTile(
           visualDensity: const VisualDensity(vertical: -1),
           leading: const Icon(Icons.playlist_add_rounded),
-          title: const Text("Add to playlist"),
+          title: Text("addToPlaylist".tr),
           onTap: () {
             Navigator.of(context).pop();
             showDialog(
@@ -100,11 +100,11 @@ class SongInfoBottomSheet extends StatelessWidget {
             : ListTile(
                 visualDensity: const VisualDensity(vertical: -1),
                 leading: const Icon(Icons.merge_rounded),
-                title: const Text("Enqueue this song"),
+                title: Text("enqueueSong".tr),
                 onTap: () {
                   Get.find<PlayerController>().enqueueSong(song).whenComplete(
                       () => ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                          context, "Song enqueued!",
+                          context, "songEnqueueAlert".tr,
                           size: SanckBarSize.MEDIUM)));
                   Navigator.of(context).pop();
                 },
@@ -113,7 +113,7 @@ class SongInfoBottomSheet extends StatelessWidget {
             ? ListTile(
                 visualDensity: const VisualDensity(vertical: -1),
                 leading: const Icon(Icons.album_rounded),
-                title: const Text("Go to album"),
+                title: Text("goToAlbum".tr),
                 onTap: () {
                   Navigator.of(context).pop();
                   if (calledFromPlayer) {
@@ -138,8 +138,8 @@ class SongInfoBottomSheet extends StatelessWidget {
                 visualDensity: const VisualDensity(vertical: -1),
                 leading: const Icon(Icons.delete_rounded),
                 title: playlist!.playlistId == "SongsCache"
-                    ? const Text("Remove from cache")
-                    : const Text("Remove from playlist"),
+                    ? Text("removeFromCache".tr)
+                    : Text("removeFromPlaylist".tr),
                 onTap: () {
                   Navigator.of(context).pop();
                   songInfoController
@@ -155,18 +155,18 @@ class SongInfoBottomSheet extends StatelessWidget {
             ? ListTile(
                 visualDensity: const VisualDensity(vertical: -1),
                 leading: const Icon(Icons.delete_rounded),
-                title: const Text("Remove form Queue"),
+                title: Text("removeFromQueue".tr),
                 onTap: () {
                   Navigator.of(context).pop();
                   final plarcntr = Get.find<PlayerController>();
                   if (plarcntr.currentSong.value!.id == song.id) {
                     ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                        context, "You can't remove currently playing song",
+                        context, "songRemovedfromQueueCurrSong".tr,
                         size: SanckBarSize.BIG));
                   } else {
                     Get.find<PlayerController>().removeFromQueue(song);
                     ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                        context, "Removed from queue !",
+                        context, "songRemovedfromQueue".tr,
                         size: SanckBarSize.MEDIUM));
                   }
                 })
@@ -179,7 +179,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                 contentPadding: const EdgeInsets.only(bottom: 20, left: 15),
                 visualDensity: const VisualDensity(vertical: -1),
                 leading: const Icon(Icons.share_rounded),
-                title: const Text("Share this song"),
+                title: Text("shareSong".tr),
                 onTap: () =>
                     Share.share("https://youtube.com/watch?v=${song.id}"),
               ),
@@ -216,7 +216,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                   },
                   tileColor: Colors.transparent,
                   leading: const Icon(Icons.person_rounded),
-                  title: Text("View Artist (${e['name']})"),
+                  title: Text("${"viewArtist".tr} (${e['name']})"),
                 ))
             .toList()
         : [const SizedBox.shrink()];

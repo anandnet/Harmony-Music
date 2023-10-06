@@ -290,7 +290,7 @@ class Player extends StatelessWidget {
                                                                       .lyrics
                                                                       .value ==
                                                                   "NA"
-                                                              ? "Lyrics not available!"
+                                                              ? "lyricsNotAvailable".tr
                                                               : playerController
                                                                   .lyrics.value,
                                                           textAlign:

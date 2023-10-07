@@ -116,5 +116,20 @@
     "blacklistPlstResetAlert": "Сброс выполнен успешно!",
     "resetblacklistedplaylist": "Сбросить плейлисты из черного списка",
     "stopMusicOnTaskClear": "Остановить музыку",
-    "stopMusicOnTaskClearDes": "Воспроизведение музыки остановится, когда приложение будет удалено из диспетчера задач."
+    "stopMusicOnTaskClearDes": "Воспроизведение музыки остановится, когда приложение будет удалено из диспетчера задач.",
+    "communityplaylists": "Плейлисты сообщества",
+    "languageDes": "Язык приложения",
+    "customInsSelectMsg": "Пожалуйста, выберите пользовательский вход",
+    "allFieldsReqMsg": "Все поля обязательны",
+    "rename": "Переименовать",
+    "selectAuthInsMsg": "Пожалуйста, выберите экземпляр Authentication!",
+    "customIns": "Свои серверы",
+    "Piped": "Piped",
+    "topmusicvideos": "Лучшие музыкальные клипы",
+    "singles": "Синглы",
+    "language": "Язык",
+    "hintApiUrl": "URL-адрес API экземпляра Piped",
+    "removeFromPlaylist": "Удалить из плейлиста",
+    "featuredplaylists": "Избранные плейлисты",
+    "quickpicks": "Быстрый выбор"
 }

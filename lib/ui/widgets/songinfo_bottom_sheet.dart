@@ -242,8 +242,16 @@ class SongInfoController extends GetxController {
     }
   }
 
-  Future<void> removeSongFromPlaylist(MediaItem item, Playlist playlist) async {
-    final plstCntroller = Get.find<PlayListNAlbumScreenController>();
+  Future<void> removeSongFromPlaylist(
+      MediaItem item, Playlist playlist) async {
+    final box = await Hive.openBox(playlist.playlistId);
+    box.delete(item.id);
+    if (playlist.playlistId == "SongsCache") {
+      Get.find<LibrarySongsController>().removeSong(item);
+      if (playlist.title == "Library Songs") return;
+    }
+
+    final plstCntroller = Get.find<PlayListNAlbumScreenController>(tag: Key(playlist.playlistId).hashCode.toString());
     if (playlist.isPipedPlaylist) {
       final res =
           await Get.find<PipedServices>().getPlaylistSongs(playlist.playlistId);
@@ -258,17 +266,12 @@ class SongInfoController extends GetxController {
       return;
     }
 
-    final box = await Hive.openBox(playlist.playlistId);
-    box.delete(item.id);
     try {
       plstCntroller.addNRemoveItemsinList(item, action: 'remove');
       // ignore: empty_catches
     } catch (e) {}
     //Updating Library song list in frontend
-    if (playlist.playlistId == "SongsCache") {
-      Get.find<LibrarySongsController>().removeSong(item);
-      return;
-    }
+
     box.close();
   }
 

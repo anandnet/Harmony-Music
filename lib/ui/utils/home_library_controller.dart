@@ -86,6 +86,9 @@ class LibrarySongsController extends GetxController {
   }
 
   Future<void> removeSong(MediaItem item) async {
+    if(tempListContainer.isNotEmpty){
+      tempListContainer.remove(item);
+    }
     cachedSongsList.remove(item);
     final cacheDir = (await getTemporaryDirectory()).path;
     if (await File("$cacheDir/cachedSongs/${item.id}.mp3").exists()) {

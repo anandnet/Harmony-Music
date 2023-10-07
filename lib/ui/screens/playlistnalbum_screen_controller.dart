@@ -64,8 +64,15 @@ class PlayListNAlbumScreenController extends GetxController {
   void addNRemoveItemsinList(MediaItem? item,
       {required String action, int? index}) {
     if (action == 'add') {
+      if(tempListContainer.isNotEmpty){
+        index != null ? tempListContainer.insert(index, item!) : tempListContainer.add(item!);
+        return;
+      }
       index != null ? songList.insert(index, item!) : songList.add(item!);
     } else {
+      if(tempListContainer.isNotEmpty){
+        index != null ? tempListContainer.removeAt(index) : tempListContainer.remove(item);
+      }
       index != null ? songList.removeAt(index) : songList.remove(item);
     }
   }

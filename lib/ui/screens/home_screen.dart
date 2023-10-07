@@ -258,7 +258,7 @@ class Body extends StatelessWidget {
                       true,
                       isPlaylist: true,
                       playlist: Playlist(
-                          title: "Cached/Offline",
+                          title: "Library Songs",
                           playlistId: "SongsCache",
                           thumbnailUrl: "",
                           isCloudPlaylist: false),

@@ -146,8 +146,10 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                       .showSnackBar(snackbar(
                                                           Get.context!,
                                                           value
-                                                              ? "playlistRemovedAlert".tr
-                                                              : "operationFailed".tr,
+                                                              ? "playlistRemovedAlert"
+                                                                  .tr
+                                                              : "operationFailed"
+                                                                  .tr,
                                                           size: SanckBarSize
                                                               .MEDIUM));
                                                 });
@@ -270,7 +272,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                                   Get.context!)
                                                               .showSnackBar(snackbar(
                                                                   Get.context!,
-                                                                  "playlistBlacklistAlert".tr,
+                                                                  "playlistBlacklistAlert"
+                                                                      .tr,
                                                                   size: SanckBarSize
                                                                       .MEDIUM));
                                                         }),
@@ -323,17 +326,20 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                             child: Align(
                                               alignment: Alignment.bottomLeft,
                                               child: Container(
+                                                constraints: const BoxConstraints(
+                                                    maxWidth: 180,
+                                                    minWidth: 110),
                                                 padding: const EdgeInsets.only(
-                                                    left: 10, right: 10),
+                                                    left: 10, right: 10,top: 5),
                                                 decoration: BoxDecoration(
                                                     color: Theme.of(context)
                                                         .canvasColor
-                                                        .withOpacity(.7),
+                                                        .withOpacity(.8),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             15)),
                                                 height: 27,
-                                                width: 110,
+                                                //width: 110,
                                                 child: InkWell(
                                                   onTap: () {
                                                     Get.find<PlayerController>()
@@ -346,16 +352,15 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                                     .of(context)
                                                                 .showSnackBar(snackbar(
                                                                     context,
-                                                                    "songEnqueueAlert".tr,
+                                                                    "songEnqueueAlert"
+                                                                        .tr,
                                                                     size: SanckBarSize
                                                                         .MEDIUM)));
                                                   },
-                                                  child: Center(
-                                                      child: Text(
+                                                  child: Text(
                                                     "enqueueAll".tr,
-                                                    style: const TextStyle(
-                                                        color: Colors.white),
-                                                  )),
+                                                    style: Theme.of(context).textTheme.titleSmall,
+                                                  ),
                                                 ),
                                               ),
                                             ),

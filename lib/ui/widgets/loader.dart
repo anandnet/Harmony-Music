@@ -5,6 +5,6 @@ class LoadingIndicator extends StatelessWidget {
   const LoadingIndicator({super.key,this.strokeWidth = 4});
   @override
   Widget build(BuildContext context) {
-    return SizedBox.square(dimension: 25, child: CircularProgressIndicator(strokeWidth: strokeWidth,));
+    return SizedBox.square(dimension: 25, child: CircularProgressIndicator(strokeWidth: strokeWidth,color: Theme.of(context).textTheme.titleLarge!.color,));
   }
 }

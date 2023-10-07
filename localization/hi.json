@@ -116,5 +116,20 @@
     "resetblacklistedplaylist": "ब्लैकलिस्टेड प्लेलिस्ट रिसेट",
     "resetblacklistedplaylistDes": "सभी पाइप्ड ब्लैकलिस्टेड प्लेलिस्ट्स को रिसेट करें",
     "stopMusicOnTaskClear": "म्यूजिक बंद करें",
-    "stopMusicOnTaskClearDes": "इस ऐप को टास्क मैनेजर से स्वाइप करने पर म्यूजिक बंद हो जायेगा"
+    "stopMusicOnTaskClearDes": "इस ऐप को टास्क मैनेजर से स्वाइप करने पर म्यूजिक बंद हो जायेगा",
+    "communityplaylists": "कम्यूनिटी प्लेलिस्ट",
+    "languageDes": "अनुप्रयोग भाषा सेट करें",
+    "customInsSelectMsg": "कृपया कस्टम इंस्टेंस का चयन करें",
+    "allFieldsReqMsg": "सभी फील्ड भरें",
+    "rename": "नाम बदलें",
+    "selectAuthInsMsg": "कृपया ऑथेंटिकेशन इंस्टैंस चुने !",
+    "customIns": "कस्टम इंस्टेंस",
+    "Piped": "पाइप्ड",
+    "topmusicvideos": "शीर्ष संगीत वीडियो",
+    "singles": "सिंगल्स",
+    "language": "भाषा",
+    "hintApiUrl": "पाइप्ड इंस्टैंस एपीआई यूआरएल",
+    "removeFromPlaylist": "प्लेलिस्ट से निकालें",
+    "featuredplaylists": "फीचर्ड प्लेलिस्ट",
+    "quickpicks": "गानों का सुझाव"
 }

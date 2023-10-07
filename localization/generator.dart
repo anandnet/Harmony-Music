@@ -11,12 +11,14 @@ Future<void> generate() async {
       return;
     }
     String fileContent = (entity as File).readAsStringSync();
-    print(entity.uri.pathSegments.last);
     allLangData =
         """$allLangData"${entity.uri.pathSegments.last.split(".")[0]}" : $fileContent,""";
   });
 
   String content = """
+/// This is auto generated file 
+/// Do not modify this file manually
+
 import 'package:get/get.dart';
 class Languages extends Translations {
 

@@ -115,7 +115,7 @@
     "songRemovedfromQueueCurrSong": "Не можете уклонити песму која је тренутно пуштена",
     "settings": "Подешавања",
     "basedOnLast": "Засновано на последњој интеракцији",
-    "hintApiUrl": "URL API-ја Piped инстанце",
+    "hintApiUrl": "URL API-ја до Piped инстанце",
     "playlistRenameAlert": "Преименовано је успешно!",
     "albumBookmarkAddAlert": "Албум је обележен!",
     "removeFromPlaylist": "Уклони са плејлисте",

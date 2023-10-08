@@ -112,7 +112,7 @@
     "Piped": "Piped",
     "link": "Link",
     "unLink": "Unlink",
-    "hintApiUrl": "Piped instance api url",
+    "hintApiUrl": "API URL to Piped instance",
     "customIns": "Custom Instance",
     "customInsSelectMsg": "Please select Custom Instance",
     "selectAuthInsMsg": "Please select Authentication instance!",

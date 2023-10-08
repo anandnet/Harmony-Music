@@ -90,7 +90,7 @@
     "notaValidLink": "¡No es un enlace válido!",
     "emptyPlaylist": "¡Lista de reproducción vacía!",
     "favorites": "Favoritos",
-    "dark": "Oscuro",
+    "dark": "oscuro",
     "home": "Inicio",
     "cancel": "Cancelar",
     "by": "por",
@@ -114,7 +114,7 @@
     "songRemovedfromQueueCurrSong": "No puedes eliminar la canción que se está reproduciendo",
     "settings": "Ahustes",
     "basedOnLast": "Según la última interacción",
-    "hintApiUrl": "Dirección url a la api de la instancia de Piped",
+    "hintApiUrl": "Dirección URL de la API a la instancia de Piped",
     "playlistRenameAlert": "¡Renombrado con éxito!",
     "albumBookmarkAddAlert": "¡Álbum en favoritos!",
     "removeFromPlaylist": "Eliminar de la lista de reproducción",
@@ -128,5 +128,6 @@
     "goToAlbum": "Ir al álbum",
     "removeFromQueue": "Eliminar de la cola",
     "shareSong": "Compartir esta canción",
-    "songRemovedAlert": "Eliminado de"
+    "songRemovedAlert": "Eliminado de",
+    "resetblacklistedplaylistDes": "Restablecer todas las listas de reproducción en la lista negra"
 }

@@ -116,5 +116,20 @@
     "reset": "Nullstille",
     "blacklistPlstResetAlert": "Tilbakestill vellykket!",
     "password": "Passord",
-    "resetblacklistedplaylist": "Tilbakestill svartelistede spillelister"
+    "resetblacklistedplaylist": "Tilbakestill svartelistede spillelister",
+    "communityplaylists": "Gemenskapsspillelister",
+    "languageDes": "Sett programspråk",
+    "customInsSelectMsg": "Velg egendefinert instans",
+    "allFieldsReqMsg": "Alle felter må fylles ut",
+    "rename": "Gi nytt navn",
+    "selectAuthInsMsg": "Velg identitetbereftelsesinstans.",
+    "customIns": "Egendefinert instans",
+    "Piped": "Pipe",
+    "topmusicvideos": "Topp-musikkvideoer",
+    "singles": "Singler",
+    "language": "Språk",
+    "hintApiUrl": "API-nettadresse til Piped-instans",
+    "removeFromPlaylist": "Fjern fra spillelisten",
+    "featuredplaylists": "Framhevede spillelister",
+    "quickpicks": "Hurtigvalg"
 }

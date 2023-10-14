@@ -116,5 +116,9 @@
     "resetblacklistedplaylist": "Auf die schwarze Liste gesetzte Wiedergabelisten zurücksetzen",
     "setDiscoverContent": "Entdecken Sie Inhalte",
     "stopMusicOnTaskClear": "Musik stoppen wenn die Taskleiste geleert wird",
-    "stopMusicOnTaskClearDes": "Die Musikwiedergabe wird gestoppt, wenn die App aus dem Task-Manager weggewischt wird"
+    "stopMusicOnTaskClearDes": "Die Musikwiedergabe wird gestoppt, wenn die App aus dem Task-Manager weggewischt wird",
+    "communityplaylists": "Community Playlists",
+    "languageDes": "Appsprache ändern",
+    "language": "Sprache",
+    "removeFromPlaylist": "Aus Wiedergabeliste entfernen"
 }

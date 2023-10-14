@@ -13,8 +13,8 @@
     "networkError1": "网络错误!",
     "retry": "页: 1!",
     "recentlyPlayed": "最近",
-    "favorites": "陪审团",
-    "cachedOrOffline": "Cached/Oflline",
+    "favorites": "收藏夹",
+    "cachedOrOffline": "缓存/Oflline",
     "enqueueAll": "开 幕",
     "renamePlaylist": "名单",
     "removePlaylist": "F. 移居名单",
@@ -99,5 +99,8 @@
     "noOfflineSong": "无线歌!",
     "emptyPlaylist": "胜利!",
     "CreateNewPlaylist": "创设新的名录",
-    "cancel": "增 编"
+    "cancel": "增 编",
+    "communityplaylists": "社区播放列表",
+    "singles": "选择",
+    "featuredplaylists": "特色播放列表"
 }

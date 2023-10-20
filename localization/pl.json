@@ -116,5 +116,20 @@
     "resetblacklistedplaylistDes": "Zresetuj wszystkie potokowane playlisty z czarnej listy",
     "blacklistPlstResetAlert": "Zresetowano pomyślnie!",
     "stopMusicOnTaskClearDes": "Odtwarzanie muzyki zostanie zatrzymane, gdy aplikacja zostanie usunięta z menedżera zadań",
-    "stopMusicOnTaskClear": "Zatrzymaj muzykę"
+    "stopMusicOnTaskClear": "Zatrzymaj muzykę",
+    "communityplaylists": "Społecznościowe playlisty",
+    "languageDes": "Ustaw język aplikacji",
+    "customInsSelectMsg": "Wybierz wystąpienie niestandardowe",
+    "allFieldsReqMsg": "Wymagane są wszystkie pola",
+    "rename": "Zmień nazwę",
+    "selectAuthInsMsg": "Należy wybrać instancję uwierzytelniania!",
+    "customIns": "Niestandardowe wystąpienie",
+    "Piped": "Piped",
+    "topmusicvideos": "Najlepsze wideoklipy",
+    "singles": "Single",
+    "language": "Język",
+    "hintApiUrl": "URL API do instancji Piped",
+    "removeFromPlaylist": "Usuń z playlistę",
+    "featuredplaylists": "Polecane playlisty",
+    "quickpicks": "Szybki wybór"
 }

@@ -12,7 +12,8 @@ class ThemeController extends GetxController {
   late Brightness systemBrightness;
 
   ThemeController() {
-    systemBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    systemBrightness =
+        WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
     primaryColor.value = Color(Hive.box('appPrefs').get("themePrimaryColor"));
 
@@ -91,7 +92,7 @@ class ThemeController extends GetxController {
           primaryColor: primarySwatch![500],
           colorScheme: ColorScheme.fromSwatch(
               accentColor: primarySwatch[200],
-              primaryColorDark: primarySwatch[700],
+              // primaryColorDark: primarySwatch[700],
               brightness: Brightness.dark,
               backgroundColor: primarySwatch[700],
               primarySwatch: primarySwatch),
@@ -108,12 +109,9 @@ class ThemeController extends GetxController {
               modalBarrierColor: primarySwatch[400]),
           textTheme: TextTheme(
             titleLarge: const TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.bold,
-                color:Colors.white),
+                fontSize: 23, fontWeight: FontWeight.bold, color: Colors.white),
             titleMedium: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white),
+                fontWeight: FontWeight.bold, color: Colors.white),
             titleSmall: TextStyle(color: primarySwatch[100]),
             bodyMedium: TextStyle(color: primarySwatch[100]),
             labelMedium: TextStyle(
@@ -239,7 +237,7 @@ class ThemeController extends GetxController {
           primaryColorLight: Colors.grey[300],
           progressIndicatorTheme: ProgressIndicatorThemeData(
               linearTrackColor: Colors.grey[700], color: Colors.grey[400]),
-          textTheme:TextTheme(
+          textTheme: TextTheme(
               titleLarge: const TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.bold,

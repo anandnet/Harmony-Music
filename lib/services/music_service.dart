@@ -506,6 +506,10 @@ class MusicServices extends getx.GetxService {
     }
   }
 
+ StreamClient getStreamClient(){
+    return _yt.videos.streamsClient;
+  }
+
   // Future<Uri?> getSongUri(String songId,
   //     {String defaultUrl = "https://pipedapi.in.projectsegfau.lt"}) async {
   //   try {

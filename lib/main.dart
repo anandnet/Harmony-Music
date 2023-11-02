@@ -3,10 +3,11 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/utils/get_localization.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '/utils/get_localization.dart';
+import '/services/downloader.dart';
 import '/services/piped_service.dart';
 import '/ui/utils/app_link_controller.dart';
 import '/services/audio_handler.dart';
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
           home: const Home(),
           debugShowCheckedModeBanner: false,
           translations: Languages(),
-          locale:Locale (Hive.box("AppPrefs").get('currentAppLanguageCode') ?? "en"),
+          locale: Locale(
+              Hive.box("AppPrefs").get('currentAppLanguageCode') ?? "en"),
           fallbackLocale: const Locale("en"),
           builder: (context, child) {
             final scale =
@@ -78,12 +80,14 @@ Future<void> startApplicationServices() async {
   Get.lazyPut(() => LibraryAlbumsController(), fenix: true);
   Get.lazyPut(() => LibraryArtistsController(), fenix: true);
   Get.lazyPut(() => SettingsScreenController(), fenix: true);
+  Get.lazyPut(() => Downloader(), fenix: true);
 }
 
 initHive() async {
   Directory applicationDirectory = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(applicationDirectory.path);
   await Hive.openBox("SongsCache");
+  await Hive.openBox("SongDownloads");
   await Hive.openBox('SongsUrlCache');
   await Hive.openBox("AppPrefs");
 }

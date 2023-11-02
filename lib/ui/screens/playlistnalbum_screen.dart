@@ -94,7 +94,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                       !content.isCloudPlaylist &&
                                       content.playlistId != "LIBFAV" &&
                                       content.playlistId != "SongsCache" &&
-                                      content.playlistId != "LIBRP") ||
+                                      content.playlistId != "LIBRP" && content.playlistId != "SongDownloads") ||
                                   (!playListNAlbumScreenController.isAlbum &&
                                       content.isPipedPlaylist))
                               ? IconButton(

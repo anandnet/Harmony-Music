@@ -183,6 +183,16 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
               ),
+               ListTile(
+                contentPadding:
+                    const EdgeInsets.only(left: 5, right: 10, top: 0),
+                title: Text("downloadLocation".tr),
+                subtitle: Obx(() => Text(settingsController.downloadLocationPath.value,
+                    style: Theme.of(context).textTheme.bodyMedium)),
+                onTap: () async {
+                  settingsController.setDownloadLocation();
+                },
+              ),
               ListTile(
                 contentPadding:
                     const EdgeInsets.only(left: 5, right: 10, top: 0),

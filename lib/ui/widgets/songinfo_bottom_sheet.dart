@@ -84,9 +84,29 @@ class SongInfoBottomSheet extends StatelessWidget {
                       : downloader.songQueue.contains(song) &&
                               downloader.isJobRunning.isTrue &&
                               downloader.currentSong == song
-                          ? Obx(() => Text(
-                                "${downloader.downloadingProgress.value}%",
-                                textAlign: TextAlign.center,
+                          ? Obx(() => Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "${downloader.downloadingProgress.value}%",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  LoadingIndicator(
+                                    dimension: 30,
+                                    strokeWidth: 4,
+                                    value:
+                                        (downloader.downloadingProgress.value) /
+                                            100,
+                                  )
+                                ],
                               ))
                           : downloader.songQueue.contains(song)
                               ? const LoadingIndicator()
@@ -103,8 +123,8 @@ class SongInfoBottomSheet extends StatelessWidget {
                                       if (box.containsKey(song.id)) {
                                         Navigator.of(context).pop();
                                         ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackbar(
-                                                context, "songAlreadyOfflineAlert".tr,
+                                            .showSnackBar(snackbar(context,
+                                                "songAlreadyOfflineAlert".tr,
                                                 size: SanckBarSize.BIG));
                                       } else {
                                         downloader.download(song);

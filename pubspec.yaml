@@ -35,28 +35,28 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   #cupertino_icons: ^1.0.2
-  just_audio: ^0.9.34
-  audio_video_progress_bar: ^1.0.0
+  just_audio: ^0.9.35
+  audio_video_progress_bar: ^2.0.1
   get: ^4.6.5
   #http: ^0.13.5
-  dio: ^5.1.2
-  cached_network_image: ^3.2.3
-  youtube_explode_dart: ^2.0.1
-  audio_service: ^0.18.10
-  palette_generator: ^0.3.3+2
-  path_provider: ^2.0.13
-  shimmer: ^2.0.0
+  dio: ^5.3.3
+  cached_network_image: ^3.3.0
+  youtube_explode_dart: ^2.0.2
+  audio_service: ^0.18.12
+  palette_generator: ^0.3.3+3
+  path_provider: ^2.1.1
+  shimmer: ^3.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   flutter_keyboard_visibility: ^5.4.1
   url_launcher: ^6.1.11
-  share_plus: ^7.1.0
+  share_plus: ^7.2.1
   android_power_manager: ^1.0.0
   device_equalizer:
     git:
       url: https://github.com/anandnet/device_equalizer.git
       ref: main
-  app_links: ^3.4.3
+  app_links: ^3.4.5
   permission_handler: ^11.0.1
   sdk_int:
     git:

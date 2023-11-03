@@ -5,6 +5,8 @@ import 'package:hive/hive.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '/services/piped_service.dart';
+import '/services/downloader.dart';
+import '/ui/widgets/loader.dart';
 import '/ui/player/player_controller.dart';
 import '/ui/screens/playlistnalbum_screen_controller.dart';
 import '/ui/utils/home_library_controller.dart';
@@ -28,6 +30,7 @@ class SongInfoBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final downloader = Get.find<Downloader>();
     final songInfoController =
         Get.put(SongInfoController(song, calledFromPlayer));
     return Column(
@@ -45,22 +48,94 @@ class SongInfoBottomSheet extends StatelessWidget {
             maxLines: 1,
           ),
           subtitle: Text(song.artist!),
-          trailing: calledFromPlayer
-              ? IconButton(
-                  onPressed: () =>
-                      Share.share("https://youtube.com/watch?v=${song.id}"),
-                  icon: Icon(
-                    Icons.share_rounded,
-                    color: Theme.of(context).textTheme.titleMedium!.color,
-                  ))
-              : IconButton(
-                  onPressed: songInfoController.toggleFav,
-                  icon: Obx(() => Icon(
-                        songInfoController.isCurrentSongFav.isFalse
-                            ? Icons.favorite_border_rounded
-                            : Icons.favorite_rounded,
-                        color: Theme.of(context).textTheme.titleMedium!.color,
-                      ))),
+          trailing: SizedBox(
+            width: 110,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                calledFromPlayer
+                    ? IconButton(
+                        onPressed: () => Share.share(
+                            "https://youtube.com/watch?v=${song.id}"),
+                        icon: Icon(
+                          Icons.share_rounded,
+                          color: Theme.of(context).textTheme.titleMedium!.color,
+                        ))
+                    : IconButton(
+                        onPressed: songInfoController.toggleFav,
+                        icon: Obx(() => Icon(
+                              songInfoController.isCurrentSongFav.isFalse
+                                  ? Icons.favorite_border_rounded
+                                  : Icons.favorite_rounded,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .color,
+                            ))),
+                Obx(
+                  () => (downloader.songQueue.contains(song) &&
+                              downloader.currentSong == song &&
+                              downloader.downloadingProgress.value == 100) ||
+                          Hive.box("SongDownloads").containsKey(song.id)
+                      ? Icon(
+                          Icons.download_done,
+                          color: Theme.of(context).textTheme.titleMedium!.color,
+                        )
+                      : downloader.songQueue.contains(song) &&
+                              downloader.isJobRunning.isTrue &&
+                              downloader.currentSong == song
+                          ? Obx(() => Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      "${downloader.downloadingProgress.value}%",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  LoadingIndicator(
+                                    dimension: 30,
+                                    strokeWidth: 4,
+                                    value:
+                                        (downloader.downloadingProgress.value) /
+                                            100,
+                                  )
+                                ],
+                              ))
+                          : downloader.songQueue.contains(song)
+                              ? const LoadingIndicator()
+                              : IconButton(
+                                  icon: Icon(
+                                    Icons.download,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .color,
+                                  ),
+                                  onPressed: () {
+                                    (Hive.openBox("SongsCache").then((box) {
+                                      if (box.containsKey(song.id)) {
+                                        Navigator.of(context).pop();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackbar(context,
+                                                "songAlreadyOfflineAlert".tr,
+                                                size: SanckBarSize.BIG));
+                                      } else {
+                                        downloader.download(song);
+                                      }
+                                    }));
+                                  },
+                                ),
+                )
+              ],
+            ),
+          ),
         ),
         const Divider(),
         ListTile(
@@ -137,8 +212,8 @@ class SongInfoBottomSheet extends StatelessWidget {
             ? ListTile(
                 visualDensity: const VisualDensity(vertical: -1),
                 leading: const Icon(Icons.delete_rounded),
-                title: playlist!.playlistId == "SongsCache"
-                    ? Text("removeFromCache".tr)
+                title: playlist!.title == "Library Songs"
+                    ? Text("removeFromLib".tr)
                     : Text("removeFromPlaylist".tr),
                 onTap: () {
                   Navigator.of(context).pop();
@@ -242,16 +317,25 @@ class SongInfoController extends GetxController {
     }
   }
 
-  Future<void> removeSongFromPlaylist(
-      MediaItem item, Playlist playlist) async {
+  Future<void> removeSongFromPlaylist(MediaItem item, Playlist playlist) async {
     final box = await Hive.openBox(playlist.playlistId);
-    box.delete(item.id);
+    //Library songs case
     if (playlist.playlistId == "SongsCache") {
-      Get.find<LibrarySongsController>().removeSong(item);
-      if (playlist.title == "Library Songs") return;
+      if (!box.containsKey(item.id)) {
+        Hive.box("SongDownloads").delete(item.id);
+        Get.find<LibrarySongsController>().removeSong(item, true);
+      } else {
+        Get.find<LibrarySongsController>().removeSong(item, false);
+      }
+    } else if (playlist.playlistId == "SongDownloads") {
+      Get.find<LibrarySongsController>().removeSong(item, true);
     }
 
-    final plstCntroller = Get.find<PlayListNAlbumScreenController>(tag: Key(playlist.playlistId).hashCode.toString());
+    box.delete(item.id);
+    if (playlist.title == "Library Songs") return;
+
+    final plstCntroller = Get.find<PlayListNAlbumScreenController>(
+        tag: Key(playlist.playlistId).hashCode.toString());
     if (playlist.isPipedPlaylist) {
       final res =
           await Get.find<PipedServices>().getPlaylistSongs(playlist.playlistId);
@@ -270,8 +354,8 @@ class SongInfoController extends GetxController {
       plstCntroller.addNRemoveItemsinList(item, action: 'remove');
       // ignore: empty_catches
     } catch (e) {}
-    //Updating Library song list in frontend
 
+    if (playlist.playlistId == "SongDownloads") return;
     box.close();
   }
 

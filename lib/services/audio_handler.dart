@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -6,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:device_equalizer/device_equalizer.dart';
 
+import '/services/permission_service.dart';
 import '../utils/helper.dart';
 import '/models/media_Item_builder.dart';
 import '/services/utils.dart';
@@ -152,10 +154,10 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   Future<void> _triggerNext() async {
     if (loopModeEnabled) {
-     await _player.seek(Duration.zero);
-     if(!_player.playing){
-      _player.play();
-     }
+      await _player.seek(Duration.zero);
+      if (!_player.playing) {
+        _player.play();
+      }
       return;
     }
     skipToNext();
@@ -207,8 +209,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   AudioSource _createAudioSource(MediaItem mediaItem) {
     final url = mediaItem.extras!['url'] as String;
-    if (url.contains('file') ||
-        Get.find<SettingsScreenController>().cacheSongs.isTrue) {
+    if (url.contains('/cache') ||
+        (Get.find<SettingsScreenController>().cacheSongs.isTrue &&
+            url.contains("http"))) {
       printINFO("Playing Using LockCaching");
       isPlayingUsingLockCachingSource = true;
       return LockCachingAudioSource(
@@ -344,8 +347,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         jsonData['duration'] = _player.duration!.inSeconds;
         songsCacheBox.put(song.id, jsonData);
         if (!librarySongsController.isClosed) {
-          librarySongsController.cachedSongsList.value =
-              librarySongsController.cachedSongsList.toList() + [song];
+          librarySongsController.librarySongsList.value =
+              librarySongsController.librarySongsList.toList() + [song];
         }
       }
     } else if (name == 'setSourceNPlay') {
@@ -407,7 +410,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   @override
   Future<void> onTaskRemoved() async {
-    final stopForegroundService = Get.find<SettingsScreenController>().stopPlyabackOnSwipeAway.value;
+    final stopForegroundService =
+        Get.find<SettingsScreenController>().stopPlyabackOnSwipeAway.value;
     if (stopForegroundService) {
       await stop();
     }
@@ -429,11 +433,20 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 // Work around used [useNewInstanceOfExplode = false] to Fix Connection closed before full header was received issue
   Future<String?> checkNGetUrl(String songId,
       {bool useNewInstanceOfExplode = false,
-      bool generateNewUrl = false}) async {
-    final songsCacheBox = await Hive.openBox("SongsCache");
-    if (songsCacheBox.containsKey(songId)) {
+      bool generateNewUrl = false, bool offlineReplacementUrl = false}) async {
+    final songDownloadsBox = Hive.box("SongDownloads");
+    if (!offlineReplacementUrl && (await Hive.openBox("SongsCache")).containsKey(songId)) {
       printINFO("Got Song from cachedbox ($songId)");
       return "file://$_cacheDir/cachedSongs/$songId.mp3";
+    } else if (!offlineReplacementUrl && songDownloadsBox.containsKey(songId)) {
+      //check file access and if file exist in storage
+      final status = await PermissionService.getExtStoragePermission();
+      final path = songDownloadsBox.get(songId)['url'];
+      if(status && await File(path).exists()){
+        return path;
+      }
+      //in case file doesnot found in storage, song will be played online
+      return checkNGetUrl(songId, offlineReplacementUrl: true);
     } else {
       //check if song stream url is cached and allocate url accordingly
       final songsUrlCacheBox = Hive.box("SongsUrlCache");

@@ -42,21 +42,31 @@ class ContentListItem extends StatelessWidget {
                               size: 120,
                               playlist: content,
                             ),
-                           if (content.isPipedPlaylist) Align(
-                              alignment: Alignment.bottomRight,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 18,
-                                  width: 18,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: Theme.of(context).colorScheme.secondary,
+                            if (content.isPipedPlaylist)
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: 18,
+                                    width: 18,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                      "P",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(fontSize: 14),
+                                    )),
                                   ),
-                                  child: Center(child:Text( "P",style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 14),)),
                                 ),
-                              ),
-                            )
+                              )
                           ],
                         ),
                       )
@@ -74,7 +84,9 @@ class ContentListItem extends StatelessWidget {
                                   ? Icons.favorite_rounded
                                   : content.playlistId == 'SongsCache'
                                       ? Icons.flight_rounded
-                                      : Icons.playlist_play_rounded,
+                                      : content.playlistId == 'SongDownloads'
+                                          ? Icons.download
+                                          : Icons.playlist_play_rounded,
                           color: Colors.white,
                           size: 40,
                         ))),

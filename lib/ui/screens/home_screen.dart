@@ -237,7 +237,7 @@ class Body extends StatelessWidget {
               return SortWidget(
                 tag: "LibSongSort",
                 itemCountTitle:
-                    "${libSongsController.cachedSongsList.length} ${"items".tr}",
+                    "${libSongsController.librarySongsList.length} ${"items".tr}",
                 titleLeftPadding: 9,
                 isDateOptionRequired: true,
                 isDurationOptionRequired: true,
@@ -251,9 +251,9 @@ class Body extends StatelessWidget {
               );
             }),
             GetX<LibrarySongsController>(builder: (controller) {
-              return controller.cachedSongsList.isNotEmpty
+              return controller.librarySongsList.isNotEmpty
                   ? ListWidget(
-                      controller.cachedSongsList,
+                      controller.librarySongsList,
                       "library Songs",
                       true,
                       isPlaylist: true,

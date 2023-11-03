@@ -1,6 +1,8 @@
 import 'package:android_power_manager/android_power_manager.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/services/permission_service.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../utils/update_check_flag_file.dart';
@@ -25,6 +27,8 @@ class SettingsScreenController extends GetxController {
   final isLinkedWithPiped = false.obs;
   final stopPlyabackOnSwipeAway = false.obs;
   final currentAppLanguageCode = "en".obs;
+  final downloadLocationPath = "".obs;
+  final downloadingFormat = "".obs;
   final currentVersion = "V1.5.0";
 
   @override
@@ -48,6 +52,9 @@ class SettingsScreenController extends GetxController {
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
+    downloadLocationPath.value = setBox.get('downloadLocationPath') ??
+        "/storage/emulated/0/Harmony-Music/downloads";
+    downloadingFormat.value = setBox.get('downloadingFormat') ?? "opus";
     discoverContentType.value = setBox.get('discoverContentType') ?? "QP";
     if (setBox.containsKey("piped")) {
       isLinkedWithPiped.value = setBox.get("piped")['isLoggedIn'];
@@ -63,12 +70,31 @@ class SettingsScreenController extends GetxController {
   void setAppLanguage(String? val) {
     Get.updateLocale(Locale(val!));
     currentAppLanguageCode.value = val;
-    setBox.put('currentAppLanguageCode',val);
+    setBox.put('currentAppLanguageCode', val);
   }
 
   void setStreamingQuality(dynamic val) {
     setBox.put("streamingQuality", AudioQuality.values.indexOf(val));
     streamingQuality.value = val;
+  }
+
+  void changeDownloadingFormat(String? val){
+    setBox.put("downloadingFormat", val);
+    downloadingFormat.value = val!;
+  }
+
+  Future<void> setDownloadLocation() async {
+    if (!await PermissionService.getExtStoragePermission()) {
+      return;
+    }
+
+    final String? pickedFolderPath = await FilePicker.platform.getDirectoryPath(dialogTitle: "Select downloads folder");
+    if(pickedFolderPath == '/' || pickedFolderPath == null){
+      return;
+    }
+    
+    setBox.put("downloadLocationPath", pickedFolderPath);
+    downloadLocationPath.value = pickedFolderPath;
   }
 
   void onThemeChange(dynamic val) {

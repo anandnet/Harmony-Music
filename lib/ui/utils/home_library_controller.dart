@@ -13,7 +13,7 @@ import '/models/media_Item_builder.dart';
 import '/models/playlist.dart';
 
 class LibrarySongsController extends GetxController {
-  late RxList<MediaItem> cachedSongsList = RxList();
+  late RxList<MediaItem> librarySongsList = RxList();
   final isSongFetched = false.obs;
   List<MediaItem> tempListContainer = [];
 
@@ -53,23 +53,29 @@ class LibrarySongsController extends GetxController {
       }
     }
 
-    cachedSongsList.value = box.values
+    librarySongsList.value = box.values
         .map<MediaItem?>((item) => MediaItemBuilder.fromJson(item))
         .whereType<MediaItem>()
         .toList();
+
+    librarySongsList.addAll(Hive.box("SongDownloads")
+        .values
+        .map<MediaItem?>((item) => MediaItemBuilder.fromJson(item))
+        .whereType<MediaItem>()
+        .toList());
     isSongFetched.value = true;
   }
 
   void onSort(
       bool sortByName, bool sortByDate, bool sortByDuration, bool isAscending) {
-    final songlist = cachedSongsList.toList();
+    final songlist = librarySongsList.toList();
     sortSongsNVideos(
         songlist, sortByName, sortByDate, sortByDuration, isAscending);
-    cachedSongsList.value = songlist;
+    librarySongsList.value = songlist;
   }
 
   void onSearchStart(String? tag) {
-    tempListContainer = cachedSongsList.toList();
+    tempListContainer = librarySongsList.toList();
   }
 
   void onSearch(String value, String? tag) {
@@ -77,22 +83,29 @@ class LibrarySongsController extends GetxController {
         .where((element) =>
             element.title.toLowerCase().contains(value.toLowerCase()))
         .toList();
-    cachedSongsList.value = songlist;
+    librarySongsList.value = songlist;
   }
 
   void onSearchClose(String? tag) {
-    cachedSongsList.value = tempListContainer.toList();
+    librarySongsList.value = tempListContainer.toList();
     tempListContainer.clear();
   }
 
-  Future<void> removeSong(MediaItem item) async {
-    if(tempListContainer.isNotEmpty){
+  Future<void> removeSong(MediaItem item, bool isDownloaded) async {
+    if (tempListContainer.isNotEmpty) {
       tempListContainer.remove(item);
     }
-    cachedSongsList.remove(item);
-    final cacheDir = (await getTemporaryDirectory()).path;
-    if (await File("$cacheDir/cachedSongs/${item.id}.mp3").exists()) {
-      await (File("$cacheDir/cachedSongs/${item.id}.mp3")).delete();
+    librarySongsList.remove(item);
+    String filePath = "";
+    if (isDownloaded) {
+      filePath = item.extras!['url'];
+    } else {
+      final cacheDir = (await getTemporaryDirectory()).path;
+      filePath = "$cacheDir/cachedSongs/${item.id}.mp3";
+    }
+
+    if (await (File(filePath)).exists()) {
+      await (File(filePath)).delete();
     }
   }
 }
@@ -116,6 +129,11 @@ class LibraryPlaylistsController extends GetxController
     Playlist(
         title: "cachedOrOffline".tr,
         playlistId: "SongsCache",
+        thumbnailUrl: "",
+        isCloudPlaylist: false),
+    Playlist(
+        title: "downloads".tr,
+        playlistId: "SongDownloads",
         thumbnailUrl: "",
         isCloudPlaylist: false)
   ];
@@ -214,13 +232,14 @@ class LibraryPlaylistsController extends GetxController
       if (playlist.isPipedPlaylist) {
         final res = await Get.find<PipedServices>()
             .renamePlaylist(playlist.playlistId, title);
-        if (res.code == 0) false;
+        if (res.code == 0) return false;
+        playlist.newTitle = title;
       } else {
         final box = await Hive.openBox("LibraryPlaylists");
         title = "${title[0].toUpperCase()}${title.substring(1).toLowerCase()}";
+        playlist.newTitle = title;
         box.put(playlist.playlistId, playlist.toJson());
       }
-      playlist.newTitle = title;
       refreshLib();
       return true;
     }

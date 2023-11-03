@@ -187,7 +187,7 @@ class PlayListNAlbumScreenController extends GetxController {
   @override
   void onClose() {
     tempListContainer.clear();
-    box.close();
+    if(id != "SongDownloads") box.close();
     super.onClose();
   }
 }

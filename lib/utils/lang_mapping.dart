@@ -1,6 +1,8 @@
 const langMap = {
   "ar": "Arabic",
+  "bg": "Bulgarian",
   "bn": "Bengali",
+  "cs": "Czech",
   "de": "German",
   "en": "English",
   "es": "Spanish",
@@ -19,6 +21,8 @@ const langMap = {
   "my": "Burmese",
   "nb_NO": "Norwegian",
   "nl": "Dutch",
+  "or": "Odia",
+  "pa": "Punjabi",
   "pl": "Polish",
   "pt": "Portuguese",
   "ro": "Romanian",

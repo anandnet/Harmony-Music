@@ -28,6 +28,7 @@ class SettingsScreenController extends GetxController {
   final stopPlyabackOnSwipeAway = false.obs;
   final currentAppLanguageCode = "en".obs;
   final downloadLocationPath = "".obs;
+  final downloadingFormat = "".obs;
   final currentVersion = "V1.5.0";
 
   @override
@@ -53,6 +54,7 @@ class SettingsScreenController extends GetxController {
         AudioQuality.values[setBox.get('streamingQuality')];
     downloadLocationPath.value = setBox.get('downloadLocationPath') ??
         "/storage/emulated/0/Harmony-Music/downloads";
+    downloadingFormat.value = setBox.get('downloadingFormat') ?? "opus";
     discoverContentType.value = setBox.get('discoverContentType') ?? "QP";
     if (setBox.containsKey("piped")) {
       isLinkedWithPiped.value = setBox.get("piped")['isLoggedIn'];
@@ -74,6 +76,11 @@ class SettingsScreenController extends GetxController {
   void setStreamingQuality(dynamic val) {
     setBox.put("streamingQuality", AudioQuality.values.indexOf(val));
     streamingQuality.value = val;
+  }
+
+  void changeDownloadingFormat(String? val){
+    setBox.put("downloadingFormat", val);
+    downloadingFormat.value = val!;
   }
 
   Future<void> setDownloadLocation() async {

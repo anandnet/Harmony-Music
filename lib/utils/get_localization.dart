@@ -189,7 +189,7 @@ class Languages extends Translations {
           "shareSong": "Share this song",
           "removeFromPlaylist": "Remove from playlist",
           "removeFromQueue": "Remove from queue",
-          "removeFromCache": "Remove from cache",
+          "removeFromLib": "Remove from Library Songs",
           "themeMode": "Theme Mode",
           "dynamic": "Dynamic",
           "systemDefault": "System default",
@@ -213,6 +213,9 @@ class Languages extends Translations {
           "high": "High",
           "low": "Low",
           "downloadLocation": "Download Location",
+          "downloadingFormat": "Downloading File Format",
+          "downloadingFormatDes":
+              "Select downloading file format. Opus will provide best quality",
           "equalizer": "Equalizer",
           "equalizerDes": "open system equalizer",
           "ignoreBatOpt": "Ignore battery optimization",

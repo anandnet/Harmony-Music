@@ -192,8 +192,8 @@ class SongInfoBottomSheet extends StatelessWidget {
             ? ListTile(
                 visualDensity: const VisualDensity(vertical: -1),
                 leading: const Icon(Icons.delete_rounded),
-                title: playlist!.playlistId == "SongsCache"
-                    ? Text("removeFromCache".tr)
+                title: playlist!.title == "Library Songs"
+                    ? Text("removeFromLib".tr)
                     : Text("removeFromPlaylist".tr),
                 onTap: () {
                   Navigator.of(context).pop();

@@ -63,6 +63,7 @@ dependencies:
       url: https://github.com/anandnet/sdk_int.git
       ref: master
   file_picker: ^6.0.0
+  audiotags: ^1.3.0
   
 dev_dependencies:
   flutter_test:

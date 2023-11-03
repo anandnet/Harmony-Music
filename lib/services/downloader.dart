@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:audiotags/audiotags.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
@@ -61,8 +63,13 @@ class Downloader extends GetxService {
     Completer<void> complete = Completer();
 
     final songStreamManifest = await streamClient.getManifest(song.id);
-    final streamInfo = songStreamManifest.audioOnly
-        .firstWhere((element) => element.tag == 251);
+
+    final settingsScreenController = Get.find<SettingsScreenController>();
+    final downloadingFormat = settingsScreenController.downloadingFormat.string;
+    final streamInfo = songStreamManifest.audioOnly.sortByBitrate().firstWhere(
+        (element) => downloadingFormat == "opus"
+            ? element.tag == 251
+            : element.audioCodec.contains("mp4a"));
     final totalBytes = streamInfo.size.totalBytes;
     final stream = streamClient.get(streamInfo);
     final List<int> fileBytes = [];
@@ -71,11 +78,11 @@ class Downloader extends GetxService {
       downloadingProgress.value =
           ((fileBytes.length / totalBytes) * 100).toInt();
     }).onDone(() async {
-      final dirPath =
-          Get.find<SettingsScreenController>().downloadLocationPath.string;
+      final dirPath = settingsScreenController.downloadLocationPath.string;
 
-      final filePath = "$dirPath/${song.id}.opus";
-      printINFO("Downloading Path: $dirPath");
+      String filePath = "$dirPath/${song.title}.$downloadingFormat";
+      filePath = filePath.replaceAll("\"","").replaceAll(">", "").replaceAll("<", "").replaceAll("|", "");
+      printINFO("Downloading filePath: $filePath");
       var file = File(filePath);
 
       await file.writeAsBytes(fileBytes);
@@ -83,6 +90,28 @@ class Downloader extends GetxService {
       Hive.box("SongDownloads").put(song.id, MediaItemBuilder.toJson(song));
       Get.find<LibrarySongsController>().librarySongsList.add(song);
       printINFO("Downloaded successfully");
+      try {
+        Tag tag = Tag(
+            title: song.title,
+            trackArtist: song.artist,
+            album: song.album,
+            albumArtist: song.artist,
+            genre: song.genre,
+            pictures: [
+              Picture(
+                  bytes: (await NetworkAssetBundle(song.artUri!)
+                          .load(song.artUri.toString()))
+                      .buffer
+                      .asUint8List(),
+                  mimeType: MimeType.none,
+                  pictureType: PictureType.coverFront)
+            ]);
+
+        await AudioTags.write(filePath, tag);
+      } catch (e) {
+        printERROR("$e");
+      }
+
       complete.complete();
     });
 

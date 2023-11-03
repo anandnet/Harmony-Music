@@ -440,9 +440,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       return "file://$_cacheDir/cachedSongs/$songId.mp3";
     } else if (!offlineReplacementUrl && songDownloadsBox.containsKey(songId)) {
       //check file access and if file exist in storage
-      await PermissionService.getExtStoragePermission();
+      final status = await PermissionService.getExtStoragePermission();
       final path = songDownloadsBox.get(songId)['url'];
-      if(await File(path).exists()){
+      if(status && await File(path).exists()){
         return path;
       }
       //in case file doesnot found in storage, song will be played online

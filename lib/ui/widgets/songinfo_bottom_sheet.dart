@@ -99,7 +99,17 @@ class SongInfoBottomSheet extends StatelessWidget {
                                         .color,
                                   ),
                                   onPressed: () {
-                                    downloader.download(song);
+                                    (Hive.openBox("SongsCache").then((box) {
+                                      if (box.containsKey(song.id)) {
+                                        Navigator.of(context).pop();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackbar(
+                                                context, "songAlreadyOfflineAlert".tr,
+                                                size: SanckBarSize.BIG));
+                                      } else {
+                                        downloader.download(song);
+                                      }
+                                    }));
                                   },
                                 ),
                 )

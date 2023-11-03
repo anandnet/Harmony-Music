@@ -241,6 +241,7 @@ class Languages extends Translations {
               "You can't remove currently playing song",
           "songAddedToPlaylistAlert": "Song added to playlist!",
           "songAlreadyExists": "Song already exists!",
+          "songAlreadyOfflineAlert": "Song already offline in cache",
           "songEnqueueAlert": "Song enqueued!",
           "songRemovedAlert": "Removed from",
           "errorOccuredAlert": "Some error occured!",

@@ -121,7 +121,7 @@ class MusicServices extends getx.GetxService {
       } else {
         return _sendRequest(action, data, additionalParams: additionalParams);
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       printINFO("Error $e");
       throw NetworkError();
     }

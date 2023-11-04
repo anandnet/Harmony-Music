@@ -1,5 +1,5 @@
-/// This is auto generated file
-/// Do not modify this file manually
+// This is auto generated file
+// Do not modify this file manually
 
 import 'package:get/get.dart';
 

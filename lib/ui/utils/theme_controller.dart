@@ -91,7 +91,6 @@ class ThemeController extends GetxController {
           primaryColor: primarySwatch![500],
           colorScheme: ColorScheme.fromSwatch(
               accentColor: primarySwatch[200],
-              primaryColorDark: primarySwatch[700],
               brightness: Brightness.dark,
               backgroundColor: primarySwatch[700],
               primarySwatch: primarySwatch),

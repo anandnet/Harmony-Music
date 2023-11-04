@@ -129,5 +129,11 @@
     "goToAlbum": "ਐਲਬਮ 'ਤੇ ਜਾਓ",
     "removeFromQueue": "ਕਤਾਰ ਤੋਂ ਹਟਾਓ",
     "shareSong": "ਇਸ ਗੀਤ ਨੂੰ ਸ਼ੇਅਰ ਕਰੋ",
-    "songRemovedAlert": "ਤੋਂ ਹਟਾਇਆ ਗਿਆ"
+    "songRemovedAlert": "ਤੋਂ ਹਟਾਇਆ ਗਿਆ",
+    "downloads": "ਡਾਊਨਲੋਡਸ",
+    "removeFromLib": "ਲਾਇਬ੍ਰੇਰੀ ਗੀਤਾਂ ਤੋਂ ਹਟਾਓ",
+    "downloadingFormat": "ਡਾਊਨਲੋਡ ਕਰੋ ਫਾਈਲ ਫਾਰਮੈਟ",
+    "songAlreadyOfflineAlert": "ਗੀਤ ਪਹਿਲਾਂ ਹੀ ਕੈਸ਼ ਵਿੱਚ ਔਫਲਾਈਨ ਹੈ",
+    "downloadLocation": "ਟਿਕਾਣਾ ਡਾਊਨਲੋਡ ਕਰੋ",
+    "downloadingFormatDes": "ਡਾਊਨਲੋਡਿੰਗ ਫਾਈਲ ਫਾਰਮੈਟ ਚੁਣੋ। \"ਓਪਸ\" ਵਧੀਆ ਗੁਣਵੱਤਾ ਪ੍ਰਦਾਨ ਕਰੇਗਾ"
 }

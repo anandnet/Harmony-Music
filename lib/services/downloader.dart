@@ -14,6 +14,7 @@ import '/utils/helper.dart';
 import '/models/media_Item_builder.dart';
 import '/services/music_service.dart';
 import '/ui/utils/home_library_controller.dart';
+import '../models/thumbnail.dart' as th;
 
 class Downloader extends GetxService {
   MediaItem? currentSong;
@@ -81,7 +82,11 @@ class Downloader extends GetxService {
       final dirPath = settingsScreenController.downloadLocationPath.string;
 
       String filePath = "$dirPath/${song.title}.$downloadingFormat";
-      filePath = filePath.replaceAll("\"","").replaceAll(">", "").replaceAll("<", "").replaceAll("|", "");
+      filePath = filePath
+          .replaceAll("\"", "")
+          .replaceAll(">", "")
+          .replaceAll("<", "")
+          .replaceAll("|", "");
       printINFO("Downloading filePath: $filePath");
       var file = File(filePath);
 
@@ -91,6 +96,7 @@ class Downloader extends GetxService {
       Get.find<LibrarySongsController>().librarySongsList.add(song);
       printINFO("Downloaded successfully");
       try {
+        final imageUrl = th.Thumbnail(song.artUri!.toString()).sizewith(540);
         Tag tag = Tag(
             title: song.title,
             trackArtist: song.artist,
@@ -99,8 +105,8 @@ class Downloader extends GetxService {
             genre: song.genre,
             pictures: [
               Picture(
-                  bytes: (await NetworkAssetBundle(song.artUri!)
-                          .load(song.artUri.toString()))
+                  bytes: (await NetworkAssetBundle(Uri.parse((imageUrl)))
+                          .load(imageUrl))
                       .buffer
                       .asUint8List(),
                   mimeType: MimeType.none,

@@ -129,5 +129,11 @@
     "goToAlbum": "ଆଲବମକୁ ଯାଆନ୍ତୁ",
     "removeFromQueue": "ଧାଡ଼ିରୁ କାଢ଼ନ୍ତୁ",
     "shareSong": "ଏହି ଗୀତକୁ ସହଭାଗ କରନ୍ତୁ",
-    "songRemovedAlert": "ଏଥିରୁ ଅପସାରିତ ହୋଇଛି"
+    "songRemovedAlert": "ଏଥିରୁ ଅପସାରିତ ହୋଇଛି",
+    "downloads": "ଡାଉନଲୋଡ୍",
+    "removeFromLib": "ଲାଇବ୍ରେରୀ ଗୀତରୁ ଅପସାରଣ କରନ୍ତୁ",
+    "downloadingFormat": "ଫାଇଲ୍ ଫର୍ମାଟ୍ ଡାଉନଲୋଡ୍ କରୁଛି",
+    "songAlreadyOfflineAlert": "ଗୀତ କ୍ୟାଶେରେ ଅଫଲାଇନରେ ଅଛି",
+    "downloadLocation": "ଅବସ୍ଥାନ ଡାଉନଲୋଡ୍ କରନ୍ତୁ",
+    "downloadingFormatDes": "ଫାଇଲ୍ ଫର୍ମାଟ୍ ଡାଉନଲୋଡ୍ କରନ୍ତୁ ଚୟନ କରନ୍ତୁ | \"Opus\" ସର୍ବୋତ୍ତମ ଗୁଣ ପ୍ରଦାନ କରିବ"
 }

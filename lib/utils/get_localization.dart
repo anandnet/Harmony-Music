@@ -147,7 +147,14 @@ class Languages extends Translations {
           "goToAlbum": "Отидете на албум",
           "removeFromQueue": "Премахване от опашката",
           "shareSong": "Споделете тази песен",
-          "songRemovedAlert": "Премахнато от"
+          "songRemovedAlert": "Премахнато от",
+          "downloads": "Изтегляния",
+          "removeFromLib": "Премахване от библиотеката песни",
+          "downloadingFormat": "Изтегли Файл формат",
+          "songAlreadyOfflineAlert": "Песента е налична в кеша като офлайн",
+          "downloadLocation": "Местоположение на изтеглянията",
+          "downloadingFormatDes":
+              "Изберете файлов формат за изтегляне. \"Opus\" ще осигури най-доброто качество"
         },
         "bn": {},
         "cs": {
@@ -288,7 +295,14 @@ class Languages extends Translations {
           "goToAlbum": "Přejít do alba",
           "removeFromQueue": "Odstranit z fronty",
           "shareSong": "Sdílet tuto skladbu",
-          "songRemovedAlert": "Odstraněno z"
+          "songRemovedAlert": "Odstraněno z",
+          "downloads": "Stahování",
+          "removeFromLib": "Odebrat z knihovny skladeb",
+          "downloadingFormat": "Stahování formátu souboru",
+          "songAlreadyOfflineAlert": "Skladba je v mezipaměti již offline",
+          "downloadLocation": "Umístění stahování",
+          "downloadingFormatDes":
+              "Vyberte formát souboru pro stahování. \"Opus\" bude poskytovat nejlepší kvalitu"
         },
         "de": {
           "home": "Startseite",
@@ -425,7 +439,27 @@ class Languages extends Translations {
           "communityplaylists": "Community Playlists",
           "languageDes": "Appsprache ändern",
           "language": "Sprache",
-          "removeFromPlaylist": "Aus Wiedergabeliste entfernen"
+          "removeFromPlaylist": "Aus Wiedergabeliste entfernen",
+          "customInsSelectMsg":
+              "Bitte wählen Sie „Benutzerdefinierte Instanz“ aus",
+          "allFieldsReqMsg": "Alle Felder benötigt",
+          "rename": "Umbenennen",
+          "downloads": "Downloads",
+          "removeFromLib": "Lied aus der Bibliothek entfernen",
+          "downloadingFormat": "Dateiformat herunterladen",
+          "selectAuthInsMsg": "Bitte Authentifizierungsinstanz auswählen!",
+          "customIns": "Benutzerdefinierte Instanz",
+          "Piped": "Piped",
+          "topmusicvideos": "Neue Musikvideos",
+          "singles": "Singles",
+          "songAlreadyOfflineAlert":
+              "Der Song ist bereits offline im Cache verfügbar",
+          "downloadLocation": "Downloadpfad",
+          "hintApiUrl": "API-URL zur Piped-Instanz",
+          "downloadingFormatDes":
+              "Wählen Sie das Dateiformat für den Download aus. „Opus“ bietet beste Qualität",
+          "featuredplaylists": "Ausgewählte Wiedergabelisten",
+          "quickpicks": "Schnellauswahl"
         },
         "en": {
           "home": "Home",
@@ -495,7 +529,7 @@ class Languages extends Translations {
           "downloadLocation": "Download Location",
           "downloadingFormat": "Downloading File Format",
           "downloadingFormatDes":
-              "Select downloading file format. Opus will provide best quality",
+              "Select downloading file format. \"Opus\" will provide best quality",
           "equalizer": "Equalizer",
           "equalizerDes": "open system equalizer",
           "ignoreBatOpt": "Ignore battery optimization",
@@ -674,7 +708,7 @@ class Languages extends Translations {
           "notaValidLink": "¡No es un enlace válido!",
           "emptyPlaylist": "¡Lista de reproducción vacía!",
           "favorites": "Favoritos",
-          "dark": "oscuro",
+          "dark": "Oscuro",
           "home": "Inicio",
           "cancel": "Cancelar",
           "by": "por",
@@ -716,7 +750,14 @@ class Languages extends Translations {
           "shareSong": "Compartir esta canción",
           "songRemovedAlert": "Eliminado de",
           "resetblacklistedplaylistDes":
-              "Restablecer todas las listas de reproducción en la lista negra"
+              "Restablecer todas las listas de reproducción en la lista negra",
+          "downloads": "Descargas",
+          "removeFromLib": "Eliminar las canciones de la biblioteca",
+          "downloadingFormat": "Descargar el formato del archivo",
+          "songAlreadyOfflineAlert": "Canción sin conexión en la caché",
+          "downloadLocation": "Ubicación de la descarga",
+          "downloadingFormatDes":
+              "Selecciona el formato del archivo de la descarga. \"Opus\" proporcionará la mejor calidad"
         },
         "fil": {},
         "fj": {},
@@ -864,7 +905,14 @@ class Languages extends Translations {
           "hintApiUrl": "URL de l'API de l'instance",
           "removeFromPlaylist": "Retirer de la playlist",
           "featuredplaylists": "Playlist mise en avant",
-          "quickpicks": "Sélections rapides"
+          "quickpicks": "Sélections rapides",
+          "downloads": "Téléchargements",
+          "removeFromLib": "Odebrat z knihovny skladeb",
+          "downloadingFormat": "Télécharger le format de fichier",
+          "songAlreadyOfflineAlert": "Chanson déjà hors ligne dans le cache",
+          "downloadLocation": "Emplacement du téléchargement",
+          "downloadingFormatDes":
+              "Sélectionnez le format de fichier de téléchargement. \"Opus\" offrira la meilleure qualité"
         },
         "ga": {},
         "hi": {
@@ -1006,7 +1054,14 @@ class Languages extends Translations {
           "hintApiUrl": "पाइप्ड इंस्टैंस एपीआई यूआरएल",
           "removeFromPlaylist": "प्लेलिस्ट से निकालें",
           "featuredplaylists": "फीचर्ड प्लेलिस्ट",
-          "quickpicks": "गानों का सुझाव"
+          "quickpicks": "गानों का सुझाव",
+          "downloads": "डाउनलोड्स",
+          "removeFromLib": "लाइब्रेरी गाने से हटाएँ",
+          "downloadingFormat": "डाउनलोडिंग फ़ाइल फ़ारमैट",
+          "songAlreadyOfflineAlert": "गाना पहले से ही कैश में ऑफ़लाइन है",
+          "downloadLocation": "डाउनलोड का स्थान",
+          "downloadingFormatDes":
+              "डाउनलोडिंग फाइल फॉर्मेट चुने, \"Opus\" सर्वोत्तम गुणवत्ता प्रदान करेगा"
         },
         "id": {},
         "it": {
@@ -1307,7 +1362,14 @@ class Languages extends Translations {
           "goToAlbum": "ଆଲବମକୁ ଯାଆନ୍ତୁ",
           "removeFromQueue": "ଧାଡ଼ିରୁ କାଢ଼ନ୍ତୁ",
           "shareSong": "ଏହି ଗୀତକୁ ସହଭାଗ କରନ୍ତୁ",
-          "songRemovedAlert": "ଏଥିରୁ ଅପସାରିତ ହୋଇଛି"
+          "songRemovedAlert": "ଏଥିରୁ ଅପସାରିତ ହୋଇଛି",
+          "downloads": "ଡାଉନଲୋଡ୍",
+          "removeFromLib": "ଲାଇବ୍ରେରୀ ଗୀତରୁ ଅପସାରଣ କରନ୍ତୁ",
+          "downloadingFormat": "ଫାଇଲ୍ ଫର୍ମାଟ୍ ଡାଉନଲୋଡ୍ କରୁଛି",
+          "songAlreadyOfflineAlert": "ଗୀତ କ୍ୟାଶେରେ ଅଫଲାଇନରେ ଅଛି",
+          "downloadLocation": "ଅବସ୍ଥାନ ଡାଉନଲୋଡ୍ କରନ୍ତୁ",
+          "downloadingFormatDes":
+              "ଫାଇଲ୍ ଫର୍ମାଟ୍ ଡାଉନଲୋଡ୍ କରନ୍ତୁ ଚୟନ କରନ୍ତୁ | \"Opus\" ସର୍ବୋତ୍ତମ ଗୁଣ ପ୍ରଦାନ କରିବ"
         },
         "pa": {
           "playlistCreatednsongAddedAlert":
@@ -1447,7 +1509,14 @@ class Languages extends Translations {
           "goToAlbum": "ਐਲਬਮ 'ਤੇ ਜਾਓ",
           "removeFromQueue": "ਕਤਾਰ ਤੋਂ ਹਟਾਓ",
           "shareSong": "ਇਸ ਗੀਤ ਨੂੰ ਸ਼ੇਅਰ ਕਰੋ",
-          "songRemovedAlert": "ਤੋਂ ਹਟਾਇਆ ਗਿਆ"
+          "songRemovedAlert": "ਤੋਂ ਹਟਾਇਆ ਗਿਆ",
+          "downloads": "ਡਾਊਨਲੋਡਸ",
+          "removeFromLib": "ਲਾਇਬ੍ਰੇਰੀ ਗੀਤਾਂ ਤੋਂ ਹਟਾਓ",
+          "downloadingFormat": "ਡਾਊਨਲੋਡ ਕਰੋ ਫਾਈਲ ਫਾਰਮੈਟ",
+          "songAlreadyOfflineAlert": "ਗੀਤ ਪਹਿਲਾਂ ਹੀ ਕੈਸ਼ ਵਿੱਚ ਔਫਲਾਈਨ ਹੈ",
+          "downloadLocation": "ਟਿਕਾਣਾ ਡਾਊਨਲੋਡ ਕਰੋ",
+          "downloadingFormatDes":
+              "ਡਾਊਨਲੋਡਿੰਗ ਫਾਈਲ ਫਾਰਮੈਟ ਚੁਣੋ। \"ਓਪਸ\" ਵਧੀਆ ਗੁਣਵੱਤਾ ਪ੍ਰਦਾਨ ਕਰੇਗਾ"
         },
         "pl": {
           "home": "Główna",
@@ -1589,7 +1658,15 @@ class Languages extends Translations {
           "hintApiUrl": "URL API do instancji Piped",
           "removeFromPlaylist": "Usuń z playlistę",
           "featuredplaylists": "Polecane playlisty",
-          "quickpicks": "Szybki wybór"
+          "quickpicks": "Szybki wybór",
+          "downloads": "Pobrania",
+          "removeFromLib": "Usuń z utworów bibliotecznych",
+          "downloadingFormat": "Pobierz format pliku",
+          "songAlreadyOfflineAlert":
+              "Utwór jest już offline w pamięci podręcznej",
+          "downloadLocation": "Lokalizacja Pobierania",
+          "downloadingFormatDes":
+              "Wybierz format pliku do pobrania. „Opus” zapewni najlepszą jakość"
         },
         "pt": {},
         "ro": {},
@@ -1735,7 +1812,14 @@ class Languages extends Translations {
           "hintApiUrl": "URL-адрес API экземпляра Piped",
           "removeFromPlaylist": "Удалить из плейлиста",
           "featuredplaylists": "Избранные плейлисты",
-          "quickpicks": "Быстрый выбор"
+          "quickpicks": "Быстрый выбор",
+          "downloads": "Загрузки",
+          "removeFromLib": "Удалить из библиотеки-Песни",
+          "downloadingFormat": "Скачать формат файла",
+          "songAlreadyOfflineAlert": "Песня уже офлайн в кеше",
+          "downloadLocation": "Папка для загрузок",
+          "downloadingFormatDes":
+              "Выберите формат файла загрузки. «Опус» обеспечит лучшее качество"
         },
         "sk": {},
         "sr": {
@@ -1877,7 +1961,14 @@ class Languages extends Translations {
           "goToAlbum": "Иди на албум",
           "removeFromQueue": "Уклони из реда",
           "shareSong": "Дели ову песму",
-          "songRemovedAlert": "Уклоњено из"
+          "songRemovedAlert": "Уклоњено из",
+          "downloads": "Преузимања",
+          "removeFromLib": "Уклони из збирке песама",
+          "downloadingFormat": "Формат фајла за преузимање",
+          "songAlreadyOfflineAlert": "Песма је већ офлајн у кешу",
+          "downloadLocation": "Локација преузимања",
+          "downloadingFormatDes":
+              "Изаберите формат фајла за преузимање. „Opus“ ће обезбедити најбољи квалитет"
         },
         "ta": {},
         "te": {},
@@ -2018,7 +2109,14 @@ class Languages extends Translations {
           "goToAlbum": "Albüme var",
           "removeFromQueue": "Sıradan al",
           "shareSong": "Bunu paylaş",
-          "songRemovedAlert": "Şundan çıkarıldı"
+          "songRemovedAlert": "Şundan çıkarıldı",
+          "downloads": "İndirilenler",
+          "removeFromLib": "Kitaplık Şarkılarından Kaldır",
+          "downloadingFormat": "Dosya Formatını İndirme",
+          "songAlreadyOfflineAlert": "Şarkı zaten önbellekte çevrimdışı",
+          "downloadLocation": "İndirme Konumu",
+          "downloadingFormatDes":
+              "İndirme dosya biçimini seçin. \"Opus\" en iyi kaliteyi sağlayacak"
         },
         "uk": {},
         "ur": {},

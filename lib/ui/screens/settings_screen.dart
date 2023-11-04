@@ -100,17 +100,20 @@ class SettingsScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium),
                 trailing: Obx(
                   () => DropdownButton(
+                    menuMaxHeight: Get.height - 200,
                     dropdownColor: Theme.of(context).cardColor,
                     underline: const SizedBox.shrink(),
                     style: Theme.of(context).textTheme.titleSmall,
                     value: settingsController.currentAppLanguageCode.value,
                     items: langMap.entries
-                        .map((lang) =>
-                            DropdownMenuItem(value: lang.key, child: Text(lang.value)))
+                        .map((lang) => DropdownMenuItem(
+                              value: lang.key,
+                              child: Text(lang.value),
+                            ))
                         .whereType<DropdownMenuItem<String>>()
                         .toList(),
-                    selectedItemBuilder: (context) => langMap.entries
-                        .map<Widget>((item) {
+                    selectedItemBuilder: (context) =>
+                        langMap.entries.map<Widget>((item) {
                       return Container(
                         alignment: Alignment.centerRight,
                         constraints: const BoxConstraints(minWidth: 50),
@@ -183,11 +186,12 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-               ListTile(
+              ListTile(
                 contentPadding:
                     const EdgeInsets.only(left: 5, right: 10, top: 0),
                 title: Text("downloadLocation".tr),
-                subtitle: Obx(() => Text(settingsController.downloadLocationPath.value,
+                subtitle: Obx(() => Text(
+                    settingsController.downloadLocationPath.value,
                     style: Theme.of(context).textTheme.bodyMedium)),
                 onTap: () async {
                   settingsController.setDownloadLocation();
@@ -204,8 +208,7 @@ class SettingsScreen extends StatelessWidget {
                     underline: const SizedBox.shrink(),
                     value: settingsController.downloadingFormat.value,
                     items: const [
-                      DropdownMenuItem(
-                          value: "opus", child: Text("Opus")),
+                      DropdownMenuItem(value: "opus", child: Text("Opus")),
                       DropdownMenuItem(
                         value: "m4a",
                         child: Text("M4a"),

@@ -129,5 +129,11 @@
     "goToAlbum": "Отидете на албум",
     "removeFromQueue": "Премахване от опашката",
     "shareSong": "Споделете тази песен",
-    "songRemovedAlert": "Премахнато от"
+    "songRemovedAlert": "Премахнато от",
+    "downloads": "Изтегляния",
+    "removeFromLib": "Премахване от библиотеката песни",
+    "downloadingFormat": "Изтегли Файл формат",
+    "songAlreadyOfflineAlert": "Песента е налична в кеша като офлайн",
+    "downloadLocation": "Местоположение на изтеглянията",
+    "downloadingFormatDes": "Изберете файлов формат за изтегляне. \"Opus\" ще осигури най-доброто качество"
 }

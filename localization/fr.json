@@ -133,5 +133,9 @@
     "featuredplaylists": "Playlist mise en avant",
     "quickpicks": "Sélections rapides",
     "downloads": "Téléchargements",
-    "removeFromLib": "Odebrat z knihovny skladeb"
+    "removeFromLib": "Odebrat z knihovny skladeb",
+    "downloadingFormat": "Télécharger le format de fichier",
+    "songAlreadyOfflineAlert": "Chanson déjà hors ligne dans le cache",
+    "downloadLocation": "Emplacement du téléchargement",
+    "downloadingFormatDes": "Sélectionnez le format de fichier de téléchargement. \"Opus\" offrira la meilleure qualité"
 }

@@ -70,30 +70,35 @@ class HomeScreen extends StatelessWidget {
       body: Row(
         children: <Widget>[
           // create a navigation rail
-          Obx(
-            () => NavigationRail(
-              useIndicator: false,
-              selectedIndex:
-                  homeScreenController.tabIndex.value, //_selectedIndex,
-              onDestinationSelected: homeScreenController.onTabSelected,
-              minWidth: 60,
-              leading: SizedBox(height: size.height < 750 ? 30 : 60),
-              labelType: NavigationRailLabelType.all,
-              //backgroundColor: Colors.green,
-              destinations: <NavigationRailDestination>[
-                railDestination("home".tr),
-                railDestination("songs".tr),
-                railDestination("playlists".tr),
-                railDestination("albums".tr),
-                railDestination("artists".tr),
-                //railDestination("Settings")
-                const NavigationRailDestination(
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
-                  icon: Icon(Icons.settings_rounded),
-                  label: SizedBox.shrink(),
-                  selectedIcon: Icon(Icons.settings_rounded),
-                )
-              ],
+          SingleChildScrollView(
+            padding: const EdgeInsets.only(bottom: 60),
+            child: IntrinsicHeight(
+              child: Obx(
+                () => NavigationRail(
+                  useIndicator: false,
+                  selectedIndex:
+                      homeScreenController.tabIndex.value, //_selectedIndex,
+                  onDestinationSelected: homeScreenController.onTabSelected,
+                  minWidth: 60,
+                  leading: SizedBox(height: size.height < 750 ? 30 : 60),
+                  labelType: NavigationRailLabelType.all,
+                  //backgroundColor: Colors.green,
+                  destinations: <NavigationRailDestination>[
+                    railDestination("home".tr),
+                    railDestination("songs".tr),
+                    railDestination("playlists".tr),
+                    railDestination("albums".tr),
+                    railDestination("artists".tr),
+                    //railDestination("Settings")
+                    const NavigationRailDestination(
+                      padding: EdgeInsets.only(top: 10, bottom: 10),
+                      icon: Icon(Icons.settings_rounded),
+                      label: SizedBox.shrink(),
+                      selectedIcon: Icon(Icons.settings_rounded),
+                    )
+                  ],
+                ),
+              ),
             ),
           ),
           //const VerticalDivider(thickness: 1, width: 2),

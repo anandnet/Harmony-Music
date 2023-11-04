@@ -44,6 +44,10 @@ migrate_working_dir/
 **/windows/flutter/generated_plugin_registrant.h
 **/windows/flutter/generated_plugins.cmake
 
+# linux
+**/linux/flutter/generated_plugin_registrant.cc
+**/linux/flutter/generated_plugins.cmake
+
 # Symbolication related
 app.*.symbols
 

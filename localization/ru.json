@@ -131,5 +131,11 @@
     "hintApiUrl": "URL-адрес API экземпляра Piped",
     "removeFromPlaylist": "Удалить из плейлиста",
     "featuredplaylists": "Избранные плейлисты",
-    "quickpicks": "Быстрый выбор"
+    "quickpicks": "Быстрый выбор",
+    "downloads": "Загрузки",
+    "removeFromLib": "Удалить из библиотеки-Песни",
+    "downloadingFormat": "Скачать формат файла",
+    "songAlreadyOfflineAlert": "Песня уже офлайн в кеше",
+    "downloadLocation": "Папка для загрузок",
+    "downloadingFormatDes": "Выберите формат файла загрузки. «Опус» обеспечит лучшее качество"
 }

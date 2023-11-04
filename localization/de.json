@@ -120,5 +120,22 @@
     "communityplaylists": "Community Playlists",
     "languageDes": "Appsprache ändern",
     "language": "Sprache",
-    "removeFromPlaylist": "Aus Wiedergabeliste entfernen"
+    "removeFromPlaylist": "Aus Wiedergabeliste entfernen",
+    "customInsSelectMsg": "Bitte wählen Sie „Benutzerdefinierte Instanz“ aus",
+    "allFieldsReqMsg": "Alle Felder benötigt",
+    "rename": "Umbenennen",
+    "downloads": "Downloads",
+    "removeFromLib": "Lied aus der Bibliothek entfernen",
+    "downloadingFormat": "Dateiformat herunterladen",
+    "selectAuthInsMsg": "Bitte Authentifizierungsinstanz auswählen!",
+    "customIns": "Benutzerdefinierte Instanz",
+    "Piped": "Piped",
+    "topmusicvideos": "Neue Musikvideos",
+    "singles": "Singles",
+    "songAlreadyOfflineAlert": "Der Song ist bereits offline im Cache verfügbar",
+    "downloadLocation": "Downloadpfad",
+    "hintApiUrl": "API-URL zur Piped-Instanz",
+    "downloadingFormatDes": "Wählen Sie das Dateiformat für den Download aus. „Opus“ bietet beste Qualität",
+    "featuredplaylists": "Ausgewählte Wiedergabelisten",
+    "quickpicks": "Schnellauswahl"
 }

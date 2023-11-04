@@ -131,5 +131,11 @@
     "hintApiUrl": "पाइप्ड इंस्टैंस एपीआई यूआरएल",
     "removeFromPlaylist": "प्लेलिस्ट से निकालें",
     "featuredplaylists": "फीचर्ड प्लेलिस्ट",
-    "quickpicks": "गानों का सुझाव"
+    "quickpicks": "गानों का सुझाव",
+    "downloads": "डाउनलोड्स",
+    "removeFromLib": "लाइब्रेरी गाने से हटाएँ",
+    "downloadingFormat": "डाउनलोडिंग फ़ाइल फ़ारमैट",
+    "songAlreadyOfflineAlert": "गाना पहले से ही कैश में ऑफ़लाइन है",
+    "downloadLocation": "डाउनलोड का स्थान",
+    "downloadingFormatDes": "डाउनलोडिंग फाइल फॉर्मेट चुने, \"Opus\" सर्वोत्तम गुणवत्ता प्रदान करेगा"
 }

@@ -129,5 +129,11 @@
     "goToAlbum": "Иди на албум",
     "removeFromQueue": "Уклони из реда",
     "shareSong": "Дели ову песму",
-    "songRemovedAlert": "Уклоњено из"
+    "songRemovedAlert": "Уклоњено из",
+    "downloads": "Преузимања",
+    "removeFromLib": "Уклони из збирке песама",
+    "downloadingFormat": "Формат фајла за преузимање",
+    "songAlreadyOfflineAlert": "Песма је већ офлајн у кешу",
+    "downloadLocation": "Локација преузимања",
+    "downloadingFormatDes": "Изаберите формат фајла за преузимање. „Opus“ ће обезбедити најбољи квалитет"
 }

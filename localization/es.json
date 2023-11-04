@@ -90,7 +90,7 @@
     "notaValidLink": "¡No es un enlace válido!",
     "emptyPlaylist": "¡Lista de reproducción vacía!",
     "favorites": "Favoritos",
-    "dark": "oscuro",
+    "dark": "Oscuro",
     "home": "Inicio",
     "cancel": "Cancelar",
     "by": "por",
@@ -129,5 +129,11 @@
     "removeFromQueue": "Eliminar de la cola",
     "shareSong": "Compartir esta canción",
     "songRemovedAlert": "Eliminado de",
-    "resetblacklistedplaylistDes": "Restablecer todas las listas de reproducción en la lista negra"
+    "resetblacklistedplaylistDes": "Restablecer todas las listas de reproducción en la lista negra",
+    "downloads": "Descargas",
+    "removeFromLib": "Eliminar las canciones de la biblioteca",
+    "downloadingFormat": "Descargar el formato del archivo",
+    "songAlreadyOfflineAlert": "Canción sin conexión en la caché",
+    "downloadLocation": "Ubicación de la descarga",
+    "downloadingFormatDes": "Selecciona el formato del archivo de la descarga. \"Opus\" proporcionará la mejor calidad"
 }

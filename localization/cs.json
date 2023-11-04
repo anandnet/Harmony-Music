@@ -129,5 +129,11 @@
     "goToAlbum": "Přejít do alba",
     "removeFromQueue": "Odstranit z fronty",
     "shareSong": "Sdílet tuto skladbu",
-    "songRemovedAlert": "Odstraněno z"
+    "songRemovedAlert": "Odstraněno z",
+    "downloads": "Stahování",
+    "removeFromLib": "Odebrat z knihovny skladeb",
+    "downloadingFormat": "Stahování formátu souboru",
+    "songAlreadyOfflineAlert": "Skladba je v mezipaměti již offline",
+    "downloadLocation": "Umístění stahování",
+    "downloadingFormatDes": "Vyberte formát souboru pro stahování. \"Opus\" bude poskytovat nejlepší kvalitu"
 }

@@ -134,7 +134,7 @@ class ThemeController extends GetxController {
                   : Colors.white70,
               color: textColor),
           navigationRailTheme: NavigationRailThemeData(
-              backgroundColor: primarySwatch[600],
+              backgroundColor: primarySwatch[700],
               selectedIconTheme: const IconThemeData(color: Colors.white),
               unselectedIconTheme: IconThemeData(color: primarySwatch[100]),
               selectedLabelTextStyle: const TextStyle(

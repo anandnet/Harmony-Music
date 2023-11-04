@@ -4,11 +4,11 @@ import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../widgets/loader.dart';
+import '../ui/widgets/loader.dart';
 import '/services/music_service.dart';
 import '/ui/player/player_controller.dart';
-import '../navigator.dart';
-import '../widgets/snackbar.dart';
+import '../ui/navigator.dart';
+import '../ui/widgets/snackbar.dart';
 
 class AppLinksController extends GetxController {
   late AppLinks _appLinks;
@@ -43,7 +43,7 @@ class AppLinksController extends GetxController {
 
     if (uri.host == "youtube.com" ||
         uri.host == "music.youtube.com" ||
-        uri.host == "youtu.be") {
+        uri.host == "youtu.be" || uri.host == "www.youtube.com") {
       //printINFO("pathsegmet: ${uri.pathSegments} params:${uri.queryParameters}");
       if (uri.pathSegments[0] == "playlist" &&
           (!uri.queryParameters.containsKey("playnext") || uri.host == "music.youtube.com")) {

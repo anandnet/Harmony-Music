@@ -64,7 +64,7 @@
     "low": "Low",
     "downloadLocation": "Download Location",
     "downloadingFormat": "Downloading File Format",
-    "downloadingFormatDes": "Select downloading file format. Opus will provide best quality",
+    "downloadingFormatDes": "Select downloading file format. \"Opus\" will provide best quality",
     "equalizer": "Equalizer",
     "equalizerDes": "open system equalizer",
     "ignoreBatOpt": "Ignore battery optimization",

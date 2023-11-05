@@ -29,7 +29,7 @@ class SettingsScreenController extends GetxController {
   final currentAppLanguageCode = "en".obs;
   final downloadLocationPath = "".obs;
   final downloadingFormat = "".obs;
-  final currentVersion = "V1.5.0";
+  final currentVersion = "V1.6.0";
 
   @override
   void onInit() {

@@ -1,3 +1,10 @@
+## 1.6.0
+* App language support #21 #54
+* Selective song download feature #40
+* Fixed - Songs can not be deleted from the cached/offline #68
+* Changed app font
+* Fixed - Offline playlist rename/delete issue
+
 ## 1.5.0
 * Added search feature where required - Feature requested in #45 
 * Fixed - loop song does not work #49

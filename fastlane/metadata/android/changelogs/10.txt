@@ -1,0 +1,5 @@
+- Language support
+- Selective song download feature
+- Changed app font
+- Fixed - Songs can not be deleted from the cached/offline
+- Fixed - Offline playlist rename/delete issue

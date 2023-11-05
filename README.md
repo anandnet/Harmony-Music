@@ -12,9 +12,12 @@ An app for music streaming made with Flutter(Currently support Android only).
 * Artist & Album bookmark support
 * Import song,Playlist,Album,Artist via sharing from Ytube/Ytube Music.
 * Streaming quality control
+* Song downloading support
+* Language support
 * Skip silence
 * Dynamic Theme
 * Equalizer support
+* Android Auto support
 * Lyrics support
 * No Advertisment
 * No Login required

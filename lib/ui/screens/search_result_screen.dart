@@ -16,54 +16,46 @@ class SearchResultScreen extends StatelessWidget {
       body: Row(
         children: [
           SingleChildScrollView(
-            child: Obx(
-              () => ConstrainedBox(
-                constraints: BoxConstraints(
-                    minHeight: searchResScrController.railitemHeight.value),
-                child: IntrinsicHeight(
-                  child: Obx(
-                    () => NavigationRail(
-                      onDestinationSelected:
-                          searchResScrController.onDestinationSelected,
-                      minWidth: 60,
-                      destinations: (searchResScrController
-                                  .isResultContentFetced.value &&
-                              searchResScrController.railItems.isNotEmpty)
-                          ? [
-                              railDestination("results".tr),
-                              ...(searchResScrController.railItems
-                                  .map((element) => railDestination(element))),
-                            ]
-                          : [railDestination("results".tr), railDestination("")],
-                      leading: Column(
-                        children: [
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.arrow_back_ios_new_rounded,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .color,
-                            ),
-                            onPressed: () {
-                              Get.nestedKey(ScreenNavigationSetup.id)!
-                                  .currentState!
-                                  .pop();
-                            },
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
+            padding: const EdgeInsets.only(bottom: 80),
+            child: IntrinsicHeight(
+              child: Obx(
+                () => NavigationRail(
+                  onDestinationSelected:
+                      searchResScrController.onDestinationSelected,
+                  minWidth: 60,
+                  destinations: (searchResScrController
+                              .isResultContentFetced.value &&
+                          searchResScrController.railItems.isNotEmpty)
+                      ? [
+                          railDestination("results".tr),
+                          ...(searchResScrController.railItems
+                              .map((element) => railDestination(element))),
+                        ]
+                      : [railDestination("results".tr), railDestination("")],
+                  leading: Column(
+                    children: [
+                      const SizedBox(
+                        height: 30,
                       ),
-                      labelType: NavigationRailLabelType.all,
-                      selectedIndex: searchResScrController
-                          .navigationRailCurrentIndex.value,
-                    ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: Theme.of(context).textTheme.titleMedium!.color,
+                        ),
+                        onPressed: () {
+                          Get.nestedKey(ScreenNavigationSetup.id)!
+                              .currentState!
+                              .pop();
+                        },
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
                   ),
+                  labelType: NavigationRailLabelType.all,
+                  selectedIndex:
+                      searchResScrController.navigationRailCurrentIndex.value,
                 ),
               ),
             ),
@@ -159,7 +151,9 @@ class SearchResultScreen extends StatelessWidget {
   NavigationRailDestination railDestination(String label) {
     return NavigationRailDestination(
       icon: const SizedBox.shrink(),
-      label: RotatedBox(quarterTurns: -1, child: Text(label.toLowerCase().removeAllWhitespace.tr)),
+      label: RotatedBox(
+          quarterTurns: -1,
+          child: Text(label.toLowerCase().removeAllWhitespace.tr)),
     );
   }
 }

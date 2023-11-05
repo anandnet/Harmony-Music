@@ -34,94 +34,87 @@ class SortWidget extends StatelessWidget {
     return Stack(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(
               padding: EdgeInsets.only(left: titleLeftPadding),
               child: Text(itemCountTitle),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Obx(
-                  () => IconButton(
-                    color: controller.sortByName.value
-                        ? Theme.of(context).textTheme.bodySmall!.color
-                        : Theme.of(context).colorScheme.secondary,
-                    icon: const Icon(Icons.sort_by_alpha_rounded),
-                    iconSize: 20,
-                    splashRadius: 20,
-                    visualDensity:
-                        const VisualDensity(horizontal: -3, vertical: -3),
-                    onPressed: () {
-                      controller.onSortByName(onSort);
-                    },
-                  ),
-                ),
-                isDateOptionRequired
-                    ? Obx(() => IconButton(
-                          color: controller.sortByDate.value
-                              ? Theme.of(context).textTheme.bodySmall!.color
-                              : Theme.of(context).colorScheme.secondary,
-                          icon: const Icon(Icons.calendar_month_rounded),
-                          iconSize: 20,
-                          splashRadius: 20,
-                          visualDensity:
-                              const VisualDensity(horizontal: -3, vertical: -3),
-                          onPressed: () {
-                            controller.onSortByDate(onSort);
-                          },
-                        ))
-                    : const SizedBox.shrink(),
-                isDurationOptionRequired
-                    ? Obx(() => IconButton(
-                          color: controller.sortByDuration.value
-                              ? Theme.of(context).textTheme.bodySmall!.color
-                              : Theme.of(context).colorScheme.secondary,
-                          icon: const Icon(Icons.timer_rounded),
-                          iconSize: 20,
-                          splashRadius: 20,
-                          visualDensity:
-                              const VisualDensity(horizontal: -3, vertical: -3),
-                          onPressed: () {
-                            controller.onSortByDuration(onSort);
-                          },
-                        ))
-                    : const SizedBox.shrink(),
-                const SizedBox(
-                  width: 40,
-                ),
-                Obx(
-                  () => IconButton(
-                    icon: controller.isAscending.value
-                        ? const Icon(Icons.arrow_downward_rounded)
-                        : const Icon(Icons.arrow_upward_rounded),
-                    iconSize: 20,
-                    splashRadius: 20,
-                    visualDensity:
-                        const VisualDensity(horizontal: -3, vertical: -3),
-                    onPressed: () {
-                      controller.onAscendNDescend(onSort);
-                    },
-                  ),
-                ),
-                if (isSearchFeatureRequired)
-                  IconButton(
-                    icon: const Icon(Icons.search),
-                    iconSize: 20,
-                    splashRadius: 20,
-                    visualDensity:
-                        const VisualDensity(horizontal: -3, vertical: -3),
-                    onPressed: () {
-                      onSearchStart!(tag);
-                      controller.toggleSearch();
-                    },
-                  ),
-                const SizedBox(
-                  width: 20,
-                )
-              ],
+            Obx(
+              () => IconButton(
+                color: controller.sortByName.value
+                    ? Theme.of(context).textTheme.bodySmall!.color
+                    : Theme.of(context).colorScheme.secondary,
+                icon: const Icon(Icons.sort_by_alpha_rounded),
+                iconSize: 20,
+                splashRadius: 20,
+                visualDensity:
+                    const VisualDensity(horizontal: -3, vertical: -3),
+                onPressed: () {
+                  controller.onSortByName(onSort);
+                },
+              ),
             ),
+            isDateOptionRequired
+                ? Obx(() => IconButton(
+                      color: controller.sortByDate.value
+                          ? Theme.of(context).textTheme.bodySmall!.color
+                          : Theme.of(context).colorScheme.secondary,
+                      icon: const Icon(Icons.calendar_month_rounded),
+                      iconSize: 20,
+                      splashRadius: 20,
+                      visualDensity:
+                          const VisualDensity(horizontal: -3, vertical: -3),
+                      onPressed: () {
+                        controller.onSortByDate(onSort);
+                      },
+                    ))
+                : const SizedBox.shrink(),
+            isDurationOptionRequired
+                ? Obx(() => IconButton(
+                      color: controller.sortByDuration.value
+                          ? Theme.of(context).textTheme.bodySmall!.color
+                          : Theme.of(context).colorScheme.secondary,
+                      icon: const Icon(Icons.timer_rounded),
+                      iconSize: 20,
+                      splashRadius: 20,
+                      visualDensity:
+                          const VisualDensity(horizontal: -3, vertical: -3),
+                      onPressed: () {
+                        controller.onSortByDuration(onSort);
+                      },
+                    ))
+                : const SizedBox.shrink(),
+            const Expanded(child: SizedBox()),
+            Obx(
+              () => IconButton(
+                icon: controller.isAscending.value
+                    ? const Icon(Icons.arrow_downward_rounded)
+                    : const Icon(Icons.arrow_upward_rounded),
+                iconSize: 20,
+                splashRadius: 20,
+                visualDensity:
+                    const VisualDensity(horizontal: -3, vertical: -3),
+                onPressed: () {
+                  controller.onAscendNDescend(onSort);
+                },
+              ),
+            ),
+            if (isSearchFeatureRequired)
+              IconButton(
+                icon: const Icon(Icons.search),
+                iconSize: 20,
+                splashRadius: 20,
+                visualDensity:
+                    const VisualDensity(horizontal: -3, vertical: -3),
+                onPressed: () {
+                  onSearchStart!(tag);
+                  controller.toggleSearch();
+                },
+              ),
+            const SizedBox(
+              width: 18,
+            )
           ],
         ),
         Obx(() => controller.isSearchingEnabled.value

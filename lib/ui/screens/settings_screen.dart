@@ -364,7 +364,7 @@ class ThemeSelectorDialog extends StatelessWidget {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Container(
-        height: 280,
+        height: 300,
         //color: Theme.of(context).cardColor,
         padding: const EdgeInsets.only(top: 30, left: 5, right: 30, bottom: 10),
         child: Column(children: [
@@ -419,7 +419,7 @@ class DiscoverContentSelectorDialog extends StatelessWidget {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Container(
-        height: 280,
+        height: 300,
         //color: Theme.of(context).cardColor,
         padding: const EdgeInsets.only(top: 30, left: 5, right: 30, bottom: 10),
         child: Column(children: [
@@ -433,22 +433,32 @@ class DiscoverContentSelectorDialog extends StatelessWidget {
               ),
             ),
           ),
-          radioWidget(
-              label: "quickpicks".tr,
-              controller: settingsController,
-              value: "QP"),
-          radioWidget(
-              label: "topmusicvideos".tr,
-              controller: settingsController,
-              value: "TMV"),
-          radioWidget(
-              label: "trending".tr,
-              controller: settingsController,
-              value: "TR"),
-          radioWidget(
-              label: "basedOnLast".tr,
-              controller: settingsController,
-              value: "BOLI"),
+          SizedBox(
+            height: 180,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  radioWidget(
+                      label: "quickpicks".tr,
+                      controller: settingsController,
+                      value: "QP"),
+                  radioWidget(
+                      label: "topmusicvideos".tr,
+                      controller: settingsController,
+                      value: "TMV"),
+                  radioWidget(
+                      label: "trending".tr,
+                      controller: settingsController,
+                      value: "TR"),
+                  radioWidget(
+                      label: "basedOnLast".tr,
+                      controller: settingsController,
+                      value: "BOLI"),
+                ],
+              ),
+            ),
+          ),
+          const Expanded(child: SizedBox()),
           Align(
               alignment: Alignment.centerRight,
               child: InkWell(

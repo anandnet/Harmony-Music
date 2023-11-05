@@ -28,7 +28,7 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Container(
-        height: (isPipedLinked && !renamePlaylist) ? 215 : 170,
+        height: (isPipedLinked && !renamePlaylist) ? 245 : 200,
         padding:
             const EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 10),
         child: Stack(

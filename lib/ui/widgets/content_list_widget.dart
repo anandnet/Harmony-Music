@@ -25,7 +25,7 @@ class ContentListWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  content.title.length > 12
+                 !isHomeContent && content.title.length > 12
                       ? "${content.title.substring(0, 12)}..."
                       : content.title,
                   //maxLines: 2,

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:palette_generator/palette_generator.dart';
 
@@ -12,7 +13,8 @@ class ThemeController extends GetxController {
   late Brightness systemBrightness;
 
   ThemeController() {
-    systemBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    systemBrightness =
+        WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
     primaryColor.value = Color(Hive.box('appPrefs').get("themePrimaryColor"));
 
@@ -87,7 +89,8 @@ class ThemeController extends GetxController {
             systemStatusBarContrastEnforced: false,
             systemNavigationBarContrastEnforced: true),
       );
-      return ThemeData(
+
+      final baseTheme = ThemeData(
           primaryColor: primarySwatch![500],
           colorScheme: ColorScheme.fromSwatch(
               accentColor: primarySwatch[200],
@@ -107,12 +110,9 @@ class ThemeController extends GetxController {
               modalBarrierColor: primarySwatch[400]),
           textTheme: TextTheme(
             titleLarge: const TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.bold,
-                color:Colors.white),
+                fontSize: 23, fontWeight: FontWeight.bold, color: Colors.white),
             titleMedium: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white),
+                fontWeight: FontWeight.bold, color: Colors.white),
             titleSmall: TextStyle(color: primarySwatch[100]),
             bodyMedium: TextStyle(color: primarySwatch[100]),
             labelMedium: TextStyle(
@@ -151,6 +151,8 @@ class ThemeController extends GetxController {
           )
           //scaffoldBackgroundColor: primarySwatch[700]
           );
+      return baseTheme.copyWith(
+          textTheme: GoogleFonts.nunitoSansTextTheme(baseTheme.textTheme));
     } else if (themeType == ThemeType.dark) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -162,7 +164,7 @@ class ThemeController extends GetxController {
             systemStatusBarContrastEnforced: false,
             systemNavigationBarContrastEnforced: true),
       );
-      return ThemeData(
+      final baseTheme = ThemeData(
           brightness: Brightness.dark,
           canvasColor: Colors.black,
           primaryColor: Colors.black,
@@ -215,6 +217,8 @@ class ThemeController extends GetxController {
               focusColor: Colors.white,
               focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.white))));
+      return baseTheme.copyWith(
+          textTheme: GoogleFonts.nunitoSansTextTheme(baseTheme.textTheme));
     } else {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -226,7 +230,7 @@ class ThemeController extends GetxController {
             systemStatusBarContrastEnforced: false,
             systemNavigationBarContrastEnforced: false),
       );
-      return ThemeData(
+      final baseTheme = ThemeData(
           brightness: Brightness.light,
           canvasColor: Colors.white,
           colorScheme: ColorScheme.fromSwatch(
@@ -238,7 +242,7 @@ class ThemeController extends GetxController {
           primaryColorLight: Colors.grey[300],
           progressIndicatorTheme: ProgressIndicatorThemeData(
               linearTrackColor: Colors.grey[700], color: Colors.grey[400]),
-          textTheme:TextTheme(
+          textTheme: TextTheme(
               titleLarge: const TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.bold,
@@ -279,6 +283,8 @@ class ThemeController extends GetxController {
               focusColor: Colors.black,
               focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.black))));
+      return baseTheme.copyWith(
+          textTheme: GoogleFonts.nunitoSansTextTheme(baseTheme.textTheme));
     }
   }
 

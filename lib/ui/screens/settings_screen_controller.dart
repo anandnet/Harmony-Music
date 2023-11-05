@@ -1,9 +1,9 @@
-import 'package:android_power_manager/android_power_manager.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/services/permission_service.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../utils/update_check_flag_file.dart';
 import '/services/piped_service.dart';
@@ -63,7 +63,7 @@ class SettingsScreenController extends GetxController {
         setBox.get('stopPlyabackOnSwipeAway') ?? false;
     if (GetPlatform.isAndroid) {
       isIgnoringBatteryOptimizations.value =
-          (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
+          (await Permission.ignoreBatteryOptimizations.isGranted);
     }
   }
 
@@ -78,7 +78,7 @@ class SettingsScreenController extends GetxController {
     streamingQuality.value = val;
   }
 
-  void changeDownloadingFormat(String? val){
+  void changeDownloadingFormat(String? val) {
     setBox.put("downloadingFormat", val);
     downloadingFormat.value = val!;
   }
@@ -88,11 +88,12 @@ class SettingsScreenController extends GetxController {
       return;
     }
 
-    final String? pickedFolderPath = await FilePicker.platform.getDirectoryPath(dialogTitle: "Select downloads folder");
-    if(pickedFolderPath == '/' || pickedFolderPath == null){
+    final String? pickedFolderPath = await FilePicker.platform
+        .getDirectoryPath(dialogTitle: "Select downloads folder");
+    if (pickedFolderPath == '/' || pickedFolderPath == null) {
       return;
     }
-    
+
     setBox.put("downloadLocationPath", pickedFolderPath);
     downloadLocationPath.value = pickedFolderPath;
   }
@@ -121,9 +122,9 @@ class SettingsScreenController extends GetxController {
   }
 
   Future<void> enableIgnoringBatteryOptimizations() async {
-    await AndroidPowerManager.requestIgnoreBatteryOptimizations();
+    await Permission.ignoreBatteryOptimizations.request();
     isIgnoringBatteryOptimizations.value =
-        (await AndroidPowerManager.isIgnoringBatteryOptimizations)!;
+        await Permission.ignoreBatteryOptimizations.isGranted;
   }
 
   Future<void> unlinkPiped() async {

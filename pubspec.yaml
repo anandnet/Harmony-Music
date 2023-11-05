@@ -51,7 +51,6 @@ dependencies:
   flutter_keyboard_visibility: ^5.4.1
   url_launcher: ^6.2.1
   share_plus: ^7.2.1
-  android_power_manager: ^1.0.0
   device_equalizer:
     git:
       url: https://github.com/anandnet/device_equalizer.git

@@ -29,7 +29,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
             ? Get.find<PlayListNAlbumScreenController>(tag: tag)
             : Get.put(PlayListNAlbumScreenController(), tag: tag);
 
-    return SizedBox(
+    return Container(
+      color: Theme.of(context).canvasColor,
       child: Row(
         children: [
           NavigationRail(

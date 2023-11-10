@@ -15,47 +15,51 @@ class SearchResultScreen extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          SingleChildScrollView(
-            padding: const EdgeInsets.only(bottom: 80),
-            child: IntrinsicHeight(
-              child: Obx(
-                () => NavigationRail(
-                  onDestinationSelected:
-                      searchResScrController.onDestinationSelected,
-                  minWidth: 60,
-                  destinations: (searchResScrController
-                              .isResultContentFetced.value &&
-                          searchResScrController.railItems.isNotEmpty)
-                      ? [
-                          railDestination("results".tr),
-                          ...(searchResScrController.railItems
-                              .map((element) => railDestination(element))),
-                        ]
-                      : [railDestination("results".tr), railDestination("")],
-                  leading: Column(
-                    children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: Theme.of(context).textTheme.titleMedium!.color,
+          Align(
+            alignment: Alignment.topCenter,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.only(bottom: 80),
+              child: IntrinsicHeight(
+                child: Obx(
+                  () => NavigationRail(
+                    onDestinationSelected:
+                        searchResScrController.onDestinationSelected,
+                    minWidth: 60,
+                    destinations: (searchResScrController
+                                .isResultContentFetced.value &&
+                            searchResScrController.railItems.isNotEmpty)
+                        ? [
+                            railDestination("results".tr),
+                            ...(searchResScrController.railItems
+                                .map((element) => railDestination(element))),
+                          ]
+                        : [railDestination("results".tr), railDestination("")],
+                    leading: Column(
+                      children: [
+                        const SizedBox(
+                          height: 30,
                         ),
-                        onPressed: () {
-                          Get.nestedKey(ScreenNavigationSetup.id)!
-                              .currentState!
-                              .pop();
-                        },
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
+                        IconButton(
+                          icon: Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            color:
+                                Theme.of(context).textTheme.titleMedium!.color,
+                          ),
+                          onPressed: () {
+                            Get.nestedKey(ScreenNavigationSetup.id)!
+                                .currentState!
+                                .pop();
+                          },
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                    labelType: NavigationRailLabelType.all,
+                    selectedIndex:
+                        searchResScrController.navigationRailCurrentIndex.value,
                   ),
-                  labelType: NavigationRailLabelType.all,
-                  selectedIndex:
-                      searchResScrController.navigationRailCurrentIndex.value,
                 ),
               ),
             ),

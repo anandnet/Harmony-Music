@@ -160,7 +160,7 @@ class PipedLinkedController extends GetxController {
     }
     _pipedServices
         .login(
-            instApiUrlInputController.text == 'custom'
+            selectedInst.toString() == 'custom'
                 ? instApiUrlInputController.text
                 : selectedInst.toString(),
             userName,

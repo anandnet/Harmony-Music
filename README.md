@@ -41,6 +41,16 @@ You can also help us in translation, click status image or <a href="https://host
 # Troubleshoot
 * if you are facing Notification control issue or music playback stopped by system optimization, please enable ignore battery optimization option from settings
 
+# License
+```
+Harmony Music is a free software licensed under GPL v3.0 with following condition.
+
+- Copied/Modified version of this software can not be used for 'non-free' and profit purposes.
+- You can not publish copied/modified version of this app on closed source app repository like PlayStore/AppStore.
+
+```
+
+
 # Disclaimer
 ```
 This project has been created while learning & learning is the main intention.

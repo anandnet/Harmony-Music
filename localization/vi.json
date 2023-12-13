@@ -1,4 +1,12 @@
 {
     "home": "Trang chủ",
-    "songs": "Bài hát"
+    "songs": "Bài hát",
+    "create": "Tạo",
+    "rename": "Đổi tên",
+    "downloads": "Tải về",
+    "retry": "Thử lại!",
+    "cancel": "Hủy",
+    "settings": "Cài đặt",
+    "noOfflineSong": "Không có bài hát ngoại tuyến!",
+    "removeFromQueue": "Xóa khỏi hàng đợi"
 }

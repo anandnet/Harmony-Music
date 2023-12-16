@@ -30,8 +30,26 @@ class Downloader extends GetxService {
   RxList<MediaItem> songQueue = <MediaItem>[].obs;
   final streamClient = Get.find<MusicServices>().getStreamClient();
 
+  Future<bool> checkPermissionNDir() async {
+    final settingsScreenController =
+        Get.find<SettingsScreenController>();
+
+    if (!settingsScreenController.isCurrentPathsupportDownDir && !await PermissionService.getExtStoragePermission()) {
+      return false;
+    }
+
+    final dirPath =
+        Get.find<SettingsScreenController>().downloadLocationPath.string;
+    final directory = Directory(dirPath);
+    if (!await directory.exists()) {
+      await directory.create(recursive: true);
+    }
+    return true;
+  }
+
   Future<void> downloadPlaylist(
       String playlistId, List<MediaItem> songList) async {
+    if(!(await checkPermissionNDir())) return;
     playlistQueue[playlistId] = songList;
     songQueue.addAll(songList);
 
@@ -41,10 +59,7 @@ class Downloader extends GetxService {
   }
 
   Future<void> download(MediaItem? song, {List<MediaItem>? songList}) async {
-    if (!await PermissionService.getExtStoragePermission()) {
-      return;
-    }
-
+    if (!(await checkPermissionNDir())) return;
     if (songList != null) {
       songQueue.addAll(songList);
     } else {
@@ -56,13 +71,6 @@ class Downloader extends GetxService {
   }
 
   Future<void> triggerDownloadingJob() async {
-    final dirPath =
-        Get.find<SettingsScreenController>().downloadLocationPath.string;
-    final directory = Directory(dirPath);
-    if (!await directory.exists()) {
-      await directory.create(recursive: true);
-    }
-
     //check if playlist download in queue => download playlistsongs else download from general songs queue
     if (playlistQueue.isNotEmpty) {
       isJobRunning.value = true;

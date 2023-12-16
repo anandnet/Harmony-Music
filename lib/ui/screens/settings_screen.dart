@@ -185,39 +185,61 @@ class SettingsScreen extends StatelessWidget {
                     onChanged: settingsController.setStreamingQuality,
                   ),
                 ),
-              ),
-              ListTile(
-                contentPadding:
-                    const EdgeInsets.only(left: 5, right: 10, top: 0),
-                title: Text("downloadLocation".tr),
-                subtitle: Obx(() => Text(
-                    settingsController.downloadLocationPath.value,
-                    style: Theme.of(context).textTheme.bodyMedium)),
-                onTap: () async {
-                  settingsController.setDownloadLocation();
+                onLongPress: () {
+                  settingsController.showDownLoc();
                 },
               ),
-              ListTile(
-                contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                title: Text("downloadingFormat".tr),
-                subtitle: Text("downloadingFormatDes".tr,
-                    style: Theme.of(context).textTheme.bodyMedium),
-                trailing: Obx(
-                  () => DropdownButton(
-                    dropdownColor: Theme.of(context).cardColor,
-                    underline: const SizedBox.shrink(),
-                    value: settingsController.downloadingFormat.value,
-                    items: const [
-                      DropdownMenuItem(value: "opus", child: Text("Opus")),
-                      DropdownMenuItem(
-                        value: "m4a",
-                        child: Text("M4a"),
+              Obx(() => settingsController.hideDloc.isFalse
+                  ? ListTile(
+                      trailing: TextButton(
+                        child: Text(
+                          "reset".tr,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontSize: 15),
+                        ),
+                        onPressed: () {
+                          settingsController.resetDownloadLocation();
+                        },
                       ),
-                    ],
-                    onChanged: settingsController.changeDownloadingFormat,
-                  ),
-                ),
-              ),
+                      contentPadding:
+                          const EdgeInsets.only(left: 5, right: 10, top: 0),
+                      title: Text("downloadLocation".tr),
+                      subtitle: Obx(() => Text(
+                          settingsController.isCurrentPathsupportDownDir
+                              ? "In App storage directory"
+                              : settingsController.downloadLocationPath.value,
+                          style: Theme.of(context).textTheme.bodyMedium)),
+                      onTap: () async {
+                        settingsController.setDownloadLocation();
+                      },
+                    )
+                  : const SizedBox.shrink()),
+              Obx(() => settingsController.hideDloc.isFalse
+                  ? ListTile(
+                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                      title: Text("downloadingFormat".tr),
+                      subtitle: Text("downloadingFormatDes".tr,
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      trailing: Obx(
+                        () => DropdownButton(
+                          dropdownColor: Theme.of(context).cardColor,
+                          underline: const SizedBox.shrink(),
+                          value: settingsController.downloadingFormat.value,
+                          items: const [
+                            DropdownMenuItem(
+                                value: "opus", child: Text("Opus")),
+                            DropdownMenuItem(
+                              value: "m4a",
+                              child: Text("M4a"),
+                            ),
+                          ],
+                          onChanged: settingsController.changeDownloadingFormat,
+                        ),
+                      ),
+                    )
+                  : const SizedBox.shrink()),
               ListTile(
                 contentPadding:
                     const EdgeInsets.only(left: 5, right: 10, top: 0),

@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/services/permission_service.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../utils/update_check_flag_file.dart';
@@ -16,6 +19,7 @@ import '/ui/screens/home_screen_controller.dart';
 import '/ui/utils/theme_controller.dart';
 
 class SettingsScreenController extends GetxController {
+  late String _supportDir;
   final cacheSongs = false.obs;
   final setBox = Hive.box("AppPrefs");
   final themeModetype = ThemeType.dynamic.obs;
@@ -29,6 +33,7 @@ class SettingsScreenController extends GetxController {
   final currentAppLanguageCode = "en".obs;
   final downloadLocationPath = "".obs;
   final downloadingFormat = "".obs;
+  final hideDloc = true.obs;
   final currentVersion = "V1.6.0";
 
   @override
@@ -39,10 +44,21 @@ class SettingsScreenController extends GetxController {
   }
 
   get currentVision => currentVersion;
+  get isCurrentPathsupportDownDir => "$_supportDir/Music" == downloadLocationPath.toString();
 
   _checkNewVersion() {
     newVersionCheck(currentVersion)
         .then((value) => isNewVersionAvailable.value = value);
+  _createInAppSongDownDir();
+  }
+
+ Future<String> _createInAppSongDownDir() async {
+    _supportDir = (await getApplicationSupportDirectory()).path;
+    final directory = Directory("$_supportDir/Music/");
+    if (!await directory.exists()) {
+      await directory.create(recursive: true);
+    }
+    return "$_supportDir/Music";
   }
 
   Future<void> _setInitValue() async {
@@ -53,7 +69,7 @@ class SettingsScreenController extends GetxController {
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
     downloadLocationPath.value = setBox.get('downloadLocationPath') ??
-        "/storage/emulated/0/Harmony-Music/downloads";
+        await _createInAppSongDownDir();
     downloadingFormat.value = setBox.get('downloadingFormat') ?? "opus";
     discoverContentType.value = setBox.get('discoverContentType') ?? "QP";
     if (setBox.containsKey("piped")) {
@@ -96,6 +112,16 @@ class SettingsScreenController extends GetxController {
 
     setBox.put("downloadLocationPath", pickedFolderPath);
     downloadLocationPath.value = pickedFolderPath;
+  }
+
+  void showDownLoc(){
+    hideDloc.value = false;
+  }
+
+  void resetDownloadLocation() {
+    final defaultPath = "$_supportDir/Music";
+    setBox.put("downloadLocationPath", defaultPath);
+    downloadLocationPath.value = defaultPath;
   }
 
   void onThemeChange(dynamic val) {

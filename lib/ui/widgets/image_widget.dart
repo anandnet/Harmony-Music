@@ -30,8 +30,8 @@ class ImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String imageUrl = song != null
         ? isPlayerArtImage
-            ? Thumbnail(song!.artUri.toString()).high
-            : song!.artUri.toString()
+            ? song!.artUri.toString()
+            : Thumbnail(song!.artUri.toString()).low
         : playlist != null
             ? playlist!.thumbnailUrl
             : album != null

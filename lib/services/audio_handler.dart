@@ -295,6 +295,10 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   @override
   Future<void> skipToPrevious() async {
+    if(_player.position.inMilliseconds > 5000){
+      _player.seek(Duration.zero);
+      return;
+    }
     _player.seek(Duration.zero);
     if (currentIndex - 1 >= 0) {
       await customAction("playByIndex", {'index': currentIndex - 1});

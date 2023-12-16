@@ -3,8 +3,10 @@ import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:audiotags/audiotags.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/screens/playlistnalbum_screen_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
@@ -18,24 +20,42 @@ import '../models/thumbnail.dart' as th;
 
 class Downloader extends GetxService {
   MediaItem? currentSong;
-  final downloadingProgress = 0.obs;
+  RxMap<String, List<MediaItem>> playlistQueue =
+      <String, List<MediaItem>>{}.obs;
+  final currentPlaylistId = "".obs;
+  final songDownloadingProgress = 0.obs;
+  final playlistDownloadingProgress = 0.obs;
   final isJobRunning = false.obs;
 
   RxList<MediaItem> songQueue = <MediaItem>[].obs;
+  final streamClient = Get.find<MusicServices>().getStreamClient();
 
-  Future<void> download(MediaItem song) async {
+  Future<void> downloadPlaylist(
+      String playlistId, List<MediaItem> songList) async {
+    playlistQueue[playlistId] = songList;
+    songQueue.addAll(songList);
+
+    if (isJobRunning.isFalse) {
+      await triggerDownloadingJob();
+    }
+  }
+
+  Future<void> download(MediaItem? song, {List<MediaItem>? songList}) async {
     if (!await PermissionService.getExtStoragePermission()) {
       return;
     }
 
-    songQueue.add(song);
+    if (songList != null) {
+      songQueue.addAll(songList);
+    } else {
+      songQueue.add(song!);
+    }
     if (isJobRunning.isFalse) {
       await triggerDownloadingJob();
     }
   }
 
   Future<void> triggerDownloadingJob() async {
-    final streamClient = Get.find<MusicServices>().getStreamClient();
     final dirPath =
         Get.find<SettingsScreenController>().downloadLocationPath.string;
     final directory = Directory(dirPath);
@@ -43,18 +63,49 @@ class Downloader extends GetxService {
       await directory.create(recursive: true);
     }
 
-    final jobSongList = songQueue.toList();
-    isJobRunning.value = true;
+    //check if playlist download in queue => download playlistsongs else download from general songs queue
+    if (playlistQueue.isNotEmpty) {
+      isJobRunning.value = true;
+      for (String playlistId in playlistQueue.keys.toList()) {
+        currentPlaylistId.value = playlistId;
+        await downloadSongList((playlistQueue[playlistId]!).toList(),
+            isPlaylist: true);
+        playlistQueue.remove(playlistId);
+        if (Get.isRegistered<PlayListNAlbumScreenController>(
+            tag: Key(playlistId).hashCode.toString())) {
+          Get.find<PlayListNAlbumScreenController>(
+                  tag: Key(playlistId).hashCode.toString())
+              .isDownloaded
+              .value = true;
+        }
+      }
+      currentPlaylistId.value = "";
+      playlistDownloadingProgress.value = 0;
+    } else {
+      isJobRunning.value = true;
+      await downloadSongList(songQueue.toList());
+    }
 
-    for (MediaItem song in jobSongList) {
-      currentSong = song;
-      downloadingProgress.value = 0;
-      await writeFileStream(streamClient, song);
-      songQueue.remove(song);
+    if (songQueue.isNotEmpty) {
+      triggerDownloadingJob();
+    } else {
       isJobRunning.value = false;
       currentSong = null;
-      if (songQueue.isNotEmpty) {
-        triggerDownloadingJob();
+    }
+  }
+
+  Future<void> downloadSongList(List<MediaItem> jobSongList,
+      {bool isPlaylist = false}) async {
+    for (MediaItem song in jobSongList) {
+      if (!Hive.box("SongDownloads").containsKey(song.id)) {
+        currentSong = song;
+        songDownloadingProgress.value = 0;
+        await writeFileStream(streamClient, song);
+      }
+      songQueue.remove(song);
+      //for playlist downloading counter update
+      if (isPlaylist) {
+        playlistDownloadingProgress.value = jobSongList.indexOf(song) + 1;
       }
     }
   }
@@ -76,7 +127,7 @@ class Downloader extends GetxService {
     final List<int> fileBytes = [];
     stream.listen((part) {
       fileBytes.addAll(part);
-      downloadingProgress.value =
+      songDownloadingProgress.value =
           ((fileBytes.length / totalBytes) * 100).toInt();
     }).onDone(() async {
       final dirPath = settingsScreenController.downloadLocationPath.string;

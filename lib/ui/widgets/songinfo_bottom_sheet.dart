@@ -75,7 +75,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                 Obx(
                   () => (downloader.songQueue.contains(song) &&
                               downloader.currentSong == song &&
-                              downloader.downloadingProgress.value == 100) ||
+                              downloader.songDownloadingProgress.value == 100) ||
                           Hive.box("SongDownloads").containsKey(song.id)
                       ? Icon(
                           Icons.download_done,
@@ -90,7 +90,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      "${downloader.downloadingProgress.value}%",
+                                      "${downloader.songDownloadingProgress.value}%",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleMedium!
@@ -103,7 +103,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                                     dimension: 30,
                                     strokeWidth: 4,
                                     value:
-                                        (downloader.downloadingProgress.value) /
+                                        (downloader.songDownloadingProgress.value) /
                                             100,
                                   )
                                 ],

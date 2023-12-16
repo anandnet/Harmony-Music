@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/services/downloader.dart';
 
 import '../widgets/loader.dart';
 import '/ui/utils/home_library_controller.dart';
@@ -95,7 +96,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                       !content.isCloudPlaylist &&
                                       content.playlistId != "LIBFAV" &&
                                       content.playlistId != "SongsCache" &&
-                                      content.playlistId != "LIBRP" && content.playlistId != "SongDownloads") ||
+                                      content.playlistId != "LIBRP" &&
+                                      content.playlistId != "SongDownloads") ||
                                   (!playListNAlbumScreenController.isAlbum &&
                                       content.isPipedPlaylist))
                               ? IconButton(
@@ -172,202 +174,286 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 10.0),
                               child: Obx(() => !playListNAlbumScreenController
                                       .isSearchingOn.value
-                                  ? SizedBox.square(
-                                      dimension: 200,
-                                      child: Stack(
-                                        children: [
-                                          playListNAlbumScreenController.isAlbum
-                                              ? ImageWidget(
-                                                  size: 200,
-                                                  album: content,
+                                  ? Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox.square(
+                                            dimension: 200,
+                                            child: Stack(
+                                              children: [
+                                                playListNAlbumScreenController
+                                                        .isAlbum
+                                                    ? ImageWidget(
+                                                        size: 200,
+                                                        album: content,
+                                                      )
+                                                    : ImageWidget(
+                                                        size: 200,
+                                                        playlist: content,
+                                                      ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.bottomLeft,
+                                                    child: Container(
+                                                      constraints:
+                                                          const BoxConstraints(
+                                                              maxWidth: 180,
+                                                              minWidth: 110),
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10,
+                                                              right: 10,
+                                                              top: 5),
+                                                      decoration: BoxDecoration(
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .canvasColor
+                                                              .withOpacity(.8),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15)),
+                                                      height: 27,
+                                                      //width: 110,
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          Get.find<
+                                                                  PlayerController>()
+                                                              .enqueueSongList(
+                                                                  playListNAlbumScreenController
+                                                                      .songList
+                                                                      .toList())
+                                                              .whenComplete(() => ScaffoldMessenger
+                                                                      .of(
+                                                                          context)
+                                                                  .showSnackBar(snackbar(
+                                                                      context,
+                                                                      "songEnqueueAlert"
+                                                                          .tr,
+                                                                      size: SanckBarSize
+                                                                          .MEDIUM)));
+                                                        },
+                                                        child: Text(
+                                                          "enqueueAll".tr,
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .titleSmall,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
                                                 )
-                                              : ImageWidget(
-                                                  size: 200,
-                                                  playlist: content,
-                                                ),
-                                          Align(
-                                            alignment: Alignment.topRight,
-                                            child: Container(
-                                              height: 80,
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                  color: Theme.of(context)
-                                                      .canvasColor
-                                                      .withOpacity(.7),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  10))),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  (!playListNAlbumScreenController
-                                                              .isAlbum &&
-                                                          content
-                                                              .isPipedPlaylist)
-                                                      ? const SizedBox.shrink()
-                                                      : IconButton(
-                                                          visualDensity:
-                                                              const VisualDensity(
-                                                                  vertical: -4),
-                                                          splashRadius: 10,
-                                                          onPressed: () {
-                                                            final add =
-                                                                playListNAlbumScreenController
-                                                                    .isAddedToLibrary
-                                                                    .isFalse;
-                                                            playListNAlbumScreenController
-                                                                .addNremoveFromLibrary(
-                                                                    content,
-                                                                    add: add)
-                                                                .then((value) => ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                                                                    context,
-                                                                    value
-                                                                        ? add
-                                                                            ? playListNAlbumScreenController.isAlbum
-                                                                                ? "albumBookmarkAddAlert".tr
-                                                                                : "playlistBookmarkAddAlert".tr
-                                                                            : playListNAlbumScreenController.isAlbum
-                                                                                ? "albumBookmarkRemoveAlert".tr
-                                                                                : "playlistBookmarkRemoveAlert".tr
-                                                                        : "operationFailed".tr,
-                                                                    size: SanckBarSize.MEDIUM)));
-                                                          },
-                                                          icon: Obx(() => Icon(
-                                                              size: 20,
-                                                              playListNAlbumScreenController
-                                                                      .isAddedToLibrary
-                                                                      .isFalse
-                                                                  ? Icons
-                                                                      .bookmark_add_rounded
-                                                                  : Icons
-                                                                      .bookmark_added_rounded)),
-                                                        ),
-                                                  if (!playListNAlbumScreenController
-                                                          .isAlbum &&
-                                                      content.isPipedPlaylist)
-                                                    IconButton(
-                                                        icon: const Icon(
-                                                          Icons.block,
-                                                          size: 20,
-                                                        ),
+                                              ],
+                                            )),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        // side tool bar
+                                        Align(
+                                          alignment: Alignment.topRight,
+                                          child: Container(
+                                            height: 130,
+                                            width: 47,
+                                            decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary
+                                                    .withOpacity(.7),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(10))),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                (!playListNAlbumScreenController
+                                                            .isAlbum &&
+                                                        content.isPipedPlaylist)
+                                                    ? const SizedBox.shrink()
+                                                    : IconButton(
                                                         visualDensity:
                                                             const VisualDensity(
                                                                 vertical: -4),
                                                         splashRadius: 10,
                                                         onPressed: () {
-                                                          Get.nestedKey(
-                                                                  ScreenNavigationSetup
-                                                                      .id)!
-                                                              .currentState!
-                                                              .pop();
-                                                          Get.find<
-                                                                  LibraryPlaylistsController>()
-                                                              .blacklistPipedPlaylist(
-                                                                  content
-                                                                      as Playlist);
-                                                          ScaffoldMessenger.of(
-                                                                  Get.context!)
-                                                              .showSnackBar(snackbar(
-                                                                  Get.context!,
-                                                                  "playlistBlacklistAlert"
-                                                                      .tr,
-                                                                  size: SanckBarSize
-                                                                      .MEDIUM));
-                                                        }),
+                                                          final add =
+                                                              playListNAlbumScreenController
+                                                                  .isAddedToLibrary
+                                                                  .isFalse;
+                                                          playListNAlbumScreenController
+                                                              .addNremoveFromLibrary(
+                                                                  content,
+                                                                  add: add)
+                                                              .then((value) => ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                                                                  context,
+                                                                  value
+                                                                      ? add
+                                                                          ? playListNAlbumScreenController.isAlbum
+                                                                              ? "albumBookmarkAddAlert".tr
+                                                                              : "playlistBookmarkAddAlert".tr
+                                                                          : playListNAlbumScreenController.isAlbum
+                                                                              ? "albumBookmarkRemoveAlert".tr
+                                                                              : "playlistBookmarkRemoveAlert".tr
+                                                                      : "operationFailed".tr,
+                                                                  size: SanckBarSize.MEDIUM)));
+                                                        },
+                                                        icon: Obx(() => Icon(
+                                                            size: 20,
+                                                            playListNAlbumScreenController
+                                                                    .isAddedToLibrary
+                                                                    .isFalse
+                                                                ? Icons
+                                                                    .bookmark_add_rounded
+                                                                : Icons
+                                                                    .bookmark_added_rounded)),
+                                                      ),
+                                                if (!playListNAlbumScreenController
+                                                        .isAlbum &&
+                                                    content.isPipedPlaylist)
                                                   IconButton(
+                                                      icon: const Icon(
+                                                        Icons.block,
+                                                        size: 20,
+                                                      ),
                                                       visualDensity:
                                                           const VisualDensity(
-                                                              vertical: -3),
+                                                              vertical: -4),
                                                       splashRadius: 10,
                                                       onPressed: () {
-                                                        if (playListNAlbumScreenController
-                                                            .isAlbum) {
-                                                          Share.share(
-                                                              "https://youtube.com/playlist?list=${content.audioPlaylistId}");
-                                                        } else if (content
-                                                            .isPipedPlaylist) {
-                                                          Share.share(
-                                                              "https://piped.video/playlist?list=${content.playlistId}");
-                                                        } else {
-                                                          final isPlaylistIdPrefixAvlbl =
-                                                              content.playlistId
-                                                                      .substring(
-                                                                          0,
-                                                                          2) ==
-                                                                  "VL";
-                                                          String url =
-                                                              "https://youtube.com/playlist?list=";
+                                                        Get.nestedKey(
+                                                                ScreenNavigationSetup
+                                                                    .id)!
+                                                            .currentState!
+                                                            .pop();
+                                                        Get.find<
+                                                                LibraryPlaylistsController>()
+                                                            .blacklistPipedPlaylist(
+                                                                content
+                                                                    as Playlist);
+                                                        ScaffoldMessenger.of(
+                                                                Get.context!)
+                                                            .showSnackBar(snackbar(
+                                                                Get.context!,
+                                                                "playlistBlacklistAlert"
+                                                                    .tr,
+                                                                size: SanckBarSize
+                                                                    .MEDIUM));
+                                                      }),
+                                                IconButton(
+                                                    visualDensity:
+                                                        const VisualDensity(
+                                                            vertical: -3),
+                                                    splashRadius: 10,
+                                                    onPressed: () {
+                                                      if (playListNAlbumScreenController
+                                                          .isAlbum) {
+                                                        Share.share(
+                                                            "https://youtube.com/playlist?list=${content.audioPlaylistId}");
+                                                      } else if (content
+                                                          .isPipedPlaylist) {
+                                                        Share.share(
+                                                            "https://piped.video/playlist?list=${content.playlistId}");
+                                                      } else {
+                                                        final isPlaylistIdPrefixAvlbl =
+                                                            content.playlistId
+                                                                    .substring(
+                                                                        0, 2) ==
+                                                                "VL";
+                                                        String url =
+                                                            "https://youtube.com/playlist?list=";
 
-                                                          url = isPlaylistIdPrefixAvlbl
-                                                              ? url +
-                                                                  content
-                                                                      .playlistId
-                                                                      .substring(
-                                                                          2)
-                                                              : url +
-                                                                  content
-                                                                      .playlistId;
-                                                          Share.share(url);
-                                                        }
-                                                      },
-                                                      icon: const Icon(
-                                                        Icons.share,
-                                                        size: 20,
-                                                      ))
-                                                ],
-                                              ),
+                                                        url = isPlaylistIdPrefixAvlbl
+                                                            ? url +
+                                                                content
+                                                                    .playlistId
+                                                                    .substring(
+                                                                        2)
+                                                            : url +
+                                                                content
+                                                                    .playlistId;
+                                                        Share.share(url);
+                                                      }
+                                                    },
+                                                    icon: const Icon(
+                                                      Icons.share,
+                                                      size: 20,
+                                                    )),
+                                                GetX<Downloader>(
+                                                    builder: (controller) {
+                                                  final id =
+                                                      playListNAlbumScreenController
+                                                              .isAlbum
+                                                          ? content.browseId
+                                                          : content.playlistId;
+                                                  return IconButton(
+                                                    onPressed: () {
+                                                      if (playListNAlbumScreenController
+                                                          .isDownloaded
+                                                          .isTrue) {
+                                                        return;
+                                                      }
+                                                      controller.downloadPlaylist(
+                                                          id,
+                                                          playListNAlbumScreenController
+                                                              .songList
+                                                              .toList());
+                                                    },
+                                                    icon: playListNAlbumScreenController
+                                                            .isDownloaded.isTrue
+                                                        ? const Icon(Icons
+                                                            .download_done_rounded)
+                                                        : controller.playlistQueue
+                                                                    .containsKey(
+                                                                        id) &&
+                                                                controller
+                                                                        .currentPlaylistId.toString() ==
+                                                                    id
+                                                            ? Stack(
+                                                                children: [
+                                                                  Center(
+                                                                      child: Text(
+                                                                          "${controller.playlistDownloadingProgress.value}/${playListNAlbumScreenController.songList.length}",
+                                                                          style: Theme.of(context)
+                                                                              .textTheme
+                                                                              .titleMedium!
+                                                                              .copyWith(fontSize: 10, fontWeight: FontWeight.bold))),
+                                                                  const Center(
+                                                                      child:
+                                                                          LoadingIndicator(dimension: 30,))
+                                                                ],
+                                                              )
+                                                            : controller
+                                                                    .playlistQueue
+                                                                    .containsKey(
+                                                                        id)
+                                                                ? const Stack(
+                                                                    children: [
+                                                                      Center(
+                                                                          child:
+                                                                              Icon(Icons.hourglass_bottom_rounded,size: 20,)),
+                                                                      Center(
+                                                                          child:
+                                                                              LoadingIndicator(
+                                                                        dimension:
+                                                                            30,
+                                                                      ))
+                                                                    ],
+                                                                  )
+                                                                : const Icon(Icons
+                                                                    .download_rounded),
+                                                  );
+                                                })
+                                              ],
                                             ),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Align(
-                                              alignment: Alignment.bottomLeft,
-                                              child: Container(
-                                                constraints: const BoxConstraints(
-                                                    maxWidth: 180,
-                                                    minWidth: 110),
-                                                padding: const EdgeInsets.only(
-                                                    left: 10, right: 10,top: 5),
-                                                decoration: BoxDecoration(
-                                                    color: Theme.of(context)
-                                                        .canvasColor
-                                                        .withOpacity(.8),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15)),
-                                                height: 27,
-                                                //width: 110,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    Get.find<PlayerController>()
-                                                        .enqueueSongList(
-                                                            playListNAlbumScreenController
-                                                                .songList
-                                                                .toList())
-                                                        .whenComplete(() =>
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(snackbar(
-                                                                    context,
-                                                                    "songEnqueueAlert"
-                                                                        .tr,
-                                                                    size: SanckBarSize
-                                                                        .MEDIUM)));
-                                                  },
-                                                  child: Text(
-                                                    "enqueueAll".tr,
-                                                    style: Theme.of(context).textTheme.titleSmall,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ))
+                                        ),
+                                      ],
+                                    )
                                   : const SizedBox.shrink()),
                             ),
                       Padding(

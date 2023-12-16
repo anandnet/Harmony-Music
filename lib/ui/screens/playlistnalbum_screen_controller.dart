@@ -17,6 +17,7 @@ class PlayListNAlbumScreenController extends GetxController {
   final isContentFetched = false.obs;
   final isAddedToLibrary = false.obs;
   final isSearchingOn = false.obs;
+  final isDownloaded = false.obs;
   late final String id;
   late dynamic contentRenderer;
   late bool isAlbum;
@@ -86,6 +87,7 @@ class PlayListNAlbumScreenController extends GetxController {
         .reversed
         .toList();
     isContentFetched.value = true;
+    checkDownloadStatus();
   }
 
   Future<void> _fetchSong(
@@ -95,6 +97,7 @@ class PlayListNAlbumScreenController extends GetxController {
     if (isPipedPlaylist) {
       songList.value = (await Get.find<PipedServices>().getPlaylistSongs(id));
       isContentFetched.value = true;
+      checkDownloadStatus();
       return;
     }
 
@@ -125,6 +128,7 @@ class PlayListNAlbumScreenController extends GetxController {
     }
     songList.value = List<MediaItem>.from(content['tracks']);
     isContentFetched.value = true;
+    checkDownloadStatus();
   }
 
   /// Function for bookmark & add playlist to library
@@ -156,6 +160,17 @@ class PlayListNAlbumScreenController extends GetxController {
     } catch (e) {
       return false;
     }
+  }
+
+  void checkDownloadStatus(){
+    bool downloaded = true;
+    for(MediaItem item in songList){
+      if(!Hive.box("SongDownloads").containsKey(item.id)){
+        downloaded = false;
+        break;
+      }
+    }
+    isDownloaded.value = downloaded;
   }
 
   void onSort(bool sortByName, bool sortByDuration, bool isAscending) {

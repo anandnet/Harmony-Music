@@ -31,10 +31,10 @@ class Downloader extends GetxService {
   final streamClient = Get.find<MusicServices>().getStreamClient();
 
   Future<bool> checkPermissionNDir() async {
-    final settingsScreenController =
-        Get.find<SettingsScreenController>();
+    final settingsScreenController = Get.find<SettingsScreenController>();
 
-    if (!settingsScreenController.isCurrentPathsupportDownDir && !await PermissionService.getExtStoragePermission()) {
+    if (!settingsScreenController.isCurrentPathsupportDownDir &&
+        !await PermissionService.getExtStoragePermission()) {
       return false;
     }
 
@@ -49,7 +49,15 @@ class Downloader extends GetxService {
 
   Future<void> downloadPlaylist(
       String playlistId, List<MediaItem> songList) async {
-    if(!(await checkPermissionNDir())) return;
+    if (!(await checkPermissionNDir())) return;
+
+    // for toggle between downloading request & cancelling
+    if(playlistQueue.containsKey(playlistId)){
+      songQueue.removeWhere((element) => songList.contains(element));
+      playlistQueue.remove(playlistId);
+      return;
+    }
+
     playlistQueue[playlistId] = songList;
     songQueue.addAll(songList);
 
@@ -75,20 +83,24 @@ class Downloader extends GetxService {
     if (playlistQueue.isNotEmpty) {
       isJobRunning.value = true;
       for (String playlistId in playlistQueue.keys.toList()) {
-        currentPlaylistId.value = playlistId;
-        await downloadSongList((playlistQueue[playlistId]!).toList(),
-            isPlaylist: true);
-        playlistQueue.remove(playlistId);
-        if (Get.isRegistered<PlayListNAlbumScreenController>(
-            tag: Key(playlistId).hashCode.toString())) {
-          Get.find<PlayListNAlbumScreenController>(
-                  tag: Key(playlistId).hashCode.toString())
-              .isDownloaded
-              .value = true;
+        //checked in case download cancel request
+        if (playlistQueue.containsKey(playlistId)) {
+          currentPlaylistId.value = playlistId;
+          await downloadSongList((playlistQueue[playlistId]!).toList(),
+              isPlaylist: true);
+          if (Get.isRegistered<PlayListNAlbumScreenController>(
+                  tag: Key(playlistId).hashCode.toString()) &&
+              playlistQueue.containsKey(playlistId)) {
+            Get.find<PlayListNAlbumScreenController>(
+                    tag: Key(playlistId).hashCode.toString())
+                .isDownloaded
+                .value = true;
+          }
+          playlistQueue.remove(playlistId);
         }
+        currentPlaylistId.value = "";
+        playlistDownloadingProgress.value = 0;
       }
-      currentPlaylistId.value = "";
-      playlistDownloadingProgress.value = 0;
     } else {
       isJobRunning.value = true;
       await downloadSongList(songQueue.toList());
@@ -105,6 +117,13 @@ class Downloader extends GetxService {
   Future<void> downloadSongList(List<MediaItem> jobSongList,
       {bool isPlaylist = false}) async {
     for (MediaItem song in jobSongList) {
+      // intrrupt downloading task in case of playlist download cancel request
+      if (isPlaylist && !playlistQueue.containsKey(currentPlaylistId.value)) {
+        currentPlaylistId.value = "";
+        playlistDownloadingProgress.value = 0;
+        return;
+      }
+
       if (!Hive.box("SongDownloads").containsKey(song.id)) {
         currentSong = song;
         songDownloadingProgress.value = 0;

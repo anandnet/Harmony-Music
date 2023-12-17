@@ -443,9 +443,13 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       printINFO("Got Song from cachedbox ($songId)");
       return "file://$_cacheDir/cachedSongs/$songId.mp3";
     } else if (!offlineReplacementUrl && songDownloadsBox.containsKey(songId)) {
+      final path = songDownloadsBox.get(songId)['url'];
+      
+      if(path.contains("${Get.find<SettingsScreenController>().supportDirPath}/Music")){
+        return path;
+      }
       //check file access and if file exist in storage
       final status = await PermissionService.getExtStoragePermission();
-      final path = songDownloadsBox.get(songId)['url'];
       if(status && await File(path).exists()){
         return path;
       }

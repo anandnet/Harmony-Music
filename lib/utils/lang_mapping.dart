@@ -1,5 +1,6 @@
 const langMap = {
   "ar": "Arabic",
+  "az":"Azerbaijani",
   "bg": "Bulgarian",
   "bn": "Bengali",
   "cs": "Czech",

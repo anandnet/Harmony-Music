@@ -34,7 +34,7 @@ class SettingsScreenController extends GetxController {
   final downloadLocationPath = "".obs;
   final downloadingFormat = "".obs;
   final hideDloc = true.obs;
-  final currentVersion = "V1.6.0";
+  final currentVersion = "V1.7.0";
 
   @override
   void onInit() {
@@ -45,6 +45,7 @@ class SettingsScreenController extends GetxController {
 
   get currentVision => currentVersion;
   get isCurrentPathsupportDownDir => "$_supportDir/Music" == downloadLocationPath.toString();
+  get supportDirPath => _supportDir;
 
   _checkNewVersion() {
     newVersionCheck(currentVersion)

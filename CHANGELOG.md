@@ -1,3 +1,14 @@
+## 1.7.0
+* Added feature to download whole playlist/album #79 & #100
+* Added Replay on previous feature #101
+* Fixed Result tab alignment & playlist screen intial flickr
+* Fixed piped custom instance issue #103
+* Fixed (increased) Lockscreen's album art image quality #96
+* Translation completed Azerbaijani,Indonesian,Japanese,Portuguese,Chinese and some correction in other lang translation. Thanks to @Qaz-6,@Hada45,@maboroshin,@S4r4h-O,@raymond-nee,@siggi1984,@PonyJohnny,@MattSolo451,@hoabuiyt
+
+
+
+
 ## 1.6.0
 * App language support #21 #54
 * Selective song download feature #40

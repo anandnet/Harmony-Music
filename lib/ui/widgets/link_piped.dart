@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 import '../../utils/helper.dart';
 import '/services/piped_service.dart';
-import '/ui/screens/settings_screen_controller.dart';
-import '/ui/utils/home_library_controller.dart';
+import '../screens/Settings/settings_screen_controller.dart';
+import '../screens/Library/library_controller.dart';
 import 'snackbar.dart';
 
 class LinkPiped extends StatelessWidget {

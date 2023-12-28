@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,8 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import '../../utils/helper.dart';
 import '/models/media_Item_builder.dart';
-import '/ui/screens/home_screen_controller.dart';
-import '/ui/screens/playlistnalbum_screen_controller.dart';
+import '../screens/Home/home_screen_controller.dart';
+import '../screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
 import '../widgets/sliding_up_panel.dart';
 import '/models/durationstate.dart';
 import '/services/music_service.dart';
@@ -20,7 +21,7 @@ class PlayerController extends GetxController {
 
   final playerPaneOpacity = (1.0).obs;
   final isPlayerpanelTopVisible = true.obs;
-  final isPlayerPaneDraggable = true.obs;
+  final isPanelGTHOpened = false.obs;
   final playerPanelMinHeight = 0.0.obs;
   bool _initFlagForPlayer = true;
   final isQueueReorderingInProcess = false.obs;
@@ -70,14 +71,14 @@ class PlayerController extends GetxController {
     if (x >= 0 && x <= 0.2) {
       playerPaneOpacity.value = 1 - (x * 5);
       isPlayerpanelTopVisible.value = true;
-    }
-    if (x > 0.2) {
+    } else if (x > 0.2) {
       isPlayerpanelTopVisible.value = false;
     }
-    if (x > 0) {
-      isPlayerPaneDraggable.value = false;
+
+    if (x > 0.6) {
+      isPanelGTHOpened.value = true;
     } else {
-      isPlayerPaneDraggable.value = true;
+      isPanelGTHOpened.value = false;
     }
   }
 
@@ -304,7 +305,11 @@ class PlayerController extends GetxController {
     }
 
     if (_initFlagForPlayer) {
-      playerPanelMinHeight.value = 75.0 + Get.mediaQuery.viewPadding.bottom;
+      if (Get.find<SettingsScreenController>().isBottomNavBarEnabled.isFalse) {
+        playerPanelMinHeight.value = 75.0 + Get.mediaQuery.viewPadding.bottom;
+      } else {
+        playerPanelMinHeight.value = 75.0;
+      }
       _initFlagForPlayer = false;
     }
   }
@@ -378,8 +383,7 @@ class PlayerController extends GetxController {
         : box.delete(currMediaItem.id);
     try {
       final playlistController = Get.find<PlayListNAlbumScreenController>();
-      if (!playlistController.isAlbum &&
-          playlistController.id == "LIBFAV") {
+      if (!playlistController.isAlbum && playlistController.id == "LIBFAV") {
         isCurrentSongFav.isFalse
             ? playlistController.addNRemoveItemsinList(currMediaItem,
                 action: 'add', index: 0)
@@ -402,8 +406,7 @@ class PlayerController extends GetxController {
       box.add(MediaItemBuilder.toJson(mediaItem));
       try {
         final playlistController = Get.find<PlayListNAlbumScreenController>();
-        if (!playlistController.isAlbum &&
-            playlistController.id == "LIBRP") {
+        if (!playlistController.isAlbum && playlistController.id == "LIBRP") {
           if (playlistController.songList.length > 20) {
             playlistController.addNRemoveItemsinList(null,
                 action: 'remove',
@@ -428,7 +431,7 @@ class PlayerController extends GetxController {
       if (relatedLyricsId != null) {
         final lyrics_ = await _musicServices.getLyrics(relatedLyricsId);
         lyrics.value = lyrics_ as String;
-      }else{
+      } else {
         lyrics.value = "NA";
       }
       isLyricsLoading.value = false;

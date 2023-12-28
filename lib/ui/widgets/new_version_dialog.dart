@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '/ui/screens/home_screen_controller.dart';
+import '../screens/Home/home_screen_controller.dart';
 
 class NewVersionDialog extends StatelessWidget {
   const NewVersionDialog({super.key});

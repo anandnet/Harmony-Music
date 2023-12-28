@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/screens/Home/home_screen_controller.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 
 import '../utils/helper.dart';
 import '../ui/navigator.dart';
 import '../ui/player/player.dart';
 import 'player/player_controller.dart';
+import 'screens/Home/home_screen_controller.dart';
+import 'widgets/bottom_nav_bar.dart';
 import 'widgets/image_widget.dart';
 import 'widgets/mini_player_progress_bar.dart';
+import 'widgets/scroll_to_hide.dart';
 import 'widgets/sliding_up_panel.dart';
 
 class Home extends StatelessWidget {
@@ -17,157 +22,176 @@ class Home extends StatelessWidget {
     printINFO("Home");
     var safePadding = MediaQuery.of(context).padding.bottom;
     final PlayerController playerController = Get.find<PlayerController>();
+    final settingsScreenController = Get.find<SettingsScreenController>();
+    final homeScreenController = Get.find<HomeScreenController>();
     final size = MediaQuery.of(context).size;
     return WillPopScope(
-      onWillPop: () async {
-        if (playerController.playerPanelController.isPanelOpen) {
-          playerController.playerPanelController.close();
-          return false;
-        } else {
-          if (Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.canPop()) {
-            Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
+        onWillPop: () async {
+          if (playerController.playerPanelController.isPanelOpen) {
+            playerController.playerPanelController.close();
             return false;
+          } else {
+            if (Get.nestedKey(ScreenNavigationSetup.id)!
+                .currentState!
+                .canPop()) {
+              Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
+              return false;
+            }
+            return true;
           }
-          return true;
-        }
-      },
-      child: Scaffold(
-          key: playerController.homeScaffoldkey,
-          body: Obx(() => SlidingUpPanel(
-                onPanelSlide: playerController.panellistener,
-                controller: playerController.playerPanelController,
-                minHeight: playerController.playerPanelMinHeight.value,
-                maxHeight: size.height,
-                panel: const Player(),
-                body: const ScreenNavigation(),
-                header: Obx(() {
-                  return Visibility(
-                    visible: playerController.isPlayerpanelTopVisible.value,
-                    child: Opacity(
-                      opacity: playerController.playerPaneOpacity.value,
-                      child: Container(
-                        height: 75 + safePadding,
-                        width: size.width,
-                        color:
-                            Theme.of(context).bottomSheetTheme.backgroundColor,
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Container(
-                                  height: 3,
-                                  color: Theme.of(context)
-                                      .progressIndicatorTheme
-                                      .color,
-                                  child: MiniPlayerProgressBar(
-                                      progressBarStatus: playerController
-                                          .progressBarStatus.value,
-                                      progressBarColor: Theme.of(context)
-                                              .progressIndicatorTheme
-                                              .linearTrackColor ??
-                                          Colors.white)),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 17.0, vertical: 7),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    playerController.currentSong.value != null
-                                        ? ImageWidget(
-                                            size: 50,
-                                            song: playerController
-                                                .currentSong.value!,
-                                          )
-                                        : const SizedBox(
-                                            height: 50,
-                                            width: 50,
-                                          ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            height: 20,
-                                            child: Text(
-                                              playerController
-                                                      .currentQueue.isNotEmpty
-                                                  ? playerController
-                                                      .currentSong.value!.title
-                                                  : "",
-                                              maxLines: 1,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 20,
-                                            child: Text(
-                                              playerController
-                                                      .currentQueue.isNotEmpty
-                                                  ? playerController.currentSong
-                                                      .value!.artist!
-                                                  : "",
-                                              maxLines: 1,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Row(
+        },
+        child: Obx(
+          () => Scaffold(
+              bottomNavigationBar: settingsScreenController
+                      .isBottomNavBarEnabled.isTrue
+                  ? ScrollToHideWidget(
+                      isVisible: homeScreenController.isHomeSreenOnTop.isTrue &&
+                          playerController.isPanelGTHOpened.isFalse,
+                      child: const BottomNavBar())
+                  : null,
+              key: playerController.homeScaffoldkey,
+              body: Obx(() => SlidingUpPanel(
+                    onPanelSlide: playerController.panellistener,
+                    controller: playerController.playerPanelController,
+                    minHeight: playerController.playerPanelMinHeight.value,
+                    maxHeight: size.height,
+                    panel: const Player(),
+                    body: const ScreenNavigation(),
+                    header: Obx(() {
+                      return Visibility(
+                        visible: playerController.isPlayerpanelTopVisible.value,
+                        child: Opacity(
+                          opacity: playerController.playerPaneOpacity.value,
+                          child: Container(
+                            height: playerController.playerPanelMinHeight.value,
+                            width: size.width,
+                            color: Theme.of(context)
+                                .bottomSheetTheme
+                                .backgroundColor,
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Container(
+                                      height: 3,
+                                      color: Theme.of(context)
+                                          .progressIndicatorTheme
+                                          .color,
+                                      child: MiniPlayerProgressBar(
+                                          progressBarStatus: playerController
+                                              .progressBarStatus.value,
+                                          progressBarColor: Theme.of(context)
+                                                  .progressIndicatorTheme
+                                                  .linearTrackColor ??
+                                              Colors.white)),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 17.0, vertical: 7),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        SizedBox(
-                                            width: 45,
-                                            child: _playButton(context)),
-                                        SizedBox(
-                                            width: 40,
-                                            child: InkWell(
-                                              onTap: (playerController
-                                                          .currentQueue
-                                                          .isEmpty ||
-                                                      (playerController
-                                                              .currentQueue
-                                                              .last
-                                                              .id ==
-                                                          playerController
-                                                              .currentSong
-                                                              .value!
-                                                              .id))
-                                                  ? null
-                                                  : playerController.next,
-                                              child: Icon(
-                                                Icons.skip_next_rounded,
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .color,
-                                                size: 35,
+                                        playerController.currentSong.value !=
+                                                null
+                                            ? ImageWidget(
+                                                size: 50,
+                                                song: playerController
+                                                    .currentSong.value!,
+                                              )
+                                            : const SizedBox(
+                                                height: 50,
+                                                width: 50,
                                               ),
-                                            ))
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(
+                                                height: 20,
+                                                child: Text(
+                                                  playerController.currentQueue
+                                                          .isNotEmpty
+                                                      ? playerController
+                                                          .currentSong
+                                                          .value!
+                                                          .title
+                                                      : "",
+                                                  maxLines: 1,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleMedium,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 20,
+                                                child: Text(
+                                                  playerController.currentQueue
+                                                          .isNotEmpty
+                                                      ? playerController
+                                                          .currentSong
+                                                          .value!
+                                                          .artist!
+                                                      : "",
+                                                  maxLines: 1,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                                width: 45,
+                                                child: _playButton(context)),
+                                            SizedBox(
+                                                width: 40,
+                                                child: InkWell(
+                                                  onTap: (playerController
+                                                              .currentQueue
+                                                              .isEmpty ||
+                                                          (playerController
+                                                                  .currentQueue
+                                                                  .last
+                                                                  .id ==
+                                                              playerController
+                                                                  .currentSong
+                                                                  .value!
+                                                                  .id))
+                                                      ? null
+                                                      : playerController.next,
+                                                  child: Icon(
+                                                    Icons.skip_next_rounded,
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .titleMedium!
+                                                        .color,
+                                                    size: 35,
+                                                  ),
+                                                ))
+                                          ],
+                                        )
                                       ],
-                                    )
-                                  ],
-                                ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  );
-                }),
-              ))),
-    );
+                      );
+                    }),
+                  ))),
+        ));
   }
 
   Widget _playButton(BuildContext context) {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../navigator.dart';
-import '../widgets/loader.dart';
-import '../widgets/search_related_widgets.dart';
+import '../../navigator.dart';
+import '../../widgets/loader.dart';
+import '../../widgets/search_related_widgets.dart';
 import 'search_result_screen_controller.dart';
 
 class SearchResultScreen extends StatelessWidget {

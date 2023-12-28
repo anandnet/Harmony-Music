@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/services/downloader.dart';
 
-import '../widgets/loader.dart';
-import '/ui/utils/home_library_controller.dart';
+import '../../widgets/loader.dart';
+import '../Library/library_controller.dart';
 import '/ui/navigator.dart';
-import '/ui/screens/playlistnalbum_screen_controller.dart';
+import 'playlistnalbum_screen_controller.dart';
 import '/ui/widgets/create_playlist_dialog.dart';
 import '/ui/widgets/list_widget.dart';
 import '/ui/widgets/shimmer_widgets/song_list_shimmer.dart';
 import '/ui/widgets/snackbar.dart';
 import '/ui/widgets/sort_widget.dart';
 import 'package:share_plus/share_plus.dart';
-import '../../models/playlist.dart';
-import '../player/player_controller.dart';
-import '../widgets/image_widget.dart';
+import '../../../models/playlist.dart';
+import '../../player/player_controller.dart';
+import '../../widgets/image_widget.dart';
 
 class PlaylistNAlbumScreen extends StatelessWidget {
   ///PlaylistScreen renders playlist content

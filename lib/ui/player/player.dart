@@ -7,7 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../widgets/loader.dart';
 import '../../utils/helper.dart';
 import '/ui/player/player_controller.dart';
-import '/ui/screens/settings_screen_controller.dart';
+import '../screens/Settings/settings_screen_controller.dart';
 import '/ui/utils/theme_controller.dart';
 import '/ui/widgets/marqwee_widget.dart';
 import '/ui/widgets/songinfo_bottom_sheet.dart';

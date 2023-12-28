@@ -1,15 +1,16 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:hive/hive.dart';
 
-import '../../utils/update_check_flag_file.dart';
-import '../../utils/helper.dart';
+import '../../../utils/update_check_flag_file.dart';
+import '../../../utils/helper.dart';
 import '/models/album.dart';
 import '/models/playlist.dart';
 import '/models/quick_picks.dart';
 import '/services/music_service.dart';
-import '/ui/screens/settings_screen_controller.dart';
+import '../Settings/settings_screen_controller.dart';
 import '/ui/widgets/new_version_dialog.dart';
 
 class HomeScreenController extends GetxController {
@@ -21,6 +22,8 @@ class HomeScreenController extends GetxController {
   final middleContent = [].obs;
   final fixedContent = [].obs;
   final showVersionDialog = true.obs;
+  //isHomeScreenOnTop var only useful if bottom nav enabled
+  final isHomeSreenOnTop = true.obs;
 
   @override
   onInit() {
@@ -149,8 +152,21 @@ class HomeScreenController extends GetxController {
     quickPicks.value = quickPicks_;
   }
 
-  void onTabSelected(int index) {
+  void onSideBarTabSelected(int index) {
     tabIndex.value = index;
+  }
+
+  void onBottonBarTabSelected(int index) {
+    tabIndex.value = index;
+    // if(index == 1){
+    //   tabIndex.value = 6;
+    // }else if(index == 2){
+    //   tabIndex.value = 7;
+    // }else if(index == 3){
+    //   tabIndex.value = 5;
+    // }else{
+    //   tabIndex.value = 0;
+    // }
   }
 
   void _checkNewVersion() {
@@ -171,5 +187,21 @@ class HomeScreenController extends GetxController {
   void onChangeVersionVisibility(bool val) {
     Hive.box("AppPrefs").put("newVersionVisibility", !val);
     showVersionDialog.value = !val;
+  }
+
+ ///this fn only useful if bottom nav enabled
+  void checkIfHomeScreenOnTop() {
+    if (Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue) {
+      final isHomeOnTop = getCurrentRouteName() == '/homeScreen';
+      final playerCon = Get.find<PlayerController>();
+      
+      if (isHomeOnTop) {
+        playerCon.playerPanelMinHeight.value = 75.0;
+      } else {
+        playerCon.playerPanelMinHeight.value =
+            75.0 + Get.mediaQuery.viewPadding.bottom;
+      }
+      isHomeSreenOnTop.value = isHomeOnTop;
+    }
   }
 }

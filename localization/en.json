@@ -54,6 +54,8 @@
     "trending": "Trending",
     "topmusicvideos": "Top Music Videos",
     "basedOnLast": "Based on last interaction",
+    "enableBottomNav": "Bottom nav bar",
+    "enableBottomNavDes":"Switch to bottom navigation bar",
     "cacheSongs": "Cache Songs",
     "cacheSongsDes": "Caching songs while playing for future/offline playback, it will take additional space on your device",
     "skipSilence": "Skip silence",

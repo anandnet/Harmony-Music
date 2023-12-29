@@ -32,7 +32,7 @@ class PlayListNAlbumScreenController extends GetxController {
       isAlbum = args[0];
       _init(args[1], args[0], args[2]);
     }
-    Get.find<HomeScreenController>().checkIfHomeScreenOnTop();
+    Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onReady();
   }
 
@@ -205,7 +205,7 @@ class PlayListNAlbumScreenController extends GetxController {
   void onClose() {
     tempListContainer.clear();
     if(id != "SongDownloads") box.close();
-    Get.find<HomeScreenController>().checkIfHomeScreenOnTop();
+    Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();
   }
 }

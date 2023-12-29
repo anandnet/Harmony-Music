@@ -141,7 +141,7 @@ class HomeScreenController extends GetxController {
       if (songId != null) {
         final value = await _musicServices.getContentRelatedToSong(songId);
         middleContent.value = _setContentList(value);
-        if ((value[0]['title']).contains("like")) {
+        if (value.isNotEmpty && (value[0]['title']).contains("like")) {
           quickPicks_ = QuickPicks(List<MediaItem>.from(value[0]["contents"]));
         }
         Hive.box("AppPrefs").put("recentSongId", songId);
@@ -158,15 +158,6 @@ class HomeScreenController extends GetxController {
 
   void onBottonBarTabSelected(int index) {
     tabIndex.value = index;
-    // if(index == 1){
-    //   tabIndex.value = 6;
-    // }else if(index == 2){
-    //   tabIndex.value = 7;
-    // }else if(index == 3){
-    //   tabIndex.value = 5;
-    // }else{
-    //   tabIndex.value = 0;
-    // }
   }
 
   void _checkNewVersion() {
@@ -189,19 +180,30 @@ class HomeScreenController extends GetxController {
     showVersionDialog.value = !val;
   }
 
- ///this fn only useful if bottom nav enabled
-  void checkIfHomeScreenOnTop() {
+  ///this fn only useful if bottom nav enabled
+  void whenHomeScreenOnTop() {
     if (Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue) {
-      final isHomeOnTop = getCurrentRouteName() == '/homeScreen';
+      final currentRoute = getCurrentRouteName();
+      final isHomeOnTop = currentRoute == '/homeScreen';
+      final isResultScreenOnTop = currentRoute == '/searchResultScreen';
       final playerCon = Get.find<PlayerController>();
-      
-      if (isHomeOnTop) {
-        playerCon.playerPanelMinHeight.value = 75.0;
-      } else {
-        playerCon.playerPanelMinHeight.value =
-            75.0 + Get.mediaQuery.viewPadding.bottom;
-      }
+
       isHomeSreenOnTop.value = isHomeOnTop;
+
+      // Set miniplayer height accordingly
+      if (!playerCon.initFlagForPlayer) {
+        if (isHomeOnTop) {
+          playerCon.playerPanelMinHeight.value = 75.0;
+        } else {
+          Future.delayed(
+              isResultScreenOnTop
+                  ? const Duration(milliseconds: 300)
+                  : Duration.zero, () {
+            playerCon.playerPanelMinHeight.value =
+                75.0 + Get.mediaQuery.viewPadding.bottom;
+          });
+        }
+      }
     }
   }
 }

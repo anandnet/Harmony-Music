@@ -23,7 +23,7 @@ class PlayerController extends GetxController {
   final isPlayerpanelTopVisible = true.obs;
   final isPanelGTHOpened = false.obs;
   final playerPanelMinHeight = 0.0.obs;
-  bool _initFlagForPlayer = true;
+  bool initFlagForPlayer = true;
   final isQueueReorderingInProcess = false.obs;
   PanelController playerPanelController = PanelController();
   bool isRadioModeOn = false;
@@ -214,7 +214,7 @@ class PlayerController extends GetxController {
   Future<void> playPlayListSong(List<MediaItem> mediaItems, int index) async {
     isRadioModeOn = false;
     //open player pane,set current song and push first song into playing list,
-    final init = _initFlagForPlayer;
+    final init = initFlagForPlayer;
     currentSong.value = mediaItems[index];
 
     //for changing home content based on last interation
@@ -304,13 +304,13 @@ class PlayerController extends GetxController {
       playerPanelController.open();
     }
 
-    if (_initFlagForPlayer) {
-      if (Get.find<SettingsScreenController>().isBottomNavBarEnabled.isFalse) {
+    if (initFlagForPlayer) {
+      if (Get.find<SettingsScreenController>().isBottomNavBarEnabled.isFalse || getCurrentRouteName() == '/searchResultScreen') {
         playerPanelMinHeight.value = 75.0 + Get.mediaQuery.viewPadding.bottom;
       } else {
         playerPanelMinHeight.value = 75.0;
       }
-      _initFlagForPlayer = false;
+      initFlagForPlayer = false;
     }
   }
 

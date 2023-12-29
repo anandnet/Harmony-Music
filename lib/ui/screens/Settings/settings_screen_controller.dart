@@ -34,7 +34,7 @@ class SettingsScreenController extends GetxController {
   final downloadLocationPath = "".obs;
   final downloadingFormat = "".obs;
   final hideDloc = true.obs;
-  final isBottomNavBarEnabled = true.obs;
+  final isBottomNavBarEnabled = false.obs;
   final currentVersion = "V1.7.0";
 
   @override
@@ -66,6 +66,7 @@ class SettingsScreenController extends GetxController {
 
   Future<void> _setInitValue() async {
     currentAppLanguageCode.value = setBox.get('currentAppLanguageCode') ?? "en";
+    isBottomNavBarEnabled.value = setBox.get("isBottomNavBarEnabled") ?? false;
     cacheSongs.value = setBox.get('cacheSongs');
     themeModetype.value = ThemeType.values[setBox.get('themeModeType')];
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
@@ -107,9 +108,11 @@ class SettingsScreenController extends GetxController {
       isBottomNavBarEnabled.value = false;
       homeScrCon.onSideBarTabSelected(5);
     }
-
-    playerCon.playerPanelMinHeight.value =
+    if(!Get.find<PlayerController>().initFlagForPlayer) {
+      playerCon.playerPanelMinHeight.value =
         val ? 75.0 : 75.0 + Get.mediaQuery.viewPadding.bottom;
+    }
+    setBox.put("isBottomNavBarEnabled", val);
   }
 
   void changeDownloadingFormat(String? val) {

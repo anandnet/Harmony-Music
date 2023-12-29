@@ -22,9 +22,9 @@ class SearchResultScreenController extends GetxController {
   final Map<String, ScrollController> scrollControllers = {};
 
   @override
-  void onReady() async {
+  void onReady(){
     _getInitSearchResult();
-   Future.delayed(const Duration(milliseconds: 100), Get.find<HomeScreenController>().checkIfHomeScreenOnTop);
+    Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onReady();
   }
 
@@ -134,7 +134,7 @@ class SearchResultScreenController extends GetxController {
     for (String item in railItems) {
       (scrollControllers[item])!.dispose();
     }
-    Get.find<HomeScreenController>().checkIfHomeScreenOnTop();
+    Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();
   }
 }

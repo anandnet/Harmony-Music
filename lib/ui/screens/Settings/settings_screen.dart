@@ -149,8 +149,8 @@ class SettingsScreen extends StatelessWidget {
               ),
               ListTile(
                   contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                  title: Text("Bottom Nav bar".tr),
-                  subtitle: Text("Switch to bottom nav bar".tr,
+                  title: Text("enableBottomNav".tr),
+                  subtitle: Text("enableBottomNavDes".tr,
                       style: Theme.of(context).textTheme.bodyMedium),
                   trailing: Obx(
                     () => Switch(

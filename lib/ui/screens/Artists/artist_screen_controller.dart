@@ -27,7 +27,7 @@ class ArtistScreenController extends GetxController {
   void onReady() {
     final args = Get.arguments;
     _init(args[0], args[1]);
-    Get.find<HomeScreenController>().checkIfHomeScreenOnTop();
+    Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onReady();
   }
 
@@ -172,7 +172,7 @@ class ArtistScreenController extends GetxController {
     tempListContainer.clear();
     songScrollController.dispose();
     videoScrollController.dispose();
-    Get.find<HomeScreenController>().checkIfHomeScreenOnTop();
+    Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();
   }
 }

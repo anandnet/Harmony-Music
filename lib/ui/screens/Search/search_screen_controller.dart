@@ -42,6 +42,14 @@ class SearchScreenController extends GetxController {
       await queryBox.add(txt);
       historyQuerylist.insert(0, txt);
     }
+
+    //reset current query and suggestionlist
+    reset();
+  }
+
+  void reset(){
+    textInputController.text = "";
+    suggestionList.clear();
   }
 
   Future<void> removeQueryFromHistory(String txt) async {

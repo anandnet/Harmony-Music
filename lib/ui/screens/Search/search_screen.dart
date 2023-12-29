@@ -83,7 +83,7 @@ class SearchScreen extends StatelessWidget {
                     Expanded(
                       child: Obx(() {
                         final isEmpty =
-                            searchScreenController.suggestionList.isEmpty;
+                            searchScreenController.suggestionList.isEmpty || searchScreenController.textInputController.text=="";
                         final list = isEmpty
                             ? searchScreenController.historyQuerylist.toList()
                             : searchScreenController.suggestionList.toList();

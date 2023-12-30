@@ -13,24 +13,32 @@ class BottomNavBar extends StatelessWidget {
             selectedIndex: homeScreenController.tabIndex.toInt(),
             backgroundColor: Theme.of(context).primaryColor,
             indicatorColor: Theme.of(context).colorScheme.secondary,
-            destinations: const [
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+            destinations: [
               NavigationDestination(
-                selectedIcon: Icon(Icons.home),
-                icon: Icon(Icons.home_outlined),
-                label: 'Home',
+                selectedIcon: const Icon(Icons.home),
+                icon: const Icon(Icons.home_outlined),
+                label: modifyNgetlabel('home'.tr),
               ),
               NavigationDestination(
-                icon: Icon(Icons.search),
-                label: 'Search',
+                icon: const Icon(Icons.search),
+                label: modifyNgetlabel('search'.tr),
               ),
               NavigationDestination(
-                icon: Icon(Icons.library_music),
-                label: 'Library',
+                icon: const Icon(Icons.library_music),
+                label: modifyNgetlabel('library'.tr),
               ),
               NavigationDestination(
-                icon: Icon(Icons.settings),
-                label: 'Settings',
+                icon: const Icon(Icons.settings),
+                label: modifyNgetlabel('settings'.tr),
               ),
             ]));
+  }
+
+  String modifyNgetlabel(String label){
+    if(label.length>10){
+      return "${label.substring(0,9)}..";
+    }
+    return label;
   }
 }

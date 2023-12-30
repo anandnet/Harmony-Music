@@ -103,7 +103,7 @@ class SettingsScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium),
                 trailing: Obx(
                   () => DropdownButton(
-                    menuMaxHeight: Get.height - 200,
+                    menuMaxHeight: Get.height - 250,
                     dropdownColor: Theme.of(context).cardColor,
                     underline: const SizedBox.shrink(),
                     style: Theme.of(context).textTheme.titleSmall,

@@ -24,6 +24,7 @@ class SettingsScreenController extends GetxController {
   final setBox = Hive.box("AppPrefs");
   final themeModetype = ThemeType.dynamic.obs;
   final skipSilenceEnabled = false.obs;
+  final noOfHomeScreenContent = 3.obs;
   final streamingQuality = AudioQuality.High.obs;
   final isIgnoringBatteryOptimizations = false.obs;
   final discoverContentType = "QP".obs;
@@ -67,6 +68,7 @@ class SettingsScreenController extends GetxController {
   Future<void> _setInitValue() async {
     currentAppLanguageCode.value = setBox.get('currentAppLanguageCode') ?? "en";
     isBottomNavBarEnabled.value = setBox.get("isBottomNavBarEnabled") ?? false;
+    noOfHomeScreenContent.value = setBox.get("noOfHomeScreenContent") ?? 3;
     cacheSongs.value = setBox.get('cacheSongs');
     themeModetype.value = ThemeType.values[setBox.get('themeModeType')];
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
@@ -93,6 +95,11 @@ class SettingsScreenController extends GetxController {
     setBox.put('currentAppLanguageCode', val);
   }
 
+  void setContentNumber(int? no) {
+    noOfHomeScreenContent.value = no!;
+    setBox.put("noOfHomeScreenContent", no);
+  }
+
   void setStreamingQuality(dynamic val) {
     setBox.put("streamingQuality", AudioQuality.values.indexOf(val));
     streamingQuality.value = val;
@@ -108,9 +115,9 @@ class SettingsScreenController extends GetxController {
       isBottomNavBarEnabled.value = false;
       homeScrCon.onSideBarTabSelected(5);
     }
-    if(!Get.find<PlayerController>().initFlagForPlayer) {
+    if (!Get.find<PlayerController>().initFlagForPlayer) {
       playerCon.playerPanelMinHeight.value =
-        val ? 75.0 : 75.0 + Get.mediaQuery.viewPadding.bottom;
+          val ? 75.0 : 75.0 + Get.mediaQuery.viewPadding.bottom;
     }
     setBox.put("isBottomNavBarEnabled", val);
   }

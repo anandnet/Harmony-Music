@@ -39,7 +39,9 @@ class HomeScreenController extends GetxController {
     networkError.value = false;
     try {
       List middleContentTemp = [];
-      final homeContentListMap = await _musicServices.getHome(limit: 10);
+      final homeContentListMap = await _musicServices.getHome(
+          limit:
+              Get.find<SettingsScreenController>().noOfHomeScreenContent.value);
       if (contentType == "TR") {
         final index = homeContentListMap
             .indexWhere((element) => element['title'] == "Trending");
@@ -77,13 +79,16 @@ class HomeScreenController extends GetxController {
           quickPicks.value = QuickPicks(List<MediaItem>.from(con["contents"]));
           middleContentTemp.addAll(rel);
         }
-      } else if (quickPicks.value.songList.isEmpty) {
+      } 
+      
+      if (quickPicks.value.songList.isEmpty) {
         final index = homeContentListMap
             .indexWhere((element) => element['title'] == "Quick picks");
         final con = homeContentListMap.removeAt(index);
         quickPicks.value = QuickPicks(List<MediaItem>.from(con["contents"]),
             title: "Quick picks");
       }
+      
       middleContent.value = _setContentList(middleContentTemp);
       fixedContent.value = _setContentList(homeContentListMap);
 
@@ -143,8 +148,8 @@ class HomeScreenController extends GetxController {
         middleContent.value = _setContentList(value);
         if (value.isNotEmpty && (value[0]['title']).contains("like")) {
           quickPicks_ = QuickPicks(List<MediaItem>.from(value[0]["contents"]));
+          Hive.box("AppPrefs").put("recentSongId", songId);
         }
-        Hive.box("AppPrefs").put("recentSongId", songId);
       }
     }
     if (quickPicks_ == null) return;

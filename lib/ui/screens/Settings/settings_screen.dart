@@ -148,6 +148,22 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               ListTile(
+                contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                title: Text("homeContentCount".tr),
+                subtitle: Text("homeContentCountDes".tr,
+                    style: Theme.of(context).textTheme.bodyMedium),
+                trailing: Obx(
+                  () => DropdownButton(
+                    dropdownColor: Theme.of(context).cardColor,
+                    underline: const SizedBox.shrink(),
+                    value: settingsController.noOfHomeScreenContent.value,
+                    items: ([3,5,7,9,11]).map((e) => DropdownMenuItem(
+                          value: e, child: Text("$e"))).toList(),
+                    onChanged: settingsController.setContentNumber,
+                  ),
+                ),
+              ),
+              ListTile(
                   contentPadding: const EdgeInsets.only(left: 5, right: 10),
                   title: Text("enableBottomNav".tr),
                   subtitle: Text("enableBottomNavDes".tr,

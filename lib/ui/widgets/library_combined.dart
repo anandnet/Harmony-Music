@@ -16,16 +16,16 @@ class CombinedLibrary extends StatelessWidget{
         backgroundColor: Theme.of(context).primaryColor,
         bottom:  TabBar(
           controller: tabCon.tabController,
-          tabs: const [
-            Tab(text: "Songs"),
-            Tab(text:"Playlists"),
-            Tab(text: "Albums"),
-            Tab(text: "Artists"),
+          tabs: [
+            Tab(text: "songs".tr),
+            Tab(text:"playlists".tr),
+            Tab(text: "albums".tr),
+            Tab(text: "artists".tr),
           ],
         ),
         title: Padding(
           padding: const EdgeInsets.only(top:60.0),
-          child: Text('Library',style: Theme.of(context).textTheme.titleLarge),
+          child: Text('library'.tr,style: Theme.of(context).textTheme.titleLarge),
         ),
       ),
       body: TabBarView(

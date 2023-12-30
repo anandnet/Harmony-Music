@@ -7,7 +7,6 @@ import '../utils/helper.dart';
 import '../ui/navigator.dart';
 import '../ui/player/player.dart';
 import 'player/player_controller.dart';
-import 'screens/Home/home_screen_controller.dart';
 import 'widgets/bottom_nav_bar.dart';
 import 'widgets/image_widget.dart';
 import 'widgets/mini_player_progress_bar.dart';
@@ -20,7 +19,6 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     printINFO("Home");
-    var safePadding = MediaQuery.of(context).padding.bottom;
     final PlayerController playerController = Get.find<PlayerController>();
     final settingsScreenController = Get.find<SettingsScreenController>();
     final homeScreenController = Get.find<HomeScreenController>();

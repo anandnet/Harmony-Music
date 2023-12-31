@@ -1,8 +1,10 @@
 import 'dart:ui';
+import 'package:flutter_lyric/lyrics_reader.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 import '../widgets/loader.dart';
 import '../../utils/helper.dart';
@@ -228,8 +230,47 @@ class Player extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 25, right: 25),
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: size.height < 750 ? 80 : 120,
+                    Obx(
+                      () => playerController.showLyricsflag.value
+                          ? SizedBox(
+                              height: size.height < 750 ? 30 : 70,
+                            )
+                          : SizedBox(
+                              height: size.height < 750 ? 80 : 120,
+                            ),
+                    ),
+                    Obx(
+                      () => playerController.showLyricsflag.value
+                          ? Padding(
+                              padding: const EdgeInsets.only(bottom: 10.0),
+                              child: ToggleSwitch(
+                                minWidth: 90.0,
+                                cornerRadius: 20.0,
+                                activeBgColors: [
+                                  [
+                                    Theme.of(context)
+                                        .primaryColor
+                                        .withLightness(0.4)
+                                  ],
+                                  [
+                                    Theme.of(context)
+                                        .primaryColor
+                                        .withLightness(0.4)
+                                  ]
+                                ],
+                                activeFgColor: Colors.white,
+                                inactiveBgColor:
+                                    Theme.of(context).colorScheme.secondary,
+                                inactiveFgColor: Colors.white,
+                                initialLabelIndex:
+                                    playerController.lyricsMode.value,
+                                totalSwitches: 2,
+                                labels: ['synced'.tr, 'plain'.tr],
+                                radiusStyle: true,
+                                onToggle: playerController.changeLyricsMode,
+                              ),
+                            )
+                          : const SizedBox.shrink(),
                     ),
                     Obx(() => playerController.currentSong.value != null
                         ? Stack(
@@ -272,43 +313,76 @@ class Player extends StatelessWidget {
                                         ),
                                         child: Stack(
                                           children: [
-                                            Center(
-                                              child: SingleChildScrollView(
-                                                physics:
-                                                    const BouncingScrollPhysics(),
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 0,
-                                                    vertical:
-                                                        playerArtImageSize /
-                                                            3.5),
-                                                child: Obx(
-                                                  () => playerController
+                                            Obx(
+                                              () =>
+                                                  playerController
                                                           .isLyricsLoading
-                                                          .isFalse
-                                                      ? Text(
-                                                          playerController
-                                                                      .lyrics
-                                                                      .value ==
-                                                                  "NA"
-                                                              ? "lyricsNotAvailable".tr
-                                                              : playerController
-                                                                  .lyrics.value,
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: Theme.of(
-                                                                  context)
-                                                              .textTheme
-                                                              .titleMedium!
-                                                              .copyWith(
-                                                                  color: Colors
-                                                                      .white),
-                                                        )
-                                                      : const Center(
+                                                          .isTrue
+                                                      ? const Center(
                                                           child:
                                                               LoadingIndicator(),
-                                                        ),
-                                                ),
-                                              ),
+                                                        )
+                                                      : playerController
+                                                                  .lyricsMode
+                                                                  .toInt() ==
+                                                              1
+                                                          ? Center(
+                                                              child:
+                                                                  SingleChildScrollView(
+                                                                physics:
+                                                                    const BouncingScrollPhysics(),
+                                                                padding: EdgeInsets.symmetric(
+                                                                    horizontal:
+                                                                        0,
+                                                                    vertical:
+                                                                        playerArtImageSize /
+                                                                            3.5),
+                                                                child: Obx(()=>
+                                                                  Text(
+                                                                    playerController.lyrics["plainLyrics"] ==
+                                                                            "NA"
+                                                                        ? "lyricsNotAvailable"
+                                                                            .tr
+                                                                        : playerController
+                                                                            .lyrics["plainLyrics"],
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .titleMedium!
+                                                                        .copyWith(
+                                                                            color:
+                                                                                Colors.white),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : IgnorePointer(
+                                                            child: LyricsReader(
+                                                              lyricUi: playerController.lyricUi,
+                                                                position: playerController
+                                                                    .progressBarStatus
+                                                                    .value
+                                                                    .current
+                                                                    .inMilliseconds,
+                                                                
+                                                                model: LyricsModelBuilder
+                                                                        .create()
+                                                                    .bindLyricToMain(playerController
+                                                                        .lyrics[
+                                                                            'synced']
+                                                                        .toString())
+                                                                    .getModel(),
+                                                                emptyBuilder: () =>
+                                                                    Center(
+                                                                  child: Text(
+                                                                    "syncedLyricsNotAvailable".tr,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                          ),
                                             ),
                                             IgnorePointer(
                                               child: Container(

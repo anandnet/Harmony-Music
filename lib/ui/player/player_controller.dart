@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:flutter_lyric/lyric_ui/ui_netease.dart';
+import 'package:harmonymusic/services/synced_lyrics_service.dart';
 import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
@@ -42,7 +44,10 @@ class PlayerController extends GetxController {
   final isCurrentSongFav = false.obs;
   final showLyricsflag = false.obs;
   final isLyricsLoading = false.obs;
-  final lyrics = "".obs;
+  final lyricsMode = 0.obs;
+  final lyricUi = UINetease(highlight: true,defaultSize: 22);
+  RxMap<String, dynamic> lyrics =
+      <String, dynamic>{"synced": "", "plainLyrics": ""}.obs;
   ScrollController scrollController = ScrollController();
   final GlobalKey<ScaffoldState> homeScaffoldkey = GlobalKey<ScaffoldState>();
 
@@ -65,6 +70,11 @@ class PlayerController extends GetxController {
     _listenForChangesInDuration();
     _listenForPlaylistChange();
     _listenForKeyboardActivity();
+    _setInitLyricsMode();
+  }
+
+  void _setInitLyricsMode() {
+    lyricsMode.value = Hive.box("AppPrefs").get("lyricsMode") ?? 0;
   }
 
   void panellistener(double x) {
@@ -159,7 +169,7 @@ class PlayerController extends GetxController {
         if (isRadioModeOn && (currentSong.value!.id == currentQueue.last.id)) {
           await _addRadioContinuation(radioInitiatorItem!);
         }
-        lyrics.value = "";
+        lyrics.value = {"synced": "", "plainLyrics": ""};
         showLyricsflag.value = false;
       }
     });
@@ -305,7 +315,8 @@ class PlayerController extends GetxController {
     }
 
     if (initFlagForPlayer) {
-      if (Get.find<SettingsScreenController>().isBottomNavBarEnabled.isFalse || getCurrentRouteName() == '/searchResultScreen') {
+      if (Get.find<SettingsScreenController>().isBottomNavBarEnabled.isFalse ||
+          getCurrentRouteName() == '/searchResultScreen') {
         playerPanelMinHeight.value = 75.0 + Get.mediaQuery.viewPadding.bottom;
       } else {
         playerPanelMinHeight.value = 75.0;
@@ -423,19 +434,33 @@ class PlayerController extends GetxController {
 
   Future<void> showLyrics() async {
     showLyricsflag.value = !showLyricsflag.value;
-    if (lyrics.isEmpty && showLyricsflag.value) {
+    if ((lyrics["synced"].isEmpty && lyrics['plainLyrics'].isEmpty) &&
+        showLyricsflag.value) {
       isLyricsLoading.value = true;
+      final Map<String, dynamic>? lyricsR =
+          await SyncedLyricsService.getSyncedLyrics(
+              currentSong.value!, progressBarStatus.value.total.inSeconds);
+      if (lyricsR != null) {
+        lyrics.value = lyricsR;
+        isLyricsLoading.value = false;
+        return;
+      }
       final related = await _musicServices.getWatchPlaylist(
           videoId: currentSong.value!.id, onlyRelated: true);
       final relatedLyricsId = related['lyrics'];
       if (relatedLyricsId != null) {
         final lyrics_ = await _musicServices.getLyrics(relatedLyricsId);
-        lyrics.value = lyrics_ as String;
+        lyrics.value = {"synced": "", "plainLyrics": lyrics_};
       } else {
-        lyrics.value = "NA";
+        lyrics.value = {"synced": "", "plainLyrics": "NA"};
       }
       isLyricsLoading.value = false;
     }
+  }
+
+  void changeLyricsMode(int? val) {
+    Hive.box("AppPrefs").put("lyricsMode", val);
+    lyricsMode.value = val!;
   }
 
   Future<void> openEqualizer() async {

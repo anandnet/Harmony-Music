@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
-import 'package:audiotags/audiotags.dart';
+//import 'package:audiotags/audiotags.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
+//import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
 import 'package:hive/hive.dart';
@@ -16,7 +16,7 @@ import '/utils/helper.dart';
 import '/models/media_Item_builder.dart';
 import '/services/music_service.dart';
 import '../ui/screens/Library/library_controller.dart';
-import '../models/thumbnail.dart' as th;
+//import '../models/thumbnail.dart' as th;
 
 class Downloader extends GetxService {
   MediaItem? currentSong;
@@ -52,7 +52,7 @@ class Downloader extends GetxService {
     if (!(await checkPermissionNDir())) return;
 
     // for toggle between downloading request & cancelling
-    if(playlistQueue.containsKey(playlistId)){
+    if (playlistQueue.containsKey(playlistId)) {
       songQueue.removeWhere((element) => songList.contains(element));
       playlistQueue.remove(playlistId);
       return;
@@ -174,24 +174,25 @@ class Downloader extends GetxService {
       Get.find<LibrarySongsController>().librarySongsList.add(song);
       printINFO("Downloaded successfully");
       try {
-        final imageUrl = th.Thumbnail(song.artUri!.toString()).sizewith(540);
-        Tag tag = Tag(
-            title: song.title,
-            trackArtist: song.artist,
-            album: song.album,
-            albumArtist: song.artist,
-            genre: song.genre,
-            pictures: [
-              Picture(
-                  bytes: (await NetworkAssetBundle(Uri.parse((imageUrl)))
-                          .load(imageUrl))
-                      .buffer
-                      .asUint8List(),
-                  mimeType: MimeType.none,
-                  pictureType: PictureType.coverFront)
-            ]);
+        /// Removed AudioTags as using this package, app is flagged as TROJ_GEN.R002V01K623 by TrendMicro-HouseCall
+        //   final imageUrl = th.Thumbnail(song.artUri!.toString()).sizewith(540);
+        //   Tag tag = Tag(
+        //       title: song.title,
+        //       trackArtist: song.artist,
+        //       album: song.album,
+        //       albumArtist: song.artist,
+        //       genre: song.genre,
+        //       pictures: [
+        //         Picture(
+        //             bytes: (await NetworkAssetBundle(Uri.parse((imageUrl)))
+        //                     .load(imageUrl))
+        //                 .buffer
+        //                 .asUint8List(),
+        //             mimeType: MimeType.none,
+        //             pictureType: PictureType.coverFront)
+        //       ]);
 
-        await AudioTags.write(filePath, tag);
+        //   await AudioTags.write(filePath, tag);
       } catch (e) {
         printERROR("$e");
       }

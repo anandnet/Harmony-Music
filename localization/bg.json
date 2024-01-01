@@ -72,7 +72,7 @@
     "playlistBookmarkAddAlert": "Плейлистът е маркиран!",
     "albums": "Албуми",
     "radioNotAvailable": "Радиото не е достъпно за този изпълнител!",
-    "recentlyPlayed": "Наскоро изпълннявани",
+    "recentlyPlayed": "Наскоро изпълнявани",
     "viewArtist": "Преглед на изпълнител",
     "createnAdd": "Създаване и добавяне",
     "topmusicvideos": "Най-популярни",
@@ -131,9 +131,9 @@
     "shareSong": "Споделете тази песен",
     "songRemovedAlert": "Премахнато от",
     "downloads": "Изтегляния",
-    "removeFromLib": "Премахване от библиотеката песни",
-    "downloadingFormat": "Изтегли Файл формат",
-    "songAlreadyOfflineAlert": "Песента е налична в кеша като офлайн",
+    "removeFromLib": "Премахване на песни от библиотеката",
+    "downloadingFormat": "Изтегляне на файлов формат",
+    "songAlreadyOfflineAlert": "Песента вече е офлайн в кеша",
     "downloadLocation": "Местоположение на изтеглянията",
     "downloadingFormatDes": "Изберете файлов формат за изтегляне. \"Opus\" ще осигури най-доброто качество"
 }

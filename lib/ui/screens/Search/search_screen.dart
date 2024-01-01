@@ -75,15 +75,22 @@ class SearchScreen extends StatelessWidget {
                       autofocus: true,
                       cursorColor: Theme.of(context).textTheme.bodySmall!.color,
                       decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.only(left: 5),
-                        focusColor: Colors.white,
-                        hintText: "searchDes".tr,
-                      ),
+                          contentPadding: const EdgeInsets.only(left: 5),
+                          focusColor: Colors.white,
+                          hintText: "searchDes".tr,
+                          suffix: IconButton(
+                            onPressed: searchScreenController.reset,
+                            icon: const Icon(Icons.close),
+                            splashRadius: 16,
+                            iconSize: 19,
+                          )),
                     ),
                     Expanded(
                       child: Obx(() {
-                        final isEmpty =
-                            searchScreenController.suggestionList.isEmpty || searchScreenController.textInputController.text=="";
+                        final isEmpty = searchScreenController
+                                .suggestionList.isEmpty ||
+                            searchScreenController.textInputController.text ==
+                                "";
                         final list = isEmpty
                             ? searchScreenController.historyQuerylist.toList()
                             : searchScreenController.suggestionList.toList();
@@ -111,22 +118,28 @@ class SearchScreen extends StatelessWidget {
                               width: 80,
                               child: Row(
                                 children: [
-                                isEmpty? IconButton(
-                                    iconSize: 18,
-                                    splashRadius: 18,
-                                    visualDensity: const VisualDensity(horizontal: -2),
-                                    onPressed: () {
-                                      searchScreenController.removeQueryFromHistory(
+                                  isEmpty
+                                      ? IconButton(
+                                          iconSize: 18,
+                                          splashRadius: 18,
+                                          visualDensity: const VisualDensity(
+                                              horizontal: -2),
+                                          onPressed: () {
+                                            searchScreenController
+                                                .removeQueryFromHistory(
                                                     list[index]);
-                                    },
-                                    icon: Icon(
-                                      Icons.clear,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium!
-                                          .color,
-                                    ),
-                                  ):const SizedBox(width: 40,),
+                                          },
+                                          icon: Icon(
+                                            Icons.clear,
+                                            color: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .color,
+                                          ),
+                                        )
+                                      : const SizedBox(
+                                          width: 40,
+                                        ),
                                   IconButton(
                                     iconSize: 20,
                                     splashRadius: 18,

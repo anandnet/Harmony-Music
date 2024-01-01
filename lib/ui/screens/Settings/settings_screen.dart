@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:harmonymusic/utils/lang_mapping.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '/ui/utils/home_library_controller.dart';
-import '../widgets/snackbar.dart';
+import '../Library/library_controller.dart';
+import '../../widgets/snackbar.dart';
 import '/ui/widgets/link_piped.dart';
 import '/services/music_service.dart';
 import '/ui/player/player_controller.dart';
@@ -12,13 +12,16 @@ import '/ui/utils/theme_controller.dart';
 import 'settings_screen_controller.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+  const SettingsScreen({super.key, this.isBottomNavActive = false});
+  final bool isBottomNavActive;
 
   @override
   Widget build(BuildContext context) {
     final settingsController = Get.find<SettingsScreenController>();
     return Padding(
-      padding: const EdgeInsets.only(top: 90.0, left: 5),
+      padding: isBottomNavActive
+          ? const EdgeInsets.only(left: 20, top: 90)
+          : const EdgeInsets.only(top: 90.0, left: 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -100,7 +103,7 @@ class SettingsScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium),
                 trailing: Obx(
                   () => DropdownButton(
-                    menuMaxHeight: Get.height - 200,
+                    menuMaxHeight: Get.height - 250,
                     dropdownColor: Theme.of(context).cardColor,
                     underline: const SizedBox.shrink(),
                     style: Theme.of(context).textTheme.titleSmall,
@@ -144,6 +147,32 @@ class SettingsScreen extends StatelessWidget {
                   builder: (context) => const DiscoverContentSelectorDialog(),
                 ),
               ),
+              ListTile(
+                contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                title: Text("homeContentCount".tr),
+                subtitle: Text("homeContentCountDes".tr,
+                    style: Theme.of(context).textTheme.bodyMedium),
+                trailing: Obx(
+                  () => DropdownButton(
+                    dropdownColor: Theme.of(context).cardColor,
+                    underline: const SizedBox.shrink(),
+                    value: settingsController.noOfHomeScreenContent.value,
+                    items: ([3,5,7,9,11]).map((e) => DropdownMenuItem(
+                          value: e, child: Text("$e"))).toList(),
+                    onChanged: settingsController.setContentNumber,
+                  ),
+                ),
+              ),
+              ListTile(
+                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                  title: Text("enableBottomNav".tr),
+                  subtitle: Text("enableBottomNavDes".tr,
+                      style: Theme.of(context).textTheme.bodyMedium),
+                  trailing: Obx(
+                    () => Switch(
+                        value: settingsController.isBottomNavBarEnabled.isTrue,
+                        onChanged: settingsController.enableBottomNavBar),
+                  )),
               ListTile(
                   contentPadding: const EdgeInsets.only(left: 5, right: 10),
                   title: Text("cacheSongs".tr),

@@ -184,6 +184,9 @@ class MusicServices extends getx.GetxService {
       bool shuffle = false,
       String? additionalParamsNext,
       bool onlyRelated = false}) async {
+    if(videoId.substring(0,4)== "MPED"){
+      videoId = videoId.substring(4);
+    }
     final data = Map.from(_context);
     data['enablePersistentPlaylistPanel'] = true;
     data['isAudioOnly'] = true;
@@ -467,6 +470,9 @@ class MusicServices extends getx.GetxService {
   Future<List<String>?> getSongUri(String songId,
       {AudioQuality quality = AudioQuality.High, int attempt = 1}) async {
     try {
+      if (songId.substring(0, 4) == "MPED") {
+        songId = songId.substring(4);
+      }
       final songStreamManifest =
           await _yt.videos.streamsClient.getManifest(songId);
       final streamUriList = songStreamManifest.audioOnly.sortByBitrate();

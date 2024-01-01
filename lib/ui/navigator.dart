@@ -4,11 +4,12 @@ import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/models/artist.dart';
 import 'package:harmonymusic/models/playlist.dart';
 
-import 'package:harmonymusic/ui/screens/artist_screen.dart';
-import 'package:harmonymusic/ui/screens/home_screen.dart';
-import 'package:harmonymusic/ui/screens/playlistnalbum_screen.dart';
-import 'package:harmonymusic/ui/screens/search_screen.dart';
-import 'screens/search_result_screen.dart';
+import 'package:harmonymusic/ui/screens/Artists/artist_screen.dart';
+import 'package:harmonymusic/ui/screens/Home/home_screen.dart';
+import 'package:harmonymusic/ui/screens/PlaylistNAlbum/playlistnalbum_screen.dart';
+
+import 'screens/Search/search_result_screen.dart';
+import 'screens/Search/search_screen.dart';
 
 class ScreenNavigationSetup {
   ScreenNavigationSetup._();

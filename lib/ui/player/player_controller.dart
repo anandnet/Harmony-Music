@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'package:flutter_lyric/lyric_ui/ui_netease.dart';
+import 'package:harmonymusic/services/synced_lyrics_service.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +10,8 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import '../../utils/helper.dart';
 import '/models/media_Item_builder.dart';
-import '/ui/screens/home_screen_controller.dart';
-import '/ui/screens/playlistnalbum_screen_controller.dart';
+import '../screens/Home/home_screen_controller.dart';
+import '../screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
 import '../widgets/sliding_up_panel.dart';
 import '/models/durationstate.dart';
 import '/services/music_service.dart';
@@ -20,14 +23,19 @@ class PlayerController extends GetxController {
 
   final playerPaneOpacity = (1.0).obs;
   final isPlayerpanelTopVisible = true.obs;
-  final isPlayerPaneDraggable = true.obs;
+  final isPanelGTHOpened = false.obs;
   final playerPanelMinHeight = 0.0.obs;
-  bool _initFlagForPlayer = true;
+  bool initFlagForPlayer = true;
   final isQueueReorderingInProcess = false.obs;
   PanelController playerPanelController = PanelController();
   bool isRadioModeOn = false;
   String? radioContinuationParam;
   dynamic radioInitiatorItem;
+  Timer? sleepTimer;
+  int timerDuration = 0;
+  final timerDurationLeft = 0.obs;
+  final isSleepTimerActive = false.obs;
+  final isSleepEndOfSongActive = false.obs;
 
   final progressBarStatus = ProgressBarState(
           buffered: Duration.zero, current: Duration.zero, total: Duration.zero)
@@ -41,7 +49,10 @@ class PlayerController extends GetxController {
   final isCurrentSongFav = false.obs;
   final showLyricsflag = false.obs;
   final isLyricsLoading = false.obs;
-  final lyrics = "".obs;
+  final lyricsMode = 0.obs;
+  final lyricUi = UINetease(highlight: true, defaultSize: 22);
+  RxMap<String, dynamic> lyrics =
+      <String, dynamic>{"synced": "", "plainLyrics": ""}.obs;
   ScrollController scrollController = ScrollController();
   final GlobalKey<ScaffoldState> homeScaffoldkey = GlobalKey<ScaffoldState>();
 
@@ -52,8 +63,10 @@ class PlayerController extends GetxController {
 
   late StreamSubscription<bool> keyboardSubscription;
 
-  PlayerController() {
+  @override
+  onInit() {
     _init();
+    super.onInit();
   }
 
   void _init() async {
@@ -64,20 +77,25 @@ class PlayerController extends GetxController {
     _listenForChangesInDuration();
     _listenForPlaylistChange();
     _listenForKeyboardActivity();
+    _setInitLyricsMode();
+  }
+
+  void _setInitLyricsMode() {
+    lyricsMode.value = Hive.box("AppPrefs").get("lyricsMode") ?? 0;
   }
 
   void panellistener(double x) {
     if (x >= 0 && x <= 0.2) {
       playerPaneOpacity.value = 1 - (x * 5);
       isPlayerpanelTopVisible.value = true;
-    }
-    if (x > 0.2) {
+    } else if (x > 0.2) {
       isPlayerpanelTopVisible.value = false;
     }
-    if (x > 0) {
-      isPlayerPaneDraggable.value = false;
+
+    if (x > 0.6) {
+      isPanelGTHOpened.value = true;
     } else {
-      isPlayerPaneDraggable.value = true;
+      isPanelGTHOpened.value = false;
     }
   }
 
@@ -110,6 +128,13 @@ class PlayerController extends GetxController {
   void _listenForChangesInPosition() {
     AudioService.position.listen((position) {
       final oldState = progressBarStatus.value;
+      if(isSleepEndOfSongActive.isTrue){
+        timerDurationLeft.value = oldState.total.inSeconds - position.inSeconds;
+        if(timerDurationLeft.value == 1){
+          pause();
+          cancelSleepTimer();
+        }
+      }
       progressBarStatus.update((val) {
         val!.current = position;
         val.buffered = oldState.buffered;
@@ -158,7 +183,7 @@ class PlayerController extends GetxController {
         if (isRadioModeOn && (currentSong.value!.id == currentQueue.last.id)) {
           await _addRadioContinuation(radioInitiatorItem!);
         }
-        lyrics.value = "";
+        lyrics.value = {"synced": "", "plainLyrics": ""};
         showLyricsflag.value = false;
       }
     });
@@ -213,7 +238,7 @@ class PlayerController extends GetxController {
   Future<void> playPlayListSong(List<MediaItem> mediaItems, int index) async {
     isRadioModeOn = false;
     //open player pane,set current song and push first song into playing list,
-    final init = _initFlagForPlayer;
+    final init = initFlagForPlayer;
     currentSong.value = mediaItems[index];
 
     //for changing home content based on last interation
@@ -303,9 +328,14 @@ class PlayerController extends GetxController {
       playerPanelController.open();
     }
 
-    if (_initFlagForPlayer) {
-      playerPanelMinHeight.value = 75.0 + Get.mediaQuery.viewPadding.bottom;
-      _initFlagForPlayer = false;
+    if (initFlagForPlayer) {
+      if (Get.find<SettingsScreenController>().isBottomNavBarEnabled.isFalse ||
+          getCurrentRouteName() == '/searchResultScreen') {
+        playerPanelMinHeight.value = 75.0 + Get.mediaQuery.viewPadding.bottom;
+      } else {
+        playerPanelMinHeight.value = 75.0;
+      }
+      initFlagForPlayer = false;
     }
   }
 
@@ -378,8 +408,7 @@ class PlayerController extends GetxController {
         : box.delete(currMediaItem.id);
     try {
       final playlistController = Get.find<PlayListNAlbumScreenController>();
-      if (!playlistController.isAlbum &&
-          playlistController.id == "LIBFAV") {
+      if (!playlistController.isAlbum && playlistController.id == "LIBFAV") {
         isCurrentSongFav.isFalse
             ? playlistController.addNRemoveItemsinList(currMediaItem,
                 action: 'add', index: 0)
@@ -402,8 +431,7 @@ class PlayerController extends GetxController {
       box.add(MediaItemBuilder.toJson(mediaItem));
       try {
         final playlistController = Get.find<PlayListNAlbumScreenController>();
-        if (!playlistController.isAlbum &&
-            playlistController.id == "LIBRP") {
+        if (!playlistController.isAlbum && playlistController.id == "LIBRP") {
           if (playlistController.songList.length > 20) {
             playlistController.addNRemoveItemsinList(null,
                 action: 'remove',
@@ -420,19 +448,70 @@ class PlayerController extends GetxController {
 
   Future<void> showLyrics() async {
     showLyricsflag.value = !showLyricsflag.value;
-    if (lyrics.isEmpty && showLyricsflag.value) {
+    if ((lyrics["synced"].isEmpty && lyrics['plainLyrics'].isEmpty) &&
+        showLyricsflag.value) {
       isLyricsLoading.value = true;
+      final Map<String, dynamic>? lyricsR =
+          await SyncedLyricsService.getSyncedLyrics(
+              currentSong.value!, progressBarStatus.value.total.inSeconds);
+      if (lyricsR != null) {
+        lyrics.value = lyricsR;
+        isLyricsLoading.value = false;
+        return;
+      }
       final related = await _musicServices.getWatchPlaylist(
           videoId: currentSong.value!.id, onlyRelated: true);
       final relatedLyricsId = related['lyrics'];
       if (relatedLyricsId != null) {
         final lyrics_ = await _musicServices.getLyrics(relatedLyricsId);
-        lyrics.value = lyrics_ as String;
-      }else{
-        lyrics.value = "NA";
+        lyrics.value = {"synced": "", "plainLyrics": lyrics_};
+      } else {
+        lyrics.value = {"synced": "", "plainLyrics": "NA"};
       }
       isLyricsLoading.value = false;
     }
+  }
+
+  void changeLyricsMode(int? val) {
+    Hive.box("AppPrefs").put("lyricsMode", val);
+    lyricsMode.value = val!;
+  }
+
+  void sleepEndOfSong(){
+    isSleepTimerActive.value = true;
+    isSleepEndOfSongActive.value = true;
+  }
+
+  void startSleepTimer(int minutes) {
+    timerDuration = minutes * 60;
+    isSleepTimerActive.value = true;
+    if ((sleepTimer != null && !sleepTimer!.isActive) || sleepTimer == null) {
+      sleepTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (timer.tick == timerDuration) {
+          sleepTimer?.cancel();
+          pause();
+          isSleepTimerActive.value = false;
+          timerDuration = 0;
+          timerDurationLeft.value = 0;
+        } else {
+          timerDurationLeft.value = timerDuration - timer.tick;
+        }
+      });
+    }
+  }
+
+  void addFiveMinutes() {
+    timerDuration += 300;
+  }
+
+  void cancelSleepTimer() {
+    if(isSleepEndOfSongActive.isTrue){
+      isSleepEndOfSongActive.value = false;
+    }
+    sleepTimer?.cancel();
+    isSleepTimerActive.value = false;
+    timerDuration = 0;
+    timerDurationLeft.value = 0;
   }
 
   Future<void> openEqualizer() async {
@@ -444,6 +523,7 @@ class PlayerController extends GetxController {
     _audioHandler.customAction('dispose');
     keyboardSubscription.cancel();
     scrollController.dispose();
+    sleepTimer?.cancel();
     super.dispose();
   }
 }

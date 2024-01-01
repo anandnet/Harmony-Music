@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/screens/Home/home_screen_controller.dart';
 import 'package:hive/hive.dart';
 
-import '../../utils/helper.dart';
-import '../../models/artist.dart';
-import '../utils/home_library_controller.dart';
+import '../../../models/artist.dart';
+import '../../../utils/helper.dart';
+import '../Library/library_controller.dart';
 import '/services/music_service.dart';
 
 class ArtistScreenController extends GetxController {
@@ -26,6 +27,7 @@ class ArtistScreenController extends GetxController {
   void onReady() {
     final args = Get.arguments;
     _init(args[0], args[1]);
+    Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onReady();
   }
 
@@ -170,6 +172,7 @@ class ArtistScreenController extends GetxController {
     tempListContainer.clear();
     songScrollController.dispose();
     videoScrollController.dispose();
+    Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();
   }
 }

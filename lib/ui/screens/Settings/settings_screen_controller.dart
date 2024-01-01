@@ -8,14 +8,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../utils/update_check_flag_file.dart';
+import '../../../utils/update_check_flag_file.dart';
 import '/services/piped_service.dart';
-import '/ui/utils/home_library_controller.dart';
-import '../widgets/snackbar.dart';
-import '../../utils/helper.dart';
+import '../Library/library_controller.dart';
+import '../../widgets/snackbar.dart';
+import '../../../utils/helper.dart';
 import '/services/music_service.dart';
 import '/ui/player/player_controller.dart';
-import '/ui/screens/home_screen_controller.dart';
+import '../Home/home_screen_controller.dart';
 import '/ui/utils/theme_controller.dart';
 
 class SettingsScreenController extends GetxController {
@@ -24,6 +24,7 @@ class SettingsScreenController extends GetxController {
   final setBox = Hive.box("AppPrefs");
   final themeModetype = ThemeType.dynamic.obs;
   final skipSilenceEnabled = false.obs;
+  final noOfHomeScreenContent = 3.obs;
   final streamingQuality = AudioQuality.High.obs;
   final isIgnoringBatteryOptimizations = false.obs;
   final discoverContentType = "QP".obs;
@@ -34,6 +35,7 @@ class SettingsScreenController extends GetxController {
   final downloadLocationPath = "".obs;
   final downloadingFormat = "".obs;
   final hideDloc = true.obs;
+  final isBottomNavBarEnabled = false.obs;
   final currentVersion = "V1.7.0";
 
   @override
@@ -44,16 +46,17 @@ class SettingsScreenController extends GetxController {
   }
 
   get currentVision => currentVersion;
-  get isCurrentPathsupportDownDir => "$_supportDir/Music" == downloadLocationPath.toString();
+  get isCurrentPathsupportDownDir =>
+      "$_supportDir/Music" == downloadLocationPath.toString();
   get supportDirPath => _supportDir;
 
   _checkNewVersion() {
     newVersionCheck(currentVersion)
         .then((value) => isNewVersionAvailable.value = value);
-  _createInAppSongDownDir();
+    _createInAppSongDownDir();
   }
 
- Future<String> _createInAppSongDownDir() async {
+  Future<String> _createInAppSongDownDir() async {
     _supportDir = (await getApplicationSupportDirectory()).path;
     final directory = Directory("$_supportDir/Music/");
     if (!await directory.exists()) {
@@ -64,13 +67,15 @@ class SettingsScreenController extends GetxController {
 
   Future<void> _setInitValue() async {
     currentAppLanguageCode.value = setBox.get('currentAppLanguageCode') ?? "en";
+    isBottomNavBarEnabled.value = setBox.get("isBottomNavBarEnabled") ?? false;
+    noOfHomeScreenContent.value = setBox.get("noOfHomeScreenContent") ?? 3;
     cacheSongs.value = setBox.get('cacheSongs');
     themeModetype.value = ThemeType.values[setBox.get('themeModeType')];
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
-    downloadLocationPath.value = setBox.get('downloadLocationPath') ??
-        await _createInAppSongDownDir();
+    downloadLocationPath.value =
+        setBox.get('downloadLocationPath') ?? await _createInAppSongDownDir();
     downloadingFormat.value = setBox.get('downloadingFormat') ?? "opus";
     discoverContentType.value = setBox.get('discoverContentType') ?? "QP";
     if (setBox.containsKey("piped")) {
@@ -90,9 +95,31 @@ class SettingsScreenController extends GetxController {
     setBox.put('currentAppLanguageCode', val);
   }
 
+  void setContentNumber(int? no) {
+    noOfHomeScreenContent.value = no!;
+    setBox.put("noOfHomeScreenContent", no);
+  }
+
   void setStreamingQuality(dynamic val) {
     setBox.put("streamingQuality", AudioQuality.values.indexOf(val));
     streamingQuality.value = val;
+  }
+
+  void enableBottomNavBar(bool val) {
+    final homeScrCon = Get.find<HomeScreenController>();
+    final playerCon = Get.find<PlayerController>();
+    if (val) {
+      homeScrCon.onSideBarTabSelected(3);
+      isBottomNavBarEnabled.value = true;
+    } else {
+      isBottomNavBarEnabled.value = false;
+      homeScrCon.onSideBarTabSelected(5);
+    }
+    if (!Get.find<PlayerController>().initFlagForPlayer) {
+      playerCon.playerPanelMinHeight.value =
+          val ? 75.0 : 75.0 + Get.mediaQuery.viewPadding.bottom;
+    }
+    setBox.put("isBottomNavBarEnabled", val);
   }
 
   void changeDownloadingFormat(String? val) {
@@ -115,7 +142,7 @@ class SettingsScreenController extends GetxController {
     downloadLocationPath.value = pickedFolderPath;
   }
 
-  void showDownLoc(){
+  void showDownLoc() {
     hideDloc.value = false;
   }
 

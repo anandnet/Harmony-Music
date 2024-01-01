@@ -1,15 +1,16 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:hive/hive.dart';
 
-import '../../utils/update_check_flag_file.dart';
-import '../../utils/helper.dart';
+import '../../../utils/update_check_flag_file.dart';
+import '../../../utils/helper.dart';
 import '/models/album.dart';
 import '/models/playlist.dart';
 import '/models/quick_picks.dart';
 import '/services/music_service.dart';
-import '/ui/screens/settings_screen_controller.dart';
+import '../Settings/settings_screen_controller.dart';
 import '/ui/widgets/new_version_dialog.dart';
 
 class HomeScreenController extends GetxController {
@@ -21,6 +22,8 @@ class HomeScreenController extends GetxController {
   final middleContent = [].obs;
   final fixedContent = [].obs;
   final showVersionDialog = true.obs;
+  //isHomeScreenOnTop var only useful if bottom nav enabled
+  final isHomeSreenOnTop = true.obs;
 
   @override
   onInit() {
@@ -36,7 +39,9 @@ class HomeScreenController extends GetxController {
     networkError.value = false;
     try {
       List middleContentTemp = [];
-      final homeContentListMap = await _musicServices.getHome(limit: 10);
+      final homeContentListMap = await _musicServices.getHome(
+          limit:
+              Get.find<SettingsScreenController>().noOfHomeScreenContent.value);
       if (contentType == "TR") {
         final index = homeContentListMap
             .indexWhere((element) => element['title'] == "Trending");
@@ -74,13 +79,16 @@ class HomeScreenController extends GetxController {
           quickPicks.value = QuickPicks(List<MediaItem>.from(con["contents"]));
           middleContentTemp.addAll(rel);
         }
-      } else if (quickPicks.value.songList.isEmpty) {
+      } 
+      
+      if (quickPicks.value.songList.isEmpty) {
         final index = homeContentListMap
             .indexWhere((element) => element['title'] == "Quick picks");
         final con = homeContentListMap.removeAt(index);
         quickPicks.value = QuickPicks(List<MediaItem>.from(con["contents"]),
             title: "Quick picks");
       }
+      
       middleContent.value = _setContentList(middleContentTemp);
       fixedContent.value = _setContentList(homeContentListMap);
 
@@ -138,10 +146,10 @@ class HomeScreenController extends GetxController {
       if (songId != null) {
         final value = await _musicServices.getContentRelatedToSong(songId);
         middleContent.value = _setContentList(value);
-        if ((value[0]['title']).contains("like")) {
+        if (value.isNotEmpty && (value[0]['title']).contains("like")) {
           quickPicks_ = QuickPicks(List<MediaItem>.from(value[0]["contents"]));
+          Hive.box("AppPrefs").put("recentSongId", songId);
         }
-        Hive.box("AppPrefs").put("recentSongId", songId);
       }
     }
     if (quickPicks_ == null) return;
@@ -149,7 +157,11 @@ class HomeScreenController extends GetxController {
     quickPicks.value = quickPicks_;
   }
 
-  void onTabSelected(int index) {
+  void onSideBarTabSelected(int index) {
+    tabIndex.value = index;
+  }
+
+  void onBottonBarTabSelected(int index) {
     tabIndex.value = index;
   }
 
@@ -171,5 +183,32 @@ class HomeScreenController extends GetxController {
   void onChangeVersionVisibility(bool val) {
     Hive.box("AppPrefs").put("newVersionVisibility", !val);
     showVersionDialog.value = !val;
+  }
+
+  ///this fn only useful if bottom nav enabled
+  void whenHomeScreenOnTop() {
+    if (Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue) {
+      final currentRoute = getCurrentRouteName();
+      final isHomeOnTop = currentRoute == '/homeScreen';
+      final isResultScreenOnTop = currentRoute == '/searchResultScreen';
+      final playerCon = Get.find<PlayerController>();
+
+      isHomeSreenOnTop.value = isHomeOnTop;
+
+      // Set miniplayer height accordingly
+      if (!playerCon.initFlagForPlayer) {
+        if (isHomeOnTop) {
+          playerCon.playerPanelMinHeight.value = 75.0;
+        } else {
+          Future.delayed(
+              isResultScreenOnTop
+                  ? const Duration(milliseconds: 300)
+                  : Duration.zero, () {
+            playerCon.playerPanelMinHeight.value =
+                75.0 + Get.mediaQuery.viewPadding.bottom;
+          });
+        }
+      }
+    }
   }
 }

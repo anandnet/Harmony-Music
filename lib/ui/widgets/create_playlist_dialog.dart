@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '/services/piped_service.dart';
-import '/ui/utils/home_library_controller.dart';
+import '../screens/Library/library_controller.dart';
 import '/ui/widgets/snackbar.dart';
 import '../../models/playlist.dart';
 

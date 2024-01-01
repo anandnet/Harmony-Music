@@ -2,11 +2,11 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../screens/Artists/artist_screen_controller.dart';
+import '../screens/Search/search_result_screen_controller.dart';
 import '/models/album.dart';
 import '/models/artist.dart';
 import '/models/playlist.dart';
-import '/ui/screens/artist_screen_controller.dart';
-import '/ui/screens/search_result_screen_controller.dart';
 import '/ui/widgets/content_list_widget.dart';
 import '/ui/widgets/sort_widget.dart';
 import 'list_widget.dart';

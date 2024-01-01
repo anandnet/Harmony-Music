@@ -14,10 +14,10 @@ import '/services/audio_handler.dart';
 import '/services/music_service.dart';
 import '/ui/home.dart';
 import '/ui/player/player_controller.dart';
-import '/ui/screens/settings_screen_controller.dart';
+import 'ui/screens/Settings/settings_screen_controller.dart';
 import '/ui/utils/theme_controller.dart';
-import 'ui/screens/home_screen_controller.dart';
-import 'ui/utils/home_library_controller.dart';
+import 'ui/screens/Home/home_screen_controller.dart';
+import 'ui/screens/Library/library_controller.dart';
 import 'utils/house_keeping.dart';
 import 'utils/update_check_flag_file.dart';
 
@@ -74,7 +74,7 @@ Future<void> startApplicationServices() async {
   Get.lazyPut(() => MusicServices(true), fenix: true);
   Get.lazyPut(() => ThemeController(), fenix: true);
   Get.lazyPut(() => PlayerController(), fenix: true);
-  Get.lazyPut(() => HomeScreenController());
+  Get.lazyPut(() => HomeScreenController(), fenix: true);
   Get.lazyPut(() => LibrarySongsController(), fenix: true);
   Get.lazyPut(() => LibraryPlaylistsController(), fenix: true);
   Get.lazyPut(() => LibraryAlbumsController(), fenix: true);

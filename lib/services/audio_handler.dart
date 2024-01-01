@@ -11,8 +11,8 @@ import '/services/permission_service.dart';
 import '../utils/helper.dart';
 import '/models/media_Item_builder.dart';
 import '/services/utils.dart';
-import '/ui/screens/settings_screen_controller.dart';
-import '../ui/utils/home_library_controller.dart';
+import '../ui/screens/Settings/settings_screen_controller.dart';
+import '../ui/screens/Library/library_controller.dart';
 import 'music_service.dart';
 
 Future<AudioHandler> initAudioService() async {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '/ui/screens/search_result_screen_controller.dart';
+import '../screens/Search/search_result_screen_controller.dart';
 import '/ui/widgets/content_list_widget_item.dart';
 
 class ContentListWidget extends StatelessWidget {

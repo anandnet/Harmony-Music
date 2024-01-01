@@ -2,14 +2,15 @@ import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
+import '../Home/home_screen_controller.dart';
 import '/services/piped_service.dart';
-import '../../utils/helper.dart';
+import '../../../utils/helper.dart';
 import '/models/playlist.dart';
 import '/models/album.dart';
 import '/models/thumbnail.dart';
-import '../../models/media_Item_builder.dart';
-import '../../services/music_service.dart';
-import '../utils/home_library_controller.dart';
+import '../../../models/media_Item_builder.dart';
+import '../../../services/music_service.dart';
+import '../Library/library_controller.dart';
 
 class PlayListNAlbumScreenController extends GetxController {
   final MusicServices _musicServices = Get.find<MusicServices>();
@@ -31,6 +32,7 @@ class PlayListNAlbumScreenController extends GetxController {
       isAlbum = args[0];
       _init(args[1], args[0], args[2]);
     }
+    Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onReady();
   }
 
@@ -203,6 +205,7 @@ class PlayListNAlbumScreenController extends GetxController {
   void onClose() {
     tempListContainer.clear();
     if(id != "SongDownloads") box.close();
+    Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();
   }
 }

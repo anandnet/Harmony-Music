@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../utils/helper.dart';
+import '../../../utils/helper.dart';
+import '../Home/home_screen_controller.dart';
 import '/services/music_service.dart';
 
 class SearchResultScreenController extends GetxController {
@@ -21,9 +22,10 @@ class SearchResultScreenController extends GetxController {
   final Map<String, ScrollController> scrollControllers = {};
 
   @override
-  void onInit() async {
+  void onReady(){
     _getInitSearchResult();
-    super.onInit();
+    Get.find<HomeScreenController>().whenHomeScreenOnTop();
+    super.onReady();
   }
 
   Future<void> onDestinationSelected(int value) async {
@@ -132,6 +134,7 @@ class SearchResultScreenController extends GetxController {
     for (String item in railItems) {
       (scrollControllers[item])!.dispose();
     }
+    Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();
   }
 }

@@ -6,7 +6,7 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '/services/piped_service.dart';
-import '../../utils/helper.dart';
+import '../../../utils/helper.dart';
 import '/models/album.dart';
 import '/models/artist.dart';
 import '/models/media_Item_builder.dart';

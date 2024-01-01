@@ -7,6 +7,7 @@ import 'package:share_plus/share_plus.dart';
 import '/services/piped_service.dart';
 import '/services/downloader.dart';
 import '/ui/widgets/loader.dart';
+import '/ui/widgets/sleep_timer_bottom_sheet.dart';
 import '/ui/player/player_controller.dart';
 import '../screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
 import '../screens/Library/library_controller.dart';
@@ -34,7 +35,7 @@ class SongInfoBottomSheet extends StatelessWidget {
     final songInfoController =
         Get.put(SongInfoController(song, calledFromPlayer));
     return Padding(
-      padding: EdgeInsets.only(bottom:Get.mediaQuery.padding.bottom),
+      padding: EdgeInsets.only(bottom: Get.mediaQuery.padding.bottom),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -61,7 +62,8 @@ class SongInfoBottomSheet extends StatelessWidget {
                               "https://youtube.com/watch?v=${song.id}"),
                           icon: Icon(
                             Icons.share_rounded,
-                            color: Theme.of(context).textTheme.titleMedium!.color,
+                            color:
+                                Theme.of(context).textTheme.titleMedium!.color,
                           ))
                       : IconButton(
                           onPressed: songInfoController.toggleFav,
@@ -77,11 +79,13 @@ class SongInfoBottomSheet extends StatelessWidget {
                   Obx(
                     () => (downloader.songQueue.contains(song) &&
                                 downloader.currentSong == song &&
-                                downloader.songDownloadingProgress.value == 100) ||
+                                downloader.songDownloadingProgress.value ==
+                                    100) ||
                             Hive.box("SongDownloads").containsKey(song.id)
                         ? Icon(
                             Icons.download_done,
-                            color: Theme.of(context).textTheme.titleMedium!.color,
+                            color:
+                                Theme.of(context).textTheme.titleMedium!.color,
                           )
                         : downloader.songQueue.contains(song) &&
                                 downloader.isJobRunning.isTrue &&
@@ -104,9 +108,9 @@ class SongInfoBottomSheet extends StatelessWidget {
                                     LoadingIndicator(
                                       dimension: 30,
                                       strokeWidth: 4,
-                                      value:
-                                          (downloader.songDownloadingProgress.value) /
-                                              100,
+                                      value: (downloader
+                                              .songDownloadingProgress.value) /
+                                          100,
                                     )
                                   ],
                                 ))
@@ -180,9 +184,9 @@ class SongInfoBottomSheet extends StatelessWidget {
                   title: Text("enqueueSong".tr),
                   onTap: () {
                     Get.find<PlayerController>().enqueueSong(song).whenComplete(
-                        () => ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                            context, "songEnqueueAlert".tr,
-                            size: SanckBarSize.MEDIUM)));
+                        () => ScaffoldMessenger.of(context).showSnackBar(
+                            snackbar(context, "songEnqueueAlert".tr,
+                                size: SanckBarSize.MEDIUM)));
                     Navigator.of(context).pop();
                   },
                 ),
@@ -194,7 +198,9 @@ class SongInfoBottomSheet extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).pop();
                     if (calledFromPlayer) {
-                      Get.find<PlayerController>().playerPanelController.close();
+                      Get.find<PlayerController>()
+                          .playerPanelController
+                          .close();
                     }
                     if (calledFromQueue) {
                       final playerController = Get.find<PlayerController>();
@@ -248,18 +254,32 @@ class SongInfoBottomSheet extends StatelessWidget {
                     }
                   })
               : const SizedBox.shrink(),
-          calledFromPlayer
-              ? const SizedBox(
-                  height: 10,
-                )
-              : ListTile(
-                  contentPadding: const EdgeInsets.only(left: 15),
-                  visualDensity: const VisualDensity(vertical: -1),
-                  leading: const Icon(Icons.share_rounded),
-                  title: Text("shareSong".tr),
-                  onTap: () =>
-                      Share.share("https://youtube.com/watch?v=${song.id}"),
-                ),
+          if (!calledFromPlayer)
+            ListTile(
+              contentPadding: const EdgeInsets.only(left: 15),
+              visualDensity: const VisualDensity(vertical: -1),
+              leading: const Icon(Icons.share_rounded),
+              title: Text("shareSong".tr),
+              onTap: () =>
+                  Share.share("https://youtube.com/watch?v=${song.id}"),
+            ),
+          if (calledFromPlayer)
+            ListTile(
+              contentPadding: const EdgeInsets.only(left: 15),
+              visualDensity: const VisualDensity(vertical: -1),
+              leading: const Icon(Icons.timer),
+              title: Text("sleepTimer".tr),
+              onTap: () {
+                Navigator.of(context).pop();
+                final playerController = Get.find<PlayerController>();
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  context:playerController.homeScaffoldkey.currentState!.context,
+                  barrierColor: Colors.transparent.withAlpha(100),
+                  builder: (context) => const SleepTimerBottomSheet(),
+                );
+              },
+            ),
         ],
       ),
     );

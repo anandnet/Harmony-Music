@@ -31,6 +31,11 @@ class PlayerController extends GetxController {
   bool isRadioModeOn = false;
   String? radioContinuationParam;
   dynamic radioInitiatorItem;
+  Timer? sleepTimer;
+  int timerDuration = 0;
+  final timerDurationLeft = 0.obs;
+  final isSleepTimerActive = false.obs;
+  final isSleepEndOfSongActive = false.obs;
 
   final progressBarStatus = ProgressBarState(
           buffered: Duration.zero, current: Duration.zero, total: Duration.zero)
@@ -45,7 +50,7 @@ class PlayerController extends GetxController {
   final showLyricsflag = false.obs;
   final isLyricsLoading = false.obs;
   final lyricsMode = 0.obs;
-  final lyricUi = UINetease(highlight: true,defaultSize: 22);
+  final lyricUi = UINetease(highlight: true, defaultSize: 22);
   RxMap<String, dynamic> lyrics =
       <String, dynamic>{"synced": "", "plainLyrics": ""}.obs;
   ScrollController scrollController = ScrollController();
@@ -58,8 +63,10 @@ class PlayerController extends GetxController {
 
   late StreamSubscription<bool> keyboardSubscription;
 
-  PlayerController() {
+  @override
+  onInit() {
     _init();
+    super.onInit();
   }
 
   void _init() async {
@@ -121,6 +128,13 @@ class PlayerController extends GetxController {
   void _listenForChangesInPosition() {
     AudioService.position.listen((position) {
       final oldState = progressBarStatus.value;
+      if(isSleepEndOfSongActive.isTrue){
+        timerDurationLeft.value = oldState.total.inSeconds - position.inSeconds;
+        if(timerDurationLeft.value == 1){
+          pause();
+          cancelSleepTimer();
+        }
+      }
       progressBarStatus.update((val) {
         val!.current = position;
         val.buffered = oldState.buffered;
@@ -463,6 +477,43 @@ class PlayerController extends GetxController {
     lyricsMode.value = val!;
   }
 
+  void sleepEndOfSong(){
+    isSleepTimerActive.value = true;
+    isSleepEndOfSongActive.value = true;
+  }
+
+  void startSleepTimer(int minutes) {
+    timerDuration = minutes * 60;
+    isSleepTimerActive.value = true;
+    if ((sleepTimer != null && !sleepTimer!.isActive) || sleepTimer == null) {
+      sleepTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (timer.tick == timerDuration) {
+          sleepTimer?.cancel();
+          pause();
+          isSleepTimerActive.value = false;
+          timerDuration = 0;
+          timerDurationLeft.value = 0;
+        } else {
+          timerDurationLeft.value = timerDuration - timer.tick;
+        }
+      });
+    }
+  }
+
+  void addFiveMinutes() {
+    timerDuration += 300;
+  }
+
+  void cancelSleepTimer() {
+    if(isSleepEndOfSongActive.isTrue){
+      isSleepEndOfSongActive.value = false;
+    }
+    sleepTimer?.cancel();
+    isSleepTimerActive.value = false;
+    timerDuration = 0;
+    timerDurationLeft.value = 0;
+  }
+
   Future<void> openEqualizer() async {
     await _audioHandler.customAction("openEqualizer");
   }
@@ -472,6 +523,7 @@ class PlayerController extends GetxController {
     _audioHandler.customAction('dispose');
     keyboardSubscription.cancel();
     scrollController.dispose();
+    sleepTimer?.cancel();
     super.dispose();
   }
 }

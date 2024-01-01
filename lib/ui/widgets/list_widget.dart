@@ -117,9 +117,20 @@ class ListWidget extends StatelessWidget {
             maxLines: 1,
             style: Theme.of(context).textTheme.titleSmall,
           ),
-          trailing: Text(
-            items[index].extras!['length'] ?? "",
-            style: Theme.of(context).textTheme.titleSmall,
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            if(isPlaylist) Obx(() =>
+                  playerController.currentSong.value?.id == items[index].id
+                      ? const Icon(
+                          Icons.equalizer_rounded,
+                        )
+                      : const SizedBox.shrink()),
+              Text(
+                items[index].extras!['length'] ?? "",
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ],
           ),
         ),
       ),

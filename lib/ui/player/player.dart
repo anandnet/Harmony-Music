@@ -384,6 +384,9 @@ class Player extends StatelessWidget {
                                                                   child: Text(
                                                                     "syncedLyricsNotAvailable"
                                                                         .tr,
+                                                                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                                                          color:
+                                                                              Colors.white),
                                                                   ),
                                                                 ),
                                                               ),
@@ -441,14 +444,11 @@ class Player extends StatelessWidget {
                                                 BorderRadius.circular(15),
                                             border: Border.all(
                                                 width: 1.3,
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .color!),
+                                                color: Colors.white),
                                             color: Theme.of(context)
                                                 .colorScheme
                                                 .secondary
-                                                .withAlpha(67)),
+                                                .withAlpha(150)),
                                         child: IconButton(
                                           onPressed: () {
                                             showModalBottomSheet(
@@ -463,7 +463,7 @@ class Player extends StatelessWidget {
                                                   const SleepTimerBottomSheet(),
                                             );
                                           },
-                                          icon: const Icon(Icons.timer),
+                                          icon: const Icon(Icons.timer,color: Colors.white,),
                                         ),
                                       ),
                                     ),

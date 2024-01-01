@@ -92,7 +92,7 @@ class SleepTimerBottomSheet extends StatelessWidget {
                                 Theme.of(context).textTheme.titleMedium!.color!,
                           ),
                         ),
-                        child: const Text("cancelTimer"))
+                        child: Text("cancelTimer".tr))
                   ],
                 ),
               ),

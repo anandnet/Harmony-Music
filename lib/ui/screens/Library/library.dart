@@ -184,7 +184,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                       controller: ScrollController(keepScrollOffset: false),
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
-                      padding: const EdgeInsets.only(bottom: 70, top: 10),
+                      padding: const EdgeInsets.only(bottom: 200, top: 10),
                       itemCount: isAlbumContent
                           ? libralbumCntrller.libraryAlbums.length
                           : librplstCntrller.libraryPlaylists.length,

@@ -187,7 +187,7 @@ class Body extends StatelessWidget {
                         ]
                       : [const HomeShimmer()];
                   return ListView.builder(
-                    padding: EdgeInsets.only(bottom: 90, top: topPadding),
+                    padding: EdgeInsets.only(bottom: 200, top: topPadding),
                     itemCount: items.length,
                     itemBuilder: (context, index) => items[index],
                   );

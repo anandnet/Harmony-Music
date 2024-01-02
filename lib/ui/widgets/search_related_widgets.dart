@@ -24,7 +24,7 @@ class ResultWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(0.0),
           child: SingleChildScrollView(
-            padding: const EdgeInsets.only(bottom: 84, top: 70),
+            padding: const EdgeInsets.only(bottom: 200, top: 70),
             child: searchResScrController.isResultContentFetced.value
                 ? Column(children: [
                     Align(

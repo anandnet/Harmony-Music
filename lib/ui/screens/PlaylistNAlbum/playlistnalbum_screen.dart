@@ -34,37 +34,25 @@ class PlaylistNAlbumScreen extends StatelessWidget {
       color: Theme.of(context).canvasColor,
       child: Row(
         children: [
-          NavigationRail(
-            leading: Column(
-              children: [
-                const SizedBox(
-                  height: 40,
-                ),
-                IconButton(
+          SizedBox(
+            width: 55,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(top:73.0),
+                child: IconButton(
                   icon: Icon(
                     Icons.arrow_back_ios_new_rounded,
                     color: Theme.of(context).textTheme.titleMedium!.color,
                   ),
                   onPressed: () {
-                    Get.nestedKey(ScreenNavigationSetup.id)!
-                        .currentState!
-                        .pop();
+                    Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
                   },
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-              ],
+              ),
             ),
-            selectedIndex: 0, //_selectedIndex,
-            minWidth: 60,
-            labelType: NavigationRailLabelType.all,
-            destinations: <NavigationRailDestination>[
-              railDestination("songs".tr),
-              railDestination(""),
-            ],
-            // selectedIconTheme: IconThemeData(color: Colors.white)
           ),
+          
           Obx(() {
             if (playListNAlbumScreenController.isContentFetched.isFalse) {
               return const Expanded(
@@ -101,151 +89,155 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                   (!playListNAlbumScreenController.isAlbum &&
                                       content.isPipedPlaylist))
                               ? Row(
-                                children: [
-                                !content.isPipedPlaylist?  GetX<Downloader>(builder: (controller) {
-                                    final id =
-                                        playListNAlbumScreenController
-                                                .isAlbum
-                                            ? content.browseId
-                                            : content.playlistId;
-                                    return IconButton(
-                                      onPressed: () {
-                                        if (playListNAlbumScreenController
-                                            .isDownloaded.isTrue) {
-                                          return;
-                                        }
-                                        controller.downloadPlaylist(
-                                            id,
-                                            playListNAlbumScreenController
-                                                .songList
-                                                .toList());
-                                      },
-                                      icon: playListNAlbumScreenController
-                                              .isDownloaded.isTrue
-                                          ? const Icon(
-                                              Icons.download_done_rounded)
-                                          : controller.playlistQueue
-                                                      .containsKey(id) &&
-                                                  controller
-                                                          .currentPlaylistId
-                                                          .toString() ==
-                                                      id
-                                              ? Stack(
-                                                  children: [
-                                                    Center(
-                                                        child: Text(
-                                                            "${controller.playlistDownloadingProgress.value}/${playListNAlbumScreenController.songList.length}",
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .titleMedium!
-                                                                .copyWith(
-                                                                    fontSize:
-                                                                        10,
-                                                                    fontWeight:
-                                                                        FontWeight.bold))),
-                                                    const Center(
-                                                        child:
-                                                            LoadingIndicator(
-                                                      dimension: 30,
-                                                    ))
-                                                  ],
-                                                )
-                                              : controller.playlistQueue
-                                                      .containsKey(id)
-                                                  ? const Stack(
-                                                      children: [
-                                                        Center(
-                                                            child: Icon(
-                                                          Icons
-                                                              .hourglass_bottom_rounded,
-                                                          size: 20,
-                                                        )),
-                                                        Center(
-                                                            child:
-                                                                LoadingIndicator(
-                                                          dimension: 30,
-                                                        ))
-                                                      ],
-                                                    )
-                                                  : const Icon(Icons
-                                                      .download_rounded),
-                                    );
-                                  }):const SizedBox.shrink(),
-                                  IconButton(
-                                      onPressed: () {
-                                        showModalBottomSheet(
-                                          context:
-                                              Get.find<PlayerController>()
-                                                  .homeScaffoldkey
-                                                  .currentState!
-                                                  .context,
-                                          barrierColor: Colors.transparent
-                                              .withAlpha(100),
-                                          builder: (context) => SizedBox(
-                                            height: 140,
-                                            child: Column(
-                                              children: [
-                                                ListTile(
-                                                  leading: const Icon(
-                                                      Icons.edit_rounded),
-                                                  title: Text(
-                                                      "renamePlaylist".tr),
-                                                  onTap: () {
-                                                    Navigator.of(context)
-                                                        .pop();
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (context) =>
-                                                          CreateNRenamePlaylistPopup(
-                                                              renamePlaylist:
-                                                                  true,
-                                                              playlist:
-                                                                  content),
-                                                    );
-                                                  },
-                                                ),
-                                                ListTile(
-                                                  leading: const Icon(
-                                                      Icons.delete_rounded),
-                                                  title: Text(
-                                                      "removePlaylist".tr),
-                                                  onTap: () {
-                                                    Navigator.of(context)
-                                                        .pop();
+                                  children: [
+                                    !content.isPipedPlaylist
+                                        ? GetX<Downloader>(
+                                            builder: (controller) {
+                                            final id =
+                                                playListNAlbumScreenController
+                                                        .isAlbum
+                                                    ? content.browseId
+                                                    : content.playlistId;
+                                            return IconButton(
+                                              onPressed: () {
+                                                if (playListNAlbumScreenController
+                                                    .isDownloaded.isTrue) {
+                                                  return;
+                                                }
+                                                controller.downloadPlaylist(
+                                                    id,
                                                     playListNAlbumScreenController
-                                                        .addNremoveFromLibrary(
-                                                            content,
-                                                            add: false)
-                                                        .then((value) {
-                                                      Get.nestedKey(
-                                                              ScreenNavigationSetup
-                                                                  .id)!
-                                                          .currentState!
+                                                        .songList
+                                                        .toList());
+                                              },
+                                              icon: playListNAlbumScreenController
+                                                      .isDownloaded.isTrue
+                                                  ? const Icon(Icons
+                                                      .download_done_rounded)
+                                                  : controller.playlistQueue
+                                                              .containsKey(
+                                                                  id) &&
+                                                          controller
+                                                                  .currentPlaylistId
+                                                                  .toString() ==
+                                                              id
+                                                      ? Stack(
+                                                          children: [
+                                                            Center(
+                                                                child: Text(
+                                                                    "${controller.playlistDownloadingProgress.value}/${playListNAlbumScreenController.songList.length}",
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .titleMedium!
+                                                                        .copyWith(
+                                                                            fontSize:
+                                                                                10,
+                                                                            fontWeight:
+                                                                                FontWeight.bold))),
+                                                            const Center(
+                                                                child:
+                                                                    LoadingIndicator(
+                                                              dimension: 30,
+                                                            ))
+                                                          ],
+                                                        )
+                                                      : controller.playlistQueue
+                                                              .containsKey(id)
+                                                          ? const Stack(
+                                                              children: [
+                                                                Center(
+                                                                    child: Icon(
+                                                                  Icons
+                                                                      .hourglass_bottom_rounded,
+                                                                  size: 20,
+                                                                )),
+                                                                Center(
+                                                                    child:
+                                                                        LoadingIndicator(
+                                                                  dimension: 30,
+                                                                ))
+                                                              ],
+                                                            )
+                                                          : const Icon(Icons
+                                                              .download_rounded),
+                                            );
+                                          })
+                                        : const SizedBox.shrink(),
+                                    IconButton(
+                                        onPressed: () {
+                                          showModalBottomSheet(
+                                            context:
+                                                Get.find<PlayerController>()
+                                                    .homeScaffoldkey
+                                                    .currentState!
+                                                    .context,
+                                            barrierColor: Colors.transparent
+                                                .withAlpha(100),
+                                            builder: (context) => SizedBox(
+                                              height: 140,
+                                              child: Column(
+                                                children: [
+                                                  ListTile(
+                                                    leading: const Icon(
+                                                        Icons.edit_rounded),
+                                                    title: Text(
+                                                        "renamePlaylist".tr),
+                                                    onTap: () {
+                                                      Navigator.of(context)
                                                           .pop();
-                                                      ScaffoldMessenger.of(
-                                                              Get.context!)
-                                                          .showSnackBar(snackbar(
-                                                              Get.context!,
-                                                              value
-                                                                  ? "playlistRemovedAlert"
-                                                                      .tr
-                                                                  : "operationFailed"
-                                                                      .tr,
-                                                              size: SanckBarSize
-                                                                  .MEDIUM));
-                                                    });
-                                                  },
-                                                )
-                                              ],
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (context) =>
+                                                            CreateNRenamePlaylistPopup(
+                                                                renamePlaylist:
+                                                                    true,
+                                                                playlist:
+                                                                    content),
+                                                      );
+                                                    },
+                                                  ),
+                                                  ListTile(
+                                                    leading: const Icon(
+                                                        Icons.delete_rounded),
+                                                    title: Text(
+                                                        "removePlaylist".tr),
+                                                    onTap: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                      playListNAlbumScreenController
+                                                          .addNremoveFromLibrary(
+                                                              content,
+                                                              add: false)
+                                                          .then((value) {
+                                                        Get.nestedKey(
+                                                                ScreenNavigationSetup
+                                                                    .id)!
+                                                            .currentState!
+                                                            .pop();
+                                                        ScaffoldMessenger.of(
+                                                                Get.context!)
+                                                            .showSnackBar(snackbar(
+                                                                Get.context!,
+                                                                value
+                                                                    ? "playlistRemovedAlert"
+                                                                        .tr
+                                                                    : "operationFailed"
+                                                                        .tr,
+                                                                size: SanckBarSize
+                                                                    .MEDIUM));
+                                                      });
+                                                    },
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                      icon: const Icon(
-                                          Icons.more_vert_rounded)),
-                                ],
-                              )
+                                          );
+                                        },
+                                        icon: const Icon(
+                                            Icons.more_vert_rounded)),
+                                  ],
+                                )
                               : const SizedBox.shrink()
                         ],
                       ),

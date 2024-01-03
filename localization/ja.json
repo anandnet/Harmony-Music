@@ -134,5 +134,20 @@
     "goToAlbum": "アルバムを開く",
     "removeFromQueue": "キューから削除",
     "shareSong": "この曲を共有",
-    "songRemovedAlert": "以下から削除しました"
+    "songRemovedAlert": "以下から削除しました",
+    "add5Minutes": "5分追加",
+    "enableBottomNavDes": "ナビゲーションバーを下部に切り替える",
+    "syncedLyricsNotAvailable": "同期可能な歌詞はありません！",
+    "synced": "同期",
+    "plain": "通常",
+    "endOfThisSong": "この曲の終わり",
+    "library": "ライブラリ",
+    "cancelTimer": "タイマーをキャンセル",
+    "minutes": "分",
+    "enableBottomNav": "下部のなびばー",
+    "homeContentCount": "ホームのコンテンツ数",
+    "sleepTimeSetAlert": "スリープタイマーをセットしました",
+    "homeContentCountDes": "最初のホーム画面のコンテンツ数 (およそ) を選択します。少ないほど読み込みが速いです",
+    "cancelTimerAlert": "スリープタイマーをキャンセルしました",
+    "sleepTimer": "スリープタイマー"
 }

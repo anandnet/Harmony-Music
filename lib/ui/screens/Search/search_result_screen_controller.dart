@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 
 import '../../../utils/helper.dart';
 import '../Home/home_screen_controller.dart';
 import '/services/music_service.dart';
 
-class SearchResultScreenController extends GetxController {
+class SearchResultScreenController extends GetxController
+    with GetTickerProviderStateMixin {
   final navigationRailCurrentIndex = 0.obs;
   final isResultContentFetced = false.obs;
   final isSeparatedResultContentFetced = false.obs;
@@ -17,18 +20,21 @@ class SearchResultScreenController extends GetxController {
   final railitemHeight = Get.size.height.obs;
   final additionalParamNext = {};
   bool continuationInProgress = false;
-
+  TabController? tabController;
   //ScrollContollers List
   final Map<String, ScrollController> scrollControllers = {};
 
   @override
-  void onReady(){
+  void onReady() {
     _getInitSearchResult();
     Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onReady();
   }
 
   Future<void> onDestinationSelected(int value) async {
+    if(tabController!=null){
+      tabController?.animateTo(value);
+    }
     if (railItems.isEmpty) {
       return;
     }
@@ -103,6 +109,11 @@ class SearchResultScreenController extends GetxController {
       for (String item in railItems) {
         scrollControllers[item] = ScrollController();
       }
+
+      if (Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue) {
+        tabController =
+            TabController(length: railItems.length + 1, vsync: this);
+      }
       isResultContentFetced.value = true;
     }
   }
@@ -135,6 +146,7 @@ class SearchResultScreenController extends GetxController {
       (scrollControllers[item])!.dispose();
     }
     Get.find<HomeScreenController>().whenHomeScreenOnTop();
+    tabController?.dispose();
     super.onClose();
   }
 }

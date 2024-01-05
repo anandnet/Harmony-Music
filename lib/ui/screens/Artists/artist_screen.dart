@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../widgets/loader.dart';
+import '../../widgets/separate_tab_item_widget.dart';
 import '/ui/player/player_controller.dart';
 import '/ui/widgets/image_widget.dart';
-import '/ui/widgets/search_related_widgets.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../navigator.dart';
 import '../../widgets/snackbar.dart';
@@ -214,7 +214,8 @@ class ArtistScreen extends StatelessWidget {
                                                       height: 300,
                                                       child: Center(
                                                         child: Text(
-                                                          "artistDesNotAvailable".tr,
+                                                          "artistDesNotAvailable"
+                                                              .tr,
                                                           style:
                                                               Theme.of(context)
                                                                   .textTheme
@@ -234,7 +235,7 @@ class ArtistScreen extends StatelessWidget {
                   }
                 case 1:
                   {
-                    return SeparateSearchItemWidget(
+                    return SeparateTabItemWidget(
                       artistControllerTag: tag,
                       isResultWidget: false,
                       items: separatedContent.containsKey('Songs')
@@ -248,7 +249,7 @@ class ArtistScreen extends StatelessWidget {
                   }
                 case 2:
                   {
-                    return SeparateSearchItemWidget(
+                    return SeparateTabItemWidget(
                       artistControllerTag: tag,
                       isResultWidget: false,
                       items: separatedContent.containsKey('Videos')
@@ -262,7 +263,7 @@ class ArtistScreen extends StatelessWidget {
                   }
                 case 3:
                   {
-                    return SeparateSearchItemWidget(
+                    return SeparateTabItemWidget(
                       artistControllerTag: tag,
                       isResultWidget: false,
                       items: separatedContent.containsKey('Albums')
@@ -274,7 +275,7 @@ class ArtistScreen extends StatelessWidget {
                   }
                 case 4:
                   {
-                    return SeparateSearchItemWidget(
+                    return SeparateTabItemWidget(
                       artistControllerTag: tag,
                       isResultWidget: false,
                       items: separatedContent.containsKey('Singles')

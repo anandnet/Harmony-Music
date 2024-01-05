@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  buttons_tabbar:
+    dependency: "direct main"
+    description:
+      name: buttons_tabbar
+      sha256: "3f0969c26574ef15c0c9ff1dee42c3c4b0d3563d2c8607804372490fb8b76896"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.8"
   cached_network_image:
     dependency: "direct main"
     description:

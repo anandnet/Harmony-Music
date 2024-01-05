@@ -72,7 +72,7 @@ class SearchScreen extends StatelessWidget {
                             id: ScreenNavigationSetup.id, arguments: val);
                         searchScreenController.addToHistryQueryList(val);
                       },
-                      autofocus: true,
+                      autofocus: settingsScreenController.isBottomNavBarEnabled.isFalse,
                       cursorColor: Theme.of(context).textTheme.bodySmall!.color,
                       decoration: InputDecoration(
                           contentPadding: const EdgeInsets.only(left: 5),

@@ -411,6 +411,7 @@ class MusicServices extends getx.GetxService {
     album['tracks'] = parsePlaylistItems(results['contents'],
         artistsM: album['artists'],
         thumbnailsM: album["thumbnails"],
+        albumIdM:albumId,
         isAlbum: true);
     results = nav(
       response,

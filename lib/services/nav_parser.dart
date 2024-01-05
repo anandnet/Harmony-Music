@@ -453,6 +453,7 @@ List<dynamic> parsePlaylistItems(List<dynamic> results,
     {List<List<dynamic>>? menuEntries,
     dynamic thumbnailsM,
     dynamic artistsM,
+    dynamic albumIdM,
     bool isAlbum = false}) {
   List<MediaItem> songs = [];
 
@@ -496,7 +497,7 @@ List<dynamic> parsePlaylistItems(List<dynamic> results,
 
     List? artists = parseSongArtists(data, 1);
 
-    dynamic album = parseSongAlbum({...data}, 2);
+    dynamic album =isAlbum?{"id":albumIdM}: parseSongAlbum({...data}, 2);
 
     dynamic duration;
     if (data.containsKey('fixedColumns')) {

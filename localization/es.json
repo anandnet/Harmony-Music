@@ -135,5 +135,20 @@
     "downloadingFormat": "Descargar el formato del archivo",
     "songAlreadyOfflineAlert": "Canción sin conexión en la caché",
     "downloadLocation": "Ubicación de la descarga",
-    "downloadingFormatDes": "Selecciona el formato del archivo de la descarga. \"Opus\" proporcionará la mejor calidad"
+    "downloadingFormatDes": "Selecciona el formato del archivo de la descarga. \"Opus\" proporcionará la mejor calidad",
+    "add5Minutes": "Añadir 5 minutos",
+    "enableBottomNavDes": "Cambiar a la barra de navegación inferior",
+    "syncedLyricsNotAvailable": "¡Letra sincronizada no disponible!",
+    "synced": "Sincronizado",
+    "plain": "Plano",
+    "endOfThisSong": "Fin de esta canción",
+    "library": "Biblioteca",
+    "cancelTimer": "Cancelar temporizador",
+    "minutes": "minutos",
+    "enableBottomNav": "Barra de navegación inferior",
+    "homeContentCount": "Recuento de contenidos",
+    "sleepTimeSetAlert": "El temporizador de apagado está activado",
+    "homeContentCountDes": "Seleccione el número de contenidos iniciales de la pantalla de inicio (aprox.). Menos resultados carga más rápida",
+    "cancelTimerAlert": "Temporizador de reposo cancelado",
+    "sleepTimer": "Temporizador"
 }

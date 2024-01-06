@@ -79,8 +79,8 @@ class HomeScreenController extends GetxController {
           quickPicks.value = QuickPicks(List<MediaItem>.from(con["contents"]));
           middleContentTemp.addAll(rel);
         }
-      } 
-      
+      }
+
       if (quickPicks.value.songList.isEmpty) {
         final index = homeContentListMap
             .indexWhere((element) => element['title'] == "Quick picks");
@@ -88,7 +88,7 @@ class HomeScreenController extends GetxController {
         quickPicks.value = QuickPicks(List<MediaItem>.from(con["contents"]),
             title: "Quick picks");
       }
-      
+
       middleContent.value = _setContentList(middleContentTemp);
       fixedContent.value = _setContentList(homeContentListMap);
 
@@ -144,12 +144,15 @@ class HomeScreenController extends GetxController {
     } else {
       songId ??= Hive.box("AppPrefs").get("recentSongId");
       if (songId != null) {
-        final value = await _musicServices.getContentRelatedToSong(songId);
-        middleContent.value = _setContentList(value);
-        if (value.isNotEmpty && (value[0]['title']).contains("like")) {
-          quickPicks_ = QuickPicks(List<MediaItem>.from(value[0]["contents"]));
-          Hive.box("AppPrefs").put("recentSongId", songId);
-        }
+        try {
+          final value = await _musicServices.getContentRelatedToSong(songId);
+          middleContent.value = _setContentList(value);
+          if (value.isNotEmpty && (value[0]['title']).contains("like")) {
+            quickPicks_ =
+                QuickPicks(List<MediaItem>.from(value[0]["contents"]));
+            Hive.box("AppPrefs").put("recentSongId", songId);
+          }
+        } catch (e) {}
       }
     }
     if (quickPicks_ == null) return;

@@ -91,17 +91,21 @@ class SearchResultScreenBN extends StatelessWidget {
                               contentPadding:
                                   const EdgeInsets.only(left: 15, right: 15),
                               backgroundColor:
-                                  Theme.of(context).colorScheme.secondary,
+                                  Theme.of(context).textTheme.titleMedium?.color!,
+                              unselectedBackgroundColor:  Theme.of(context).colorScheme.secondary,
                               borderWidth: 0,
                               buttonMargin: const EdgeInsets.only(
                                   right: 10, left: 4, top: 4, bottom: 4),
                               borderColor: Colors.black,
-                              labelStyle: const TextStyle(
-                                color: Colors.white,
+                              labelStyle: TextStyle(
+                                color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold,
                               ),
-                              unselectedLabelStyle: const TextStyle(
-                                color: Colors.black,
+                              unselectedLabelStyle: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.color!,
                                 fontWeight: FontWeight.bold,
                               ),
                               // Add your tabs here

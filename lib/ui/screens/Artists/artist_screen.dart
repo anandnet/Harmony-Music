@@ -26,7 +26,7 @@ class ArtistScreen extends StatelessWidget {
         () => Padding(
           padding: EdgeInsets.only(
               bottom:
-                  playerController.playerPanelMinHeight.value == 0 ? 20 : 75),
+                  playerController.playerPanelMinHeight.value == 0 ? 20 : 75 + Get.mediaQuery.padding.bottom),
           child: SizedBox(
             height: 60,
             width: 60,

@@ -137,88 +137,48 @@ class ListWidget extends StatelessWidget {
   Widget listViewPlaylists(List<dynamic> playlists, {ScrollController? sc}) {
     return Expanded(
       child: ListView.builder(
-        padding: const EdgeInsets.only(
-          bottom: 210,
-          top: 0,
-        ),
-        controller: sc,
-        itemCount: playlists.length,
-        itemExtent: 100,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) => ListTile(
-          visualDensity: const VisualDensity(vertical: 4.0),
-          isThreeLine: true,
-          onTap: () {
-            Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
-                id: ScreenNavigationSetup.id,
-                arguments: [false, playlists[index], false]);
-          },
-          contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 10),
-          leading: ImageWidget(
-            size: 100,
-            playlist: playlists[index],
+          padding: const EdgeInsets.only(
+            bottom: 210,
+            top: 0,
           ),
-          title: Text(
-            playlists[index].title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          subtitle: Text(
-            playlists[index]?.description ?? "NA",
-            maxLines: 2,
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-        ),
-      ),
+          controller: sc,
+          itemCount: playlists.length,
+          itemExtent: 120,
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (context, index) => wideListTile(context,
+              playlist: playlists[index],
+              title: playlists[index].title,
+              subtitle: playlists[index]?.description ?? "NA",
+              subtitle2: "")),
     );
   }
 
   Widget listViewAlbums(List<dynamic> albums, {ScrollController? sc}) {
     return Expanded(
       child: ListView.builder(
-        padding: const EdgeInsets.only(
-          bottom: 210,
-          top: 0,
-        ),
-        controller: sc,
-        itemCount: albums.length,
-        itemExtent: 100,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          String artistName = "";
-          for (dynamic items in (albums[index].artists).sublist(1)) {
-            artistName = "${artistName + items['name']},";
-          }
-          artistName =
-              artistName.length > 16 ? artistName.substring(0, 16) : artistName;
-          return ListTile(
-            visualDensity: const VisualDensity(vertical: 4.0),
-            isThreeLine: true,
-            onTap: () {
-              Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
-                  id: ScreenNavigationSetup.id,
-                  arguments: [true, albums[index], false]);
-            },
-            contentPadding: const EdgeInsets.only(top: 0, bottom: 0, left: 10),
-            leading: ImageWidget(
-              size: 100,
-              album: albums[index],
-            ),
-            title: Text(
-              albums[index].title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            subtitle: Text(
-              "$artistName\n${(albums[index].artists[0]['name'])} • ${albums[index].year}",
-              maxLines: 2,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-          );
-        },
-      ),
+          padding: const EdgeInsets.only(
+            bottom: 210,
+            top: 0,
+          ),
+          controller: sc,
+          itemCount: albums.length,
+          itemExtent: 120,
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (context, index) {
+            String artistName = "";
+            for (dynamic items in (albums[index].artists).sublist(1)) {
+              artistName = "${artistName + items['name']},";
+            }
+            artistName = artistName.length > 16
+                ? artistName.substring(0, 16)
+                : artistName;
+            return wideListTile(context,
+                album: albums[index],
+                title: albums[index].title,
+                subtitle: artistName,
+                subtitle2:
+                    "${(albums[index].artists[0]['name'])} • ${albums[index].year}");
+          }),
     );
   }
 
@@ -254,6 +214,69 @@ class ListWidget extends StatelessWidget {
           artists[index].subscribers,
           maxLines: 2,
           style: Theme.of(context).textTheme.titleSmall,
+        ),
+      ),
+    );
+  }
+
+  Widget wideListTile(BuildContext context,
+      {dynamic album,
+      dynamic playlist,
+      required String title,
+      required String subtitle,
+      required String subtitle2}) {
+    return InkWell(
+      onTap: () {
+        if (album != null) {
+          Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
+              id: ScreenNavigationSetup.id, arguments: [true, album, false]);
+        } else {
+          Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
+              id: ScreenNavigationSetup.id,
+              arguments: [false, playlist, false]);
+        }
+      },
+      child: SizedBox(
+        height: 120,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10.0, bottom: 10),
+          child: Row(
+            children: [
+              ImageWidget(
+                size: 100,
+                album: album,
+                playlist: playlist,
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Text(
+                      subtitle,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    Text(
+                      subtitle2,
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ],
+                ),
+              ))
+            ],
+          ),
         ),
       ),
     );

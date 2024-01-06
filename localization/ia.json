@@ -140,5 +140,14 @@
     "operationFailed": "Falleva le operation",
     "goToAlbum": "Vader al album",
     "cancelTimerAlert": "Temporisator de somno cancellate",
-    "sleepTimer": "Temporisator de somno"
+    "sleepTimer": "Temporisator de somno",
+    "cacheSongsDes": "Immagazinar le cantos in cache pro reproductiones futur e foras de linea, illo usara spatio additional in tu apparato",
+    "stopMusicOnTaskClear": "Stoppar le musica al rader le barra de cargas",
+    "resetblacklistedplaylist": "Restabilir le listas de reproduction in lista nigre",
+    "stopMusicOnTaskClearDes": "Le reproduction de musica stoppara quando le application sia glissate foras del gestor de cargas",
+    "topmusicvideos": "Videos musical plus reguardate",
+    "linkAlert": "Ligate con successo!",
+    "playlistBlacklistAlert": "Lista de reproduction in le lista nigre!",
+    "resetblacklistedplaylistDes": "Restabilir tote le listas de reproduction de piped in lista nigre",
+    "homeContentCount": "Computo de contentos"
 }

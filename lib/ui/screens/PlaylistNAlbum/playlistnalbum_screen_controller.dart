@@ -28,7 +28,7 @@ class PlayListNAlbumScreenController extends GetxController {
   @override
   void onReady() {
     final args = Get.arguments;
-    if(args!=null){
+    if (args != null) {
       isAlbum = args[0];
       _init(args[1], args[0], args[2]);
     }
@@ -52,8 +52,24 @@ class PlayListNAlbumScreenController extends GetxController {
       }
     }
 
-    _checkIfAddedToLibrary(id);
-    _fetchSong(id, isIdOnly, isPipedPlaylist);
+    _checkNFetchSongs(id, isIdOnly, isPipedPlaylist);
+  }
+
+  Future<void> _checkNFetchSongs(
+      String id, bool isIdOnly, bool isPipedPlaylist) async {
+    await _checkIfAddedToLibrary(id);
+    if (isAddedToLibrary.isTrue) {
+      final songsBox = await Hive.openBox(id);
+      if(songsBox.values.isEmpty){
+        _fetchSong(id, isIdOnly, isPipedPlaylist).then((value){
+          updateSongsIntoDb();
+        });
+      }else{
+        fetchSongsfromDatabase(id);
+      }
+    } else {
+      _fetchSong(id, isIdOnly, isPipedPlaylist);
+    }
   }
 
   Future<void> _checkIfAddedToLibrary(String id) async {
@@ -67,17 +83,28 @@ class PlayListNAlbumScreenController extends GetxController {
   void addNRemoveItemsinList(MediaItem? item,
       {required String action, int? index}) {
     if (action == 'add') {
-      if(tempListContainer.isNotEmpty){
-        index != null ? tempListContainer.insert(index, item!) : tempListContainer.add(item!);
+      if (tempListContainer.isNotEmpty) {
+        index != null
+            ? tempListContainer.insert(index, item!)
+            : tempListContainer.add(item!);
         return;
       }
       index != null ? songList.insert(index, item!) : songList.add(item!);
     } else {
-      if(tempListContainer.isNotEmpty){
-        index != null ? tempListContainer.removeAt(index) : tempListContainer.remove(item);
+      if (tempListContainer.isNotEmpty) {
+        index != null
+            ? tempListContainer.removeAt(index)
+            : tempListContainer.remove(item);
       }
       index != null ? songList.removeAt(index) : songList.remove(item);
     }
+  }
+
+ Future<void> updateSongsIntoDb() async {
+    final songsBox = await Hive.openBox(id);
+    songList.toList().forEach((song) async {
+      await songsBox.put(song.id, MediaItemBuilder.toJson(song));
+     });
   }
 
   Future<void> fetchSongsfromDatabase(id) async {
@@ -133,6 +160,11 @@ class PlayListNAlbumScreenController extends GetxController {
     checkDownloadStatus();
   }
 
+  void syncPlaylistNAlbumSong(){
+    _fetchSong(id, false, false).then((value) => updateSongsIntoDb());
+
+  }
+
   /// Function for bookmark & add playlist to library
   Future<bool> addNremoveFromLibrary(dynamic content, {bool add = true}) async {
     try {
@@ -147,7 +179,14 @@ class PlayListNAlbumScreenController extends GetxController {
             ? await Hive.openBox("LibraryAlbums")
             : await Hive.openBox("LibraryPlaylists");
         final id = isAlbum ? content.browseId : content.playlistId;
-        add ? box.put(id, content.toJson()) : box.delete(id);
+        if(add){
+          box.put(id, content.toJson());
+          updateSongsIntoDb();
+        }else{
+          box.delete(id);
+          final songsBox = await Hive.openBox(id);
+          songsBox.deleteFromDisk();
+        } 
         isAddedToLibrary.value = add;
       }
       //Update frontend
@@ -164,10 +203,10 @@ class PlayListNAlbumScreenController extends GetxController {
     }
   }
 
-  void checkDownloadStatus(){
+  void checkDownloadStatus() {
     bool downloaded = true;
-    for(MediaItem item in songList){
-      if(!Hive.box("SongDownloads").containsKey(item.id)){
+    for (MediaItem item in songList) {
+      if (!Hive.box("SongDownloads").containsKey(item.id)) {
         downloaded = false;
         break;
       }
@@ -200,11 +239,10 @@ class PlayListNAlbumScreenController extends GetxController {
     tempListContainer.clear();
   }
 
-
   @override
   void onClose() {
     tempListContainer.clear();
-    if(id != "SongDownloads") box.close();
+    if (id != "SongDownloads") box.close();
     Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();
   }

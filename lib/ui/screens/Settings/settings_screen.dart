@@ -35,7 +35,7 @@ class SettingsScreen extends StatelessWidget {
           Expanded(
               child: ListView(
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.only(bottom: 90),
+            padding: const EdgeInsets.only(bottom: 200),
             children: [
               Obx(
                 () => settingsController.isNewVersionAvailable.value
@@ -378,7 +378,7 @@ class SettingsScreen extends StatelessWidget {
                 contentPadding: const EdgeInsets.only(left: 5, right: 10),
                 title: Text("github".tr),
                 subtitle: Text(
-                  "${"githubDes".tr}${((Get.find<PlayerController>().playerPanelMinHeight.value) == 0) ? "" : "\n\n${settingsController.currentVersion} ${"by".tr} anandnet"}",
+                  "${"githubDes".tr}${((Get.find<PlayerController>().playerPanelMinHeight.value) == 0 || !isBottomNavActive) ? "" : "\n\n${settingsController.currentVersion} ${"by".tr} anandnet"}",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 isThreeLine: true,

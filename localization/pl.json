@@ -137,5 +137,14 @@
     "downloadingFormat": "Pobierz format pliku",
     "songAlreadyOfflineAlert": "Utwór jest już offline w pamięci podręcznej",
     "downloadLocation": "Lokalizacja Pobierania",
-    "downloadingFormatDes": "Wybierz format pliku do pobrania. „Opus” zapewni najlepszą jakość"
+    "downloadingFormatDes": "Wybierz format pliku do pobrania. „Opus” zapewni najlepszą jakość",
+    "library": "Biblioteka",
+    "minutes": "minuty",
+    "endOfThisSong": "Koniec tej piosenki",
+    "enableBottomNav": "Dolny pasek nawigacyjny",
+    "enableBottomNavDes": "Przełącz na dolny pasek nawigacyjny",
+    "syncedLyricsNotAvailable": "Synchronizowanie tekstu nie jest dostępne!",
+    "homeContentCountDes": "Wybierz liczbę początkowej zawartości ekranu głównego (w przybliżeniu). Mniejsze wyniki, szybsze ładowanie",
+    "plain": "Zwykły",
+    "add5Minutes": "Dodaj 5 minut"
 }

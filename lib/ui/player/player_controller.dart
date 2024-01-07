@@ -451,6 +451,7 @@ class PlayerController extends GetxController {
     if ((lyrics["synced"].isEmpty && lyrics['plainLyrics'].isEmpty) &&
         showLyricsflag.value) {
       isLyricsLoading.value = true;
+      try{
       final Map<String, dynamic>? lyricsR =
           await SyncedLyricsService.getSyncedLyrics(
               currentSong.value!, progressBarStatus.value.total.inSeconds);
@@ -466,6 +467,9 @@ class PlayerController extends GetxController {
         final lyrics_ = await _musicServices.getLyrics(relatedLyricsId);
         lyrics.value = {"synced": "", "plainLyrics": lyrics_};
       } else {
+        lyrics.value = {"synced": "", "plainLyrics": "NA"};
+      }
+      }catch (e){
         lyrics.value = {"synced": "", "plainLyrics": "NA"};
       }
       isLyricsLoading.value = false;

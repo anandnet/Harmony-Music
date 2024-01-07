@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../screens/Library/library.dart';
+import 'library.dart';
 
 class CombinedLibrary extends StatelessWidget{
   const CombinedLibrary({super.key});
@@ -12,9 +12,11 @@ class CombinedLibrary extends StatelessWidget{
     final tabCon = Get.put(CombinedLibraryController());
     return  Scaffold(
       appBar: AppBar(
-        toolbarHeight: 90,
-        backgroundColor: Theme.of(context).primaryColor,
+        toolbarHeight: 85,
+        backgroundColor: Theme.of(context).canvasColor,
+        elevation: 0,
         bottom:  TabBar(
+          isScrollable: true,
           controller: tabCon.tabController,
           tabs: [
             Tab(text: "songs".tr),
@@ -24,7 +26,7 @@ class CombinedLibrary extends StatelessWidget{
           ],
         ),
         title: Padding(
-          padding: const EdgeInsets.only(top:60.0),
+          padding: const EdgeInsets.only(top:60.0,left: 5),
           child: Text('library'.tr,style: Theme.of(context).textTheme.titleLarge),
         ),
       ),

@@ -69,18 +69,20 @@ class Home extends StatelessWidget {
                             child: Center(
                               child: Column(
                                 children: [
-                                  Container(
-                                      height: 3,
-                                      color: Theme.of(context)
-                                          .progressIndicatorTheme
-                                          .color,
-                                      child: MiniPlayerProgressBar(
-                                          progressBarStatus: playerController
-                                              .progressBarStatus.value,
-                                          progressBarColor: Theme.of(context)
-                                                  .progressIndicatorTheme
-                                                  .linearTrackColor ??
-                                              Colors.white)),
+                                  GetX<PlayerController>(
+                                    builder: (controller) => Container(
+                                        height: 3,
+                                        color: Theme.of(context)
+                                            .progressIndicatorTheme
+                                            .color,
+                                        child: MiniPlayerProgressBar(
+                                            progressBarStatus: controller
+                                                .progressBarStatus.value,
+                                            progressBarColor: Theme.of(context)
+                                                    .progressIndicatorTheme
+                                                    .linearTrackColor ??
+                                                Colors.white)),
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 17.0, vertical: 7),

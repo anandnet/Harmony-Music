@@ -1,11 +1,13 @@
+import 'dart:io';
+
 import 'package:audio_service/audio_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../screens/Settings/settings_screen_controller.dart';
 import '/models/artist.dart';
-import '/models/thumbnail.dart';
 import '../../models/album.dart';
 import '../../models/playlist.dart';
 
@@ -28,10 +30,9 @@ class ImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isThumbDownloaded = false;
     String imageUrl = song != null
-        ? isPlayerArtImage
-            ? song!.artUri.toString()
-            : Thumbnail(song!.artUri.toString()).low
+        ? song!.artUri.toString()
         : playlist != null
             ? playlist!.thumbnailUrl
             : album != null
@@ -40,9 +41,7 @@ class ImageWidget extends StatelessWidget {
                     ? artist!.thumbnailUrl
                     : "";
     String cacheKey = song != null
-        ? isPlayerArtImage
-            ? "${song!.id}_song_pl"
-            : "${song!.id}_song"
+        ? "${song!.id}_song"
         : playlist != null
             ? "${playlist!.playlistId}_playlist"
             : album != null
@@ -50,6 +49,14 @@ class ImageWidget extends StatelessWidget {
                 : artist != null
                     ? "${artist!.browseId}_artist"
                     : "";
+    // if song exist in file
+    File? imgFile;
+    if (song != null) {
+      imgFile = File(
+          "${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${song!.id}.png");
+      isThumbDownloaded = imgFile.existsSync();
+    }
+
     return GetPlatform.isWeb
         ? Image.network(
             imageUrl,
@@ -63,40 +70,53 @@ class ImageWidget extends StatelessWidget {
               shape: artist != null ? BoxShape.circle : BoxShape.rectangle,
               borderRadius: artist != null ? null : BorderRadius.circular(5),
             ),
-            child: CachedNetworkImage(
-              height: size,
-              width: size,
-              memCacheHeight: (song != null && !isPlayerArtImage) ? 140 : null,
-              //memCacheWidth: (song != null && !isPlayerArtImage)? 140 : null,
-              cacheKey: cacheKey,
-              imageUrl: imageUrl,
-              fit: BoxFit.cover,
-              errorWidget: (context, url, error) => Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
-                    shape:
-                        artist != null ? BoxShape.circle : BoxShape.rectangle,
-                    borderRadius:
-                        artist != null ? null : BorderRadius.circular(10),
+            child: isThumbDownloaded
+                ? Image.file(
+                    imgFile!,
+                    height: size,
+                    width: size,
+                    cacheHeight:
+                        (song != null && !isPlayerArtImage) ? 140 : null,
+                  )
+                : CachedNetworkImage(
+                    height: size,
+                    width: size,
+                    memCacheHeight:
+                        (song != null && !isPlayerArtImage) ? 140 : null,
+                    //memCacheWidth: (song != null && !isPlayerArtImage)? 140 : null,
+                    cacheKey: cacheKey,
+                    imageUrl: imageUrl,
+                    fit: BoxFit.cover,
+                    errorWidget: (context, url, error) => Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.secondary,
+                          shape: artist != null
+                              ? BoxShape.circle
+                              : BoxShape.rectangle,
+                          borderRadius:
+                              artist != null ? null : BorderRadius.circular(10),
+                        ),
+                        child: Image.asset(
+                            "assets/icons/${song != null ? "song" : artist != null ? "artist" : "album"}.png")),
+                    progressIndicatorBuilder: ((_, __, ___) =>
+                        Shimmer.fromColors(
+                            baseColor: Colors.grey[500]!,
+                            highlightColor: Colors.grey[300]!,
+                            enabled: true,
+                            direction: ShimmerDirection.ltr,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: artist != null
+                                    ? BoxShape.circle
+                                    : BoxShape.rectangle,
+                                borderRadius: artist != null
+                                    ? null
+                                    : BorderRadius.circular(10),
+                                color: Colors.white54,
+                              ),
+                            ))),
                   ),
-                  child: Image.asset(
-                      "assets/icons/${song != null ? "song" : artist != null ? "artist" : "album"}.png")),
-              progressIndicatorBuilder: ((_, __, ___) => Shimmer.fromColors(
-                  baseColor: Colors.grey[500]!,
-                  highlightColor: Colors.grey[300]!,
-                  enabled: true,
-                  direction: ShimmerDirection.ltr,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape:
-                          artist != null ? BoxShape.circle : BoxShape.rectangle,
-                      borderRadius:
-                          artist != null ? null : BorderRadius.circular(10),
-                      color: Colors.white54,
-                    ),
-                  ))),
-            ),
           );
   }
 }

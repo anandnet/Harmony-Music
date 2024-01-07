@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../Settings/settings_screen_controller.dart';
 import '/services/piped_service.dart';
 import '../../../utils/helper.dart';
 import '/models/album.dart';
@@ -106,6 +107,12 @@ class LibrarySongsController extends GetxController {
 
     if (await (File(filePath)).exists()) {
       await (File(filePath)).delete();
+    }
+
+    final thumbFile = File(
+        "${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${item.id}.png");
+    if (await thumbFile.exists()) {
+      await thumbFile.delete();
     }
   }
 }

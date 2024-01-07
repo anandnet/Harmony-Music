@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:dio/dio.dart';
 //import 'package:audiotags/audiotags.dart';
 import 'package:flutter/foundation.dart';
 //import 'package:flutter/services.dart';
@@ -157,8 +158,8 @@ class Downloader extends GetxService {
       songDownloadingProgress.value =
           ((fileBytes.length / totalBytes) * 100).toInt();
     }).onDone(() async {
+      // Save Song
       final dirPath = settingsScreenController.downloadLocationPath.string;
-
       String filePath = "$dirPath/${song.title}.$downloadingFormat";
       filePath = filePath
           .replaceAll("\"", "")
@@ -170,7 +171,19 @@ class Downloader extends GetxService {
 
       await file.writeAsBytes(fileBytes);
       song.extras?['url'] = filePath;
-      Hive.box("SongDownloads").put(song.id, MediaItemBuilder.toJson(song));
+      final songJson = MediaItemBuilder.toJson(song);
+
+      // Save Thumbnail
+      try {
+        final thumbnailPath =
+            "${settingsScreenController.supportDirPath}/thumbnails/${song.id}.png";
+        await Dio().downloadUri(song.artUri!, thumbnailPath);
+        songJson['thumbnails'] = [
+          {'url': thumbnailPath}
+        ];
+      } catch (e) {}
+
+      Hive.box("SongDownloads").put(song.id, songJson);
       Get.find<LibrarySongsController>().librarySongsList.add(song);
       printINFO("Downloaded successfully");
       try {

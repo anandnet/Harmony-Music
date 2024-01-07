@@ -316,7 +316,7 @@ class LibraryPlaylistsController extends GetxController
 
   void onSort(bool sortByName, bool isAscending) {
     final playlists = libraryPlaylists.toList();
-    playlists.removeRange(0, 3);
+    playlists.removeRange(0, 4);
     sortPlayLists(playlists, sortByName, isAscending);
     playlists.insertAll(0, initPlst);
     libraryPlaylists.value = playlists;

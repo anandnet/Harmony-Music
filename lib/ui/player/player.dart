@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:flutter_lyric/lyrics_reader.dart';
 import 'package:get/get.dart';
@@ -198,6 +199,15 @@ class Player extends StatelessWidget {
                 () => SizedBox.expand(
                   child: playerController.currentSong.value != null
                       ? CachedNetworkImage(
+                          errorWidget: (context, url, error) {
+                            final imgFile = File(
+                                "${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${playerController.currentSong.value!.id}.png");
+                            if (imgFile.existsSync()) {
+                              themeController.setTheme(FileImage(imgFile));
+                              return Image.file(imgFile, cacheHeight: 200);
+                            }
+                            return const SizedBox.shrink();
+                          },
                           memCacheHeight: 200,
                           imageBuilder: (context, imageProvider) {
                             Get.find<SettingsScreenController>()
@@ -384,9 +394,13 @@ class Player extends StatelessWidget {
                                                                   child: Text(
                                                                     "syncedLyricsNotAvailable"
                                                                         .tr,
-                                                                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                                                          color:
-                                                                              Colors.white),
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .titleMedium!
+                                                                        .copyWith(
+                                                                            color:
+                                                                                Colors.white),
                                                                   ),
                                                                 ),
                                                               ),
@@ -463,7 +477,10 @@ class Player extends StatelessWidget {
                                                   const SleepTimerBottomSheet(),
                                             );
                                           },
-                                          icon: const Icon(Icons.timer,color: Colors.white,),
+                                          icon: const Icon(
+                                            Icons.timer,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),

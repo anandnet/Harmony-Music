@@ -178,9 +178,6 @@ class Downloader extends GetxService {
         final thumbnailPath =
             "${settingsScreenController.supportDirPath}/thumbnails/${song.id}.png";
         await Dio().downloadUri(song.artUri!, thumbnailPath);
-        songJson['thumbnails'] = [
-          {'url': thumbnailPath}
-        ];
       } catch (e) {}
 
       Hive.box("SongDownloads").put(song.id, songJson);

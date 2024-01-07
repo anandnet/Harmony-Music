@@ -146,5 +146,7 @@
     "syncedLyricsNotAvailable": "Synchronizowanie tekstu nie jest dostępne!",
     "homeContentCountDes": "Wybierz liczbę początkowej zawartości ekranu głównego (w przybliżeniu). Mniejsze wyniki, szybsze ładowanie",
     "plain": "Zwykły",
-    "add5Minutes": "Dodaj 5 minut"
+    "add5Minutes": "Dodaj 5 minut",
+    "sleepTimer": "Wyłącznik czasowy",
+    "synced": "Zsynchronizowano"
 }

@@ -12,13 +12,20 @@ class MediaItemBuilder {
       }
     }
 
+    Map? album ;
+    if(json['album']!=null){
+      if(json['album']['id']!=null){
+        album = json['album'];
+      }
+    }
+
     return MediaItem(
         id: json["videoId"],
         title: json["title"],
         duration: json['duration'] != null
             ? Duration(seconds: json['duration'])
             : toDuration(json['length']),
-        album: json['album'] != null ? json['album']['name'] : null,
+        album: album != null ? album['name'] : null,
         artist: artistName == ""
             ? artistName
             : artistName.substring(0, artistName.length - 2),
@@ -26,7 +33,7 @@ class MediaItemBuilder {
         extras: {
           'url': json['url'] ?? url,
           'length': json['length'],
-          'album': json['album'],
+          'album': album,
           'artists': json['artists'],
           'date': json['date']
         });

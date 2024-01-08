@@ -95,7 +95,7 @@ class SearchScreen extends StatelessWidget {
                             ? searchScreenController.historyQuerylist.toList()
                             : searchScreenController.suggestionList.toList();
                         return ListView.builder(
-                          padding: const EdgeInsets.only(top: 5),
+                          padding: const EdgeInsets.only(top: 5,bottom: 400),
                           physics: const BouncingScrollPhysics(
                               parent: AlwaysScrollableScrollPhysics()),
                           itemCount: list.length,

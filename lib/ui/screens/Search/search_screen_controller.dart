@@ -34,8 +34,8 @@ class SearchScreenController extends GetxController {
   }
 
   Future<void> addToHistryQueryList(String txt) async {
-    if (historyQuerylist.length > 6) {
-      await queryBox.deleteAt(6);
+    if (historyQuerylist.length > 9) {
+      await queryBox.deleteAt(9);
       historyQuerylist.removeLast();
     }
     if (!historyQuerylist.contains(txt)) {

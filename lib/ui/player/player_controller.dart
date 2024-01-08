@@ -50,7 +50,8 @@ class PlayerController extends GetxController {
   final showLyricsflag = false.obs;
   final isLyricsLoading = false.obs;
   final lyricsMode = 0.obs;
-  final lyricUi = UINetease(highlight: true, defaultSize: 20,defaultExtSize: 12);
+  final lyricUi =
+      UINetease(highlight: true, defaultSize: 20, defaultExtSize: 12);
   RxMap<String, dynamic> lyrics =
       <String, dynamic>{"synced": "", "plainLyrics": ""}.obs;
   ScrollController scrollController = ScrollController();
@@ -128,9 +129,9 @@ class PlayerController extends GetxController {
   void _listenForChangesInPosition() {
     AudioService.position.listen((position) {
       final oldState = progressBarStatus.value;
-      if(isSleepEndOfSongActive.isTrue){
+      if (isSleepEndOfSongActive.isTrue) {
         timerDurationLeft.value = oldState.total.inSeconds - position.inSeconds;
-        if(timerDurationLeft.value == 1){
+        if (timerDurationLeft.value == 1) {
           pause();
           cancelSleepTimer();
         }
@@ -425,21 +426,24 @@ class PlayerController extends GetxController {
 
   /// This function is used to add a mediaItem/Song to Recently played playlist
   Future<void> _addToRP(MediaItem mediaItem) async {
-    final box = await Hive.openBox("LIBRP");
-    if (box.keys.length > 20) box.deleteAt(0);
     if (recentItem != mediaItem) {
+      final box = await Hive.openBox("LIBRP");
+      String? removedSongId;
+      if (box.keys.length >= 30) {
+        removedSongId = box.getAt(0)['videoId'];
+        box.deleteAt(0);
+      }
       box.add(MediaItemBuilder.toJson(mediaItem));
       try {
-        final playlistController = Get.find<PlayListNAlbumScreenController>();
-        if (!playlistController.isAlbum && playlistController.id == "LIBRP") {
-          if (playlistController.songList.length > 20) {
-            playlistController.addNRemoveItemsinList(null,
-                action: 'remove',
-                index: playlistController.songList.length - 1);
-          }
-          playlistController.addNRemoveItemsinList(mediaItem,
-              action: 'add', index: 0);
+        final playlistController = Get.find<PlayListNAlbumScreenController>(
+            tag: const Key("LIBRP").hashCode.toString());
+        if (removedSongId != null) {
+          playlistController.songList
+              .removeWhere((element) => element.id == removedSongId);
         }
+        playlistController.addNRemoveItemsinList(mediaItem,
+            action: 'add', index: 0);
+
         // ignore: empty_catches
       } catch (e) {}
     }
@@ -451,25 +455,25 @@ class PlayerController extends GetxController {
     if ((lyrics["synced"].isEmpty && lyrics['plainLyrics'].isEmpty) &&
         showLyricsflag.value) {
       isLyricsLoading.value = true;
-      try{
-      final Map<String, dynamic>? lyricsR =
-          await SyncedLyricsService.getSyncedLyrics(
-              currentSong.value!, progressBarStatus.value.total.inSeconds);
-      if (lyricsR != null) {
-        lyrics.value = lyricsR;
-        isLyricsLoading.value = false;
-        return;
-      }
-      final related = await _musicServices.getWatchPlaylist(
-          videoId: currentSong.value!.id, onlyRelated: true);
-      final relatedLyricsId = related['lyrics'];
-      if (relatedLyricsId != null) {
-        final lyrics_ = await _musicServices.getLyrics(relatedLyricsId);
-        lyrics.value = {"synced": "", "plainLyrics": lyrics_};
-      } else {
-        lyrics.value = {"synced": "", "plainLyrics": "NA"};
-      }
-      }catch (e){
+      try {
+        final Map<String, dynamic>? lyricsR =
+            await SyncedLyricsService.getSyncedLyrics(
+                currentSong.value!, progressBarStatus.value.total.inSeconds);
+        if (lyricsR != null) {
+          lyrics.value = lyricsR;
+          isLyricsLoading.value = false;
+          return;
+        }
+        final related = await _musicServices.getWatchPlaylist(
+            videoId: currentSong.value!.id, onlyRelated: true);
+        final relatedLyricsId = related['lyrics'];
+        if (relatedLyricsId != null) {
+          final lyrics_ = await _musicServices.getLyrics(relatedLyricsId);
+          lyrics.value = {"synced": "", "plainLyrics": lyrics_};
+        } else {
+          lyrics.value = {"synced": "", "plainLyrics": "NA"};
+        }
+      } catch (e) {
         lyrics.value = {"synced": "", "plainLyrics": "NA"};
       }
       isLyricsLoading.value = false;
@@ -481,7 +485,7 @@ class PlayerController extends GetxController {
     lyricsMode.value = val!;
   }
 
-  void sleepEndOfSong(){
+  void sleepEndOfSong() {
     isSleepTimerActive.value = true;
     isSleepEndOfSongActive.value = true;
   }
@@ -509,7 +513,7 @@ class PlayerController extends GetxController {
   }
 
   void cancelSleepTimer() {
-    if(isSleepEndOfSongActive.isTrue){
+    if (isSleepEndOfSongActive.isTrue) {
       isSleepEndOfSongActive.value = false;
     }
     sleepTimer?.cancel();

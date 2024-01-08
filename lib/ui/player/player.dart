@@ -373,6 +373,7 @@ class Player extends StatelessWidget {
                                                           : IgnorePointer(
                                                               child:
                                                                   LyricsReader(
+                                                                    padding: const EdgeInsets.only(left: 5,right: 5),
                                                                 lyricUi:
                                                                     playerController
                                                                         .lyricUi,

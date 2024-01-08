@@ -54,6 +54,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     _listenForSequenceStateChanges();
     _player
         .setSkipSilenceEnabled(Hive.box("appPrefs").get("skipSilenceEnabled"));
+    loopModeEnabled = Hive.box("appPrefs").get("isLoopModeEnabled") ?? false;
   }
 
   Future<void> _createCacheDir() async {
@@ -295,7 +296,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   @override
   Future<void> skipToPrevious() async {
-    if(_player.position.inMilliseconds > 5000){
+    if (_player.position.inMilliseconds > 5000) {
       _player.seek(Duration.zero);
       return;
     }
@@ -437,20 +438,23 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 // Work around used [useNewInstanceOfExplode = false] to Fix Connection closed before full header was received issue
   Future<String?> checkNGetUrl(String songId,
       {bool useNewInstanceOfExplode = false,
-      bool generateNewUrl = false, bool offlineReplacementUrl = false}) async {
+      bool generateNewUrl = false,
+      bool offlineReplacementUrl = false}) async {
     final songDownloadsBox = Hive.box("SongDownloads");
-    if (!offlineReplacementUrl && (await Hive.openBox("SongsCache")).containsKey(songId)) {
+    if (!offlineReplacementUrl &&
+        (await Hive.openBox("SongsCache")).containsKey(songId)) {
       printINFO("Got Song from cachedbox ($songId)");
       return "file://$_cacheDir/cachedSongs/$songId.mp3";
     } else if (!offlineReplacementUrl && songDownloadsBox.containsKey(songId)) {
       final path = songDownloadsBox.get(songId)['url'];
-      
-      if(path.contains("${Get.find<SettingsScreenController>().supportDirPath}/Music")){
+
+      if (path.contains(
+          "${Get.find<SettingsScreenController>().supportDirPath}/Music")) {
         return path;
       }
       //check file access and if file exist in storage
       final status = await PermissionService.getExtStoragePermission();
-      if(status && await File(path).exists()){
+      if (status && await File(path).exists()) {
         return path;
       }
       //in case file doesnot found in storage, song will be played online

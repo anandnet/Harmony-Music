@@ -79,6 +79,7 @@ class PlayerController extends GetxController {
     _listenForPlaylistChange();
     _listenForKeyboardActivity();
     _setInitLyricsMode();
+    isLoopModeEnabled.value = Hive.box("AppPrefs").get("isLoopModeEnabled") ?? false;
   }
 
   void _setInitLyricsMode() {
@@ -389,11 +390,12 @@ class PlayerController extends GetxController {
     _audioHandler.customAction("toggleSkipSilence", {"enable": enable});
   }
 
-  void toggleLoopMode() {
+  Future<void> toggleLoopMode() async {
     isLoopModeEnabled.isFalse
         ? _audioHandler.setRepeatMode(AudioServiceRepeatMode.one)
         : _audioHandler.setRepeatMode(AudioServiceRepeatMode.none);
     isLoopModeEnabled.value = !isLoopModeEnabled.value;
+    await Hive.box("AppPrefs").put("isLoopModeEnabled", isLoopModeEnabled.value);
   }
 
   Future<void> _checkFav() async {

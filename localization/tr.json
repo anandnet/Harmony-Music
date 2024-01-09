@@ -135,5 +135,10 @@
     "downloadingFormat": "Dosya Formatını İndirme",
     "songAlreadyOfflineAlert": "Şarkı zaten önbellekte çevrimdışı",
     "downloadLocation": "İndirme Konumu",
-    "downloadingFormatDes": "İndirme dosya biçimini seçin. \"Opus\" en iyi kaliteyi sağlayacak"
+    "downloadingFormatDes": "İndirme dosya biçimini seçin. \"Opus\" en iyi kaliteyi sağlayacak",
+    "library": "Kütüphane",
+    "minutes": "dakika",
+    "synced": "Eşitlendi",
+    "cancelTimerAlert": "Uyku zamanlayıcısı iptal edildi",
+    "sleepTimer": "Uyku Zamanlayıcısı"
 }

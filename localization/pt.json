@@ -134,5 +134,10 @@
     "quickpicks": "Escolhas rápidas",
     "artistBookmarkRemoveAlert": "Artista não mais salvo!",
     "operationFailed": "Operação falhou",
-    "songRemovedAlert": "Removida da/do"
+    "songRemovedAlert": "Removida da/do",
+    "library": "Biblioteca",
+    "synced": "Sincronizado",
+    "sleepTimer": "Temporizador de Suspensão",
+    "minutes": "minutos",
+    "cancelTimerAlert": "O despertador foi cancelado"
 }

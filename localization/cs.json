@@ -135,5 +135,9 @@
     "downloadingFormat": "Stahování formátu souboru",
     "songAlreadyOfflineAlert": "Skladba je v mezipaměti již offline",
     "downloadLocation": "Umístění stahování",
-    "downloadingFormatDes": "Vyberte formát souboru pro stahování. \"Opus\" bude poskytovat nejlepší kvalitu"
+    "downloadingFormatDes": "Vyberte formát souboru pro stahování. \"Opus\" bude poskytovat nejlepší kvalitu",
+    "sleepTimer": "Časovač spánku",
+    "minutes": "minut",
+    "synced": "Synchronizováno",
+    "library": "Knihovna"
 }

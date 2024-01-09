@@ -66,6 +66,7 @@ dependencies:
   toggle_switch: ^2.1.0
   flutter_lyric: ^2.0.4+6
   buttons_tabbar: ^1.3.8
+  animations: ^2.0.8
   
 dev_dependencies:
   flutter_test:

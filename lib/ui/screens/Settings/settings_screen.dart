@@ -157,8 +157,10 @@ class SettingsScreen extends StatelessWidget {
                     dropdownColor: Theme.of(context).cardColor,
                     underline: const SizedBox.shrink(),
                     value: settingsController.noOfHomeScreenContent.value,
-                    items: ([3,5,7,9,11]).map((e) => DropdownMenuItem(
-                          value: e, child: Text("$e"))).toList(),
+                    items: ([3, 5, 7, 9, 11])
+                        .map((e) =>
+                            DropdownMenuItem(value: e, child: Text("$e")))
+                        .toList(),
                     onChanged: settingsController.setContentNumber,
                   ),
                 ),
@@ -332,6 +334,21 @@ class SettingsScreen extends StatelessWidget {
                           }),
                     )
                   : const SizedBox.shrink()),
+              ListTile(
+                contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                title: Text("Clear images cache".tr),
+                subtitle: Text(
+                  "Click here to clear cached thumbnails/images. (Not recommended unless want to refresh cached images data). This feature limited to this version only",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                isThreeLine: true,
+                onTap: () {
+                  settingsController.clearImagesCache().then((value) =>
+                      ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
+                          Get.context!, "Images chache cleared successfully".tr,
+                          size: SanckBarSize.BIG)));
+                },
+              ),
               ListTile(
                   contentPadding: const EdgeInsets.only(left: 5, right: 10),
                   title: Text("stopMusicOnTaskClear".tr),

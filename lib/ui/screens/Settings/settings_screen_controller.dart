@@ -146,6 +146,17 @@ class SettingsScreenController extends GetxController {
     hideDloc.value = false;
   }
 
+  Future<void> clearImagesCache() async {
+    final tempImgDirPath =
+        "${(await getApplicationCacheDirectory()).path}/libCachedImageData";
+    final tempImgDir = Directory(tempImgDirPath);
+    try {
+      if (await tempImgDir.exists()) {
+        await tempImgDir.delete(recursive: true);
+      }
+    } catch (e) {}
+  }
+
   void resetDownloadLocation() {
     final defaultPath = "$_supportDir/Music";
     setBox.put("downloadLocationPath", defaultPath);

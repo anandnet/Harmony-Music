@@ -24,6 +24,7 @@ class HomeScreenController extends GetxController {
   final showVersionDialog = true.obs;
   //isHomeScreenOnTop var only useful if bottom nav enabled
   final isHomeSreenOnTop = true.obs;
+  bool reverseAnimationtransiton = false;
 
   @override
   onInit() {
@@ -161,10 +162,12 @@ class HomeScreenController extends GetxController {
   }
 
   void onSideBarTabSelected(int index) {
+    reverseAnimationtransiton = index > tabIndex.value;
     tabIndex.value = index;
   }
 
   void onBottonBarTabSelected(int index) {
+    reverseAnimationtransiton = index > tabIndex.value;
     tabIndex.value = index;
   }
 

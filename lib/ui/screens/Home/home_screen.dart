@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '/ui/widgets/animated_screen_transition.dart';
 import '../Library/library_combined.dart';
 import '../../widgets/side_nav_bar.dart';
 import '../Library/library.dart';
@@ -78,28 +79,16 @@ class HomeScreen extends StatelessWidget {
                     ),
               //const VerticalDivider(thickness: 1, width: 2),
               Expanded(
-                child: Obx(
-                  () => AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    // switchInCurve: Curves.easeIn,
-                    // switchOutCurve: Curves.easeOut,
-                    transitionBuilder:
-                        (Widget child, Animation<double> animation) {
-                      return SlideTransition(
-                          position: Tween<Offset>(
-                                  begin: const Offset(1.2, 0),
-                                  end: const Offset(0, 0))
-                              .animate(animation),
-                          child: child);
-                    },
-                    layoutBuilder: (currentChild, previousChildren) =>
-                        currentChild!,
-                    child: Center(
-                      key: ValueKey<int>(homeScreenController.tabIndex.value),
-                      child: const Body(),
+                child: Obx(() => AnimatedScreenTransition(
+                          resverse: homeScreenController.reverseAnimationtransiton,
+                          horizontalTransition: settingsScreenController
+                            .isBottomNavBarEnabled.isTrue,
+                            child: Center(
+                          key: ValueKey<int>(
+                              homeScreenController.tabIndex.value),
+                          child: const Body(),
+                        ))
                     ),
-                  ),
-                ),
               ),
             ],
           ),

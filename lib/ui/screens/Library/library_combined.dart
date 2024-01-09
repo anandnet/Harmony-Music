@@ -3,38 +3,42 @@ import 'package:get/get.dart';
 
 import 'library.dart';
 
-class CombinedLibrary extends StatelessWidget{
+class CombinedLibrary extends StatelessWidget {
   const CombinedLibrary({super.key});
 
-  
   @override
   Widget build(BuildContext context) {
     final tabCon = Get.put(CombinedLibraryController());
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         toolbarHeight: 85,
         backgroundColor: Theme.of(context).canvasColor,
         elevation: 0,
-        bottom:  TabBar(
+        bottom: TabBar(
           isScrollable: true,
+          splashFactory: NoSplash.splashFactory,
           controller: tabCon.tabController,
           tabs: [
             Tab(text: "songs".tr),
-            Tab(text:"playlists".tr),
+            Tab(text: "playlists".tr),
             Tab(text: "albums".tr),
             Tab(text: "artists".tr),
           ],
         ),
         title: Padding(
-          padding: const EdgeInsets.only(top:60.0,left: 5),
-          child: Text('library'.tr,style: Theme.of(context).textTheme.titleLarge),
+          padding: const EdgeInsets.only(top: 60.0, left: 5),
+          child:
+              Text('library'.tr, style: Theme.of(context).textTheme.titleLarge),
         ),
       ),
       body: TabBarView(
         controller: tabCon.tabController,
         children: const [
-          SongsLibraryWidget(isBottomNavActive: true,),
-          PlaylistNAlbumLibraryWidget(isAlbumContent: false, isBottomNavActive: true),
+          SongsLibraryWidget(
+            isBottomNavActive: true,
+          ),
+          PlaylistNAlbumLibraryWidget(
+              isAlbumContent: false, isBottomNavActive: true),
           PlaylistNAlbumLibraryWidget(isBottomNavActive: true),
           LibraryArtistWidget(isBottomNavActive: true),
         ],
@@ -43,12 +47,19 @@ class CombinedLibrary extends StatelessWidget{
   }
 }
 
-class CombinedLibraryController extends GetxController with GetSingleTickerProviderStateMixin{
+class CombinedLibraryController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   late TabController tabController;
 
   @override
   void onInit() {
     super.onInit();
     tabController = TabController(vsync: this, length: 4);
+  }
+
+  @override
+  void onClose() {
+    tabController.dispose();
+    super.onClose();
   }
 }

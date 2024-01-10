@@ -37,7 +37,7 @@ class AnimatedScreenTransition extends StatelessWidget {
           animation: primaryAnimation,
           forwardBuilder: (context, animation, child) => SlideTransition(
             transformHitTests: true,
-            position: forwardTween.animate(animation),
+            position: forwardTween.animate(primaryAnimation),
             child: child,
           ),
           reverseBuilder: (context, animation, child) => SlideTransition(

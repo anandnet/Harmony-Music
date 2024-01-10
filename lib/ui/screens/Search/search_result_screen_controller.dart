@@ -30,18 +30,22 @@ class SearchResultScreenController extends GetxController
     super.onReady();
   }
 
-  Future<void> onDestinationSelected(int value) async {
-    if(tabController!=null){
-      tabController?.animateTo(value);
-    }
+  Future<void> onDestinationSelected(int value,
+      {bool ignoreTabCommand = false}) async {
     if (railItems.isEmpty) {
       return;
     }
 
     isSeparatedResultContentFetced.value = false;
     navigationRailCurrentIndex.value = value;
-    if (value != 0 &&
-        !separatedResultContent.containsKey(railItems[value - 1])) {
+
+    if (tabController != null && !ignoreTabCommand) {
+      tabController?.animateTo(value);
+    }
+
+    if (value > 0 &&
+        (!separatedResultContent.containsKey(railItems[value - 1]) ||
+            separatedResultContent[railItems[value - 1]].isEmpty)) {
       final tabName = railItems[value - 1];
       final itemCount = (tabName == 'Songs' || tabName == 'Videos') ? 25 : 10;
       final x = await musicServices.search(queryString.value,
@@ -109,9 +113,25 @@ class SearchResultScreenController extends GetxController
         scrollControllers[item] = ScrollController();
       }
 
+      //Case if bottom nav used
       if (Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue) {
+        // assiging init val
+        for (var element in railItems) {
+          separatedResultContent[element] = [];
+        }
+
+        //tab controller for v2
         tabController =
             TabController(length: railItems.length + 1, vsync: this);
+
+        tabController?.animation?.addListener(() {
+          int indexChange = tabController!.offset.round();
+          int index = tabController!.index + indexChange;
+
+          if (index != navigationRailCurrentIndex.value) {
+            onDestinationSelected(index, ignoreTabCommand: true);
+          }
+        });
       }
       isResultContentFetced.value = true;
     }

@@ -137,5 +137,20 @@
     "downloadingFormat": "डाउनलोडिंग फ़ाइल फ़ारमैट",
     "songAlreadyOfflineAlert": "गाना पहले से ही कैश में ऑफ़लाइन है",
     "downloadLocation": "डाउनलोड का स्थान",
-    "downloadingFormatDes": "डाउनलोडिंग फाइल फॉर्मेट चुने, \"Opus\" सर्वोत्तम गुणवत्ता प्रदान करेगा"
+    "downloadingFormatDes": "डाउनलोडिंग फाइल फॉर्मेट चुने, \"Opus\" सर्वोत्तम गुणवत्ता प्रदान करेगा",
+    "library": "लाइब्रेरी",
+    "add5Minutes": "5 मिनट जोड़े",
+    "minutes": "मिनट्स",
+    "endOfThisSong": "इस गाने के अंत में",
+    "enableBottomNav": "बॉटम नेविगेशन बार",
+    "enableBottomNavDes": "बॉटम नेविगेशन बार पर स्विच करें",
+    "plain": "प्लेन",
+    "syncedLyricsNotAvailable": "समन्वयित गीत उपलब्ध नहीं!",
+    "cancelTimer": "टाइमर रद्द करें",
+    "sleepTimer": "स्लीप टाइमर",
+    "homeContentCount": "होम कंटेंट की संख्या",
+    "homeContentCountDes": "आरंभिक होमस्क्रीन-कंटेंट की संख्या (लगभग) चुनें। कम परिणाम तेजी से लोड होगा",
+    "synced": "सिंकड",
+    "cancelTimerAlert": "स्लीप टाइमर रद्द कर दिया गया",
+    "sleepTimeSetAlert": "आपका स्लीप टाइमर सेट हो गया है"
 }

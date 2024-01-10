@@ -65,5 +65,16 @@
     "quickpicks": "Rapidaj Elektoj",
     "goToAlbum": "Iri al la albumo",
     "removeFromQueue": "Forigi el la vico",
-    "shareSong": "Kunhavigi ĉi tiun kanton"
+    "shareSong": "Kunhavigi ĉi tiun kanton",
+    "library": "Biblioteko",
+    "sleepTimer": "Dorma Minutatoro",
+    "add5Minutes": "Aldonas 5 minutojn",
+    "cancelTimer": "Nuligas minutatoron",
+    "minutes": "minutoj",
+    "endOfThisSong": "Fino de ĉi tiu kanto",
+    "homeContentCount": "Hejme kontenta kalkulo",
+    "homeContentCountDes": "Elektas la nombron de komenca homescreen-kontenta(approx). Malpliaj rezultoj pli rapida ŝarĝado",
+    "enableBottomNavDes": "Ŝaltilo al malsupra navigada baro",
+    "equalizerDes": "malferma sistema egaligilo",
+    "equalizer": "Egaligilo"
 }

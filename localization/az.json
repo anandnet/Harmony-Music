@@ -134,5 +134,13 @@
     "goToAlbum": "Alboma keç",
     "removeFromQueue": "Növbədən sil",
     "shareSong": "Bu mahnını paylaş",
-    "songRemovedAlert": "-dən² silindi"
+    "songRemovedAlert": "-dən² silindi",
+    "add5Minutes": "5 dəqiqə əlavə edin",
+    "cancelTimer": "Taymeri ləğv edin",
+    "endOfThisSong": "Bu mahnının sonunda",
+    "sleepTimeSetAlert": "Yuxu taymeriniz qurulub",
+    "library": "Kitabxana",
+    "minutes": "dəqiqə",
+    "sleepTimer": "Yuxu taymeri",
+    "cancelTimerAlert": "Yuxu taymeri ləğv edildi"
 }

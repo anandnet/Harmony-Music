@@ -134,5 +134,8 @@
     "goToAlbum": "Ke album",
     "removeFromQueue": "Hapus dari antrian",
     "shareSong": "Bagikan lagu ini",
-    "songRemovedAlert": "Dihapus dari"
+    "songRemovedAlert": "Dihapus dari",
+    "library": "Perpustakaan",
+    "sleepTimer": "Pengatur Waktu Tidur",
+    "minutes": "menit"
 }

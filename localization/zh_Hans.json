@@ -137,5 +137,11 @@
     "hintApiUrl": "Piped 实例的 API 地址",
     "downloadingFormatDes": "选择下载所用的文件格式。“Opus”会提供最佳音质",
     "removeFromPlaylist": "从播放列表移除",
-    "quickpicks": "歌曲快选"
+    "quickpicks": "歌曲快选",
+    "sleepTimer": "睡眠定时器",
+    "plain": "普通",
+    "library": "音乐库",
+    "minutes": "分钟",
+    "synced": "已同步",
+    "cancelTimerAlert": "睡眠定时器已取消"
 }

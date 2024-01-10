@@ -137,5 +137,10 @@
     "downloadingFormat": "Télécharger le format de fichier",
     "songAlreadyOfflineAlert": "Chanson déjà hors ligne dans le cache",
     "downloadLocation": "Emplacement du téléchargement",
-    "downloadingFormatDes": "Sélectionnez le format de fichier de téléchargement. \"Opus\" offrira la meilleure qualité"
+    "downloadingFormatDes": "Sélectionnez le format de fichier de téléchargement. \"Opus\" offrira la meilleure qualité",
+    "library": "Bibliothèque",
+    "sleepTimer": "Minuterie de veille",
+    "synced": "Synchronisé",
+    "cancelTimerAlert": "Minuteur de veille annulé",
+    "minutes": "minutes"
 }

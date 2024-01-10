@@ -137,5 +137,10 @@
     "downloadingFormat": "Формат файла при скачивании",
     "songAlreadyOfflineAlert": "Песня уже офлайн в кеше",
     "downloadLocation": "Папка для загрузок",
-    "downloadingFormatDes": "Выберите формат файла загрузки. «Opus» обеспечит лучшее качество"
+    "downloadingFormatDes": "Выберите формат файла загрузки. «Opus» обеспечит лучшее качество",
+    "sleepTimer": "Таймер сна",
+    "synced": "Синхронизировано",
+    "library": "Библиотека",
+    "minutes": "минуты",
+    "cancelTimerAlert": "Таймер сна отключен"
 }

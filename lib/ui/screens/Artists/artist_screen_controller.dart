@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/screens/Home/home_screen_controller.dart';
 import 'package:hive/hive.dart';
 
 import '../../../models/artist.dart';
 import '../../../utils/helper.dart';
 import '../Library/library_controller.dart';
 import '/services/music_service.dart';
+import '/ui/screens/Home/home_screen_controller.dart';
+import '/ui/screens/Settings/settings_screen_controller.dart';
 
-class ArtistScreenController extends GetxController {
+class ArtistScreenController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final isArtistContentFetced = false.obs;
   final navigationRailCurrentIndex = 0.obs;
   final musicServices = Get.find<MusicServices>();
@@ -22,11 +24,30 @@ class ArtistScreenController extends GetxController {
   bool continuationInProgress = false;
   late Artist artist_;
   Map<String, List> tempListContainer = {};
+  TabController? tabController;
+  bool isTabTransitionReversed = false;
+
+  @override
+  void onInit() {
+    final args = Get.arguments;
+    _init(args[0], args[1]);
+    if (Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue) {
+      tabController = TabController(vsync: this, length: 5);
+      tabController?.animation?.addListener(() {
+        int indexChange = tabController!.offset.round();
+        int index = tabController!.index + indexChange;
+
+        if (index != navigationRailCurrentIndex.value) {
+          onDestinationSelected(index);
+          navigationRailCurrentIndex.value = index;
+        }
+      });
+    }
+    super.onInit();
+  }
 
   @override
   void onReady() {
-    final args = Get.arguments;
-    _init(args[0], args[1]);
     Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onReady();
   }
@@ -73,6 +94,7 @@ class ArtistScreenController extends GetxController {
   }
 
   Future<void> onDestinationSelected(int val) async {
+    isTabTransitionReversed = val > navigationRailCurrentIndex.value;
     navigationRailCurrentIndex.value = val;
     final tabName = ["About", "Songs", "Videos", "Albums", "Singles"][val];
 
@@ -172,6 +194,7 @@ class ArtistScreenController extends GetxController {
     tempListContainer.clear();
     songScrollController.dispose();
     videoScrollController.dispose();
+    tabController?.dispose();
     Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();
   }

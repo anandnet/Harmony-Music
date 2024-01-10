@@ -160,12 +160,10 @@ class Downloader extends GetxService {
     }).onDone(() async {
       // Save Song
       final dirPath = settingsScreenController.downloadLocationPath.string;
-      String filePath = "$dirPath/${song.title}.$downloadingFormat";
-      filePath = filePath
-          .replaceAll("\"", "")
-          .replaceAll(">", "")
-          .replaceAll("<", "")
-          .replaceAll("|", "");
+      final RegExp invalidChar =
+          RegExp(r'Container.|\/|\\|\"|\<|\>|\*|\?|\:|\!|\[|\]|\¡|\||\%');
+      final songTitle = song.title.replaceAll(invalidChar, "");
+      String filePath = "$dirPath/$songTitle.$downloadingFormat";
       printINFO("Downloading filePath: $filePath");
       var file = File(filePath);
 

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/screens/Search/search_result_screen_v2.dart';
-import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 
+import '/ui/screens/Search/search_result_screen_v2.dart';
+import '/ui/screens/Settings/settings_screen_controller.dart';
 import '../../navigator.dart';
+import '../../widgets/animated_screen_transition.dart';
 import '../../widgets/loader.dart';
 import '../../widgets/search_related_widgets.dart';
 import '../../widgets/separate_tab_item_widget.dart';
@@ -75,53 +76,16 @@ class SearchResultScreen extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: Obx(
-                    () {
-                      if (searchResScrController
-                              .navigationRailCurrentIndex.value ==
-                          0) {
-                        if (searchResScrController
-                                .isResultContentFetced.isTrue &&
-                            searchResScrController.railItems.isEmpty) {
-                          return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "nomatch".tr,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                                Text(
-                                    "'${searchResScrController.queryString.value}'"),
-                              ],
-                            ),
-                          );
-                        } else if (searchResScrController
-                            .isResultContentFetced.isTrue) {
-                          return const ResultWidget();
-                        } else {
-                          return const Center(
-                            child: LoadingIndicator(),
-                          );
-                        }
-                      }
-                      if (searchResScrController.isResultContentFetced.isTrue) {
-                        final name = searchResScrController.railItems[
-                            searchResScrController
-                                    .navigationRailCurrentIndex.value -
-                                1];
-
-                        return SeparateTabItemWidget(
-                          items: const [],
-                          title: name,
-                          topPadding: 75,
-                          scrollController:
-                              searchResScrController.scrollControllers[name],
-                        );
-                      }
-                      return const SizedBox.shrink();
-                    },
+                  child: GetX<SearchResultScreenController>(
+                    builder: (controller) => AnimatedScreenTransition(
+                      resverse: controller.isTabTransitionReversed,
+                      child: Center(
+                        key: ValueKey<int>(
+                            controller.navigationRailCurrentIndex.toInt() * 8),
+                        child: Body(
+                            searchResScrController: searchResScrController),
+                      ),
+                    ),
                   ),
                 )
               ],
@@ -136,5 +100,55 @@ class SearchResultScreen extends StatelessWidget {
           quarterTurns: -1,
           child: Text(label.toLowerCase().removeAllWhitespace.tr)),
     );
+  }
+}
+
+class Body extends StatelessWidget {
+  const Body({
+    super.key,
+    required this.searchResScrController,
+  });
+
+  final SearchResultScreenController searchResScrController;
+
+  @override
+  Widget build(BuildContext context) {
+    if (searchResScrController.navigationRailCurrentIndex.value == 0) {
+      return Obx(() {
+        if (searchResScrController.isResultContentFetced.isTrue &&
+            searchResScrController.railItems.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "nomatch".tr,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Text("'${searchResScrController.queryString.value}'"),
+              ],
+            ),
+          );
+        } else if (searchResScrController.isResultContentFetced.isTrue) {
+          return const ResultWidget();
+        } else {
+          return const Center(
+            child: LoadingIndicator(),
+          );
+        }
+      });
+    } else {
+      if (searchResScrController.isResultContentFetced.isTrue) {
+        final name = searchResScrController.railItems[
+            searchResScrController.navigationRailCurrentIndex.value - 1];
+        return SeparateTabItemWidget(
+          items: const [],
+          title: name,
+          topPadding: 75,
+          scrollController: searchResScrController.scrollControllers[name],
+        );
+      }
+    }
+    return const SizedBox.shrink();
   }
 }

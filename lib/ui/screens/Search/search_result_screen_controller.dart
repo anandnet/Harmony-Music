@@ -20,6 +20,7 @@ class SearchResultScreenController extends GetxController
   final additionalParamNext = {};
   bool continuationInProgress = false;
   TabController? tabController;
+  bool isTabTransitionReversed = false;
   //ScrollContollers List
   final Map<String, ScrollController> scrollControllers = {};
 
@@ -35,6 +36,8 @@ class SearchResultScreenController extends GetxController
     if (railItems.isEmpty) {
       return;
     }
+
+    isTabTransitionReversed = value > navigationRailCurrentIndex.value;
 
     isSeparatedResultContentFetced.value = false;
     navigationRailCurrentIndex.value = value;

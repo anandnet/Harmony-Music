@@ -108,6 +108,7 @@
     "songEnqueueAlert": "Song enqueued!",
     "songRemovedAlert": "Removed from",
     "errorOccuredAlert": "Some error occured!",
+    "pipedplstSyncAlert": "Piped playlist synced!",
     "playlistCreatedAlert": "Playlist created!",
     "playlistCreatednsongAddedAlert": "Playlist created & song added!",
     "playlistRenameAlert": "Renamed successfully!",

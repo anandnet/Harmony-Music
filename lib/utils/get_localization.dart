@@ -152,7 +152,15 @@ class Languages extends Translations {
           "goToAlbum": "Alboma keç",
           "removeFromQueue": "Növbədən sil",
           "shareSong": "Bu mahnını paylaş",
-          "songRemovedAlert": "-dən² silindi"
+          "songRemovedAlert": "-dən² silindi",
+          "add5Minutes": "5 dəqiqə əlavə edin",
+          "cancelTimer": "Taymeri ləğv edin",
+          "endOfThisSong": "Bu mahnının sonunda",
+          "sleepTimeSetAlert": "Yuxu taymeriniz qurulub",
+          "library": "Kitabxana",
+          "minutes": "dəqiqə",
+          "sleepTimer": "Yuxu taymeri",
+          "cancelTimerAlert": "Yuxu taymeri ləğv edildi"
         },
         "bg": {
           "playlistCreatednsongAddedAlert":
@@ -301,7 +309,24 @@ class Languages extends Translations {
           "songAlreadyOfflineAlert": "Песента вече е офлайн в кеша",
           "downloadLocation": "Местоположение на изтеглянията",
           "downloadingFormatDes":
-              "Изберете файлов формат за изтегляне. \"Opus\" ще осигури най-доброто качество"
+              "Изберете файлов формат за изтегляне. \"Opus\" ще осигури най-доброто качество",
+          "minutes": "минути",
+          "endOfThisSong": "Край на тази песен",
+          "enableBottomNav": "Долната навигационна лента",
+          "enableBottomNavDes": "Превключване към долната лента за навигация",
+          "synced": "Синхронизирано",
+          "plain": "Обикновен",
+          "cancelTimerAlert": "Таймерът за заспиване е отменен",
+          "syncedLyricsNotAvailable":
+              "Синхронизираните текстове не са налични!",
+          "sleepTimer": "Таймер за заспиване",
+          "library": "Библиотека",
+          "add5Minutes": "Добавете 5 минути",
+          "homeContentCount": "Брой начално съдържание",
+          "cancelTimer": "Отмяна на таймера",
+          "homeContentCountDes":
+              "Изберете броя на първоначалното съдържание на началния екран (приблизително).  По-малко резултати, по-бързо зареждане",
+          "sleepTimeSetAlert": "Вашият таймер за заспиване е зададен"
         },
         "bn": {},
         "cs": {
@@ -449,11 +474,15 @@ class Languages extends Translations {
           "songAlreadyOfflineAlert": "Skladba je v mezipaměti již offline",
           "downloadLocation": "Umístění stahování",
           "downloadingFormatDes":
-              "Vyberte formát souboru pro stahování. \"Opus\" bude poskytovat nejlepší kvalitu"
+              "Vyberte formát souboru pro stahování. \"Opus\" bude poskytovat nejlepší kvalitu",
+          "sleepTimer": "Časovač spánku",
+          "minutes": "minut",
+          "synced": "Synchronizováno",
+          "library": "Knihovna"
         },
         "de": {
           "home": "Startseite",
-          "songs": "Songs",
+          "songs": "Lieder",
           "playlists": "Wiedergabelisten",
           "albums": "Alben",
           "settings": "Einstellungen",
@@ -488,15 +517,15 @@ class Languages extends Translations {
           "quickPics": "Schnellauswahl",
           "discover": "Entdecke",
           "systemDefault": "Systemvorgabe",
-          "dark": "dunkel",
-          "light": "hell",
+          "dark": "Dunkel",
+          "light": "Hell",
           "trending": "Trend",
           "topMusicVid": "Top-Musikvideos",
           "skipSilence": "Stille überspringen",
           "basedOnLast": "Basierend auf der letzten Interaktion",
           "cacheSongs": "Cache-Songs",
           "cacheSongsDes":
-              "Das Zwischenspeichern von Titeln während der Wiedergabe für die zukünftige/offline-Wiedergabe, nimmt zusätzlichen Speicherplatz auf Ihrem Gerät in Anspruch.",
+              "Zwischenspeichern von Titeln während der Wiedergabe für die zukünftige/offline-Wiedergabe, nimmt zusätzlichen Speicherplatz auf Ihrem Gerät in Anspruch.",
           "streamingQuality": "Qualität des Streamings",
           "streamingQualityDes": "Qualität des Musikstreams",
           "high": "hoch",
@@ -583,7 +612,7 @@ class Languages extends Translations {
               "Musik stoppen wenn die Taskleiste geleert wird",
           "stopMusicOnTaskClearDes":
               "Die Musikwiedergabe wird gestoppt, wenn die App aus dem Task-Manager weggewischt wird",
-          "communityplaylists": "Community Playlists",
+          "communityplaylists": "Community Wiedergabelisten",
           "languageDes": "Appsprache ändern",
           "language": "Sprache",
           "removeFromPlaylist": "Aus Wiedergabeliste entfernen",
@@ -594,10 +623,10 @@ class Languages extends Translations {
           "downloads": "Downloads",
           "removeFromLib": "Lied aus der Bibliothek entfernen",
           "downloadingFormat": "Download-Format",
-          "selectAuthInsMsg": "Bitte Authentifizierungsinstanz auswählen!",
+          "selectAuthInsMsg": "Bitte wähle Authentifizierungsinstanz!",
           "customIns": "Benutzerdefinierte Instanz",
           "Piped": "Piped",
-          "topmusicvideos": "Neue Musikvideos",
+          "topmusicvideos": "Top Musikvideos",
           "singles": "Singles",
           "songAlreadyOfflineAlert":
               "Der Song ist bereits offline im Cache verfügbar",
@@ -605,8 +634,13 @@ class Languages extends Translations {
           "hintApiUrl": "API-URL zur Piped-Instanz",
           "downloadingFormatDes":
               "Wählen Sie das Dateiformat für den Download aus. „Opus“ bietet beste Qualität",
-          "featuredplaylists": "Ausgewählte Wiedergabelisten",
-          "quickpicks": "Schnellauswahl"
+          "featuredplaylists": "Vorgestellte Playlists",
+          "quickpicks": "Schnellauswahl",
+          "sleepTimer": "Schlaf-Timer",
+          "minutes": "Minuten",
+          "library": "Bibliothek",
+          "synced": "Synchronisiert",
+          "cancelTimerAlert": "Einschlafautomatik deaktiviert"
         },
         "en": {
           "home": "Home",
@@ -724,6 +758,7 @@ class Languages extends Translations {
           "songEnqueueAlert": "Song enqueued!",
           "songRemovedAlert": "Removed from",
           "errorOccuredAlert": "Some error occured!",
+          "pipedplstSyncAlert": "Piped playlist synced!",
           "playlistCreatedAlert": "Playlist created!",
           "playlistCreatednsongAddedAlert": "Playlist created & song added!",
           "playlistRenameAlert": "Renamed successfully!",
@@ -838,7 +873,19 @@ class Languages extends Translations {
           "quickpicks": "Rapidaj Elektoj",
           "goToAlbum": "Iri al la albumo",
           "removeFromQueue": "Forigi el la vico",
-          "shareSong": "Kunhavigi ĉi tiun kanton"
+          "shareSong": "Kunhavigi ĉi tiun kanton",
+          "library": "Biblioteko",
+          "sleepTimer": "Dorma Minutatoro",
+          "add5Minutes": "Aldonas 5 minutojn",
+          "cancelTimer": "Nuligas minutatoron",
+          "minutes": "minutoj",
+          "endOfThisSong": "Fino de ĉi tiu kanto",
+          "homeContentCount": "Hejme kontenta kalkulo",
+          "homeContentCountDes":
+              "Elektas la nombron de komenca homescreen-kontenta(approx). Malpliaj rezultoj pli rapida ŝarĝado",
+          "enableBottomNavDes": "Ŝaltilo al malsupra navigada baro",
+          "equalizerDes": "malferma sistema egaligilo",
+          "equalizer": "Egaligilo"
         },
         "es": {
           "playlistCreatednsongAddedAlert":
@@ -991,7 +1038,23 @@ class Languages extends Translations {
           "songAlreadyOfflineAlert": "Canción sin conexión en la caché",
           "downloadLocation": "Ubicación de la descarga",
           "downloadingFormatDes":
-              "Selecciona el formato del archivo de la descarga. \"Opus\" proporcionará la mejor calidad"
+              "Selecciona el formato del archivo de la descarga. \"Opus\" proporcionará la mejor calidad",
+          "add5Minutes": "Añadir 5 minutos",
+          "enableBottomNavDes": "Cambiar a la barra de navegación inferior",
+          "syncedLyricsNotAvailable": "¡Letra sincronizada no disponible!",
+          "synced": "Sincronizado",
+          "plain": "Plano",
+          "endOfThisSong": "Fin de esta canción",
+          "library": "Biblioteca",
+          "cancelTimer": "Cancelar temporizador",
+          "minutes": "minutos",
+          "enableBottomNav": "Barra de navegación inferior",
+          "homeContentCount": "Recuento de contenidos",
+          "sleepTimeSetAlert": "El temporizador de apagado está activado",
+          "homeContentCountDes":
+              "Seleccione el número de contenidos iniciales de la pantalla de inicio (aprox.). Menos resultados carga más rápida",
+          "cancelTimerAlert": "Temporizador de reposo cancelado",
+          "sleepTimer": "Temporizador"
         },
         "fil": {},
         "fj": {},
@@ -1146,7 +1209,12 @@ class Languages extends Translations {
           "songAlreadyOfflineAlert": "Chanson déjà hors ligne dans le cache",
           "downloadLocation": "Emplacement du téléchargement",
           "downloadingFormatDes":
-              "Sélectionnez le format de fichier de téléchargement. \"Opus\" offrira la meilleure qualité"
+              "Sélectionnez le format de fichier de téléchargement. \"Opus\" offrira la meilleure qualité",
+          "library": "Bibliothèque",
+          "sleepTimer": "Minuterie de veille",
+          "synced": "Synchronisé",
+          "cancelTimerAlert": "Minuteur de veille annulé",
+          "minutes": "minutes"
         },
         "ga": {},
         "hi": {
@@ -1295,7 +1363,23 @@ class Languages extends Translations {
           "songAlreadyOfflineAlert": "गाना पहले से ही कैश में ऑफ़लाइन है",
           "downloadLocation": "डाउनलोड का स्थान",
           "downloadingFormatDes":
-              "डाउनलोडिंग फाइल फॉर्मेट चुने, \"Opus\" सर्वोत्तम गुणवत्ता प्रदान करेगा"
+              "डाउनलोडिंग फाइल फॉर्मेट चुने, \"Opus\" सर्वोत्तम गुणवत्ता प्रदान करेगा",
+          "library": "लाइब्रेरी",
+          "add5Minutes": "5 मिनट जोड़े",
+          "minutes": "मिनट्स",
+          "endOfThisSong": "इस गाने के अंत में",
+          "enableBottomNav": "बॉटम नेविगेशन बार",
+          "enableBottomNavDes": "बॉटम नेविगेशन बार पर स्विच करें",
+          "plain": "प्लेन",
+          "syncedLyricsNotAvailable": "समन्वयित गीत उपलब्ध नहीं!",
+          "cancelTimer": "टाइमर रद्द करें",
+          "sleepTimer": "स्लीप टाइमर",
+          "homeContentCount": "होम कंटेंट की संख्या",
+          "homeContentCountDes":
+              "आरंभिक होमस्क्रीन-कंटेंट की संख्या (लगभग) चुनें। कम परिणाम तेजी से लोड होगा",
+          "synced": "सिंकड",
+          "cancelTimerAlert": "स्लीप टाइमर रद्द कर दिया गया",
+          "sleepTimeSetAlert": "आपका स्लीप टाइमर सेट हो गया है"
         },
         "ia": {
           "playlistCreatednsongAddedAlert":
@@ -1385,7 +1469,85 @@ class Languages extends Translations {
           "noOfflineSong": "Non il ha cantos foras de linea!",
           "removeFromQueue": "Deler del cauda",
           "shareSong": "Compartir iste canto",
-          "songRemovedAlert": "Removite ab"
+          "songRemovedAlert": "Removite ab",
+          "goToDownloadPage":
+              "Clicca hic pro vader al pagina de discargamentos",
+          "unlinkAlert": "Separate con successo!",
+          "unLink": "Separar",
+          "noLibPlaylist": "Tu non ha necun lista de reproduction lib!",
+          "setDiscoverContent": "Definir le discoperta de contento",
+          "networkError1": "Oh, un error de rete!",
+          "githubDes":
+              "Vider le codice fonte in GitHub\nSi te place iste project, non oblida de dar un ⭐",
+          "add5Minutes": "Adder 5 minutas",
+          "playlistRemovedAlert": "Lista de reproduction removite!",
+          "albumBookmarkRemoveAlert": "Marcator de album removite!",
+          "notaSongVideo": "Non es un canto/video musical!",
+          "ignoreBatOptDes":
+              "Si tu ha problemas de notificationes o de reproduction stoppate per le optimisation de batteria, activa iste option",
+          "enableBottomNavDes": "Cambiar al barra de navigation basse",
+          "low": "Basse",
+          "enqueueAll": "Mitter toto in le cauda",
+          "enqueueSong": "Mitter iste canto in le cauda",
+          "syncedLyricsNotAvailable":
+              "Parolas de canto synchronisate non disponibile!",
+          "allFieldsReqMsg": "Tote le campos es requirite",
+          "artistBookmarkAddAlert": "Artista marcate!",
+          "synced": "Synchronisate",
+          "discover": "Discoperir",
+          "downloadingFormat": "Formato de file de discarga",
+          "playlistBookmarkAddAlert": "Lista de reproduction marcate!",
+          "plain": "Plan",
+          "recentlyPlayed": "Reproducite recentemente",
+          "endOfThisSong": "Fin de iste canto",
+          "library": "Bibliotheca",
+          "playlistBookmarkRemoveAlert":
+              "Marcator del lista de reproduction removite!",
+          "cancelTimer": "Cancellar temporisator",
+          "ignoreBatOpt": "Ignorar le optimisation del batteria",
+          "singles": "Singles",
+          "nomatch": "Nulle correspondentia trovate pro",
+          "linkPipedDes": "Ligamine con piped pro listas de reproduction",
+          "minutes": "minutas",
+          "blacklistPlstResetAlert": "Reinitialisate con successo!",
+          "songAlreadyOfflineAlert": "Canto jam foras de linea in le cache",
+          "skipSilenceDes":
+              "Le silentio essera saltate in le reproduction de musica",
+          "enableBottomNav": "Barra de navigation basse",
+          "errorOccuredAlert": "Ocurreva alcun error!",
+          "high": "Alte",
+          "artistDesNotAvailable": "Description non disponibile!",
+          "basedOnLast": "Basate in le ultime interaction",
+          "playlistRenameAlert": "Renominate con successo!",
+          "downloadingFormatDes":
+              "Selige le formato del file de discarga. \"Opus\" fornira le melior qualitate",
+          "sleepTimeSetAlert": "Tu temporisator de somno es definite",
+          "albumBookmarkAddAlert": "Album marcate!",
+          "lyricsNotAvailable": "Parolas de canto non disponibile!",
+          "dontShowInfoAgain": "Non monstrar iste information novemente",
+          "featuredplaylists": "Listas de reproduction eminente",
+          "homeContentCountDes":
+              "Selige le numero de contentos del schermo de initio (approx.). Minus resultatos carga plus rapide",
+          "quickpicks": "Selectiones rapide",
+          "artistBookmarkRemoveAlert": "Marcator de artista removite!",
+          "operationFailed": "Falleva le operation",
+          "goToAlbum": "Vader al album",
+          "cancelTimerAlert": "Temporisator de somno cancellate",
+          "sleepTimer": "Temporisator de somno",
+          "cacheSongsDes":
+              "Immagazinar le cantos in cache pro reproductiones futur e foras de linea, illo usara spatio additional in tu apparato",
+          "stopMusicOnTaskClear":
+              "Stoppar le musica al rader le barra de cargas",
+          "resetblacklistedplaylist":
+              "Restabilir le listas de reproduction in lista nigre",
+          "stopMusicOnTaskClearDes":
+              "Le reproduction de musica stoppara quando le application sia glissate foras del gestor de cargas",
+          "topmusicvideos": "Videos musical plus reguardate",
+          "linkAlert": "Ligate con successo!",
+          "playlistBlacklistAlert": "Lista de reproduction in le lista nigre!",
+          "resetblacklistedplaylistDes":
+              "Restabilir tote le listas de reproduction de piped in lista nigre",
+          "homeContentCount": "Computo de contentos"
         },
         "id": {
           "playlistCreatednsongAddedAlert":
@@ -1532,7 +1694,10 @@ class Languages extends Translations {
           "goToAlbum": "Ke album",
           "removeFromQueue": "Hapus dari antrian",
           "shareSong": "Bagikan lagu ini",
-          "songRemovedAlert": "Dihapus dari"
+          "songRemovedAlert": "Dihapus dari",
+          "library": "Perpustakaan",
+          "sleepTimer": "Pengatur Waktu Tidur",
+          "minutes": "menit"
         },
         "it": {
           "home": "Pagina principale",
@@ -1680,7 +1845,22 @@ class Languages extends Translations {
           "goToAlbum": "アルバムを開く",
           "removeFromQueue": "キューから削除",
           "shareSong": "この曲を共有",
-          "songRemovedAlert": "以下から削除しました"
+          "songRemovedAlert": "以下から削除しました",
+          "add5Minutes": "5分追加",
+          "enableBottomNavDes": "ナビゲーションバーを下部に切り替える",
+          "syncedLyricsNotAvailable": "同期可能な歌詞はありません！",
+          "synced": "同期",
+          "plain": "通常",
+          "endOfThisSong": "この曲の終わり",
+          "library": "ライブラリ",
+          "cancelTimer": "タイマーをキャンセル",
+          "minutes": "分",
+          "enableBottomNav": "下部のなびばー",
+          "homeContentCount": "ホームのコンテンツ数",
+          "sleepTimeSetAlert": "スリープタイマーをセットしました",
+          "homeContentCountDes": "最初のホーム画面のコンテンツ数 (およそ) を選択します。少ないほど読み込みが速いです",
+          "cancelTimerAlert": "スリープタイマーをキャンセルしました",
+          "sleepTimer": "スリープタイマー"
         },
         "kn": {"libArtists": "歌手库"},
         "ko": {},
@@ -1826,7 +2006,11 @@ class Languages extends Translations {
           "hintApiUrl": "API-nettadresse til Piped-instans",
           "removeFromPlaylist": "Fjern fra spillelisten",
           "featuredplaylists": "Framhevede spillelister",
-          "quickpicks": "Hurtigvalg"
+          "quickpicks": "Hurtigvalg",
+          "library": "Bibliotek",
+          "synced": "Synkronisert",
+          "cancelTimerAlert": "Tidsavbrudd avbrutt",
+          "minutes": "minutter"
         },
         "nl": {},
         "or": {
@@ -1976,7 +2160,11 @@ class Languages extends Translations {
           "songAlreadyOfflineAlert": "ଗୀତ କ୍ୟାଶେରେ ଅଫଲାଇନରେ ଅଛି",
           "downloadLocation": "ଅବସ୍ଥାନ ଡାଉନଲୋଡ୍ କରନ୍ତୁ",
           "downloadingFormatDes":
-              "ଫାଇଲ୍ ଫର୍ମାଟ୍ ଡାଉନଲୋଡ୍ କରନ୍ତୁ ଚୟନ କରନ୍ତୁ | \"Opus\" ସର୍ବୋତ୍ତମ ଗୁଣ ପ୍ରଦାନ କରିବ"
+              "ଫାଇଲ୍ ଫର୍ମାଟ୍ ଡାଉନଲୋଡ୍ କରନ୍ତୁ ଚୟନ କରନ୍ତୁ | \"Opus\" ସର୍ବୋତ୍ତମ ଗୁଣ ପ୍ରଦାନ କରିବ",
+          "sleepTimer": "ଶୟନ ସମୟ-ନିୟାମକ",
+          "minutes": "ମିନିଟ୍",
+          "endOfThisSong": "ଏହି ଗୀତର ଶେଷରେ",
+          "library": "ଲାଇବ୍ରେରୀ"
         },
         "pa": {
           "playlistCreatednsongAddedAlert":
@@ -2123,7 +2311,10 @@ class Languages extends Translations {
           "songAlreadyOfflineAlert": "ਗੀਤ ਪਹਿਲਾਂ ਹੀ ਕੈਸ਼ ਵਿੱਚ ਔਫਲਾਈਨ ਹੈ",
           "downloadLocation": "ਟਿਕਾਣਾ ਡਾਊਨਲੋਡ ਕਰੋ",
           "downloadingFormatDes":
-              "ਡਾਊਨਲੋਡਿੰਗ ਫਾਈਲ ਫਾਰਮੈਟ ਚੁਣੋ। \"ਓਪਸ\" ਵਧੀਆ ਗੁਣਵੱਤਾ ਪ੍ਰਦਾਨ ਕਰੇਗਾ"
+              "ਡਾਊਨਲੋਡਿੰਗ ਫਾਈਲ ਫਾਰਮੈਟ ਚੁਣੋ। \"ਓਪਸ\" ਵਧੀਆ ਗੁਣਵੱਤਾ ਪ੍ਰਦਾਨ ਕਰੇਗਾ",
+          "library": "ਲਾਇਬ੍ਰੇਰੀ",
+          "sleepTimer": "ਸਲੀਪ ਟਾਈਮਰ",
+          "minutes": "ਮਿੰਟ"
         },
         "pl": {
           "home": "Główna",
@@ -2273,7 +2464,21 @@ class Languages extends Translations {
               "Utwór jest już offline w pamięci podręcznej",
           "downloadLocation": "Lokalizacja Pobierania",
           "downloadingFormatDes":
-              "Wybierz format pliku do pobrania. „Opus” zapewni najlepszą jakość"
+              "Wybierz format pliku do pobrania. „Opus” zapewni najlepszą jakość",
+          "library": "Biblioteka",
+          "minutes": "minuty",
+          "endOfThisSong": "Koniec tej piosenki",
+          "enableBottomNav": "Dolny pasek nawigacyjny",
+          "enableBottomNavDes": "Przełącz na dolny pasek nawigacyjny",
+          "syncedLyricsNotAvailable":
+              "Synchronizowanie tekstu nie jest dostępne!",
+          "homeContentCountDes":
+              "Wybierz liczbę początkowej zawartości ekranu głównego (w przybliżeniu). Mniejsze wyniki, szybsze ładowanie",
+          "plain": "Zwykły",
+          "add5Minutes": "Dodaj 5 minut",
+          "sleepTimer": "Wyłącznik czasowy",
+          "synced": "Zsynchronizowano",
+          "cancelTimerAlert": "Wyłącznik uśpienia anulowany"
         },
         "pt": {
           "renamePlaylist": "Renomear Playlist",
@@ -2420,7 +2625,12 @@ class Languages extends Translations {
           "quickpicks": "Escolhas rápidas",
           "artistBookmarkRemoveAlert": "Artista não mais salvo!",
           "operationFailed": "Operação falhou",
-          "songRemovedAlert": "Removida da/do"
+          "songRemovedAlert": "Removida da/do",
+          "library": "Biblioteca",
+          "synced": "Sincronizado",
+          "sleepTimer": "Temporizador de Suspensão",
+          "minutes": "minutos",
+          "cancelTimerAlert": "O despertador foi cancelado"
         },
         "ro": {},
         "ru": {
@@ -2571,7 +2781,12 @@ class Languages extends Translations {
           "songAlreadyOfflineAlert": "Песня уже офлайн в кеше",
           "downloadLocation": "Папка для загрузок",
           "downloadingFormatDes":
-              "Выберите формат файла загрузки. «Opus» обеспечит лучшее качество"
+              "Выберите формат файла загрузки. «Opus» обеспечит лучшее качество",
+          "sleepTimer": "Таймер сна",
+          "synced": "Синхронизировано",
+          "library": "Библиотека",
+          "minutes": "минуты",
+          "cancelTimerAlert": "Таймер сна отключен"
         },
         "sk": {},
         "sr": {
@@ -2629,7 +2844,7 @@ class Languages extends Translations {
           "viewAll": "Погледај све",
           "github": "GitHub",
           "newVersionAvailable": "Нова верзија доступна!",
-          "items": "ставке",
+          "items": "предмета",
           "subscribers": "праћења",
           "startRadio": "Покрени радио",
           "discover": "Откриј",
@@ -2639,7 +2854,7 @@ class Languages extends Translations {
           "username": "Корисничко име",
           "light": "Светла",
           "resetblacklistedplaylist": "Ресетуј плејлисте на црној листи",
-          "dynamic": "Динамички",
+          "dynamic": "Динамичка",
           "selectAuthInsMsg": "Изаберите инстанцу аутентификације!",
           "equalizerDes": "отворите системски еквилајзер",
           "removePlaylist": "Уклони плејлисту",
@@ -2666,7 +2881,7 @@ class Languages extends Translations {
           "singles": "Синглови",
           "linkAlert": "Успешно повезано!",
           "status": "Статус",
-          "themeMode": "Режим теме",
+          "themeMode": "Тема",
           "streamingQualityDes": "Квалитет музичког стрима",
           "nomatch": "Није пронађено подударање за",
           "notaValidLink": "Није важећи линк!",
@@ -2720,7 +2935,23 @@ class Languages extends Translations {
           "songAlreadyOfflineAlert": "Песма је већ офлајн у кешу",
           "downloadLocation": "Локација преузимања",
           "downloadingFormatDes":
-              "Изаберите формат фајла за преузимање. „Opus“ ће обезбедити најбољи квалитет"
+              "Изаберите формат фајла за преузимање. „Opus“ ће обезбедити најбољи квалитет",
+          "add5Minutes": "Додај 5 минута",
+          "enableBottomNavDes": "Пребаците се на доњу траку за навигацију",
+          "syncedLyricsNotAvailable": "Синхронизовани текстови нису доступни!",
+          "synced": "Синхронизовано",
+          "plain": "Обично",
+          "endOfThisSong": "Крај ове песме",
+          "library": "Збирка",
+          "cancelTimer": "Откажи тајмер",
+          "minutes": "минута",
+          "enableBottomNav": "Доња трака за навигацију",
+          "homeContentCount": "Број почетног садржаја",
+          "sleepTimeSetAlert": "Ваш тајмер за спавање је постављен",
+          "homeContentCountDes":
+              "Изаберите број иницијалног садржаја почетног екрана (приближно). Мање резултата - брже учитавање",
+          "cancelTimerAlert": "Тајмер за спавање је отказан",
+          "sleepTimer": "Тајмер за спавање"
         },
         "ta": {},
         "te": {},
@@ -2868,7 +3099,12 @@ class Languages extends Translations {
           "songAlreadyOfflineAlert": "Şarkı zaten önbellekte çevrimdışı",
           "downloadLocation": "İndirme Konumu",
           "downloadingFormatDes":
-              "İndirme dosya biçimini seçin. \"Opus\" en iyi kaliteyi sağlayacak"
+              "İndirme dosya biçimini seçin. \"Opus\" en iyi kaliteyi sağlayacak",
+          "library": "Kütüphane",
+          "minutes": "dakika",
+          "synced": "Eşitlendi",
+          "cancelTimerAlert": "Uyku zamanlayıcısı iptal edildi",
+          "sleepTimer": "Uyku Zamanlayıcısı"
         },
         "uk": {},
         "ur": {},
@@ -3023,7 +3259,13 @@ class Languages extends Translations {
           "hintApiUrl": "Piped 实例的 API 地址",
           "downloadingFormatDes": "选择下载所用的文件格式。“Opus”会提供最佳音质",
           "removeFromPlaylist": "从播放列表移除",
-          "quickpicks": "歌曲快选"
+          "quickpicks": "歌曲快选",
+          "sleepTimer": "睡眠定时器",
+          "plain": "普通",
+          "library": "音乐库",
+          "minutes": "分钟",
+          "synced": "已同步",
+          "cancelTimerAlert": "睡眠定时器已取消"
         },
       };
 }

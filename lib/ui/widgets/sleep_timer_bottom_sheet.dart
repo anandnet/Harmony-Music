@@ -55,7 +55,10 @@ class SleepTimerBottomSheet extends StatelessWidget {
                   ),
                 ),
               ),
-             if(playerController.isSleepTimerActive.isFalse) Column(children: getTimeListWidget(context),),
+            if (playerController.isSleepTimerActive.isFalse)
+              Column(
+                children: getTimeListWidget(context),
+              ),
             if (playerController.isSleepTimerActive.isTrue)
               Padding(
                 padding: const EdgeInsets.only(bottom: 20.0, top: 20),
@@ -78,7 +81,8 @@ class SleepTimerBottomSheet extends StatelessWidget {
                           child: Text("add5Minutes".tr)),
                     OutlinedButton(
                         onPressed: () {
-                          playerController.cancelSleepTimer();
+                          Future.delayed(const Duration(milliseconds: 100),
+                              playerController.cancelSleepTimer);
                           Navigator.of(context).pop();
                           ScaffoldMessenger.of(context).showSnackBar(snackbar(
                               context, "cancelTimerAlert".tr,
@@ -109,7 +113,9 @@ class SleepTimerBottomSheet extends StatelessWidget {
         .map((dur) => ListTile(
               onTap: () {
                 Navigator.of(context).pop();
-                playerController.startSleepTimer(dur);
+                Future.delayed(const Duration(milliseconds: 200), () {
+                  playerController.startSleepTimer(dur);
+                });
                 ScaffoldMessenger.of(context).showSnackBar(snackbar(
                     context, "sleepTimeSetAlert".tr,
                     size: SanckBarSize.BIG));

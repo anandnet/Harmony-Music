@@ -36,10 +36,12 @@ class _MarqueeWidgetState extends State<MarqueeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: widget.direction,
-      controller: scrollController,
-      child: widget.child,
+    return IgnorePointer(
+      child: SingleChildScrollView(
+        scrollDirection: widget.direction,
+        controller: scrollController,
+        child: widget.child,
+      ),
     );
   }
 

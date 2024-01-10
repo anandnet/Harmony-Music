@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../models/playlist.dart';
-import '../../../utils/helper.dart';
+import '../../widgets/piped_sync_widget.dart';
 import 'library_controller.dart';
 import '../../widgets/content_list_widget_item.dart';
 import '../../widgets/list_widget.dart';
@@ -10,7 +10,7 @@ import '../../widgets/sort_widget.dart';
 import '../Settings/settings_screen_controller.dart';
 
 class SongsLibraryWidget extends StatelessWidget {
-  const SongsLibraryWidget({super.key,this.isBottomNavActive = false});
+  const SongsLibraryWidget({super.key, this.isBottomNavActive = false});
   final bool isBottomNavActive;
 
   @override
@@ -22,17 +22,17 @@ class SongsLibraryWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         isBottomNavActive
+          isBottomNavActive
               ? const SizedBox(
                   height: 10,
                 )
               : Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "libSongs".tr,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "libSongs".tr,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ),
           Obx(() {
             final libSongsController = Get.find<LibrarySongsController>();
             return SortWidget(
@@ -79,7 +79,8 @@ class SongsLibraryWidget extends StatelessWidget {
 }
 
 class PlaylistNAlbumLibraryWidget extends StatelessWidget {
-  const PlaylistNAlbumLibraryWidget({super.key, this.isAlbumContent = true,this.isBottomNavActive=false});
+  const PlaylistNAlbumLibraryWidget(
+      {super.key, this.isAlbumContent = true, this.isBottomNavActive = false});
   final bool isAlbumContent;
   final bool isBottomNavActive;
 
@@ -94,7 +95,9 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
     const double itemWidth = 180;
 
     return Padding(
-      padding:isBottomNavActive?const EdgeInsets.only(left: 15): const EdgeInsets.only(top: 90.0),
+      padding: isBottomNavActive
+          ? const EdgeInsets.only(left: 15)
+          : const EdgeInsets.only(top: 90.0),
       child: Column(
         children: [
           Padding(
@@ -107,36 +110,18 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                         height: 10,
                       )
                     : Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    isAlbumContent ? "libAlbums".tr : "libPlaylists".tr,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
-                (isAlbumContent ||
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          isAlbumContent ? "libAlbums".tr : "libPlaylists".tr,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                (settingscrnController.isBottomNavBarEnabled.isTrue ||
+                        isAlbumContent ||
                         settingscrnController.isLinkedWithPiped.isFalse)
                     ? const SizedBox.shrink()
-                    : Padding(
+                    : PipedSyncWidget(
                         padding: EdgeInsets.only(right: size.width * .05),
-                        child: RotationTransition(
-                          turns: Tween(begin: 0.0, end: 1.0)
-                              .animate(librplstCntrller.controller),
-                          child: IconButton(
-                              splashRadius: 20,
-                              iconSize: 20,
-                              visualDensity: const VisualDensity(vertical: -4),
-                              icon: const Icon(
-                                Icons.sync,
-                              ), // <-- Icon
-                              onPressed: () async {
-                                printINFO(librplstCntrller.controller.status);
-                                librplstCntrller.controller.forward();
-                                librplstCntrller.controller.repeat();
-                                await librplstCntrller.syncPipedPlaylist();
-                                librplstCntrller.controller.stop();
-                                librplstCntrller.controller.reset();
-                              }),
-                        ),
                       )
               ],
             ),
@@ -210,10 +195,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
 }
 
 class LibraryArtistWidget extends StatelessWidget {
-  const LibraryArtistWidget({
-    super.key,
-    this.isBottomNavActive = false
-  });
+  const LibraryArtistWidget({super.key, this.isBottomNavActive = false});
   final bool isBottomNavActive;
 
   @override
@@ -225,13 +207,17 @@ class LibraryArtistWidget extends StatelessWidget {
           : const EdgeInsets.only(left: 5, top: 90.0),
       child: Column(
         children: [
-         isBottomNavActive?const SizedBox(height: 10,): Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "libArtists".tr,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ),
+          isBottomNavActive
+              ? const SizedBox(
+                  height: 10,
+                )
+              : Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "libArtists".tr,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ),
           Obx(
             () => SortWidget(
               tag: "LibArtistSort",

@@ -1547,7 +1547,8 @@ class Languages extends Translations {
           "playlistBlacklistAlert": "Lista de reproduction in le lista nigre!",
           "resetblacklistedplaylistDes":
               "Restabilir tote le listas de reproduction de piped in lista nigre",
-          "homeContentCount": "Computo de contentos"
+          "homeContentCount": "Computo de contentos",
+          "pipedplstSyncAlert": "Lista de reproduction de Piped synchronisate!"
         },
         "id": {
           "playlistCreatednsongAddedAlert":

@@ -31,6 +31,7 @@ class CombinedLibrary extends StatelessWidget {
               width: 50,
               child: FittedBox(
                 child: FloatingActionButton.extended(
+                    elevation: 0,
                     onPressed: () {
                       showDialog(
                           context: context,

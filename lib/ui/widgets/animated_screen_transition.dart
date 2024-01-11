@@ -31,12 +31,13 @@ class AnimatedScreenTransition extends StatelessWidget {
           : Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
     }
     return PageTransitionSwitcher(
-      duration: const Duration(milliseconds: 450),
+      duration: horizontalTransition
+          ? const Duration(milliseconds: 400)
+          : const Duration(milliseconds: 450),
       transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
         return DualTransitionBuilder(
           animation: primaryAnimation,
           forwardBuilder: (context, animation, child) => SlideTransition(
-            transformHitTests: true,
             position: forwardTween.animate(primaryAnimation),
             child: child,
           ),

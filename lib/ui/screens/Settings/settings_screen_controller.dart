@@ -154,6 +154,7 @@ class SettingsScreenController extends GetxController {
       if (await tempImgDir.exists()) {
         await tempImgDir.delete(recursive: true);
       }
+      // ignore: empty_catches
     } catch (e) {}
   }
 

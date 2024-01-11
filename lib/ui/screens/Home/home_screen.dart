@@ -28,8 +28,9 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
         floatingActionButton: Obx(
-          () => homeScreenController.tabIndex.value == 0 ||
-                  homeScreenController.tabIndex.value == 2
+          () => (homeScreenController.tabIndex.value == 0 ||
+                      homeScreenController.tabIndex.value == 2) &&
+                  settingsScreenController.isBottomNavBarEnabled.isFalse
               ? Obx(
                   () => Padding(
                     padding: EdgeInsets.only(
@@ -80,15 +81,13 @@ class HomeScreen extends StatelessWidget {
               //const VerticalDivider(thickness: 1, width: 2),
               Expanded(
                 child: Obx(() => AnimatedScreenTransition(
-                          resverse: homeScreenController.reverseAnimationtransiton,
-                          horizontalTransition: settingsScreenController
-                            .isBottomNavBarEnabled.isTrue,
-                            child: Center(
-                          key: ValueKey<int>(
-                              homeScreenController.tabIndex.value),
-                          child: const Body(),
-                        ))
-                    ),
+                    resverse: homeScreenController.reverseAnimationtransiton,
+                    horizontalTransition:
+                        settingsScreenController.isBottomNavBarEnabled.isTrue,
+                    child: Center(
+                      key: ValueKey<int>(homeScreenController.tabIndex.value),
+                      child: const Body(),
+                    ))),
               ),
             ],
           ),

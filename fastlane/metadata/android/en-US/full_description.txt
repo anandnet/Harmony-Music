@@ -12,8 +12,10 @@
 * Language support
 * Skip silence
 * Dynamic Theme
+* Flexibility to switch between Bottom & Side Nav bar
 * Equalizer support
-* Lyrics support
+* Synced & Plain Lyrics support
+* Sleep Timer
 * Android Auto support
 * No Advertisment
 * No Login required

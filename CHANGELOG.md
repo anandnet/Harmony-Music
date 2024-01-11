@@ -1,3 +1,24 @@
+## 1.8.0
+* Added feature to switch to Bottom Navigation Bar (Major Change) #95 #58
+* Synced Lyrics feature added #66 #116 #98 (Data provided by lrclib.net)
+* Added x button to clear search query #92
+* Added Search history #128
+* Sleep Timer feature added #118 #109
+* Added feature to ensure offline availability of bookmarked Album/playlists #113
+* Highlight for now playing song in playlists #97
+* Changes made for remember last session selection for loop mode #127
+* Added functionality to remove invalid char from file name to fix issue #129
+* Downloaded thumbnail support for downloaded song
+* Added option to set no of homescreen content (approx)
+* Fixed app flagged as TROJEN in virustotal #122
+* Fixed song album id issue for songs in album
+* Fixed playlist sort issue
+* Fixed null album issue
+* Improved app animation #83
+* fixed thumbnail url issue
+* New language support Interlingua, Esperanto and updated other langs thanks to @softinterlingua, @Kjev666, @maboroshin, @trunars, @gallegonovato, @nexiRS, @WaldiSt, @MattSolo451, @
+
+
 ## 1.7.0
 * Added feature to download whole playlist/album #79 & #100
 * Added Replay on previous feature #101
@@ -5,9 +26,6 @@
 * Fixed piped custom instance issue #103
 * Fixed (increased) Lockscreen's album art image quality #96
 * Translation completed Azerbaijani,Indonesian,Japanese,Portuguese,Chinese and some correction in other lang translation. Thanks to @Qaz-6,@Hada45,@maboroshin,@S4r4h-O,@raymond-nee,@siggi1984,@PonyJohnny,@MattSolo451,@hoabuiyt
-
-
-
 
 ## 1.6.0
 * App language support #21 #54

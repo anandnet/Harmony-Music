@@ -1,0 +1,11 @@
+- Added feature to switch to Bottom Navigation Bar (Major Change)
+- Synced Lyrics feature added (Data provided by lrclib.net)
+- Added x button to clear search query
+- Added Search history
+- Sleep Timer feature added
+- Added feature to ensure offline availability of bookmarked Album/playlists
+- Highlight for now playing song in playlists
+- Changes made for remember last session selection for loop mode
+- Added functionality to remove invalid char from file name to fix issue
+- Downloaded thumbnail support for downloaded song
+- Added option to set no of homescreen content (approx)

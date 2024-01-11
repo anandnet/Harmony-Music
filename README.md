@@ -16,9 +16,11 @@ An app for music streaming made with Flutter(Currently support Android only).
 * Language support
 * Skip silence
 * Dynamic Theme
+* Flexibility to switch between Bottom & Side Nav bar
 * Equalizer support
 * Android Auto support
-* Lyrics support
+* Synced & Plain Lyrics support
+* Sleep Timer
 * No Advertisment
 * No Login required
 * Piped playlist integration
@@ -59,6 +61,12 @@ This project is not sponsored or affiliated with, funded, authorized, endorsed b
 Any Song, content, trademark used in this app are intellectual property of their respective owners.
 Harmony music is not responsible for any infringement of copyright or other intellectual property rights that may result
 from the use of the songs and other content available through this app.
+
+This Software is released "as-is", without any warranty, responsibility or liability.
+In no event shall the Author of this Software be liable for any special, consequential,
+incidental or indirect damages whatsoever (including, without limitation, any 
+other pecuniary loss) arising out of the use of inability to use this product, even if
+Author of this Sotware is aware of the possibility of such damages and known defect.
 ```
 
 # Learning References & Credits
@@ -66,12 +74,13 @@ from the use of the songs and other content available through this app.
 <a href = 'https://suragch.medium.com/'>Suragch</a>'s Article related to Just audio & state management,architectural style<br/>
 <a href = 'https://github.com/sigma67'>sigma67</a>'s unofficial ytmusic api project<br/>
 App UI inspired by <a href = 'https://github.com/vfsfitvnm'>vfsfitvnm</a>'s ViMusic<br/>
+Synced lyrics provided by <a href = 'https://lrclib.net' >LRCLIB</a> <br/>
 
 #### Major Packages used
-* just_audio: ^0.9.32  -  provide audio player to play song  
-* audio_service: ^0.18.9 - manage background music & platform audio services
-* get: ^4.6.5 -  package for high-performance state management, intelligent dependency injection, and route management
-* youtube_explode_dart: ^1.12.4 - Third party package to provide song url
+* just_audio: ^0.9.35  -  provide audio player to play song  
+* audio_service: ^0.18.12 - manage background music & platform audio services
+* get: ^4.6.6 -  package for high-performance state management, intelligent dependency injection, and route management
+* youtube_explode_dart: ^2.0.2 - Third party package to provide song url
 * hive: ^2.2.3 - offline db used 
 * hive_flutter: ^1.1.0
 

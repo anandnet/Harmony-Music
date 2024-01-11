@@ -36,7 +36,7 @@ class SettingsScreenController extends GetxController {
   final downloadingFormat = "".obs;
   final hideDloc = true.obs;
   final isBottomNavBarEnabled = false.obs;
-  final currentVersion = "V1.7.0";
+  final currentVersion = "V1.8.0";
 
   @override
   void onInit() {

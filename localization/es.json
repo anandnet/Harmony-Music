@@ -150,5 +150,6 @@
     "sleepTimeSetAlert": "El temporizador de apagado está activado",
     "homeContentCountDes": "Seleccione el número de contenidos iniciales de la pantalla de inicio (aprox.). Menos resultados carga más rápida",
     "cancelTimerAlert": "Temporizador de reposo cancelado",
-    "sleepTimer": "Temporizador"
+    "sleepTimer": "Temporizador",
+    "pipedplstSyncAlert": "¡Lista de reproducción de Piped sincronizada!"
 }

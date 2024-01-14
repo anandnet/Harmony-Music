@@ -149,5 +149,6 @@
     "sleepTimeSetAlert": "スリープタイマーをセットしました",
     "homeContentCountDes": "最初のホーム画面のコンテンツ数 (およそ) を選択します。少ないほど読み込みが速いです",
     "cancelTimerAlert": "スリープタイマーをキャンセルしました",
-    "sleepTimer": "スリープタイマー"
+    "sleepTimer": "スリープタイマー",
+    "pipedplstSyncAlert": "Pipedの再生リストを同期しました！"
 }

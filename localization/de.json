@@ -142,5 +142,9 @@
     "minutes": "Minuten",
     "library": "Bibliothek",
     "synced": "Synchronisiert",
-    "cancelTimerAlert": "Einschlafautomatik deaktiviert"
+    "cancelTimerAlert": "Einschlafautomatik deaktiviert",
+    "add5Minutes": "5 Minuten hinzufügen",
+    "enableBottomNav": "Untere Navigationsleiste",
+    "cancelTimer": "Timer abbrechen",
+    "endOfThisSong": "Ende dieses Liedes"
 }

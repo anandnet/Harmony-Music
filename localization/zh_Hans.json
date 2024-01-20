@@ -143,5 +143,15 @@
     "library": "音乐库",
     "minutes": "分钟",
     "synced": "已同步",
-    "cancelTimerAlert": "睡眠定时器已取消"
+    "cancelTimerAlert": "睡眠定时器已取消",
+    "add5Minutes": "增加 5 分钟",
+    "endOfThisSong": "这首歌的末尾",
+    "enableBottomNav": "底部导航栏",
+    "enableBottomNavDes": "切换到底部导航栏",
+    "sleepTimeSetAlert": "你的睡眠定时器已设定",
+    "syncedLyricsNotAvailable": "滚动歌词不可用！",
+    "pipedplstSyncAlert": "Piped 播放列表已同步！",
+    "cancelTimer": "取消定时器",
+    "homeContentCount": "首页内容数量",
+    "homeContentCountDes": "选择首页初始化时加载的大致内容数量。更少的内容可加快载入速度"
 }

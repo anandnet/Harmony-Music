@@ -184,7 +184,7 @@ class MusicServices extends getx.GetxService {
       bool shuffle = false,
       String? additionalParamsNext,
       bool onlyRelated = false}) async {
-    if(videoId.substring(0,4)== "MPED"){
+    if (videoId.substring(0, 4) == "MPED") {
       videoId = videoId.substring(4);
     }
     final data = Map.from(_context);
@@ -411,7 +411,7 @@ class MusicServices extends getx.GetxService {
     album['tracks'] = parsePlaylistItems(results['contents'],
         artistsM: album['artists'],
         thumbnailsM: album["thumbnails"],
-        albumIdM:albumId,
+        albumIdM: albumId,
         isAlbum: true);
     results = nav(
       response,
@@ -468,8 +468,8 @@ class MusicServices extends getx.GetxService {
     return [false, null];
   }
 
-  Future<List<String>?> getSongUri(String songId,
-      {AudioQuality quality = AudioQuality.High, int attempt = 1}) async {
+  Future<List<String>?> getSongStreamUrl(String songId,
+      {int attempt = 1}) async {
     try {
       if (songId.substring(0, 4) == "MPED") {
         songId = songId.substring(4);
@@ -489,59 +489,20 @@ class MusicServices extends getx.GetxService {
             .url
             .toString()
       ];
-
-      // if (quality == AudioQuality.High) {
-      //   return streamUriList
-      //       .firstWhere((element) => element.audioCodec.contains("mp4a"))
-      //       .url;
-      // } else if (quality == AudioQuality.Medium) {
-      //   printINFO(streamUriList[streamUriList.length ~/ 2].url);
-      //   return streamUriList[streamUriList.length ~/ 2].url;
-      // } else {
-      //   return streamUriList
-      //       .lastWhere((element) => element.audioCodec.contains("mp4a"))
-      //       .url;
-      // }
     } catch (e) {
       printERROR("Error $e.");
       if (e.toString() == "Connection closed before full header was received" &&
           attempt < 3) {
         attempt = attempt + 1;
-        return getSongUri(songId, attempt: attempt);
+        return getSongStreamUrl(songId, attempt: attempt);
       }
       return null;
     }
   }
 
- StreamClient getStreamClient(){
+  StreamClient getStreamClient() {
     return _yt.videos.streamsClient;
   }
-
-  // Future<Uri?> getSongUri(String songId,
-  //     {String defaultUrl = "https://pipedapi.in.projectsegfau.lt"}) async {
-  //   try {
-  //     final response = await dio.get("$defaultUrl/streams/$songId");
-  //     if (response.statusCode == 200) {
-  //       final x = ((response.data["audioStreams"])
-  //           .map((item) {
-  //             if (item['format'] == "M4A") {
-  //               //printINFO(item);
-  //               return Map<dynamic, dynamic>.from(item);
-  //             }
-  //             return null;
-  //           })
-  //           .whereType<Map<dynamic, dynamic>>()
-  //           .toList());
-  //       printINFO("Url$defaultUrl");
-
-  //       return Uri.parse(x[1]['url']);
-  //     } else {
-  //       return getSongUri(songId, defaultUrl: "https://pipedapi.kavin.rocks");
-  //     }
-  //   } catch (e) {
-  //     return getSongUri(songId, defaultUrl: "https://pipedapi.kavin.rocks");
-  //   }
-  // }
 
   Future<Map<String, dynamic>> search(String query,
       {String? filter,

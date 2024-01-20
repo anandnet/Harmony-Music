@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:device_equalizer/device_equalizer.dart';
 
+import '/services/background_task.dart';
 import '/services/permission_service.dart';
 import '../utils/helper.dart';
 import '/models/media_Item_builder.dart';
@@ -340,9 +342,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       currentIndex = extras!['index'];
       final isNewUrlReq = extras['newUrl'] ?? false;
       final currentSong = queue.value[currentIndex];
-      mediaItem.add(currentSong);
       final url =
           await checkNGetUrl(currentSong.id, generateNewUrl: isNewUrlReq);
+      mediaItem.add(currentSong);
       currentSongUrl = url;
       if (url == null) {
         return;
@@ -353,6 +355,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       await _playList.add(_createAudioSource(currentSong));
 
       await _player.play();
+      if (currentIndex == 0) {
+        cacheNextSongUrl(offset: 1);
+      }
       cacheNextSongUrl();
     } else if (name == "checkWithCacheDb" && isPlayingUsingLockCachingSource) {
       final song = extras!['mediaItem'] as MediaItem;
@@ -375,8 +380,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       currentIndex = 0;
       mediaItem.add(currMed);
       queue.add([currMed]);
-      final url =
-          (await checkNGetUrl(currMed.id, useNewInstanceOfExplode: true));
+      final url = (await checkNGetUrl(currMed.id));
       currentSongUrl = url;
       if (url == null) {
         return;
@@ -385,7 +389,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       currMed.extras!['url'] = url;
       await _playList.add(_createAudioSource(currMed));
       await _player.play();
-      cacheNextSongUrl();
+      cacheNextSongUrl(offset: 1);
+      cacheNextSongUrl(offset: 2);
     } else if (name == 'toggleSkipSilence') {
       final enable = (extras!['enable'] as bool);
       await _player.setSkipSilenceEnabled(enable);
@@ -441,18 +446,27 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     return super.stop();
   }
 
-  Future<void> cacheNextSongUrl() async {
-    if (queue.value.length > currentIndex + 1) {
-      await checkNGetUrl((queue.value[currentIndex + 1]).id);
-      printINFO("Next Song Url Cached");
+  Future<void> cacheNextSongUrl({int offset = 2}) async {
+    if (queue.value.length > currentIndex + offset) {
+      final songId = (queue.value[currentIndex + offset]).id;
+      if (isExpired(url: Hive.box("SongsUrlCache").get(songId)?.first) &&
+          !(Hive.box("SongDownloads").containsKey(songId)) &&
+          !(Hive.box("SongsCache").containsKey(songId))) {
+        Future.sync(() => Isolate.run(() => getSongUrlFromExplode(songId))
+                .then((value) async {
+              if (value != null) {
+                await Hive.box("SongsUrlCache").put(songId, value);
+                printWarning("Isolate: Next Song Url Cached song Id $songId");
+              }
+            }));
+      }
     }
   }
 
 // Work around used [useNewInstanceOfExplode = false] to Fix Connection closed before full header was received issue
   Future<String?> checkNGetUrl(String songId,
-      {bool useNewInstanceOfExplode = false,
-      bool generateNewUrl = false,
-      bool offlineReplacementUrl = false}) async {
+      {bool generateNewUrl = false, bool offlineReplacementUrl = false}) async {
+    printINFO("Requested id : $songId");
     final songDownloadsBox = Hive.box("SongDownloads");
     if (!offlineReplacementUrl &&
         (await Hive.openBox("SongsCache")).containsKey(songId)) {
@@ -476,31 +490,24 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       //check if song stream url is cached and allocate url accordingly
       final songsUrlCacheBox = Hive.box("SongsUrlCache");
       final qualityIndex = Hive.box('AppPrefs').get('streamingQuality');
-      final musicServices = Get.find<MusicServices>();
-      final newMusicServicesIns =
-          useNewInstanceOfExplode ? MusicServices(false) : null;
       dynamic url;
       if (songsUrlCacheBox.containsKey(songId) && !generateNewUrl) {
         if (isExpired(url: songsUrlCacheBox.get(songId)[qualityIndex])) {
-          url = useNewInstanceOfExplode
-              ? await newMusicServicesIns!.getSongUri(songId)
-              : (await musicServices.getSongUri(songId));
+          url = await Isolate.run(() => getSongUrlFromExplode(songId));
           if (url != null) songsUrlCacheBox.put(songId, url);
         } else {
           url = songsUrlCacheBox.get(songId);
+          printINFO("Got URLLLLLL cachedbox ($songId)");
         }
       } else {
-        url = useNewInstanceOfExplode
-            ? await newMusicServicesIns!.getSongUri(songId)
-            : (await musicServices.getSongUri(songId));
+        url = await Isolate.run(() => getSongUrlFromExplode(
+            songId)); //(await musicServices.getSongStreamUrl(songId));
         if (url != null) {
           songsUrlCacheBox.put(songId, url);
-          printINFO("Url cached in Box for songId $songId");
+          printERROR("Url cached in Box for songId $songId");
         }
       }
-      if (useNewInstanceOfExplode) {
-        newMusicServicesIns!.closeYtClient();
-      }
+
       return url != null ? url[qualityIndex] : null;
     }
   }

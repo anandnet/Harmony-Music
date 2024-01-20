@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_media_kit/just_audio_media_kit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:device_equalizer/device_equalizer.dart';
@@ -14,6 +15,7 @@ import '/services/utils.dart';
 import '../ui/screens/Settings/settings_screen_controller.dart';
 import '../ui/screens/Library/library_controller.dart';
 import 'music_service.dart';
+import "package:media_kit/src/player/platform_player.dart" show MPVLogLevel;
 
 Future<AudioHandler> initAudioService() async {
   return await AudioService.init(
@@ -31,13 +33,14 @@ Future<AudioHandler> initAudioService() async {
 class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   // ignore: prefer_typing_uninitialized_variables
   late final _cacheDir;
-  final _player = AudioPlayer();
+  late AudioPlayer _player;
   // ignore: prefer_typing_uninitialized_variables
   var currentIndex;
   late String? currentSongUrl;
   bool isPlayingUsingLockCachingSource = false;
   bool loopModeEnabled = false;
   var networkErrorPause = false;
+  final bool isWindows = GetPlatform.isWindows;
 
   final _playList = ConcatenatingAudioSource(
     children: [],
@@ -46,6 +49,13 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       Get.find<LibrarySongsController>();
 
   MyAudioHandler() {
+    if (isWindows) {
+      JustAudioMediaKit.mpvLogLevel = MPVLogLevel.info;
+      JustAudioMediaKit.bufferSize = 8 * 1024 * 1024; // 8 MB
+      JustAudioMediaKit.title = 'Harmony music';
+      JustAudioMediaKit.protocolWhitelist = const ['http', 'https', 'file'];
+    }
+    _player = AudioPlayer();
     _createCacheDir();
     _addEmptyList();
     _notifyAudioHandlerAboutPlaybackEvents();
@@ -145,10 +155,13 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
   void _listenToPlaybackForNextSong() {
+    final playerDurationOffset = isWindows ? 200 : 0;
     _player.positionStream.listen((value) async {
-      if (_player.duration != null &&
-          value.inMilliseconds >= _player.duration!.inMilliseconds) {
-        await _triggerNext();
+      if (_player.duration != null && _player.duration?.inSeconds != 0) {
+        if (value.inMilliseconds >=
+            (_player.duration!.inMilliseconds - playerDurationOffset)) {
+          await _triggerNext();
+        }
       }
     });
   }

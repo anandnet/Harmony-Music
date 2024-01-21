@@ -588,6 +588,14 @@ class Player extends StatelessWidget {
   Widget _playButton() {
     return GetX<PlayerController>(builder: (controller) {
       final buttonState = controller.buttonState.value;
+      if (buttonState == PlayButtonState.loading) {
+        return IconButton(
+          icon: const LoadingIndicator(
+            dimension: 20,
+          ),
+          onPressed: () {},
+        );
+      }
       if (buttonState == PlayButtonState.paused) {
         return IconButton(
           icon: const Icon(Icons.play_arrow_rounded),

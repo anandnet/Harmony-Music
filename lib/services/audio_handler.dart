@@ -43,6 +43,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   bool loopModeEnabled = false;
   var networkErrorPause = false;
   final bool isWindows = GetPlatform.isWindows;
+  bool isSongLoading = true;
 
   final _playList = ConcatenatingAudioSource(
     children: [],
@@ -97,13 +98,15 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
           MediaAction.seek,
         },
         androidCompactActionIndices: const [0, 1, 2],
-        processingState: const {
-          ProcessingState.idle: AudioProcessingState.idle,
-          ProcessingState.loading: AudioProcessingState.loading,
-          ProcessingState.buffering: AudioProcessingState.buffering,
-          ProcessingState.ready: AudioProcessingState.ready,
-          ProcessingState.completed: AudioProcessingState.completed,
-        }[_player.processingState]!,
+        processingState: isSongLoading
+            ? AudioProcessingState.loading
+            : const {
+                ProcessingState.idle: AudioProcessingState.idle,
+                ProcessingState.loading: AudioProcessingState.loading,
+                ProcessingState.buffering: AudioProcessingState.buffering,
+                ProcessingState.ready: AudioProcessingState.ready,
+                ProcessingState.completed: AudioProcessingState.completed,
+              }[_player.processingState]!,
         repeatMode: const {
           LoopMode.off: AudioServiceRepeatMode.none,
           LoopMode.one: AudioServiceRepeatMode.one,
@@ -336,6 +339,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       await _player.dispose();
       super.stop();
     } else if (name == 'playByIndex') {
+      isSongLoading = true;
       if (_playList.children.isNotEmpty) {
         await _playList.clear();
       }
@@ -353,7 +357,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       playbackState.add(playbackState.value.copyWith(queueIndex: currentIndex));
 
       await _playList.add(_createAudioSource(currentSong));
-
+      isSongLoading = false;
       await _player.play();
       if (currentIndex == 0) {
         cacheNextSongUrl(offset: 1);
@@ -375,6 +379,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         }
       }
     } else if (name == 'setSourceNPlay') {
+      isSongLoading = true;
       await _playList.clear();
       final currMed = (extras!['mediaItem'] as MediaItem);
       currentIndex = 0;
@@ -388,6 +393,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       currentSongUrl = url;
       currMed.extras!['url'] = url;
       await _playList.add(_createAudioSource(currMed));
+      isSongLoading = false;
       await _player.play();
       cacheNextSongUrl(offset: 1);
       cacheNextSongUrl(offset: 2);

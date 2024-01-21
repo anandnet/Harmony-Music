@@ -16,7 +16,6 @@ import '/models/media_Item_builder.dart';
 import '/services/utils.dart';
 import '../ui/screens/Settings/settings_screen_controller.dart';
 import '../ui/screens/Library/library_controller.dart';
-import 'music_service.dart';
 import "package:media_kit/src/player/platform_player.dart" show MPVLogLevel;
 
 Future<AudioHandler> initAudioService() async {
@@ -355,7 +354,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       }
       currentSong.extras!['url'] = url;
       playbackState.add(playbackState.value.copyWith(queueIndex: currentIndex));
-
       await _playList.add(_createAudioSource(currentSong));
       isSongLoading = false;
       await _player.play();

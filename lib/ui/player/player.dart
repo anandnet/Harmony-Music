@@ -27,7 +27,8 @@ class Player extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final PlayerController playerController = Get.find<PlayerController>();
     final ThemeController themeController = Get.find<ThemeController>();
-    final playerArtImageSize = size.width - ((size.height < 750) ? 90 : 60);
+    double playerArtImageSize = size.width - ((size.height < 750) ? 90 : 60);
+    playerArtImageSize = playerArtImageSize > 300 ? 300 : playerArtImageSize;
     return Scaffold(
       body: SlidingUpPanel(
           minHeight: 65 + Get.mediaQuery.padding.bottom,
@@ -373,7 +374,12 @@ class Player extends StatelessWidget {
                                                           : IgnorePointer(
                                                               child:
                                                                   LyricsReader(
-                                                                    padding: const EdgeInsets.only(left: 5,right: 5),
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        left: 5,
+                                                                        right:
+                                                                            5),
                                                                 lyricUi:
                                                                     playerController
                                                                         .lyricUi,

@@ -707,6 +707,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  sidebar_with_animation:
+    dependency: "direct main"
+    description:
+      name: sidebar_with_animation
+      sha256: d96bdd8e43acf80fd9ead65c52f623d4b12720eec3c34cd129739df60cae6157
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   sky_engine:
     dependency: transitive
     description: flutter

@@ -39,35 +39,43 @@ class QuickPicksWidget extends StatelessWidget {
                 ),
                 itemBuilder: (_, item) {
                   return ListTile(
-                    contentPadding: const EdgeInsets.only(left: 5),
-                    leading: ImageWidget(song: content.songList[item],size: 55,),
-                    title: Text(
-                      content.songList[item].title,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    subtitle: Text(
-                      "${content.songList[item].artist}",
-                      maxLines: 1,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    onTap: () {
-                      playerController
-                          .pushSongToQueue(content.songList[item]);
-                    },
-                    onLongPress: () async {
-                      showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: playerController
-                            .homeScaffoldkey.currentState!.context,
-                        //constraints: BoxConstraints(maxHeight:Get.height),
-                        barrierColor: Colors.transparent.withAlpha(100),
-                        builder: (context) =>
-                            SongInfoBottomSheet(
-                            content.songList[item]),
-                      ).whenComplete(() => Get.delete<SongInfoController>());
-                    },
-                  );
+                      contentPadding: const EdgeInsets.only(left: 5),
+                      leading: ImageWidget(
+                        song: content.songList[item],
+                        size: 55,
+                      ),
+                      title: Text(
+                        content.songList[item].title,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      subtitle: Text(
+                        "${content.songList[item].artist}",
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      onTap: () {
+                        playerController
+                            .pushSongToQueue(content.songList[item]);
+                      },
+                      trailing: (GetPlatform.isDesktop)
+                          ? IconButton(
+                            splashRadius: 20,
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: playerController
+                                      .homeScaffoldkey.currentState!.context,
+                                  //constraints: BoxConstraints(maxHeight:Get.height),
+                                  barrierColor:
+                                      Colors.transparent.withAlpha(100),
+                                  builder: (context) => SongInfoBottomSheet(
+                                      content.songList[item]),
+                                ).whenComplete(
+                                    () => Get.delete<SongInfoController>());
+                              },
+                              icon: const Icon(Icons.more_vert))
+                          : null);
                 }),
           ),
           const SizedBox(height: 20)

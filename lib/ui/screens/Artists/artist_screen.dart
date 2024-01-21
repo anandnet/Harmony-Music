@@ -28,9 +28,7 @@ class ArtistScreen extends StatelessWidget {
       floatingActionButton: Obx(
         () => Padding(
           padding: EdgeInsets.only(
-              bottom: playerController.playerPanelMinHeight.value == 0
-                  ? 20
-                  : 75 + Get.mediaQuery.padding.bottom),
+              bottom: playerController.playerPanelMinHeight.value),
           child: SizedBox(
             height: 60,
             width: 60,
@@ -56,7 +54,8 @@ class ArtistScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Get.find<SettingsScreenController>().isBottomNavBarEnabled.value
+      body: GetPlatform.isDesktop ||
+              Get.find<SettingsScreenController>().isBottomNavBarEnabled.value
           ? ArtistScreenBN(
               artistScreenController: artistScreenController, tag: tag)
           : Row(

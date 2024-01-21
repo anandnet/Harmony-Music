@@ -79,7 +79,8 @@ class PlayerController extends GetxController {
     _listenForPlaylistChange();
     _listenForKeyboardActivity();
     _setInitLyricsMode();
-    isLoopModeEnabled.value = Hive.box("AppPrefs").get("isLoopModeEnabled") ?? false;
+    isLoopModeEnabled.value =
+        Hive.box("AppPrefs").get("isLoopModeEnabled") ?? false;
   }
 
   void _setInitLyricsMode() {
@@ -113,9 +114,9 @@ class PlayerController extends GetxController {
     _audioHandler.playbackState.listen((playerState) {
       final isPlaying = playerState.playing;
       final processingState = playerState.processingState;
-      if (processingState == AudioProcessingState.loading ||
-          processingState == AudioProcessingState.buffering) {
+      if (processingState == AudioProcessingState.loading) {
         buttonState.value = PlayButtonState.loading;
+      } else if (processingState == AudioProcessingState.buffering) {
       } else if (!isPlaying) {
         buttonState.value = PlayButtonState.paused;
       } else if (processingState != AudioProcessingState.completed) {
@@ -208,9 +209,7 @@ class PlayerController extends GetxController {
       Duration.zero,
       () async {
         final content = await _musicServices.getWatchPlaylist(
-            videoId: mediaItem?.id ?? "",
-            radio: radio,
-            playlistId: playlistid);
+            videoId: mediaItem?.id ?? "", radio: radio, playlistId: playlistid);
         radioContinuationParam = content['additionalParamsForNext'];
         await _audioHandler
             .updateQueue(List<MediaItem>.from(content['tracks']));
@@ -326,16 +325,19 @@ class PlayerController extends GetxController {
   }
 
   void _playerPanelCheck() {
-    if (playerPanelController.isAttached) {
+    final isWideScreen = Get.size.width > 800;
+    if (!isWideScreen && playerPanelController.isAttached) {
       playerPanelController.open();
     }
 
     if (initFlagForPlayer) {
+      final miniPlayerHeight = isWideScreen ? 105.0 : 75.0;
       if (Get.find<SettingsScreenController>().isBottomNavBarEnabled.isFalse ||
           getCurrentRouteName() != '/homeScreen') {
-        playerPanelMinHeight.value = 75.0 + Get.mediaQuery.viewPadding.bottom;
+        playerPanelMinHeight.value =
+            miniPlayerHeight + Get.mediaQuery.viewPadding.bottom;
       } else {
-        playerPanelMinHeight.value = 75.0;
+        playerPanelMinHeight.value = miniPlayerHeight;
       }
       initFlagForPlayer = false;
     }
@@ -395,7 +397,8 @@ class PlayerController extends GetxController {
         ? _audioHandler.setRepeatMode(AudioServiceRepeatMode.one)
         : _audioHandler.setRepeatMode(AudioServiceRepeatMode.none);
     isLoopModeEnabled.value = !isLoopModeEnabled.value;
-    await Hive.box("AppPrefs").put("isLoopModeEnabled", isLoopModeEnabled.value);
+    await Hive.box("AppPrefs")
+        .put("isLoopModeEnabled", isLoopModeEnabled.value);
   }
 
   Future<void> _checkFav() async {

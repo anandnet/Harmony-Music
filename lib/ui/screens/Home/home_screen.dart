@@ -34,9 +34,7 @@ class HomeScreen extends StatelessWidget {
               ? Obx(
                   () => Padding(
                     padding: EdgeInsets.only(
-                        bottom: playerController.playerPanelMinHeight.value == 0
-                            ? 20
-                            : 75),
+                        bottom: playerController.playerPanelMinHeight.value),
                     child: SizedBox(
                       height: 60,
                       width: 60,

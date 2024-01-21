@@ -18,6 +18,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingsController = Get.find<SettingsScreenController>();
+    final isDesktop = GetPlatform.isDesktop;
     return Padding(
       padding: isBottomNavActive
           ? const EdgeInsets.only(left: 20, top: 90)
@@ -165,7 +166,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              ListTile(
+             if(!isDesktop) ListTile(
                   contentPadding: const EdgeInsets.only(left: 5, right: 10),
                   title: Text("enableBottomNav".tr),
                   subtitle: Text("enableBottomNavDes".tr,
@@ -175,7 +176,7 @@ class SettingsScreen extends StatelessWidget {
                         value: settingsController.isBottomNavBarEnabled.isTrue,
                         onChanged: settingsController.enableBottomNavBar),
                   )),
-              ListTile(
+             if(!isDesktop) ListTile(
                   contentPadding: const EdgeInsets.only(left: 5, right: 10),
                   title: Text("cacheSongs".tr),
                   subtitle: Text("cacheSongsDes".tr,
@@ -185,7 +186,7 @@ class SettingsScreen extends StatelessWidget {
                         value: settingsController.cacheSongs.value,
                         onChanged: settingsController.toggleCachingSongsValue),
                   )),
-              ListTile(
+            if(!isDesktop)  ListTile(
                   contentPadding: const EdgeInsets.only(left: 5, right: 10),
                   title: Text("skipSilence".tr),
                   subtitle: Text("skipSilenceDes".tr,
@@ -271,7 +272,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     )
                   : const SizedBox.shrink()),
-              ListTile(
+           if (!isDesktop)  ListTile(
                 contentPadding:
                     const EdgeInsets.only(left: 5, right: 10, top: 0),
                 title: Text("equalizer".tr),
@@ -349,7 +350,7 @@ class SettingsScreen extends StatelessWidget {
                           size: SanckBarSize.BIG)));
                 },
               ),
-              ListTile(
+            if (!isDesktop)  ListTile(
                   contentPadding: const EdgeInsets.only(left: 5, right: 10),
                   title: Text("stopMusicOnTaskClear".tr),
                   subtitle: Text("stopMusicOnTaskClearDes".tr,

@@ -16,7 +16,7 @@ class SearchResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final searchResScrController = Get.put(SearchResultScreenController());
-    return Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue
+    return GetPlatform.isDesktop || Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue
         ? const SearchResultScreenBN()
         : Scaffold(
             body: Row(

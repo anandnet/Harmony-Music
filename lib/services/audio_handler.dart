@@ -159,7 +159,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
   void _listenToPlaybackForNextSong() {
-    final playerDurationOffset = isWindows ? 200 : 0;
+    final playerDurationOffset = isWindows ? 200 : GetPlatform.isLinux ? 700 : 0;
     _player.positionStream.listen((value) async {
       if (_player.duration != null && _player.duration?.inSeconds != 0) {
         if (value.inMilliseconds >=

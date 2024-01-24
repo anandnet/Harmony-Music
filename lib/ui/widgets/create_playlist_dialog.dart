@@ -6,6 +6,7 @@ import '/services/piped_service.dart';
 import '../screens/Library/library_controller.dart';
 import '/ui/widgets/snackbar.dart';
 import '../../models/playlist.dart';
+import 'common_dialog_widget.dart';
 
 class CreateNRenamePlaylistPopup extends StatelessWidget {
   const CreateNRenamePlaylistPopup(
@@ -23,10 +24,9 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
   Widget build(BuildContext context) {
     final librPlstCntrller = Get.find<LibraryPlaylistsController>();
     librPlstCntrller.changeCreationMode("local");
-    librPlstCntrller.textInputController.text ="";
+    librPlstCntrller.textInputController.text = "";
     final isPipedLinked = Get.find<PipedServices>().isLoggedIn;
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    return CommonDialog(
       child: Container(
         height: (isPipedLinked && !renamePlaylist) ? 245 : 200,
         padding:
@@ -39,7 +39,9 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    renamePlaylist ? "renamePlaylist".tr : "CreateNewPlaylist".tr,
+                    renamePlaylist
+                        ? "renamePlaylist".tr
+                        : "CreateNewPlaylist".tr,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
@@ -133,7 +135,8 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                                     snackbar(
                                         context,
                                         isCreateNadd
-                                            ? "playlistCreatednsongAddedAlert".tr
+                                            ? "playlistCreatednsongAddedAlert"
+                                                .tr
                                             : "playlistCreatedAlert".tr,
                                         size: SanckBarSize.MEDIUM));
                               } else {

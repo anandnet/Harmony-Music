@@ -5,6 +5,7 @@ import '../../utils/helper.dart';
 import '/services/piped_service.dart';
 import '../screens/Settings/settings_screen_controller.dart';
 import '../screens/Library/library_controller.dart';
+import 'common_dialog_widget.dart';
 import 'snackbar.dart';
 
 class LinkPiped extends StatelessWidget {
@@ -13,8 +14,7 @@ class LinkPiped extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pipedLinkedController = Get.put(PipedLinkedController());
-    return Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    return CommonDialog(
         child: Obx(() => Container(
               height: pipedLinkedController.selectedInst.value == "custom"
                   ? 400

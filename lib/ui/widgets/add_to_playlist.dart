@@ -7,6 +7,7 @@ import '../../services/piped_service.dart';
 import '/models/media_Item_builder.dart';
 import '/ui/widgets/create_playlist_dialog.dart';
 import '../../models/playlist.dart';
+import 'common_dialog_widget.dart';
 import 'snackbar.dart';
 
 class AddToPlaylist extends StatelessWidget {
@@ -17,8 +18,7 @@ class AddToPlaylist extends StatelessWidget {
   Widget build(BuildContext context) {
     final addToPlaylistController = Get.put(AddToPlaylistController());
     final isPipedLinked = Get.find<PipedServices>().isLoggedIn;
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    return CommonDialog(
       child: Container(
         height: isPipedLinked ? 400 : 350,
         padding:

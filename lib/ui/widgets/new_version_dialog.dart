@@ -3,14 +3,14 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../screens/Home/home_screen_controller.dart';
+import 'common_dialog_widget.dart';
 
 class NewVersionDialog extends StatelessWidget {
   const NewVersionDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    return CommonDialog(
       child: Container(
         height: 320,
         padding: const EdgeInsets.only(top: 40, bottom: 20),

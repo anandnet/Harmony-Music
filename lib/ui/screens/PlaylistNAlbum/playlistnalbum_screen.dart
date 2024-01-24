@@ -168,6 +168,14 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                     IconButton(
                                         onPressed: () {
                                           showModalBottomSheet(
+                                            constraints: const BoxConstraints(
+                                                maxWidth: 500),
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                      top: Radius.circular(
+                                                          10.0)),
+                                            ),
                                             context:
                                                 Get.find<PlayerController>()
                                                     .homeScaffoldkey

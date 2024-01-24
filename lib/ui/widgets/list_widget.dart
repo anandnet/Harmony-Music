@@ -85,6 +85,10 @@ class ListWidget extends StatelessWidget {
         },
         onLongPress: () async {
           showModalBottomSheet(
+            constraints: const BoxConstraints(maxWidth: 500),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+            ),
             isScrollControlled: true,
             context: playerController.homeScaffoldkey.currentState!.context,
             //constraints: BoxConstraints(maxHeight:Get.height),
@@ -140,6 +144,11 @@ class ListWidget extends StatelessWidget {
                     splashRadius: 20,
                     onPressed: () {
                       showModalBottomSheet(
+                        constraints: const BoxConstraints(maxWidth: 500),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(10.0)),
+                        ),
                         isScrollControlled: true,
                         context: playerController
                             .homeScaffoldkey.currentState!.context,

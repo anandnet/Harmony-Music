@@ -5,6 +5,7 @@ import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/widgets/loader.dart';
 import 'package:harmonymusic/ui/widgets/marqwee_widget.dart';
 
+import '../widgets/song_download_btn.dart';
 import '../widgets/image_widget.dart';
 import '../widgets/mini_player_progress_bar.dart';
 
@@ -243,10 +244,8 @@ class MiniPlayer extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.download_rounded),
-                                  ),
+                                  const SongDownloadButton(),
+                                  const SizedBox(width: 10,),
                                   IconButton(
                                     onPressed: () {},
                                     icon: const Icon(Icons.queue_music),

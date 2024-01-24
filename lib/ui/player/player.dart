@@ -77,6 +77,12 @@ class Player extends StatelessWidget {
                                     },
                                     onLongPress: () {
                                       showModalBottomSheet(
+                                        constraints:
+                                            const BoxConstraints(maxWidth: 500),
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(10.0)),
+                                        ),
                                         isScrollControlled: true,
                                         context: playerController
                                             .homeScaffoldkey
@@ -292,6 +298,12 @@ class Player extends StatelessWidget {
                                   // printINFO(
                                   //     "${size.width - ((size.height < 750) ? 90 : 60)}");
                                   showModalBottomSheet(
+                                    constraints:
+                                        const BoxConstraints(maxWidth: 500),
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(10.0)),
+                                    ),
                                     barrierColor:
                                         Colors.transparent.withAlpha(100),
                                     context: context,
@@ -473,6 +485,15 @@ class Player extends StatelessWidget {
                                         child: IconButton(
                                           onPressed: () {
                                             showModalBottomSheet(
+                                              constraints: const BoxConstraints(
+                                                  maxWidth: 500),
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            10.0)),
+                                              ),
                                               isScrollControlled: true,
                                               context: playerController
                                                   .homeScaffoldkey

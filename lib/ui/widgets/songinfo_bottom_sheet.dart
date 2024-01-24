@@ -5,8 +5,6 @@ import 'package:hive/hive.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '/services/piped_service.dart';
-import '/services/downloader.dart';
-import '/ui/widgets/loader.dart';
 import '/ui/widgets/sleep_timer_bottom_sheet.dart';
 import '/ui/player/player_controller.dart';
 import '../screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
@@ -16,6 +14,7 @@ import '/ui/widgets/snackbar.dart';
 import '../../models/media_Item_builder.dart';
 import '../../models/playlist.dart';
 import '../navigator.dart';
+import 'song_download_btn.dart';
 import 'image_widget.dart';
 
 class SongInfoBottomSheet extends StatelessWidget {
@@ -31,7 +30,6 @@ class SongInfoBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final downloader = Get.find<Downloader>();
     final songInfoController =
         Get.put(SongInfoController(song, calledFromPlayer));
     return Padding(
@@ -76,69 +74,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                                     .titleMedium!
                                     .color,
                               ))),
-                  Obx(
-                    () => (downloader.songQueue.contains(song) &&
-                                downloader.currentSong == song &&
-                                downloader.songDownloadingProgress.value ==
-                                    100) ||
-                            Hive.box("SongDownloads").containsKey(song.id)
-                        ? Icon(
-                            Icons.download_done,
-                            color:
-                                Theme.of(context).textTheme.titleMedium!.color,
-                          )
-                        : downloader.songQueue.contains(song) &&
-                                downloader.isJobRunning.isTrue &&
-                                downloader.currentSong == song
-                            ? Obx(() => Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "${downloader.songDownloadingProgress.value}%",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium!
-                                            .copyWith(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                    LoadingIndicator(
-                                      dimension: 30,
-                                      strokeWidth: 4,
-                                      value: (downloader
-                                              .songDownloadingProgress.value) /
-                                          100,
-                                    )
-                                  ],
-                                ))
-                            : downloader.songQueue.contains(song)
-                                ? const LoadingIndicator()
-                                : IconButton(
-                                    icon: Icon(
-                                      Icons.download,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium!
-                                          .color,
-                                    ),
-                                    onPressed: () {
-                                      (Hive.openBox("SongsCache").then((box) {
-                                        if (box.containsKey(song.id)) {
-                                          Navigator.of(context).pop();
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(snackbar(context,
-                                                  "songAlreadyOfflineAlert".tr,
-                                                  size: SanckBarSize.BIG));
-                                        } else {
-                                          downloader.download(song);
-                                        }
-                                      }));
-                                    },
-                                  ),
-                  )
+                  const SongDownloadButton()
                 ],
               ),
             ),
@@ -273,8 +209,14 @@ class SongInfoBottomSheet extends StatelessWidget {
                 Navigator.of(context).pop();
                 final playerController = Get.find<PlayerController>();
                 showModalBottomSheet(
+                  constraints: const BoxConstraints(maxWidth: 500),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(10.0)),
+                  ),
                   isScrollControlled: true,
-                  context:playerController.homeScaffoldkey.currentState!.context,
+                  context:
+                      playerController.homeScaffoldkey.currentState!.context,
                   barrierColor: Colors.transparent.withAlpha(100),
                   builder: (context) => const SleepTimerBottomSheet(),
                 );

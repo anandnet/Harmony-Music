@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:harmonymusic/utils/lang_mapping.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../widgets/common_dialog_widget.dart';
 import '../Library/library_controller.dart';
 import '../../widgets/snackbar.dart';
 import '/ui/widgets/link_piped.dart';
@@ -166,36 +167,41 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-             if(!isDesktop) ListTile(
-                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                  title: Text("enableBottomNav".tr),
-                  subtitle: Text("enableBottomNavDes".tr,
-                      style: Theme.of(context).textTheme.bodyMedium),
-                  trailing: Obx(
-                    () => Switch(
-                        value: settingsController.isBottomNavBarEnabled.isTrue,
-                        onChanged: settingsController.enableBottomNavBar),
-                  )),
-             if(!isDesktop) ListTile(
-                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                  title: Text("cacheSongs".tr),
-                  subtitle: Text("cacheSongsDes".tr,
-                      style: Theme.of(context).textTheme.bodyMedium),
-                  trailing: Obx(
-                    () => Switch(
-                        value: settingsController.cacheSongs.value,
-                        onChanged: settingsController.toggleCachingSongsValue),
-                  )),
-            if(!isDesktop)  ListTile(
-                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                  title: Text("skipSilence".tr),
-                  subtitle: Text("skipSilenceDes".tr,
-                      style: Theme.of(context).textTheme.bodyMedium),
-                  trailing: Obx(
-                    () => Switch(
-                        value: settingsController.skipSilenceEnabled.value,
-                        onChanged: settingsController.toggleSkipSilence),
-                  )),
+              if (!isDesktop)
+                ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: Text("enableBottomNav".tr),
+                    subtitle: Text("enableBottomNavDes".tr,
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    trailing: Obx(
+                      () => Switch(
+                          value:
+                              settingsController.isBottomNavBarEnabled.isTrue,
+                          onChanged: settingsController.enableBottomNavBar),
+                    )),
+              if (!isDesktop)
+                ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: Text("cacheSongs".tr),
+                    subtitle: Text("cacheSongsDes".tr,
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    trailing: Obx(
+                      () => Switch(
+                          value: settingsController.cacheSongs.value,
+                          onChanged:
+                              settingsController.toggleCachingSongsValue),
+                    )),
+              if (!isDesktop)
+                ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: Text("skipSilence".tr),
+                    subtitle: Text("skipSilenceDes".tr,
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    trailing: Obx(
+                      () => Switch(
+                          value: settingsController.skipSilenceEnabled.value,
+                          onChanged: settingsController.toggleSkipSilence),
+                    )),
               ListTile(
                 contentPadding: const EdgeInsets.only(left: 5, right: 10),
                 title: Text("streamingQuality".tr),
@@ -272,16 +278,17 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     )
                   : const SizedBox.shrink()),
-           if (!isDesktop)  ListTile(
-                contentPadding:
-                    const EdgeInsets.only(left: 5, right: 10, top: 0),
-                title: Text("equalizer".tr),
-                subtitle: Text("equalizerDes".tr,
-                    style: Theme.of(context).textTheme.bodyMedium),
-                onTap: () async {
-                  await Get.find<PlayerController>().openEqualizer();
-                },
-              ),
+              if (!isDesktop)
+                ListTile(
+                  contentPadding:
+                      const EdgeInsets.only(left: 5, right: 10, top: 0),
+                  title: Text("equalizer".tr),
+                  subtitle: Text("equalizerDes".tr,
+                      style: Theme.of(context).textTheme.bodyMedium),
+                  onTap: () async {
+                    await Get.find<PlayerController>().openEqualizer();
+                  },
+                ),
               ListTile(
                 contentPadding:
                     const EdgeInsets.only(left: 5, right: 10, top: 0),
@@ -350,17 +357,19 @@ class SettingsScreen extends StatelessWidget {
                           size: SanckBarSize.BIG)));
                 },
               ),
-            if (!isDesktop)  ListTile(
-                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                  title: Text("stopMusicOnTaskClear".tr),
-                  subtitle: Text("stopMusicOnTaskClearDes".tr,
-                      style: Theme.of(context).textTheme.bodyMedium),
-                  trailing: Obx(
-                    () => Switch(
-                        value: settingsController.stopPlyabackOnSwipeAway.value,
-                        onChanged:
-                            settingsController.toggleStopPlyabackOnSwipeAway),
-                  )),
+              if (!isDesktop)
+                ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: Text("stopMusicOnTaskClear".tr),
+                    subtitle: Text("stopMusicOnTaskClearDes".tr,
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    trailing: Obx(
+                      () => Switch(
+                          value:
+                              settingsController.stopPlyabackOnSwipeAway.value,
+                          onChanged:
+                              settingsController.toggleStopPlyabackOnSwipeAway),
+                    )),
               GetPlatform.isAndroid
                   ? Obx(
                       () => ListTile(
@@ -430,8 +439,7 @@ class ThemeSelectorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingsController = Get.find<SettingsScreenController>();
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    return CommonDialog(
       child: Container(
         height: 300,
         //color: Theme.of(context).cardColor,
@@ -485,8 +493,7 @@ class DiscoverContentSelectorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingsController = Get.find<SettingsScreenController>();
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    return CommonDialog(
       child: Container(
         height: 300,
         //color: Theme.of(context).cardColor,

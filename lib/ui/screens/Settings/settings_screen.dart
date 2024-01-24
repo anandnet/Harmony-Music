@@ -344,9 +344,9 @@ class SettingsScreen extends StatelessWidget {
                   : const SizedBox.shrink()),
               ListTile(
                 contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                title: Text("Clear images cache".tr),
+                title: Text("clearImgCache".tr),
                 subtitle: Text(
-                  "Click here to clear cached thumbnails/images. (Not recommended unless want to refresh cached images data). This feature limited to this version only",
+                  "clearImgCacheDes".tr,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 isThreeLine: true,

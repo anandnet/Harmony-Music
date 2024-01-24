@@ -103,8 +103,6 @@ class PlayListNAlbumScreenController extends GetxController {
   Future<void> updateSongsIntoDb() async {
     final songsBox = await Hive.openBox(id);
     await songsBox.clear();
-    //int i = 0;
-    printERROR(songsBox.keys.toList());
     final songListCopy = songList.toList();
     for (int i = 0; i < songListCopy.length; i++) {
       await songsBox.put(i, MediaItemBuilder.toJson(songListCopy[i]));

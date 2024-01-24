@@ -150,5 +150,7 @@
     "playlistBlacklistAlert": "Lista de reproduction in le lista nigre!",
     "resetblacklistedplaylistDes": "Restabilir tote le listas de reproduction de piped in lista nigre",
     "homeContentCount": "Computo de contentos",
-    "pipedplstSyncAlert": "Lista de reproduction de Piped synchronisate!"
+    "pipedplstSyncAlert": "Lista de reproduction de Piped synchronisate!",
+    "clearImgCache": "Rader le cache de imagines",
+    "clearImgCacheDes": "Clicca hic pro rader miniaturas e imagines in cache. (Non recommentate a minus que tu vole actualisar le datos de imagine in cache)"
 }

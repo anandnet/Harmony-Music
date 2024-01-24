@@ -1,0 +1,23 @@
+icon: assets/icons/icon.png
+summary: An application to stream Music
+group: Application/Multimedia
+vendor: anandnet
+packager: anandnet
+license: GPLv3
+url: https://github.com/anandnet/Harmony-Music
+
+requires:
+  - mpv
+
+display_name: Harmony Music
+
+keywords:
+  - Opensource
+  - Music
+  - Streaming
+  - Flutter
+
+generic_name: Music Application
+
+categories:
+  - Music

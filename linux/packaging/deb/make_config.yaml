@@ -1,0 +1,25 @@
+display_name: Harmony Music
+package_name: harmonymusic
+maintainer:
+  name: anandnet
+priority: optional
+section: x11
+installed_size: 20000
+
+dependencies:
+  - mpv
+  - libmpv1 | libmpv2
+
+essential: false
+icon: assets/icons/icon.png
+
+keywords:
+  - Opensource
+  - Music
+  - Streaming
+  - Flutter
+
+generic_name: Music Application
+
+categories:
+  - Music

@@ -60,11 +60,11 @@ class PlayListNAlbumScreenController extends GetxController {
     await _checkIfAddedToLibrary(id);
     if (isAddedToLibrary.isTrue) {
       final songsBox = await Hive.openBox(id);
-      if(songsBox.values.isEmpty){
-        _fetchSong(id, isIdOnly, isPipedPlaylist).then((value){
+      if (songsBox.values.isEmpty) {
+        _fetchSong(id, isIdOnly, isPipedPlaylist).then((value) {
           updateSongsIntoDb();
         });
-      }else{
+      } else {
         fetchSongsfromDatabase(id);
       }
     } else {
@@ -100,11 +100,15 @@ class PlayListNAlbumScreenController extends GetxController {
     }
   }
 
- Future<void> updateSongsIntoDb() async {
+  Future<void> updateSongsIntoDb() async {
     final songsBox = await Hive.openBox(id);
-    songList.toList().forEach((song) async {
-      await songsBox.put(song.id, MediaItemBuilder.toJson(song));
-     });
+    await songsBox.clear();
+    //int i = 0;
+    printERROR(songsBox.keys.toList());
+    final songListCopy = songList.toList();
+    for (int i = 0; i < songListCopy.length; i++) {
+      await songsBox.put(i, MediaItemBuilder.toJson(songListCopy[i]));
+    }
   }
 
   Future<void> fetchSongsfromDatabase(id) async {
@@ -112,8 +116,6 @@ class PlayListNAlbumScreenController extends GetxController {
     songList.value = box.values
         .map<MediaItem?>((item) => MediaItemBuilder.fromJson(item))
         .whereType<MediaItem>()
-        .toList()
-        .reversed
         .toList();
     isContentFetched.value = true;
     checkDownloadStatus();
@@ -160,9 +162,8 @@ class PlayListNAlbumScreenController extends GetxController {
     checkDownloadStatus();
   }
 
-  void syncPlaylistNAlbumSong(){
+  void syncPlaylistNAlbumSong() {
     _fetchSong(id, false, false).then((value) => updateSongsIntoDb());
-
   }
 
   /// Function for bookmark & add playlist to library
@@ -179,14 +180,14 @@ class PlayListNAlbumScreenController extends GetxController {
             ? await Hive.openBox("LibraryAlbums")
             : await Hive.openBox("LibraryPlaylists");
         final id = isAlbum ? content.browseId : content.playlistId;
-        if(add){
+        if (add) {
           box.put(id, content.toJson());
           updateSongsIntoDb();
-        }else{
+        } else {
           box.delete(id);
           final songsBox = await Hive.openBox(id);
           songsBox.deleteFromDisk();
-        } 
+        }
         isAddedToLibrary.value = add;
       }
       //Update frontend

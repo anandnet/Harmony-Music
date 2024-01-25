@@ -4,7 +4,10 @@ import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/widgets/loader.dart';
 import 'package:harmonymusic/ui/widgets/marqwee_widget.dart';
+import 'package:harmonymusic/utils/helper.dart';
 
+import '../widgets/add_to_playlist.dart';
+import '../widgets/sleep_timer_bottom_sheet.dart';
 import '../widgets/song_download_btn.dart';
 import '../widgets/image_widget.dart';
 import '../widgets/mini_player_progress_bar.dart';
@@ -188,7 +191,7 @@ class MiniPlayer extends StatelessWidget {
                                           child: _playButton(
                                               context, isWideScreen)))
                                   : SizedBox.square(
-                                      dimension:50,
+                                      dimension: 50,
                                       child: Center(
                                           child: _playButton(
                                               context, isWideScreen))),
@@ -244,8 +247,62 @@ class MiniPlayer extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  const SongDownloadButton(calledFromPlayer: true,),
-                                  const SizedBox(width: 10,),
+                                  IconButton(
+                                    onPressed: () {
+                                      final currentSong =
+                                          playerController.currentSong.value;
+                                      if (currentSong != null) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              AddToPlaylist(currentSong),
+                                        ).whenComplete(() => Get.delete<
+                                            AddToPlaylistController>());
+                                      }
+                                    },
+                                    icon: const Icon(Icons.playlist_add),
+                                  ),
+                                  if (size.width > 860)
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 10.0),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          showModalBottomSheet(
+                                            constraints: const BoxConstraints(
+                                                maxWidth: 500),
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                      top: Radius.circular(
+                                                          10.0)),
+                                            ),
+                                            isScrollControlled: true,
+                                            context: playerController
+                                                .homeScaffoldkey
+                                                .currentState!
+                                                .context,
+                                            barrierColor: Colors.transparent
+                                                .withAlpha(100),
+                                            builder: (context) =>
+                                                const SleepTimerBottomSheet(),
+                                          );
+                                        },
+                                        icon: Icon(playerController
+                                                .isSleepTimerActive.isTrue
+                                            ? Icons.timer
+                                            : Icons.timer_outlined),
+                                      ),
+                                    ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  const SongDownloadButton(
+                                    calledFromPlayer: true,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
                                   IconButton(
                                     onPressed: () {},
                                     icon: const Icon(Icons.queue_music),

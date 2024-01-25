@@ -1,11 +1,11 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/player/player_controller.dart';
-import 'package:harmonymusic/ui/widgets/loader.dart';
-import 'package:harmonymusic/ui/widgets/marqwee_widget.dart';
-import 'package:harmonymusic/utils/helper.dart';
 
+import '/ui/player/player_controller.dart';
+import '/ui/widgets/loader.dart';
+import '/ui/widgets/marqwee_widget.dart';
+import '/utils/helper.dart';
 import '../widgets/add_to_playlist.dart';
 import '../widgets/sleep_timer_bottom_sheet.dart';
 import '../widgets/song_download_btn.dart';
@@ -185,8 +185,8 @@ class MiniPlayer extends StatelessWidget {
                                               .secondary,
                                           borderRadius:
                                               BorderRadius.circular(10)),
-                                      width: 60,
-                                      height: 60,
+                                      width: 58,
+                                      height: 58,
                                       child: Center(
                                           child: _playButton(
                                               context, isWideScreen)))
@@ -235,7 +235,7 @@ class MiniPlayer extends StatelessWidget {
                                     )),
                               if (isWideScreen)
                                 const SizedBox(
-                                  width: 40,
+                                  width: 20,
                                 )
                             ],
                           ),
@@ -243,25 +243,20 @@ class MiniPlayer extends StatelessWidget {
                         if (isWideScreen)
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 40.0),
+                              padding: EdgeInsets.only(
+                                  right: size.width < 1004 ? 0 : 40.0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   IconButton(
                                     onPressed: () {
-                                      final currentSong =
-                                          playerController.currentSong.value;
-                                      if (currentSong != null) {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              AddToPlaylist(currentSong),
-                                        ).whenComplete(() => Get.delete<
-                                            AddToPlaylistController>());
-                                      }
+                                      playerController
+                                          .homeScaffoldkey.currentState!
+                                          .openEndDrawer();
                                     },
-                                    icon: const Icon(Icons.playlist_add),
+                                    icon: const Icon(Icons.queue_music),
                                   ),
+                                  
                                   if (size.width > 860)
                                     Padding(
                                       padding:
@@ -300,13 +295,24 @@ class MiniPlayer extends StatelessWidget {
                                   const SongDownloadButton(
                                     calledFromPlayer: true,
                                   ),
-                                  const SizedBox(
+                                const SizedBox(
                                     width: 10,
                                   ),
                                   IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.queue_music),
-                                  )
+                                    onPressed: () {
+                                      final currentSong =
+                                          playerController.currentSong.value;
+                                      if (currentSong != null) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              AddToPlaylist(currentSong),
+                                        ).whenComplete(() => Get.delete<
+                                            AddToPlaylistController>());
+                                      }
+                                    },
+                                    icon: const Icon(Icons.playlist_add),
+                                  ),
                                 ],
                               ),
                             ),

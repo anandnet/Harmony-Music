@@ -11,6 +11,7 @@ import 'player/player_controller.dart';
 import 'widgets/bottom_nav_bar.dart';
 import 'widgets/scroll_to_hide.dart';
 import 'widgets/sliding_up_panel.dart';
+import 'widgets/up_next_queue.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -57,6 +58,62 @@ class Home extends StatelessWidget {
                       child: const BottomNavBar())
                   : null,
               key: playerController.homeScaffoldkey,
+              endDrawer: Container(
+                constraints: const BoxConstraints(maxWidth: 600),
+                decoration: BoxDecoration(
+                    borderRadius:
+                        const BorderRadius.only(topLeft: Radius.circular(10)),
+                    border: Border(
+                        left: BorderSide(
+                            color: Theme.of(context).colorScheme.secondary),
+                        top: BorderSide(
+                            color: Theme.of(context).colorScheme.secondary),
+                        bottom: BorderSide(
+                            width: 0,
+                            color: Theme.of(context).colorScheme.secondary),
+                        right: BorderSide(
+                            width: 0,
+                            color: Theme.of(context).colorScheme.secondary))),
+                margin: const EdgeInsets.only(
+                  top: 5,
+                  bottom: 106,
+                ),
+                child: SizedBox(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 60,
+                        child: Center(
+                            child: Padding(
+                          padding: const EdgeInsets.only(left: 15.0, right: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                  "${playerController.currentQueue.length} ${"songs".tr}"),
+                              Text(
+                                "upNext".tr,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    playerController.shuffleQueue();
+                                  },
+                                  icon: const Icon(Icons.shuffle))
+                            ],
+                          ),
+                        )),
+                      ),
+                      const Expanded(
+                        child: UpNextQueue(
+                          isQueueInSlidePanel: false,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              drawerScrimColor: Colors.transparent,
               body: Obx(() => SlidingUpPanel(
                     onPanelSlide: playerController.panellistener,
                     controller: playerController.playerPanelController,

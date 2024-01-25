@@ -10,6 +10,7 @@ import 'package:toggle_switch/toggle_switch.dart';
 import '../widgets/loader.dart';
 import '../../utils/helper.dart';
 import '../widgets/sleep_timer_bottom_sheet.dart';
+import '../widgets/up_next_queue.dart';
 import '/ui/player/player_controller.dart';
 import '../screens/Settings/settings_screen_controller.dart';
 import '/ui/utils/theme_controller.dart';
@@ -33,155 +34,37 @@ class Player extends StatelessWidget {
       body: SlidingUpPanel(
           minHeight: 65 + Get.mediaQuery.padding.bottom,
           maxHeight: size.height,
-          isDraggable: true,
-          collapsed: Container(
-              color: Theme.of(context).bottomSheetTheme.modalBarrierColor,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 65,
-                    child: Center(
-                        child: Icon(
-                      color: Theme.of(context).textTheme.titleMedium!.color,
-                      Icons.keyboard_arrow_up_rounded,
-                      size: 40,
-                    )),
-                  ),
-                ],
-              )),
+          isDraggable: !GetPlatform.isDesktop,
+          collapsed: InkWell(
+            onTap: () {
+              if(GetPlatform.isDesktop){
+                playerController.homeScaffoldkey.currentState!.openEndDrawer();
+              }
+            },
+            child: Container(
+                color: Theme.of(context).bottomSheetTheme.modalBarrierColor,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 65,
+                      child: Center(
+                          child: Icon(
+                        color: Theme.of(context).textTheme.titleMedium!.color,
+                        Icons.keyboard_arrow_up_rounded,
+                        size: 40,
+                      )),
+                    ),
+                  ],
+                )),
+          ),
           panelBuilder: (ScrollController sc, onReorderStart, onReorderEnd) {
             playerController.scrollController = sc;
             return Stack(
               children: [
-                Container(
-                    color: Theme.of(context).bottomSheetTheme.backgroundColor,
-                    child: Obx(() {
-                      return ReorderableListView.builder(
-                        scrollController: playerController.scrollController,
-                        onReorder: playerController.onReorder,
-                        onReorderStart: onReorderStart,
-                        onReorderEnd: onReorderEnd,
-                        itemCount: playerController.currentQueue.length,
-                        padding: EdgeInsets.only(
-                            top: 55, bottom: Get.mediaQuery.padding.bottom),
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          final homeScaffoldContext =
-                              playerController.homeScaffoldkey.currentContext!;
-                          //print("${playerController.currentSongIndex.value == index} $index");
-                          return Material(
-                              key: Key('$index'),
-                              child: Obx(() => ListTile(
-                                    onTap: () {
-                                      playerController.seekByIndex(index);
-                                    },
-                                    onLongPress: () {
-                                      showModalBottomSheet(
-                                        constraints:
-                                            const BoxConstraints(maxWidth: 500),
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(10.0)),
-                                        ),
-                                        isScrollControlled: true,
-                                        context: playerController
-                                            .homeScaffoldkey
-                                            .currentState!
-                                            .context,
-                                        //constraints: BoxConstraints(maxHeight:Get.height),
-                                        barrierColor:
-                                            Colors.transparent.withAlpha(100),
-                                        builder: (context) =>
-                                            SongInfoBottomSheet(
-                                          playerController.currentQueue[index],
-                                          calledFromQueue: true,
-                                        ),
-                                      ).whenComplete(() =>
-                                          Get.delete<SongInfoController>());
-                                    },
-                                    contentPadding: const EdgeInsets.only(
-                                        top: 0, left: 30, right: 25),
-                                    tileColor: playerController
-                                                .currentSongIndex.value ==
-                                            index
-                                        ? Theme.of(homeScaffoldContext)
-                                            .colorScheme
-                                            .secondary
-                                        : Theme.of(homeScaffoldContext)
-                                            .bottomSheetTheme
-                                            .backgroundColor,
-                                    leading: ImageWidget(
-                                      size: 50,
-                                      song:
-                                          playerController.currentQueue[index],
-                                    ),
-                                    title: MarqueeWidget(
-                                      child: Text(
-                                        playerController
-                                            .currentQueue[index].title,
-                                        maxLines: 1,
-                                        style: Theme.of(homeScaffoldContext)
-                                            .textTheme
-                                            .titleMedium,
-                                      ),
-                                    ),
-                                    subtitle: Text(
-                                      "${playerController.currentQueue[index].artist}",
-                                      maxLines: 1,
-                                      style: playerController
-                                                  .currentSongIndex.value ==
-                                              index
-                                          ? Theme.of(homeScaffoldContext)
-                                              .textTheme
-                                              .titleSmall!
-                                              .copyWith(
-                                                  color: Theme.of(
-                                                          homeScaffoldContext)
-                                                      .textTheme
-                                                      .titleMedium!
-                                                      .color!
-                                                      .withOpacity(0.35))
-                                          : Theme.of(homeScaffoldContext)
-                                              .textTheme
-                                              .titleSmall,
-                                    ),
-                                    trailing: ReorderableDragStartListener(
-                                      index: index,
-                                      child: Container(
-                                        padding: const EdgeInsets.only(
-                                            right: 5, left: 20),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            const Icon(
-                                              Icons.drag_handle_rounded,
-                                            ),
-                                            playerController.currentSongIndex
-                                                        .value ==
-                                                    index
-                                                ? const Icon(
-                                                    Icons.equalizer_rounded,
-                                                    color: Colors.white,
-                                                  )
-                                                : Text(
-                                                    playerController
-                                                            .currentQueue[index]
-                                                            .extras!['length'] ??
-                                                        "",
-                                                    style: Theme.of(
-                                                            homeScaffoldContext)
-                                                        .textTheme
-                                                        .titleSmall,
-                                                  ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  )));
-                        },
-                      );
-                    })),
+                UpNextQueue(
+                  onReorderEnd: onReorderEnd,
+                  onReorderStart: onReorderStart,
+                ),
                 Positioned(
                     bottom: 60,
                     right: 15,

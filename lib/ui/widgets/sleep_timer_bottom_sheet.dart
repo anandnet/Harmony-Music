@@ -81,7 +81,7 @@ class SleepTimerBottomSheet extends StatelessWidget {
                           child: Text("add5Minutes".tr)),
                     OutlinedButton(
                         onPressed: () {
-                          Future.delayed(const Duration(milliseconds: 100),
+                          Future.delayed(const Duration(milliseconds: 200),
                               playerController.cancelSleepTimer);
                           Navigator.of(context).pop();
                           ScaffoldMessenger.of(context).showSnackBar(snackbar(

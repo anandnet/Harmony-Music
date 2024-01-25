@@ -150,5 +150,7 @@
     "homeContentCountDes": "最初のホーム画面のコンテンツ数 (およそ) を選択します。少ないほど読み込みが速いです",
     "cancelTimerAlert": "スリープタイマーをキャンセルしました",
     "sleepTimer": "スリープタイマー",
-    "pipedplstSyncAlert": "Pipedの再生リストを同期しました！"
+    "pipedplstSyncAlert": "Pipedの再生リストを同期しました！",
+    "clearImgCache": "画像キャッシュを消去",
+    "clearImgCacheDes": "クリックすると、キャッシュしたサムネイルや画像を消去します。(キャッシュした画像を更新したい場合に)"
 }

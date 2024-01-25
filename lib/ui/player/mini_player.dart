@@ -244,7 +244,7 @@ class MiniPlayer extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  const SongDownloadButton(),
+                                  const SongDownloadButton(calledFromPlayer: true,),
                                   const SizedBox(width: 10,),
                                   IconButton(
                                     onPressed: () {},

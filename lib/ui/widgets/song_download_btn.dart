@@ -1,3 +1,4 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/services/downloader.dart';
@@ -8,19 +9,21 @@ import 'loader.dart';
 import 'snackbar.dart';
 
 class SongDownloadButton extends StatelessWidget {
-  const SongDownloadButton({super.key});
+  const SongDownloadButton({super.key,this.calledFromPlayer=false,this.song_});
+  final bool calledFromPlayer;
+  final MediaItem? song_;
 
   @override
   Widget build(BuildContext context) {
     final downloader = Get.find<Downloader>();
     final playerController = Get.find<PlayerController>();
     return Obx(() {
-      final song = playerController.currentSong.value;
-      if(song==null) return const SizedBox.shrink();
+      final song = calledFromPlayer ? playerController.currentSong.value : song_;
+      if(song==null && calledFromPlayer) return const SizedBox.shrink();
       return (downloader.songQueue.contains(song) &&
                   downloader.currentSong == song &&
                   downloader.songDownloadingProgress.value == 100) ||
-              Hive.box("SongDownloads").containsKey(song.id)
+              Hive.box("SongDownloads").containsKey(song!.id)
           ? Icon(
               Icons.download_done,
               color: Theme.of(context).textTheme.titleMedium!.color,

@@ -74,7 +74,9 @@ class SongInfoBottomSheet extends StatelessWidget {
                                     .titleMedium!
                                     .color,
                               ))),
-                  const SongDownloadButton()
+                  SongDownloadButton(
+                    song_: song,
+                  )
                 ],
               ),
             ),

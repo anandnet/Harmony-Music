@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import '/ui/player/player_controller.dart';
 import '/ui/widgets/loader.dart';
 import '/ui/widgets/marqwee_widget.dart';
-import '/utils/helper.dart';
 import '../widgets/add_to_playlist.dart';
 import '../widgets/sleep_timer_bottom_sheet.dart';
 import '../widgets/song_download_btn.dart';

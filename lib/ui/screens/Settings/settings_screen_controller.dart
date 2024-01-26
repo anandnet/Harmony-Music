@@ -42,6 +42,7 @@ class SettingsScreenController extends GetxController {
   void onInit() {
     _setInitValue();
     if (updateCheckFlag) _checkNewVersion();
+    _createInAppSongDownDir();
     super.onInit();
   }
 
@@ -53,7 +54,6 @@ class SettingsScreenController extends GetxController {
   _checkNewVersion() {
     newVersionCheck(currentVersion)
         .then((value) => isNewVersionAvailable.value = value);
-    _createInAppSongDownDir();
   }
 
   Future<String> _createInAppSongDownDir() async {

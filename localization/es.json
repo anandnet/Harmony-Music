@@ -153,5 +153,6 @@
     "sleepTimer": "Temporizador",
     "pipedplstSyncAlert": "¡Lista de reproducción de Piped sincronizada!",
     "clearImgCache": "Borrar la caché de imágenes",
-    "clearImgCacheDes": "Haga clic aquí para borrar las imágenes en caché. (No se recomienda a menos que desee actualizar los datos de las imágenes en caché)"
+    "clearImgCacheDes": "Haga clic aquí para borrar las imágenes en caché. (No se recomienda a menos que desee actualizar los datos de las imágenes en caché)",
+    "upNext": "A continuación"
 }

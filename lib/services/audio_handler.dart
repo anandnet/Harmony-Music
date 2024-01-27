@@ -16,6 +16,7 @@ import '/models/media_Item_builder.dart';
 import '/services/utils.dart';
 import '../ui/screens/Settings/settings_screen_controller.dart';
 import '../ui/screens/Library/library_controller.dart';
+// ignore: unused_import, implementation_imports, depend_on_referenced_packages
 import "package:media_kit/src/player/platform_player.dart" show MPVLogLevel;
 
 Future<AudioHandler> initAudioService() async {
@@ -41,7 +42,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   bool isPlayingUsingLockCachingSource = false;
   bool loopModeEnabled = false;
   var networkErrorPause = false;
-  final bool isWindows = GetPlatform.isWindows;
   bool isSongLoading = true;
 
   final _playList = ConcatenatingAudioSource(
@@ -51,9 +51,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       Get.find<LibrarySongsController>();
 
   MyAudioHandler() {
-    if (isWindows) {
-      JustAudioMediaKit.mpvLogLevel = MPVLogLevel.info;
-      JustAudioMediaKit.bufferSize = 8 * 1024 * 1024; // 8 MB
+    if (GetPlatform.isWindows || GetPlatform.isLinux) {
       JustAudioMediaKit.title = 'Harmony music';
       JustAudioMediaKit.protocolWhitelist = const ['http', 'https', 'file'];
     }
@@ -159,7 +157,11 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
   void _listenToPlaybackForNextSong() {
-    final playerDurationOffset = isWindows ? 200 : GetPlatform.isLinux ? 700 : 0;
+    final playerDurationOffset = GetPlatform.isWindows
+        ? 200
+        : GetPlatform.isLinux
+            ? 700
+            : 0;
     _player.positionStream.listen((value) async {
       if (_player.duration != null && _player.duration?.inSeconds != 0) {
         if (value.inMilliseconds >=

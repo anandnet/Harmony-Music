@@ -75,6 +75,7 @@ dependencies:
   system_tray: ^2.0.3
   window_manager: ^0.3.7
   smtc_windows: ^0.1.2
+  audio_service_mpris: ^0.1.3
 
 dev_dependencies:
   flutter_test:

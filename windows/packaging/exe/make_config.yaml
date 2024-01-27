@@ -1,0 +1,9 @@
+app_id: B9F6E402-0CAE-4045-BDE6-14BD6C39C4EA
+publisher: anandnet
+publisher_url: https://github.com/anandnet/Harmony-Music
+display_name: Harmony Music
+create_desktop_icon: true
+privileges_required: lowest
+script_template: inno_setup.iss
+locales:
+  - en

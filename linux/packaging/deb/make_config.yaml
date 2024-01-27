@@ -9,6 +9,7 @@ installed_size: 20000
 dependencies:
   - mpv
   - libmpv1 | libmpv2
+  - libappindicator3-1 | libayatana-appindicator3-1
 
 essential: false
 icon: assets/icons/icon.png

@@ -73,6 +73,8 @@
     "streamingQualityDes": "Quality of music stream",
     "high": "High",
     "low": "Low",
+    "backgroundPlay": "Background music play",
+    "backgroundPlayDes": "Enable/Disable music playing in background (App can be accessed from system tray when app is running in background)",
     "downloadLocation": "Download Location",
     "downloadingFormat": "Downloading File Format",
     "downloadingFormatDes": "Select downloading file format. \"Opus\" will provide best quality",

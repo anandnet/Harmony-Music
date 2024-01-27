@@ -19,6 +19,7 @@ import '/ui/utils/theme_controller.dart';
 import 'ui/screens/Home/home_screen_controller.dart';
 import 'ui/screens/Library/library_controller.dart';
 import 'utils/house_keeping.dart';
+import 'utils/system_tray.dart';
 import 'utils/update_check_flag_file.dart';
 
 Future<void> main() async {
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    if(!GetPlatform.isDesktop) Get.put(AppLinksController());
+    if (!GetPlatform.isDesktop) Get.put(AppLinksController());
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     SystemChannels.lifecycle.setMessageHandler((msg) async {
       if (msg == "AppLifecycleState.resumed") {
@@ -81,6 +82,9 @@ Future<void> startApplicationServices() async {
   Get.lazyPut(() => LibraryArtistsController(), fenix: true);
   Get.lazyPut(() => SettingsScreenController(), fenix: true);
   Get.lazyPut(() => Downloader(), fenix: true);
+  if (GetPlatform.isDesktop) {
+    Get.put(DesktopSystemTray());
+  }
 }
 
 initHive() async {

@@ -83,26 +83,29 @@ class Home extends StatelessWidget {
                     children: [
                       SizedBox(
                         height: 60,
-                        child: Center(
-                            child: Padding(
-                          padding: const EdgeInsets.only(left: 15.0, right: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                  "${playerController.currentQueue.length} ${"songs".tr}"),
-                              Text(
-                                "upNext".tr,
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    playerController.shuffleQueue();
-                                  },
-                                  icon: const Icon(Icons.shuffle))
-                            ],
-                          ),
-                        )),
+                        child: ColoredBox(
+                          color: Theme.of(context).canvasColor,
+                          child: Center(
+                              child: Padding(
+                            padding: const EdgeInsets.only(left: 15.0, right: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                    "${playerController.currentQueue.length} ${"songs".tr}"),
+                                Text(
+                                  "upNext".tr,
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                                IconButton(
+                                    onPressed: () {
+                                      playerController.shuffleQueue();
+                                    },
+                                    icon: const Icon(Icons.shuffle))
+                              ],
+                            ),
+                          )),
+                        ),
                       ),
                       const Expanded(
                         child: UpNextQueue(

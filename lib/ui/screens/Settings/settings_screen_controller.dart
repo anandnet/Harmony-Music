@@ -36,6 +36,7 @@ class SettingsScreenController extends GetxController {
   final downloadingFormat = "".obs;
   final hideDloc = true.obs;
   final isBottomNavBarEnabled = false.obs;
+  final backgroundPlayEnabled = true.obs;
   final currentVersion = "V1.8.0";
 
   @override
@@ -74,6 +75,7 @@ class SettingsScreenController extends GetxController {
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
+    backgroundPlayEnabled.value = setBox.get("backgroundPlayEnabled") ?? true;
     downloadLocationPath.value =
         setBox.get('downloadLocationPath') ?? await _createInAppSongDownDir();
     downloadingFormat.value = setBox.get('downloadingFormat') ?? "opus";
@@ -185,6 +187,11 @@ class SettingsScreenController extends GetxController {
     Get.find<PlayerController>().toggleSkipSilence(val);
     setBox.put('skipSilenceEnabled', val);
     skipSilenceEnabled.value = val;
+  }
+
+  void toggleBackgroundPlay(bool val){
+    setBox.put('backgroundPlayEnabled', val);
+    backgroundPlayEnabled.value = val;
   }
 
   Future<void> enableIgnoringBatteryOptimizations() async {

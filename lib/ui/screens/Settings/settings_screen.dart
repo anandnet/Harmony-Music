@@ -227,7 +227,18 @@ class SettingsScreen extends StatelessWidget {
                   settingsController.showDownLoc();
                 },
               ),
-              Obx(() => settingsController.hideDloc.isFalse
+               if (isDesktop)
+                ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: Text("backgroundPlay".tr),
+                    subtitle: Text("backgroundPlayDes".tr,
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    trailing: Obx(
+                      () => Switch(
+                          value: settingsController.backgroundPlayEnabled.value,
+                          onChanged: settingsController.toggleBackgroundPlay),
+                    )),
+              Obx(() => settingsController.hideDloc.isFalse || isDesktop
                   ? ListTile(
                       trailing: TextButton(
                         child: Text(
@@ -254,7 +265,7 @@ class SettingsScreen extends StatelessWidget {
                       },
                     )
                   : const SizedBox.shrink()),
-              Obx(() => settingsController.hideDloc.isFalse
+              Obx(() => settingsController.hideDloc.isFalse || isDesktop
                   ? ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),
                       title: Text("downloadingFormat".tr),

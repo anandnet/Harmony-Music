@@ -8,6 +8,7 @@ url: https://github.com/anandnet/Harmony-Music
 
 requires:
   - mpv
+  - libappindicator
 
 display_name: Harmony Music
 

@@ -72,6 +72,8 @@ dependencies:
       url: https://github.com/anandnet/just_audio_media_kit.git
       ref: main
   sidebar_with_animation: ^0.0.3
+  system_tray: ^2.0.3
+  window_manager: ^0.3.7
 
 dev_dependencies:
   flutter_test:

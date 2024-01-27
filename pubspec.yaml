@@ -70,7 +70,7 @@ dependencies:
   just_audio_media_kit:
     git:
       url: https://github.com/anandnet/just_audio_media_kit.git
-      ref: main
+      ref: 06de226da469f5c55dd780b215bcc45a0d6269fb
   sidebar_with_animation: ^0.0.3
   system_tray: ^2.0.3
   window_manager: ^0.3.7

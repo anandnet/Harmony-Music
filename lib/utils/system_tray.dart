@@ -62,7 +62,7 @@ class DesktopSystemTray extends GetxService {
           }),
       MenuSeparator(),
       MenuItemLabel(
-          label: 'Quit', onClicked: (menuItem) => windowManager.close()),
+          label: 'Quit', onClicked: (menuItem) => exit(0)),
     ]);
 
     // set context menu

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
+import '../../services/windows_audio_service.dart';
 import '../../utils/helper.dart';
 import '/models/media_Item_builder.dart';
 import '../screens/Home/home_screen_controller.dart';
@@ -68,6 +69,14 @@ class PlayerController extends GetxController {
   onInit() {
     _init();
     super.onInit();
+  }
+
+  @override
+  void onReady() {
+    if (GetPlatform.isWindows) {
+      Get.put(WindowsAudioService());
+    }
+    super.onReady();
   }
 
   void _init() async {
@@ -372,6 +381,10 @@ class PlayerController extends GetxController {
     _audioHandler.pause();
   }
 
+  void playPause() {
+    _audioHandler.playbackState.value.playing ? pause() : play();
+  }
+
   void prev() {
     _audioHandler.skipToPrevious();
   }
@@ -537,6 +550,9 @@ class PlayerController extends GetxController {
     keyboardSubscription.cancel();
     scrollController.dispose();
     sleepTimer?.cancel();
+    if (GetPlatform.isWindows) {
+      Get.delete<WindowsAudioService>();
+    }
     super.dispose();
   }
 }

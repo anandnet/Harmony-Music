@@ -154,5 +154,7 @@
     "pipedplstSyncAlert": "¡Lista de reproducción de Piped sincronizada!",
     "clearImgCache": "Borrar la caché de imágenes",
     "clearImgCacheDes": "Haga clic aquí para borrar las imágenes en caché. (No se recomienda a menos que desee actualizar los datos de las imágenes en caché)",
-    "upNext": "A continuación"
+    "upNext": "A continuación",
+    "backgroundPlay": "Reproducir música de fondo",
+    "backgroundPlayDes": "Activar/desactivar la reproducción de música en segundo plano (se puede acceder a la aplicación desde la bandeja del sistema cuando se ejecuta en segundo plano)"
 }

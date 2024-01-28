@@ -153,5 +153,7 @@
     "pipedplstSyncAlert": "Lista de reproduction de Piped synchronisate!",
     "clearImgCache": "Rader le cache de imagines",
     "clearImgCacheDes": "Clicca hic pro rader miniaturas e imagines in cache. (Non recommentate a minus que tu vole actualisar le datos de imagine in cache)",
-    "upNext": "Postea"
+    "upNext": "Postea",
+    "backgroundPlay": "Reproducer musica in fundo",
+    "backgroundPlayDes": "Activar/Disactivar le reproduction de musica in fundo (Le application pote esser accessate ab la barra de systema quando ille es executante in secunde fundo)"
 }

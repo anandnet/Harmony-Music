@@ -88,8 +88,13 @@ Future<void> startApplicationServices() async {
 }
 
 initHive() async {
-  Directory applicationDirectory = await getApplicationDocumentsDirectory();
-  await Hive.initFlutter(applicationDirectory.path);
+  String applicationDataDirectoryPath;
+  if (GetPlatform.isDesktop) {
+    applicationDataDirectoryPath = "${(await getApplicationSupportDirectory()).path}/db";
+  } else {
+    applicationDataDirectoryPath = (await getApplicationDocumentsDirectory()).path;
+  }
+  await Hive.initFlutter(applicationDataDirectoryPath);
   await Hive.openBox("SongsCache");
   await Hive.openBox("SongDownloads");
   await Hive.openBox('SongsUrlCache');

@@ -689,6 +689,7 @@ class Languages extends Translations {
           "shareSong": "Share this song",
           "removeFromPlaylist": "Remove from playlist",
           "removeFromQueue": "Remove from queue",
+          "upNext": "Up Next",
           "removeFromLib": "Remove from Library Songs",
           "sleepTimer": "Sleep Timer",
           "add5Minutes": "Add 5 minutes",
@@ -722,6 +723,9 @@ class Languages extends Translations {
           "streamingQualityDes": "Quality of music stream",
           "high": "High",
           "low": "Low",
+          "backgroundPlay": "Background music play",
+          "backgroundPlayDes":
+              "Enable/Disable music playing in background (App can be accessed from system tray when app is running in background)",
           "downloadLocation": "Download Location",
           "downloadingFormat": "Downloading File Format",
           "downloadingFormatDes":
@@ -815,7 +819,7 @@ class Languages extends Translations {
           "renamePlaylist": "Alinomi Ludliston",
           "trending": "Populara",
           "cacheSongsDes":
-              "Kaŝmemorante kantojn dum ludado por estonta/elreta ludado, ĝi prenos plian spacon en via aparato",
+              "Kaŝmemorigante kantojn dum ludado por estonta/elreta ludado, ĝi prenos plian spacon en via aparato",
           "noLibPlaylist": "Vi ne havas iajn bibliotekajn ludlistojn!",
           "setDiscoverContent": "Agordi malkovran enhavon",
           "networkError1": "Ups, reteraro!",
@@ -834,7 +838,7 @@ class Languages extends Translations {
           "items": "eroj",
           "startRadio": "Komenci radion",
           "discover": "Malkovri",
-          "cacheSongs": "Kaŝmemoraj Kantoj",
+          "cacheSongs": "Kaŝmemorigitaj Kantoj",
           "downloads": "Elŝutaĵoj",
           "removeFromLib": "Forigi el la Bibliotekaj Kantoj",
           "libArtists": "Bibliotekaj Artistoj",
@@ -843,14 +847,14 @@ class Languages extends Translations {
           "dynamic": "Dinamika",
           "removePlaylist": "Forigi ludliston",
           "addToPlaylist": "Aldoni al ludlisto",
-          "cachedOrOffline": "Kaŝmemorigita/Elreta",
+          "cachedOrOffline": "Kaŝmemorigitaĵoj / Elretaĵoj",
           "retry": "Reprovu!",
           "artists": "Artistoj",
           "albums": "Albumoj",
-          "recentlyPlayed": "Lastatempe Ludita",
+          "recentlyPlayed": "Lastatempa Luditaĵoj",
           "viewArtist": "Vidi Artiston",
           "createnAdd": "Krei ⳤ aldoni",
-          "topmusicvideos": "Plej popularaj Muzikaj Videoj",
+          "topmusicvideos": "Plej popularaj Muzikvideoj",
           "systemDefault": "Sistema defaŭlta",
           "ignoreBatOpt": "Ignori baterian optimumigon",
           "singles": "Unuopaĵoj",
@@ -866,7 +870,7 @@ class Languages extends Translations {
           "CreateNewPlaylist": "Krei novan ludliston",
           "language": "Lingvo",
           "skipSilenceDes": "Silento estos preterpasita en muzika ludado",
-          "playNext": "Ludi sekvan",
+          "playNext": "Ludi sekvaĵon",
           "songs": "Kantoj",
           "high": "Alta",
           "downloadLocation": "Loko de Elŝutaĵo",
@@ -877,22 +881,111 @@ class Languages extends Translations {
           "removeFromPlaylist": "Forigi el ludlisto",
           "noOfflineSong": "Neniuj elretaj kantoj!",
           "featuredplaylists": "Elstarigitaj Ludlistoj",
-          "quickpicks": "Rapidaj Elektoj",
+          "quickpicks": "Rapidelektoj",
           "goToAlbum": "Iri al la albumo",
           "removeFromQueue": "Forigi el la vico",
           "shareSong": "Kunhavigi ĉi tiun kanton",
           "library": "Biblioteko",
-          "sleepTimer": "Dorma Minutatoro",
-          "add5Minutes": "Aldonas 5 minutojn",
-          "cancelTimer": "Nuligas minutatoron",
+          "sleepTimer": "Dormtempumilo",
+          "add5Minutes": "Aldoni 5 minutojn",
+          "cancelTimer": "Nuligi tempumilon",
           "minutes": "minutoj",
           "endOfThisSong": "Fino de ĉi tiu kanto",
-          "homeContentCount": "Hejme kontenta kalkulo",
+          "homeContentCount": "Hejma kontenta nombro",
           "homeContentCountDes":
-              "Elektas la nombron de komenca homescreen-kontenta(approx). Malpliaj rezultoj pli rapida ŝarĝado",
-          "enableBottomNavDes": "Ŝaltilo al malsupra navigada baro",
-          "equalizerDes": "malferma sistema egaligilo",
-          "equalizer": "Egaligilo"
+              "Elekti la nombron de komenca hejmekrano-kontenta(proksimume). Malpliaj rezultas en pli rapida ŝarĝado",
+          "enableBottomNavDes": "Salti al malsupra navigada breto",
+          "equalizerDes": "malfermi sisteman egaligilon",
+          "equalizer": "Egaligilo",
+          "enableBottomNav": "Malsupra naviga breto",
+          "status": "Statuso",
+          "synced": "Sinkronigite",
+          "results": "Rezultoj",
+          "nomatch": "Neniuj kongruoj trovitaj por",
+          "subscribers": "abonantoj",
+          "about": "Pri",
+          "sleepTimeSetAlert": "Via dormtempumilo estas agordite",
+          "songRemovedfromQueue": "Foriĝis el la vico!",
+          "radioNotAvailable": "Radio maldisponeblas por ĉi tiu artiso!",
+          "songEnqueueAlert": "Kanto enviciĝis!",
+          "songRemovedAlert": "Foriĝis de",
+          "playlistCreatednsongAddedAlert":
+              "Ludlisto kreiĝis ⳤ kanto aldoniĝis!",
+          "playlistRenameAlert": "Sukcese alinomiĝis!",
+          "playlistRemovedAlert": "Ludlisto foriĝis!",
+          "playlistBookmarkAddAlert": "Ludlisto legosigniĝis!",
+          "playlistBookmarkRemoveAlert": "Ludlista legosigno foriĝis!",
+          "albumBookmarkAddAlert": "Albumo legosigniĝis!",
+          "albumBookmarkRemoveAlert": "Albuma legosigno foriĝis!",
+          "dontShowInfoAgain": "Ne montri ĉi tiun informon denove",
+          "dismiss": "Forsendi",
+          "local": "Loka",
+          "hintApiUrl": "API URL de Piped instanco",
+          "customIns": "Propra Instanco",
+          "customInsSelectMsg": "Bonvolu elekti Propran Instancon",
+          "selectAuthIns": "Elekti Aŭtentigadan Instancon",
+          "linkPipedDes": "Ligi kun Piped por ludlistoj",
+          "playlistBlacklistAlert": "Ludlisto nigralistiĝis!",
+          "reset": "Rekomenciĝi",
+          "unlinkAlert": "Malligiĝis sukcese!",
+          "blacklistPlstResetAlert": "Rekomenciĝis sukcese!",
+          "stopMusicOnTaskClear":
+              "Ĉesigi la muzikon kiam la taskoj estas forigitaj",
+          "stopMusicOnTaskClearDes":
+              "Muzikludado ĉesos kiam la Aplikaĵo estas forŝovumita de la taskadministrilo",
+          "resetblacklistedplaylistDes":
+              "Rekomencigi ĉiujn piped nigralistigitajn ludlistojn",
+          "ignoreBatOptDes":
+              "Se vi trafas sciigajn problemojn aŭ la ludadon estas ĉesigita far sistema optimumigo, bonvolu ebligu ĉi tiun opcion",
+          "by": "je",
+          "search": "Serĉi",
+          "searchDes": "Kantoj, Ludlisto, Albumo aŭ Artisto",
+          "cancelTimerAlert": "Dormtempumilo nuligite",
+          "videos": "Videoj",
+          "viewAll": "Vidi ĉiuj",
+          "plain": "Ebena",
+          "upNext": "Sekva",
+          "enabled": "Ebligita",
+          "pipedplstSyncAlert": "Piped ludlisto sinkroniĝis!",
+          "Piped": "Piped",
+          "operationFailed": "Operacio malsukcesis",
+          "goToDownloadPage": "Alklaku ĉi tie por iri al elŝuta paĝo",
+          "link": "Ligi",
+          "unLink": "Malligi",
+          "username": "Uzantnomo",
+          "password": "Pasvorto",
+          "linkAlert": "Ligiĝis sukcese!",
+          "clearImgCache": "Viŝi bildan kaŝmemoron",
+          "clearImgCacheDes":
+              "Alklaku ĉi tie por viŝi kaŝmemorigitajn bildetojn/bildojn. (Ne rekomendita krom se vi volas refreŝigi kaŝmemorigitajn bildajn datumojn)",
+          "disabled": "Malebligita",
+          "github": "GitHub",
+          "for1": "por",
+          "songRemovedfromQueueCurrSong":
+              "Vi ne povas forigi nuntempe ludantan kanton",
+          "songAlreadyExists": "Kanto jam ekzistas!",
+          "backgroundPlay": "Fona muzikludado",
+          "searchRes": "Serĉrezultoj",
+          "songAddedToPlaylistAlert": "Kanto aldoniĝis al ludlisto!",
+          "songAlreadyOfflineAlert": "Kanto jam estas elrete en la kaŝmemoro",
+          "playlistCreatedAlert": "Ludlisto kreiĝis!",
+          "artistBookmarkAddAlert": "Artisto legosigniĝis!",
+          "artistBookmarkRemoveAlert": "Artista legosigno foriĝis!",
+          "lyricsNotAvailable": "Kantotekstoj maldisponeblas!",
+          "syncedLyricsNotAvailable":
+              "Sinkronigitaj kantotekstoj maldisponeblas!",
+          "artistDesNotAvailable": "Priskribo maldisponeblas!",
+          "newVersionAvailable": "Nova versio disponeblas!",
+          "notaSongVideo": "Ne Kanto/Muzikvideo!",
+          "notaValidLink": "Ne valida ligilo!",
+          "selectAuthInsMsg": "Bonvolu elekti Aŭtentigadan Instancon!",
+          "allFieldsReqMsg": "Ĉiuj kampoj estas bezonataj",
+          "backgroundPlayDes":
+              "Ebligi/Malebligi muzikon ludante en la fono (Aplikaĵo estas alirebla de taskopleto kiam aplikaĵo funkcias fone)",
+          "githubDes":
+              "Vidi GitHub fontkodon\nse vi ŝatas ĉi tiun projekton, ne forgesu doni ⭐",
+          "errorOccuredAlert": "Iu eraro okazis!",
+          "resetblacklistedplaylist": "Rekomencigi nigralistigitajn ludlistojn"
         },
         "es": {
           "playlistCreatednsongAddedAlert":
@@ -1062,7 +1155,14 @@ class Languages extends Translations {
               "Seleccione el número de contenidos iniciales de la pantalla de inicio (aprox.). Menos resultados carga más rápida",
           "cancelTimerAlert": "Temporizador de reposo cancelado",
           "sleepTimer": "Temporizador",
-          "pipedplstSyncAlert": "¡Lista de reproducción de Piped sincronizada!"
+          "pipedplstSyncAlert": "¡Lista de reproducción de Piped sincronizada!",
+          "clearImgCache": "Borrar la caché de imágenes",
+          "clearImgCacheDes":
+              "Haga clic aquí para borrar las imágenes en caché. (No se recomienda a menos que desee actualizar los datos de las imágenes en caché)",
+          "upNext": "A continuación",
+          "backgroundPlay": "Reproducir música de fondo",
+          "backgroundPlayDes":
+              "Activar/desactivar la reproducción de música en segundo plano (se puede acceder a la aplicación desde la bandeja del sistema cuando se ejecuta en segundo plano)"
         },
         "fi": {
           "libAlbums": "Kirjaston albumit",
@@ -1550,7 +1650,15 @@ class Languages extends Translations {
               "आरंभिक होमस्क्रीन-कंटेंट की संख्या (लगभग) चुनें। कम परिणाम तेजी से लोड होगा",
           "synced": "सिंकड",
           "cancelTimerAlert": "स्लीप टाइमर रद्द कर दिया गया",
-          "sleepTimeSetAlert": "आपका स्लीप टाइमर सेट हो गया है"
+          "sleepTimeSetAlert": "आपका स्लीप टाइमर सेट हो गया है",
+          "clearImgCache": "इमेज कैश हटाएँ",
+          "clearImgCacheDes":
+              "कैश की गई इमेजेज को हटाने के लिए यहाँ दबाएँ। (ये अनुशंसित नहीं है जबतक आप कैश की गई इमेजेज को नवीकृत नहीं करना चाहें)",
+          "pipedplstSyncAlert": "पाइप्ड प्लेलिस्ट समन्वयित हुआ!",
+          "upNext": "अगला",
+          "backgroundPlay": "बैकग्राउंड म्यूजिक प्ले",
+          "backgroundPlayDes":
+              "बैकग्राउंड में संगीत चलाने को सक्षम/अक्षम करें (जब ऐप बैकग्राउंड में चल रहा हो तो ऐप को सिस्टम ट्रे से एक्सेस किया जा सकता है)"
         },
         "ia": {
           "playlistCreatednsongAddedAlert":
@@ -1719,7 +1827,14 @@ class Languages extends Translations {
           "resetblacklistedplaylistDes":
               "Restabilir tote le listas de reproduction de piped in lista nigre",
           "homeContentCount": "Computo de contentos",
-          "pipedplstSyncAlert": "Lista de reproduction de Piped synchronisate!"
+          "pipedplstSyncAlert": "Lista de reproduction de Piped synchronisate!",
+          "clearImgCache": "Rader le cache de imagines",
+          "clearImgCacheDes":
+              "Clicca hic pro rader miniaturas e imagines in cache. (Non recommentate a minus que tu vole actualisar le datos de imagine in cache)",
+          "upNext": "Postea",
+          "backgroundPlay": "Reproducer musica in fundo",
+          "backgroundPlayDes":
+              "Activar/Disactivar le reproduction de musica in fundo (Le application pote esser accessate ab la barra de systema quando ille es executante in secunde fundo)"
         },
         "id": {
           "playlistCreatednsongAddedAlert":
@@ -2033,7 +2148,14 @@ class Languages extends Translations {
           "homeContentCountDes": "最初のホーム画面のコンテンツ数 (およそ) を選択します。少ないほど読み込みが速いです",
           "cancelTimerAlert": "スリープタイマーをキャンセルしました",
           "sleepTimer": "スリープタイマー",
-          "pipedplstSyncAlert": "Pipedの再生リストを同期しました！"
+          "pipedplstSyncAlert": "Pipedの再生リストを同期しました！",
+          "clearImgCache": "画像キャッシュを消去",
+          "clearImgCacheDes":
+              "クリックすると、キャッシュしたサムネイルや画像を消去します。(キャッシュした画像を更新したい場合に)",
+          "upNext": "次へ",
+          "backgroundPlay": "バックグラウンドで音楽再生",
+          "backgroundPlayDes":
+              "バックグラウンドでの音楽再生を有効/無効に (バックグラウンドでアプリ実行中ならシステムトレイからアクセスします)"
         },
         "kn": {"libArtists": "歌手库"},
         "ko": {},
@@ -2655,7 +2777,14 @@ class Languages extends Translations {
           "pipedplstSyncAlert": "Zsynchronizowano playlisty z Piped!",
           "cancelTimer": "Anuluj wyłącznik czasowy",
           "homeContentCount": "Ilość treści na ekranie głównym",
-          "sleepTimeSetAlert": "Wyłącznik czasowy jest ustawiony"
+          "sleepTimeSetAlert": "Wyłącznik czasowy jest ustawiony",
+          "clearImgCache": "Wyczyść pamięć podręczną obrazów",
+          "clearImgCacheDes":
+              "Kliknij tutaj, aby wyczyścić zapisane w pamięci podręcznej miniatury/obrazy. (Niezalecane, chyba że chcesz odświeżyć dane obrazów zapisanych w pamięci podręcznej)",
+          "upNext": "Następne",
+          "backgroundPlay": "Odtwarzanie muzyki w tle",
+          "backgroundPlayDes":
+              "Włączanie/wyłączanie odtwarzania muzyki w tle (aplikacja jest dostępna z zasobnika systemowego, gdy aplikacja działa w tle)"
         },
         "pt": {
           "renamePlaylist": "Renomear Playlist",
@@ -2671,7 +2800,7 @@ class Languages extends Translations {
           "playlists": "Listas de músicas",
           "rename": "Renomear",
           "items": "Itens",
-          "startRadio": "Ligar a rádio",
+          "startRadio": "Procurar semelhantes",
           "downloads": "Baixadas",
           "libArtists": "Biblioteca de Artistas",
           "removePlaylist": "Remover playlist",
@@ -2800,14 +2929,33 @@ class Languages extends Translations {
           "lyricsNotAvailable": "Letra não disponível!",
           "dontShowInfoAgain": "Não mostrar novamente",
           "quickpicks": "Escolhas rápidas",
-          "artistBookmarkRemoveAlert": "Artista não mais salvo!",
+          "artistBookmarkRemoveAlert": "Marcador de artista removido!",
           "operationFailed": "Operação falhou",
           "songRemovedAlert": "Removida da/do",
           "library": "Biblioteca",
           "synced": "Sincronizado",
           "sleepTimer": "Temporizador de Suspensão",
           "minutes": "minutos",
-          "cancelTimerAlert": "O despertador foi cancelado"
+          "cancelTimerAlert": "O despertador foi cancelado",
+          "add5Minutes": "Adicionar 5 minutos",
+          "cancelTimer": "Cancelar temporizador",
+          "endOfThisSong": "Fim dessa música",
+          "plain": "Simples",
+          "sleepTimeSetAlert": "Seu temporizador de sono está ativado",
+          "pipedplstSyncAlert": "Lista de reprodução sincronizada!",
+          "upNext": "A seguir",
+          "homeContentCount": "Contagem de conteúdo da página Inicial",
+          "homeContentCountDes":
+              "Selecione o número de conteúdos da tela inicial (aproximado). Menos resultados carregam mais rápido",
+          "enableBottomNav": "Barra de navegação inferior",
+          "enableBottomNavDes": "Mudar para a barra de navegação inferior",
+          "syncedLyricsNotAvailable": "Lista de reprodução não disponível!",
+          "backgroundPlay": "Reprodução de música em segundo plano",
+          "backgroundPlayDes":
+              "Ativar/Desativar reprodução de música em segundo plano (O aplicativo pode ser acessado a partir da bandeja do sistema quando está em execução em segundo plano)",
+          "clearImgCache": "Limpar cache de imagens",
+          "clearImgCacheDes":
+              "Clique aqui para limpar as thumbnails/imagens armazenadas em cache. (Não recomendado a menos que queira atualizar os dados das imagens armazenadas em cache)"
         },
         "ro": {},
         "ru": {
@@ -3129,7 +3277,14 @@ class Languages extends Translations {
               "Изаберите број иницијалног садржаја почетног екрана (приближно). Мање резултата - брже учитавање",
           "cancelTimerAlert": "Тајмер за спавање је отказан",
           "sleepTimer": "Тајмер за спавање",
-          "pipedplstSyncAlert": "Piped плејлиста је синхронизована!"
+          "pipedplstSyncAlert": "Piped плејлиста је синхронизована!",
+          "clearImgCache": "Очисти кеш слика",
+          "clearImgCacheDes":
+              "Кликните овде да бисте обрисали кеширане сличице/слике. (Не препоручује се осим ако не желите да освежите кеширане податке о сликама)",
+          "upNext": "Следеће",
+          "backgroundPlay": "Пуштање музике у позадини",
+          "backgroundPlayDes":
+              "Омогућите/онемогућите пуштање музике у позадини (апликацији се може приступити из системске траке када апликација ради у позадини)"
         },
         "ta": {},
         "te": {},

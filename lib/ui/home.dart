@@ -24,7 +24,8 @@ class Home extends StatelessWidget {
     final homeScreenController = Get.find<HomeScreenController>();
     final size = MediaQuery.of(context).size;
     final isWideScreen = size.width > 800;
-    if (!playerController.initFlagForPlayer) {
+    if (!playerController.initFlagForPlayer &&
+        settingsScreenController.isBottomNavBarEnabled.isFalse) {
       if (isWideScreen) {
         playerController.playerPanelMinHeight.value =
             105 + Get.mediaQuery.padding.bottom;
@@ -87,7 +88,8 @@ class Home extends StatelessWidget {
                           color: Theme.of(context).canvasColor,
                           child: Center(
                               child: Padding(
-                            padding: const EdgeInsets.only(left: 15.0, right: 15),
+                            padding:
+                                const EdgeInsets.only(left: 15.0, right: 15),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

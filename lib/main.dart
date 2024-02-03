@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '/utils/get_localization.dart';
@@ -28,6 +28,7 @@ Future<void> main() async {
   _setAppInitPrefs();
   startApplicationServices();
   startHouseKeeping();
+  MediaKit.ensureInitialized();
   Get.put<AudioHandler>(await initAudioService(), permanent: true);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

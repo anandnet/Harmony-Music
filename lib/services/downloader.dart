@@ -162,7 +162,7 @@ class Downloader extends GetxService {
       final dirPath = settingsScreenController.downloadLocationPath.string;
       final RegExp invalidChar =
           RegExp(r'Container.|\/|\\|\"|\<|\>|\*|\?|\:|\!|\[|\]|\¡|\||\%');
-      final songTitle = song.title.replaceAll(invalidChar, "");
+      final songTitle = "${song.title} (${song.artist})".replaceAll(invalidChar, "");
       String filePath = "$dirPath/$songTitle.$downloadingFormat";
       printINFO("Downloading filePath: $filePath");
       var file = File(filePath);

@@ -9,21 +9,32 @@ import 'loader.dart';
 import 'snackbar.dart';
 
 class SongDownloadButton extends StatelessWidget {
-  const SongDownloadButton({super.key,this.calledFromPlayer=false,this.song_});
+  const SongDownloadButton(
+      {super.key,
+      this.calledFromPlayer = false,
+      this.song_,
+      this.isDownloadingDoneCallback});
   final bool calledFromPlayer;
   final MediaItem? song_;
+  final void Function(bool)? isDownloadingDoneCallback;
 
   @override
   Widget build(BuildContext context) {
     final downloader = Get.find<Downloader>();
     final playerController = Get.find<PlayerController>();
     return Obx(() {
-      final song = calledFromPlayer ? playerController.currentSong.value : song_;
-      if(song==null && calledFromPlayer) return const SizedBox.shrink();
-      return (downloader.songQueue.contains(song) &&
-                  downloader.currentSong == song &&
-                  downloader.songDownloadingProgress.value == 100) ||
-              Hive.box("SongDownloads").containsKey(song!.id)
+      final song =
+          calledFromPlayer ? playerController.currentSong.value : song_;
+      if (song == null && calledFromPlayer) return const SizedBox.shrink();
+      final isDownloadingDone = (downloader.songQueue.contains(song) &&
+          downloader.currentSong == song &&
+          downloader.songDownloadingProgress.value == 100);
+      if (isDownloadingDoneCallback != null) {
+        isDownloadingDoneCallback!(isDownloadingDone);
+      }
+
+      return (isDownloadingDone ||
+              Hive.box("SongDownloads").containsKey(song!.id))
           ? Icon(
               Icons.download_done,
               color: Theme.of(context).textTheme.titleMedium!.color,

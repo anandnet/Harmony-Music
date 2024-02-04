@@ -92,14 +92,15 @@ class LibrarySongsController extends GetxController {
     tempListContainer.clear();
   }
 
-  Future<void> removeSong(MediaItem item, bool isDownloaded) async {
+  Future<void> removeSong(MediaItem item, bool isDownloaded,{String? url}) async {
     if (tempListContainer.isNotEmpty) {
       tempListContainer.remove(item);
     }
     librarySongsList.remove(item);
     String filePath = "";
     if (isDownloaded) {
-      filePath = item.extras!['url'];
+      filePath =
+          item.extras!['url'] ?? url;
     } else {
       final cacheDir = (await getTemporaryDirectory()).path;
       filePath = "$cacheDir/cachedSongs/${item.id}.mp3";

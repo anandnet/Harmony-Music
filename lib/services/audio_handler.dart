@@ -344,14 +344,15 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       if (_playList.children.isNotEmpty) {
         await _playList.clear();
       }
-      currentIndex = extras!['index'];
+      final songIndex = extras!['index'];
+      currentIndex = songIndex;
       final isNewUrlReq = extras['newUrl'] ?? false;
       final currentSong = queue.value[currentIndex];
       final url =
           await checkNGetUrl(currentSong.id, generateNewUrl: isNewUrlReq);
       mediaItem.add(currentSong);
       currentSongUrl = url;
-      if (url == null) {
+      if (url == null || songIndex != currentIndex) {
         return;
       }
       currentSong.extras!['url'] = url;

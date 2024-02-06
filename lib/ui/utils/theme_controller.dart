@@ -91,6 +91,7 @@ class ThemeController extends GetxController {
       );
 
       final baseTheme = ThemeData(
+        useMaterial3: false,
           primaryColor: primarySwatch![500],
           colorScheme: ColorScheme.fromSwatch(
               accentColor: primarySwatch[200],
@@ -165,6 +166,7 @@ class ThemeController extends GetxController {
             systemNavigationBarContrastEnforced: true),
       );
       final baseTheme = ThemeData(
+        useMaterial3: false,
           brightness: Brightness.dark,
           canvasColor: Colors.black,
           primaryColor: Colors.black,
@@ -231,6 +233,7 @@ class ThemeController extends GetxController {
             systemNavigationBarContrastEnforced: false),
       );
       final baseTheme = ThemeData(
+        useMaterial3: false,
           brightness: Brightness.light,
           canvasColor: Colors.white,
           colorScheme: ColorScheme.fromSwatch(

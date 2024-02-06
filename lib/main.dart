@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -60,9 +59,9 @@ class MyApp extends StatelessWidget {
           fallbackLocale: const Locale("en"),
           builder: (context, child) {
             final scale =
-                MediaQuery.of(context).textScaleFactor.clamp(1.0, 1.1);
+                MediaQuery.of(context).textScaler.clamp(minScaleFactor:1.0,maxScaleFactor: 1.1);
             return MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaleFactor: scale),
+              data: MediaQuery.of(context).copyWith(textScaler: scale),
               child: child!,
             );
           });

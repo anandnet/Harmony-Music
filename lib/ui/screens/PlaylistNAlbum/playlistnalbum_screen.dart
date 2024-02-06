@@ -408,7 +408,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                       .isAddedToLibrary.isTrue)
                                                     IconButton(
                                                         onPressed: () {
-                                                          playListNAlbumScreenController.syncPlaylistNAlbumSong();
+                                                          playListNAlbumScreenController
+                                                              .syncPlaylistNAlbumSong();
                                                         },
                                                         icon: const Icon(
                                                             Icons.cloud_sync)),
@@ -589,7 +590,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                         : content.playlistId,
                                     isSearchFeatureRequired: true,
                                     itemCountTitle:
-                                        "${playListNAlbumScreenController.songList.length} ${"songs".tr}",
+                                        "${playListNAlbumScreenController.songList.length}",
+                                    itemIcon: Icons.music_note_rounded,
                                     titleLeftPadding: 9,
                                     isDurationOptionRequired: true,
                                     onSort: (a, b, c, d) {
@@ -620,7 +622,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                     : content.playlistId,
                                 isSearchFeatureRequired: true,
                                 itemCountTitle:
-                                    "${playListNAlbumScreenController.songList.length} ${"songs".tr}",
+                                    "${playListNAlbumScreenController.songList.length}",
+                                itemIcon: Icons.music_note_rounded,
                                 titleLeftPadding: 9,
                                 isDurationOptionRequired: true,
                                 onSort: (a, b, c, d) {

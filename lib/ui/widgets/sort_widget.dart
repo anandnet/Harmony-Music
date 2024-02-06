@@ -13,18 +13,20 @@ class SortWidget extends StatelessWidget {
     this.onSearchStart,
     this.onSearch,
     this.onSearchClose,
+    this.itemIcon,
     required this.onSort,
   });
 
   /// unique identifier for each sortwidget
   final String tag;
   final String itemCountTitle;
+  final IconData? itemIcon;
   final double titleLeftPadding;
   final bool isDurationOptionRequired;
   final bool isDateOptionRequired;
   final bool isSearchFeatureRequired;
   final Function(String?)? onSearchStart;
-  final Function(String,String?)? onSearch;
+  final Function(String, String?)? onSearch;
   final Function(String?)? onSearchClose;
   final Function(bool, bool, bool, bool) onSort;
 
@@ -38,7 +40,17 @@ class SortWidget extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(left: titleLeftPadding),
-              child: Text(itemCountTitle),
+              child: Row(
+                children: [
+                  Text(itemCountTitle),
+                  if (itemIcon != null)
+                    Icon(
+                      Icons.music_note_rounded,
+                      size: 15,
+                      color: Theme.of(context).colorScheme.secondary,
+                    )
+                ],
+              ),
             ),
             Obx(
               () => IconButton(
@@ -128,7 +140,7 @@ class SortWidget extends StatelessWidget {
                   textAlignVertical: TextAlignVertical.center,
                   autofocus: true,
                   onChanged: (value) {
-                    onSearch!(value,tag);
+                    onSearch!(value, tag);
                   },
                   cursorColor: Theme.of(context).textTheme.titleSmall!.color,
                   decoration: InputDecoration(

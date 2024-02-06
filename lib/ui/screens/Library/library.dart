@@ -38,7 +38,8 @@ class SongsLibraryWidget extends StatelessWidget {
             return SortWidget(
               tag: "LibSongSort",
               itemCountTitle:
-                  "${libSongsController.librarySongsList.length} ${"items".tr}",
+                  "${libSongsController.librarySongsList.length}",
+              itemIcon: Icons.music_note_rounded,
               titleLeftPadding: 9,
               isDateOptionRequired: true,
               isDurationOptionRequired: true,

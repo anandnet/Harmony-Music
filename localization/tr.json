@@ -151,5 +151,12 @@
     "homeContentCountDes": "Ana sayfadaki içerik sayısını seçin (yaklaşık olarak). Daha az içerik daha hızlı yükleme sağlar",
     "plain": "Düz",
     "sleepTimeSetAlert": "Uyku zamanlayıcınız ayarlandı",
-    "pipedplstSyncAlert": "Piped oynatma listesi senkronize edildi!"
+    "pipedplstSyncAlert": "Piped oynatma listesi senkronize edildi!",
+    "deleteDownloadData": "İndirilenlerden kaldır",
+    "backgroundPlay": "Arka planda müzik çal",
+    "backgroundPlayDes": "Arka planda müzik çalmayı etkinleştirin/devre dışı bırakın (Uygulama arka planda çalışırken sistem tepsisinden uygulamaya erişilebilir)",
+    "deleteDownloadedDataAlert": "İndirmelerden başarıyla kaldırıldı!",
+    "upNext": "Sıradaki",
+    "clearImgCache": "Resim önbelleğini temizle",
+    "clearImgCacheDes": "Önbelleğe alınan küçük resimleri/görselleri temizlemek için buraya tıklayın. (Önbelleğe alınan resim verilerini yenilemek istemiyorsanız tavsiye edilmez)"
 }

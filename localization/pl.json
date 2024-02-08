@@ -158,5 +158,7 @@
     "clearImgCacheDes": "Kliknij tutaj, aby wyczyścić zapisane w pamięci podręcznej miniatury/obrazy. (Niezalecane, chyba że chcesz odświeżyć dane obrazów zapisanych w pamięci podręcznej)",
     "upNext": "Następne",
     "backgroundPlay": "Odtwarzanie muzyki w tle",
-    "backgroundPlayDes": "Włączanie/wyłączanie odtwarzania muzyki w tle (aplikacja jest dostępna z zasobnika systemowego, gdy aplikacja działa w tle)"
+    "backgroundPlayDes": "Włączanie/wyłączanie odtwarzania muzyki w tle (aplikacja jest dostępna z zasobnika systemowego, gdy aplikacja działa w tle)",
+    "deleteDownloadData": "Usuń z pobranych",
+    "deleteDownloadedDataAlert": "Pomyślnie usunięto z pobranych!"
 }

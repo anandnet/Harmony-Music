@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '/ui/widgets/modification_list.dart';
 import '../../../models/playlist.dart';
 import '../../widgets/piped_sync_widget.dart';
 import 'library_controller.dart';
@@ -37,34 +38,47 @@ class SongsLibraryWidget extends StatelessWidget {
             final libSongsController = Get.find<LibrarySongsController>();
             return SortWidget(
               tag: "LibSongSort",
-              itemCountTitle:
-                  "${libSongsController.librarySongsList.length}",
+              itemCountTitle: "${libSongsController.librarySongsList.length}",
               itemIcon: Icons.music_note_rounded,
               titleLeftPadding: 9,
               isDateOptionRequired: true,
               isDurationOptionRequired: true,
               isSearchFeatureRequired: true,
+              isSongDeletetioFeatureRequired: true,
               onSort: (p0, p1, p2, p3) {
                 libSongsController.onSort(p0, p1, p2, p3);
               },
               onSearch: libSongsController.onSearch,
               onSearchClose: libSongsController.onSearchClose,
               onSearchStart: libSongsController.onSearchStart,
+              startAdditionalOperation:
+                  libSongsController.startAdditionalOperation,
+              selectAll: libSongsController.selectAll,
+              performAdditionalOperation:
+                  libSongsController.performAdditionalOperation,
+              cancelAdditionalOperation:
+                  libSongsController.cancelAdditionalOperation,
             );
           }),
           GetX<LibrarySongsController>(builder: (controller) {
             return controller.librarySongsList.isNotEmpty
-                ? ListWidget(
-                    controller.librarySongsList,
-                    "library Songs",
-                    true,
-                    isPlaylist: true,
-                    playlist: Playlist(
-                        title: "Library Songs",
-                        playlistId: "SongsCache",
-                        thumbnailUrl: "",
-                        isCloudPlaylist: false),
-                  )
+                ? (controller.additionalOperationMode.value ==
+                        OperationMode.none
+                    ? ListWidget(
+                        controller.librarySongsList,
+                        "library Songs",
+                        true,
+                        isPlaylist: true,
+                        playlist: Playlist(
+                            title: "Library Songs",
+                            playlistId: "SongsCache",
+                            thumbnailUrl: "",
+                            isCloudPlaylist: false),
+                      )
+                    : ModificationList(
+                        mode: controller.additionalOperationMode.value,
+                        librarySongsController: controller,
+                      ))
                 : Expanded(
                     child: Center(
                         child: Text(
@@ -131,6 +145,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
             () => isAlbumContent
                 ? SortWidget(
                     tag: "LibAlbumSort",
+                    isAdditionalOperationRequired: false,
                     isSearchFeatureRequired: true,
                     itemCountTitle:
                         "${libralbumCntrller.libraryAlbums.length} ${"items".tr}",
@@ -144,6 +159,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                   )
                 : SortWidget(
                     tag: "LibPlaylistSort",
+                    isAdditionalOperationRequired: false,
                     isSearchFeatureRequired: true,
                     itemCountTitle:
                         "${librplstCntrller.libraryPlaylists.length} ${"items".tr}",
@@ -222,6 +238,7 @@ class LibraryArtistWidget extends StatelessWidget {
           Obx(
             () => SortWidget(
               tag: "LibArtistSort",
+              isAdditionalOperationRequired: false,
               isSearchFeatureRequired: true,
               itemCountTitle: "${cntrller.libraryArtists.length} ${"items".tr}",
               onSort: (sortByName, sortByDate, sortByDuration, isAscending) {

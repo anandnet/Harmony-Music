@@ -112,7 +112,7 @@ class SongInfoBottomSheet extends StatelessWidget {
               Navigator.of(context).pop();
               showDialog(
                 context: context,
-                builder: (context) => AddToPlaylist(song),
+                builder: (context) => AddToPlaylist([song]),
               ).whenComplete(() => Get.delete<AddToPlaylistController>());
             },
           ),

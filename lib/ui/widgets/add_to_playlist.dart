@@ -11,8 +11,8 @@ import 'common_dialog_widget.dart';
 import 'snackbar.dart';
 
 class AddToPlaylist extends StatelessWidget {
-  const AddToPlaylist(this.songItem, {super.key});
-  final MediaItem songItem;
+  const AddToPlaylist(this.songItems, {super.key});
+  final List<MediaItem> songItems;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class AddToPlaylist extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (context) => CreateNRenamePlaylistPopup(
-                              isCreateNadd: true, songItem: songItem),
+                              isCreateNadd: true, songItems: songItems),
                         );
                       },
                     )
@@ -102,16 +102,16 @@ class AddToPlaylist extends StatelessWidget {
                             ),
                             onTap: () {
                               addToPlaylistController
-                                  .addSongToPlaylist(
-                                      songItem,
+                                  .addSongsToPlaylist(
+                                      songItems,
                                       (addToPlaylistController.playlists[index])
                                           .playlistId,
                                       context)
                                   .then((value) {
                                 if (value) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                      snackbar(
-                                          context, "songAddedToPlaylistAlert".tr,
+                                      snackbar(context,
+                                          "songAddedToPlaylistAlert".tr,
                                           size: SanckBarSize.MEDIUM));
                                   Navigator.of(context).pop();
                                 } else {
@@ -190,24 +190,49 @@ class AddToPlaylistController extends GetxController {
     playlists.value = val == "piped" ? pipedPlaylists : localPlaylists;
   }
 
-  Future<bool> addSongToPlaylist(
-      MediaItem song, String playlistId, BuildContext context) async {
+  Future<bool> addSongsToPlaylist(
+      List<MediaItem> songs, String playlistId, BuildContext context) async {
+    additionInProgress.value = true;
     if (playlistType.value == "local") {
       final plstBox = await Hive.openBox(playlistId);
-      if (!plstBox.containsKey(song.id)) {
-        plstBox.put(song.id, MediaItemBuilder.toJson(song));
-        plstBox.close();
-        return true;
-      } else {
-        plstBox.close();
-        return false;
+      final playlistSongIds = plstBox.values.map((item) => item['videoId']);
+      for (MediaItem element in songs) {
+        if (!playlistSongIds.contains(element.id)) {
+          await plstBox.add(MediaItemBuilder.toJson(element));
+        }
       }
+      await plstBox.close();
+      additionInProgress.value = false;
+      return true;
     } else {
-      additionInProgress.value = true;
+      final videosId = songs.map((e) => e.id).toList();
       final res =
-          await Get.find<PipedServices>().addToPlaylist(playlistId, song.id);
+          await Get.find<PipedServices>().addToPlaylist(playlistId, videosId);
       additionInProgress.value = false;
       return (res.code == 1);
     }
+    
   }
+
+  // Future<bool> addSongToPlaylist(
+  //     MediaItem song, String playlistId, BuildContext context) async {
+  //   if (playlistType.value == "local") {
+  //     final plstBox = await Hive.openBox(playlistId);
+  //     if (!plstBox.containsKey(song.id)) {
+  //       plstBox.put(song.id, MediaItemBuilder.toJson(song));
+  //       plstBox.close();
+  //       return true;
+  //     } else {
+  //       plstBox.close();
+  //       return false;
+  //     }
+  //   } else {
+  //     additionInProgress.value = true;
+
+  //     final res =
+  //         await Get.find<PipedServices>().addToPlaylist(playlistId, song.id);
+  //     additionInProgress.value = false;
+  //     return (res.code == 1);
+  //   }
+  // }
 }

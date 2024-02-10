@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../widgets/add_to_playlist.dart';
+import '/ui/widgets/sort_widget.dart';
 import '../Settings/settings_screen_controller.dart';
 import '/services/piped_service.dart';
 import '../../../utils/helper.dart';
@@ -17,6 +19,8 @@ class LibrarySongsController extends GetxController {
   late RxList<MediaItem> librarySongsList = RxList();
   final isSongFetched = false.obs;
   List<MediaItem> tempListContainer = [];
+  SortWidgetController? sortWidgetController;
+  final additionalOperationMode = OperationMode.none.obs;
 
   @override
   void onInit() {
@@ -92,15 +96,15 @@ class LibrarySongsController extends GetxController {
     tempListContainer.clear();
   }
 
-  Future<void> removeSong(MediaItem item, bool isDownloaded,{String? url}) async {
+  Future<void> removeSong(MediaItem item, bool isDownloaded,
+      {String? url}) async {
     if (tempListContainer.isNotEmpty) {
       tempListContainer.remove(item);
     }
     librarySongsList.remove(item);
     String filePath = "";
     if (isDownloaded) {
-      filePath =
-          item.extras!['url'] ?? url;
+      filePath = item.extras!['url'] ?? url;
     } else {
       final cacheDir = (await getTemporaryDirectory()).path;
       filePath = "$cacheDir/cachedSongs/${item.id}.mp3";
@@ -115,6 +119,85 @@ class LibrarySongsController extends GetxController {
     if (await thumbFile.exists()) {
       await thumbFile.delete();
     }
+  }
+
+//Additional operations
+  final additionalOperationTempList = [].obs;
+  final additionalOperationTempMap = <int, bool>{}.obs;
+
+  void startAdditionalOperation(
+      SortWidgetController sortWidgetController_, OperationMode mode) {
+    sortWidgetController = sortWidgetController_;
+    additionalOperationTempList.value = librarySongsList.toList();
+    if (mode == OperationMode.addToPlaylist || mode == OperationMode.delete) {
+      for (int i = 0; i < additionalOperationTempList.length; i++) {
+        additionalOperationTempMap[i] = false;
+      }
+    }
+    additionalOperationMode.value = mode;
+  }
+
+  void checkIfAllSelected() {
+    sortWidgetController!.isAllSelected.value =
+        !additionalOperationTempMap.containsValue(false);
+  }
+
+  void selectAll(bool selected) {
+    for (int i = 0; i < additionalOperationTempList.length; i++) {
+      additionalOperationTempMap[i] = selected;
+    }
+  }
+
+  void performAdditionalOperation() {
+    final currMode = additionalOperationMode.value;
+    if (currMode == OperationMode.delete) {
+      deleteMultipleSongs(selectedSongs()).then((value) {
+        sortWidgetController?.setActiveMode(OperationMode.none);
+        cancelAdditionalOperation();
+      });
+    } else if (currMode == OperationMode.addToPlaylist) {
+      showDialog(
+        context: Get.context!,
+        builder: (context) => AddToPlaylist(selectedSongs()),
+      ).whenComplete(() {
+        Get.delete<AddToPlaylistController>();
+        sortWidgetController?.setActiveMode(OperationMode.none);
+        cancelAdditionalOperation();
+      });
+    }
+  }
+
+  Future<void> deleteMultipleSongs(List<MediaItem> songs) async {
+    final downloadsBox = await Hive.openBox("SongDownloads");
+    final cacheBox = await Hive.openBox("SongsCache");
+    for (MediaItem element in songs) {
+      if(downloadsBox.containsKey(element.id)){
+        await downloadsBox.delete(element.id);
+        removeSong(element, true);
+      }else{
+        await cacheBox.delete(element.id);
+        removeSong(element, false);
+      }
+    }
+  }
+
+  List<MediaItem> selectedSongs() {
+    return additionalOperationTempMap.entries
+        .map((item) {
+          if (item.value) {
+            return additionalOperationTempList[item.key];
+          }
+        })
+        .whereType<MediaItem>()
+        .toList();
+  }
+
+  void cancelAdditionalOperation() {
+    sortWidgetController!.isAllSelected.value = false;
+    sortWidgetController = null;
+    additionalOperationMode.value = OperationMode.none;
+    additionalOperationTempList.clear();
+    additionalOperationTempMap.clear();
   }
 }
 
@@ -259,7 +342,7 @@ class LibraryPlaylistsController extends GetxController
   }
 
   Future<bool> createNewPlaylist(
-      {bool createPlaylistNaddSong = false, MediaItem? songItem}) async {
+      {bool createPlaylistNaddSong = false, List<MediaItem>? songItems}) async {
     String title = textInputController.text;
     if (title != "") {
       title = "${title[0].toUpperCase()}${title.substring(1).toLowerCase()}";
@@ -272,7 +355,8 @@ class LibraryPlaylistsController extends GetxController
           newplst = Playlist(
               title: title,
               playlistId: "${res.response['playlistId']}",
-              thumbnailUrl: songItem != null ? songItem.artUri.toString() : "",
+              thumbnailUrl:
+                  songItems != null ? songItems[0].artUri.toString() : "",
               description: "Piped Playlist",
               isCloudPlaylist: true,
               isPipedPlaylist: true);
@@ -296,12 +380,15 @@ class LibraryPlaylistsController extends GetxController
 
       if (createPlaylistNaddSong && playlistCreationMode.value == "local") {
         final plastbox = await Hive.openBox(newplst.playlistId);
-        plastbox.put(songItem?.id, MediaItemBuilder.toJson(songItem!));
+        for (MediaItem item in songItems!) {
+          plastbox.add(MediaItemBuilder.toJson(item));
+        }
         plastbox.close();
       } else if ((createPlaylistNaddSong &&
           playlistCreationMode.value == "piped")) {
+        final songIds = songItems!.map((e) => e.id).toList();
         await Get.find<PipedServices>()
-            .addToPlaylist(newplst.playlistId, songItem!.id);
+            .addToPlaylist(newplst.playlistId, songIds);
       }
       creationInProgress.value = false;
       return true;

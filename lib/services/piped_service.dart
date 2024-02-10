@@ -132,10 +132,10 @@ class PipedServices extends GetxService {
         data: {"playlistId": plalistId});
   }
 
-  Future<Res> addToPlaylist(String plalistId, String videoId) async {
+  Future<Res> addToPlaylist(String plalistId, List<String> videosId) async {
     return await _sendRequest("/user/playlists/add", data: {
       "playlistId": plalistId,
-      "videoIds": [videoId]
+      "videoIds": videosId
     });
   }
 

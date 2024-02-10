@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:harmonymusic/services/downloader.dart';
 
 import '../../widgets/loader.dart';
+import '../../widgets/modification_list.dart';
 import '../Library/library_controller.dart';
 import '/ui/navigator.dart';
 import 'playlistnalbum_screen_controller.dart';
@@ -594,6 +595,13 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                     itemIcon: Icons.music_note_rounded,
                                     titleLeftPadding: 9,
                                     isDurationOptionRequired: true,
+                                    isPlaylistRearrageFeatureRequired:
+                                        content.playlistId != "LIBRP" &&
+                                            content.playlistId !=
+                                                "SongDownloads" &&
+                                            content.playlistId != "SongsCache",
+                                    isSongDeletetioFeatureRequired:
+                                        content.playlistId != "LIBRP",
                                     onSort: (a, b, c, d) {
                                       playListNAlbumScreenController.onSort(
                                           a, c, d);
@@ -606,6 +614,17 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                     onSearchStart:
                                         playListNAlbumScreenController
                                             .onSearchStart,
+                                    startAdditionalOperation:
+                                        playListNAlbumScreenController
+                                            .startAdditionalOperation,
+                                    selectAll: playListNAlbumScreenController
+                                        .selectAll,
+                                    performAdditionalOperation:
+                                        playListNAlbumScreenController
+                                            .performAdditionalOperation,
+                                    cancelAdditionalOperation:
+                                        playListNAlbumScreenController
+                                            .cancelAdditionalOperation,
                                   ),
                                 )),
                       (!playListNAlbumScreenController.isAlbum &&
@@ -636,12 +655,26 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                     .onSearchClose,
                                 onSearchStart: playListNAlbumScreenController
                                     .onSearchStart,
+                                startAdditionalOperation:
+                                    playListNAlbumScreenController
+                                        .startAdditionalOperation,
+                                selectAll:
+                                    playListNAlbumScreenController.selectAll,
+                                performAdditionalOperation:
+                                    playListNAlbumScreenController
+                                        .performAdditionalOperation,
+                                cancelAdditionalOperation:
+                                    playListNAlbumScreenController
+                                        .cancelAdditionalOperation,
                               ),
                             ),
                       Obx(() => playListNAlbumScreenController
                               .isContentFetched.value
-                          ? Obx(() =>
-                              playListNAlbumScreenController.songList.isNotEmpty
+                          ? Obx(() => playListNAlbumScreenController
+                                  .songList.isNotEmpty
+                              ? (playListNAlbumScreenController
+                                          .additionalOperationMode.value ==
+                                      OperationMode.none
                                   ? ListWidget(
                                       playListNAlbumScreenController.songList
                                           .toList(),
@@ -653,14 +686,20 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                           ? content as Playlist
                                           : null,
                                     )
-                                  : Expanded(
-                                      child: Center(
-                                        child: Text("emptyPlaylist".tr,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall),
-                                      ),
+                                  : ModificationList(
+                                      mode: playListNAlbumScreenController
+                                          .additionalOperationMode.value,
+                                      playListNAlbumScreenController:
+                                          playListNAlbumScreenController,
                                     ))
+                              : Expanded(
+                                  child: Center(
+                                    child: Text("emptyPlaylist".tr,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall),
+                                  ),
+                                ))
                           : const Expanded(child: SongListShimmer()))
                     ],
                   ),

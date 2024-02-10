@@ -348,12 +348,12 @@ class Languages extends Translations {
               "Ukládání skladeb do mezipaměti během přehrávání pro budoucí/offline přehrávání zabere v zařízení další místo",
           "password": "Heslo",
           "noLibPlaylist": "Nemáte žádný playlist lib!",
-          "setDiscoverContent": "Nastavení objevování obsahu",
+          "setDiscoverContent": "Nastav si domovskou stránku",
           "networkError1": "Ups chyba sítě!",
           "songRemovedfromQueue": "Odstraněno z fronty!",
           "libSongs": "Knihovna skladeb",
           "githubDes":
-              "Zobrazit zdrojový kód GitHub\npokud se vám tento projekt líbí, nezapomeňte dát ⭐",
+              "Zobrazit zdrojový kód GitHub\nPokud se vám tento projekt líbí, nezapomeňte dát ⭐",
           "communityplaylists": "Komunitní playlisty",
           "playlistRemovedAlert": "Playlist odstraněn!",
           "libAlbums": "Knihovna alb",
@@ -362,7 +362,7 @@ class Languages extends Translations {
           "ignoreBatOptDes":
               "Pokud se potýkáte s problémy s oznámeními nebo se přehrávání zastavilo kvůli optimalizaci systému, povolte tuto možnost",
           "for1": "pro",
-          "low": "Nízká",
+          "low": "Nízká 🪨",
           "link": "Odkaz",
           "selectAuthIns": "Vyberte Instanci ověření",
           "languageDes": "Nastavení jazyka aplikace",
@@ -384,10 +384,10 @@ class Languages extends Translations {
           "viewAll": "Zobrazit vše",
           "github": "GitHub",
           "newVersionAvailable": "K dispozici je nová verze!",
-          "items": "položky",
+          "items": "Položky",
           "subscribers": "odběratelé",
           "startRadio": "Spustit rádio",
-          "discover": "Objevit",
+          "discover": "Doporučené skladby",
           "cacheSongs": "Skladby v mezipaměti",
           "songAlreadyExists": "Skladba už existuje!",
           "libArtists": "Knihovna interpretů",
@@ -403,7 +403,7 @@ class Languages extends Translations {
           "addToPlaylist": "Přidat do playlistu",
           "stopMusicOnTaskClearDes":
               "Přehrávání hudby se zastaví, když se přejede prstem po aplikaci ze správce úloh",
-          "cachedOrOffline": "Uloženo do mezipaměti/offline",
+          "cachedOrOffline": "Uloženo do mezipaměti / Dostupné Offline",
           "retry": "Zkuste to znovu!",
           "artists": "Interpreti",
           "playlistBookmarkAddAlert": "Playlist přidán do záložek!",
@@ -412,16 +412,16 @@ class Languages extends Translations {
           "recentlyPlayed": "Nedávno přehrané",
           "viewArtist": "Zobrazit interpreta",
           "createnAdd": "Vytvořit a přidat",
-          "topmusicvideos": "Nejlepší hudební videa",
+          "topmusicvideos": "Topovky",
           "about": "O aplikaci",
           "playlistBookmarkRemoveAlert": "Playlist odstraněn ze záložek!",
           "systemDefault": "Výchozí nastavení systému",
           "local": "Místní",
-          "ignoreBatOpt": "Ignorovat optimalizace baterie",
+          "ignoreBatOpt": "Ignorovat optimalizaci baterie",
           "singles": "Singly",
           "linkAlert": "Úspěšně propojeno!",
           "status": "Stav",
-          "themeMode": "Režim motivu",
+          "themeMode": "Vzhled",
           "streamingQualityDes": "Kvalita hudebního streamu",
           "nomatch": "Nebyla nalezena shoda pro",
           "notaValidLink": "Neplatný odkaz!",
@@ -441,8 +441,8 @@ class Languages extends Translations {
           "skipSilenceDes": "Při přehrávání hudby se přeskočí ticho",
           "playNext": "Přehrát jako další",
           "errorOccuredAlert": "Došlo k nějaké chybě!",
-          "songs": "Skladby",
-          "high": "Vysoká",
+          "songs": "Písničky",
+          "high": "Vysoká 🔥",
           "searchDes": "Skladby, Playlisty, Alba nebo Interpreti",
           "results": "Výsledky",
           "playlistBlacklistAlert": "Playlist na černé listině!",
@@ -452,7 +452,7 @@ class Languages extends Translations {
           "songRemovedfromQueueCurrSong":
               "Aktuálně přehrávanou skladbu nelze odebrat",
           "settings": "Nastavení",
-          "basedOnLast": "Na základě poslední interakce",
+          "basedOnLast": "Podle poslední akce",
           "hintApiUrl": "Adresa URL rozhraní API na instanci Piped",
           "playlistRenameAlert": "Úspěšně přejmenováno!",
           "albumBookmarkAddAlert": "Album přidáno do záložek!",
@@ -472,13 +472,33 @@ class Languages extends Translations {
           "removeFromLib": "Odebrat z knihovny skladeb",
           "downloadingFormat": "Stahování formátu souboru",
           "songAlreadyOfflineAlert": "Skladba je v mezipaměti již offline",
-          "downloadLocation": "Umístění stahování",
+          "downloadLocation": "Umístění stažených písniček",
           "downloadingFormatDes":
               "Vyberte formát souboru pro stahování. \"Opus\" bude poskytovat nejlepší kvalitu",
           "sleepTimer": "Časovač spánku",
           "minutes": "minut",
           "synced": "Synchronizováno",
-          "library": "Knihovna"
+          "library": "Knihovna",
+          "backgroundPlayDes":
+              "Zapni/Vypni přehrávání hudby na pozadí (Hudba se potom dá ovládat v horní liště a na zamčené obrazovce)",
+          "add5Minutes": "Ještě 5 minut",
+          "cancelTimer": "Zruš časovač",
+          "enableBottomNav": "Dolní lišta",
+          "homeContentCountDes":
+              "Vyber si počet zobrazených položek na domovské obrazovce. Menší počet = Rychlejší načítání",
+          "enableBottomNavDes": "Přejdí na dolní lištu",
+          "plain": "Prostý",
+          "cancelTimerAlert": "Spací časovač byl zrušen",
+          "sleepTimeSetAlert": "Váš spící časovač byl spuštěn",
+          "syncedLyricsNotAvailable": "Synchronizované texty nejsou dostupné!",
+          "clearImgCache": "Vyčisti cache obrázků",
+          "clearImgCacheDes":
+              "Klikni sem aby si vyčistil cache obrázků (Není doporučeno ale může se hodit při obnově zachovaného data z obrázků)",
+          "pipedplstSyncAlert": "Piped playlist byl synchronyzován!",
+          "upNext": "Další skladba",
+          "endOfThisSong": "Konec písničky",
+          "homeContentCount": "Počet položek v domovské stránce",
+          "backgroundPlay": "Přehrávání na pozadí"
         },
         "de": {
           "home": "Startseite",
@@ -674,6 +694,9 @@ class Languages extends Translations {
           "renamePlaylist": "Rename Playlist",
           "removePlaylist": "Remove playlist",
           "CreateNewPlaylist": "Create new playlist",
+          "reArrangePlaylist": "Rearrange playlist",
+          "removeMultiple": "Remove multiple songs",
+          "addMultipleSongs": "Add songs to playlist",
           "cancel": "Cancel",
           "create": "Create",
           "rename": "Rename",
@@ -1836,7 +1859,10 @@ class Languages extends Translations {
           "upNext": "Postea",
           "backgroundPlay": "Reproducer musica in fundo",
           "backgroundPlayDes":
-              "Activar/Disactivar le reproduction de musica in fundo (Le application pote esser accessate ab la barra de systema quando ille es executante in secunde fundo)"
+              "Activar/Disactivar le reproduction de musica in fundo (Le application pote esser accessate ab la barra de systema quando ille es executante in secunde fundo)",
+          "deleteDownloadData": "Remover ab le discargamentos",
+          "deleteDownloadedDataAlert":
+              "Removite con successo ab le discargamentos!"
         },
         "id": {
           "playlistCreatednsongAddedAlert":
@@ -2157,7 +2183,9 @@ class Languages extends Translations {
           "upNext": "次へ",
           "backgroundPlay": "バックグラウンドで音楽再生",
           "backgroundPlayDes":
-              "バックグラウンドでの音楽再生を有効/無効に (バックグラウンドでアプリ実行中ならシステムトレイからアクセスします)"
+              "バックグラウンドでの音楽再生を有効/無効に (バックグラウンドでアプリ実行中ならシステムトレイからアクセスします)",
+          "deleteDownloadData": "ダウンロード一覧から除去",
+          "deleteDownloadedDataAlert": "ダウンロード一覧から除去しました！"
         },
         "kn": {"libArtists": "歌手库"},
         "ko": {},
@@ -3454,7 +3482,16 @@ class Languages extends Translations {
               "Ana sayfadaki içerik sayısını seçin (yaklaşık olarak). Daha az içerik daha hızlı yükleme sağlar",
           "plain": "Düz",
           "sleepTimeSetAlert": "Uyku zamanlayıcınız ayarlandı",
-          "pipedplstSyncAlert": "Piped oynatma listesi senkronize edildi!"
+          "pipedplstSyncAlert": "Piped oynatma listesi senkronize edildi!",
+          "deleteDownloadData": "İndirilenlerden kaldır",
+          "backgroundPlay": "Arka planda müzik çal",
+          "backgroundPlayDes":
+              "Arka planda müzik çalmayı etkinleştirin/devre dışı bırakın (Uygulama arka planda çalışırken sistem tepsisinden uygulamaya erişilebilir)",
+          "deleteDownloadedDataAlert": "İndirmelerden başarıyla kaldırıldı!",
+          "upNext": "Sıradaki",
+          "clearImgCache": "Resim önbelleğini temizle",
+          "clearImgCacheDes":
+              "Önbelleğe alınan küçük resimleri/görselleri temizlemek için buraya tıklayın. (Önbelleğe alınan resim verilerini yenilemek istemiyorsanız tavsiye edilmez)"
         },
         "uk": {},
         "ur": {},

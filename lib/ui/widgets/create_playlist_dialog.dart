@@ -12,12 +12,12 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
   const CreateNRenamePlaylistPopup(
       {super.key,
       this.isCreateNadd = false,
-      this.songItem,
+      this.songItems,
       this.renamePlaylist = false,
       this.playlist});
   final bool isCreateNadd;
   final bool renamePlaylist;
-  final MediaItem? songItem;
+  final List<MediaItem>? songItems;
   final Playlist? playlist;
 
   @override
@@ -128,7 +128,7 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                             librPlstCntrller
                                 .createNewPlaylist(
                                     createPlaylistNaddSong: isCreateNadd,
-                                    songItem: songItem)
+                                    songItems: songItems)
                                 .then((value) {
                               if (value) {
                                 ScaffoldMessenger.of(context).showSnackBar(

@@ -1,7 +1,10 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
+import '../../widgets/add_to_playlist.dart';
+import '../../widgets/sort_widget.dart';
 import '../Home/home_screen_controller.dart';
 import '/services/piped_service.dart';
 import '../../../utils/helper.dart';
@@ -19,6 +22,8 @@ class PlayListNAlbumScreenController extends GetxController {
   final isAddedToLibrary = false.obs;
   final isSearchingOn = false.obs;
   final isDownloaded = false.obs;
+  SortWidgetController? sortWidgetController;
+  final additionalOperationMode = OperationMode.none.obs;
   late final String id;
   late dynamic contentRenderer;
   late bool isAlbum;
@@ -236,6 +241,97 @@ class PlayListNAlbumScreenController extends GetxController {
     isSearchingOn.value = false;
     songList.value = tempListContainer.toList();
     tempListContainer.clear();
+  }
+
+  //Additional operations
+  final additionalOperationTempList = <MediaItem>[].obs;
+  final additionalOperationTempMap = <int, bool>{}.obs;
+
+  void startAdditionalOperation(
+      SortWidgetController sortWidgetController_, OperationMode mode) {
+    sortWidgetController = sortWidgetController_;
+    additionalOperationTempList.value = songList.toList();
+    if (mode == OperationMode.addToPlaylist || mode == OperationMode.delete) {
+      for (int i = 0; i < additionalOperationTempList.length; i++) {
+        additionalOperationTempMap[i] = false;
+      }
+    }
+    additionalOperationMode.value = mode;
+  }
+
+  void checkIfAllSelected() {
+    sortWidgetController!.isAllSelected.value =
+        !additionalOperationTempMap.containsValue(false);
+  }
+
+  void selectAll(bool selected) {
+    for (int i = 0; i < additionalOperationTempList.length; i++) {
+      additionalOperationTempMap[i] = selected;
+    }
+  }
+
+  void performAdditionalOperation() {
+    final currMode = additionalOperationMode.value;
+    if (currMode == OperationMode.arrange) {
+      songList.value = additionalOperationTempList.toList();
+      updateSongsIntoDb().then((value) {
+        sortWidgetController?.setActiveMode(OperationMode.none);
+        cancelAdditionalOperation();
+      });
+    } else if (currMode == OperationMode.delete) {
+      deleteMultipleSongs(selectedSongs()).then((value) {
+        sortWidgetController?.setActiveMode(OperationMode.none);
+        cancelAdditionalOperation();
+      });
+    } else if (currMode == OperationMode.addToPlaylist) {
+      showDialog(
+        context: Get.context!,
+        builder: (context) => AddToPlaylist(selectedSongs()),
+      ).whenComplete(() {
+        Get.delete<AddToPlaylistController>();
+        sortWidgetController?.setActiveMode(OperationMode.none);
+        cancelAdditionalOperation();
+      });
+    }
+  }
+
+  Future<void> deleteMultipleSongs(List<MediaItem> songs) async {
+    final isoffline = id == "SongsCache" || id == "SongDownloads";
+
+    final box_ = await Hive.openBox(id);
+    for (MediaItem element in songs) {
+      final index = box_.values
+          .toList()
+          .indexWhere((ele) => ele['videoId'] == element.id);
+      await box_.deleteAt(index);
+
+      if (isoffline) {
+        await Get.find<LibrarySongsController>()
+            .removeSong(element, id == "SongDownloads");
+      }
+
+      songList.removeWhere((song) => song.id == element.id);
+    }
+   if (!isoffline) await box_.close();
+  }
+
+  List<MediaItem> selectedSongs() {
+    return additionalOperationTempMap.entries
+        .map((item) {
+          if (item.value) {
+            return additionalOperationTempList[item.key];
+          }
+        })
+        .whereType<MediaItem>()
+        .toList();
+  }
+
+  void cancelAdditionalOperation() {
+    sortWidgetController!.isAllSelected.value = false;
+    sortWidgetController = null;
+    additionalOperationMode.value = OperationMode.none;
+    additionalOperationTempList.clear();
+    additionalOperationTempMap.clear();
   }
 
   @override

@@ -1,7 +1,10 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
+import '../../widgets/add_to_playlist.dart';
+import '/ui/widgets/sort_widget.dart';
 import '../../../models/artist.dart';
 import '../../../utils/helper.dart';
 import '../Library/library_controller.dart';
@@ -21,6 +24,8 @@ class ArtistScreenController extends GetxController
   final isAddedToLibrary = false.obs;
   final songScrollController = ScrollController();
   final videoScrollController = ScrollController();
+  SortWidgetController? sortWidgetController;
+  final additionalOperationMode = OperationMode.none.obs;
   bool continuationInProgress = false;
   late Artist artist_;
   Map<String, List> tempListContainer = {};
@@ -97,6 +102,12 @@ class ArtistScreenController extends GetxController
     isTabTransitionReversed = val > navigationRailCurrentIndex.value;
     navigationRailCurrentIndex.value = val;
     final tabName = ["About", "Songs", "Videos", "Albums", "Singles"][val];
+
+    //cancel additional operations in case of tab change
+    if(sortWidgetController!=null){
+      sortWidgetController?.setActiveMode(OperationMode.none);
+      cancelAdditionalOperation();
+    }
 
     //skip for about page
     if (val == 0 || sepataredContent.containsKey(tabName)) return;
@@ -187,6 +198,67 @@ class ArtistScreenController extends GetxController
     sepataredContent[title]['results'] = (tempListContainer[title]!).toList();
     sepataredContent.refresh();
     (tempListContainer[title]!).clear();
+  }
+
+  //Additional operations
+  final additionalOperationTempList = <MediaItem>[].obs;
+  final additionalOperationTempMap = <int, bool>{}.obs;
+
+  void startAdditionalOperation(
+      SortWidgetController sortWidgetController_, OperationMode mode) {
+    sortWidgetController = sortWidgetController_;
+    final tabName = ["About", "Songs", "Videos", "Albums", "Singles"][navigationRailCurrentIndex.value];
+    additionalOperationTempList.value = sepataredContent[tabName]['results'].toList();
+    if (mode == OperationMode.addToPlaylist || mode == OperationMode.delete) {
+      for (int i = 0; i < additionalOperationTempList.length; i++) {
+        additionalOperationTempMap[i] = false;
+      }
+    }
+    additionalOperationMode.value = mode;
+  }
+
+  void checkIfAllSelected() {
+    sortWidgetController!.isAllSelected.value =
+        !additionalOperationTempMap.containsValue(false);
+  }
+
+  void selectAll(bool selected) {
+    for (int i = 0; i < additionalOperationTempList.length; i++) {
+      additionalOperationTempMap[i] = selected;
+    }
+  }
+
+  void performAdditionalOperation() {
+    final currMode = additionalOperationMode.value;
+    if (currMode == OperationMode.addToPlaylist) {
+      showDialog(
+        context: Get.context!,
+        builder: (context) => AddToPlaylist(selectedSongs()),
+      ).whenComplete(() {
+        Get.delete<AddToPlaylistController>();
+        sortWidgetController?.setActiveMode(OperationMode.none);
+        cancelAdditionalOperation();
+      });
+    }
+  }
+
+  List<MediaItem> selectedSongs() {
+    return additionalOperationTempMap.entries
+        .map((item) {
+          if (item.value) {
+            return additionalOperationTempList[item.key];
+          }
+        })
+        .whereType<MediaItem>()
+        .toList();
+  }
+
+  void cancelAdditionalOperation() {
+    sortWidgetController!.isAllSelected.value = false;
+    sortWidgetController = null;
+    additionalOperationMode.value = OperationMode.none;
+    additionalOperationTempList.clear();
+    additionalOperationTempMap.clear();
   }
 
   @override

@@ -305,7 +305,7 @@ class MiniPlayer extends StatelessWidget {
                                         showDialog(
                                           context: context,
                                           builder: (context) =>
-                                              AddToPlaylist(currentSong),
+                                              AddToPlaylist([currentSong]),
                                         ).whenComplete(() => Get.delete<
                                             AddToPlaylistController>());
                                       }

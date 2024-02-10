@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/widgets/modification_list.dart';
 
 import '../screens/Artists/artist_screen_controller.dart';
 import '../screens/Search/search_result_screen_controller.dart';
@@ -67,6 +68,7 @@ class SeparateTabItemWidget extends StatelessWidget {
           isCompleteList
               ? Obx(() => SortWidget(
                     tag: "${title}_$artistControllerTag",
+                    isAdditionalOperationRequired: artistController != null,
                     isSearchFeatureRequired: artistController != null,
                     titleLeftPadding: 9,
                     itemCountTitle:
@@ -83,6 +85,13 @@ class SeparateTabItemWidget extends StatelessWidget {
                     onSearch: artistController?.onSearch,
                     onSearchClose: artistController?.onSearchClose,
                     onSearchStart: artistController?.onSearchStart,
+                    startAdditionalOperation:
+                        artistController?.startAdditionalOperation,
+                    selectAll: artistController?.selectAll,
+                    performAdditionalOperation:
+                        artistController?.performAdditionalOperation,
+                    cancelAdditionalOperation:
+                        artistController?.cancelAdditionalOperation,
                   ))
               : const SizedBox.shrink(),
           isCompleteList
@@ -101,12 +110,20 @@ class SeparateTabItemWidget extends StatelessWidget {
                       }
                     })
                   : (artistController!.isArtistContentFetced.isTrue
-                      ? ListWidget(
-                          items,
-                          title,
-                          isCompleteList,
-                          scrollController: scrollController,
-                        )
+                      ? Obx(() =>
+                          (artistController.additionalOperationMode.value ==
+                                  OperationMode.none
+                              ? ListWidget(
+                                  items,
+                                  title,
+                                  isCompleteList,
+                                  scrollController: scrollController,
+                                )
+                              : ModificationList(
+                                  mode: artistController
+                                      .additionalOperationMode.value,
+                                  artistScreenController: artistController,
+                                )))
                       : const Expanded(
                           child: Center(child: LoadingIndicator())))
               : ListWidget(

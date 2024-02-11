@@ -289,6 +289,17 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     )
                   : const SizedBox.shrink()),
+                ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: Text("restoreLastPlaybackSession".tr),
+                    subtitle: Text("restoreLastPlaybackSessionDes".tr,
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    trailing: Obx(
+                      () => Switch(
+                          value: settingsController.restorePlaybackSession.value,
+                          onChanged:
+                              settingsController.toggleRestorePlaybackSession),
+                    )),
               if (!isDesktop)
                 ListTile(
                   contentPadding:

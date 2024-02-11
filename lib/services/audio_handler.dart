@@ -272,7 +272,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   @override
   Future<void> play() async {
-    if (currentSongUrl == null) {
+    if (currentSongUrl == null || (GetPlatform.isDesktop && (_player.duration == null || _player.duration?.inMilliseconds==0))) {
       await customAction("playByIndex", {'index': currentIndex});
       return;
     }
@@ -340,11 +340,12 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       await _player.dispose();
       super.stop();
     } else if (name == 'playByIndex') {
+      final bool restoreSession = extras!['restoreSession'] ?? false;
       isSongLoading = true;
       if (_playList.children.isNotEmpty) {
         await _playList.clear();
       }
-      final songIndex = extras!['index'];
+      final songIndex = extras['index'];
       currentIndex = songIndex;
       final isNewUrlReq = extras['newUrl'] ?? false;
       final currentSong = queue.value[currentIndex];
@@ -359,7 +360,25 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       playbackState.add(playbackState.value.copyWith(queueIndex: currentIndex));
       await _playList.add(_createAudioSource(currentSong));
       isSongLoading = false;
-      await _player.play();
+
+      if (restoreSession) {
+        if (!GetPlatform.isDesktop) {
+          final position = extras['position'];
+          await _player.load();
+          await _player.seek(
+            Duration(
+              milliseconds: position,
+            ),
+          );
+          await _player.seek(
+            Duration(
+              milliseconds: position,
+            ),
+          );
+        }
+      } else {
+        await _player.play();
+      }
       if (currentIndex == 0) {
         cacheNextSongUrl(offset: 1);
       }
@@ -435,6 +454,24 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       queue.add(currentQueue);
     } else if (name == 'openEqualizer') {
       await DeviceEqualizer().open(_player.androidAudioSessionId!);
+    } else if (name == "saveSession") {
+      await saveSessionData();
+    }
+  }
+
+  Future<void> saveSessionData() async {
+    final currQueue = queue.value;
+    if (currQueue.isNotEmpty) {
+      final queueData =
+          currQueue.map((e) => MediaItemBuilder.toJson(e)).toList();
+      final currIndex = currentIndex ?? 0;
+      final position = _player.position.inMilliseconds;
+      final prevSessionData = await Hive.openBox("prevSessionData");
+      await prevSessionData.clear();
+      await prevSessionData.putAll(
+          {"queue": queueData, "position": position, "index": currIndex});
+      await prevSessionData.close();
+      printINFO("Saved session data");
     }
   }
 
@@ -449,6 +486,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   @override
   Future<void> stop() async {
+    //await saveSessionData();
     await _player.stop();
     return super.stop();
   }

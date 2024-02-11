@@ -44,6 +44,10 @@ class MyApp extends StatelessWidget {
     SystemChannels.lifecycle.setMessageHandler((msg) async {
       if (msg == "AppLifecycleState.resumed") {
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+      } else if (msg == "AppLifecycleState.detached") {
+        if (Hive.box("AppPrefs").get('restrorePlaybackSession') ?? false) {
+          Get.find<AudioHandler>().customAction("saveSession");
+        }
       }
       return null;
     });
@@ -58,8 +62,9 @@ class MyApp extends StatelessWidget {
               Hive.box("AppPrefs").get('currentAppLanguageCode') ?? "en"),
           fallbackLocale: const Locale("en"),
           builder: (context, child) {
-            final scale =
-                MediaQuery.of(context).textScaler.clamp(minScaleFactor:1.0,maxScaleFactor: 1.1);
+            final scale = MediaQuery.of(context)
+                .textScaler
+                .clamp(minScaleFactor: 1.0, maxScaleFactor: 1.1);
             return MediaQuery(
               data: MediaQuery.of(context).copyWith(textScaler: scale),
               child: child!,
@@ -89,9 +94,11 @@ Future<void> startApplicationServices() async {
 initHive() async {
   String applicationDataDirectoryPath;
   if (GetPlatform.isDesktop) {
-    applicationDataDirectoryPath = "${(await getApplicationSupportDirectory()).path}/db";
+    applicationDataDirectoryPath =
+        "${(await getApplicationSupportDirectory()).path}/db";
   } else {
-    applicationDataDirectoryPath = (await getApplicationDocumentsDirectory()).path;
+    applicationDataDirectoryPath =
+        (await getApplicationDocumentsDirectory()).path;
   }
   await Hive.initFlutter(applicationDataDirectoryPath);
   await Hive.openBox("SongsCache");

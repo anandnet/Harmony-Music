@@ -733,6 +733,9 @@ class Languages extends Translations {
           "trending": "Trending",
           "topmusicvideos": "Top Music Videos",
           "basedOnLast": "Based on last interaction",
+          "restoreLastPlaybackSession": "Restore last playback session",
+          "restoreLastPlaybackSessionDes":
+              "Automatically restore the last playback session on app start",
           "homeContentCount": "Home content count",
           "homeContentCountDes":
               "Select the number of initial homescreen-content(approx). Lesser results faster loading",

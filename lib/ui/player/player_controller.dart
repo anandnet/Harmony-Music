@@ -76,6 +76,7 @@ class PlayerController extends GetxController {
     if (GetPlatform.isWindows) {
       Get.put(WindowsAudioService());
     }
+    _restorePrevSession();
     super.onReady();
   }
 
@@ -208,6 +209,29 @@ class PlayerController extends GetxController {
     });
   }
 
+  Future<void> _restorePrevSession() async {
+    final restrorePrevSessionEnabled =
+        Hive.box("AppPrefs").get("restrorePlaybackSession") ?? false;
+    if (restrorePrevSessionEnabled) {
+      final prevSessionData = await Hive.openBox("prevSessionData");
+      if (prevSessionData.keys.isNotEmpty) {
+        final songList = (prevSessionData.get("queue") as List)
+            .map((e) => MediaItemBuilder.fromJson(e))
+            .toList();
+        final int currentIndex = prevSessionData.get("index");
+        final int position = prevSessionData.get("position");
+        prevSessionData.close();
+        await _audioHandler.addQueueItems(songList);
+        _playerPanelCheck(restoreSession: true);
+        await _audioHandler.customAction("playByIndex", {
+          "index": currentIndex,
+          "position": position,
+          "restoreSession": true
+        });
+      }
+    }
+  }
+
   ///pushSongToPlaylist method clear previous song queue, plays the tapped song and push related
   ///songs into Queue
   Future<void> pushSongToQueue(MediaItem? mediaItem,
@@ -333,9 +357,10 @@ class PlayerController extends GetxController {
     }
   }
 
-  void _playerPanelCheck() {
+  void _playerPanelCheck({bool restoreSession = false}) {
     final isWideScreen = Get.size.width > 800;
-    if (!isWideScreen && playerPanelController.isAttached) {
+    if ((!isWideScreen && playerPanelController.isAttached) &&
+        !restoreSession) {
       playerPanelController.open();
     }
 

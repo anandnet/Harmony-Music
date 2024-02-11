@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
@@ -62,7 +63,15 @@ class DesktopSystemTray extends GetxService {
           }),
       MenuSeparator(),
       MenuItemLabel(
-          label: 'Quit', onClicked: (menuItem) => exit(0)),
+          label: 'Quit',
+          onClicked: (menuItem) async {
+            if (Get.find<SettingsScreenController>()
+                .restorePlaybackSession
+                .isTrue) {
+              await Get.find<AudioHandler>().customAction("saveSession");
+            }
+            exit(0);
+          }),
     ]);
 
     // set context menu
@@ -95,11 +104,15 @@ class DesktopSystemTray extends GetxService {
 class CloseWindowListener extends WindowListener {
   @override
   Future<void> onWindowClose() async {
-    if (Get.find<SettingsScreenController>().backgroundPlayEnabled.isTrue &&
+    final settingsScrnController = Get.find<SettingsScreenController>();
+    if (settingsScrnController.backgroundPlayEnabled.isTrue &&
         Get.find<PlayerController>().buttonState.value ==
             PlayButtonState.playing) {
       await windowManager.hide();
     } else {
+      if (settingsScrnController.restorePlaybackSession.isTrue) {
+        await Get.find<AudioHandler>().customAction("saveSession");
+      }
       exit(0);
     }
   }

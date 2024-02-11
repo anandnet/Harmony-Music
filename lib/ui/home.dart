@@ -62,19 +62,15 @@ class Home extends StatelessWidget {
               endDrawer: Container(
                 constraints: const BoxConstraints(maxWidth: 600),
                 decoration: BoxDecoration(
-                    borderRadius:
-                        const BorderRadius.only(topLeft: Radius.circular(10)),
-                    border: Border(
-                        left: BorderSide(
-                            color: Theme.of(context).colorScheme.secondary),
-                        top: BorderSide(
-                            color: Theme.of(context).colorScheme.secondary),
-                        bottom: BorderSide(
-                            width: 0,
-                            color: Theme.of(context).colorScheme.secondary),
-                        right: BorderSide(
-                            width: 0,
-                            color: Theme.of(context).colorScheme.secondary))),
+                  borderRadius:
+                      const BorderRadius.only(topLeft: Radius.circular(10)),
+                  border: Border(
+                    left: BorderSide(
+                        color: Theme.of(context).colorScheme.secondary),
+                    top: BorderSide(
+                        color: Theme.of(context).colorScheme.secondary),
+                  ),
+                ),
                 margin: const EdgeInsets.only(
                   top: 5,
                   bottom: 106,

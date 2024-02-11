@@ -37,6 +37,7 @@ class SettingsScreenController extends GetxController {
   final hideDloc = true.obs;
   final isBottomNavBarEnabled = false.obs;
   final backgroundPlayEnabled = true.obs;
+  final restorePlaybackSession = false.obs;
   final currentVersion = "V1.8.0";
 
   @override
@@ -73,6 +74,8 @@ class SettingsScreenController extends GetxController {
     cacheSongs.value = setBox.get('cacheSongs');
     themeModetype.value = ThemeType.values[setBox.get('themeModeType')];
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
+    restorePlaybackSession.value =
+        setBox.get("restrorePlaybackSession") ?? false;
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
     backgroundPlayEnabled.value = setBox.get("backgroundPlayEnabled") ?? true;
@@ -189,7 +192,12 @@ class SettingsScreenController extends GetxController {
     skipSilenceEnabled.value = val;
   }
 
-  void toggleBackgroundPlay(bool val){
+  void toggleRestorePlaybackSession(bool val) {
+    setBox.put("restrorePlaybackSession", val);
+    restorePlaybackSession.value = val;
+  }
+
+  void toggleBackgroundPlay(bool val) {
     setBox.put('backgroundPlayEnabled', val);
     backgroundPlayEnabled.value = val;
   }

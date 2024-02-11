@@ -1187,7 +1187,9 @@ class Languages extends Translations {
           "upNext": "A continuación",
           "backgroundPlay": "Reproducir música de fondo",
           "backgroundPlayDes":
-              "Activar/desactivar la reproducción de música en segundo plano (se puede acceder a la aplicación desde la bandeja del sistema cuando se ejecuta en segundo plano)"
+              "Activar/desactivar la reproducción de música en segundo plano (se puede acceder a la aplicación desde la bandeja del sistema cuando se ejecuta en segundo plano)",
+          "deleteDownloadData": "Eliminar de las descargas",
+          "deleteDownloadedDataAlert": "¡Eliminado con éxito de las descargas!"
         },
         "fi": {
           "libAlbums": "Kirjaston albumit",
@@ -2814,7 +2816,9 @@ class Languages extends Translations {
           "upNext": "Następne",
           "backgroundPlay": "Odtwarzanie muzyki w tle",
           "backgroundPlayDes":
-              "Włączanie/wyłączanie odtwarzania muzyki w tle (aplikacja jest dostępna z zasobnika systemowego, gdy aplikacja działa w tle)"
+              "Włączanie/wyłączanie odtwarzania muzyki w tle (aplikacja jest dostępna z zasobnika systemowego, gdy aplikacja działa w tle)",
+          "deleteDownloadData": "Usuń z pobranych",
+          "deleteDownloadedDataAlert": "Pomyślnie usunięto z pobranych!"
         },
         "pt": {
           "renamePlaylist": "Renomear Playlist",
@@ -3662,7 +3666,14 @@ class Languages extends Translations {
           "pipedplstSyncAlert": "Piped 播放列表已同步！",
           "cancelTimer": "取消定时器",
           "homeContentCount": "首页内容数量",
-          "homeContentCountDes": "选择首页初始化时加载的大致内容数量。更少的内容可加快载入速度"
+          "homeContentCountDes": "选择首页初始化时加载的大致内容数量。更少的内容可加快载入速度",
+          "deleteDownloadData": "从下载中移除",
+          "deleteDownloadedDataAlert": "成功从下载中移除！",
+          "backgroundPlayDes": "启用/禁用后台音乐播放（应用在后台运行时可从系统托盘访问）",
+          "backgroundPlay": "后台音乐播放",
+          "clearImgCacheDes": "点击此处清理已缓存的缩略图和图像。（除非为了刷新缓存图像数据，否则不推荐此操作）",
+          "clearImgCache": "清理图像缓存",
+          "upNext": "接下来"
         },
       };
 }

@@ -1,9 +1,10 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:hive/hive.dart';
 
+import '/models/media_Item_builder.dart';
+import '/ui/player/player_controller.dart';
 import '../../../utils/update_check_flag_file.dart';
 import '../../../utils/helper.dart';
 import '/models/album.dart';
@@ -29,11 +30,60 @@ class HomeScreenController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    init();
+    loadContent();
     if (updateCheckFlag) _checkNewVersion();
   }
 
-  Future<void> init() async {
+  Future<void> loadContent() async {
+    final box = Hive.box("AppPrefs");
+    final isCachedHomeScreenDataEnabled =
+        box.get("cacheHomeScreenData") ?? true;
+    if (isCachedHomeScreenDataEnabled) {
+      final loaded = await loadContentFromDb();
+
+      if (loaded) {
+        final currTimeSecsDiff = DateTime.now().millisecondsSinceEpoch -
+            box.get("homeScreenDataTime");
+        if (currTimeSecsDiff / 1000 > 3600 * 8) {
+          loadContentFromNetwork(silent: true);
+        }
+      } else {
+        loadContentFromNetwork();
+      }
+    } else {
+      loadContentFromNetwork();
+    }
+  }
+
+  Future<bool> loadContentFromDb() async {
+    final homeScreenData = await Hive.openBox("homeScreenData");
+    if (homeScreenData.keys.isNotEmpty) {
+      final String quickPicksType = homeScreenData.get("quickPicksType");
+      final List quickPicksData = homeScreenData.get("quickPicks");
+      final List middleContentData = homeScreenData.get("middleContent");
+      final List fixedContentData = homeScreenData.get("fixedContent");
+      quickPicks.value = QuickPicks(
+          quickPicksData.map((e) => MediaItemBuilder.fromJson(e)).toList(),
+          title: quickPicksType);
+      middleContent.value = middleContentData
+          .map((e) => e["type"] == "Album Content"
+              ? AlbumContent.fromJson(e)
+              : PlaylistContent.fromJson(e))
+          .toList();
+      fixedContent.value = fixedContentData
+          .map((e) => e["type"] == "Album Content"
+              ? AlbumContent.fromJson(e)
+              : PlaylistContent.fromJson(e))
+          .toList();
+      homeScreenData.close();
+      isContentFetched.value = true;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> loadContentFromNetwork({bool silent = false}) async {
     final box = Hive.box("AppPrefs");
     String contentType = box.get("discoverContentType") ?? "QP";
 
@@ -92,13 +142,16 @@ class HomeScreenController extends GetxController {
 
       middleContent.value = _setContentList(middleContentTemp);
       fixedContent.value = _setContentList(homeContentListMap);
+      // set home content last update time
+      await Hive.box("AppPrefs")
+          .put("homeScreenDataTime", DateTime.now().millisecondsSinceEpoch);
 
       isContentFetched.value = true;
       // ignore: unused_catch_stack
     } on NetworkError catch (_, e) {
       printERROR("Home Content not loaded due to ${_.message}");
       await Future.delayed(const Duration(seconds: 1));
-      networkError.value = true;
+      networkError.value = !silent;
     }
   }
 
@@ -133,15 +186,25 @@ class HomeScreenController extends GetxController {
       quickPicks_ = QuickPicks(
           List<MediaItem>.from(homeContentListMap[0]["contents"]),
           title: homeContentListMap[0]["title"]);
+      await Hive.box("AppPrefs")
+          .put("homeScreenDataTime", DateTime.now().millisecondsSinceEpoch);
     } else if (val == "TMV" || val == 'TR') {
-      final charts = await _musicServices.getCharts();
-      final index = val == "TMV"
-          ? 0
-          : charts.length == 4
-              ? 3
-              : 2;
-      quickPicks_ = QuickPicks(List<MediaItem>.from(charts[index]["contents"]),
-          title: charts[index]["title"]);
+      try {
+        final charts = await _musicServices.getCharts();
+        final index = val == "TMV"
+            ? 0
+            : charts.length == 4
+                ? 3
+                : 2;
+        quickPicks_ = QuickPicks(
+            List<MediaItem>.from(charts[index]["contents"]),
+            title: charts[index]["title"]);
+        await Hive.box("AppPrefs")
+            .put("homeScreenDataTime", DateTime.now().millisecondsSinceEpoch);
+      } catch (e) {
+        printERROR(
+            "Seems ${val == "TMV" ? "Top music videos" : "Trending songs"} currently not available!");
+      }
     } else {
       songId ??= Hive.box("AppPrefs").get("recentSongId");
       if (songId != null) {
@@ -152,6 +215,9 @@ class HomeScreenController extends GetxController {
             quickPicks_ =
                 QuickPicks(List<MediaItem>.from(value[0]["contents"]));
             Hive.box("AppPrefs").put("recentSongId", songId);
+            // set home content last update time
+            await Hive.box("AppPrefs").put(
+                "homeScreenDataTime", DateTime.now().millisecondsSinceEpoch);
           }
           // ignore: empty_catches
         } catch (e) {}
@@ -217,5 +283,40 @@ class HomeScreenController extends GetxController {
         }
       }
     }
+  }
+
+  Future<void> cachedHomeScreenData() async {
+    if (Get.find<SettingsScreenController>().cacheHomeScreenData.isFalse) {
+      return;
+    }
+    final homeScreenData = await Hive.openBox("homeScreenData");
+    await homeScreenData.clear();
+    final quickPicksSongs = quickPicks.value.songList
+        .toList()
+        .map((e) => MediaItemBuilder.toJson(e))
+        .toList();
+    final fixedContentData = fixedContent.toList().map((e) {
+      if (e.runtimeType == AlbumContent) {
+        return (e as AlbumContent).toJson();
+      } else {
+        return (e as PlaylistContent).toJson();
+      }
+    }).toList();
+    final middleContentData = middleContent.toList().map((e) {
+      if (e.runtimeType == AlbumContent) {
+        return (e as AlbumContent).toJson();
+      } else {
+        return (e as PlaylistContent).toJson();
+      }
+    }).toList();
+
+    await homeScreenData.putAll({
+      "quickPicksType": quickPicks.value.title,
+      "quickPicks": quickPicksSongs,
+      "middleContent": fixedContentData,
+      "fixedContent": middleContentData
+    });
+
+    await homeScreenData.close();
   }
 }

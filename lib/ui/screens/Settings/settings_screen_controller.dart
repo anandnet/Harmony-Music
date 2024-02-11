@@ -38,6 +38,7 @@ class SettingsScreenController extends GetxController {
   final isBottomNavBarEnabled = false.obs;
   final backgroundPlayEnabled = true.obs;
   final restorePlaybackSession = false.obs;
+  final cacheHomeScreenData = true.obs;
   final currentVersion = "V1.8.0";
 
   @override
@@ -76,6 +77,7 @@ class SettingsScreenController extends GetxController {
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
     restorePlaybackSession.value =
         setBox.get("restrorePlaybackSession") ?? false;
+    cacheHomeScreenData.value = setBox.get("cacheHomeScreenData") ?? true;
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
     backgroundPlayEnabled.value = setBox.get("backgroundPlayEnabled") ?? true;
@@ -195,6 +197,17 @@ class SettingsScreenController extends GetxController {
   void toggleRestorePlaybackSession(bool val) {
     setBox.put("restrorePlaybackSession", val);
     restorePlaybackSession.value = val;
+  }
+
+  void toggleCacheHomeScreenData(bool val){
+    setBox.put("cacheHomeScreenData", val);
+    cacheHomeScreenData.value = val;
+    if(!val){
+      Hive.openBox("homeScreenData").then((box) async {
+        await box.clear();
+        box.close();
+      });
+    }
   }
 
   void toggleBackgroundPlay(bool val) {

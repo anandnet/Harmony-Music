@@ -4,6 +4,18 @@ class AlbumContent {
   AlbumContent({required this.title, required this.albumList});
   final String title;
   final List<Album> albumList;
+
+  factory AlbumContent.fromJson(Map<dynamic, dynamic> json) =>
+      AlbumContent(
+          title: json['title'],
+          albumList: (json['albumlist'] as List)
+              .map((e) => Album.fromJson(e))
+              .toList());
+  Map<String, dynamic> toJson() => {
+        "type": "Album Content",
+        "title": title,
+        'albumlist': albumList.map((e) => e.toJson()).toList()
+      };
 }
 
 class Album {

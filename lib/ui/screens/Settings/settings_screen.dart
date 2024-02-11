@@ -227,7 +227,7 @@ class SettingsScreen extends StatelessWidget {
                   settingsController.showDownLoc();
                 },
               ),
-               if (isDesktop)
+              if (isDesktop)
                 ListTile(
                     contentPadding: const EdgeInsets.only(left: 5, right: 10),
                     title: Text("backgroundPlay".tr),
@@ -289,17 +289,28 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     )
                   : const SizedBox.shrink()),
-                ListTile(
-                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                    title: Text("restoreLastPlaybackSession".tr),
-                    subtitle: Text("restoreLastPlaybackSessionDes".tr,
-                        style: Theme.of(context).textTheme.bodyMedium),
-                    trailing: Obx(
-                      () => Switch(
-                          value: settingsController.restorePlaybackSession.value,
-                          onChanged:
-                              settingsController.toggleRestorePlaybackSession),
-                    )),
+              ListTile(
+                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                  title: Text("restoreLastPlaybackSession".tr),
+                  subtitle: Text("restoreLastPlaybackSessionDes".tr,
+                      style: Theme.of(context).textTheme.bodyMedium),
+                  trailing: Obx(
+                    () => Switch(
+                        value: settingsController.restorePlaybackSession.value,
+                        onChanged:
+                            settingsController.toggleRestorePlaybackSession),
+                  )),
+              ListTile(
+                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                  title: Text("cacheHomeScreenData".tr),
+                  subtitle: Text("cacheHomeScreenDataDes".tr,
+                      style: Theme.of(context).textTheme.bodyMedium),
+                  trailing: Obx(
+                    () => Switch(
+                        value: settingsController.cacheHomeScreenData.value,
+                        onChanged:
+                            settingsController.toggleCacheHomeScreenData),
+                  )),
               if (!isDesktop)
                 ListTile(
                   contentPadding:

@@ -146,7 +146,8 @@ class Body extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(10)),
                                   child: InkWell(
                                     onTap: () {
-                                      homeScreenController.init();
+                                      homeScreenController
+                                          .loadContentFromNetwork();
                                     },
                                     child: Text(
                                       "retry".tr,

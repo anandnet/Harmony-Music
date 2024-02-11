@@ -4,6 +4,18 @@ class PlaylistContent {
   PlaylistContent({required this.title, required this.playlistList});
   final String title;
   final List<Playlist> playlistList;
+
+  factory PlaylistContent.fromJson(Map<dynamic, dynamic> json) =>
+      PlaylistContent(
+          title: json['title'],
+          playlistList: (json['playlists'] as List)
+              .map((e) => Playlist.fromJson(e))
+              .toList());
+  Map<String, dynamic> toJson() => {
+        "type": "Playlist Content",
+        "title": title,
+        "playlists": playlistList.map((e) => e.toJson()).toList()
+      };
 }
 
 class Playlist {
@@ -29,7 +41,7 @@ class Playlist {
       thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).medium,
       description: json["description"],
       songCount: json['itemCount'],
-      isPipedPlaylist: json["isPipedPlaylist"]??false,
+      isPipedPlaylist: json["isPipedPlaylist"] ?? false,
       isCloudPlaylist: json["isCloudPlaylist"] ?? true);
 
   Map<String, dynamic> toJson() => {
@@ -44,7 +56,7 @@ class Playlist {
         "isCloudPlaylist": isCloudPlaylist
       };
 
-  set newTitle(String title){
+  set newTitle(String title) {
     this.title = title;
   }
 }

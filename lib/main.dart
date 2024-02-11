@@ -45,9 +45,8 @@ class MyApp extends StatelessWidget {
       if (msg == "AppLifecycleState.resumed") {
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       } else if (msg == "AppLifecycleState.detached") {
-        if (Hive.box("AppPrefs").get('restrorePlaybackSession') ?? false) {
-          Get.find<AudioHandler>().customAction("saveSession");
-        }
+        await Get.find<AudioHandler>().customAction("saveSession");
+        await Get.find<HomeScreenController>().cachedHomeScreenData();
       }
       return null;
     });
@@ -118,6 +117,7 @@ void _setAppInitPrefs() {
       'themePrimaryColor': 4278199603,
       'discoverContentType': "QP",
       'newVersionVisibility': updateCheckFlag,
+      "cacheHomeScreenData": true
     });
   }
 }

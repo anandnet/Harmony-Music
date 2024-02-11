@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:device_equalizer/device_equalizer.dart';
 
+import '../ui/screens/Home/home_screen_controller.dart';
 import '/services/background_task.dart';
 import '/services/permission_service.dart';
 import '../utils/helper.dart';
@@ -272,7 +273,10 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   @override
   Future<void> play() async {
-    if (currentSongUrl == null || (GetPlatform.isDesktop && (_player.duration == null || _player.duration?.inMilliseconds==0))) {
+    if (currentSongUrl == null ||
+        (GetPlatform.isDesktop &&
+            (_player.duration == null ||
+                _player.duration?.inMilliseconds == 0))) {
       await customAction("playByIndex", {'index': currentIndex});
       return;
     }
@@ -460,6 +464,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
   Future<void> saveSessionData() async {
+    if (!(Hive.box("AppPrefs").get('restrorePlaybackSession') ?? false)) return;
     final currQueue = queue.value;
     if (currQueue.isNotEmpty) {
       final queueData =
@@ -480,13 +485,14 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     final stopForegroundService =
         Get.find<SettingsScreenController>().stopPlyabackOnSwipeAway.value;
     if (stopForegroundService) {
+      await saveSessionData();
+      await Get.find<HomeScreenController>().cachedHomeScreenData();
       await stop();
     }
   }
 
   @override
   Future<void> stop() async {
-    //await saveSessionData();
     await _player.stop();
     return super.stop();
   }

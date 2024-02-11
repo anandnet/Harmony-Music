@@ -7,6 +7,8 @@ import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart
 import 'package:system_tray/system_tray.dart';
 import 'package:window_manager/window_manager.dart';
 
+import '../ui/screens/Home/home_screen_controller.dart';
+
 class DesktopSystemTray extends GetxService {
   late WindowListener listener;
 
@@ -69,6 +71,7 @@ class DesktopSystemTray extends GetxService {
                 .restorePlaybackSession
                 .isTrue) {
               await Get.find<AudioHandler>().customAction("saveSession");
+              await Get.find<HomeScreenController>().cachedHomeScreenData();
             }
             exit(0);
           }),
@@ -112,6 +115,7 @@ class CloseWindowListener extends WindowListener {
     } else {
       if (settingsScrnController.restorePlaybackSession.isTrue) {
         await Get.find<AudioHandler>().customAction("saveSession");
+        await Get.find<HomeScreenController>().cachedHomeScreenData();
       }
       exit(0);
     }

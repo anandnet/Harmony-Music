@@ -158,5 +158,10 @@
     "backgroundPlay": "Reproducir música de fondo",
     "backgroundPlayDes": "Activar/desactivar la reproducción de música en segundo plano (se puede acceder a la aplicación desde la bandeja del sistema cuando se ejecuta en segundo plano)",
     "deleteDownloadData": "Eliminar de las descargas",
-    "deleteDownloadedDataAlert": "¡Eliminado con éxito de las descargas!"
+    "deleteDownloadedDataAlert": "¡Eliminado con éxito de las descargas!",
+    "reArrangePlaylist": "Reorganizar la lista de reproducción",
+    "removeMultiple": "Eliminar varias canciones",
+    "addMultipleSongs": "Añadir canciones a la lista de reproducción",
+    "restoreLastPlaybackSessionDes": "Restaura automáticamente la última sesión de reproducción al iniciar la aplicación",
+    "restoreLastPlaybackSession": "Restaurar la última sesión de reproducción"
 }

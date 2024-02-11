@@ -754,6 +754,9 @@ class Languages extends Translations {
           "backgroundPlayDes":
               "Enable/Disable music playing in background (App can be accessed from system tray when app is running in background)",
           "downloadLocation": "Download Location",
+          "cacheHomeScreenData": "Cache home sceen content data",
+          "cacheHomeScreenDataDes":
+              "Enable Caching home sceen content data, Home screen will load instantly if this option is enabled",
           "downloadingFormat": "Downloading File Format",
           "downloadingFormatDes":
               "Select downloading file format. \"Opus\" will provide best quality",

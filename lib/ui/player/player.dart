@@ -178,8 +178,6 @@ class Player extends StatelessWidget {
                             children: [
                               InkWell(
                                 onLongPress: () {
-                                  // printINFO(
-                                  //     "${size.width - ((size.height < 750) ? 90 : 60)}");
                                   showModalBottomSheet(
                                     constraints:
                                         const BoxConstraints(maxWidth: 500),
@@ -187,12 +185,15 @@ class Player extends StatelessWidget {
                                       borderRadius: BorderRadius.vertical(
                                           top: Radius.circular(10.0)),
                                     ),
+                                    isScrollControlled: true,
+                                    context: playerController
+                                        .homeScaffoldkey.currentState!.context,
                                     barrierColor:
                                         Colors.transparent.withAlpha(100),
-                                    context: context,
                                     builder: (context) => SongInfoBottomSheet(
-                                        playerController.currentSong.value!,
-                                        calledFromPlayer: true),
+                                      playerController.currentSong.value!,
+                                      calledFromPlayer: true,
+                                    ),
                                   ).whenComplete(
                                       () => Get.delete<SongInfoController>());
                                 },

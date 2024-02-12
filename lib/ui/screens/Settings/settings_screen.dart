@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/utils/helper.dart';
 import 'package:harmonymusic/utils/lang_mapping.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -278,20 +279,21 @@ class SettingsScreen extends StatelessWidget {
                   onTap: () => showDialog(
                     context: context,
                     builder: (context) => const ExportFileDialog(),
-                  ).whenComplete(() => Get.delete<ExportFileDialogController>()),
+                  ).whenComplete(
+                      () => Get.delete<ExportFileDialogController>()),
                 ),
               if (GetPlatform.isAndroid)
                 ListTile(
-                contentPadding:
-                    const EdgeInsets.only(left: 5, right: 10, top: 0),
-                title: Text("exportedFileLocation".tr),
-                subtitle: Obx(() => Text(
-                    settingsController.exportLocationPath.value,
-                    style: Theme.of(context).textTheme.bodyMedium)),
-                onTap: () async {
-                  settingsController.setExportedLocation();
-                },
-              ),
+                  contentPadding:
+                      const EdgeInsets.only(left: 5, right: 10, top: 0),
+                  title: Text("exportedFileLocation".tr),
+                  subtitle: Obx(() => Text(
+                      settingsController.exportLocationPath.value,
+                      style: Theme.of(context).textTheme.bodyMedium)),
+                  onTap: () async {
+                    settingsController.setExportedLocation();
+                  },
+                ),
               ListTile(
                 contentPadding: const EdgeInsets.only(left: 5, right: 10),
                 title: Text("downloadingFormat".tr),
@@ -343,7 +345,11 @@ class SettingsScreen extends StatelessWidget {
                   subtitle: Text("equalizerDes".tr,
                       style: Theme.of(context).textTheme.bodyMedium),
                   onTap: () async {
-                    await Get.find<PlayerController>().openEqualizer();
+                    try {
+                      await Get.find<PlayerController>().openEqualizer();
+                    } catch (e) {
+                      printERROR(e);
+                    }
                   },
                 ),
               ListTile(

@@ -109,7 +109,7 @@ class MiniPlayer extends StatelessWidget {
                               SizedBox(
                                 height: 20,
                                 child: Text(
-                                  playerController.currentQueue.isNotEmpty
+                                  playerController.currentSong.value!=null
                                       ? playerController
                                           .currentSong.value!.title
                                       : "",

@@ -165,5 +165,15 @@
     "cacheHomeScreenDataDes": "Ana ekran içeriği verilerini önbelleğe alma etkinleştirildiğinde ana ekran anında yüklenecektir",
     "cacheHomeScreenData": "Ana ekran içeriği verilerini önbelleğe al",
     "addMultipleSongs": "Çalma listesine şarkı ekle",
-    "restoreLastPlaybackSession": "Son çalma oturumunu geri yükle"
+    "restoreLastPlaybackSession": "Son çalma oturumunu geri yükle",
+    "exportedFileLocation": "İndirilen dosya dışa aktarma konumu",
+    "export": "Dışarı aktar",
+    "scanning": "Taranıyor...",
+    "downFilesFound": "indirilen dosyalar bulundu",
+    "close": "Kapat",
+    "exportMsg": "Dosyalar başarıyla dışa aktarıldı",
+    "clearImgCacheAlert": "Resim önbelleği başarıyla temizlendi",
+    "exportDowloadedFiles": "İndirilen dosyaları dışa aktar",
+    "exportDowloadedFilesDes": "İndirilen dosyayı uygulama dizininden harici dizine aktarmak için buraya tıklayın",
+    "exporting": "Dışa aktarılıyor..."
 }

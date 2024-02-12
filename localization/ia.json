@@ -157,5 +157,12 @@
     "backgroundPlay": "Reproducer musica in fundo",
     "backgroundPlayDes": "Activar/Disactivar le reproduction de musica in fundo (Le application pote esser accessate ab la barra de systema quando ille es executante in secunde fundo)",
     "deleteDownloadData": "Remover ab le discargamentos",
-    "deleteDownloadedDataAlert": "Removite con successo ab le discargamentos!"
+    "deleteDownloadedDataAlert": "Removite con successo ab le discargamentos!",
+    "removeMultiple": "Deler multiple cantos",
+    "addMultipleSongs": "Adder cantos al lista de reproduction",
+    "restoreLastPlaybackSession": "Restaurar le ultime session de reproduction",
+    "restoreLastPlaybackSessionDes": "Restaura automaticamente le ultime session de reproduction al initio del application",
+    "reArrangePlaylist": "Rearrangiar le lista de reproduction",
+    "cacheHomeScreenData": "Cache del datos de contento del schermo de initio",
+    "cacheHomeScreenDataDes": "Activar le cache del datos de contento del schermo de initio, ille schermo cargara immediatemente si iste option es activate"
 }

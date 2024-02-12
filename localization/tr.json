@@ -158,5 +158,12 @@
     "deleteDownloadedDataAlert": "İndirmelerden başarıyla kaldırıldı!",
     "upNext": "Sıradaki",
     "clearImgCache": "Resim önbelleğini temizle",
-    "clearImgCacheDes": "Önbelleğe alınan küçük resimleri/görselleri temizlemek için buraya tıklayın. (Önbelleğe alınan resim verilerini yenilemek istemiyorsanız tavsiye edilmez)"
+    "clearImgCacheDes": "Önbelleğe alınan küçük resimleri/görselleri temizlemek için buraya tıklayın. (Önbelleğe alınan resim verilerini yenilemek istemiyorsanız tavsiye edilmez)",
+    "reArrangePlaylist": "Çalma listesini yeniden düzenle",
+    "removeMultiple": "Birden fazla şarkıyı kaldır",
+    "restoreLastPlaybackSessionDes": "Uygulama başlatıldığında son çalma oturumunu otomatik olarak geri yükle",
+    "cacheHomeScreenDataDes": "Ana ekran içeriği verilerini önbelleğe alma etkinleştirildiğinde ana ekran anında yüklenecektir",
+    "cacheHomeScreenData": "Ana ekran içeriği verilerini önbelleğe al",
+    "addMultipleSongs": "Çalma listesine şarkı ekle",
+    "restoreLastPlaybackSession": "Son çalma oturumunu geri yükle"
 }

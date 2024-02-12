@@ -5,15 +5,15 @@ import 'package:get/get.dart';
 import '/ui/navigator.dart';
 
 void printERROR(dynamic text, {String tag = "Harmony Music"}) {
-  debugPrint("\x1B[31m[$tag]: $text");
+  debugPrint("\x1B[31m[$tag]: $text\x1B[34m");
 }
 
 void printWarning(dynamic text, {String tag = 'Harmony Music'}) {
-  debugPrint("\x1B[33m[$tag]: $text");
+  debugPrint("\x1B[33m[$tag]: $text\x1B[34m");
 }
 
 void printINFO(dynamic text, {String tag = 'Harmony Music'}) {
-  debugPrint("\x1B[32m[$tag]: $text");
+  debugPrint("\x1B[32m[$tag]: $text\x1B[34m");
 }
 
 String? getCurrentRouteName() {

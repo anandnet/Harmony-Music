@@ -1,7 +1,7 @@
 <img src="https://github.com/anandnet/Harmony-Music/blob/main/cover.png" width="1200" >
 
 # Harmony Music
-An app for music streaming made with Flutter(Currently support Android only).
+A cross platform app for music streaming made with Flutter(Android, Windows, linux).
 
 # Features
 * Ability to play song from Ytube/Ytube Music.

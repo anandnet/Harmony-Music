@@ -13,6 +13,7 @@ class ListWidget extends StatelessWidget {
   const ListWidget(this.items, this.title, this.isCompleteList,
       {super.key,
       this.isPlaylist = false,
+      this.isArtistSongs = false,
       this.playlist,
       this.scrollController});
   final List<dynamic> items;
@@ -21,6 +22,7 @@ class ListWidget extends StatelessWidget {
   final ScrollController? scrollController;
 
   /// Valid for songlist
+  final bool isArtistSongs;
   final bool isPlaylist;
   final Playlist? playlist;
 
@@ -41,7 +43,8 @@ class ListWidget extends StatelessWidget {
               child: listViewSongVid(items,
                   isPlaylist: isPlaylist,
                   playlist: playlist,
-                  sc: scrollController))
+                  sc: scrollController,
+                  isArtistSongs: isArtistSongs))
           : SizedBox(
               height: items.length * 75.0,
               child: listViewSongVid(items),
@@ -62,7 +65,10 @@ class ListWidget extends StatelessWidget {
   }
 
   Widget listViewSongVid(List<dynamic> items,
-      {bool isPlaylist = false, Playlist? playlist, ScrollController? sc}) {
+      {bool isPlaylist = false,
+      Playlist? playlist,
+      bool isArtistSongs = false,
+      ScrollController? sc}) {
     final playerController = Get.find<PlayerController>();
     return ListView.builder(
       padding: const EdgeInsets.only(
@@ -78,7 +84,7 @@ class ListWidget extends StatelessWidget {
           : const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) => ListTile(
         onTap: () {
-          isPlaylist
+          (isPlaylist || isArtistSongs)
               ? playerController.playPlayListSong(
                   List<MediaItem>.from(items), index)
               : playerController.pushSongToQueue(items[index] as MediaItem);

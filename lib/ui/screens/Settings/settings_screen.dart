@@ -4,6 +4,7 @@ import 'package:harmonymusic/utils/lang_mapping.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/common_dialog_widget.dart';
+import '../../widgets/export_file_dialog.dart';
 import '../Library/library_controller.dart';
 import '../../widgets/snackbar.dart';
 import '/ui/widgets/link_piped.dart';
@@ -265,30 +266,53 @@ class SettingsScreen extends StatelessWidget {
                       },
                     )
                   : const SizedBox.shrink()),
-              Obx(() => settingsController.hideDloc.isFalse || isDesktop
-                  ? ListTile(
-                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                      title: Text("downloadingFormat".tr),
-                      subtitle: Text("downloadingFormatDes".tr,
-                          style: Theme.of(context).textTheme.bodyMedium),
-                      trailing: Obx(
-                        () => DropdownButton(
-                          dropdownColor: Theme.of(context).cardColor,
-                          underline: const SizedBox.shrink(),
-                          value: settingsController.downloadingFormat.value,
-                          items: const [
-                            DropdownMenuItem(
-                                value: "opus", child: Text("Opus")),
-                            DropdownMenuItem(
-                              value: "m4a",
-                              child: Text("M4a"),
-                            ),
-                          ],
-                          onChanged: settingsController.changeDownloadingFormat,
-                        ),
+              if (GetPlatform.isAndroid)
+                ListTile(
+                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                  title: Text("exportDowloadedFiles".tr),
+                  subtitle: Text(
+                    "exportDowloadedFilesDes".tr,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  isThreeLine: true,
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (context) => const ExportFileDialog(),
+                  ).whenComplete(() => Get.delete<ExportFileDialogController>()),
+                ),
+              if (GetPlatform.isAndroid)
+                ListTile(
+                contentPadding:
+                    const EdgeInsets.only(left: 5, right: 10, top: 0),
+                title: Text("exportedFileLocation".tr),
+                subtitle: Obx(() => Text(
+                    settingsController.exportLocationPath.value,
+                    style: Theme.of(context).textTheme.bodyMedium)),
+                onTap: () async {
+                  settingsController.setExportedLocation();
+                },
+              ),
+              ListTile(
+                contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                title: Text("downloadingFormat".tr),
+                subtitle: Text("downloadingFormatDes".tr,
+                    style: Theme.of(context).textTheme.bodyMedium),
+                trailing: Obx(
+                  () => DropdownButton(
+                    dropdownColor: Theme.of(context).cardColor,
+                    underline: const SizedBox.shrink(),
+                    value: settingsController.downloadingFormat.value,
+                    items: const [
+                      DropdownMenuItem(value: "opus", child: Text("Opus/Ogg")),
+                      DropdownMenuItem(
+                        value: "m4a",
+                        child: Text("M4a"),
                       ),
-                    )
-                  : const SizedBox.shrink()),
+                    ],
+                    onChanged: settingsController.changeDownloadingFormat,
+                  ),
+                ),
+              ),
               ListTile(
                   contentPadding: const EdgeInsets.only(left: 5, right: 10),
                   title: Text("restoreLastPlaybackSession".tr),
@@ -386,7 +410,7 @@ class SettingsScreen extends StatelessWidget {
                 onTap: () {
                   settingsController.clearImagesCache().then((value) =>
                       ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-                          Get.context!, "Images chache cleared successfully".tr,
+                          Get.context!, "clearImgCacheAlert".tr,
                           size: SanckBarSize.BIG)));
                 },
               ),

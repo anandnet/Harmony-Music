@@ -760,9 +760,20 @@ class Languages extends Translations {
           "downloadingFormat": "Downloading File Format",
           "downloadingFormatDes":
               "Select downloading file format. \"Opus\" will provide best quality",
+          "exportDowloadedFiles": "Export downloaded files",
+          "exportDowloadedFilesDes":
+              "Click here to export downloaded file from inApp dir to external dir",
+          "exportedFileLocation": "Downloaded file export location",
+          "export": "Export",
+          "exporting": "Exporting...",
+          "scanning": "Scanning...",
+          "downFilesFound": "downloaded files found",
+          "close": "Close",
+          "exportMsg": "Files successfully exported",
           "equalizer": "Equalizer",
           "equalizerDes": "open system equalizer",
           "clearImgCache": "Clear images cache",
+          "clearImgCacheAlert": "Images chache cleared successfully",
           "clearImgCacheDes":
               "Click here to clear cached thumbnails/images. (Not recommended unless want to refresh cached images data)",
           "ignoreBatOpt": "Ignore battery optimization",
@@ -1195,7 +1206,14 @@ class Languages extends Translations {
           "backgroundPlayDes":
               "Activar/desactivar la reproducción de música en segundo plano (se puede acceder a la aplicación desde la bandeja del sistema cuando se ejecuta en segundo plano)",
           "deleteDownloadData": "Eliminar de las descargas",
-          "deleteDownloadedDataAlert": "¡Eliminado con éxito de las descargas!"
+          "deleteDownloadedDataAlert": "¡Eliminado con éxito de las descargas!",
+          "reArrangePlaylist": "Reorganizar la lista de reproducción",
+          "removeMultiple": "Eliminar varias canciones",
+          "addMultipleSongs": "Añadir canciones a la lista de reproducción",
+          "restoreLastPlaybackSessionDes":
+              "Restaura automáticamente la última sesión de reproducción al iniciar la aplicación",
+          "restoreLastPlaybackSession":
+              "Restaurar la última sesión de reproducción"
         },
         "fi": {
           "libAlbums": "Kirjaston albumit",

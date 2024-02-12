@@ -33,6 +33,7 @@ class SettingsScreenController extends GetxController {
   final stopPlyabackOnSwipeAway = false.obs;
   final currentAppLanguageCode = "en".obs;
   final downloadLocationPath = "".obs;
+  final exportLocationPath = "".obs;
   final downloadingFormat = "".obs;
   final hideDloc = true.obs;
   final isBottomNavBarEnabled = false.obs;
@@ -83,6 +84,7 @@ class SettingsScreenController extends GetxController {
     backgroundPlayEnabled.value = setBox.get("backgroundPlayEnabled") ?? true;
     downloadLocationPath.value =
         setBox.get('downloadLocationPath') ?? await _createInAppSongDownDir();
+    exportLocationPath.value = setBox.get("exportLocationPath") ?? "/storage/emulated/0/Music";
     downloadingFormat.value = setBox.get('downloadingFormat') ?? "opus";
     discoverContentType.value = setBox.get('discoverContentType') ?? "QP";
     if (setBox.containsKey("piped")) {
@@ -132,6 +134,21 @@ class SettingsScreenController extends GetxController {
   void changeDownloadingFormat(String? val) {
     setBox.put("downloadingFormat", val);
     downloadingFormat.value = val!;
+  }
+
+  Future<void> setExportedLocation() async {
+    if (!await PermissionService.getExtStoragePermission()) {
+      return;
+    }
+
+    final String? pickedFolderPath = await FilePicker.platform
+        .getDirectoryPath(dialogTitle: "Select export file folder");
+    if (pickedFolderPath == '/' || pickedFolderPath == null) {
+      return;
+    }
+
+    setBox.put("exportLocationPath", pickedFolderPath);
+    exportLocationPath.value = pickedFolderPath;
   }
 
   Future<void> setDownloadLocation() async {
@@ -199,10 +216,10 @@ class SettingsScreenController extends GetxController {
     restorePlaybackSession.value = val;
   }
 
-  void toggleCacheHomeScreenData(bool val){
+  void toggleCacheHomeScreenData(bool val) {
     setBox.put("cacheHomeScreenData", val);
     cacheHomeScreenData.value = val;
-    if(!val){
+    if (!val) {
       Hive.openBox("homeScreenData").then((box) async {
         await box.clear();
         box.close();

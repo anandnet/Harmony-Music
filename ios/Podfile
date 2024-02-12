@@ -48,5 +48,6 @@ post_install do |installer|
         ## dart: PermissionGroup.mediaLibrary
         'PERMISSION_MEDIA_LIBRARY=1'
       ]
+    end
   end
 end

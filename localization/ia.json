@@ -164,5 +164,13 @@
     "restoreLastPlaybackSessionDes": "Restaura automaticamente le ultime session de reproduction al initio del application",
     "reArrangePlaylist": "Rearrangiar le lista de reproduction",
     "cacheHomeScreenData": "Cache del datos de contento del schermo de initio",
-    "cacheHomeScreenDataDes": "Activar le cache del datos de contento del schermo de initio, ille schermo cargara immediatemente si iste option es activate"
+    "cacheHomeScreenDataDes": "Activar le cache del datos de contento del schermo de initio, ille schermo cargara immediatemente si iste option es activate",
+    "export": "Exportar",
+    "exportedFileLocation": "Location de exportation de file discargate",
+    "downFilesFound": "files discargate trovate",
+    "close": "Clauder",
+    "exportMsg": "Files exportate con successo",
+    "exportDowloadedFiles": "Exportar files discargate",
+    "exporting": "In exportation...",
+    "scanning": "Scannante..."
 }

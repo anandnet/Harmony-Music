@@ -122,7 +122,7 @@ class MiniPlayer extends StatelessWidget {
                                 height: 20,
                                 child: MarqueeWidget(
                                   child: Text(
-                                    playerController.currentQueue.isNotEmpty
+                                    playerController.currentSong.value !=null
                                         ? playerController
                                             .currentSong.value!.artist!
                                         : "",
@@ -164,7 +164,7 @@ class MiniPlayer extends StatelessWidget {
                                               (playerController
                                                       .currentQueue.first.id ==
                                                   playerController
-                                                      .currentSong.value!.id))
+                                                      .currentSong.value?.id))
                                           ? null
                                           : playerController.prev,
                                       child: Icon(
@@ -202,7 +202,7 @@ class MiniPlayer extends StatelessWidget {
                                             (playerController
                                                     .currentQueue.last.id ==
                                                 playerController
-                                                    .currentSong.value!.id))
+                                                    .currentSong.value?.id))
                                         ? null
                                         : playerController.next,
                                     child: Icon(

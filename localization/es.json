@@ -163,5 +163,19 @@
     "removeMultiple": "Eliminar varias canciones",
     "addMultipleSongs": "Añadir canciones a la lista de reproducción",
     "restoreLastPlaybackSessionDes": "Restaura automáticamente la última sesión de reproducción al iniciar la aplicación",
-    "restoreLastPlaybackSession": "Restaurar la última sesión de reproducción"
+    "restoreLastPlaybackSession": "Restaurar la última sesión de reproducción",
+    "cacheHomeScreenDataDes": "Si esta opción está activada, la pantalla de inicio se cargará instantáneamente",
+    "cacheHomeScreenData": "Caché de datos del contenido de la pantalla de inicio",
+    "exportDowloadedFiles": "Exportar archivos descargados",
+    "exportedFileLocation": "Ubicación de exportación del archivo descargado",
+    "export": "Exportar",
+    "exporting": "Exportando…",
+    "disableTransitionAnimation": "Desactivar la animación de la transición",
+    "exportDowloadedFilesDes": "Haga clic aquí para exportar el archivo descargado del directorio de la aplicación a un directorio externo",
+    "scanning": "Escaneando…",
+    "downFilesFound": "archivos descargados encontrados",
+    "disableTransitionAnimationDes": "Active esta opción para desactivar la animación de la transición de las pestañas",
+    "close": "Cerrar",
+    "exportMsg": "Archivos exportados correctamente",
+    "clearImgCacheAlert": "Imágenes en la chache borradas con éxito"
 }

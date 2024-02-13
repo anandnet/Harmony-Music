@@ -59,7 +59,7 @@ class Home extends StatelessWidget {
                       child: const BottomNavBar())
                   : null,
               key: playerController.homeScaffoldkey,
-              endDrawer: Container(
+              endDrawer:GetPlatform.isDesktop? Container(
                 constraints: const BoxConstraints(maxWidth: 600),
                 decoration: BoxDecoration(
                   borderRadius:
@@ -113,7 +113,7 @@ class Home extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
+              ):null,
               drawerScrimColor: Colors.transparent,
               body: Obx(() => SlidingUpPanel(
                     onPanelSlide: playerController.panellistener,

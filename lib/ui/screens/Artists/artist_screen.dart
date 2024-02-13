@@ -102,6 +102,7 @@ class ArtistScreen extends StatelessWidget {
                 Expanded(
                   child: Obx(
                     () => AnimatedScreenTransition(
+                      enabled: Get.find<SettingsScreenController>().isTransitionAnimationDisabled.isFalse,
                       resverse: artistScreenController.isTabTransitionReversed,
                       child: Center(
                         key: ValueKey<int>(artistScreenController

@@ -169,6 +169,18 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              ListTile(
+                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                  title: Text("disableTransitionAnimation".tr),
+                  subtitle: Text("disableTransitionAnimationDes".tr,
+                      style: Theme.of(context).textTheme.bodyMedium),
+                  trailing: Obx(
+                    () => Switch(
+                        value: settingsController
+                            .isTransitionAnimationDisabled.isTrue,
+                        onChanged:
+                            settingsController.disableTransitionAnimation),
+                  )),
               if (!isDesktop)
                 ListTile(
                     contentPadding: const EdgeInsets.only(left: 5, right: 10),

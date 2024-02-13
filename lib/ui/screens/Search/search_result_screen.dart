@@ -78,6 +78,9 @@ class SearchResultScreen extends StatelessWidget {
                 Expanded(
                   child: GetX<SearchResultScreenController>(
                     builder: (controller) => AnimatedScreenTransition(
+                      enabled: Get.find<SettingsScreenController>()
+                          .isTransitionAnimationDisabled
+                          .isFalse,
                       resverse: controller.isTabTransitionReversed,
                       child: Center(
                         key: ValueKey<int>(

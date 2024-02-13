@@ -79,6 +79,8 @@ class HomeScreen extends StatelessWidget {
               //const VerticalDivider(thickness: 1, width: 2),
               Expanded(
                 child: Obx(() => AnimatedScreenTransition(
+                    enabled: settingsScreenController
+                        .isTransitionAnimationDisabled.isFalse,
                     resverse: homeScreenController.reverseAnimationtransiton,
                     horizontalTransition:
                         settingsScreenController.isBottomNavBarEnabled.isTrue,

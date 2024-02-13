@@ -36,6 +36,7 @@ class SettingsScreenController extends GetxController {
   final exportLocationPath = "".obs;
   final downloadingFormat = "".obs;
   final hideDloc = true.obs;
+  final isTransitionAnimationDisabled = false.obs;
   final isBottomNavBarEnabled = false.obs;
   final backgroundPlayEnabled = true.obs;
   final restorePlaybackSession = false.obs;
@@ -73,6 +74,8 @@ class SettingsScreenController extends GetxController {
     currentAppLanguageCode.value = setBox.get('currentAppLanguageCode') ?? "en";
     isBottomNavBarEnabled.value = setBox.get("isBottomNavBarEnabled") ?? false;
     noOfHomeScreenContent.value = setBox.get("noOfHomeScreenContent") ?? 3;
+    isTransitionAnimationDisabled.value =
+        setBox.get("isTransitionAnimationDisabled") ?? false;
     cacheSongs.value = setBox.get('cacheSongs');
     themeModetype.value = ThemeType.values[setBox.get('themeModeType')];
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
@@ -84,7 +87,8 @@ class SettingsScreenController extends GetxController {
     backgroundPlayEnabled.value = setBox.get("backgroundPlayEnabled") ?? true;
     downloadLocationPath.value =
         setBox.get('downloadLocationPath') ?? await _createInAppSongDownDir();
-    exportLocationPath.value = setBox.get("exportLocationPath") ?? "/storage/emulated/0/Music";
+    exportLocationPath.value =
+        setBox.get("exportLocationPath") ?? "/storage/emulated/0/Music";
     downloadingFormat.value = setBox.get('downloadingFormat') ?? "opus";
     discoverContentType.value = setBox.get('discoverContentType') ?? "QP";
     if (setBox.containsKey("piped")) {
@@ -168,6 +172,11 @@ class SettingsScreenController extends GetxController {
 
   void showDownLoc() {
     hideDloc.value = false;
+  }
+
+  void disableTransitionAnimation(bool val) {
+    setBox.put('isTransitionAnimationDisabled', val);
+    isTransitionAnimationDisabled.value = val;
   }
 
   Future<void> clearImagesCache() async {

@@ -97,7 +97,7 @@ class UpNextQueue extends StatelessWidget {
                         : Theme.of(homeScaffoldContext).textTheme.titleSmall,
                   ),
                   trailing: ReorderableDragStartListener(
-                    enabled: false,
+                    enabled: !GetPlatform.isDesktop,
                     index: index,
                     child: Container(
                       padding: EdgeInsets.only(

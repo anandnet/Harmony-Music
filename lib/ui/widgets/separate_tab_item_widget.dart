@@ -68,7 +68,8 @@ class SeparateTabItemWidget extends StatelessWidget {
           isCompleteList
               ? Obx(() => SortWidget(
                     tag: "${title}_$artistControllerTag",
-                    isAdditionalOperationRequired: artistController != null,
+                    isAdditionalOperationRequired: artistController != null &&
+                        (title == "Songs" || title == "Videos"),
                     isSearchFeatureRequired: artistController != null,
                     titleLeftPadding: 9,
                     itemCountTitle:

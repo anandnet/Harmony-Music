@@ -6,5 +6,18 @@
     "artists": "Artisti",
     "settings": "Impostazioni",
     "items": "elementi",
-    "networkError1": "Ops errore rete!"
+    "networkError1": "Oops errore di rete!",
+    "library": "Libreria",
+    "favorites": "Preferiti",
+    "libSongs": "Brani della libreria",
+    "libPlaylists": "Playlist della libreria",
+    "libAlbums": "Album della libreria",
+    "recentlyPlayed": "Ascoltati di recente",
+    "libArtists": "Artisti della libreria",
+    "retry": "Riprova!",
+    "noOfflineSong": "Nessun brano offline!",
+    "emptyPlaylist": "Playlist vuota!",
+    "communityplaylists": "Playlist della community",
+    "cachedOrOffline": "Salvati nella cache/Offline",
+    "singles": "Singoli"
 }

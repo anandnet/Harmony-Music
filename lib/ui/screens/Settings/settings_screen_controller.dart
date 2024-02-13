@@ -225,14 +225,17 @@ class SettingsScreenController extends GetxController {
     restorePlaybackSession.value = val;
   }
 
-  void toggleCacheHomeScreenData(bool val) {
+  Future<void> toggleCacheHomeScreenData(bool val) async {
     setBox.put("cacheHomeScreenData", val);
     cacheHomeScreenData.value = val;
     if (!val) {
       Hive.openBox("homeScreenData").then((box) async {
         await box.clear();
-        box.close();
+        await box.close();
       });
+    }else{
+      await Hive.openBox("homeScreenData");
+      Get.find<HomeScreenController>().cachedHomeScreenData(updateAll: true);
     }
   }
 

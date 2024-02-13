@@ -5,7 +5,7 @@
 
 version:
   revision: "d211f42860350d914a5ad8102f9ec32764dc6d06"
-  channel: "stable"
+  channel: "[user-branch]"
 
 project_type: app
 
@@ -15,7 +15,7 @@ migration:
     - platform: root
       create_revision: d211f42860350d914a5ad8102f9ec32764dc6d06
       base_revision: d211f42860350d914a5ad8102f9ec32764dc6d06
-    - platform: windows
+    - platform: macos
       create_revision: d211f42860350d914a5ad8102f9ec32764dc6d06
       base_revision: d211f42860350d914a5ad8102f9ec32764dc6d06
 

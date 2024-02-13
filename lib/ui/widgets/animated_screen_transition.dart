@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 class AnimatedScreenTransition extends StatelessWidget {
   const AnimatedScreenTransition(
       {super.key,
+      this.enabled = true,
       this.resverse = false,
       this.horizontalTransition = false,
       required this.child});
+  final bool enabled;
   final bool resverse;
   final Widget child;
   final bool horizontalTransition;
 
   @override
   Widget build(BuildContext context) {
+    if (!enabled) return child;
     Tween<Offset> forwardTween;
     Tween<Offset> reverseTween;
     if (horizontalTransition) {

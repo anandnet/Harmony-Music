@@ -125,7 +125,7 @@ class ListWidget extends StatelessWidget {
           style: Theme.of(context).textTheme.titleSmall,
         ),
         trailing: SizedBox(
-          width: 80,
+          width: Get.size.width > 800 ? 80 : 40,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

@@ -77,6 +77,8 @@
     "skipSilenceDes": "Silence will be skipped in music playback",
     "streamingQuality": "Streaming quality",
     "streamingQualityDes": "Quality of music stream",
+    "disableTransitionAnimation": "Disable transition animation",
+    "disableTransitionAnimationDes": "Enable this option to disable tab transition animation",
     "high": "High",
     "low": "Low",
     "backgroundPlay": "Background music play",

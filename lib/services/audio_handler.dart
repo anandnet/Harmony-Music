@@ -464,7 +464,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
   Future<void> saveSessionData() async {
-    if (!(Hive.box("AppPrefs").get('restrorePlaybackSession') ?? false)) return;
+    if (Get.find<SettingsScreenController>().restorePlaybackSession.isFalse) return;
     final currQueue = queue.value;
     if (currQueue.isNotEmpty) {
       final queueData =
@@ -485,8 +485,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     final stopForegroundService =
         Get.find<SettingsScreenController>().stopPlyabackOnSwipeAway.value;
     if (stopForegroundService) {
-      await saveSessionData();
       await Get.find<HomeScreenController>().cachedHomeScreenData();
+      await saveSessionData();
       await stop();
     }
   }

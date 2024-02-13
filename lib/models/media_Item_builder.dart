@@ -12,9 +12,9 @@ class MediaItemBuilder {
       }
     }
 
-    Map? album ;
-    if(json['album']!=null){
-      if(json['album']['id']!=null){
+    Map? album;
+    if (json['album'] != null) {
+      if (json['album']['id'] != null) {
         album = json['album'];
       }
     }
@@ -64,8 +64,7 @@ class MediaItemBuilder {
         'album': mediaItem.extras!['album'],
         'artists': mediaItem.extras!['artists'],
         'length': mediaItem.extras!['length'],
-        'duration':
-            mediaItem.duration != null ? mediaItem.duration!.inSeconds : null,
+        'duration': mediaItem.duration?.inSeconds,
         'date': mediaItem.extras!['date'],
         'thumbnails': [
           {'url': mediaItem.artUri.toString()}

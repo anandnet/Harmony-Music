@@ -67,12 +67,8 @@ class DesktopSystemTray extends GetxService {
       MenuItemLabel(
           label: 'Quit',
           onClicked: (menuItem) async {
-            if (Get.find<SettingsScreenController>()
-                .restorePlaybackSession
-                .isTrue) {
-              await Get.find<AudioHandler>().customAction("saveSession");
-              await Get.find<HomeScreenController>().cachedHomeScreenData();
-            }
+            await Get.find<AudioHandler>().customAction("saveSession");
+            await Get.find<HomeScreenController>().cachedHomeScreenData();
             exit(0);
           }),
     ]);
@@ -113,10 +109,8 @@ class CloseWindowListener extends WindowListener {
             PlayButtonState.playing) {
       await windowManager.hide();
     } else {
-      if (settingsScrnController.restorePlaybackSession.isTrue) {
-        await Get.find<AudioHandler>().customAction("saveSession");
-        await Get.find<HomeScreenController>().cachedHomeScreenData();
-      }
+      await Get.find<AudioHandler>().customAction("saveSession");
+      await Get.find<HomeScreenController>().cachedHomeScreenData();
       exit(0);
     }
   }

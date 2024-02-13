@@ -77,6 +77,7 @@ class HomeScreenController extends GetxController {
           .toList();
       homeScreenData.close();
       isContentFetched.value = true;
+      printINFO("Loaded from offline db");
       return true;
     } else {
       return false;
@@ -286,7 +287,7 @@ class HomeScreenController extends GetxController {
   }
 
   Future<void> cachedHomeScreenData() async {
-    if (Get.find<SettingsScreenController>().cacheHomeScreenData.isFalse) {
+    if (Get.find<SettingsScreenController>().cacheHomeScreenData.isFalse || quickPicks.value.songList.isEmpty) {
       return;
     }
     final homeScreenData = await Hive.openBox("homeScreenData");
@@ -318,5 +319,6 @@ class HomeScreenController extends GetxController {
     });
 
     await homeScreenData.close();
+    printINFO("Saved Homescreen data data");
   }
 }

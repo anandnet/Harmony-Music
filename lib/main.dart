@@ -45,8 +45,8 @@ class MyApp extends StatelessWidget {
       if (msg == "AppLifecycleState.resumed") {
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
       } else if (msg == "AppLifecycleState.detached") {
-        await Get.find<AudioHandler>().customAction("saveSession");
         await Get.find<HomeScreenController>().cachedHomeScreenData();
+        await Get.find<AudioHandler>().customAction("saveSession");
       }
       return null;
     });

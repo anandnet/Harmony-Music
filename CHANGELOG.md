@@ -1,3 +1,18 @@
+## 1.9.0
+* Added Windows and linux platform support #136
+* Added feature to rearrange local playlist, add multiple songs to plalist, delete multiple songs #153
+* Added feature to export downloaded files to external storage #157
+* Added feature to restore last playback session #121
+* Added feature to cached home content data #133
+* Added feature to remove song from downloads from bottom sheet #143
+* Added option to disable transition animation #150
+* Loading indicator added in play/pause button #134
+* Fixed HM is categorized as browser #142
+* Used isolate to fetch song url #133
+* Fixed songs are not in the correct order in offline/bookmarked album #132
+* added artist name in downloaded filename to resolve issue #152
+* Added system tray support for desktops and provided option for background playing
+
 ## 1.8.0
 * Added feature to switch to Bottom Navigation Bar (Major Change) #95 #58
 * Synced Lyrics feature added #66 #116 #98 (Data provided by lrclib.net)

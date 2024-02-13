@@ -1,0 +1,10 @@
+- Rearrange local playlist, add multiple songs to plalist, delete multiple songs
+- Export downloaded files to external storage
+- Restore last playback session
+- Cache home content data
+- Remove song from downloads from bottom sheet
+- Added option to disable transition animation
+- Loading indicator added in play/pause button
+- Fixed HM is categorized as browser
+- Fixed songs are not in the correct order in offline/bookmarked album
+- Added artist name in downloaded filename to resolve issue #152

@@ -117,7 +117,7 @@
     "singles": "Đĩa đơn",
     "noBookmarks": "Không có đánh dấu!",
     "upNext": "Kế tiếp",
-    "dynamic": "Động",
+    "dynamic": "Tự động",
     "searchDes": "Bài hát,Danh sách phát, Tập nhạc hoặc Nghệ sỹ",
     "searchRes": "Kết quả tìm kiếm",
     "pipedplstSyncAlert": "Danh sách phát đã được đồng bộ hóa!",
@@ -174,5 +174,7 @@
     "cancelTimerAlert": "Đã hủy hẹn giờ tắt",
     "sleepTimeSetAlert": "Bộ hẹn giờ tắt của bạn đã được đặt",
     "radioNotAvailable": "Radio không có sẵn cho nghệ sĩ này!",
-    "playlistBookmarkRemoveAlert": "Đã xóa đánh dấu trang danh sách phát!"
+    "playlistBookmarkRemoveAlert": "Đã xóa đánh dấu trang danh sách phát!",
+    "disableTransitionAnimation": "Tắt hoạt ảnh chuyển tiếp",
+    "disableTransitionAnimationDes": "Bật tùy chọn này để tắt hoạt ảnh chuyển tiếp trang"
 }

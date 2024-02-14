@@ -175,5 +175,7 @@
     "clearImgCacheAlert": "Resim önbelleği başarıyla temizlendi",
     "exportDowloadedFiles": "İndirilen dosyaları dışa aktar",
     "exportDowloadedFilesDes": "İndirilen dosyayı uygulama dizininden harici dizine aktarmak için buraya tıklayın",
-    "exporting": "Dışa aktarılıyor..."
+    "exporting": "Dışa aktarılıyor...",
+    "disableTransitionAnimation": "Geçiş animasyonunu devre dışı bırak",
+    "disableTransitionAnimationDes": "Sekme geçiş animasyonunu devre dışı bırakmak için bu seçeneği etkinleştirin"
 }

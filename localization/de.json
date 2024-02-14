@@ -146,5 +146,6 @@
     "add5Minutes": "5 Minuten hinzufügen",
     "enableBottomNav": "Untere Navigationsleiste",
     "cancelTimer": "Timer abbrechen",
-    "endOfThisSong": "Ende dieses Liedes"
+    "endOfThisSong": "Ende dieses Liedes",
+    "reArrangePlaylist": "Playlist neu anordnen"
 }

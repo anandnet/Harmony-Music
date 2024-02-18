@@ -212,9 +212,10 @@ class SongInfoBottomSheet extends StatelessWidget {
                         box.delete(song.id).then((value) {
                           if (playlist != null) {
                             Get.find<PlayListNAlbumScreenController>(
-                                tag: Key(playlist!.playlistId)
-                                    .hashCode
-                                    .toString()).checkDownloadStatus();
+                                    tag: Key(playlist!.playlistId)
+                                        .hashCode
+                                        .toString())
+                                .checkDownloadStatus();
                           }
                           ScaffoldMessenger.of(context).showSnackBar(snackbar(
                               context, "deleteDownloadedDataAlert".tr,
@@ -335,13 +336,16 @@ class SongInfoController extends GetxController {
         Get.find<LibrarySongsController>().removeSong(item, true);
       } else {
         Get.find<LibrarySongsController>().removeSong(item, false);
+        box.delete(item.id);
       }
     } else if (playlist.playlistId == "SongDownloads") {
+      box.delete(item.id);
       Get.find<LibrarySongsController>().removeSong(item, true);
+    } else if(!playlist.isPipedPlaylist) {
+      //Other playlist song case
+      final index = box.values.toList().indexWhere((ele) => ele['videoId'] == item.id);
+      await box.deleteAt(index);
     }
-
-    box.delete(item.id);
-    if (playlist.title == "Library Songs") return;
 
     final plstCntroller = Get.find<PlayListNAlbumScreenController>(
         tag: Key(playlist.playlistId).hashCode.toString());
@@ -364,7 +368,7 @@ class SongInfoController extends GetxController {
       // ignore: empty_catches
     } catch (e) {}
 
-    if (playlist.playlistId == "SongDownloads") return;
+    if (playlist.playlistId == "SongDownloads" || playlist.playlistId == "SongsCache") return;
     box.close();
   }
 

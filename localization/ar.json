@@ -1,1 +1,17 @@
-{}
+{
+    "library": "المكتبة",
+    "libPlaylists": "قوائم تشغيل المكتبة",
+    "libAlbums": "البومات المكتبة",
+    "libArtists": "فنانين المكتبة",
+    "items": "عناصر",
+    "networkError1": "خطأ في الشبكة!",
+    "retry": "حاول مجددا !",
+    "home": "الرئيسية",
+    "playlists": "قوائم التشغيل",
+    "albums": "البومات",
+    "artists": "فنانين",
+    "settings": "الاعدادات",
+    "libSongs": "اغاني المكتبة",
+    "communityplaylists": "قوائم تشغيل الاخرين",
+    "singles": "أغاني فردية"
+}

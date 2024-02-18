@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:dio/dio.dart';
-//import 'package:audiotags/audiotags.dart';
+import 'package:audiotags/audiotags.dart';
 import 'package:flutter/foundation.dart';
-//import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
 import 'package:hive/hive.dart';
@@ -183,25 +183,25 @@ class Downloader extends GetxService {
       Get.find<LibrarySongsController>().librarySongsList.add(song);
       printINFO("Downloaded successfully");
       try {
-        /// Removed AudioTags as using this package, app is flagged as TROJ_GEN.R002V01K623 by TrendMicro-HouseCall
-        //   final imageUrl = th.Thumbnail(song.artUri!.toString()).sizewith(540);
-        //   Tag tag = Tag(
-        //       title: song.title,
-        //       trackArtist: song.artist,
-        //       album: song.album,
-        //       albumArtist: song.artist,
-        //       genre: song.genre,
-        //       pictures: [
-        //         Picture(
-        //             bytes: (await NetworkAssetBundle(Uri.parse((imageUrl)))
-        //                     .load(imageUrl))
-        //                 .buffer
-        //                 .asUint8List(),
-        //             mimeType: MimeType.none,
-        //             pictureType: PictureType.coverFront)
-        //       ]);
+        /// Reverted -- Removed AudioTags as using this package, app is flagged as TROJ_GEN.R002V01K623 by TrendMicro-HouseCall
+          final imageUrl = song.artUri!.toString();
+          Tag tag = Tag(
+              title: song.title,
+              trackArtist: song.artist,
+              album: song.album,
+              albumArtist: song.artist,
+              genre: song.genre,
+              pictures: [
+                Picture(
+                    bytes: (await NetworkAssetBundle(Uri.parse((imageUrl)))
+                            .load(imageUrl))
+                        .buffer
+                        .asUint8List(),
+                    mimeType: MimeType.none,
+                    pictureType: PictureType.coverFront)
+              ]);
 
-        //   await AudioTags.write(filePath, tag);
+          await AudioTags.write(filePath, tag);
       } catch (e) {
         printERROR("$e");
       }

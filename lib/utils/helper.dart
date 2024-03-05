@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '/ui/navigator.dart';
+import '/ui/widgets/sort_widget.dart';
 
 void printERROR(dynamic text, {String tag = "Harmony Music"}) {
   debugPrint("\x1B[31m[$tag]: $text\x1B[34m");
@@ -27,71 +28,129 @@ String? getCurrentRouteName() {
 
 void sortSongsNVideos(
   List songlist,
-  bool sortByName,
-  bool sortByDate,
-  bool sortByDuration,
+  SortType sortType,
   bool isAscending,
 ) {
-  if (sortByName) {
-    songlist.sort((a, b) => isAscending
-        ? a.title.toLowerCase().compareTo(b.title.toLowerCase())
-        : b.title.toLowerCase().compareTo(a.title.toLowerCase()));
-  } else if (sortByDate) {
-    songlist.sort((a, b) {
-      if (a.extras!['date'] == null || b.extras!['date'] == null) {
-        return 0.compareTo(0);
-      }
-      return isAscending
-          ? (a.extras!['date']).compareTo(b.extras!['date'])
-          : (b.extras!['date']).compareTo(a.extras!['date']);
-    });
-  } else if (sortByDuration) {
-    songlist.sort((a, b) => isAscending
-        ? (a.duration ?? Duration.zero).compareTo(b.duration ?? Duration.zero)
-        : (b.duration ?? Duration.zero).compareTo(a.duration ?? Duration.zero));
+  Comparator compareFunction;
+
+  switch (sortType) {
+    case SortType.Date:
+      compareFunction = (a, b) {
+        if (a.extras!['date'] == null || b.extras!['date'] == null) {
+          return 0.compareTo(0);
+        }
+        return a.extras!['date'].compareTo(b.extras!['date']);
+      };
+      break;
+    case SortType.Duration:
+      compareFunction = (a, b) => (a.duration ?? Duration.zero).compareTo(b.duration ?? Duration.zero);
+    case SortType.Name:
+    default:
+      compareFunction = (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase());
+      break;
+  }
+
+  songlist.sort(compareFunction);
+
+  if (!isAscending) {
+    List reversed = songlist.reversed.toList();
+    songlist.clear();
+    songlist.addAll(reversed);
   }
 }
 
 void sortAlbumNSingles(
   List albumList,
-  bool sortByName,
-  bool sortByDate,
+  SortType sortType,
   bool isAscending,
 ) {
-  if (sortByName) {
-    albumList.sort((a, b) => isAscending
-        ? a.title.toLowerCase().compareTo(b.title.toLowerCase())
-        : b.title.toLowerCase().compareTo(a.title.toLowerCase()));
-  } else if (sortByDate) {
-    albumList.sort((a, b) {
+  Comparator compareFunction;
+
+  switch (sortType) {
+    case SortType.Date:
+      compareFunction = (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase());
+      break;
+    case SortType.Name:
+    default:
+      compareFunction = (a, b) {
       if (a.year == null || b.year == null) {
         return 0.compareTo(0);
       }
-      return isAscending
-          ? a.year!.compareTo(b.year!)
-          : b.year!.compareTo(a.year!);
-    });
+      return a.year!.compareTo(b.year!);
+    };
+      break;
+  }
+
+  albumList.sort(compareFunction);
+
+  if (!isAscending) {
+    List reversed = albumList.reversed.toList();
+    albumList.clear();
+    albumList.addAll(reversed);
   }
 }
 
 void sortPlayLists(
   List playlists,
-  bool sortByName,
+  SortType sortType,
   bool isAscending,
 ) {
-  playlists.sort((a, b) => isAscending
-      ? a.title.toLowerCase().compareTo(b.title.toLowerCase())
-      : b.title.toLowerCase().compareTo(a.title.toLowerCase()));
+  Comparator compareFunction;
+  int titleSort(a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase());
+
+  switch (sortType) {
+    case SortType.RecentlyPlayed:
+      compareFunction = (a, b) {
+        DateTime? alp = a.lastPlayed;
+        DateTime? blp = b.lastPlayed;
+        if (alp == null && blp == null) {
+          return titleSort(a, b);
+        }
+        if (alp == null) {
+          return 1;
+        }
+        if (blp == null) {
+          return -1;
+        }
+        return blp.compareTo(alp);
+      };
+      break;
+    case SortType.Name:
+    default:
+      compareFunction = titleSort;
+      break;
+  }
+
+  playlists.sort(compareFunction);
+
+  if (!isAscending) {
+    List reversed = playlists.reversed.toList();
+    playlists.clear();
+    playlists.addAll(reversed);
+  }
 }
 
 void sortArtist(
   List artistList,
-  bool sortByName,
+  SortType sortType,
   bool isAscending,
 ) {
-  artistList.sort((a, b) => isAscending
-      ? a.name.toLowerCase().compareTo(b.name.toLowerCase())
-      : b.name.toLowerCase().compareTo(a.name.toLowerCase()));
+  Comparator compareFunction;
+
+  switch (sortType) {
+    case SortType.Name:
+    default:
+      compareFunction = (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      break;
+  }
+
+  artistList.sort(compareFunction);
+
+  if (!isAscending) {
+    List reversed = artistList.reversed.toList();
+    artistList.clear();
+    artistList.addAll(reversed);
+  }
 }
 
 /// Return true if new version available

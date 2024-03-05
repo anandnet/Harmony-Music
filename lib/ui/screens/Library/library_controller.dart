@@ -71,11 +71,10 @@ class LibrarySongsController extends GetxController {
     isSongFetched.value = true;
   }
 
-  void onSort(
-      bool sortByName, bool sortByDate, bool sortByDuration, bool isAscending) {
+  void onSort(SortType sortType, bool isAscending) {
     final songlist = librarySongsList.toList();
     sortSongsNVideos(
-        songlist, sortByName, sortByDate, sortByDuration, isAscending);
+        songlist, sortType, isAscending);
     librarySongsList.value = songlist;
   }
 
@@ -409,10 +408,10 @@ class LibraryPlaylistsController extends GetxController
     syncPipedPlaylist();
   }
 
-  void onSort(bool sortByName, bool isAscending) {
+  void onSort(SortType sortType, bool isAscending) {
     final playlists = libraryPlaylists.toList();
     playlists.removeRange(0, 4);
-    sortPlayLists(playlists, sortByName, isAscending);
+    sortPlayLists(playlists, sortType, isAscending);
     playlists.insertAll(0, initPlst);
     libraryPlaylists.value = playlists;
   }
@@ -464,9 +463,9 @@ class LibraryAlbumsController extends GetxController {
     box.close();
   }
 
-  void onSort(bool sortByName, bool sortByDate, bool isAscending) {
+  void onSort(SortType sortType, bool isAscending) {
     final albumList = libraryAlbums.toList();
-    sortAlbumNSingles(albumList, sortByName, sortByDate, isAscending);
+    sortAlbumNSingles(albumList, sortType, isAscending);
     libraryAlbums.value = albumList;
   }
 
@@ -509,9 +508,9 @@ class LibraryArtistsController extends GetxController {
     box.close();
   }
 
-  void onSort(bool sortByName, bool isAscending) {
+  void onSort(SortType sortType, bool isAscending) {
     final artistList = libraryArtists.toList();
-    sortArtist(artistList, sortByName, isAscending);
+    sortArtist(artistList, sortType, isAscending);
     libraryArtists.value = artistList;
   }
 

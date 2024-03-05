@@ -218,9 +218,9 @@ class PlayListNAlbumScreenController extends GetxController {
     isDownloaded.value = downloaded;
   }
 
-  void onSort(bool sortByName, bool sortByDuration, bool isAscending) {
+  void onSort(SortType sortType, bool isAscending) {
     final songlist_ = songList.toList();
-    sortSongsNVideos(songlist_, sortByName, false, sortByDuration, isAscending);
+    sortSongsNVideos(songlist_, sortType, isAscending);
     songList.value = songlist_;
   }
 

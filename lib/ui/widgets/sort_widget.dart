@@ -3,6 +3,27 @@ import 'package:get/get.dart';
 
 enum OperationMode { arrange, delete, addToPlaylist, none }
 
+enum SortType {
+  Name,
+  Date,
+  Duration,
+  RecentlyPlayed,
+}
+
+Set<SortType> buildSortTypeSet([bool dateRequired = false, bool durationRequired = false, bool recentlyPlayedRequired = false]) {
+  Set<SortType> requiredSortTypes = {};
+  if (dateRequired) {
+    requiredSortTypes.add(SortType.Date);
+  }
+  if (durationRequired) {
+    requiredSortTypes.add(SortType.Duration);
+  }
+  if (recentlyPlayedRequired) {
+    requiredSortTypes.add(SortType.RecentlyPlayed);
+  }
+  return requiredSortTypes;
+}
+
 class SortWidget extends StatelessWidget {
   /// Additional operations - Delete Multiple songs, Rearrage offline playlist, Add Multiple songs to playlist
   const SortWidget({
@@ -11,8 +32,7 @@ class SortWidget extends StatelessWidget {
     this.itemCountTitle = '',
     this.titleLeftPadding = 18,
     this.isAdditionalOperationRequired = true,
-    this.isDateOptionRequired = false,
-    this.isDurationOptionRequired = false,
+    this.requiredSortTypes = const <SortType>{SortType.Name},
     this.isSearchFeatureRequired = false,
     this.isPlaylistRearrageFeatureRequired = false,
     this.isSongDeletetioFeatureRequired = false,
@@ -33,8 +53,7 @@ class SortWidget extends StatelessWidget {
   final IconData? itemIcon;
   final bool isAdditionalOperationRequired;
   final double titleLeftPadding;
-  final bool isDurationOptionRequired;
-  final bool isDateOptionRequired;
+  final Set<SortType> requiredSortTypes;
   final bool isSearchFeatureRequired;
   final bool isSongDeletetioFeatureRequired;
   final bool isPlaylistRearrageFeatureRequired;
@@ -45,7 +64,7 @@ class SortWidget extends StatelessWidget {
   final Function(String?)? onSearchStart;
   final Function(String, String?)? onSearch;
   final Function(String?)? onSearchClose;
-  final Function(bool, bool, bool, bool) onSort;
+  final Function(SortType, bool) onSort;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +91,7 @@ class SortWidget extends StatelessWidget {
               ),
               Obx(
                 () => IconButton(
-                  color: controller.sortByName.value
+                  color: controller.sortType.value == SortType.Name
                       ? Theme.of(context).textTheme.bodySmall!.color
                       : Theme.of(context).colorScheme.secondary,
                   icon: const Icon(Icons.sort_by_alpha_rounded),
@@ -85,9 +104,9 @@ class SortWidget extends StatelessWidget {
                   },
                 ),
               ),
-              isDateOptionRequired
+              requiredSortTypes.contains(SortType.Date)
                   ? Obx(() => IconButton(
-                        color: controller.sortByDate.value
+                        color: controller.sortType.value == SortType.Date
                             ? Theme.of(context).textTheme.bodySmall!.color
                             : Theme.of(context).colorScheme.secondary,
                         icon: const Icon(Icons.calendar_month_rounded),
@@ -100,9 +119,9 @@ class SortWidget extends StatelessWidget {
                         },
                       ))
                   : const SizedBox.shrink(),
-              isDurationOptionRequired
+              requiredSortTypes.contains(SortType.Duration)
                   ? Obx(() => IconButton(
-                        color: controller.sortByDuration.value
+                        color: controller.sortType.value == SortType.Duration
                             ? Theme.of(context).textTheme.bodySmall!.color
                             : Theme.of(context).colorScheme.secondary,
                         icon: const Icon(Icons.timer_rounded),
@@ -313,10 +332,8 @@ class SortWidget extends StatelessWidget {
 }
 
 class SortWidgetController extends GetxController {
-  final sortByName = true.obs;
+  final Rx<SortType> sortType = SortType.Name.obs;
   final isAscending = true.obs;
-  final sortByDate = false.obs;
-  final sortByDuration = false.obs;
   final isSearchingEnabled = false.obs;
   final isRearraningEnabled = false.obs;
   final isDeletionEnabled = false.obs;
@@ -335,33 +352,23 @@ class SortWidgetController extends GetxController {
   }
 
   void onSortByName(Function onSort) {
-    sortByName.value = true;
-    sortByDate.value = false;
-    sortByDuration.value = false;
-    onSort(sortByName.value, sortByDate.value, sortByDuration.value,
-        isAscending.value);
+    sortType.value = SortType.Name;
+    onSort(sortType.value, isAscending.value);
   }
 
   void onSortByDuration(Function onSort) {
-    sortByName.value = false;
-    sortByDate.value = false;
-    sortByDuration.value = true;
-    onSort(sortByName.value, sortByDate.value, sortByDuration.value,
-        isAscending.value);
+    sortType.value = SortType.Duration;
+    onSort(sortType.value, isAscending.value);
   }
 
   void onSortByDate(Function onSort) {
-    sortByName.value = false;
-    sortByDate.value = true;
-    sortByDuration.value = false;
-    onSort(sortByName.value, sortByDate.value, sortByDuration.value,
-        isAscending.value);
+    sortType.value = SortType.Date;
+    onSort(sortType.value, isAscending.value);
   }
 
   void onAscendNDescend(Function onSort) {
     isAscending.value = !isAscending.value;
-    onSort(sortByName.value, sortByDate.value, sortByDuration.value,
-        isAscending.value);
+    onSort(sortType.value, isAscending.value);
   }
 
   void toggleSearch() {

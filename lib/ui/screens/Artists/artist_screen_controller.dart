@@ -160,7 +160,7 @@ class ArtistScreenController extends GetxController
     continuationInProgress = false;
   }
 
-  void onSort(bool sortByName, bool sortByDate, bool sortByDuration,
+  void onSort(SortType sortType,
       bool isAscending, String title) {
     if (sepataredContent[title] == null) {
       return;
@@ -168,11 +168,11 @@ class ArtistScreenController extends GetxController
     if (title == "Songs" || title == "Videos") {
       final songlist = sepataredContent[title]['results'].toList();
       sortSongsNVideos(
-          songlist, sortByName, sortByDate, sortByDuration, isAscending);
+          songlist, sortType, isAscending);
       sepataredContent[title]['results'] = songlist;
     } else if (title == "Albums" || title == "Singles") {
       final albumList = sepataredContent[title]['results'].toList();
-      sortAlbumNSingles(albumList, sortByName, sortByDate, isAscending);
+      sortAlbumNSingles(albumList, sortType, isAscending);
       sepataredContent[title]['results'] = albumList;
     }
     sepataredContent.refresh();

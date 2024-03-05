@@ -26,7 +26,8 @@ class Playlist {
       required this.thumbnailUrl,
       this.songCount,
       this.isPipedPlaylist = false,
-      this.isCloudPlaylist = true});
+      this.isCloudPlaylist = true,
+      this.lastPlayed});
   final String playlistId;
   String title;
   final bool isPipedPlaylist;
@@ -34,6 +35,7 @@ class Playlist {
   final String thumbnailUrl;
   final String? songCount;
   final bool isCloudPlaylist;
+  DateTime? lastPlayed;
 
   factory Playlist.fromJson(Map<dynamic, dynamic> json) => Playlist(
       title: json["title"],
@@ -42,7 +44,8 @@ class Playlist {
       description: json["description"],
       songCount: json['itemCount'],
       isPipedPlaylist: json["isPipedPlaylist"] ?? false,
-      isCloudPlaylist: json["isCloudPlaylist"] ?? true);
+      isCloudPlaylist: json["isCloudPlaylist"] ?? true,
+      lastPlayed: json['lastPlayed']);
 
   Map<String, dynamic> toJson() => {
         "title": title,
@@ -53,10 +56,15 @@ class Playlist {
         ],
         "itemCount": songCount,
         "isPipedPlaylist": isPipedPlaylist,
-        "isCloudPlaylist": isCloudPlaylist
+        "isCloudPlaylist": isCloudPlaylist,
+        "lastPlayed": lastPlayed
       };
 
   set newTitle(String title) {
     this.title = title;
+  }
+
+  set updateLastPlayed() {
+    lastPlayed = DateTime.now();
   }
 }

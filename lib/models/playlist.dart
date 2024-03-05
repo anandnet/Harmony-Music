@@ -1,3 +1,6 @@
+import 'package:harmonymusic/utils/helper.dart';
+import 'package:hive/hive.dart';
+
 import '../models/thumbnail.dart';
 
 class PlaylistContent {
@@ -64,7 +67,20 @@ class Playlist {
     this.title = title;
   }
 
-  set updateLastPlayed() {
+  void updateLastPlayed() async {
     lastPlayed = DateTime.now();
+    if (isPipedPlaylist) {
+      final box = await Hive.openBox('pipedPlaylistAdditionalMetadata');
+      var pipedMetadata = box.get(playlistId, defaultValue: {});
+      pipedMetadata['lastPlayed'] = lastPlayed;
+      box.put(playlistId, pipedMetadata);
+      await box.close();
+    } else {
+      final box = await Hive.openBox("LibraryPlaylists");
+      if (box.containsKey(playlistId)) {
+        box.put(playlistId, toJson());
+      }
+      await box.close();
+    }
   }
 }

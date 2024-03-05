@@ -134,6 +134,21 @@ class SortWidget extends StatelessWidget {
                         },
                       ))
                   : const SizedBox.shrink(),
+              requiredSortTypes.contains(SortType.RecentlyPlayed)
+                  ? Obx(() => IconButton(
+                      color: controller.sortType.value == SortType.RecentlyPlayed
+                          ? Theme.of(context).textTheme.bodySmall!.color
+                          : Theme.of(context).colorScheme.secondary,
+                      icon: const Icon(Icons.history),
+                      iconSize: 20,
+                      splashRadius: 20,
+                      visualDensity:
+                          const VisualDensity(horizontal: -3, vertical: -3),
+                      onPressed: () {
+                        controller.onSortByRecentlyPlayed(onSort);
+                      }
+                    ))
+                  : const SizedBox.shrink(),
               const Expanded(child: SizedBox()),
               Obx(
                 () => IconButton(
@@ -363,6 +378,11 @@ class SortWidgetController extends GetxController {
 
   void onSortByDate(Function onSort) {
     sortType.value = SortType.Date;
+    onSort(sortType.value, isAscending.value);
+  }
+
+  void onSortByRecentlyPlayed(Function onSort) {
+    sortType.value = SortType.RecentlyPlayed;
     onSort(sortType.value, isAscending.value);
   }
 

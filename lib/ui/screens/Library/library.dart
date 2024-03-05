@@ -41,12 +41,11 @@ class SongsLibraryWidget extends StatelessWidget {
               itemCountTitle: "${libSongsController.librarySongsList.length}",
               itemIcon: Icons.music_note_rounded,
               titleLeftPadding: 9,
-              isDateOptionRequired: true,
-              isDurationOptionRequired: true,
+              requiredSortTypes: buildSortTypeSet(true, true),
               isSearchFeatureRequired: true,
               isSongDeletetioFeatureRequired: true,
-              onSort: (p0, p1, p2, p3) {
-                libSongsController.onSort(p0, p1, p2, p3);
+              onSort: (type, ascending) {
+                libSongsController.onSort(type, ascending);
               },
               onSearch: libSongsController.onSearch,
               onSearchClose: libSongsController.onSearchClose,
@@ -149,9 +148,9 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                     isSearchFeatureRequired: true,
                     itemCountTitle:
                         "${libralbumCntrller.libraryAlbums.length} ${"items".tr}",
-                    isDateOptionRequired: isAlbumContent,
-                    onSort: (a, b, c, d) {
-                      libralbumCntrller.onSort(a, b, d);
+                    requiredSortTypes: buildSortTypeSet(true),
+                    onSort: (type, ascending) {
+                      libralbumCntrller.onSort(type, ascending);
                     },
                     onSearch: libralbumCntrller.onSearch,
                     onSearchClose: libralbumCntrller.onSearchClose,
@@ -163,9 +162,9 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                     isSearchFeatureRequired: true,
                     itemCountTitle:
                         "${librplstCntrller.libraryPlaylists.length} ${"items".tr}",
-                    isDateOptionRequired: isAlbumContent,
-                    onSort: (a, b, c, d) {
-                      librplstCntrller.onSort(a, d);
+                    requiredSortTypes: buildSortTypeSet(),
+                    onSort: (type, ascending) {
+                      librplstCntrller.onSort(type, ascending);
                     },
                     onSearch: librplstCntrller.onSearch,
                     onSearchClose: librplstCntrller.onSearchClose,
@@ -241,8 +240,8 @@ class LibraryArtistWidget extends StatelessWidget {
               isAdditionalOperationRequired: false,
               isSearchFeatureRequired: true,
               itemCountTitle: "${cntrller.libraryArtists.length} ${"items".tr}",
-              onSort: (sortByName, sortByDate, sortByDuration, isAscending) {
-                cntrller.onSort(sortByName, isAscending);
+              onSort: (type, ascending) {
+                cntrller.onSort(type, ascending);
               },
               onSearch: cntrller.onSearch,
               onSearchClose: cntrller.onSearchClose,

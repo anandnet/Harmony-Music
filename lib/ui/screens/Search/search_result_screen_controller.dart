@@ -5,6 +5,7 @@ import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart
 import '../../../utils/helper.dart';
 import '../Home/home_screen_controller.dart';
 import '/services/music_service.dart';
+import '/ui/widgets/sort_widget.dart';
 
 class SearchResultScreenController extends GetxController
     with GetTickerProviderStateMixin {
@@ -141,24 +142,23 @@ class SearchResultScreenController extends GetxController
     }
   }
 
-  void onSort(bool sortByName, bool sortByDate, bool sortByDuration,
-      bool isAscending, String title) {
+  void onSort(SortType sortType, bool isAscending, String title) {
     if (title == "Songs" || title == "Videos") {
       final songList = separatedResultContent[title].toList();
       sortSongsNVideos(
-          songList, sortByName, sortByDate, sortByDuration, isAscending);
+          songList, sortType, isAscending);
       separatedResultContent[title] = songList;
     } else if (title.contains('playlists')) {
       final playlists = separatedResultContent[title].toList();
-      sortPlayLists(playlists, sortByName, isAscending);
+      sortPlayLists(playlists, sortType, isAscending);
       separatedResultContent[title] = playlists;
     } else if (title == "Artists") {
       final artistList = separatedResultContent[title].toList();
-      sortArtist(artistList, sortByName, isAscending);
+      sortArtist(artistList, sortType, isAscending);
       separatedResultContent[title] = artistList;
     } else if (title == "Albums") {
       final albumList = separatedResultContent[title].toList();
-      sortAlbumNSingles(albumList, sortByName, sortByDate, isAscending);
+      sortAlbumNSingles(albumList, sortType, isAscending);
       separatedResultContent[title] = albumList;
     }
   }

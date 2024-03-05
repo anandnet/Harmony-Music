@@ -594,7 +594,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                         "${playListNAlbumScreenController.songList.length}",
                                     itemIcon: Icons.music_note_rounded,
                                     titleLeftPadding: 9,
-                                    isDurationOptionRequired: true,
+                                    requiredSortTypes: buildSortTypeSet(false, true),
                                     isPlaylistRearrageFeatureRequired:
                                         content.playlistId != "LIBRP" &&
                                             content.playlistId !=
@@ -602,9 +602,9 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                             content.playlistId != "SongsCache",
                                     isSongDeletetioFeatureRequired:
                                         content.playlistId != "LIBRP",
-                                    onSort: (a, b, c, d) {
+                                    onSort: (type, ascending) {
                                       playListNAlbumScreenController.onSort(
-                                          a, c, d);
+                                          type, ascending);
                                     },
                                     onSearch:
                                         playListNAlbumScreenController.onSearch,
@@ -644,10 +644,10 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                     "${playListNAlbumScreenController.songList.length}",
                                 itemIcon: Icons.music_note_rounded,
                                 titleLeftPadding: 9,
-                                isDurationOptionRequired: true,
-                                onSort: (a, b, c, d) {
+                                requiredSortTypes: buildSortTypeSet(false, true),
+                                onSort: (type, ascending) {
                                   playListNAlbumScreenController.onSort(
-                                      a, c, d);
+                                      type, ascending);
                                 },
                                 onSearch:
                                     playListNAlbumScreenController.onSearch,

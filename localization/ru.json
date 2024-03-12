@@ -142,5 +142,9 @@
     "synced": "Синхронизировано",
     "library": "Библиотека",
     "minutes": "минуты",
-    "cancelTimerAlert": "Таймер сна отключен"
+    "cancelTimerAlert": "Таймер сна отключен",
+    "add5Minutes": "Добавить 5 минут",
+    "reArrangePlaylist": "Упорядочить плейлист",
+    "removeMultiple": "Убрать несколько песен",
+    "addMultipleSongs": "Добавить песни в плейлист"
 }

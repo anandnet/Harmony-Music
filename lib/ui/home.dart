@@ -34,19 +34,20 @@ class Home extends StatelessWidget {
             75 + Get.mediaQuery.padding.bottom;
       }
     }
-    return WillPopScope(
-        onWillPop: () async {
+    return PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) {
+          if (didPop) return;
           if (playerController.playerPanelController.isPanelOpen) {
             playerController.playerPanelController.close();
-            return false;
           } else {
             if (Get.nestedKey(ScreenNavigationSetup.id)!
                 .currentState!
                 .canPop()) {
               Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
-              return false;
+            } else {
+              Navigator.of(context).pop();
             }
-            return true;
           }
         },
         child: Obx(

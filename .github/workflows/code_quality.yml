@@ -1,5 +1,6 @@
 name: Code quality check
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main

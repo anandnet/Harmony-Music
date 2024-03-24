@@ -28,8 +28,11 @@ class Player extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final PlayerController playerController = Get.find<PlayerController>();
     final ThemeController themeController = Get.find<ThemeController>();
-    double playerArtImageSize = size.width - ((size.height < 750) ? 90 : 60);
-    playerArtImageSize = playerArtImageSize > 300 ? 300 : playerArtImageSize;
+    double playerArtImageSize = size.width -
+        ((size.height < 750)
+                ? 90
+                : 60);
+    playerArtImageSize = playerArtImageSize > 350 ? 350 : playerArtImageSize;
     return Scaffold(
       body: SlidingUpPanel(
           minHeight: 65 + Get.mediaQuery.padding.bottom,
@@ -37,7 +40,7 @@ class Player extends StatelessWidget {
           isDraggable: !GetPlatform.isDesktop,
           collapsed: InkWell(
             onTap: () {
-              if(GetPlatform.isDesktop){
+              if (GetPlatform.isDesktop) {
                 playerController.homeScaffoldkey.currentState!.openEndDrawer();
               }
             },

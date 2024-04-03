@@ -41,6 +41,7 @@
     "enqueueSong": "Enqueue this song",
     "goToAlbum": "Go to album",
     "viewArtist": "View Artist",
+    "openIn": "Open in",
     "shareSong": "Share this song",
     "removeFromPlaylist": "Remove from playlist",
     "removeFromQueue": "Remove from queue",

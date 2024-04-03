@@ -2,7 +2,9 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '/services/piped_service.dart';
 import '/ui/widgets/sleep_timer_bottom_sheet.dart';
@@ -226,6 +228,34 @@ class SongInfoBottomSheet extends StatelessWidget {
                   )
                 : const SizedBox.shrink(),
           ),
+          ListTile(
+            leading: const Icon(Icons.open_with),
+            title: Text("openIn".tr),
+            trailing: SizedBox(
+              width: 200,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    splashRadius: 10,
+                    onPressed: () {
+                      launchUrl(
+                          Uri.parse("https://youtube.com/watch?v=${song.id}"));
+                    },
+                    icon: const Icon(Ionicons.logo_youtube),
+                  ),
+                  IconButton(
+                    splashRadius: 10,
+                    onPressed: () {
+                      launchUrl(Uri.parse(
+                          "https://music.youtube.com/watch?v=${song.id}"));
+                    },
+                    icon: const Icon(Ionicons.play_circle),
+                  )
+                ],
+              ),
+            ),
+          ),
           if (!calledFromPlayer)
             ListTile(
               contentPadding: const EdgeInsets.only(left: 15),
@@ -341,9 +371,10 @@ class SongInfoController extends GetxController {
     } else if (playlist.playlistId == "SongDownloads") {
       box.delete(item.id);
       Get.find<LibrarySongsController>().removeSong(item, true);
-    } else if(!playlist.isPipedPlaylist) {
+    } else if (!playlist.isPipedPlaylist) {
       //Other playlist song case
-      final index = box.values.toList().indexWhere((ele) => ele['videoId'] == item.id);
+      final index =
+          box.values.toList().indexWhere((ele) => ele['videoId'] == item.id);
       await box.deleteAt(index);
     }
 
@@ -368,7 +399,8 @@ class SongInfoController extends GetxController {
       // ignore: empty_catches
     } catch (e) {}
 
-    if (playlist.playlistId == "SongDownloads" || playlist.playlistId == "SongsCache") return;
+    if (playlist.playlistId == "SongDownloads" ||
+        playlist.playlistId == "SongsCache") return;
     box.close();
   }
 

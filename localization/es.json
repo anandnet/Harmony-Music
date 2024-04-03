@@ -177,5 +177,6 @@
     "disableTransitionAnimationDes": "Active esta opción para desactivar la animación de la transición de las pestañas",
     "close": "Cerrar",
     "exportMsg": "Archivos exportados correctamente",
-    "clearImgCacheAlert": "Imágenes en la chache borradas con éxito"
+    "clearImgCacheAlert": "Imágenes en la chache borradas con éxito",
+    "openIn": "Abrir en"
 }

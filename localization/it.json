@@ -19,5 +19,18 @@
     "emptyPlaylist": "Playlist vuota!",
     "communityplaylists": "Playlist della community",
     "cachedOrOffline": "Salvati nella cache/Offline",
-    "singles": "Singoli"
+    "singles": "Singoli",
+    "enqueueAll": "Metti in coda tutte",
+    "renamePlaylist": "Rinomina Playlist",
+    "create": "Crea",
+    "createnAdd": "Crea & aggiungi",
+    "reArrangePlaylist": "Riordina Playlist",
+    "removeMultiple": "Rimuovi multiple canzoni",
+    "addMultipleSongs": "Aggiungi canzoni alla playlist",
+    "downloads": "Scaricati",
+    "cancel": "Annulla",
+    "rename": "Rinomina",
+    "removePlaylist": "Rimuovi Playlist",
+    "CreateNewPlaylist": "Crea una nuova Playlist",
+    "startRadio": "Inizia Radio"
 }

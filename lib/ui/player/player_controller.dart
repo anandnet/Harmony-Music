@@ -37,6 +37,7 @@ class PlayerController extends GetxController {
   final timerDurationLeft = 0.obs;
   final isSleepTimerActive = false.obs;
   final isSleepEndOfSongActive = false.obs;
+  final volume = 100.obs;
 
   final progressBarStatus = ProgressBarState(
           buffered: Duration.zero, current: Duration.zero, total: Duration.zero)
@@ -91,6 +92,9 @@ class PlayerController extends GetxController {
     _setInitLyricsMode();
     isLoopModeEnabled.value =
         Hive.box("AppPrefs").get("isLoopModeEnabled") ?? false;
+    if (GetPlatform.isDesktop) {
+      setVolume(Hive.box("AppPrefs").get("volume") ?? 100);
+    }
   }
 
   void _setInitLyricsMode() {
@@ -437,6 +441,27 @@ class PlayerController extends GetxController {
     isLoopModeEnabled.value = !isLoopModeEnabled.value;
     await Hive.box("AppPrefs")
         .put("isLoopModeEnabled", isLoopModeEnabled.value);
+  }
+
+  Future<void> setVolume(int value) async {
+    _audioHandler.customAction("setVolume", {"value": value});
+    volume.value = value;
+    await Hive.box("AppPrefs").put("volume", value);
+  }
+
+  Future<void> mute() async {
+    int? vol;
+    if (volume.value != 0) {
+      vol = 0;
+    } else {
+      vol = await Hive.box("AppPrefs").get("volume");
+      if (vol == 0) {
+        vol = 10;
+        await Hive.box("AppPrefs").put("volume", vol);
+      }
+    }
+    _audioHandler.customAction("setVolume", {"value": vol!});
+    volume.value = vol;
   }
 
   Future<void> _checkFav() async {

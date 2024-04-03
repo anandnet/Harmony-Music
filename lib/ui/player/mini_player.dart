@@ -109,7 +109,7 @@ class MiniPlayer extends StatelessWidget {
                               SizedBox(
                                 height: 20,
                                 child: Text(
-                                  playerController.currentSong.value!=null
+                                  playerController.currentSong.value != null
                                       ? playerController
                                           .currentSong.value!.title
                                       : "",
@@ -122,7 +122,7 @@ class MiniPlayer extends StatelessWidget {
                                 height: 20,
                                 child: MarqueeWidget(
                                   child: Text(
-                                    playerController.currentSong.value !=null
+                                    playerController.currentSong.value != null
                                         ? playerController
                                             .currentSong.value!.artist!
                                         : "",
@@ -244,73 +244,134 @@ class MiniPlayer extends StatelessWidget {
                             child: Padding(
                               padding: EdgeInsets.only(
                                   right: size.width < 1004 ? 0 : 40.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      playerController
-                                          .homeScaffoldkey.currentState!
-                                          .openEndDrawer();
-                                    },
-                                    icon: const Icon(Icons.queue_music),
-                                  ),
-                                  
-                                  if (size.width > 860)
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: IconButton(
-                                        onPressed: () {
-                                          showModalBottomSheet(
-                                            constraints: const BoxConstraints(
-                                                maxWidth: 500),
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.vertical(
-                                                      top: Radius.circular(
-                                                          10.0)),
+                                  Container(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    height: 20,
+                                    width: 180,
+                                    child: Obx(() {
+                                      final volume =
+                                          playerController.volume.value;
+                                      return Row(
+                                        children: [
+                                          SizedBox(
+                                              width: 20,
+                                              child: InkWell(
+                                                onTap: playerController.mute,
+                                                child: Icon(
+                                                  volume == 0
+                                                      ? Icons.volume_off
+                                                      : volume > 0 && volume < 50
+                                                          ? Icons.volume_down
+                                                          : Icons.volume_up,
+                                                  size: 20,
+                                                ),
+                                              )),
+                                          Expanded(
+                                            child: SliderTheme(
+                                              data: SliderTheme.of(context)
+                                                  .copyWith(
+                                                activeTrackColor: Colors.white,
+                                                trackHeight: 2,
+                                                thumbShape:
+                                                    const RoundSliderThumbShape(
+                                                        enabledThumbRadius:
+                                                            6.0),
+                                                overlayShape:
+                                                    const RoundSliderOverlayShape(
+                                                        overlayRadius: 10.0),
+                                              ),
+                                              child: Slider(
+                                                value: playerController.volume.value/100,
+                                                onChanged: (value) {
+                                                  playerController.setVolume((value*100).toInt());
+                                                },
+                                              ),
                                             ),
-                                            isScrollControlled: true,
-                                            context: playerController
-                                                .homeScaffoldkey
-                                                .currentState!
-                                                .context,
-                                            barrierColor: Colors.transparent
-                                                .withAlpha(100),
-                                            builder: (context) =>
-                                                const SleepTimerBottomSheet(),
-                                          );
-                                        },
-                                        icon: Icon(playerController
-                                                .isSleepTimerActive.isTrue
-                                            ? Icons.timer
-                                            : Icons.timer_outlined),
-                                      ),
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            playerController
+                                                .homeScaffoldkey.currentState!
+                                                .openEndDrawer();
+                                          },
+                                          icon: const Icon(Icons.queue_music),
+                                        ),
+                                        if (size.width > 860)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10.0),
+                                            child: IconButton(
+                                              onPressed: () {
+                                                showModalBottomSheet(
+                                                  constraints:
+                                                      const BoxConstraints(
+                                                          maxWidth: 500),
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.vertical(
+                                                            top:
+                                                                Radius.circular(
+                                                                    10.0)),
+                                                  ),
+                                                  isScrollControlled: true,
+                                                  context: playerController
+                                                      .homeScaffoldkey
+                                                      .currentState!
+                                                      .context,
+                                                  barrierColor: Colors
+                                                      .transparent
+                                                      .withAlpha(100),
+                                                  builder: (context) =>
+                                                      const SleepTimerBottomSheet(),
+                                                );
+                                              },
+                                              icon: Icon(playerController
+                                                      .isSleepTimerActive.isTrue
+                                                  ? Icons.timer
+                                                  : Icons.timer_outlined),
+                                            ),
+                                          ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        const SongDownloadButton(
+                                          calledFromPlayer: true,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            final currentSong = playerController
+                                                .currentSong.value;
+                                            if (currentSong != null) {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    AddToPlaylist(
+                                                        [currentSong]),
+                                              ).whenComplete(() => Get.delete<
+                                                  AddToPlaylistController>());
+                                            }
+                                          },
+                                          icon: const Icon(Icons.playlist_add),
+                                        ),
+                                      ],
                                     ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  const SongDownloadButton(
-                                    calledFromPlayer: true,
-                                  ),
-                                const SizedBox(
-                                    width: 10,
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      final currentSong =
-                                          playerController.currentSong.value;
-                                      if (currentSong != null) {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              AddToPlaylist([currentSong]),
-                                        ).whenComplete(() => Get.delete<
-                                            AddToPlaylistController>());
-                                      }
-                                    },
-                                    icon: const Icon(Icons.playlist_add),
                                   ),
                                 ],
                               ),

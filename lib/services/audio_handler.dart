@@ -460,6 +460,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       await DeviceEqualizer().open(_player.androidAudioSessionId!);
     } else if (name == "saveSession") {
       await saveSessionData();
+    }else if(name == "setVolume"){
+      _player.setVolume(extras!['value']/100);
     }
   }
 

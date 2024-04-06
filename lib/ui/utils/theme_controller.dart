@@ -128,6 +128,15 @@ class ThemeController extends GetxController {
                 letterSpacing: 1,
                 fontWeight: FontWeight.bold),
           ),
+          switchTheme: SwitchThemeData(
+            thumbColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.selected)) {
+                return primarySwatch[100]!.withLightness(50);
+              }
+              return Colors.white.withOpacity(0.3);
+            }),
+          ),
           indicatorColor: Colors.white,
           progressIndicatorTheme: ProgressIndicatorThemeData(
               linearTrackColor: (primarySwatch[300])!.computeLuminance() > 0.3
@@ -215,6 +224,15 @@ class ThemeController extends GetxController {
             valueIndicatorColor: Colors.black38,
             thumbColor: Colors.white,
           ),
+          switchTheme: SwitchThemeData(
+            thumbColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.selected)) {
+                return Colors.white.withLightness(50);
+              }
+              return Colors.white.withOpacity(0.3);
+            }),
+          ),
           inputDecorationTheme: const InputDecorationTheme(
               focusColor: Colors.white,
               focusedBorder: UnderlineInputBorder(
@@ -273,7 +291,7 @@ class ThemeController extends GetxController {
                   color: Colors.grey[800], fontWeight: FontWeight.bold)),
           bottomSheetTheme: const BottomSheetThemeData(
               backgroundColor: Colors.white, modalBarrierColor: Colors.white),
-          sliderTheme: SliderThemeData(
+          sliderTheme:SliderThemeData(
             //base bar color
             inactiveTrackColor: Colors.black38,
             //buffered progress
@@ -281,6 +299,15 @@ class ThemeController extends GetxController {
             //progress bar color
             valueIndicatorColor: Colors.white38,
             thumbColor: Colors.grey[800],
+          ),
+          switchTheme: SwitchThemeData(
+            thumbColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.selected)) {
+                return Colors.white.withLightness(50);
+              }
+              return Colors.grey.withOpacity(0.3);
+            }),
           ),
           inputDecorationTheme: const InputDecorationTheme(
               focusColor: Colors.black,

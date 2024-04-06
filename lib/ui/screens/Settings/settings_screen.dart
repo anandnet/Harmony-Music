@@ -5,6 +5,7 @@ import 'package:harmonymusic/utils/lang_mapping.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/common_dialog_widget.dart';
+import '../../widgets/cust_switch.dart';
 import '../../widgets/export_file_dialog.dart';
 import '../Library/library_controller.dart';
 import '../../widgets/snackbar.dart';
@@ -175,7 +176,7 @@ class SettingsScreen extends StatelessWidget {
                   subtitle: Text("disableTransitionAnimationDes".tr,
                       style: Theme.of(context).textTheme.bodyMedium),
                   trailing: Obx(
-                    () => Switch(
+                    () => CustSwitch(
                         value: settingsController
                             .isTransitionAnimationDisabled.isTrue,
                         onChanged:
@@ -188,7 +189,7 @@ class SettingsScreen extends StatelessWidget {
                     subtitle: Text("enableBottomNavDes".tr,
                         style: Theme.of(context).textTheme.bodyMedium),
                     trailing: Obx(
-                      () => Switch(
+                      () => CustSwitch(
                           value:
                               settingsController.isBottomNavBarEnabled.isTrue,
                           onChanged: settingsController.enableBottomNavBar),
@@ -200,7 +201,7 @@ class SettingsScreen extends StatelessWidget {
                     subtitle: Text("cacheSongsDes".tr,
                         style: Theme.of(context).textTheme.bodyMedium),
                     trailing: Obx(
-                      () => Switch(
+                      () => CustSwitch(
                           value: settingsController.cacheSongs.value,
                           onChanged:
                               settingsController.toggleCachingSongsValue),
@@ -212,7 +213,7 @@ class SettingsScreen extends StatelessWidget {
                     subtitle: Text("skipSilenceDes".tr,
                         style: Theme.of(context).textTheme.bodyMedium),
                     trailing: Obx(
-                      () => Switch(
+                      () => CustSwitch(
                           value: settingsController.skipSilenceEnabled.value,
                           onChanged: settingsController.toggleSkipSilence),
                     )),
@@ -248,7 +249,7 @@ class SettingsScreen extends StatelessWidget {
                     subtitle: Text("backgroundPlayDes".tr,
                         style: Theme.of(context).textTheme.bodyMedium),
                     trailing: Obx(
-                      () => Switch(
+                      () => CustSwitch(
                           value: settingsController.backgroundPlayEnabled.value,
                           onChanged: settingsController.toggleBackgroundPlay),
                     )),
@@ -333,7 +334,7 @@ class SettingsScreen extends StatelessWidget {
                   subtitle: Text("restoreLastPlaybackSessionDes".tr,
                       style: Theme.of(context).textTheme.bodyMedium),
                   trailing: Obx(
-                    () => Switch(
+                    () => CustSwitch(
                         value: settingsController.restorePlaybackSession.value,
                         onChanged:
                             settingsController.toggleRestorePlaybackSession),
@@ -344,7 +345,7 @@ class SettingsScreen extends StatelessWidget {
                   subtitle: Text("cacheHomeScreenDataDes".tr,
                       style: Theme.of(context).textTheme.bodyMedium),
                   trailing: Obx(
-                    () => Switch(
+                    () => CustSwitch(
                         value: settingsController.cacheHomeScreenData.value,
                         onChanged:
                             settingsController.toggleCacheHomeScreenData),
@@ -439,7 +440,7 @@ class SettingsScreen extends StatelessWidget {
                     subtitle: Text("stopMusicOnTaskClearDes".tr,
                         style: Theme.of(context).textTheme.bodyMedium),
                     trailing: Obx(
-                      () => Switch(
+                      () => CustSwitch(
                           value:
                               settingsController.stopPlyabackOnSwipeAway.value,
                           onChanged:

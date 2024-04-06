@@ -116,10 +116,11 @@ class PlayListNAlbumScreenController extends GetxController {
 
   Future<void> fetchSongsfromDatabase(id) async {
     box = await Hive.openBox(id);
-    songList.value = box.values
+    final List<MediaItem> songList_ = box.values
         .map<MediaItem?>((item) => MediaItemBuilder.fromJson(item))
         .whereType<MediaItem>()
         .toList();
+    songList.value = id == "LIBRP" ? songList_.reversed.toList() : songList_;
     isContentFetched.value = true;
     checkDownloadStatus();
   }
@@ -312,7 +313,7 @@ class PlayListNAlbumScreenController extends GetxController {
 
       songList.removeWhere((song) => song.id == element.id);
     }
-   if (!isoffline) await box_.close();
+    if (!isoffline) await box_.close();
   }
 
   List<MediaItem> selectedSongs() {

@@ -600,8 +600,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                             content.playlistId !=
                                                 "SongDownloads" &&
                                             content.playlistId != "SongsCache",
-                                    isSongDeletetioFeatureRequired:
-                                        content.playlistId != "LIBRP",
+                                    isSongDeletetioFeatureRequired: true,
                                     onSort: (type, ascending) {
                                       playListNAlbumScreenController.onSort(
                                           type, ascending);

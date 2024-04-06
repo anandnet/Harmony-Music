@@ -1,3 +1,16 @@
+## 1.9.1
+* Added volume slider for desktop app #169
+* Added open in youtube/youtube music option #189
+* fixed list widget size issue android
+* fixed queue rearrange issue android #165
+* Ucommented audiotags implementation for Auditag #163
+* Fixed song removal issue #162
+* Fixed Small Thumbnail issue #158 & #183
+* Fixed Album & playlist stuck on exception #192
+* Fixed Enabled/disabled color of toggles are misleading #178
+* Fixed RP playlist song order & added option for deletion #179
+
+
 ## 1.9.0
 * Added Windows and linux platform support #136
 * Added feature to rearrange local playlist, add multiple songs to plalist, delete multiple songs #153

@@ -1,0 +1,9 @@
+- Added open in youtube/youtube music option
+- fixed list widget size issue 
+- fixed queue rearrange issue
+- Ucommented audiotags implementation for Auditagging
+- Fixed song removal issue
+- Fixed Small Thumbnail issue
+- Fixed Album & playlist stuck on exception
+- Fixed Enabled/disabled color of toggles are misleading
+- Fixed RP playlist song order & added option for deletion

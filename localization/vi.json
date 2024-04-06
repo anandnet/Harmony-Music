@@ -176,5 +176,6 @@
     "radioNotAvailable": "Radio không có sẵn cho nghệ sĩ này!",
     "playlistBookmarkRemoveAlert": "Đã xóa đánh dấu trang danh sách phát!",
     "disableTransitionAnimation": "Tắt hoạt ảnh chuyển tiếp",
-    "disableTransitionAnimationDes": "Bật tùy chọn này để tắt hoạt ảnh chuyển tiếp trang"
+    "disableTransitionAnimationDes": "Bật tùy chọn này để tắt hoạt ảnh chuyển tiếp trang",
+    "openIn": "Mở trong"
 }

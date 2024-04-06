@@ -177,5 +177,6 @@
     "exportDowloadedFilesDes": "Кликните овде да бисте извезли преузети фајл из „inApp“ фолдера у спољни фолдер",
     "exportMsg": "Фајлови су успешно извезени",
     "disableTransitionAnimation": "Онемогући прелазну анимацију",
-    "disableTransitionAnimationDes": "Омогућите ову опцију да бисте онемогућили анимацију прелаза картице"
+    "disableTransitionAnimationDes": "Омогућите ову опцију да бисте онемогућили анимацију прелаза картице",
+    "openIn": "Отвори у"
 }

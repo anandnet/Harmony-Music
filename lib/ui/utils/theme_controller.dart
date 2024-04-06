@@ -91,7 +91,7 @@ class ThemeController extends GetxController {
       );
 
       final baseTheme = ThemeData(
-        useMaterial3: false,
+          useMaterial3: false,
           primaryColor: primarySwatch![500],
           colorScheme: ColorScheme.fromSwatch(
               accentColor: primarySwatch[200],
@@ -146,8 +146,8 @@ class ThemeController extends GetxController {
                   color: primarySwatch[100], fontWeight: FontWeight.bold)),
           sliderTheme: SliderThemeData(
             inactiveTrackColor: primarySwatch[300],
-            activeTrackColor: primarySwatch[400],
-            valueIndicatorColor: textColor,
+            activeTrackColor: textColor,
+            valueIndicatorColor: primarySwatch[400],
             thumbColor: Colors.white,
           )
           //scaffoldBackgroundColor: primarySwatch[700]
@@ -166,7 +166,7 @@ class ThemeController extends GetxController {
             systemNavigationBarContrastEnforced: true),
       );
       final baseTheme = ThemeData(
-        useMaterial3: false,
+          useMaterial3: false,
           brightness: Brightness.dark,
           canvasColor: Colors.black,
           primaryColor: Colors.black,
@@ -210,9 +210,9 @@ class ThemeController extends GetxController {
             //base bar color
             inactiveTrackColor: Colors.white30,
             //buffered progress
-            activeTrackColor: Colors.black38,
+            activeTrackColor: Colors.white,
             //progress bar color
-            valueIndicatorColor: Colors.white,
+            valueIndicatorColor: Colors.black38,
             thumbColor: Colors.white,
           ),
           inputDecorationTheme: const InputDecorationTheme(
@@ -233,7 +233,7 @@ class ThemeController extends GetxController {
             systemNavigationBarContrastEnforced: false),
       );
       final baseTheme = ThemeData(
-        useMaterial3: false,
+          useMaterial3: false,
           brightness: Brightness.light,
           canvasColor: Colors.white,
           colorScheme: ColorScheme.fromSwatch(
@@ -277,9 +277,9 @@ class ThemeController extends GetxController {
             //base bar color
             inactiveTrackColor: Colors.black38,
             //buffered progress
-            activeTrackColor: Colors.white38,
+            activeTrackColor: Colors.grey[800],
             //progress bar color
-            valueIndicatorColor: Colors.grey[800],
+            valueIndicatorColor: Colors.white38,
             thumbColor: Colors.grey[800],
           ),
           inputDecorationTheme: const InputDecorationTheme(

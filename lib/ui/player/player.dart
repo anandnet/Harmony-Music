@@ -439,9 +439,9 @@ class Player extends StatelessWidget {
                         baseBarColor:
                             Theme.of(context).sliderTheme.inactiveTrackColor,
                         bufferedBarColor:
-                            Theme.of(context).sliderTheme.activeTrackColor,
-                        progressBarColor:
                             Theme.of(context).sliderTheme.valueIndicatorColor,
+                        progressBarColor:
+                            Theme.of(context).sliderTheme.activeTrackColor,
                         thumbColor: Theme.of(context).sliderTheme.thumbColor,
                         timeLabelTextStyle:
                             Theme.of(context).textTheme.titleMedium,

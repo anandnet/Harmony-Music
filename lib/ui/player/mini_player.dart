@@ -60,10 +60,10 @@ class MiniPlayer extends StatelessWidget {
                                   .inactiveTrackColor,
                               bufferedBarColor: Theme.of(context)
                                   .sliderTheme
-                                  .activeTrackColor,
+                                  .valueIndicatorColor,
                               progressBarColor: Theme.of(context)
                                   .sliderTheme
-                                  .valueIndicatorColor,
+                                  .activeTrackColor,
                               thumbColor:
                                   Theme.of(context).sliderTheme.thumbColor,
                               timeLabelTextStyle:
@@ -249,7 +249,8 @@ class MiniPlayer extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
-                                    padding: const EdgeInsets.only(right: 20,left: 10),
+                                    padding: const EdgeInsets.only(
+                                        right: 20, left: 10),
                                     height: 20,
                                     width: 180,
                                     child: Obx(() {
@@ -264,7 +265,8 @@ class MiniPlayer extends StatelessWidget {
                                                 child: Icon(
                                                   volume == 0
                                                       ? Icons.volume_off
-                                                      : volume > 0 && volume < 50
+                                                      : volume > 0 &&
+                                                              volume < 50
                                                           ? Icons.volume_down
                                                           : Icons.volume_up,
                                                   size: 20,
@@ -274,7 +276,6 @@ class MiniPlayer extends StatelessWidget {
                                             child: SliderTheme(
                                               data: SliderTheme.of(context)
                                                   .copyWith(
-                                                activeTrackColor: Colors.white,
                                                 trackHeight: 2,
                                                 thumbShape:
                                                     const RoundSliderThumbShape(
@@ -285,9 +286,12 @@ class MiniPlayer extends StatelessWidget {
                                                         overlayRadius: 10.0),
                                               ),
                                               child: Slider(
-                                                value: playerController.volume.value/100,
+                                                value: playerController
+                                                        .volume.value /
+                                                    100,
                                                 onChanged: (value) {
-                                                  playerController.setVolume((value*100).toInt());
+                                                  playerController.setVolume(
+                                                      (value * 100).toInt());
                                                 },
                                               ),
                                             ),

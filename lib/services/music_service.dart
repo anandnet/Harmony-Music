@@ -331,26 +331,29 @@ class MusicServices extends getx.GetxService {
     data['browseId'] = browseId;
     Map<String, dynamic> response = (await _sendRequest('browse', data)).data;
     if (playlistId != null) {
-      Map<String, dynamic> header = response['header'];
-      Map<String, dynamic> results = nav(
-          response,
-          single_column_tab +
-              section_list_item +
-              ['musicPlaylistShelfRenderer']);
-      Map<String, dynamic> playlist = {'id': results['playlistId']};
+      Map<String, dynamic> header = nav(response, [
+        'contents',
+        "twoColumnBrowseResultsRenderer",
+        'tabs',
+        0,
+        "tabRenderer",
+        "content",
+        "sectionListRenderer",
+        "contents",
+        0,
+        "musicResponsiveHeaderRenderer"
+      ]);
 
-      bool ownPlaylist =
-          header.containsKey('musicEditablePlaylistDetailHeaderRenderer');
-      if (!ownPlaylist) {
-        playlist['privacy'] = 'PUBLIC';
-        header = header['musicDetailHeaderRenderer'];
-      } else {
-        Map<String, dynamic> editableHeader =
-            header['musicEditablePlaylistDetailHeaderRenderer'];
-        playlist['privacy'] = editableHeader['editHeader']
-            ['musicPlaylistEditHeaderRenderer']['privacy'];
-        header = editableHeader['header']['musicDetailHeaderRenderer'];
-      }
+      Map<String, dynamic> results = nav(response, [
+        "contents",
+        "twoColumnBrowseResultsRenderer",
+        "secondaryContents",
+        "sectionListRenderer",
+        "contents",
+        0,
+        "musicPlaylistShelfRenderer",
+      ]);
+      Map<String, dynamic> playlist = {'id': results['playlistId']};
 
       playlist['title'] = nav(header, title_text);
       playlist['thumbnails'] = nav(header, thumnail_cropped);
@@ -406,8 +409,17 @@ class MusicServices extends getx.GetxService {
     final album = parseAlbumHeader(response);
     dynamic results = nav(
       response,
-      [...single_column_tab, ...section_list_item, 'musicShelfRenderer'],
+      [
+        'contents',
+        "twoColumnBrowseResultsRenderer",
+        "secondaryContents",
+        'sectionListRenderer',
+        'contents',
+        0,
+        'musicShelfRenderer'
+      ],
     );
+
     album['tracks'] = parsePlaylistItems(results['contents'],
         artistsM: album['artists'],
         thumbnailsM: album["thumbnails"],

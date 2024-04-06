@@ -249,7 +249,7 @@ class MiniPlayer extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
-                                    padding: const EdgeInsets.only(right: 10),
+                                    padding: const EdgeInsets.only(right: 20,left: 10),
                                     height: 20,
                                     width: 180,
                                     child: Obx(() {

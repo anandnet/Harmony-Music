@@ -497,7 +497,7 @@ List<dynamic> parsePlaylistItems(List<dynamic> results,
 
     List? artists = parseSongArtists(data, 1);
 
-    dynamic album =isAlbum?{"id":albumIdM}: parseSongAlbum({...data}, 2);
+    dynamic album = isAlbum ? {"id": albumIdM} : parseSongAlbum({...data}, 2);
 
     dynamic duration;
     if (data.containsKey('fixedColumns')) {
@@ -793,16 +793,34 @@ dynamic parseSearchResult(Map<String, dynamic> data,
 
 //parse album Header
 Map<String, dynamic> parseAlbumHeader(Map<String, dynamic> response) {
-  Map<String, dynamic> header =
-      nav(response, ['header', 'musicDetailHeaderRenderer']);
+  Map<String, dynamic> header = nav(response, [
+    'contents',
+    "twoColumnBrowseResultsRenderer",
+    'tabs',
+    0,
+    "tabRenderer",
+    "content",
+    "sectionListRenderer",
+    "contents",
+    0,
+    "musicResponsiveHeaderRenderer"
+  ]);
   Map<String, dynamic> album = {
     'title': nav(header, title_text),
     'type': nav(header, subtitle),
-    'thumbnails': nav(header, thumnail_cropped)
+    'thumbnails': nav(header,
+        ["thumbnail", "musicThumbnailRenderer", "thumbnail", "thumbnails"])
   };
 
   if (header.containsKey("description")) {
-    album["description"] = header["description"]["runs"][0]["text"];
+    album["description"] = nav(header, [
+      "description",
+      "musicDescriptionShelfRenderer",
+      "description",
+      "runs",
+      0,
+      "text"
+    ]);
   }
 
   Map<String, dynamic> albumInfo =
@@ -817,11 +835,11 @@ Map<String, dynamic> parseAlbumHeader(Map<String, dynamic> response) {
   }
 
   // add to library/uploaded
-  Map<String, dynamic> menu = nav(header, ['menu', 'menuRenderer']);
-  List<dynamic> toplevel = menu['topLevelButtons'];
+
   album['audioPlaylistId'] =
-      nav(toplevel, [0, 'buttonRenderer', ...navigation_watch_playlist_id]) ??
-          nav(toplevel, [0, 'buttonRenderer', ...navigation_playlist_id]);
+      nav(response, ['microformat', "microformatDataRenderer", "urlCanonical"])
+          .toString()
+          .split("list=")[1];
 
   return album;
 }
@@ -976,7 +994,7 @@ MediaItem? parseChartsTrending(dynamic data) {
           flex_0,
           text_run + navigation_video_id,
         ) ??
-        nav(data, ['playlistItemData','videoId']),
+        nav(data, ['playlistItemData', 'videoId']),
     'playlistId': nav(flex_0, text_run + navigation_playlist_id),
     'artists': artists,
     'thumbnails': nav(data, thumbnails),

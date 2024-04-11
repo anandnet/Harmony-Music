@@ -179,5 +179,6 @@
     "disableTransitionAnimationDes": "Włącz tę opcję, aby wyłączyć animację przejścia między kartami",
     "exporting": "Eksportowanie...",
     "scanning": "Skanowanie...",
-    "downFilesFound": "znaleziono pobrane pliki"
+    "downFilesFound": "znaleziono pobrane pliki",
+    "openIn": "Otwórz w"
 }

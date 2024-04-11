@@ -176,5 +176,6 @@
     "disableTransitionAnimation": "Disactivar animation de transition",
     "disableTransitionAnimationDes": "Activa iste option pro disactivar le animation de transition de scheda",
     "exportDowloadedFilesDes": "Clicca hic pro exportar files discargate ab directorio inApp a directorio externe",
-    "clearImgCacheAlert": "Imagines del cache delite con successo"
+    "clearImgCacheAlert": "Imagines del cache delite con successo",
+    "openIn": "Aperir in"
 }

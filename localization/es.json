@@ -112,7 +112,7 @@
     "playlistBlacklistAlert": "¡Lista de reproducción en la lista negra!",
     "artistDesNotAvailable": "¡Descripción no disponible!",
     "songRemovedfromQueueCurrSong": "No puedes eliminar la canción que se está reproduciendo",
-    "settings": "Ahustes",
+    "settings": "Ajustes",
     "basedOnLast": "Según la última interacción",
     "hintApiUrl": "Dirección URL de la API a la instancia de Piped",
     "playlistRenameAlert": "¡Renombrado con éxito!",

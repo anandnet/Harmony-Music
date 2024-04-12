@@ -1,4 +1,7 @@
+import 'dart:io';
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/screens/Home/home_screen_controller.dart';
 import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
@@ -36,7 +39,7 @@ class Home extends StatelessWidget {
     }
     return PopScope(
         canPop: false,
-        onPopInvoked: (didPop) {
+        onPopInvoked: (didPop) async {
           if (didPop) return;
           if (playerController.playerPanelController.isPanelOpen) {
             playerController.playerPanelController.close();
@@ -46,7 +49,13 @@ class Home extends StatelessWidget {
                 .canPop()) {
               Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
             } else {
-              Navigator.of(context).pop();
+              if (playerController.buttonState.value ==
+                  PlayButtonState.playing) {
+                SystemNavigator.pop();
+              } else {
+                await Get.find<AudioHandler>().customAction("saveSession");
+                exit(0);
+              }
             }
           }
         },
@@ -60,61 +69,66 @@ class Home extends StatelessWidget {
                       child: const BottomNavBar())
                   : null,
               key: playerController.homeScaffoldkey,
-              endDrawer:GetPlatform.isDesktop? Container(
-                constraints: const BoxConstraints(maxWidth: 600),
-                decoration: BoxDecoration(
-                  borderRadius:
-                      const BorderRadius.only(topLeft: Radius.circular(10)),
-                  border: Border(
-                    left: BorderSide(
-                        color: Theme.of(context).colorScheme.secondary),
-                    top: BorderSide(
-                        color: Theme.of(context).colorScheme.secondary),
-                  ),
-                ),
-                margin: const EdgeInsets.only(
-                  top: 5,
-                  bottom: 106,
-                ),
-                child: SizedBox(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 60,
-                        child: ColoredBox(
-                          color: Theme.of(context).canvasColor,
-                          child: Center(
-                              child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 15.0, right: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                    "${playerController.currentQueue.length} ${"songs".tr}"),
-                                Text(
-                                  "upNext".tr,
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                ),
-                                IconButton(
-                                    onPressed: () {
-                                      playerController.shuffleQueue();
-                                    },
-                                    icon: const Icon(Icons.shuffle))
-                              ],
+              endDrawer: GetPlatform.isDesktop
+                  ? Container(
+                      constraints: const BoxConstraints(maxWidth: 600),
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10)),
+                        border: Border(
+                          left: BorderSide(
+                              color: Theme.of(context).colorScheme.secondary),
+                          top: BorderSide(
+                              color: Theme.of(context).colorScheme.secondary),
+                        ),
+                      ),
+                      margin: const EdgeInsets.only(
+                        top: 5,
+                        bottom: 106,
+                      ),
+                      child: SizedBox(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 60,
+                              child: ColoredBox(
+                                color: Theme.of(context).canvasColor,
+                                child: Center(
+                                    child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 15.0, right: 15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                          "${playerController.currentQueue.length} ${"songs".tr}"),
+                                      Text(
+                                        "upNext".tr,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge,
+                                      ),
+                                      IconButton(
+                                          onPressed: () {
+                                            playerController.shuffleQueue();
+                                          },
+                                          icon: const Icon(Icons.shuffle))
+                                    ],
+                                  ),
+                                )),
+                              ),
                             ),
-                          )),
+                            const Expanded(
+                              child: UpNextQueue(
+                                isQueueInSlidePanel: false,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const Expanded(
-                        child: UpNextQueue(
-                          isQueueInSlidePanel: false,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ):null,
+                    )
+                  : null,
               drawerScrimColor: Colors.transparent,
               body: Obx(() => SlidingUpPanel(
                     onPanelSlide: playerController.panellistener,

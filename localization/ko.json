@@ -176,5 +176,6 @@
     "playlistCreatedAlert": "플레이리스트 생성됨!",
     "albumBookmarkAddAlert": "앨범을 즐겨찾기에 추가함!",
     "albumBookmarkRemoveAlert": "앨범 즐겨찾기를 제거함!",
-    "artistBookmarkAddAlert": "아티스트를 즐겨찾기에 추가함!"
+    "artistBookmarkAddAlert": "아티스트를 즐겨찾기에 추가함!",
+    "openIn": "열기"
 }

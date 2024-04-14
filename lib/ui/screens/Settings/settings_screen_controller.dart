@@ -233,7 +233,7 @@ class SettingsScreenController extends GetxController {
         await box.clear();
         await box.close();
       });
-    }else{
+    } else {
       await Hive.openBox("homeScreenData");
       Get.find<HomeScreenController>().cachedHomeScreenData(updateAll: true);
     }
@@ -264,5 +264,9 @@ class SettingsScreenController extends GetxController {
   void toggleStopPlyabackOnSwipeAway(bool val) {
     setBox.put('stopPlyabackOnSwipeAway', val);
     stopPlyabackOnSwipeAway.value = val;
+  }
+
+  Future<void> closeAllDatabases() async {
+    await Hive.close();
   }
 }

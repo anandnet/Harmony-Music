@@ -177,5 +177,15 @@
     "resetblacklistedplaylist": "Reset blacklisted playlists",
     "resetblacklistedplaylistDes": "Reset all the piped blacklisted playlists",
     "stopMusicOnTaskClear": "Stop music on task clear",
-    "stopMusicOnTaskClearDes": "Music playback will stop when App being swiped away from the task manager"
+    "stopMusicOnTaskClearDes": "Music playback will stop when App being swiped away from the task manager",
+    "backupSettingsAndPlaylists": "Backup Settings and Playlists",
+    "backupSettingsAndPlaylistsDes": "Saves all settings, playlists and login data in a backup file",
+    "restoreSettingsAndPlaylists": "Restore Settings and Playlists",
+    "restoreSettingsAndPlaylistsDes": "Restores all settings, login data and playlists from a backup file. Overwrites all current data",
+    "backupMsg": "Backup successfully saved!",
+    "backFilesFound": "databases found",
+    "restoreMsg": "Successfully restored! Changes are applied on restart",
+    "restoring": "restoring...",
+    "restore": "Restore",
+    "closeApp": "Close App"
 }

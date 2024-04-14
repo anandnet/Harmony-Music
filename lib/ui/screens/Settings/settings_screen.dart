@@ -7,6 +7,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../widgets/common_dialog_widget.dart';
 import '../../widgets/cust_switch.dart';
 import '../../widgets/export_file_dialog.dart';
+import '../../widgets/backup_dialog.dart';
+import '../../widgets/restore_dialog.dart';
 import '../Library/library_controller.dart';
 import '../../widgets/snackbar.dart';
 import '/ui/widgets/link_piped.dart';
@@ -446,6 +448,32 @@ class SettingsScreen extends StatelessWidget {
                           onChanged:
                               settingsController.toggleStopPlyabackOnSwipeAway),
                     )),
+              ListTile(
+                contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                title: Text("backupSettingsAndPlaylists".tr),
+                subtitle: Text(
+                  "backupSettingsAndPlaylistsDes".tr,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                isThreeLine: true,
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => const BackupDialog(),
+                ).whenComplete(() => Get.delete<BackupDialogController>()),
+              ),
+              ListTile(
+                contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                title: Text("restoreSettingsAndPlaylists".tr),
+                subtitle: Text(
+                  "restoreSettingsAndPlaylistsDes".tr,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                isThreeLine: true,
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => const RestoreDialog(),
+                ).whenComplete(() => Get.delete<RestoreDialogController>()),
+              ),
               GetPlatform.isAndroid
                   ? Obx(
                       () => ListTile(

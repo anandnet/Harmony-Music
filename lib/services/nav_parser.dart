@@ -202,15 +202,23 @@ dynamic parseVideo(dynamic result) {
 }
 
 dynamic parseSingle(dynamic result) {
+  dynamic year;
+  try {
+    year = int.parse(nav(result, subtitle));
+  } catch (e) {
+    year = nav(result, ["subtitle", "runs", 2, "text"]);
+  }
   return Album.fromJson({
     'title': nav(result, title_text),
     'artists': [
       {'name': 'Single'}
     ],
     'audioPlaylistId': nav(result, audio_watch_playlist_id),
-    'year': nav(result, subtitle),
+    'year': "${year ?? ""}",
     'browseId': nav(result, ['title', 'runs', 0, ...navigation_browse_id]),
-    'thumbnails': nav(result, thumbnail_renderer)
+    'thumbnails': nav(result, thumbnail_renderer),
+    'description':
+        (nav(result, ["subtitle", "runs"])).map((run) => run['text']).join('')
   });
 }
 
@@ -256,7 +264,6 @@ Map<String, dynamic> parseSongRuns(List<dynamic> runs) {
         parsed['artists'].add(item);
       }
     } else {
-      // note: YT uses non-breaking space \xa0 to separate number and magnitude
       RegExp regExp = RegExp(r"^\d([^ ])* [^ ]*$");
       if (regExp.hasMatch(text) && i > 0) {
         parsed['views'] = text.split(' ')[0];
@@ -281,7 +288,9 @@ Album parseAlbum(Map<dynamic, dynamic> result, {bool reqAlbumObj = true}) {
     'title': nav(result, title_text),
     'browseId': nav(result, n_title + navigation_browse_id),
     'thumbnails': nav(result, thumbnail_renderer),
-    'audioPlaylistId': nav(result, audio_watch_playlist_id)
+    'audioPlaylistId': nav(result, audio_watch_playlist_id),
+    'description':
+        (nav(result, ["subtitle", "runs"])).map((run) => run['text']).join('')
     //'isExplicit': nav(result, subtitle_badge_label, noneIfAbsent: true) != null,
   };
   albumMap.addAll(artistInfo);
@@ -696,6 +705,11 @@ dynamic parseSearchResult(Map<String, dynamic> data,
   } else if (resultType == 'album') {
     searchResult['type'] = getItemText(data, 1);
     searchResult['audioPlaylistId'] = nav(data, audio_watch_playlist_id);
+    try {
+      final list = data['flexColumns'][1]
+          ['musicResponsiveListItemFlexColumnRenderer']['text']['runs'];
+      searchResult['description'] = list.map((run) => run['text']).join('');
+    } catch (e) {}
   } else if (resultType.contains('playlist')) {
     List<dynamic> flexItem = getFlexColumnItem(data, 1)['text']['runs'];
     bool hasAuthor = (flexItem.length == defaultOffset + 3);
@@ -794,37 +808,44 @@ dynamic parseSearchResult(Map<String, dynamic> data,
 //parse album Header
 Map<String, dynamic> parseAlbumHeader(Map<String, dynamic> response) {
   Map<String, dynamic> header = nav(response, [
-    'contents',
-    "twoColumnBrowseResultsRenderer",
-    'tabs',
-    0,
-    "tabRenderer",
-    "content",
-    "sectionListRenderer",
-    "contents",
-    0,
-    "musicResponsiveHeaderRenderer"
-  ]);
+        'contents',
+        "twoColumnBrowseResultsRenderer",
+        'tabs',
+        0,
+        "tabRenderer",
+        "content",
+        "sectionListRenderer",
+        "contents",
+        0,
+        "musicResponsiveHeaderRenderer"
+      ]) ??
+      nav(response, ["header", "musicDetailHeaderRenderer"]);
   Map<String, dynamic> album = {
     'title': nav(header, title_text),
     'type': nav(header, subtitle),
-    'thumbnails': nav(header,
-        ["thumbnail", "musicThumbnailRenderer", "thumbnail", "thumbnails"])
+    'thumbnails': nav(header, thumnail_cropped) ??
+        nav(header,
+            ["thumbnail", "musicThumbnailRenderer", "thumbnail", "thumbnails"])
   };
 
-  if (header.containsKey("description")) {
-    album["description"] = nav(header, [
-      "description",
-      "musicDescriptionShelfRenderer",
-      "description",
-      "runs",
-      0,
-      "text"
-    ]);
-  }
+  album["description"] = nav(header, [
+        "description",
+        "musicDescriptionShelfRenderer",
+        "description",
+        "runs",
+        0,
+        "text"
+      ]) ??
+      (nav(header, ["subtitle", "runs"]))
+          .map((item) => item.values.first)
+          .toList()
+          .join(" ");
 
   Map<String, dynamic> albumInfo =
       parseSongRuns(header['subtitle']['runs'].sublist(2));
+  try {
+    albumInfo.addAll(parseSongRuns(header["straplineTextOne"]['runs']));
+  } catch (e) {}
   album.addAll(albumInfo);
 
   if (header['secondSubtitle']['runs'].length > 1) {

@@ -331,32 +331,55 @@ class MusicServices extends getx.GetxService {
     data['browseId'] = browseId;
     Map<String, dynamic> response = (await _sendRequest('browse', data)).data;
     if (playlistId != null) {
-      Map<String, dynamic> header = nav(response, [
-        'contents',
-        "twoColumnBrowseResultsRenderer",
-        'tabs',
-        0,
-        "tabRenderer",
-        "content",
-        "sectionListRenderer",
-        "contents",
-        0,
-        "musicResponsiveHeaderRenderer"
-      ]);
+      Map<String, dynamic> header =
+          nav(response, ['header', "musicDetailHeaderRenderer"]) ??
+              nav(response, [
+                'contents',
+                "twoColumnBrowseResultsRenderer",
+                'tabs',
+                0,
+                "tabRenderer",
+                "content",
+                "sectionListRenderer",
+                "contents",
+                0,
+                "musicResponsiveHeaderRenderer"
+              ]);
 
-      Map<String, dynamic> results = nav(response, [
-        "contents",
-        "twoColumnBrowseResultsRenderer",
-        "secondaryContents",
-        "sectionListRenderer",
-        "contents",
-        0,
-        "musicPlaylistShelfRenderer",
-      ]);
+      Map<String, dynamic> results = nav(
+            response,
+            [
+              'contents',
+              "singleColumnBrowseResultsRenderer",
+              "tabs",
+              0,
+              "tabRenderer",
+              "content",
+              'sectionListRenderer',
+              'contents',
+              0,
+              "musicPlaylistShelfRenderer"
+            ],
+          ) ??
+          nav(response, [
+            "contents",
+            "twoColumnBrowseResultsRenderer",
+            "secondaryContents",
+            "sectionListRenderer",
+            "contents",
+            0,
+            "musicPlaylistShelfRenderer",
+          ]);
       Map<String, dynamic> playlist = {'id': results['playlistId']};
 
       playlist['title'] = nav(header, title_text);
-      playlist['thumbnails'] = nav(header, thumnail_cropped);
+      playlist['thumbnails'] = nav(header, thumnail_cropped) ??
+          nav(header, [
+            "thumbnail",
+            "musicThumbnailRenderer",
+            "thumbnail",
+            "thumbnails"
+          ]);
       playlist["description"] = nav(header, description);
       int runCount = header['subtitle']['runs'].length;
       if (runCount > 1) {
@@ -408,17 +431,32 @@ class MusicServices extends getx.GetxService {
     //album content
     final album = parseAlbumHeader(response);
     dynamic results = nav(
-      response,
-      [
-        'contents',
-        "twoColumnBrowseResultsRenderer",
-        "secondaryContents",
-        'sectionListRenderer',
-        'contents',
-        0,
-        'musicShelfRenderer'
-      ],
-    );
+          response,
+          [
+            'contents',
+            "twoColumnBrowseResultsRenderer",
+            "secondaryContents",
+            'sectionListRenderer',
+            'contents',
+            0,
+            'musicShelfRenderer'
+          ],
+        ) ??
+        nav(
+          response,
+          [
+            'contents',
+            "singleColumnBrowseResultsRenderer",
+            "tabs",
+            0,
+            "tabRenderer",
+            "content",
+            'sectionListRenderer',
+            'contents',
+            0,
+            'musicShelfRenderer'
+          ],
+        );
 
     album['tracks'] = parsePlaylistItems(results['contents'],
         artistsM: album['artists'],

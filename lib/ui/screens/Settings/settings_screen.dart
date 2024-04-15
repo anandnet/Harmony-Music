@@ -448,7 +448,7 @@ class SettingsScreen extends StatelessWidget {
                           onChanged:
                               settingsController.toggleStopPlyabackOnSwipeAway),
                     )),
-              ListTile(
+            if(GetPlatform.isWindows)  ListTile(
                 contentPadding: const EdgeInsets.only(left: 5, right: 10),
                 title: Text("backupSettingsAndPlaylists".tr),
                 subtitle: Text(
@@ -461,7 +461,7 @@ class SettingsScreen extends StatelessWidget {
                   builder: (context) => const BackupDialog(),
                 ).whenComplete(() => Get.delete<BackupDialogController>()),
               ),
-              ListTile(
+              if(GetPlatform.isWindows) ListTile(
                 contentPadding: const EdgeInsets.only(left: 5, right: 10),
                 title: Text("restoreSettingsAndPlaylists".tr),
                 subtitle: Text(

@@ -180,5 +180,9 @@
     "close": "बंद करें",
     "exportMsg": "फाइलें सफलतापूर्वक निर्यात की गईं",
     "clearImgCacheAlert": "छवियां सफलतापूर्वक साफ हो गईं",
-    "openIn": "खोलें"
+    "openIn": "खोलें",
+    "backupSettingsAndPlaylists": "बैकअप सेटिंग्स और प्लेलिस्ट",
+    "restoreSettingsAndPlaylists": "सेटिंग्स और प्लेलिस्ट पुनर्स्थापित करें",
+    "backupSettingsAndPlaylistsDes": "सभी सेटिंग्स, प्लेलिस्ट और लॉगिन डेटा को एक बैकअप फ़ाइल में सहेजता है",
+    "restoreSettingsAndPlaylistsDes": "Restores all settings, login data and playlists from a backup file. Overwrites all current data"
 }

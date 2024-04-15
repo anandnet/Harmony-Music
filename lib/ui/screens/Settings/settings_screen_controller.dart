@@ -41,7 +41,7 @@ class SettingsScreenController extends GetxController {
   final backgroundPlayEnabled = true.obs;
   final restorePlaybackSession = false.obs;
   final cacheHomeScreenData = true.obs;
-  final currentVersion = "V1.9.1";
+  final currentVersion = "V1.9.2";
 
   @override
   void onInit() {

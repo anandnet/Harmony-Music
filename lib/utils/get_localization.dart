@@ -382,6 +382,211 @@ class Languages extends Translations {
           "openIn": "Отвори в"
         },
         "bn": {},
+        "ca": {
+          "libPlaylists": "Col · lecció de llistes de reproducció",
+          "libArtists": "Biblioteca d'Artistes",
+          "communityplaylists": "Llistes de reproducció de la comunitat",
+          "featuredplaylists": "Llistes de Reproducció Destacades",
+          "recentlyPlayed": "Reproduït Fa Poc",
+          "favorites": "Preferits",
+          "downloads": "Baixades",
+          "removeMultiple": "Esborrar diverses cançons",
+          "cancel": "Cancel·lar",
+          "create": "Crear",
+          "playNext": "Següent",
+          "addToPlaylist": "Afegir a la llista de reproducció",
+          "removeFromPlaylist": "Esborrar de la llista de reproducció",
+          "removeFromLib": "Esborrar del catàleg de cançons",
+          "deleteDownloadData": "Esborrar de les baixades",
+          "deleteDownloadedDataAlert": "Esborrada de les baixades!",
+          "downloadingFormatDes":
+              "Tria el format de les baixades. \"Opus\" té la millor qualitat",
+          "exportDowloadedFilesDes":
+              "Prem aqui per exportar els arxius baixats de la carpeta de l'aplicació a una carpeta externa",
+          "downloadLocation": "Ubicació de les baixades",
+          "exportDowloadedFiles": "Exporta arxius baixats",
+          "downloadingFormat": "Format de les baixades",
+          "home": "Inici",
+          "songs": "Cançons",
+          "playlists": "Llistes de reproducció",
+          "albums": "Àlbums",
+          "artists": "Artistes",
+          "settings": "Configuració",
+          "libAlbums": "Biblioteca d'Àlbums",
+          "singles": "Senzills",
+          "library": "Col·lecció",
+          "libSongs": "Col·lecció de cançons",
+          "items": "elements",
+          "retry": "Reintenta!",
+          "noOfflineSong": "No hi ha cançons sense connexió!",
+          "networkError1": "Ui, error de xarxa!",
+          "cachedOrOffline": "A la memòria cau/Fora de línia",
+          "emptyPlaylist": "Llista de reproducció buida!",
+          "enqueueAll": "Posar tots en cua",
+          "renamePlaylist": "Reanomenar la llista de reproducció",
+          "removePlaylist": "Esborrar la llista de reproducció",
+          "CreateNewPlaylist": "Crear una nova llista de reproducció",
+          "reArrangePlaylist": "Reorganizar la llista de reproducció",
+          "addMultipleSongs": "Afegir cançons a la llista de reproducció",
+          "rename": "Reanomenar",
+          "createnAdd": "Crear i afegir",
+          "noBookmarks": "Cap preferit!",
+          "startRadio": "Engegar la ràdio",
+          "noLibPlaylist": "No tens cap col·lecció de llistes de reproducció!",
+          "enqueueSong": "Afegir a la cua",
+          "goToAlbum": "Ves a l'àlbum",
+          "viewArtist": "Veure l'artista",
+          "openIn": "Obrir a",
+          "shareSong": "Compartir aquesta cançó",
+          "removeFromQueue": "Esborrar de la cua",
+          "upNext": "Tot seguit",
+          "sleepTimer": "Temporitzador",
+          "add5Minutes": "Afegir 5 minuts",
+          "cancelTimer": "Cancel·lar temporitzador",
+          "exportedFileLocation": "Ubicació dels arxius baixats",
+          "downFilesFound": "s'han trobat arxius baixats",
+          "minutes": "minuts",
+          "endOfThisSong": "Fi d'aquesta cançó",
+          "themeMode": "Mode Tema",
+          "dynamic": "Dinàmic",
+          "systemDefault": "Predeterminat del sistema",
+          "dark": "Fosc",
+          "light": "Clar",
+          "language": "Idioma",
+          "languageDes": "Configurar l'idioma de l'aplicació",
+          "setDiscoverContent": "Descobrir contingut",
+          "quickpicks": "Tria ràpida",
+          "trending": "Tendència",
+          "topmusicvideos": "Millors Vídeos Musicals",
+          "enableBottomNav": "Barra de navegació a baix",
+          "enableBottomNavDes": "Canviar la barra de navegació a baix",
+          "cacheSongs": "Cançons a la memòria cau",
+          "cacheSongsDes":
+              "Desa les cançons a la memòria cau per reproduïr més endavant/fora de línia, farà servir espai addicional al dispositiu",
+          "skipSilence": "Saltar silenci",
+          "skipSilenceDes": "Saltarà el silenci a la reproducció de música",
+          "streamingQuality": "Qualitat de la transmissió",
+          "disableTransitionAnimation": "Deshabilita l'animació de transició",
+          "high": "Alt",
+          "low": "Baix",
+          "backgroundPlay": "Reproduïr música en segon pla",
+          "backgroundPlayDes":
+              "Activa/Desactiva la reproducció de música en segon pla (Es pot obrir l'aplicació des de la safata del sistema quan està executant-se en segon pla)",
+          "cacheHomeScreenData":
+              "Desa el contingut de la pantalla inicial a la memòria cau",
+          "export": "Exportar",
+          "exporting": "Exportant...",
+          "scanning": "Escanejant...",
+          "close": "Tancar",
+          "equalizerDes": "Obrir l'equalitzador del sistema",
+          "clearImgCache": "Esborrar les imatges de la memòria cau",
+          "clearImgCacheAlert": "Memòria cau d'imatges esborrada correctament",
+          "ignoreBatOpt": "Ignorar optimització de bateria",
+          "status": "Estat",
+          "enabled": "Activat",
+          "githubDes":
+              "Veure codi font a GitHub\nsi t'agrada el projecte, no oblidis donar-li una ⭐",
+          "by": "per",
+          "searchDes": "Cançons,Llista de reproducció,Album o Artista",
+          "searchRes": "Resultats de la cerca",
+          "videos": "Vídeos",
+          "viewAll": "Veure tot",
+          "nomatch": "No hi han coincidències per",
+          "subscribers": "subscriptors",
+          "for1": "per a",
+          "synced": "Sincronitzat",
+          "newVersionAvailable": "Nova versió disponible!",
+          "dontShowInfoAgain": "No mostrar més aquesta informació",
+          "dismiss": "Descartar",
+          "notaSongVideo": "No és cap cançó/vídeo musical!",
+          "notaValidLink": "Enllaç invàlid!",
+          "local": "Local",
+          "unLink": "Desenllaçar",
+          "link": "Enllaçar",
+          "hintApiUrl": "API URL a la instància Piped",
+          "stopMusicOnTaskClear":
+              "Aturar la música quan s'elimina de la llista de tasques",
+          "stopMusicOnTaskClearDes":
+              "La reproducció s'aturarà quan s'elimini la App de la llista de tasques",
+          "discover": "Descobrir",
+          "homeContentCount": "Recompte de contingut a l'inici",
+          "streamingQualityDes": "Qualitat de la transmissió de la música",
+          "restoreLastPlaybackSessionDes":
+              "Restaurar automàticament la darrera sessió de reproducció en iniciar la App",
+          "homeContentCountDes":
+              "Selecciona el nombre de continguts a la pàgina d'inici (aprox.). Menys resultats carrega més ràpid",
+          "basedOnLast": "Basat en la darrera interacció",
+          "restoreLastPlaybackSession":
+              "Restaura la darrera sessió de reproducció",
+          "disableTransitionAnimationDes":
+              "Activa aquesta opció per deshabilitar l'animació de canvi de pestanya",
+          "cacheHomeScreenDataDes":
+              "Activa desar a la memòria cau el contingut de la pantalla inicial, carregarà instantàniament en activar aquesta opció",
+          "exportMsg": "Arxius exportats correctament",
+          "clearImgCacheDes":
+              "Prem aquí per esborrar les miniatures/imatges de la memòria cau. (No recomanat a no ser que vulguis refrescar les imatges de la memòria cau)",
+          "equalizer": "Equalitzador",
+          "ignoreBatOptDes":
+              "Si trobes problemes o s'atura la reproducció per optimització del sistema, si us plau habilita aquesta opció",
+          "disabled": "Desactivat",
+          "github": "GitHub",
+          "search": "Cercar",
+          "results": "Resultats",
+          "playlistRemovedAlert": "Llista de reproducció esborrada!",
+          "errorOccuredAlert": "Hi ha hagut un error!",
+          "pipedplstSyncAlert": "Llista de reproducció de Piped sincronitzada!",
+          "lyricsNotAvailable": "Lletres no disponibles!",
+          "plain": "Pla",
+          "about": "Quant a",
+          "cancelTimerAlert": "S'ha cancel·lat el temporitzador per dormir",
+          "radioNotAvailable": "Ràdio no disponible per aquest artista!",
+          "sleepTimeSetAlert": "S'ha activat el temporitzador per dormir",
+          "songRemovedfromQueue": "Esborrada de la cua!",
+          "songRemovedfromQueueCurrSong":
+              "No pots esborrar la cançó que s'està reproduïnt",
+          "songAddedToPlaylistAlert":
+              "Cançó afegida a la llista de reproducció!",
+          "songAlreadyExists": "Aquesta cançó ja existeix!",
+          "songAlreadyOfflineAlert":
+              "Aquesta canço ja és a la memòria cau fora de línia",
+          "songEnqueueAlert": "Cançó afegida a la cua!",
+          "songRemovedAlert": "Esborrada de",
+          "playlistBookmarkRemoveAlert":
+              "Llista de reproducció preferida desmarcada!",
+          "playlistCreatedAlert": "Llista de reproducció creada!",
+          "playlistCreatednsongAddedAlert":
+              "Llista de reproducció creada i canço afegida!",
+          "playlistBookmarkAddAlert":
+              "Llista de reproducció marcada com preferida!",
+          "playlistRenameAlert": "Reanomenat correctament!",
+          "artistBookmarkRemoveAlert": "Artista favorit desmarcat!",
+          "artistBookmarkAddAlert": "Artista marcat preferit!",
+          "syncedLyricsNotAvailable": "Lletres sincronitzades no disponibles!",
+          "artistDesNotAvailable": "Descripció no disponible!",
+          "Piped": "Piped",
+          "operationFailed": "Ha fallat l'operació",
+          "goToDownloadPage": "Prem aquí per anar a la pàgina de baixada",
+          "selectAuthInsMsg": "Si us plau tria la instància d'autenticació!",
+          "customIns": "Instància personalitzada",
+          "allFieldsReqMsg": "Tots els camps són obligatoris",
+          "linkPipedDes": "Enllaç de llistes de reproducció de Piped",
+          "selectAuthIns": "Tria instància Auth",
+          "password": "Contrasenya",
+          "reset": "Restablir",
+          "username": "Usuari",
+          "linkAlert": "Enllaçat correctament!",
+          "blacklistPlstResetAlert": "Restablert correctament!",
+          "unlinkAlert": "Desenllaçat correctament!",
+          "playlistBlacklistAlert":
+              "Llista de reproducció afegida a la llista negra!",
+          "customInsSelectMsg": "Si us plau tria una instància personalitzada",
+          "resetblacklistedplaylist":
+              "Restablir les llistes de reproducció de la llista negra",
+          "resetblacklistedplaylistDes":
+              "Restablir totes les llistes de reproducció a la llista negra de Piped",
+          "albumBookmarkRemoveAlert": "Àlbum preferit desmarcat!",
+          "albumBookmarkAddAlert": "Àlbum preferit marcat!"
+        },
         "cs": {
           "home": "Domů",
           "playlistCreatednsongAddedAlert":
@@ -952,7 +1157,19 @@ class Languages extends Translations {
               "Reset all the piped blacklisted playlists",
           "stopMusicOnTaskClear": "Stop music on task clear",
           "stopMusicOnTaskClearDes":
-              "Music playback will stop when App being swiped away from the task manager"
+              "Music playback will stop when App being swiped away from the task manager",
+          "backupSettingsAndPlaylists": "Backup Settings and Playlists",
+          "backupSettingsAndPlaylistsDes":
+              "Saves all settings, playlists and login data in a backup file",
+          "restoreSettingsAndPlaylists": "Restore Settings and Playlists",
+          "restoreSettingsAndPlaylistsDes":
+              "Restores all settings, login data and playlists from a backup file. Overwrites all current data",
+          "backupMsg": "Backup successfully saved!",
+          "backFilesFound": "databases found",
+          "restoreMsg": "Successfully restored! Changes are applied on restart",
+          "restoring": "restoring...",
+          "restore": "Restore",
+          "closeApp": "Close App"
         },
         "eo": {
           "renamePlaylist": "Alinomi Ludliston",
@@ -1252,7 +1469,7 @@ class Languages extends Translations {
           "artistDesNotAvailable": "¡Descripción no disponible!",
           "songRemovedfromQueueCurrSong":
               "No puedes eliminar la canción que se está reproduciendo",
-          "settings": "Ahustes",
+          "settings": "Ajustes",
           "basedOnLast": "Según la última interacción",
           "hintApiUrl": "Dirección URL de la API a la instancia de Piped",
           "playlistRenameAlert": "¡Renombrado con éxito!",
@@ -1589,7 +1806,7 @@ class Languages extends Translations {
           "streamingQuality": "Qualité de diffusion",
           "streamingQualityDes": "Qualité du flux de musique",
           "high": "Élevée",
-          "equalizerDes": "ouvrir l'égaliseur du système",
+          "equalizerDes": "Ouvrir l'égaliseur du système",
           "ignoreBatOpt": "Ignorer l'optimisation de la batterie",
           "github": "GitHub",
           "by": "par",
@@ -1639,12 +1856,12 @@ class Languages extends Translations {
           "topmusicvideos": "Top Vidéos de musique",
           "singles": "Singles",
           "language": "Langue",
-          "hintApiUrl": "URL de l'API de l'instance",
+          "hintApiUrl": "URL API de l'instance Piped",
           "removeFromPlaylist": "Retirer de la playlist",
           "featuredplaylists": "Playlist mise en avant",
           "quickpicks": "Sélections rapides",
           "downloads": "Téléchargements",
-          "removeFromLib": "Odebrat z knihovny skladeb",
+          "removeFromLib": "Supprimer de la bibliothèque musicale",
           "downloadingFormat": "Télécharger le format de fichier",
           "songAlreadyOfflineAlert": "Chanson déjà hors ligne dans le cache",
           "downloadLocation": "Emplacement du téléchargement",
@@ -1654,7 +1871,57 @@ class Languages extends Translations {
           "sleepTimer": "Minuterie de veille",
           "synced": "Synchronisé",
           "cancelTimerAlert": "Minuteur de veille annulé",
-          "minutes": "minutes"
+          "minutes": "minutes",
+          "backgroundPlay": "Lecture de musique en arrière-plan",
+          "add5Minutes": "Ajouter 5 minutes",
+          "endOfThisSong": "Fin de ce titre",
+          "cacheHomeScreenDataDes":
+              "Activer la mise en cache du menu principal, son chargement sera instantané si cette option est activée",
+          "cacheHomeScreenData":
+              "Mettre en cache le contenu de la page d'accueil",
+          "plain": "Entier",
+          "reArrangePlaylist": "Réarranger la playlist",
+          "removeMultiple": "Supprimer plusieurs titres",
+          "addMultipleSongs": "Ajouter des titres à la playlist",
+          "disableTransitionAnimationDes":
+              "Activer cette option pour désactiver les animations de changement d'onglets",
+          "scanning": "Analyse en cours...",
+          "restoreLastPlaybackSession": "Revenir à la lecture précédente",
+          "openIn": "Ouvrir avec",
+          "deleteDownloadData": "Supprimer des téléchargements",
+          "disableTransitionAnimation":
+              "Désactiver les animations de transition",
+          "exportDowloadedFiles": "Exporter les fichiers téléchargés",
+          "exportDowloadedFilesDes":
+              "Cliquer ici pour exporter le fichier téléchargé du dossier de l'application vers un dossier externe",
+          "exportedFileLocation": "Lieu d'exportation du fichier",
+          "exporting": "Exportation en cours...",
+          "downFilesFound": "fichier téléchargé trouvé",
+          "close": "Fermer",
+          "exportMsg": "Fichiers exportés avec succès",
+          "clearImgCache": "Nettoyer le cache des images",
+          "clearImgCacheDes":
+              "Cliquer ici pour vider le cache des images/miniatures (non recommandé sauf si vous voulez rafraîchir le cache des images)",
+          "deleteDownloadedDataAlert":
+              "Retiré avec succès des téléchargements !",
+          "sleepTimeSetAlert": "Le minuteur de sommeil est activé",
+          "syncedLyricsNotAvailable":
+              "Les paroles synchronisées ne sont pas disponibles !",
+          "cancelTimer": "Annuler le minuteur",
+          "homeContentCountDes":
+              "Choisir la quantité de contenu sur l'écran d'accueil (approx.). Moins de résultats pour un chargement plus rapide",
+          "restoreLastPlaybackSessionDes":
+              "Relancer automatiquement la lecture précédente au démarrage de l'application",
+          "backgroundPlayDes":
+              "Activer/désactiver la lecture de musique en arrière-plan (l'application peut être accedée depuis le menu des notifications lorsqu'elle tourne en arrière-plan)",
+          "pipedplstSyncAlert": "Playlist piped synchronisée !",
+          "export": "Exporter",
+          "clearImgCacheAlert":
+              "Nettoyage du cache des images réalisé avec succès",
+          "homeContentCount": "Compteur de contenu du menu principal",
+          "upNext": "En haut pour la suivante",
+          "enableBottomNav": "Barre de navigation inférieure",
+          "enableBottomNavDes": "Passer à la barre de navigation inférieure"
         },
         "ga": {},
         "hi": {
@@ -2057,7 +2324,8 @@ class Languages extends Translations {
               "Activa iste option pro disactivar le animation de transition de scheda",
           "exportDowloadedFilesDes":
               "Clicca hic pro exportar files discargate ab directorio inApp a directorio externe",
-          "clearImgCacheAlert": "Imagines del cache delite con successo"
+          "clearImgCacheAlert": "Imagines del cache delite con successo",
+          "openIn": "Aperir in"
         },
         "id": {
           "playlistCreatednsongAddedAlert":
@@ -2547,7 +2815,8 @@ class Languages extends Translations {
           "clearImgCacheAlert": "画像キャッシュの消去に成功しました",
           "exportDowloadedFilesDes":
               "クリックすると、アプリのディレクトリから別の場所へダウンロード済みファイルをエクスポート",
-          "removeMultiple": "複数の曲を削除"
+          "removeMultiple": "複数の曲を削除",
+          "openIn": "開く"
         },
         "kn": {"libArtists": "歌手库"},
         "ko": {
@@ -2734,7 +3003,8 @@ class Languages extends Translations {
           "playlistCreatedAlert": "플레이리스트 생성됨!",
           "albumBookmarkAddAlert": "앨범을 즐겨찾기에 추가함!",
           "albumBookmarkRemoveAlert": "앨범 즐겨찾기를 제거함!",
-          "artistBookmarkAddAlert": "아티스트를 즐겨찾기에 추가함!"
+          "artistBookmarkAddAlert": "아티스트를 즐겨찾기에 추가함!",
+          "openIn": "열기"
         },
         "ku": {},
         "ml": {},
@@ -3428,7 +3698,8 @@ class Languages extends Translations {
           "plain": "ਪਲੇਨ",
           "clearImgCacheAlert": "ਚਿੱਤਰ ਕੈਸ਼ ਸਫ਼ਲਤਾਪੂਰਵਕ ਸਾਫ ਕੀਤਾ",
           "close": "ਬੰਦ ਕਰੋ",
-          "exportMsg": "ਫ਼ਾਈਲ ਸਫ਼ਲਤਾਪੂਰਵਕ ਐਕਸਪੋਰਟ ਹੋਈ"
+          "exportMsg": "ਫ਼ਾਈਲ ਸਫ਼ਲਤਾਪੂਰਵਕ ਐਕਸਪੋਰਟ ਹੋਈ",
+          "openIn": "ਦੇ ਵਿੱਚ ਖੋਲ੍ਹੋ"
         },
         "pl": {
           "home": "Główna",
@@ -3630,7 +3901,8 @@ class Languages extends Translations {
               "Włącz tę opcję, aby wyłączyć animację przejścia między kartami",
           "exporting": "Eksportowanie...",
           "scanning": "Skanowanie...",
-          "downFilesFound": "znaleziono pobrane pliki"
+          "downFilesFound": "znaleziono pobrane pliki",
+          "openIn": "Otwórz w"
         },
         "pt": {
           "renamePlaylist": "Renomear Playlist",
@@ -4665,7 +4937,8 @@ class Languages extends Translations {
           "exporting": "Dışa aktarılıyor...",
           "disableTransitionAnimation": "Geçiş animasyonunu devre dışı bırak",
           "disableTransitionAnimationDes":
-              "Sekme geçiş animasyonunu devre dışı bırakmak için bu seçeneği etkinleştirin"
+              "Sekme geçiş animasyonunu devre dışı bırakmak için bu seçeneği etkinleştirin",
+          "openIn": "Uygulamada aç"
         },
         "uk": {
           "library": "Бібліотека",

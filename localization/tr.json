@@ -178,5 +178,15 @@
     "exporting": "Dışa aktarılıyor...",
     "disableTransitionAnimation": "Geçiş animasyonunu devre dışı bırak",
     "disableTransitionAnimationDes": "Sekme geçiş animasyonunu devre dışı bırakmak için bu seçeneği etkinleştirin",
-    "openIn": "Uygulamada aç"
+    "openIn": "Uygulamada aç",
+    "backupSettingsAndPlaylists": "Yedekleme Ayarları ve Çalma Listeleri",
+    "restoreSettingsAndPlaylists": "Ayarları ve Çalma Listelerini Geri Yükle",
+    "backupSettingsAndPlaylistsDes": "Tüm ayarları, çalma listelerini ve oturum açma verilerini bir yedekleme dosyasına kaydeder",
+    "restoreSettingsAndPlaylistsDes": "Tüm ayarları, oturum açma verilerini ve çalma listelerini bir yedekleme dosyasından geri yükler. Mevcut tüm verilerin üzerine yazar",
+    "backupMsg": "Yedekleme başarıyla kaydedildi!",
+    "backFilesFound": "veri tabanları bulundu",
+    "restoreMsg": "Başarıyla geri yüklendi! Değişiklikler yeniden başlatıldığında uygulanır",
+    "restoring": "Geri yükleniyor...",
+    "restore": "Geri Yükle",
+    "closeApp": "Uygulamayı Kapat"
 }

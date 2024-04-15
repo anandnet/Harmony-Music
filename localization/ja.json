@@ -174,8 +174,18 @@
     "scanning": "スキャン中...",
     "downFilesFound": "ダウンロード済みファイルが存在します",
     "exportMsg": "ファイルのエクスポートに成功しました",
-    "clearImgCacheAlert": "画像キャッシュの消去に成功しました",
+    "clearImgCacheAlert": "画像キャッシュを消去しました",
     "exportDowloadedFilesDes": "クリックすると、アプリのディレクトリから別の場所へダウンロード済みファイルをエクスポート",
     "removeMultiple": "複数の曲を削除",
-    "openIn": "開く"
+    "openIn": "開く",
+    "restoreSettingsAndPlaylists": "設定と再生リストを復元",
+    "restoreSettingsAndPlaylistsDes": "すべての設定と再生リスト、ログイン情報をバックアップファイルから復元。現在のデータを上書きします",
+    "restoreMsg": "復元に成功しました！再起動で変更を適用",
+    "restoring": "復元中...",
+    "restore": "復元",
+    "closeApp": "アプリを閉じる",
+    "backupMsg": "バックアップに成功しました！",
+    "backupSettingsAndPlaylists": "設定と再生リストをバックアップ",
+    "backupSettingsAndPlaylistsDes": "すべての設定と再生リスト、ログイン情報をバックアップファイルに保存",
+    "backFilesFound": "データベースを発見"
 }

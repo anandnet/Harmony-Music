@@ -10,7 +10,6 @@ import '/services/piped_service.dart';
 import '../../../utils/helper.dart';
 import '/models/playlist.dart';
 import '/models/album.dart';
-import '/models/thumbnail.dart';
 import '../../../models/media_Item_builder.dart';
 import '../../../services/music_service.dart';
 import '../Library/library_controller.dart';
@@ -142,22 +141,12 @@ class PlayListNAlbumScreenController extends GetxController {
 
     if (isIdOnly) {
       if (isAlbum) {
-        final album = Album(
-            browseId: id,
-            artists: List<Map<dynamic, dynamic>>.from(content['artists']),
-            thumbnailUrl: Thumbnail(content['thumbnails'][0]['url']).high,
-            title: content['title'],
-            audioPlaylistId: content['audioPlaylistId'],
-            year: content['year']);
+        content['browseId'] = id;
+        final album =Album.fromJson(content);
         contentRenderer = album;
       } else {
-        final playlist = Playlist(
-            title: content['title'],
-            playlistId: id,
-            thumbnailUrl: Thumbnail(content['thumbnails'][0]['url']).high,
-            description: content['description'],
-            isCloudPlaylist: true,
-            songCount: (content['trackCount']).toString());
+        content['playlistId'] = id;
+        final playlist = Playlist.fromJson(content);
         contentRenderer = playlist;
       }
     }

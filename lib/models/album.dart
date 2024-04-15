@@ -24,11 +24,13 @@ class Album {
       required this.browseId,
       required this.artists,
       this.year,
+      this.description,
       this.audioPlaylistId,
       required this.thumbnailUrl});
   final String browseId;
   final String? audioPlaylistId;
   final String title;
+  final String? description;
   final List<Map<dynamic, dynamic>>? artists;
   final String? year;
   final String thumbnailUrl;
@@ -40,6 +42,7 @@ class Album {
       artists:json["artists"]!=null? List<Map<dynamic, dynamic>>.from(json["artists"]):[{'name':''}],
       year: json['year'],
       audioPlaylistId: json['audioPlaylistId'],
+      description: json['description'] ?? json["type"] ?? "Album",
       thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).medium);
 
    Map<String,dynamic> toJson()=>{
@@ -48,6 +51,7 @@ class Album {
     'artists':artists,
     'year':year,
     'audioPlaylistId':audioPlaylistId,
+    'description':description,
     'thumbnails':[{'url':thumbnailUrl}]
    };
 }

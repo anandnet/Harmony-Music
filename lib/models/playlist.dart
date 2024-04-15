@@ -39,7 +39,7 @@ class Playlist {
       title: json["title"],
       playlistId: json["playlistId"] ?? json["browseId"],
       thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).medium,
-      description: json["description"],
+      description: json["description"] ?? "Playlist",
       songCount: json['itemCount'],
       isPipedPlaylist: json["isPipedPlaylist"] ?? false,
       isCloudPlaylist: json["isCloudPlaylist"] ?? true);

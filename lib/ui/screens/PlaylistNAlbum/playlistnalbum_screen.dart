@@ -579,9 +579,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                   (!playListNAlbumScreenController.isAlbum &&
                                       content.isCloudPlaylist))
                               ? Text(
-                                  playListNAlbumScreenController.isAlbum
-                                      ? content.artists[0]['name'] ?? ""
-                                      : content.description ?? "",
+                                  content.description,
                                   style: Theme.of(context).textTheme.titleSmall,
                                 )
                               : Obx(

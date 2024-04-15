@@ -4,6 +4,7 @@ import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '/utils/helper.dart';
 import '../ui/widgets/loader.dart';
 import '/services/music_service.dart';
 import '/ui/player/player_controller.dart';
@@ -43,10 +44,11 @@ class AppLinksController extends GetxController {
 
     if (uri.host == "youtube.com" ||
         uri.host == "music.youtube.com" ||
-        uri.host == "youtu.be" || uri.host == "www.youtube.com") {
-      //printINFO("pathsegmet: ${uri.pathSegments} params:${uri.queryParameters}");
+        uri.host == "youtu.be" ||
+        uri.host == "www.youtube.com") {
+      printINFO("pathsegmet: ${uri.pathSegments} params:${uri.queryParameters}");
       if (uri.pathSegments[0] == "playlist" &&
-          (!uri.queryParameters.containsKey("playnext") || uri.host == "music.youtube.com")) {
+          uri.queryParameters.containsKey("list")) {
         final browseId = uri.queryParameters['list'];
         await openPlaylistOrAlbum(browseId!);
       } else if (uri.pathSegments[0] == "shorts") {
@@ -59,7 +61,8 @@ class AppLinksController extends GetxController {
       } else if (uri.pathSegments[0] == "channel") {
         final browseId = uri.pathSegments[1];
         await openArtist(browseId);
-      } else if ((uri.queryParameters.isEmpty || uri.query.contains("si="))  && uri.host == "youtu.be") {
+      } else if ((uri.queryParameters.isEmpty || uri.query.contains("si=")) &&
+          uri.host == "youtu.be") {
         final songId = uri.pathSegments[0];
         await playSong(songId);
       }

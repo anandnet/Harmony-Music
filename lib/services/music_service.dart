@@ -510,8 +510,8 @@ class MusicServices extends getx.GetxService {
     final data = Map.of(_context);
     data['videoId'] = songId;
     final response = (await _sendRequest("player", data)).data;
-    final videoDetails = response["videoDetails"];
-    if (videoDetails.containsKey("musicVideoType")) {
+    final category = nav(response, ["microformat","microformatDataRenderer", "category"]);
+    if (category == "Music" || (response["videoDetails"]).containsKey("musicVideoType")) {
       final list = await getWatchPlaylist(videoId: songId);
       return [true, list['tracks']];
     }

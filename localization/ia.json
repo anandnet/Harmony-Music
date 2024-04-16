@@ -177,5 +177,13 @@
     "disableTransitionAnimationDes": "Activa iste option pro disactivar le animation de transition de scheda",
     "exportDowloadedFilesDes": "Clicca hic pro exportar files discargate ab directorio inApp a directorio externe",
     "clearImgCacheAlert": "Imagines del cache delite con successo",
-    "openIn": "Aperir in"
+    "openIn": "Aperir in",
+    "closeApp": "Clauder le application",
+    "backupSettingsAndPlaylists": "Copia de securitate del parametros e listas de reproduction",
+    "backupSettingsAndPlaylistsDes": "Salveguarda tote le parametros, listas de reproduction e datos de initio de session in un file de copia de securitate",
+    "restoreSettingsAndPlaylists": "Restaurar le parametros e listas de reproduction",
+    "backupMsg": "Copia de securitate salveguardate con successo!",
+    "backFilesFound": "bases de datos trovate",
+    "restoring": "in restauration...",
+    "restore": "Restaurar"
 }

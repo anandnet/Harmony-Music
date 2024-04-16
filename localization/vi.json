@@ -177,5 +177,15 @@
     "playlistBookmarkRemoveAlert": "Đã xóa đánh dấu trang danh sách phát!",
     "disableTransitionAnimation": "Tắt hoạt ảnh chuyển tiếp",
     "disableTransitionAnimationDes": "Bật tùy chọn này để tắt hoạt ảnh chuyển tiếp trang",
-    "openIn": "Mở trong"
+    "openIn": "Mở trong",
+    "backupSettingsAndPlaylists": "Sao lưu cài đặt và đánh sách phát",
+    "backupSettingsAndPlaylistsDes": "Lưu tất cả cài đặt, đánh sách phát, và dữ liệu đăng nhập vào một tệp sao lưu",
+    "restoreSettingsAndPlaylists": "Khôi phục cài đặt và đánh sách phát",
+    "backFilesFound": "Tìm thấy cơ sở dữ liệu",
+    "restoreMsg": "Khôi phục thành công! Thấy đổi sẽ có hiệu lực khi khởi động lại ứng dụng",
+    "restoring": "Đang khôi phục...",
+    "closeApp": "Đóng ứng dụng",
+    "restoreSettingsAndPlaylistsDes": "Khôi phục tất cả cài đặt, dữ liệu đăng nhập và đánh sách phát từ file sao lưu. Ghi đè tất cả dữ liệu hiện tại",
+    "backupMsg": "Bản sao lưu được lưu thành công!",
+    "restore": "Khôi phục"
 }

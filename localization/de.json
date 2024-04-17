@@ -180,5 +180,15 @@
     "export": "Exportieren",
     "deleteDownloadedDataAlert": "Erfolgreich aus Downloads entfernt!",
     "sleepTimeSetAlert": "Dein Sleep-Timer ist gesetzt",
-    "openIn": "Öffnen in"
+    "openIn": "Öffnen in",
+    "restoring": "wiederherstellen...",
+    "restore": "Wiederherstellen",
+    "closeApp": "App schließen",
+    "backupSettingsAndPlaylistsDes": "Sichert alle Einstellungen, Wiedergabelisten und Login-Daten in einer Sicherungsdatei",
+    "backupSettingsAndPlaylists": "Sichere Einstellungen und Wiedergabelisten",
+    "restoreSettingsAndPlaylists": "Wiederherstellen",
+    "restoreSettingsAndPlaylistsDes": "Stellt alle Einstellungen, Login-Daten und Wiedergabelisten mit einer Sicherungsdatei wieder her. Überschreibt alle jetzigen Daten",
+    "backupMsg": "Sicherung erfolgreich gespeichert!",
+    "backFilesFound": "Datenbanken gefunden",
+    "restoreMsg": "Erfolgreich wiederhergestellt! Änderungen werden beim Neustart in Kraft treten"
 }

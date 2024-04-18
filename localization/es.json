@@ -178,5 +178,15 @@
     "close": "Cerrar",
     "exportMsg": "Archivos exportados correctamente",
     "clearImgCacheAlert": "Imágenes en la chache borradas con éxito",
-    "openIn": "Abrir en"
+    "openIn": "Abrir en",
+    "backupSettingsAndPlaylists": "Configuración de copia de seguridad y listas de reproducción",
+    "restoreMsg": "¡Restaurado correctamente! Los cambios se aplicarán al reiniciar",
+    "backupSettingsAndPlaylistsDes": "Guarda todas las configuraciones, listas de reproducción y datos de inicio de sesión en una copia de seguridad",
+    "restoreSettingsAndPlaylists": "Restaurar los ajustes y listas de reproducción",
+    "restoreSettingsAndPlaylistsDes": "Restaura todos los ajustes, datos de inicio de sesión y listas de reproducción desde un archivo de copia de seguridad. Sobrescribe todos los datos actuales",
+    "backupMsg": "¡Copia de seguridad guardada exitosamente!",
+    "backFilesFound": "bases de datos encontradas",
+    "restoring": "restaurando...",
+    "restore": "Restaurar",
+    "closeApp": "Cerrar la aplicación"
 }

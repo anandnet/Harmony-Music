@@ -177,5 +177,15 @@
     "resetblacklistedplaylist": "Restablir les llistes de reproducció de la llista negra",
     "resetblacklistedplaylistDes": "Restablir totes les llistes de reproducció a la llista negra de Piped",
     "albumBookmarkRemoveAlert": "Àlbum preferit desmarcat!",
-    "albumBookmarkAddAlert": "Àlbum preferit marcat!"
+    "albumBookmarkAddAlert": "Àlbum preferit marcat!",
+    "backupSettingsAndPlaylists": "Configurar còpia de seguretat i llistes de reproducció",
+    "backupSettingsAndPlaylistsDes": "Desa tota la configuració, llistes de reproducció i credencials de sessió en un arxiu de còpia de seguretat",
+    "restoreSettingsAndPlaylists": "Restaura configuració i llistes de reproducció",
+    "restoreSettingsAndPlaylistsDes": "Restaura tota la configuració, credencials de sessió i llistes de reproducció des d'un arxiu de còpia de seguretat. Sobre-escriu les dades actuals",
+    "backFilesFound": "bases de dades trobades",
+    "restoreMsg": "Restaurada correctament! Els canvis s'aplicaran en reiniciar",
+    "restoring": "restaurant...",
+    "backupMsg": "Còpia de seguretat desada correctament!",
+    "restore": "Restaurar",
+    "closeApp": "Tancar l'aplicació"
 }

@@ -177,7 +177,7 @@
     "clearImgCacheAlert": "画像キャッシュを消去しました",
     "exportDowloadedFilesDes": "クリックすると、アプリのディレクトリから別の場所へダウンロード済みファイルをエクスポート",
     "removeMultiple": "複数の曲を削除",
-    "openIn": "開く",
+    "openIn": "アプリで開く",
     "restoreSettingsAndPlaylists": "設定と再生リストを復元",
     "restoreSettingsAndPlaylistsDes": "すべての設定と再生リスト、ログイン情報をバックアップファイルから復元。現在のデータを上書きします",
     "restoreMsg": "復元に成功しました！再起動で変更を適用",

@@ -160,5 +160,13 @@
     "backgroundPlay": "后台音乐播放",
     "clearImgCacheDes": "点击此处清理已缓存的缩略图和图像。（除非为了刷新缓存图像数据，否则不推荐此操作）",
     "clearImgCache": "清理图像缓存",
-    "upNext": "接下来"
+    "upNext": "接下来",
+    "scanning": "扫描中...",
+    "close": "关闭",
+    "exporting": "输出中...",
+    "downFilesFound": "找到已下载的文件",
+    "exportDowloadedFiles": "输出已下载的文件",
+    "clearImgCacheAlert": "图像缓存清理成功",
+    "exportMsg": "文件已成功輸出",
+    "export": "输出"
 }

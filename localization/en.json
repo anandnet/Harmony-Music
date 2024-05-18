@@ -101,7 +101,7 @@
     "equalizer": "Equalizer",
     "equalizerDes": "Open system equalizer",
     "clearImgCache": "Clear images cache",
-    "clearImgCacheAlert": "Images chache cleared successfully",
+    "clearImgCacheAlert": "Images cache cleared successfully",
     "clearImgCacheDes": "Click here to clear cached thumbnails/images. (Not recommended unless want to refresh cached images data)",
     "ignoreBatOpt": "Ignore battery optimization",
     "ignoreBatOptDes": "If you are facing notification issues or playback stopped by system optimization, please enable this option",

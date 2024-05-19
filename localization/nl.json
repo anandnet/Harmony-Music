@@ -176,5 +176,10 @@
     "close": "Sluit",
     "exportMsg": "Bestanden successvol geëxporteerd",
     "clearImgCacheAlert": "Afbeeldingen cache is successvol verwijderd",
-    "selectAuthInsMsg": "Selecteer Authenticatie instantie!"
+    "selectAuthInsMsg": "Selecteer Authenticatie instantie!",
+    "openIn": "Openen in",
+    "backupSettingsAndPlaylists": "Back-up instellingen en afspeellijsten",
+    "backupSettingsAndPlaylistsDes": "Bewaart alle instellingen, afspeellijsten en aanmeldgegevens in een back-up bestand",
+    "restoreSettingsAndPlaylistsDes": "Herstelt alle instellingen, aanmeldgegevens en afspeellijsten van een back-up bestand. Overschrijft alle huidige gegevens",
+    "restoreSettingsAndPlaylists": "Herstel instellingen en afspeellijsten"
 }

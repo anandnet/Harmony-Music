@@ -13,5 +13,13 @@
     "settings": "الاعدادات",
     "libSongs": "اغاني المكتبة",
     "communityplaylists": "قوائم تشغيل الاخرين",
-    "singles": "أغاني فردية"
+    "singles": "أغاني فردية",
+    "recentlyPlayed": "استمعت مؤخرا",
+    "songs": "أغاني",
+    "favorites": "المفضلة",
+    "cachedOrOffline": "متاح بدون انترنت",
+    "downloads": "التنزيلات",
+    "emptyPlaylist": "قائمة فارغة!",
+    "featuredplaylists": "قوائم مقترحة",
+    "noOfflineSong": "لا يوجد أغاني بدون إنترنت!"
 }

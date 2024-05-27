@@ -182,5 +182,10 @@
     "restoreSettingsAndPlaylists": "Відновити налаштування та списки відтворення",
     "restoreSettingsAndPlaylistsDes": "Відновлює всі налаштування, дані для входу та списки відтворення з файлу резервної копії. Переписує всі поточні дані",
     "restoreMsg": "Успішно відновлено!Зміни застосовуються після перезавантаження",
-    "Piped": "Piped"
+    "Piped": "Piped",
+    "hintApiUrl": "URL-адреса API до екземпляра Piped",
+    "linkPipedDes": "Посилання з piped для списків відтворення",
+    "backupSettingsAndPlaylists": "Резервне копіювання налаштувань та списків відтворення",
+    "stopMusicOnTaskClear": "Зупинити музику на task clear",
+    "backupSettingsAndPlaylistsDes": "Зберігає всі налаштування, списки відтворення та дані для входу у файл резервної копії"
 }

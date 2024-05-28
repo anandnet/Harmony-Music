@@ -180,5 +180,15 @@
     "exporting": "Eksportowanie...",
     "scanning": "Skanowanie...",
     "downFilesFound": "znaleziono pobrane pliki",
-    "openIn": "Otwórz w"
+    "openIn": "Otwórz w",
+    "backupSettingsAndPlaylists": "Kopia zapasowa ustawień i list odtwarzania",
+    "backupSettingsAndPlaylistsDes": "Zapisuje wszystkie ustawienia, listy odtwarzania i dane logowania w pliku kopii zapasowej",
+    "restoreSettingsAndPlaylistsDes": "Przywraca wszystkie ustawienia, dane logowania i listy odtwarzania z pliku kopii zapasowej. Nadpisuje wszystkie bieżące dane",
+    "backFilesFound": "znalezione bazy danych",
+    "restoreSettingsAndPlaylists": "Przywracanie ustawień i list odtwarzania",
+    "backupMsg": "Kopia zapasowa została pomyślnie zapisana!",
+    "restoreMsg": "Przywrócenie powiodło się! Zmiany zostaną zastosowane po ponownym uruchomieniu",
+    "restoring": "przywracanie...",
+    "restore": "Przywracanie",
+    "closeApp": "Zamknij aplikację"
 }

@@ -78,5 +78,6 @@
     "removeFromLib": "Elimină din bibliotecă de Melodii",
     "cancelTimer": "Anulare temporizator",
     "basedOnLast": "Bazat de ultima interacțiune",
-    "restoreLastPlaybackSession": "Restaurați ultima sesiune de redare"
+    "restoreLastPlaybackSession": "Restaurați ultima sesiune de redare",
+    "openIn": "Deschide cu"
 }

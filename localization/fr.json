@@ -181,5 +181,14 @@
     "upNext": "En haut pour la suivante",
     "enableBottomNav": "Barre de navigation inférieure",
     "enableBottomNavDes": "Passer à la barre de navigation inférieure",
-    "backupSettingsAndPlaylists": "Musique"
+    "backupSettingsAndPlaylists": "Musique",
+    "restoreSettingsAndPlaylists": "Restaurer les paramètres et les listes de lecture",
+    "backupMsg": "Fichier de sauvegarde créé avec succès!",
+    "backFilesFound": "Bases de données trouvées",
+    "restoreMsg": "Opération réussie ! Vos changements seront appliqués au redémarrage",
+    "restoring": "Récupération en cours...",
+    "restore": "Récupérer",
+    "backupSettingsAndPlaylistsDes": "Sauvegarde tous vos paramètres, listes de lectures et données de connexion dans un fichier de récupération",
+    "restoreSettingsAndPlaylistsDes": "Restaurer tous les paramètres, données de connexion et listes de lectures depuis un fichier de récupération. Supprime toutes les données actuelles",
+    "closeApp": "Fermer l'application"
 }

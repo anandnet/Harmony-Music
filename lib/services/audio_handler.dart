@@ -44,6 +44,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   bool loopModeEnabled = false;
   var networkErrorPause = false;
   bool isSongLoading = true;
+  DeviceEqualizer? deviceEqualizer;
 
   final _playList = ConcatenatingAudioSource(
     children: [],
@@ -66,6 +67,10 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     _player
         .setSkipSilenceEnabled(Hive.box("appPrefs").get("skipSilenceEnabled"));
     loopModeEnabled = Hive.box("appPrefs").get("isLoopModeEnabled") ?? false;
+    if (GetPlatform.isAndroid) {
+      deviceEqualizer = DeviceEqualizer();
+      _listenSessionIdStream();
+    }
   }
 
   Future<void> _createCacheDir() async {
@@ -81,6 +86,14 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     } catch (r) {
       printERROR(r.toString());
     }
+  }
+
+  void _listenSessionIdStream() {
+    _player.androidAudioSessionIdStream.listen((int? id) {
+      if(id!=null){
+        deviceEqualizer?.initAudioEffect(id);
+      }
+    });
   }
 
   void _notifyAudioHandlerAboutPlaybackEvents() {
@@ -457,11 +470,11 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       currentQueue.insert(currentIndex + 1, song);
       queue.add(currentQueue);
     } else if (name == 'openEqualizer') {
-      await DeviceEqualizer().open(_player.androidAudioSessionId!);
+      await deviceEqualizer?.open(_player.androidAudioSessionId!);
     } else if (name == "saveSession") {
       await saveSessionData();
-    }else if(name == "setVolume"){
-      _player.setVolume(extras!['value']/100);
+    } else if (name == "setVolume") {
+      _player.setVolume(extras!['value'] / 100);
     }
   }
 
@@ -495,6 +508,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   @override
   Future<void> stop() async {
+    await deviceEqualizer?.endAudioEffect(_player.androidAudioSessionId!);
     await _player.stop();
     return super.stop();
   }

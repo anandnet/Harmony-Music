@@ -53,7 +53,7 @@ dependencies:
   device_equalizer:
     git:
       url: https://github.com/anandnet/device_equalizer.git
-      ref: main
+      ref: 29ea7ff4e284101af114de64bafca25a1a0c01d8
   app_links: ^3.4.5
   permission_handler: ^11.0.1
   sdk_int:

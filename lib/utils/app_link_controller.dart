@@ -4,6 +4,7 @@ import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '/ui/widgets/songinfo_bottom_sheet.dart';
 import '/utils/helper.dart';
 import '../ui/widgets/loader.dart';
 import '/services/music_service.dart';
@@ -42,11 +43,17 @@ class AppLinksController extends GetxController {
       playerController.playerPanelController.close();
     }
 
+    if(Get.isRegistered<SongInfoController>()){
+      Navigator.of(Get.context!).pop();
+    }
+
     if (uri.host == "youtube.com" ||
         uri.host == "music.youtube.com" ||
         uri.host == "youtu.be" ||
-        uri.host == "www.youtube.com") {
-      printINFO("pathsegmet: ${uri.pathSegments} params:${uri.queryParameters}");
+        uri.host == "www.youtube.com" ||
+        uri.host == "m.youtube.com") {
+      printINFO(
+          "pathsegmet: ${uri.pathSegments} params:${uri.queryParameters}");
       if (uri.pathSegments[0] == "playlist" &&
           uri.queryParameters.containsKey("list")) {
         final browseId = uri.queryParameters['list'];

@@ -34,39 +34,39 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   #cupertino_icons: ^1.0.2
-  just_audio: ^0.9.35
-  audio_video_progress_bar: ^2.0.1
+  just_audio: ^0.9.38
+  audio_video_progress_bar: ^2.0.3
   get: ^4.6.6
   #http: ^0.13.5
   dio: ^5.3.3
-  cached_network_image: ^3.3.0
+  cached_network_image: ^3.3.1
   youtube_explode_dart: ^2.0.2
-  audio_service: ^0.18.12
+  audio_service: ^0.18.13
   palette_generator: ^0.3.3+3
   path_provider: ^2.1.1
   shimmer: ^3.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  flutter_keyboard_visibility: ^5.4.1
+  flutter_keyboard_visibility: ^6.0.0
   url_launcher: ^6.2.1
-  share_plus: ^7.2.1
+  share_plus: ^9.0.0
   device_equalizer:
     git:
       url: https://github.com/anandnet/device_equalizer.git
       ref: 29ea7ff4e284101af114de64bafca25a1a0c01d8
-  app_links: ^3.4.5
+  app_links: ^3.5.1
   permission_handler: ^11.0.1
   sdk_int:
     git:
       url: https://github.com/anandnet/sdk_int.git
       ref: master
-  file_picker: ^6.0.0
+  file_picker: ^8.0.6
   audiotags: ^1.3.0
   google_fonts: ^6.1.0
   toggle_switch: ^2.1.0
   flutter_lyric: ^2.0.4+6
   buttons_tabbar: ^1.3.8
-  animations: ^2.0.8
+  animations: ^2.0.11
   just_audio_media_kit:
     git:
       url: https://github.com/anandnet/just_audio_media_kit.git
@@ -74,7 +74,7 @@ dependencies:
   sidebar_with_animation: ^0.0.3
   window_manager: ^0.3.7
   smtc_windows: ^0.1.2
-  audio_service_mpris: ^0.1.3
+  audio_service_mpris: ^0.1.5
   ionicons: ^0.2.2
   archive: ^3.1.6
   path: ^1.8.3
@@ -88,7 +88,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.1
+  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -290,19 +290,27 @@ class LibraryPlaylistsController extends GetxController
           })
           .whereType<String>()
           .toList();
+
+      final ppmBox = await Hive.openBox('pipedPlaylistAdditionalMetadata');
       //add new playlist from cloud
       for (dynamic playlist in res.response) {
         if (!libPipedPlaylistsId.contains(playlist['id'])) {
+          DateTime? lastPlayed;
+          if (ppmBox.containsKey(playlist['id'])) {
+            lastPlayed = ppmBox.get(playlist['id'])['lastPlayed'];
+          }
           final plst = Playlist(
             title: playlist['name'],
             playlistId: playlist['id'],
             description: "Piped Playlist",
             thumbnailUrl: playlist['thumbnail'],
             isPipedPlaylist: true,
+            lastPlayed: lastPlayed,
           );
           libraryPlaylists.add(plst);
         }
       }
+      await ppmBox.close();
 
       //remove playist if removed from cloud
       for (Playlist playlist in libraryPlaylists.toList()) {

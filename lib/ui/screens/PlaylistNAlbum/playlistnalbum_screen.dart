@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/services/downloader.dart';
+import 'package:harmonymusic/utils/helper.dart';
 
 import '../../widgets/loader.dart';
 import '../../widgets/modification_list.dart';
@@ -348,8 +351,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                   playListNAlbumScreenController
                                                           .isAddedToLibrary
                                                           .isFalse
-                                                      ? 130
-                                                      : 180,
+                                                      ? 180
+                                                      : 230,
                                               width: 47,
                                               decoration: BoxDecoration(
                                                   color: Theme.of(context)
@@ -559,7 +562,17 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                                                   : const Icon(Icons
                                                                       .download_rounded),
                                                     );
-                                                  })
+                                                  }),
+                                                  IconButton(
+                                                    onPressed: () {
+                                                      Get.find<PlayerController>()
+                                                        .playPlayListSong(playListNAlbumScreenController.songList, 0);
+                                                      if (playListNAlbumScreenController.contentRenderer is Playlist) {
+                                                        playListNAlbumScreenController.contentRenderer.updateLastPlayed();
+                                                      }
+                                                    },
+                                                    icon: const Icon(Icons.play_arrow)
+                                                  )
                                                 ],
                                               ),
                                             ),

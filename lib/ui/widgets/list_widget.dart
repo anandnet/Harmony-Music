@@ -1,8 +1,8 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:widget_marquee/widget_marquee.dart';
 
-import '/ui/widgets/marqwee_widget.dart';
 import '../../models/playlist.dart';
 import '../navigator.dart';
 import '../player/player_controller.dart';
@@ -110,7 +110,10 @@ class ListWidget extends StatelessWidget {
           size: 55,
           song: items[index],
         ),
-        title: MarqueeWidget(
+        title: Marquee(
+          delay: const Duration(milliseconds: 300),
+          duration: const Duration(seconds: 5),
+          id: items[index].title.hashCode.toString(),
           child: Text(
             items[index].title.length > 50
                 ? items[index].title.substring(0, 50)

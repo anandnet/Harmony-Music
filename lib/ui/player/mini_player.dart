@@ -1,10 +1,10 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:widget_marquee/widget_marquee.dart';
 
 import '/ui/player/player_controller.dart';
 import '/ui/widgets/loader.dart';
-import '/ui/widgets/marqwee_widget.dart';
 import '../widgets/add_to_playlist.dart';
 import '../widgets/sleep_timer_bottom_sheet.dart';
 import '../widgets/song_download_btn.dart';
@@ -120,7 +120,10 @@ class MiniPlayer extends StatelessWidget {
                               ),
                               SizedBox(
                                 height: 20,
-                                child: MarqueeWidget(
+                                child: Marquee(
+                                  id: "Mini player artists",
+                                  delay: const Duration(milliseconds: 300),
+                                  duration: const Duration(seconds: 5),
                                   child: Text(
                                     playerController.currentSong.value != null
                                         ? playerController

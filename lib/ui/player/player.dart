@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:widget_marquee/widget_marquee.dart';
 
 import '../widgets/loader.dart';
 import '../../utils/helper.dart';
@@ -14,7 +15,6 @@ import '../widgets/up_next_queue.dart';
 import '/ui/player/player_controller.dart';
 import '../screens/Settings/settings_screen_controller.dart';
 import '/ui/utils/theme_controller.dart';
-import '/ui/widgets/marqwee_widget.dart';
 import '/ui/widgets/songinfo_bottom_sheet.dart';
 import '../widgets/image_widget.dart';
 import '../widgets/sliding_up_panel.dart';
@@ -406,21 +406,26 @@ class Player extends StatelessWidget {
                         : Container()),
                     Expanded(child: Container()),
                     Obx(() {
-                      return MarqueeWidget(
-                        child: Text(
-                          playerController.currentSong.value != null
-                              ? playerController.currentSong.value!.title
-                              : "NA",
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
+                      return Marquee(
+                        delay: const Duration(milliseconds: 300),
+                        duration: const Duration(seconds: 5),
+                        id: "Current Song",
+                        child:Text(playerController.currentSong.value != null
+                            ? playerController.currentSong.value!.title
+                            : "NA",
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.labelMedium!,
+                      ),
                       );
                     }),
                     const SizedBox(
                       height: 10,
                     ),
                     GetX<PlayerController>(builder: (controller) {
-                      return MarqueeWidget(
+                      return Marquee(
+                        delay: const Duration(milliseconds: 300),
+                        duration: const Duration(seconds: 5),
+                        id: "Current Song artists",
                         child: Text(
                           playerController.currentSong.value != null
                               ? controller.currentSong.value!.artist!

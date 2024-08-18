@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:widget_marquee/widget_marquee.dart';
 
 import '/ui/screens/Artists/artist_screen_controller.dart';
 import '/ui/screens/Library/library_controller.dart';
 import '/ui/screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
 import '/ui/widgets/sort_widget.dart' show OperationMode;
 import 'image_widget.dart';
-import 'marqwee_widget.dart';
 
 class ModificationList extends StatelessWidget {
   const ModificationList(
@@ -36,7 +36,10 @@ class ModificationList extends StatelessWidget {
                     size: 55,
                     song: items[index],
                   ),
-                  title: MarqueeWidget(
+                  title: Marquee(
+                    delay: const Duration(milliseconds: 300),
+                    duration: const Duration(seconds: 5),
+                    id: items[index].title.hashCode.toString(),
                     child: Text(
                       items[index].title.length > 50
                           ? items[index].title.substring(0, 50)
@@ -102,7 +105,10 @@ class ModificationList extends StatelessWidget {
                 ],
               ),
             ),
-            title: MarqueeWidget(
+            title: Marquee(
+              delay: const Duration(milliseconds: 300),
+              duration: const Duration(seconds: 5),
+              id: items[index].title.hashCode.toString(),
               child: Text(
                 items[index].title.length > 50
                     ? items[index].title.substring(0, 50)

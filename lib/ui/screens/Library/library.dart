@@ -162,7 +162,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                     isSearchFeatureRequired: true,
                     itemCountTitle:
                         "${librplstCntrller.libraryPlaylists.length} ${"items".tr}",
-                    requiredSortTypes: buildSortTypeSet(),
+                    requiredSortTypes: buildSortTypeSet(false, false, true),
                     onSort: (type, ascending) {
                       librplstCntrller.onSort(type, ascending);
                     },

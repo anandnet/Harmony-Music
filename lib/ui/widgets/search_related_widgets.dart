@@ -17,12 +17,14 @@ class ResultWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final SearchResultScreenController searchResScrController =
         Get.find<SearchResultScreenController>();
+    final topPadding = context.isLandscape ? 50.0 : 80.0;
     return Obx(
       () => Center(
         child: Padding(
           padding: const EdgeInsets.all(0.0),
           child: SingleChildScrollView(
-            padding: EdgeInsets.only(bottom: 200, top: isv2Used ? 0 : 70),
+            padding:
+                EdgeInsets.only(bottom: 200, top: isv2Used ? 0 : topPadding),
             child: searchResScrController.isResultContentFetced.value
                 ? Column(children: [
                     if (!isv2Used)

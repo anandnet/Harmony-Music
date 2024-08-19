@@ -74,8 +74,8 @@ class ArtistScreen extends StatelessWidget {
                     ].map((e) => railDestination(e)).toList(),
                     leading: Column(
                       children: [
-                        const SizedBox(
-                          height: 30,
+                        SizedBox(
+                          height: context.isLandscape ? 20.0 : 45.0,
                         ),
                         IconButton(
                           icon: Icon(
@@ -102,7 +102,9 @@ class ArtistScreen extends StatelessWidget {
                 Expanded(
                   child: Obx(
                     () => AnimatedScreenTransition(
-                      enabled: Get.find<SettingsScreenController>().isTransitionAnimationDisabled.isFalse,
+                      enabled: Get.find<SettingsScreenController>()
+                          .isTransitionAnimationDisabled
+                          .isFalse,
                       resverse: artistScreenController.isTabTransitionReversed,
                       child: Center(
                         key: ValueKey<int>(artistScreenController
@@ -164,7 +166,7 @@ class Body extends StatelessWidget {
               ? separatedContent[currentTabName]['results']
               : [],
           title: currentTabName,
-          topPadding: 75,
+          topPadding: context.isLandscape ? 50.0 : 80.0,
           scrollController: currentTabName == "Songs"
               ? artistScreenController.songScrollController
               : currentTabName == "Videos"

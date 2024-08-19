@@ -12,6 +12,7 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final searchScreenController = Get.put(SearchScreenController());
     final settingsScreenController = Get.find<SettingsScreenController>();
+    final topPadding = context.isLandscape ? 50.0 : 80.0;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Obx(
@@ -25,7 +26,7 @@ class SearchScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 80),
+                          padding: EdgeInsets.only(top: topPadding),
                           child: IconButton(
                             icon: Icon(
                               Icons.arrow_back_ios_new_rounded,
@@ -49,7 +50,7 @@ class SearchScreen extends StatelessWidget {
                   ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(top: 90, left: 5),
+                padding: EdgeInsets.only(top: topPadding, left: 5),
                 child: Column(
                   children: [
                     Align(
@@ -72,7 +73,8 @@ class SearchScreen extends StatelessWidget {
                             id: ScreenNavigationSetup.id, arguments: val);
                         searchScreenController.addToHistryQueryList(val);
                       },
-                      autofocus: settingsScreenController.isBottomNavBarEnabled.isFalse,
+                      autofocus: settingsScreenController
+                          .isBottomNavBarEnabled.isFalse,
                       cursorColor: Theme.of(context).textTheme.bodySmall!.color,
                       decoration: InputDecoration(
                           contentPadding: const EdgeInsets.only(left: 5),
@@ -95,7 +97,7 @@ class SearchScreen extends StatelessWidget {
                             ? searchScreenController.historyQuerylist.toList()
                             : searchScreenController.suggestionList.toList();
                         return ListView.builder(
-                          padding: const EdgeInsets.only(top: 5,bottom: 400),
+                          padding: const EdgeInsets.only(top: 5, bottom: 400),
                           physics: const BouncingScrollPhysics(
                               parent: AlwaysScrollableScrollPhysics()),
                           itemCount: list.length,

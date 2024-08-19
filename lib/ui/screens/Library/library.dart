@@ -16,10 +16,11 @@ class SongsLibraryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final topPadding = context.isLandscape ? 50.0 : 90.0;
     return Padding(
       padding: isBottomNavActive
           ? const EdgeInsets.only(left: 15)
-          : const EdgeInsets.only(left: 5.0, top: 90),
+          : EdgeInsets.only(left: 5.0, top: topPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -107,11 +108,12 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
 
     const double itemHeight = 220;
     const double itemWidth = 180;
+    final topPadding = context.isLandscape ? 50.0 : 90.0;
 
     return Padding(
       padding: isBottomNavActive
           ? const EdgeInsets.only(left: 15)
-          : const EdgeInsets.only(top: 90.0),
+          : EdgeInsets.only(top: topPadding),
       child: Column(
         children: [
           Padding(
@@ -217,10 +219,11 @@ class LibraryArtistWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cntrller = Get.find<LibraryArtistsController>();
+    final topPadding = context.isLandscape ? 50.0 : 90.0;
     return Padding(
       padding: isBottomNavActive
           ? const EdgeInsets.only(left: 15)
-          : const EdgeInsets.only(left: 5, top: 90.0),
+          : EdgeInsets.only(left: 5, top: topPadding),
       child: Column(
         children: [
           isBottomNavActive

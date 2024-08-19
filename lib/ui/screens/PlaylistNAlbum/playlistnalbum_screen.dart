@@ -26,6 +26,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tag = key.hashCode.toString();
+    final topPadding = context.isLandscape ? 50.0 : 80.0;
     final PlayListNAlbumScreenController playListNAlbumScreenController =
         (Get.isRegistered<PlayListNAlbumScreenController>(tag: tag))
             ? Get.find<PlayListNAlbumScreenController>(tag: tag)
@@ -40,7 +41,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
             child: Align(
               alignment: Alignment.topCenter,
               child: Padding(
-                padding: const EdgeInsets.only(top: 73.0),
+                padding: EdgeInsets.only(top: topPadding),
                 child: IconButton(
                   icon: Icon(
                     Icons.arrow_back_ios_new_rounded,
@@ -66,7 +67,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
               return Expanded(
                 child: Container(
                   color: Theme.of(context).canvasColor,
-                  padding: const EdgeInsets.only(top: 73, left: 10),
+                  padding: EdgeInsets.only(top: topPadding, left: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -592,7 +593,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                         "${playListNAlbumScreenController.songList.length}",
                                     itemIcon: Icons.music_note_rounded,
                                     titleLeftPadding: 9,
-                                    requiredSortTypes: buildSortTypeSet(false, true),
+                                    requiredSortTypes:
+                                        buildSortTypeSet(false, true),
                                     isPlaylistRearrageFeatureRequired:
                                         content.playlistId != "LIBRP" &&
                                             content.playlistId !=
@@ -641,7 +643,8 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                                     "${playListNAlbumScreenController.songList.length}",
                                 itemIcon: Icons.music_note_rounded,
                                 titleLeftPadding: 9,
-                                requiredSortTypes: buildSortTypeSet(false, true),
+                                requiredSortTypes:
+                                    buildSortTypeSet(false, true),
                                 onSort: (type, ascending) {
                                   playListNAlbumScreenController.onSort(
                                       type, ascending);

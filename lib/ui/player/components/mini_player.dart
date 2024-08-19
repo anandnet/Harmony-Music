@@ -5,11 +5,11 @@ import 'package:widget_marquee/widget_marquee.dart';
 
 import '/ui/player/player_controller.dart';
 import '/ui/widgets/loader.dart';
-import '../widgets/add_to_playlist.dart';
-import '../widgets/sleep_timer_bottom_sheet.dart';
-import '../widgets/song_download_btn.dart';
-import '../widgets/image_widget.dart';
-import '../widgets/mini_player_progress_bar.dart';
+import '../../widgets/add_to_playlist.dart';
+import '../../widgets/sleep_timer_bottom_sheet.dart';
+import '../../widgets/song_download_btn.dart';
+import '../../widgets/image_widget.dart';
+import '../../widgets/mini_player_progress_bar.dart';
 
 class MiniPlayer extends StatelessWidget {
   const MiniPlayer({super.key});

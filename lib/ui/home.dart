@@ -9,7 +9,7 @@ import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart
 import '../utils/helper.dart';
 import '../ui/navigator.dart';
 import '../ui/player/player.dart';
-import 'player/mini_player.dart';
+import 'player/components/mini_player.dart';
 import 'player/player_controller.dart';
 import 'widgets/bottom_nav_bar.dart';
 import 'widgets/scroll_to_hide.dart';

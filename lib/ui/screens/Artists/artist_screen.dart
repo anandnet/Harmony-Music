@@ -60,43 +60,51 @@ class ArtistScreen extends StatelessWidget {
               artistScreenController: artistScreenController, tag: tag)
           : Row(
               children: [
-                Obx(
-                  () => NavigationRail(
-                    onDestinationSelected:
-                        artistScreenController.onDestinationSelected,
-                    minWidth: 60,
-                    destinations: [
-                      "about".tr,
-                      "songs".tr,
-                      "videos".tr,
-                      "albums".tr,
-                      "singles".tr
-                    ].map((e) => railDestination(e)).toList(),
-                    leading: Column(
-                      children: [
-                        SizedBox(
-                          height: context.isLandscape ? 20.0 : 45.0,
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            color:
-                                Theme.of(context).textTheme.titleMedium!.color,
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.only(bottom: 80),
+                    child: IntrinsicHeight(
+                      child: Obx(
+                        () => NavigationRail(
+                          onDestinationSelected:
+                              artistScreenController.onDestinationSelected,
+                          minWidth: 60,
+                          destinations: [
+                            "about".tr,
+                            "songs".tr,
+                            "videos".tr,
+                            "albums".tr,
+                            "singles".tr
+                          ].map((e) => railDestination(e)).toList(),
+                          leading: Column(
+                            children: [
+                              SizedBox(
+                                height: context.isLandscape ? 20.0 : 45.0,
+                              ),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.arrow_back_ios_new_rounded,
+                                  color:
+                                      Theme.of(context).textTheme.titleMedium!.color,
+                                ),
+                                onPressed: () {
+                                  Get.nestedKey(ScreenNavigationSetup.id)!
+                                      .currentState!
+                                      .pop();
+                                },
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
                           ),
-                          onPressed: () {
-                            Get.nestedKey(ScreenNavigationSetup.id)!
-                                .currentState!
-                                .pop();
-                          },
+                          labelType: NavigationRailLabelType.all,
+                          selectedIndex:
+                              artistScreenController.navigationRailCurrentIndex.value,
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
+                      ),
                     ),
-                    labelType: NavigationRailLabelType.all,
-                    selectedIndex:
-                        artistScreenController.navigationRailCurrentIndex.value,
                   ),
                 ),
                 Expanded(

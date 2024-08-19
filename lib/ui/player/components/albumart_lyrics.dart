@@ -15,7 +15,7 @@ class AlbumArtNLyrics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PlayerController playerController = Get.find<PlayerController>();
-    final size = MediaQuery.of(context).size;
+    //final size = MediaQuery.of(context).size;
     //double playerArtImageSize = size.width - ((size.height < 750) ? 90 : 60);
     return Obx(() => playerController.currentSong.value != null
         ? Stack(

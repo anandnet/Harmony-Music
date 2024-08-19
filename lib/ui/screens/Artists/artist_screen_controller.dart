@@ -36,7 +36,8 @@ class ArtistScreenController extends GetxController
   void onInit() {
     final args = Get.arguments;
     _init(args[0], args[1]);
-    if (GetPlatform.isDesktop || Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue) {
+    if (GetPlatform.isDesktop ||
+        Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue) {
       tabController = TabController(vsync: this, length: 5);
       tabController?.animation?.addListener(() {
         int indexChange = tabController!.offset.round();
@@ -104,7 +105,7 @@ class ArtistScreenController extends GetxController
     final tabName = ["About", "Songs", "Videos", "Albums", "Singles"][val];
 
     //cancel additional operations in case of tab change
-    if(sortWidgetController!=null){
+    if (sortWidgetController != null) {
       sortWidgetController?.setActiveMode(OperationMode.none);
       cancelAdditionalOperation();
     }
@@ -160,15 +161,13 @@ class ArtistScreenController extends GetxController
     continuationInProgress = false;
   }
 
-  void onSort(SortType sortType,
-      bool isAscending, String title) {
+  void onSort(SortType sortType, bool isAscending, String title) {
     if (sepataredContent[title] == null) {
       return;
     }
     if (title == "Songs" || title == "Videos") {
       final songlist = sepataredContent[title]['results'].toList();
-      sortSongsNVideos(
-          songlist, sortType, isAscending);
+      sortSongsNVideos(songlist, sortType, isAscending);
       sepataredContent[title]['results'] = songlist;
     } else if (title == "Albums" || title == "Singles") {
       final albumList = sepataredContent[title]['results'].toList();
@@ -207,8 +206,15 @@ class ArtistScreenController extends GetxController
   void startAdditionalOperation(
       SortWidgetController sortWidgetController_, OperationMode mode) {
     sortWidgetController = sortWidgetController_;
-    final tabName = ["About", "Songs", "Videos", "Albums", "Singles"][navigationRailCurrentIndex.value];
-    additionalOperationTempList.value = sepataredContent[tabName]['results'].toList();
+    final tabName = [
+      "About",
+      "Songs",
+      "Videos",
+      "Albums",
+      "Singles"
+    ][navigationRailCurrentIndex.value];
+    additionalOperationTempList.value =
+        sepataredContent[tabName]['results'].toList();
     if (mode == OperationMode.addToPlaylist || mode == OperationMode.delete) {
       for (int i = 0; i < additionalOperationTempList.length; i++) {
         additionalOperationTempMap[i] = false;

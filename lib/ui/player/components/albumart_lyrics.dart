@@ -9,7 +9,7 @@ import '../../widgets/sleep_timer_bottom_sheet.dart';
 import '../../widgets/songinfo_bottom_sheet.dart';
 
 class AlbumArtNLyrics extends StatelessWidget {
-  const AlbumArtNLyrics({super.key,required this.playerArtImageSize});
+  const AlbumArtNLyrics({super.key, required this.playerArtImageSize});
   final double playerArtImageSize;
 
   @override

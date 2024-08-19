@@ -43,10 +43,12 @@ void sortSongsNVideos(
       };
       break;
     case SortType.Duration:
-      compareFunction = (a, b) => (a.duration ?? Duration.zero).compareTo(b.duration ?? Duration.zero);
+      compareFunction = (a, b) =>
+          (a.duration ?? Duration.zero).compareTo(b.duration ?? Duration.zero);
     case SortType.Name:
     default:
-      compareFunction = (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase());
+      compareFunction =
+          (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase());
       break;
   }
 
@@ -68,16 +70,17 @@ void sortAlbumNSingles(
 
   switch (sortType) {
     case SortType.Date:
-      compareFunction = (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase());
+      compareFunction =
+          (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase());
       break;
     case SortType.Name:
     default:
       compareFunction = (a, b) {
-      if (a.year == null || b.year == null) {
-        return 0.compareTo(0);
-      }
-      return a.year!.compareTo(b.year!);
-    };
+        if (a.year == null || b.year == null) {
+          return 0.compareTo(0);
+        }
+        return a.year!.compareTo(b.year!);
+      };
       break;
   }
 
@@ -140,7 +143,8 @@ void sortArtist(
   switch (sortType) {
     case SortType.Name:
     default:
-      compareFunction = (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      compareFunction =
+          (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase());
       break;
   }
 
@@ -155,25 +159,27 @@ void sortArtist(
 
 /// Return true if new version available
 Future<bool> newVersionCheck(String currentVersion) async {
-  try{
-  final tags = (await Dio()
-          .get("https://api.github.com/repos/anandnet/Harmony-Music/tags"))
-      .data;
-  final availableVersion = tags[0]['name'] as String;
-  List currentVersion_ = currentVersion.substring(1).split(".");
-  List availableVersion_ = availableVersion.substring(1).split(".");
-  if (int.parse(availableVersion_[0]) > int.parse(currentVersion_[0])) {
-    return true;
-  } else if (int.parse(availableVersion_[1]) > int.parse(currentVersion_[1]) &&
-      int.parse(availableVersion_[0]) == int.parse(currentVersion_[0])) {
-    return true;
-  } else if (int.parse(availableVersion_[2]) > int.parse(currentVersion_[2]) &&
-      int.parse(availableVersion_[0]) == int.parse(currentVersion_[0]) &&
-      int.parse(availableVersion_[1]) == int.parse(currentVersion_[1])) {
-    return true;
-  }
-  return false;
-  }catch(e){
+  try {
+    final tags = (await Dio()
+            .get("https://api.github.com/repos/anandnet/Harmony-Music/tags"))
+        .data;
+    final availableVersion = tags[0]['name'] as String;
+    List currentVersion_ = currentVersion.substring(1).split(".");
+    List availableVersion_ = availableVersion.substring(1).split(".");
+    if (int.parse(availableVersion_[0]) > int.parse(currentVersion_[0])) {
+      return true;
+    } else if (int.parse(availableVersion_[1]) >
+            int.parse(currentVersion_[1]) &&
+        int.parse(availableVersion_[0]) == int.parse(currentVersion_[0])) {
+      return true;
+    } else if (int.parse(availableVersion_[2]) >
+            int.parse(currentVersion_[2]) &&
+        int.parse(availableVersion_[0]) == int.parse(currentVersion_[0]) &&
+        int.parse(availableVersion_[1]) == int.parse(currentVersion_[1])) {
+      return true;
+    }
+    return false;
+  } catch (e) {
     return false;
   }
 }

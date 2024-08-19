@@ -12,9 +12,7 @@ class PlayerControlWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PlayerController playerController = Get.find<PlayerController>();
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Obx(() {
         return Marquee(
           delay: const Duration(milliseconds: 300),
@@ -95,9 +93,8 @@ class PlayerControlWidget extends StatelessWidget {
         ],
       ),
     ]);
-    
   }
-  
+
   Widget _playButton() {
     return GetX<PlayerController>(builder: (controller) {
       final buttonState = controller.buttonState.value;

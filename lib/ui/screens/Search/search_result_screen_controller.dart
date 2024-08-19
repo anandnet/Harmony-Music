@@ -145,8 +145,7 @@ class SearchResultScreenController extends GetxController
   void onSort(SortType sortType, bool isAscending, String title) {
     if (title == "Songs" || title == "Videos") {
       final songList = separatedResultContent[title].toList();
-      sortSongsNVideos(
-          songList, sortType, isAscending);
+      sortSongsNVideos(songList, sortType, isAscending);
       separatedResultContent[title] = songList;
     } else if (title.contains('playlists')) {
       final playlists = separatedResultContent[title].toList();

@@ -142,7 +142,7 @@ class PlayListNAlbumScreenController extends GetxController {
     if (isIdOnly) {
       if (isAlbum) {
         content['browseId'] = id;
-        final album =Album.fromJson(content);
+        final album = Album.fromJson(content);
         contentRenderer = album;
       } else {
         content['playlistId'] = id;

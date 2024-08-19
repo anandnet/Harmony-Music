@@ -48,7 +48,7 @@ class SearchScreenController extends GetxController {
     reset();
   }
 
-  void reset(){
+  void reset() {
     textInputController.text = "";
     suggestionList.clear();
   }

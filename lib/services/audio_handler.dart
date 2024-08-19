@@ -90,7 +90,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   void _listenSessionIdStream() {
     _player.androidAudioSessionIdStream.listen((int? id) {
-      if(id!=null){
+      if (id != null) {
         deviceEqualizer?.initAudioEffect(id);
       }
     });
@@ -479,7 +479,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
   Future<void> saveSessionData() async {
-    if (Get.find<SettingsScreenController>().restorePlaybackSession.isFalse) return;
+    if (Get.find<SettingsScreenController>().restorePlaybackSession.isFalse)
+      return;
     final currQueue = queue.value;
     if (currQueue.isNotEmpty) {
       final queueData =

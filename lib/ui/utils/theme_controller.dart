@@ -273,7 +273,7 @@ class ThemeController extends GetxController {
                   color: Colors.grey[800], fontWeight: FontWeight.bold)),
           bottomSheetTheme: const BottomSheetThemeData(
               backgroundColor: Colors.white, modalBarrierColor: Colors.white),
-          sliderTheme:SliderThemeData(
+          sliderTheme: SliderThemeData(
             //base bar color
             inactiveTrackColor: Colors.black38,
             //buffered progress

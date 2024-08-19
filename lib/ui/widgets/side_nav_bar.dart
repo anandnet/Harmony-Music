@@ -9,7 +9,7 @@ class SideNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final isMobileOrTabScreen = size.width<480;
+    final isMobileOrTabScreen = size.width < 480;
     final homeScreenController = Get.find<HomeScreenController>();
     return Align(
       alignment: Alignment.topCenter,
@@ -55,14 +55,16 @@ class SideNavBar extends StatelessWidget {
                 ),
               ))
           : Padding(
-            padding: const EdgeInsets.only(bottom:100.0),
-            child: SideBarAnimated(
+              padding: const EdgeInsets.only(bottom: 100.0),
+              child: SideBarAnimated(
                 onTap: homeScreenController.onSideBarTabSelected,
                 sideBarColor: Theme.of(context).primaryColor.withAlpha(250),
                 animatedContainerColor: Theme.of(context).colorScheme.secondary,
-                hoverColor: Theme.of(context).colorScheme.secondary.withAlpha(180),
+                hoverColor:
+                    Theme.of(context).colorScheme.secondary.withAlpha(180),
                 splashColor: Theme.of(context).colorScheme.secondary,
-                highlightColor: Theme.of(context).colorScheme.secondary.withAlpha(180),
+                highlightColor:
+                    Theme.of(context).colorScheme.secondary.withAlpha(180),
                 widthSwitch: 800,
                 mainLogoImage: 'assets/icons/icon.png',
                 sidebarItems: [
@@ -97,7 +99,7 @@ class SideNavBar extends StatelessWidget {
                   ),
                 ],
               ),
-          ),
+            ),
     );
   }
 

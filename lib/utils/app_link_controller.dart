@@ -43,7 +43,7 @@ class AppLinksController extends GetxController {
       playerController.playerPanelController.close();
     }
 
-    if(Get.isRegistered<SongInfoController>()){
+    if (Get.isRegistered<SongInfoController>()) {
       Navigator.of(Get.context!).pop();
     }
 

@@ -41,7 +41,7 @@ Future<List<dynamic>> getContinuations(
     String additionalParam = (reloadable
         ? getReloadableContinuationParams(results)
         : getContinuationParams(results, ctokenPath: ctokenPath));
-    return [items,additionalParam];
+    return [items, additionalParam];
   } else {
     return items;
   }
@@ -88,8 +88,7 @@ Map<String, dynamic> getParsedContinuationItems(
   };
 }
 
-String getContinuationParams(dynamic results,
-    {String ctokenPath = ''}) {
+String getContinuationParams(dynamic results, {String ctokenPath = ''}) {
   final ctoken = nav(results, [
     'continuations',
     0,

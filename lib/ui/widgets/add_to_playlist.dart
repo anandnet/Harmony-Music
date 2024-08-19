@@ -211,7 +211,6 @@ class AddToPlaylistController extends GetxController {
       additionInProgress.value = false;
       return (res.code == 1);
     }
-    
   }
 
   // Future<bool> addSongToPlaylist(

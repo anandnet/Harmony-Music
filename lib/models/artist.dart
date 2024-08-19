@@ -35,8 +35,8 @@ class Artist {
       };
 }
 
-class ArtistContent{
-  ArtistContent(this.content,{this.title = "Artists"});
+class ArtistContent {
+  ArtistContent(this.content, {this.title = "Artists"});
   final List<Artist> content;
   final String title;
 }

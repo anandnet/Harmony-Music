@@ -25,7 +25,7 @@ class ContentListWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                 !isHomeContent && content.title.length > 12
+                  !isHomeContent && content.title.length > 12
                       ? "${content.title.substring(0, 12)}..."
                       : content.title,
                   //maxLines: 2,
@@ -49,8 +49,8 @@ class ContentListWidget extends StatelessWidget {
             height: 200,
             //color: Colors.blueAccent,
             child: ListView.separated(
-                addAutomaticKeepAlives: false, //Testing going 
-                addRepaintBoundaries: false,   //on this
+                addAutomaticKeepAlives: false, //Testing going
+                addRepaintBoundaries: false, //on this
                 physics: const BouncingScrollPhysics(),
                 separatorBuilder: (context, index) => const SizedBox(
                       width: 15,

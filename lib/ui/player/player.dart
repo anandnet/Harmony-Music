@@ -25,8 +25,11 @@ class Player extends StatelessWidget {
     final ThemeController themeController = Get.find<ThemeController>();
     double playerArtImageSize = size.width - ((size.height < 750) ? 90 : 60);
     //playerArtImageSize = playerArtImageSize > 350 ? 350 : playerArtImageSize;
-    final spaceAvailableForArtImage = size.height - (90 + Get.mediaQuery.padding.bottom + 330);
-    playerArtImageSize = playerArtImageSize > spaceAvailableForArtImage ? spaceAvailableForArtImage: playerArtImageSize; 
+    final spaceAvailableForArtImage =
+        size.height - (90 + Get.mediaQuery.padding.bottom + 330);
+    playerArtImageSize = playerArtImageSize > spaceAvailableForArtImage
+        ? spaceAvailableForArtImage
+        : playerArtImageSize;
     return Scaffold(
       body: SlidingUpPanel(
           minHeight: 65 + Get.mediaQuery.padding.bottom,
@@ -137,10 +140,10 @@ class Player extends StatelessWidget {
                                 bottom: 90.0,
                               ),
                               child: Padding(
-                                padding:  const EdgeInsets.only(top:40),
+                                padding: const EdgeInsets.only(top: 40),
                                 child: Center(
                                   child: AlbumArtNLyrics(
-                                    playerArtImageSize: size.width*.29,
+                                    playerArtImageSize: size.width * .29,
                                   ),
                                 ),
                               ),
@@ -177,9 +180,8 @@ class Player extends StatelessWidget {
                             padding: EdgeInsets.only(
                                 bottom: 90 + Get.mediaQuery.padding.bottom),
                             child: Container(
-                              constraints: BoxConstraints(maxWidth: 500),
-                              child: const PlayerControlWidget()
-                              ),
+                                constraints: const BoxConstraints(maxWidth: 500),
+                                child: const PlayerControlWidget()),
                           )
                         ],
                       ),

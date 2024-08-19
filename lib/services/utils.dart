@@ -36,7 +36,7 @@ int sumTotalDuration(Map<String, dynamic> item) {
   int totalDuration = 0;
 
   for (var track in tracks) {
-    if (track.extras['duration_seconds']!=null) {
+    if (track.extras['duration_seconds'] != null) {
       totalDuration += track.extras['duration_seconds'] as int;
     }
   }

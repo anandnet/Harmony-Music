@@ -13,7 +13,8 @@ class ModificationList extends StatelessWidget {
       {super.key,
       required this.mode,
       this.librarySongsController,
-      this.playListNAlbumScreenController,this.artistScreenController});
+      this.playListNAlbumScreenController,
+      this.artistScreenController});
   final OperationMode mode;
   final PlayListNAlbumScreenController? playListNAlbumScreenController;
   final LibrarySongsController? librarySongsController;
@@ -21,7 +22,9 @@ class ModificationList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dynamic controller = librarySongsController ?? playListNAlbumScreenController ?? artistScreenController;
+    dynamic controller = librarySongsController ??
+        playListNAlbumScreenController ??
+        artistScreenController;
     final items = controller!.additionalOperationTempList;
     if (mode == OperationMode.arrange) {
       return Expanded(
@@ -75,7 +78,8 @@ class ModificationList extends StatelessWidget {
           itemCount: items.length,
           itemBuilder: (context, index) => ListTile(
             onTap: () {
-              controller.additionalOperationTempMap[index] = !controller.additionalOperationTempMap[index]!;
+              controller.additionalOperationTempMap[index] =
+                  !controller.additionalOperationTempMap[index]!;
               controller.checkIfAllSelected();
             },
             contentPadding: const EdgeInsets.only(top: 0, left: 5, right: 30),
@@ -88,8 +92,7 @@ class ModificationList extends StatelessWidget {
                     () => Checkbox(
                       value: controller.additionalOperationTempMap[index],
                       onChanged: (val) {
-                        controller.additionalOperationTempMap[index] =
-                            val!;
+                        controller.additionalOperationTempMap[index] = val!;
                         controller.checkIfAllSelected();
                       },
                       visualDensity:

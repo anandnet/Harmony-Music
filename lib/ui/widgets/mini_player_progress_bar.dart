@@ -14,7 +14,9 @@ class MiniPlayerProgressBar extends StatelessWidget {
     return CustomPaint(
       size: Size(MediaQuery.of(context).size.width, 3),
       painter: ProgressBarPainter(
-          current: progressBarStatus.current, total: progressBarStatus.total, progressBarColor: progressBarColor),
+          current: progressBarStatus.current,
+          total: progressBarStatus.total,
+          progressBarColor: progressBarColor),
     );
   }
 }

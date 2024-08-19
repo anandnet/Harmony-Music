@@ -12,7 +12,10 @@ enum SortType {
   RecentlyPlayed,
 }
 
-Set<SortType> buildSortTypeSet([bool dateRequired = false, bool durationRequired = false, bool recentlyPlayedRequired = false]) {
+Set<SortType> buildSortTypeSet(
+    [bool dateRequired = false,
+    bool durationRequired = false,
+    bool recentlyPlayedRequired = false]) {
   Set<SortType> requiredSortTypes = {};
   if (dateRequired) {
     requiredSortTypes.add(SortType.Date);

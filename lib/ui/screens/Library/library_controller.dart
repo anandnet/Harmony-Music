@@ -73,8 +73,7 @@ class LibrarySongsController extends GetxController {
 
   void onSort(SortType sortType, bool isAscending) {
     final songlist = librarySongsList.toList();
-    sortSongsNVideos(
-        songlist, sortType, isAscending);
+    sortSongsNVideos(songlist, sortType, isAscending);
     librarySongsList.value = songlist;
   }
 
@@ -170,10 +169,10 @@ class LibrarySongsController extends GetxController {
     final downloadsBox = await Hive.openBox("SongDownloads");
     final cacheBox = await Hive.openBox("SongsCache");
     for (MediaItem element in songs) {
-      if(downloadsBox.containsKey(element.id)){
+      if (downloadsBox.containsKey(element.id)) {
         await downloadsBox.delete(element.id);
         removeSong(element, true);
-      }else{
+      } else {
         await cacheBox.delete(element.id);
         removeSong(element, false);
       }

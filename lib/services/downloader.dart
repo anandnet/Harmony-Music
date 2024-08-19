@@ -162,7 +162,8 @@ class Downloader extends GetxService {
       final dirPath = settingsScreenController.downloadLocationPath.string;
       final RegExp invalidChar =
           RegExp(r'Container.|\/|\\|\"|\<|\>|\*|\?|\:|\!|\[|\]|\¡|\||\%');
-      final songTitle = "${song.title} (${song.artist})".replaceAll(invalidChar, "");
+      final songTitle =
+          "${song.title} (${song.artist})".replaceAll(invalidChar, "");
       String filePath = "$dirPath/$songTitle.$downloadingFormat";
       printINFO("Downloading filePath: $filePath");
       var file = File(filePath);
@@ -184,24 +185,24 @@ class Downloader extends GetxService {
       printINFO("Downloaded successfully");
       try {
         /// Reverted -- Removed AudioTags as using this package, app is flagged as TROJ_GEN.R002V01K623 by TrendMicro-HouseCall
-          final imageUrl = song.artUri!.toString();
-          Tag tag = Tag(
-              title: song.title,
-              trackArtist: song.artist,
-              album: song.album,
-              albumArtist: song.artist,
-              genre: song.genre,
-              pictures: [
-                Picture(
-                    bytes: (await NetworkAssetBundle(Uri.parse((imageUrl)))
-                            .load(imageUrl))
-                        .buffer
-                        .asUint8List(),
-                    mimeType: MimeType.png,
-                    pictureType: PictureType.coverFront)
-              ]);
+        final imageUrl = song.artUri!.toString();
+        Tag tag = Tag(
+            title: song.title,
+            trackArtist: song.artist,
+            album: song.album,
+            albumArtist: song.artist,
+            genre: song.genre,
+            pictures: [
+              Picture(
+                  bytes: (await NetworkAssetBundle(Uri.parse((imageUrl)))
+                          .load(imageUrl))
+                      .buffer
+                      .asUint8List(),
+                  mimeType: MimeType.png,
+                  pictureType: PictureType.coverFront)
+            ]);
 
-          await AudioTags.write(filePath, tag);
+        await AudioTags.write(filePath, tag);
       } catch (e) {
         printERROR("$e");
       }

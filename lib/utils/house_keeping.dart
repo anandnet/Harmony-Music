@@ -19,6 +19,6 @@ Future<void> removeExpiredSongsUrlFromDb() async {
         await songsUrlCacheBox.delete(songUrlKey);
       }
     }
-  // ignore: empty_catches
+    // ignore: empty_catches
   } catch (e) {}
 }

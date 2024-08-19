@@ -393,8 +393,11 @@ class MusicServices extends getx.GetxService {
       }
 
       int secondSubtitleRunCount = header['secondSubtitle']['runs'].length;
-      String count = (((header['secondSubtitle']['runs'][secondSubtitleRunCount % 3]
-              ['text']).split(' ')[0]).split(',') as List).join();
+      String count = (((header['secondSubtitle']['runs']
+                      [secondSubtitleRunCount % 3]['text'])
+                  .split(' ')[0])
+              .split(',') as List)
+          .join();
       int songCount = int.parse(count);
       if (header['secondSubtitle']['runs'].length > 1) {
         playlist['duration'] = header['secondSubtitle']['runs']
@@ -510,8 +513,10 @@ class MusicServices extends getx.GetxService {
     final data = Map.of(_context);
     data['videoId'] = songId;
     final response = (await _sendRequest("player", data)).data;
-    final category = nav(response, ["microformat","microformatDataRenderer", "category"]);
-    if (category == "Music" || (response["videoDetails"]).containsKey("musicVideoType")) {
+    final category =
+        nav(response, ["microformat", "microformatDataRenderer", "category"]);
+    if (category == "Music" ||
+        (response["videoDetails"]).containsKey("musicVideoType")) {
       final list = await getWatchPlaylist(videoId: songId);
       return [true, list['tracks']];
     }

@@ -71,7 +71,11 @@ dependencies:
     git:
       url: https://github.com/anandnet/just_audio_media_kit.git
       ref: 06de226da469f5c55dd780b215bcc45a0d6269fb
-  sidebar_with_animation: ^0.0.3
+  sidebar_with_animation:
+    git:
+        url: https://github.com/anandnet/animated_side_bar.git
+        branch: main
+        ref: b53567a42b4ba3793a3cf00d478bdba0ecce33d7
   window_manager: ^0.3.7
   smtc_windows: ^0.1.2
   audio_service_mpris: ^0.1.5

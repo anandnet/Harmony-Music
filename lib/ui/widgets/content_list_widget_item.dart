@@ -23,8 +23,9 @@ class ContentListItem extends StatelessWidget {
             id: ScreenNavigationSetup.id, arguments: [isAlbum, content, false]);
       },
       child: Container(
-        width: 120,
-        padding: const EdgeInsets.all(0),
+        width: 130,
+        height: 180,
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -91,23 +92,30 @@ class ContentListItem extends StatelessWidget {
                           size: 40,
                         ))),
             const SizedBox(height: 5),
-            Text(
-              content.title,
-              // overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            Text(
-              isAlbum
-                  ? isLibraryItem
-                      ? ""
-                      : "${content.artists[0]['name'] ?? ""} | ${content.year ?? ""}"
-                  : isLibraryItem
-                      ? ""
-                      : content.description ?? "",
-              maxLines: 1,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    content.title,
+                    // overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Text(
+                    isAlbum
+                        ? isLibraryItem
+                            ? ""
+                            : "${content.artists[0]['name'] ?? ""} | ${content.year ?? ""}"
+                        : isLibraryItem
+                            ? ""
+                            : content.description ?? "",
+                    maxLines: 1,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

@@ -187,8 +187,16 @@
     "backFilesFound": "znalezione bazy danych",
     "restoreSettingsAndPlaylists": "Przywracanie ustawień i list odtwarzania",
     "backupMsg": "Kopia zapasowa została pomyślnie zapisana!",
-    "restoreMsg": "Przywrócenie powiodło się! Zmiany zostaną zastosowane po ponownym uruchomieniu",
-    "restoring": "przywracanie...",
+    "restoreMsg": "Przywrócenie powiodło się!\nZmiany zostaną zastosowane po ponownym uruchomieniu",
+    "restoring": "Przywracanie...",
     "restore": "Przywracanie",
-    "closeApp": "Zamknij aplikację"
+    "closeApp": "Zamknij aplikację",
+    "letsStrart": "Zaczynajmy...",
+    "processFiles": "Przetwarzanie plików...",
+    "includeDownloadedFiles": "Dołącz pliki z pobranymi utworami",
+    "backupInProgress": "Trwa tworzenie kopii zapasowej...",
+    "restoreAppData": "Przywracanie danych aplikacji",
+    "restartApp": "Restart aplikacji",
+    "backupAppData": "Kopia zapasowa danych aplikacji",
+    "backup": "Kopia zapasowa"
 }

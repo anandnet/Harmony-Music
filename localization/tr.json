@@ -142,7 +142,7 @@
     "cancelTimerAlert": "Uyku zamanlayıcısı iptal edildi",
     "sleepTimer": "Uyku zamanlayıcısı",
     "add5Minutes": "5 dakika ekle",
-    "cancelTimer": "İptal et",
+    "cancelTimer": "Zamanlayıcıyı iptal et",
     "homeContentCount": "Ana sayfadaki içerik sayısı",
     "endOfThisSong": "Bu şarkının sonunda",
     "enableBottomNav": "Alt gezinme çubuğu",
@@ -185,8 +185,16 @@
     "restoreSettingsAndPlaylistsDes": "Tüm ayarları, oturum açma verilerini ve çalma listelerini bir yedekleme dosyasından geri yükler. Mevcut tüm verilerin üzerine yazar",
     "backupMsg": "Yedekleme başarıyla kaydedildi!",
     "backFilesFound": "veri tabanları bulundu",
-    "restoreMsg": "Başarıyla geri yüklendi! Değişiklikler yeniden başlatıldığında uygulanır",
+    "restoreMsg": "Başarıyla geri yüklendi!\nDeğişiklikler yeniden başlatıldığında uygulanır",
     "restoring": "Geri yükleniyor...",
     "restore": "Geri Yükle",
-    "closeApp": "Uygulamayı Kapat"
+    "closeApp": "Uygulamayı Kapat",
+    "backupAppData": "Uygulama verilerini yedekle",
+    "backup": "Yedekle",
+    "letsStrart": "Başlayalım...",
+    "processFiles": "Dosyalar işleniyor...",
+    "includeDownloadedFiles": "İndirilen şarkı dosyalarını dahil et",
+    "backupInProgress": "Yedekleme devam ediyor...",
+    "restoreAppData": "Uygulama verilerini geri yükle",
+    "restartApp": "Uygulamayı yeniden başlat"
 }

@@ -269,4 +269,13 @@ class SettingsScreenController extends GetxController {
   Future<void> closeAllDatabases() async {
     await Hive.close();
   }
+
+  Future<String> get dbDir async {
+    if (GetPlatform.isDesktop) {
+      return "$supportDirPath/db";
+    } else {
+      return (await getApplicationDocumentsDirectory()).path;
+    }
+  }
+  
 }

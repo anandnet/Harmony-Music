@@ -188,5 +188,12 @@
     "backFilesFound": "bases de datos encontradas",
     "restoring": "restaurando...",
     "restore": "Restaurar",
-    "closeApp": "Cerrar la aplicación"
+    "closeApp": "Cerrar la aplicación",
+    "includeDownloadedFiles": "Incluir canciones descargadas",
+    "backupInProgress": "Copia de seguridad en progreso...",
+    "restoreAppData": "Restaurar datos de la aplicación",
+    "backupAppData": "Copia de seguridad de datos de la aplicación",
+    "backup": "Copia de seguridad",
+    "letsStrart": "Vamos a empezar..",
+    "processFiles": "Procesando archivos..."
 }

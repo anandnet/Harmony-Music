@@ -451,7 +451,7 @@ class SettingsScreen extends StatelessWidget {
                     )),
               ListTile(
                 contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                title: Text("backupSettingsAndPlaylists".tr),
+                title: Text("backupAppData".tr),
                 subtitle: Text(
                   "backupSettingsAndPlaylistsDes".tr,
                   style: Theme.of(context).textTheme.bodyMedium,
@@ -464,7 +464,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               ListTile(
                 contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                title: Text("restoreSettingsAndPlaylists".tr),
+                title: Text("restoreAppData".tr),
                 subtitle: Text(
                   "restoreSettingsAndPlaylistsDes".tr,
                   style: Theme.of(context).textTheme.bodyMedium,

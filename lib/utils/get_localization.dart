@@ -8,20 +8,217 @@ class Languages extends Translations {
   Map<String, Map<String, String>> get keys => {
         "ar": {
           "library": "المكتبة",
-          "libPlaylists": "قوائم تشغيل المكتبة",
+          "libPlaylists": "مكتبة قوائم التشغيل",
           "libAlbums": "البومات المكتبة",
           "libArtists": "فنانين المكتبة",
           "items": "عناصر",
           "networkError1": "خطأ في الشبكة!",
-          "retry": "حاول مجددا !",
+          "retry": "حاول مجددا!",
           "home": "الرئيسية",
           "playlists": "قوائم التشغيل",
           "albums": "البومات",
           "artists": "فنانين",
-          "settings": "الاعدادات",
-          "libSongs": "اغاني المكتبة",
+          "settings": "إعدادات",
+          "libSongs": "مكتبة الأغاني",
           "communityplaylists": "قوائم تشغيل الاخرين",
-          "singles": "أغاني فردية"
+          "singles": "منفردة",
+          "recentlyPlayed": "استمعت مؤخرا",
+          "songs": "أغاني",
+          "favorites": "المفضلة",
+          "cachedOrOffline": "متاح بدون انترنت",
+          "downloads": "التنزيلات",
+          "emptyPlaylist": "قائمة فارغة!",
+          "featuredplaylists": "قوائم مقترحة",
+          "noOfflineSong": "لا يوجد أغاني بدون إنترنت!",
+          "enableBottomNavDes": "التبديل إلى أزرار شريط التنقل",
+          "homeContentCount": "عدد محتوى القائمة الرئيسية",
+          "playlistCreatednsongAddedAlert":
+              "تم إنشاء قائمة التشغيل وإضافة الأغنية!",
+          "songAlreadyOfflineAlert":
+              "الأغنية غير متصلة بالإنترنت بالفعل في ذاكرة التخزين المؤقت",
+          "sleepTimer": "مؤقت النوم",
+          "upNext": "التالي",
+          "plain": "عادي",
+          "addMultipleSongs": "إضافة الأغاني إلى قائمة التشغيل",
+          "renamePlaylist": "إعادة تسمية قائمة التشغيل",
+          "videos": "فيديو",
+          "enqueueAll": "إدراج الكل",
+          "removePlaylist": "إزالة قائمة التشغيل",
+          "CreateNewPlaylist": "إنشاء قائمة تشغيل جديدة",
+          "createnAdd": "إنشاء وإضافة",
+          "noBookmarks": "لا الإشارات المرجعية!",
+          "startRadio": "تشغيل الراديو",
+          "playNext": "تشغيل التالي",
+          "noLibPlaylist": "ليس لديك أي قائمة تشغيل!",
+          "enqueueSong": "قم بإدراج هذه الأغنية",
+          "themeMode": "وضع السمة",
+          "systemDefault": "الافتراضي للنظام",
+          "setDiscoverContent": "تعيين اكتشاف المحتوى",
+          "discover": "اكتشف",
+          "equalizerDes": "فتح المعادل الخاص بالنظام",
+          "basedOnLast": "بناء على تفاعلاتك الأخيرة",
+          "notaSongVideo": "ليست أغنية /فيديو موسيقي!",
+          "linkPipedDes": "الارتباط مع الأنابيب لقوائم التشغيل",
+          "selectAuthIns": "حدد مثيل المصادقة",
+          "password": "كلمة المرور",
+          "rename": "إعادة تسمية",
+          "removeMultiple": "إزالة أغاني متعددة",
+          "restoreLastPlaybackSession": "استعادة جلسة التشغيل الأخيرة",
+          "clearImgCacheAlert": "تم مسح ذاكرة التخزين المؤقت للصور بنجاح",
+          "dynamic": "ديناميكي",
+          "results": "النتائج",
+          "albumBookmarkRemoveAlert": "تمت إزالة الإشارة المرجعية للألبوم!",
+          "reArrangePlaylist": "إعادة ترتيب قوائم التشغيل",
+          "cancel": "إلغاء",
+          "create": "إنشاء",
+          "close": "إغلاق",
+          "disableTransitionAnimationDes":
+              "قم بتمكين هذا الخيار لتعطيل الرسوم المتحركة الانتقالية بين الصفحات",
+          "openIn": "فتح في",
+          "removeFromLib": "إزالة من مكتبة الأغاني",
+          "add5Minutes": "إضافة 5 دقائق",
+          "cancelTimer": "إلغاء الموقت",
+          "deleteDownloadData": "إزالة من التنزيلات",
+          "minutes": "دقائق",
+          "endOfThisSong": "نهاية هذه الأغنية",
+          "dark": "مظلم",
+          "light": "مضيء",
+          "language": "اللغة",
+          "languageDes": "ضبط لغة التطبيق",
+          "quickpicks": "اختيارات سريعة",
+          "homeContentCountDes":
+              "حدد عدد محتوى الشاشة الرئيسية الأولي (تقريبًا). عدد أقل تحميل أسرع",
+          "cacheSongsDes":
+              "سيؤدي تخزين الأغاني مؤقتًا أثناء التشغيل للتشغيل في المستقبل/دون الاتصال بالإنترنت إلى استهلاك مساحة إضافية على جهازك",
+          "skipSilence": "تخطي الصمت",
+          "skipSilenceDes": "سيتم تخطي الصمت أثناء تشغيل الموسيقى",
+          "streamingQuality": "جودة البث",
+          "high": "عالي",
+          "backgroundPlay": "تشغيل الموسيقى الخلفية",
+          "cacheHomeScreenData": "تخزين بيانات محتوى الشاشة الرئيسية مؤقتًا",
+          "cacheHomeScreenDataDes":
+              "تمكين التخزين المؤقت لبيانات محتوى الشاشة الرئيسية، سيتم تحميل الشاشة الرئيسية على الفور إذا تم تمكين هذا الخيار",
+          "downloadingFormatDes":
+              "حدد تنزيل تنسيق الملف. سوف توفر \"Opus\" أعلى جودة",
+          "exportDowloadedFiles": "تصدير الملفات التي تم تنزيلها",
+          "exportedFileLocation": "موقع تصدير الملف الذي تم تنزيله",
+          "exporting": "جار التصدير...",
+          "scanning": "جارٍ المسح...",
+          "downFilesFound": "تم العثور على الملفات التي تم تنزيلها",
+          "exportMsg": "تم تصدير الملفات بنجاح",
+          "equalizer": "المعادل",
+          "clearImgCache": "مسح ذاكرة التخزين المؤقت للصور",
+          "clearImgCacheDes":
+              "انقر هنا لمسح الصور المصغرة/الصور المخزنة مؤقتًا. (غير مستحسن إلا إذا كنت ترغب في تحديث بيانات الصور المخزنة مؤقتًا)",
+          "disabled": "معطل",
+          "ignoreBatOpt": "تجاهل تحسين البطارية",
+          "enabled": "ممكّن",
+          "github": "GitHub",
+          "githubDes":
+              "عرض كود مصدر على GitHub\nإذا أعجبك هذا المشروع، فلا تنسى أن تعطي ⭐",
+          "by": "من قبل",
+          "searchDes": "الأغاني، قائمة التشغيل، الألبوم، أو الفنان",
+          "searchRes": "نتائج البحث",
+          "for1": "لأجل",
+          "viewAll": "رؤية الكل",
+          "nomatch": "لايوجد مطابق",
+          "subscribers": "متابعون",
+          "synced": "مزامنة",
+          "deleteDownloadedDataAlert": "تمت الإزالة من التنزيلات بنجاح!",
+          "cancelTimerAlert": "تم إلغاء مؤقت النوم",
+          "sleepTimeSetAlert": "تم ضبط مؤقت نوم",
+          "songRemovedfromQueueCurrSong":
+              "لا يمكنك إزالة الأغنية التي يتم تشغيلها حاليًا",
+          "songRemovedAlert": "تمت الإزالة من",
+          "pipedplstSyncAlert": "تمت مزامنة قائمة التشغيل المنقولة!",
+          "playlistRenameAlert": "تمت إعادة التسمية بنجاح!",
+          "playlistRemovedAlert": "تمت إزالة قائمة التشغيل!",
+          "playlistBookmarkAddAlert": "تم وضع إشارة مرجعية لقائمة التشغيل!",
+          "playlistBookmarkRemoveAlert":
+              "تمت إزالة الإشارة المرجعية لقائمة التشغيل!",
+          "albumBookmarkAddAlert": "تم وضع إشارة مرجعية للألبوم!",
+          "lyricsNotAvailable": "كلمات غير متوفرة!",
+          "newVersionAvailable": "إصدار جديد متاح!",
+          "dontShowInfoAgain": "لا تظهر هذه المعلومات مرة أخرى",
+          "notaValidLink": "الرابط ليس صالحا!",
+          "operationFailed": "فشلت العملية",
+          "Piped": "منقولة",
+          "link": "ربط",
+          "unLink": "الغاء الربط",
+          "hintApiUrl": "عنوان URL لطلب النقل",
+          "customIns": "مثيل مخصص",
+          "linkAlert": "تم ربطه بنجاح!",
+          "unlinkAlert": "تم إلغاء الربط بنجاح!",
+          "stopMusicOnTaskClear":
+              "ايقاف الموسيقى عند مسح تطبيقات التي تعمل بالخلفية",
+          "goToAlbum": "انتقل إلى الألبوم",
+          "downloadLocation": "موقع التحميل",
+          "low": "منخفض",
+          "downloadingFormat": "صيغة تحميل الملفات",
+          "ignoreBatOptDes":
+              "إذا كنت تواجه مشكلات في الإشعارات أو توقف التشغيل عن طريق تحسين النظام، فيرجى تمكين هذا الخيار",
+          "status": "الحالة",
+          "radioNotAvailable": "الراديو غير متوفر لهذا الفنان!",
+          "songRemovedfromQueue": "تمت إزالتها من قائمة الانتظار!",
+          "artistBookmarkRemoveAlert": "تمت إزالة الإشارة المرجعية للفنان!",
+          "dismiss": "اهمال",
+          "goToDownloadPage": "انقر هنا للذهاب إلى صفحة التحميل",
+          "local": "محلي",
+          "addToPlaylist": "إضافة إلى قائمة التشغيل",
+          "cacheSongs": "أغاني ذاكرة التخزين المؤقت",
+          "disableTransitionAnimation": "إيقاف الرسوم المتحركة الانتقالية",
+          "exportDowloadedFilesDes":
+              "انقر هنا لتصدير الملف الذي تم تنزيله من دليل التطبيق إلى مكان خارجي",
+          "export": "تصدير",
+          "backgroundPlayDes":
+              "تمكين/تعطيل تشغيل الموسيقى في الخلفية (يمكن الوصول إلى التطبيق من واجهة النظام عندما يكون التطبيق قيد التشغيل في الخلفية)",
+          "search": "بحث",
+          "about": "عن",
+          "songAddedToPlaylistAlert": "تمت إضافة الأغنية إلى قائمة التشغيل!",
+          "songAlreadyExists": "الأغنية موجودة بالفعل!",
+          "topmusicvideos": "اشهر مقاطع الفيديو الموسيقية",
+          "restoreLastPlaybackSessionDes":
+              "استعادة جلسة التشغيل الأخيرة تلقائيًا عند بدء التطبيق",
+          "enableBottomNav": "شريط التنقل السفلي",
+          "songEnqueueAlert": "أغنية في قائمة الانتظار!",
+          "artistBookmarkAddAlert": "تم وضع إشارة مرجعية للفنان!",
+          "syncedLyricsNotAvailable": "كلمات متزامنة غير متوفرة!",
+          "artistDesNotAvailable": "الوصف غير متوفر!",
+          "selectAuthInsMsg": "الرجاء تحديد مثيل المصادقة!",
+          "allFieldsReqMsg": "جميع الحقول مطلوبة",
+          "username": "اسم المستخدم",
+          "playlistBlacklistAlert": "قائمة التشغيل في القائمة السوداء!",
+          "blacklistPlstResetAlert": "تمت إعادة الضبط بنجاح!",
+          "resetblacklistedplaylist":
+              "إعادة تعيين قوائم التشغيل المدرجة في القائمة السوداء",
+          "resetblacklistedplaylistDes":
+              "إعادة تعيين كافة قوائم التشغيل المدرجة في القائمة السوداء",
+          "backupSettingsAndPlaylists":
+              "إعدادات النسخ الاحتياطي وقوائم التشغيل",
+          "restoreSettingsAndPlaylists": "استعادة الإعدادات وقوائم التشغيل",
+          "restoreSettingsAndPlaylistsDes":
+              "استعادة كافة الإعدادات، وبيانات تسجيل الدخول وقوائم التشغيل من ملف النسخ الاحتياطي، الكتابة فوق كافة البيانات الحالية",
+          "errorOccuredAlert": "لقد حدث خطأ ما!",
+          "playlistCreatedAlert": "تم إنشاء قائمة التشغيل!",
+          "shareSong": "مشاركة هذه الأغنية",
+          "trending": "الأكثر رواجا",
+          "reset": "إعادة ضبط",
+          "viewArtist": "عرض الفنان",
+          "removeFromPlaylist": "إزالة من قائمة التشغيل",
+          "removeFromQueue": "إزالة من قائمة الانتظار",
+          "streamingQualityDes": "جودة بث الموسيقى",
+          "customInsSelectMsg": "الرجاء تحديد مثيل مخصص",
+          "stopMusicOnTaskClearDes":
+              "سيتوقف تشغيل الموسيقى عندما يتم اغلاق التطبيق عن طريق مدير المهام",
+          "backupSettingsAndPlaylistsDes":
+              "حفظ جميع الإعدادات، وقوائم التشغيل، وبيانات تسجيل الدخول في ملف نسخة احتياطية",
+          "backupMsg": "تم حفظ النسخة الاحتياطية بنجاح!",
+          "backFilesFound": "تم العثور على قواعد البيانات",
+          "restoreMsg":
+              "تمت الاستعادة بنجاح! سيتم تطبيق التغييرات عند إعادة التشغيل",
+          "restoring": "جار استعادة...",
+          "restore": "استعادة",
+          "closeApp": "إغلاق التطبيق"
         },
         "az": {
           "playlistCreatednsongAddedAlert":
@@ -202,7 +399,7 @@ class Languages extends Translations {
           "songRemovedfromQueue": "Премахнато от опашката!",
           "libSongs": "Библиотека Песни",
           "githubDes":
-              "Вижте изходния код в GitHub. \nако ви харесва този проект, не забравяйте да дарите ⭐",
+              "Вижте изходния код в GitHub. \nАко ви харесва този проект, не забравяйте да дарите ⭐",
           "communityplaylists": "Плейлисти на Общността",
           "playlistRemovedAlert": "Плейлистът е премахнат!",
           "libAlbums": "Библиотека Албуми",
@@ -281,7 +478,7 @@ class Languages extends Translations {
           "cancel": "Отказ",
           "by": "от",
           "streamingQuality": "Качество на потока",
-          "linkPipedDes": "Връзка с piped за плейлисти",
+          "linkPipedDes": "Връзка с Piped за плейлисти",
           "libPlaylists": "Библиотека Плейлисти",
           "disabled": "Деактевирано",
           "CreateNewPlaylist": "Създайте нов плейлист",
@@ -345,7 +542,7 @@ class Languages extends Translations {
           "sleepTimeSetAlert": "Вашият таймер за заспиване е зададен",
           "deleteDownloadedDataAlert": "Успешно премахване от изтегляния!",
           "clearImgCache": "Изчистване кеша на изображенията",
-          "backgroundPlay": "Възпроизвеждане на фонова музика",
+          "backgroundPlay": "Възпроизвеждане на музика във фонов режим",
           "backgroundPlayDes":
               "Активиране/деактивиране на възпроизвеждане на музика във фонов режим (Достъпът до приложението може да бъде от системната област, когато приложението работи във фонов режим)",
           "reArrangePlaylist": "Пренареждане на плейлиста",
@@ -360,18 +557,18 @@ class Languages extends Translations {
           "cacheHomeScreenData":
               "Кеширайте данните за съдържанието на началния екран",
           "cacheHomeScreenDataDes":
-              "Разрешете Кеширане на данни за съдържанието на началния екран, Началният екран ще се зареди незабавно, ако тази опция е активирана",
-          "exportDowloadedFiles": "Експортирайте изтеглените файлове",
+              "Разрешете кеширане на данни за съдържанието на началния екран, началният екран ще се зареди незабавно, ако тази опция е активирана",
+          "exportDowloadedFiles": "Изнесете изтеглените файлове",
           "exportedFileLocation":
-              "Местоположение за експортиране на изтегления файл",
-          "export": "Експортиране",
-          "exporting": "Експортиране...",
+              "Местоположение за изнасяне на изтегления файл",
+          "export": "Изнеси",
+          "exporting": "Изнасяне...",
           "scanning": "Сканиране...",
           "downFilesFound": "намерени изтеглени файлове",
           "close": "Затвори",
-          "exportMsg": "Файловете са експортирани успешно",
+          "exportMsg": "Файловете са изнесени успешно",
           "exportDowloadedFilesDes":
-              "Щракнете тук, за да експортирате изтегления файл от inApp директория във външна директория",
+              "Щракнете тук, за да изнесете изтегления файл от inApp директория във външна директория",
           "clearImgCacheAlert": "Кешът на изображенията е изчистен успешно",
           "disableTransitionAnimation": "Деактивирай анимация при преход",
           "disableTransitionAnimationDes":
@@ -379,7 +576,20 @@ class Languages extends Translations {
           "clearImgCacheDes":
               "Щракнете тук, за да изчистите кеширани миниатюри/изображения. (Не се препоръчва, освен ако не искате да опресните данните от кеширани изображения)",
           "pipedplstSyncAlert": "Piped плейлист е синхронизиран!",
-          "openIn": "Отвори в"
+          "openIn": "Отвори в",
+          "backupSettingsAndPlaylistsDes":
+              "Запазва всички настройки, плейлисти и данни за влизане в архивен файл",
+          "restoreSettingsAndPlaylistsDes":
+              "Възстановява всички настройки, данни за вход и плейлисти от архивен файл. Презаписва всички текущи данни",
+          "backFilesFound": "открита бази данни",
+          "restoreMsg":
+              "Успешно възстановено! Промените се прилагат при рестартиране",
+          "restore": "Възстанови",
+          "closeApp": "Затвори приложението",
+          "restoring": "възстановяване...",
+          "backupSettingsAndPlaylists": "Архивиране на настройки и плейлисти",
+          "restoreSettingsAndPlaylists": "Възстанови настройки и плейлисти",
+          "backupMsg": "Резервното копие е запазено успешно!"
         },
         "bn": {},
         "ca": {
@@ -585,7 +795,22 @@ class Languages extends Translations {
           "resetblacklistedplaylistDes":
               "Restablir totes les llistes de reproducció a la llista negra de Piped",
           "albumBookmarkRemoveAlert": "Àlbum preferit desmarcat!",
-          "albumBookmarkAddAlert": "Àlbum preferit marcat!"
+          "albumBookmarkAddAlert": "Àlbum preferit marcat!",
+          "backupSettingsAndPlaylists":
+              "Configurar còpia de seguretat i llistes de reproducció",
+          "backupSettingsAndPlaylistsDes":
+              "Desa tota la configuració, llistes de reproducció i credencials de sessió en un arxiu de còpia de seguretat",
+          "restoreSettingsAndPlaylists":
+              "Restaura configuració i llistes de reproducció",
+          "restoreSettingsAndPlaylistsDes":
+              "Restaura tota la configuració, credencials de sessió i llistes de reproducció des d'un arxiu de còpia de seguretat. Sobre-escriu les dades actuals",
+          "backFilesFound": "bases de dades trobades",
+          "restoreMsg":
+              "Restaurada correctament! Els canvis s'aplicaran en reiniciar",
+          "restoring": "restaurant...",
+          "backupMsg": "Còpia de seguretat desada correctament!",
+          "restore": "Restaurar",
+          "closeApp": "Tancar l'aplicació"
         },
         "cs": {
           "home": "Domů",
@@ -598,14 +823,14 @@ class Languages extends Translations {
           "songAddedToPlaylistAlert": "Skladba přidána do playlistu!",
           "unlinkAlert": "Úspěšně odpojeno!",
           "playlistCreatedAlert": "Playlist vytvořen!",
-          "reset": "Obnovit",
-          "unLink": "Odstranění odkazu",
+          "reset": "Resetovat",
+          "unLink": "Odstranit odkaz",
           "trending": "Trendy",
           "searchRes": "Výsledky vyhledávání",
           "cacheSongsDes":
               "Ukládání skladeb do mezipaměti během přehrávání pro budoucí/offline přehrávání zabere v zařízení další místo",
           "password": "Heslo",
-          "noLibPlaylist": "Nemáte žádný playlist lib!",
+          "noLibPlaylist": "Nemáte žádný playlist v knihovně!",
           "setDiscoverContent": "Nastav si domovskou stránku",
           "networkError1": "Ups chyba sítě!",
           "songRemovedfromQueue": "Odstraněno z fronty!",
@@ -616,7 +841,7 @@ class Languages extends Translations {
           "playlistRemovedAlert": "Playlist odstraněn!",
           "libAlbums": "Knihovna alb",
           "albumBookmarkRemoveAlert": "Album odstraněno ze záložek!",
-          "notaSongVideo": "Ne píseň/hudební video!",
+          "notaSongVideo": "Není to skladba/hudební video!",
           "ignoreBatOptDes":
               "Pokud se potýkáte s problémy s oznámeními nebo se přehrávání zastavilo kvůli optimalizaci systému, povolte tuto možnost",
           "for1": "pro",
@@ -642,19 +867,19 @@ class Languages extends Translations {
           "viewAll": "Zobrazit vše",
           "github": "GitHub",
           "newVersionAvailable": "K dispozici je nová verze!",
-          "items": "Položky",
+          "items": "položky",
           "subscribers": "odběratelé",
           "startRadio": "Spustit rádio",
           "discover": "Doporučené skladby",
-          "cacheSongs": "Skladby v mezipaměti",
+          "cacheSongs": "Skladby mezipaměti",
           "songAlreadyExists": "Skladba už existuje!",
           "libArtists": "Knihovna interpretů",
           "username": "Uživatelské jméno",
           "light": "Světlý",
-          "resetblacklistedplaylist": "Obnovení playlistů na černé listině",
+          "resetblacklistedplaylist": "Resetovat playlisty na černé listině",
           "dynamic": "Dynamický",
           "selectAuthInsMsg": "Prosím, vyberte instanci ověřování!",
-          "equalizerDes": "ekvalizér otevřeného systému",
+          "equalizerDes": "Otevřete systémový ekvalizér",
           "removePlaylist": "Odstranit playlist",
           "customIns": "Vlastní instance",
           "Piped": "Piped",
@@ -693,20 +918,20 @@ class Languages extends Translations {
           "libPlaylists": "Knihovna playlistů",
           "disabled": "Zakázáno",
           "CreateNewPlaylist": "Vytvořit nový playlist",
-          "blacklistPlstResetAlert": "Obnovení proběhlo úspěšně!",
+          "blacklistPlstResetAlert": "Resetování proběhlo úspěšně!",
           "language": "Jazyk",
-          "search": "Vyhledávání",
+          "search": "Hledat",
           "skipSilenceDes": "Při přehrávání hudby se přeskočí ticho",
           "playNext": "Přehrát jako další",
           "errorOccuredAlert": "Došlo k nějaké chybě!",
-          "songs": "Písničky",
+          "songs": "Skladby",
           "high": "Vysoká 🔥",
-          "searchDes": "Skladby, Playlisty, Alba nebo Interpreti",
+          "searchDes": "Skladby, playlisty, alba, interprety",
           "results": "Výsledky",
           "playlistBlacklistAlert": "Playlist na černé listině!",
           "artistDesNotAvailable": "Popis není k dispozici!",
           "resetblacklistedplaylistDes":
-              "Obnovení všech playlistů zařazených na černou listinu",
+              "Resetování všech playlistů zařazených na černou listinu",
           "songRemovedfromQueueCurrSong":
               "Aktuálně přehrávanou skladbu nelze odebrat",
           "settings": "Nastavení",
@@ -715,7 +940,7 @@ class Languages extends Translations {
           "playlistRenameAlert": "Úspěšně přejmenováno!",
           "albumBookmarkAddAlert": "Album přidáno do záložek!",
           "removeFromPlaylist": "Odstranit z playlistu",
-          "lyricsNotAvailable": "Texty písní nejsou k dispozici!",
+          "lyricsNotAvailable": "Text není k dispozici!",
           "dontShowInfoAgain": "Tuto informaci již nezobrazujte",
           "noOfflineSong": "Žádné skladby offline!",
           "featuredplaylists": "Doporučené playlisty",
@@ -726,37 +951,75 @@ class Languages extends Translations {
           "removeFromQueue": "Odstranit z fronty",
           "shareSong": "Sdílet tuto skladbu",
           "songRemovedAlert": "Odstraněno z",
-          "downloads": "Stahování",
+          "downloads": "Stažené",
           "removeFromLib": "Odebrat z knihovny skladeb",
-          "downloadingFormat": "Stahování formátu souboru",
-          "songAlreadyOfflineAlert": "Skladba je v mezipaměti již offline",
+          "downloadingFormat": "Formát stahovaného souboru",
+          "songAlreadyOfflineAlert": "Skladba je již offline v mezipaměti",
           "downloadLocation": "Umístění stažených písniček",
           "downloadingFormatDes":
-              "Vyberte formát souboru pro stahování. \"Opus\" bude poskytovat nejlepší kvalitu",
+              "Vyberte formát stahovaného souboru. \"Opus\" poskytne nejlepší kvalitu",
           "sleepTimer": "Časovač spánku",
           "minutes": "minut",
-          "synced": "Synchronizováno",
+          "synced": "Synchronizovaný",
           "library": "Knihovna",
           "backgroundPlayDes":
               "Zapni/Vypni přehrávání hudby na pozadí (Hudba se potom dá ovládat v horní liště a na zamčené obrazovce)",
           "add5Minutes": "Ještě 5 minut",
           "cancelTimer": "Zruš časovač",
-          "enableBottomNav": "Dolní lišta",
+          "enableBottomNav": "Dolní navigační lišta",
           "homeContentCountDes":
               "Vyber si počet zobrazených položek na domovské obrazovce. Menší počet = Rychlejší načítání",
           "enableBottomNavDes": "Přejdí na dolní lištu",
           "plain": "Prostý",
-          "cancelTimerAlert": "Spací časovač byl zrušen",
-          "sleepTimeSetAlert": "Váš spící časovač byl spuštěn",
-          "syncedLyricsNotAvailable": "Synchronizované texty nejsou dostupné!",
+          "cancelTimerAlert": "Časovač spánku byl zrušen",
+          "sleepTimeSetAlert": "Váš časovač spánku byl spuštěn",
+          "syncedLyricsNotAvailable": "Synchronizovaný text není k dispozici!",
           "clearImgCache": "Vyčisti cache obrázků",
           "clearImgCacheDes":
               "Klikni sem aby si vyčistil cache obrázků (Není doporučeno ale může se hodit při obnově zachovaného data z obrázků)",
-          "pipedplstSyncAlert": "Piped playlist byl synchronyzován!",
+          "pipedplstSyncAlert": "Piped playlist synchronizován!",
           "upNext": "Další skladba",
-          "endOfThisSong": "Konec písničky",
+          "endOfThisSong": "Konec skladby",
           "homeContentCount": "Počet položek v domovské stránce",
-          "backgroundPlay": "Přehrávání na pozadí"
+          "backgroundPlay": "Přehrávání na pozadí",
+          "openIn": "Otevřít v",
+          "deleteDownloadData": "Odstranit ze stažených",
+          "restoreLastPlaybackSession": "Obnovit poslední relaci přehrávání",
+          "restoreLastPlaybackSessionDes":
+              "Automaticky obnoví poslední relaci přehrávání při spuštění aplikace",
+          "cacheHomeScreenData": "Data obsahu domovské obrazovky v mezipaměti",
+          "downFilesFound": "stažené soubory nalezeny",
+          "close": "Zavřít",
+          "exportMsg": "Soubory byly úspěšně exportovány",
+          "clearImgCacheAlert": "Vymazání mezipaměti obrázků proběhlo úspěšně",
+          "removeMultiple": "Odstranit více skladeb",
+          "reArrangePlaylist": "Přeskupit playlist",
+          "addMultipleSongs": "Přidat skladby do playlistu",
+          "backupSettingsAndPlaylistsDes":
+              "Uloží všechna nastavení, playlisty a přihlašovací údaje do záložního souboru",
+          "restoreSettingsAndPlaylists": "Obnovit nastavení a playlisty",
+          "restoreSettingsAndPlaylistsDes":
+              "Obnoví všechna nastavení, přihlašovací údaje a playlisty ze záložního souboru. Přepíše všechna aktuální data",
+          "backupMsg": "Záloha úspěšně uložena!",
+          "backFilesFound": "databáze nalezené",
+          "restoreMsg": "Úspěšně obnoveno! Změny jsou aplikovány při restartu",
+          "restore": "Obnovit",
+          "restoring": "obnovování...",
+          "backupSettingsAndPlaylists": "Zálohovat nastavení a playlisty",
+          "closeApp": "Zavřít aplikaci",
+          "disableTransitionAnimation": "Vypnout přechodovou animaci",
+          "disableTransitionAnimationDes":
+              "Zapnutím této možnosti zakážete přechodovou animaci mezi kartami",
+          "cacheHomeScreenDataDes":
+              "Zapněte ukládání dat obsahu domovské obrazovky do mezipaměti. Pokud je tato možnost povolena, domovská obrazovka se načte okamžitě",
+          "exportDowloadedFiles": "Exportovat stažené soubory",
+          "exportDowloadedFilesDes":
+              "Klikněte zde pro export staženého souboru z adresáře aplikace do externího adresáře",
+          "exportedFileLocation": "Umístění exportu staženého souboru",
+          "export": "Exportovat",
+          "exporting": "Exportování...",
+          "scanning": "Skenování...",
+          "deleteDownloadedDataAlert": "Úspěšně odstraněno ze stažených!"
         },
         "de": {
           "home": "Start",
@@ -962,7 +1225,21 @@ class Languages extends Translations {
           "export": "Exportieren",
           "deleteDownloadedDataAlert": "Erfolgreich aus Downloads entfernt!",
           "sleepTimeSetAlert": "Dein Sleep-Timer ist gesetzt",
-          "openIn": "Öffnen in"
+          "openIn": "Öffnen in",
+          "restoring": "wiederherstellen...",
+          "restore": "Wiederherstellen",
+          "closeApp": "App schließen",
+          "backupSettingsAndPlaylistsDes":
+              "Sichert alle Einstellungen, Wiedergabelisten und Login-Daten in einer Sicherungsdatei",
+          "backupSettingsAndPlaylists":
+              "Sichere Einstellungen und Wiedergabelisten",
+          "restoreSettingsAndPlaylists": "Wiederherstellen",
+          "restoreSettingsAndPlaylistsDes":
+              "Stellt alle Einstellungen, Login-Daten und Wiedergabelisten mit einer Sicherungsdatei wieder her. Überschreibt alle jetzigen Daten",
+          "backupMsg": "Sicherung erfolgreich gespeichert!",
+          "backFilesFound": "Datenbanken gefunden",
+          "restoreMsg":
+              "Erfolgreich wiederhergestellt! Änderungen werden beim Neustart in Kraft treten"
         },
         "en": {
           "home": "Home",
@@ -1075,7 +1352,7 @@ class Languages extends Translations {
           "equalizer": "Equalizer",
           "equalizerDes": "Open system equalizer",
           "clearImgCache": "Clear images cache",
-          "clearImgCacheAlert": "Images chache cleared successfully",
+          "clearImgCacheAlert": "Images cache cleared successfully",
           "clearImgCacheDes":
               "Click here to clear cached thumbnails/images. (Not recommended unless want to refresh cached images data)",
           "ignoreBatOpt": "Ignore battery optimization",
@@ -1158,18 +1435,25 @@ class Languages extends Translations {
           "stopMusicOnTaskClear": "Stop music on task clear",
           "stopMusicOnTaskClearDes":
               "Music playback will stop when App being swiped away from the task manager",
-          "backupSettingsAndPlaylists": "Backup Settings and Playlists",
+          "backupAppData": "Backup App data",
           "backupSettingsAndPlaylistsDes":
               "Saves all settings, playlists and login data in a backup file",
-          "restoreSettingsAndPlaylists": "Restore Settings and Playlists",
+          "backup": "Backup",
+          "letsStrart": "Let's start..",
+          "processFiles": "Processing files...",
+          "includeDownloadedFiles": "Include downloded songs files",
+          "backupInProgress": "Backup in progress...",
+          "restoreAppData": "Restore App data",
           "restoreSettingsAndPlaylistsDes":
               "Restores all settings, login data and playlists from a backup file. Overwrites all current data",
           "backupMsg": "Backup successfully saved!",
           "backFilesFound": "databases found",
-          "restoreMsg": "Successfully restored! Changes are applied on restart",
-          "restoring": "restoring...",
+          "restoreMsg":
+              "Successfully restored!\nChanges are applied on restart",
+          "restoring": "Restoring...",
           "restore": "Restore",
-          "closeApp": "Close App"
+          "closeApp": "Close App",
+          "restartApp": "Restart App"
         },
         "eo": {
           "renamePlaylist": "Alinomi Ludliston",
@@ -1367,7 +1651,7 @@ class Languages extends Translations {
           "songRemovedfromQueue": "¡Eliminado de la cola!",
           "libSongs": "Canciones de la biblioteca",
           "githubDes":
-              "Ver el código fuente en GitHub \nsi te gusta este proyecto, no te olvides de dar una ⭐",
+              "Ver el código fuente en GitHub \nsi te gusta este proyecto, no te olvides de darle una ⭐",
           "communityplaylists": "Listas de reproducción públicas",
           "playlistRemovedAlert": "¡Lista eliminada!",
           "libAlbums": "Álbumes de la biblioteca",
@@ -1441,7 +1725,7 @@ class Languages extends Translations {
           "status": "Estado",
           "themeMode": "Modo del tema",
           "streamingQualityDes": "Calidad de la música",
-          "nomatch": "No se han encontrado coincidencias para",
+          "nomatch": "Sin coincidencias para",
           "notaValidLink": "¡No es un enlace válido!",
           "emptyPlaylist": "¡Lista de reproducción vacía!",
           "favorites": "Favoritos",
@@ -1520,7 +1804,8 @@ class Languages extends Translations {
           "backgroundPlayDes":
               "Activar/desactivar la reproducción de música en segundo plano (se puede acceder a la aplicación desde la bandeja del sistema cuando se ejecuta en segundo plano)",
           "deleteDownloadData": "Eliminar de las descargas",
-          "deleteDownloadedDataAlert": "¡Eliminado con éxito de las descargas!",
+          "deleteDownloadedDataAlert":
+              "¡Eliminado exitosamente de las descargas!",
           "reArrangePlaylist": "Reorganizar la lista de reproducción",
           "removeMultiple": "Eliminar varias canciones",
           "addMultipleSongs": "Añadir canciones a la lista de reproducción",
@@ -1547,8 +1832,23 @@ class Languages extends Translations {
               "Active esta opción para desactivar la animación de la transición de las pestañas",
           "close": "Cerrar",
           "exportMsg": "Archivos exportados correctamente",
-          "clearImgCacheAlert": "Imágenes en la chache borradas con éxito",
-          "openIn": "Abrir en"
+          "clearImgCacheAlert": "Imágenes en la caché borradas con éxito",
+          "openIn": "Abrir en",
+          "backupSettingsAndPlaylists":
+              "Configuración de copia de seguridad y listas de reproducción",
+          "restoreMsg":
+              "¡Restaurado correctamente! Los cambios se aplicarán al reiniciar",
+          "backupSettingsAndPlaylistsDes":
+              "Guarda todas las configuraciones, listas de reproducción y datos de inicio de sesión en una copia de seguridad",
+          "restoreSettingsAndPlaylists":
+              "Restaurar los ajustes y listas de reproducción",
+          "restoreSettingsAndPlaylistsDes":
+              "Restaura todos los ajustes, datos de inicio de sesión y listas de reproducción desde un archivo de copia de seguridad. Sobrescribe todos los datos actuales",
+          "backupMsg": "¡Copia de seguridad guardada exitosamente!",
+          "backFilesFound": "bases de datos encontradas",
+          "restoring": "restaurando...",
+          "restore": "Restaurar",
+          "closeApp": "Cerrar la aplicación"
         },
         "fi": {
           "libAlbums": "Kirjaston albumit",
@@ -1921,9 +2221,238 @@ class Languages extends Translations {
           "homeContentCount": "Compteur de contenu du menu principal",
           "upNext": "En haut pour la suivante",
           "enableBottomNav": "Barre de navigation inférieure",
-          "enableBottomNavDes": "Passer à la barre de navigation inférieure"
+          "enableBottomNavDes": "Passer à la barre de navigation inférieure",
+          "backupSettingsAndPlaylists": "Musique",
+          "restoreSettingsAndPlaylists":
+              "Restaurer les paramètres et les listes de lecture",
+          "backupMsg": "Fichier de sauvegarde créé avec succès!",
+          "backFilesFound": "Bases de données trouvées",
+          "restoreMsg":
+              "Opération réussie ! Vos changements seront appliqués au redémarrage",
+          "restoring": "Récupération en cours...",
+          "restore": "Récupérer",
+          "backupSettingsAndPlaylistsDes":
+              "Sauvegarde tous vos paramètres, listes de lectures et données de connexion dans un fichier de récupération",
+          "restoreSettingsAndPlaylistsDes":
+              "Restaurer tous les paramètres, données de connexion et listes de lectures depuis un fichier de récupération. Supprime toutes les données actuelles",
+          "closeApp": "Fermer l'application"
         },
         "ga": {},
+        "gl": {
+          "singles": "Singles",
+          "artists": "Artistas",
+          "settings": "Preferencias",
+          "library": "Libraría",
+          "libSongs": "Cancións da libraría",
+          "libPlaylists": "Listas da libraría",
+          "libAlbums": "Álbumes da libraría",
+          "communityplaylists": "Listas da comunidade",
+          "featuredplaylists": "Listas destacadas",
+          "items": "elementos",
+          "networkError1": "Diantres, erro de conexión!",
+          "retry": "Téntao de novo!",
+          "noOfflineSong": "Sen cancións offline!",
+          "recentlyPlayed": "Reproducidas recentemente",
+          "favorites": "Favoritas",
+          "cachedOrOffline": "Cacheadas/Offline",
+          "downloads": "Descargas",
+          "emptyPlaylist": "Lista baleira!",
+          "enqueueAll": "Encolar todas",
+          "renamePlaylist": "Renomea lista",
+          "removePlaylist": "Elimina lista",
+          "CreateNewPlaylist": "Crea nova lista",
+          "reArrangePlaylist": "Reordea lista",
+          "removeMultiple": "Elimina varias cancións",
+          "addMultipleSongs": "Engade cancións a unha lista",
+          "create": "Crear",
+          "createnAdd": "Crear e engadir",
+          "noBookmarks": "Sen favoritas!",
+          "playNext": "Reproducir seguinte",
+          "addToPlaylist": "Engadir a lista",
+          "noLibPlaylist": "Non tes nengunha libraría de lista!",
+          "enqueueSong": "Encola esta canción",
+          "goToAlbum": "Ir a álbum",
+          "viewArtist": "Ver artista",
+          "openIn": "Abrir en",
+          "shareSong": "Compartir esta canción",
+          "removeFromPlaylist": "Eliminar da lista",
+          "upNext": "Seguinte",
+          "sleepTimer": "Temporizador",
+          "add5Minutes": "Engade 5 minutos",
+          "minutes": "minutos",
+          "endOfThisSong": "Final da canción",
+          "themeMode": "Modo do tema",
+          "dynamic": "Dinámico",
+          "setDiscoverContent": "Configura como descubrir contido",
+          "discover": "Descubrir",
+          "trending": "Tendenzas",
+          "topmusicvideos": "Top vídeos de música",
+          "basedOnLast": "Baseado na última interacción",
+          "restoreLastPlaybackSession":
+              "Restaura a última sesión de reproducción",
+          "cacheSongs": "Cancións cacheadas",
+          "skipSilence": "Omitir silenzo",
+          "streamingQualityDes": "Calidade do streaming de música",
+          "disableTransitionAnimation":
+              "Deshabilitar animación das transicións",
+          "disableTransitionAnimationDes":
+              "Activa esta opción para desativar a animación da transición das pestañas",
+          "high": "Alto",
+          "cacheHomeScreenDataDes":
+              "Se esta opción está activada, a pantalla de comezo cargará instantaneamente",
+          "downloadingFormat": "Descargar o formato do arquivo",
+          "exportDowloadedFiles": "Exportar ficheiros descargados",
+          "exportedFileLocation":
+              "Ubicación para exportar o ficheiro exportado",
+          "exporting": "Exportando...",
+          "close": "Pechar",
+          "equalizer": "Ecualizador",
+          "enabled": "Habilitado",
+          "disabled": "Deshabilitado",
+          "githubDes":
+              "Ver código fonte en GitHub \nse che gusta este proxecto, non esquezas darlle á ⭐",
+          "by": "por",
+          "search": "Buscar",
+          "searchDes": "Cancións, Lista, Álbum ou artista",
+          "searchRes": "Resultados de búsqueda",
+          "nomatch": "Non se atoparon coincidencias para",
+          "subscribers": "subscritores",
+          "radioNotAvailable": "Radio non dispoñible para este/a artista!",
+          "songRemovedfromQueue": "Eliminado da cola!",
+          "songRemovedfromQueueCurrSong":
+              "Non podes eliminar a canción en reproducción",
+          "albumBookmarkRemoveAlert": "Álbum eliminado de favoritos!",
+          "artistBookmarkAddAlert": "Artista engadido/a en favoritos!",
+          "notaSongVideo": "Non é unha canción/vídeo musical!",
+          "notaValidLink": "Non é unha ligazón válida!",
+          "operationFailed": "Erro na operación",
+          "goToDownloadPage": "Pincha aquí para ir á páxina de descarga",
+          "local": "Local",
+          "unLink": "Desvincular",
+          "hintApiUrl": "Dirección URL a instancia Piped",
+          "customIns": "Instancia personalizada",
+          "customInsSelectMsg": "Por favor selecciona Instancia personalizada",
+          "selectAuthInsMsg":
+              "Por favor selecciona Instancia de autenticación!",
+          "allFieldsReqMsg": "Tódolos campos requeridos",
+          "linkPipedDes": "Ligazón con piped para as listas de reproducción",
+          "selectAuthIns": "Selecciona Instancia de autenticación",
+          "username": "Usuario/a",
+          "password": "Contrasinal",
+          "linkAlert": "Vinculado correctamente!",
+          "unlinkAlert": "Desvinculado correctamente!",
+          "playlistBlacklistAlert": "Lista de reproducción en lista negra!",
+          "reset": "Restablecer",
+          "blacklistPlstResetAlert": "Restablecemento correcto!",
+          "resetblacklistedplaylist": "Restablecemento das listas negras",
+          "stopMusicOnTaskClear": "Deter a música cando se limpan tarefas",
+          "stopMusicOnTaskClearDes":
+              "A reproducción da música deterase cando se desprace a aplicación fora da barra de tarefas",
+          "backupSettingsAndPlaylists":
+              "Copia de seguridade das Preferencias e Listas",
+          "backupSettingsAndPlaylistsDes":
+              "Garda todas as preferencias, listas e datos de identificación nun ficheiro de copia de seguridade",
+          "restoreSettingsAndPlaylists": "Restaurar Preferencias e Listas",
+          "backupMsg": "Copia de seguridade gardada correctamente!",
+          "backFilesFound": "bases de datos atopadas",
+          "restoreMsg":
+              "Restaurado correctamente! Os cambios aplicaranse ao reiniciar",
+          "restoring": "restaurando...",
+          "home": "Comezo",
+          "songs": "Cancións",
+          "albums": "Álbumes",
+          "playlists": "Listas",
+          "libArtists": "Artistas da libraría",
+          "cancel": "Cancelar",
+          "startRadio": "Comezar radio",
+          "rename": "Renomear",
+          "removeFromQueue": "Eliminar da cola",
+          "removeFromLib": "Eliminar da libraría de cancións",
+          "cancelTimer": "Cancela temporizador",
+          "deleteDownloadData": "Eliminar de descargas",
+          "systemDefault": "Predeterminado",
+          "dark": "Oscuro",
+          "light": "Claro",
+          "language": "Lenguaxe",
+          "languageDes": "Idioma da aplicación",
+          "quickpicks": "Seleccións rápidas",
+          "restoreLastPlaybackSessionDes":
+              "Restaurar automaticamente a última sesión de reproducción ao iniciar a aplicación",
+          "homeContentCount": "Reconto de contidos",
+          "homeContentCountDes":
+              "Selecciona o número da páxina de comezo. Menos será máis rápido de cargar",
+          "enableBottomNav": "Barra de navegación inferior",
+          "enableBottomNavDes": "Cambia á barra de navegación inferior",
+          "cacheSongsDes":
+              "Cachear cancións durante a reproducción para reproducción futura/offline, consumirá espacio adicional no teu dispositivo",
+          "skipSilenceDes": "Silenzo será omitido na reproducción de música",
+          "streamingQuality": "Calidade do streaming",
+          "low": "Baixo",
+          "backgroundPlay": "Reproducir música de fondo",
+          "backgroundPlayDes":
+              "Activar/desactivar a reproducción de música en segundo plano (pódese acceder á aplicación desde a bandexa do sistema cando se executa en segundo plano)",
+          "downloadLocation": "Ubicación das descargas",
+          "cacheHomeScreenData":
+              "Caché de datos do contido da pantalla de comezo",
+          "songAlreadyOfflineAlert": "Canción xa offline na caché",
+          "downloadingFormatDes":
+              "Escolle o formato do arquivo da descarga. \"Opus\" proporcionará a mellor calidade",
+          "exportDowloadedFilesDes":
+              "PIncha aquí para exportar o arquivo descargado do diretorio da aplicación a un diretorio externo",
+          "export": "Exportar",
+          "exportMsg": "Ficheiros descargados correctamente",
+          "scanning": "Escaneando...",
+          "downFilesFound": "atopados ficheiros descargados",
+          "equalizerDes": "Abrir ecualizador de sistema",
+          "clearImgCache": "Limpar caché de imaxes",
+          "clearImgCacheAlert": "Limpeza de caché de imaxes correcta",
+          "clearImgCacheDes":
+              "Pincha aquí para limpar miniaturas/imaxes cacheadas. (No recomendado salvo que queiras refrescar as imaxes cacheadas)",
+          "ignoreBatOpt": "Ignorar a optimización da batería",
+          "ignoreBatOptDes":
+              "Si tes problemas coas notificacións ou a reproducción detense pola optimización do sistema, por favor activa esta opción",
+          "status": "Estado",
+          "github": "GitHub",
+          "for1": "para",
+          "videos": "Vídeos",
+          "viewAll": "Ver todas",
+          "results": "Resultados",
+          "about": "Acerca de",
+          "songAddedToPlaylistAlert": "Canción engadida á lista!",
+          "synced": "Sincronizado",
+          "plain": "Plano",
+          "deleteDownloadedDataAlert": "Eliminado correctamente das descargas!",
+          "cancelTimerAlert": "Temporizador de reposto cancelado",
+          "sleepTimeSetAlert": "O teu temporizador de reposo activouse",
+          "songAlreadyExists": "Canción xa existía!",
+          "songEnqueueAlert": "Canción encolada!",
+          "songRemovedAlert": "Eliminada de",
+          "errorOccuredAlert": "Ocorreu un erro!",
+          "pipedplstSyncAlert": "Lista de Piped sincronizada!",
+          "playlistCreatedAlert": "Lista creada!",
+          "playlistCreatednsongAddedAlert": "Lista creada e canción engadida!",
+          "playlistRenameAlert": "Renomeado correcto!",
+          "playlistRemovedAlert": "Lista eliminada!",
+          "playlistBookmarkAddAlert": "Lista en favoritos!",
+          "albumBookmarkAddAlert": "Álbum engadido en favoritos!",
+          "playlistBookmarkRemoveAlert": "Lista eliminada de favoritos!",
+          "artistBookmarkRemoveAlert": "Artista eliminado/a de favoritos!",
+          "lyricsNotAvailable": "Letras non dispoñibles!",
+          "syncedLyricsNotAvailable":
+              "Sincronización de letras non dispoñible!",
+          "artistDesNotAvailable": "Descripción non dispoñible!",
+          "newVersionAvailable": "Nova versión dispoñible!",
+          "dismiss": "Descartar",
+          "dontShowInfoAgain": "Non amosar esta información de novo",
+          "Piped": "Piped",
+          "link": "Vincular",
+          "resetblacklistedplaylistDes":
+              "Restablecer tódalas listas de reproducción na lista negra",
+          "restoreSettingsAndPlaylistsDes":
+              "Restaurar todas as preferencias, datos de identificación e listas desde un ficheiro de copia de seguridade. Sobreescribe tódalas configuracións actuais",
+          "restore": "Restaurar",
+          "closeApp": "Pechar aplicación"
+        },
         "hi": {
           "themeMode": "थीम मोड",
           "playlists": "प्लेलिस्ट",
@@ -2120,7 +2649,20 @@ class Languages extends Translations {
           "close": "बंद करें",
           "exportMsg": "फाइलें सफलतापूर्वक निर्यात की गईं",
           "clearImgCacheAlert": "छवियां सफलतापूर्वक साफ हो गईं",
-          "openIn": "खोलें"
+          "openIn": "खोलें",
+          "backupSettingsAndPlaylists": "बैकअप सेटिंग्स और प्लेलिस्ट",
+          "restoreSettingsAndPlaylists":
+              "सेटिंग्स और प्लेलिस्ट पुनर्स्थापित करें",
+          "backupSettingsAndPlaylistsDes":
+              "सभी सेटिंग्स, प्लेलिस्ट और लॉगिन डेटा को एक बैकअप फ़ाइल में सहेजता है",
+          "restoreSettingsAndPlaylistsDes":
+              "बैकअप फ़ाइल से सभी सेटिंग्स, लॉगिन डेटा और प्लेलिस्ट को पुनर्स्थापित करता है। सभी मौजूदा डेटा को ओवरराइट कर देता है",
+          "backupMsg": "बैकअप सफलतापूर्वक सहेजा गया!",
+          "backFilesFound": "डेटाबेस मिले",
+          "restoreMsg": "सफलतापूर्वक बहाल! परिवर्तन पुनरारंभ पर लागू होते हैं",
+          "restoring": "बहाल किया जा रहा है..।",
+          "restore": "बहाल करें",
+          "closeApp": "ऐप बंद करें"
         },
         "ia": {
           "playlistCreatednsongAddedAlert":
@@ -2325,7 +2867,22 @@ class Languages extends Translations {
           "exportDowloadedFilesDes":
               "Clicca hic pro exportar files discargate ab directorio inApp a directorio externe",
           "clearImgCacheAlert": "Imagines del cache delite con successo",
-          "openIn": "Aperir in"
+          "openIn": "Aperir in",
+          "closeApp": "Clauder le application",
+          "backupSettingsAndPlaylists":
+              "Copia de securitate del parametros e listas de reproduction",
+          "backupSettingsAndPlaylistsDes":
+              "Salveguarda tote le parametros, listas de reproduction e datos de initio de session in un file de copia de securitate",
+          "restoreSettingsAndPlaylists":
+              "Restaurar le parametros e listas de reproduction",
+          "backupMsg": "Copia de securitate salveguardate con successo!",
+          "backFilesFound": "bases de datos trovate",
+          "restoring": "in restauration...",
+          "restore": "Restaurar",
+          "restoreMsg":
+              "Restaurate con successo! Le cambios essera applicate in le reinitio",
+          "restoreSettingsAndPlaylistsDes":
+              "Restaura tote le parametros, datos de initio de session e listas de reproduction ab un file de copia de securitate. Superscribe tote le datos actual"
         },
         "id": {
           "playlistCreatednsongAddedAlert":
@@ -2812,11 +3369,22 @@ class Languages extends Translations {
           "scanning": "スキャン中...",
           "downFilesFound": "ダウンロード済みファイルが存在します",
           "exportMsg": "ファイルのエクスポートに成功しました",
-          "clearImgCacheAlert": "画像キャッシュの消去に成功しました",
+          "clearImgCacheAlert": "画像キャッシュを消去しました",
           "exportDowloadedFilesDes":
               "クリックすると、アプリのディレクトリから別の場所へダウンロード済みファイルをエクスポート",
           "removeMultiple": "複数の曲を削除",
-          "openIn": "開く"
+          "openIn": "アプリで開く",
+          "restoreSettingsAndPlaylists": "設定と再生リストを復元",
+          "restoreSettingsAndPlaylistsDes":
+              "すべての設定と再生リスト、ログイン情報をバックアップファイルから復元。現在のデータを上書きします",
+          "restoreMsg": "復元に成功しました！再起動で変更を適用",
+          "restoring": "復元中...",
+          "restore": "復元",
+          "closeApp": "アプリを閉じる",
+          "backupMsg": "バックアップに成功しました！",
+          "backupSettingsAndPlaylists": "設定と再生リストをバックアップ",
+          "backupSettingsAndPlaylistsDes": "すべての設定と再生リスト、ログイン情報をバックアップファイルに保存",
+          "backFilesFound": "データベースを発見"
         },
         "kn": {"libArtists": "歌手库"},
         "ko": {
@@ -3349,7 +3917,16 @@ class Languages extends Translations {
           "close": "Sluit",
           "exportMsg": "Bestanden successvol geëxporteerd",
           "clearImgCacheAlert": "Afbeeldingen cache is successvol verwijderd",
-          "selectAuthInsMsg": "Selecteer Authenticatie instantie!"
+          "selectAuthInsMsg": "Selecteer Authenticatie instantie!",
+          "openIn": "Openen in",
+          "backupSettingsAndPlaylists":
+              "Back-up instellingen en afspeellijsten",
+          "backupSettingsAndPlaylistsDes":
+              "Bewaart alle instellingen, afspeellijsten en aanmeldgegevens in een back-up bestand",
+          "restoreSettingsAndPlaylistsDes":
+              "Herstelt alle instellingen, aanmeldgegevens en afspeellijsten van een back-up bestand. Overschrijft alle huidige gegevens",
+          "restoreSettingsAndPlaylists":
+              "Herstel instellingen en afspeellijsten"
         },
         "or": {
           "playlistCreatednsongAddedAlert":
@@ -3699,7 +4276,21 @@ class Languages extends Translations {
           "clearImgCacheAlert": "ਚਿੱਤਰ ਕੈਸ਼ ਸਫ਼ਲਤਾਪੂਰਵਕ ਸਾਫ ਕੀਤਾ",
           "close": "ਬੰਦ ਕਰੋ",
           "exportMsg": "ਫ਼ਾਈਲ ਸਫ਼ਲਤਾਪੂਰਵਕ ਐਕਸਪੋਰਟ ਹੋਈ",
-          "openIn": "ਦੇ ਵਿੱਚ ਖੋਲ੍ਹੋ"
+          "openIn": "ਦੇ ਵਿੱਚ ਖੋਲ੍ਹੋ",
+          "restoreSettingsAndPlaylists":
+              "ਸੈਟਿੰਗਾਂ ਅਤੇ ਪਲੇਲਿਸਟਾਂ ਨੂੰ ਰੀਸਟੋਰ ਕਰੋ",
+          "backFilesFound": "ਡਾਟਾਬੇਸ ਮਿਲੇ ਹਨ",
+          "restore": "ਰੀਸਟੋਰ ਕਰੋ",
+          "restoring": "ਰੀਸਟੋਰ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...",
+          "closeApp": "ਐਪ ਬੰਦ ਕਰੋ",
+          "backupSettingsAndPlaylists": "ਬੈਕਅੱਪ ਸੈਟਿੰਗਾਂ ਅਤੇ ਪਲੇਲਿਸਟਾਂ",
+          "backupSettingsAndPlaylistsDes":
+              "ਸਾਰੀਆਂ ਸੈਟਿੰਗਾਂ, ਪਲੇਲਿਸਟਾ ਅਤੇ ਲਾਗ-ਇਨ ਡਾਟਾ ਨੂੰ ਇੱਕ ਬੈਕਅੱਪ ਫਾਈਲ ਵਿੱਚ ਸੁਰੱਖਿਅਤ ਕਰਦਾ ਹੈ",
+          "restoreSettingsAndPlaylistsDes":
+              "ਬੈਕਅੱਪ ਫਾਈਲ ਤੋਂ ਸਾਰੀਆਂ ਸੈਟਿੰਗਾਂ, ਲਾਗ-ਇਨ ਡਾਟਾ ਅਤੇ ਪਲੇਲਿਸਟਾਂ ਨੂੰ ਰੀਸਟੋਰ ਕਰਦਾ ਹੈ। ਸਾਰੇ ਮੌਜੂਦਾ ਡਾਟਾ ਨੂੰ ਓਵਰਰਾਈਟ ਕਰਦਾ ਹੈ",
+          "backupMsg": "ਬੈਕਅੱਪ ਸਫਲਤਾਪੂਰਵਕ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਗਿਆ!",
+          "restoreMsg":
+              "ਸਫਲਤਾਪੂਰਵਕ ਬਹਾਲ ਕੀਤਾ ਗਿਆ! ਮੁੜ-ਚਾਲੂ ਹੋਣ 'ਤੇ ਤਬਦੀਲੀਆਂ ਲਾਗੂ ਕੀਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ"
         },
         "pl": {
           "home": "Główna",
@@ -3902,7 +4493,22 @@ class Languages extends Translations {
           "exporting": "Eksportowanie...",
           "scanning": "Skanowanie...",
           "downFilesFound": "znaleziono pobrane pliki",
-          "openIn": "Otwórz w"
+          "openIn": "Otwórz w",
+          "backupSettingsAndPlaylists":
+              "Kopia zapasowa ustawień i list odtwarzania",
+          "backupSettingsAndPlaylistsDes":
+              "Zapisuje wszystkie ustawienia, listy odtwarzania i dane logowania w pliku kopii zapasowej",
+          "restoreSettingsAndPlaylistsDes":
+              "Przywraca wszystkie ustawienia, dane logowania i listy odtwarzania z pliku kopii zapasowej. Nadpisuje wszystkie bieżące dane",
+          "backFilesFound": "znalezione bazy danych",
+          "restoreSettingsAndPlaylists":
+              "Przywracanie ustawień i list odtwarzania",
+          "backupMsg": "Kopia zapasowa została pomyślnie zapisana!",
+          "restoreMsg":
+              "Przywrócenie powiodło się! Zmiany zostaną zastosowane po ponownym uruchomieniu",
+          "restoring": "przywracanie...",
+          "restore": "Przywracanie",
+          "closeApp": "Zamknij aplikację"
         },
         "pt": {
           "renamePlaylist": "Renomear Playlist",
@@ -3915,22 +4521,22 @@ class Languages extends Translations {
           "create": "Criar",
           "enqueueSong": "Colocar na fila",
           "noBookmarks": "Nenhuma salva!",
-          "playlists": "Listas de músicas",
+          "playlists": "Playlists",
           "rename": "Renomear",
-          "items": "Itens",
-          "startRadio": "Procurar semelhantes",
+          "items": "itens",
+          "startRadio": "Iniciar rádio",
           "downloads": "Baixadas",
           "libArtists": "Biblioteca de Artistas",
           "removePlaylist": "Remover playlist",
           "addToPlaylist": "Adicionar à playlist",
           "cachedOrOffline": "Em cache/Baixadas",
-          "retry": "Tente de novo!",
+          "retry": "Tente novamente!",
           "artists": "Artistas",
           "albums": "Álbuns",
           "recentlyPlayed": "Tocadas recentemente",
           "viewArtist": "Ver Artista",
           "createnAdd": "Criar e adicionar",
-          "singles": "Músicas de divulgação/Single",
+          "singles": "Singles",
           "emptyPlaylist": "Playlist vazia!",
           "favorites": "Favoritos",
           "home": "Início",
@@ -3942,10 +4548,10 @@ class Languages extends Translations {
           "settings": "Configurações",
           "removeFromPlaylist": "Remover da playlist",
           "noOfflineSong": "Sem músicas offline!",
-          "featuredplaylists": "Playlists em destaque",
+          "featuredplaylists": "Playlists em Destaque",
           "goToAlbum": "Ir para o álbum",
           "removeFromQueue": "Remover da fila",
-          "shareSong": "Compartilhar música",
+          "shareSong": "Compartilhar essa música",
           "playlistCreatednsongAddedAlert":
               "Playlist criada e música adicionada!",
           "dismiss": "Dispensar",
@@ -3974,7 +4580,7 @@ class Languages extends Translations {
           "low": "Baixa",
           "link": "Vincular",
           "selectAuthIns": "Selecione Instância de Autenticação",
-          "languageDes": "Definir linguagem do aplicativo",
+          "languageDes": "Definir Idioma do Aplicativo",
           "stopMusicOnTaskClear": "Parar música no gerenciador de tarefas",
           "customInsSelectMsg": "Selecione a Instância Personalizada",
           "skipSilence": "Pular silêncio",
@@ -4004,7 +4610,7 @@ class Languages extends Translations {
               "A música será interrompida quando o aplicativo for removido do gerenciador de tarefas",
           "playlistBookmarkAddAlert": "Playlist salva!",
           "radioNotAvailable": "Rádio não disponível para esse artista!",
-          "topmusicvideos": "Clipes musicais do momento",
+          "topmusicvideos": "Principais clipes",
           "about": "Sobre",
           "playlistBookmarkRemoveAlert": "Playlist não mais salva!",
           "systemDefault": "Padrão do sistema",
@@ -4012,7 +4618,7 @@ class Languages extends Translations {
           "ignoreBatOpt": "Ignorar otimização da bateria",
           "linkAlert": "Vinculado com sucesso!",
           "status": "Status/Situação",
-          "themeMode": "Modo do tema",
+          "themeMode": "Modo do Tema",
           "streamingQualityDes": "Qualidade da transmissão das músicas",
           "nomatch": "Sem resultados para",
           "notaValidLink": "Link inválido!",
@@ -4022,7 +4628,7 @@ class Languages extends Translations {
           "linkPipedDes": "Vincular as playlist com Piped",
           "disabled": "Desabilitado",
           "blacklistPlstResetAlert": "Redefinido com sucesso!",
-          "language": "Língua",
+          "language": "Idioma",
           "search": "Procurar",
           "songAlreadyOfflineAlert":
               "Músicas baixadas já disponíveis para reprodução offline",
@@ -4073,7 +4679,48 @@ class Languages extends Translations {
               "Ativar/Desativar reprodução de música em segundo plano (O aplicativo pode ser acessado a partir da bandeja do sistema quando está em execução em segundo plano)",
           "clearImgCache": "Limpar cache de imagens",
           "clearImgCacheDes":
-              "Clique aqui para limpar as thumbnails/imagens armazenadas em cache. (Não recomendado a menos que queira atualizar os dados das imagens armazenadas em cache)"
+              "Clique aqui para limpar as thumbnails/imagens armazenadas em cache. (Não recomendado a menos que queira atualizar os dados das imagens armazenadas em cache)",
+          "reArrangePlaylist": "Reorganizar playlist",
+          "addMultipleSongs": "Adicionar músicas à playlist",
+          "removeMultiple": "Remover múltiplas músicas",
+          "downFilesFound": "arquivos baixados encontrados",
+          "openIn": "Abrir em",
+          "deleteDownloadData": "Remover dos downloads",
+          "restoreLastPlaybackSession":
+              "Restaurar a última sessão de reprodução",
+          "restoreLastPlaybackSessionDes":
+              "Restaure automaticamente a última sessão de reprodução na inicialização do aplicativo",
+          "disableTransitionAnimation": "Desativar animação de transição",
+          "disableTransitionAnimationDes":
+              "Habilite esta opção para desativar a animação de transição de guias",
+          "cacheHomeScreenDataDes":
+              "Ative o armazenamento em cache dos dados do conteúdo da tela inicial. A tela inicial será carregada instantaneamente se esta opção estiver ativada",
+          "exportDowloadedFiles": "Exportar arquivos baixados",
+          "exportDowloadedFilesDes":
+              "Clique aqui para exportar o arquivo baixado do diretório interno do aplicativo para o diretório externo",
+          "exportedFileLocation": "Local de exportação do arquivo baixado",
+          "exporting": "Exportando...",
+          "scanning": "Lendo...",
+          "close": "Fechar",
+          "exportMsg": "Arquivos exportados com sucesso",
+          "clearImgCacheAlert": "Cache de imagens limpo com sucesso",
+          "restoreSettingsAndPlaylistsDes":
+              "Restaura todas as configurações, dados de login e playlists de um arquivo de backup. Substitui todos os dados atuais",
+          "backupMsg": "Backup salvo com sucesso!",
+          "backFilesFound": "bancos de dados encontrados",
+          "restoreMsg":
+              "Restaurado com sucesso! As alterações serão aplicadas na reinicialização",
+          "restoring": "restaurando...",
+          "cacheHomeScreenData":
+              "Armazenar dados de conteúdo da tela inicial em cache",
+          "deleteDownloadedDataAlert": "Removido com sucesso dos downloads",
+          "export": "Exportar",
+          "backupSettingsAndPlaylists": "Configurações de Backup e Playlists",
+          "backupSettingsAndPlaylistsDes":
+              "Salva todas as configurações, playlists e dados de login em um arquivo de backup",
+          "restoreSettingsAndPlaylists": "Restaurar configurações e playlists",
+          "restore": "Restaurar",
+          "closeApp": "Fechar App"
         },
         "ro": {
           "minutes": "minute",
@@ -4155,7 +4802,8 @@ class Languages extends Translations {
           "removeFromLib": "Elimină din bibliotecă de Melodii",
           "cancelTimer": "Anulare temporizator",
           "basedOnLast": "Bazat de ultima interacțiune",
-          "restoreLastPlaybackSession": "Restaurați ultima sesiune de redare"
+          "restoreLastPlaybackSession": "Restaurați ultima sesiune de redare",
+          "openIn": "Deschide cu"
         },
         "ru": {
           "home": "Домой",
@@ -4357,16 +5005,229 @@ class Languages extends Translations {
           "exportMsg": "Файлы успешно экспортированы",
           "clearImgCacheAlert": "Кэш изображений успешно очищен",
           "clearImgCacheDes":
-              "Нажмите здесь чтобы очистить кэшированные миниатюры/изображения. (Не рекомендуется, если только вы не хотите обновить кэшированные изображения)"
+              "Нажмите здесь чтобы очистить кэшированные миниатюры/изображения. (Не рекомендуется, если только вы не хотите обновить кэшированные изображения)",
+          "openIn": "Открыть в",
+          "closeApp": "Закрыть приложение"
         },
-        "sk": {},
+        "sk": {
+          "nomatch": "Nenašla sa žiadna zhoda pre",
+          "subscribers": "Odberatelia",
+          "operationFailed": "Operácia zlyhala",
+          "Piped": "Piped",
+          "selectAuthInsMsg": "Vyberte autorizačnú inštanciu!",
+          "library": "Knižnica",
+          "libSongs": "Knižnica skladieb",
+          "cancel": "Zrušiť",
+          "create": "Vytvoriť",
+          "enqueueSong": "Pridať skladbu do poradia",
+          "goToAlbum": "Prejsť na album",
+          "removeFromLib": "Odstrániť z knižnice skladieb",
+          "sleepTimer": "Časovač spánku",
+          "add5Minutes": "Pridať 5 minút",
+          "cancelTimer": "Zrušiť časovač",
+          "endOfThisSong": "Koniec tejto skladby",
+          "themeMode": "Téma",
+          "homeContentCount": "Počet položiek na domovskej obrazovke",
+          "streamingQualityDes": "Kvalita hudobného streamu",
+          "high": "Vysoká",
+          "low": "Nízka",
+          "downloadLocation": "Miesto sťahovania",
+          "downloadingFormat": "Formát sťahovaného súboru",
+          "ignoreBatOptDes":
+              "Ak máte problémy s oznámeniami alebo sa prehrávanie zastavilo kvôli optimalizácii systému, povoľte túto možnosť",
+          "disabled": "Vypnuté",
+          "searchDes": "Skladby, playlist, album, interpreta",
+          "for1": "pre",
+          "enabled": "Zapnuté",
+          "viewAll": "Zobraziť všetko",
+          "videos": "Videá",
+          "results": "Výsledky",
+          "playlistCreatednsongAddedAlert":
+              "Playlist vytvorený a skladba pridaná!",
+          "playlistRenameAlert": "Premenované úspešne!",
+          "lyricsNotAvailable": "Text nie je k dispozícii!",
+          "home": "Domov",
+          "songs": "Skladby",
+          "playlists": "Playlisty",
+          "albums": "Albumy",
+          "artists": "Interpreti",
+          "settings": "Nastavenia",
+          "libPlaylists": "Knižnica playlistov",
+          "libAlbums": "Knižnica albumov",
+          "items": "položky",
+          "networkError1": "Chyba siete!",
+          "retry": "Skúste znova!",
+          "noOfflineSong": "Žiadne skladby offline!",
+          "emptyPlaylist": "Prázdny playlist!",
+          "CreateNewPlaylist": "Vytvoriť nový playlist",
+          "createnAdd": "Vytvoriť a pridať",
+          "startRadio": "Spustiť rádio",
+          "addToPlaylist": "Pridať do playlistu",
+          "noLibPlaylist": "Nemáte žiadny playlist v knižnici!",
+          "rename": "Premenovať",
+          "reArrangePlaylist": "Preskupiť playlist",
+          "removeMultiple": "Odstrániť viacero skladieb",
+          "addMultipleSongs": "Pridať skladby do playlistu",
+          "artistDesNotAvailable": "Popis nie je k dispozícii!",
+          "allFieldsReqMsg": "Všetky polia sú povinné",
+          "restoreLastPlaybackSession": "Obnoviť poslednú reláciu prehrávania",
+          "openIn": "Otvoriť v",
+          "dynamic": "Dynamická",
+          "systemDefault": "Systémová",
+          "removeFromQueue": "Odstrániť z poradia",
+          "dark": "Tmavá",
+          "light": "Svetlá",
+          "languageDes": "Nastavte jazyk aplikácie",
+          "quickpicks": "Rýchle výbery",
+          "trending": "Trendy",
+          "topmusicvideos": "Najlepšie hudobné videá",
+          "enableBottomNav": "Dolný navigačný panel",
+          "enableBottomNavDes": "Prepnúť na dolný navigačný panel",
+          "basedOnLast": "Na základe poslednej interakcie",
+          "skipSilenceDes": "Pri prehrávaní hudby sa vynechá ticho",
+          "streamingQuality": "Kvalita streamu",
+          "disableTransitionAnimationDes":
+              "Zapnutím tejto možnosti zakážete prechodovú animáciu na karte",
+          "backgroundPlay": "Prehrávať hudbu na pozadí",
+          "cacheHomeScreenData":
+              "Údaje obsahu domovskej obrazovky v medzipamäti",
+          "downloadingFormatDes":
+              "Vyberte formát sťahovaného súboru. \"Opus\" poskytne najlepšiu kvalitu",
+          "exportDowloadedFiles": "Exportovať stiahnuté súbory",
+          "exportDowloadedFilesDes":
+              "Kliknite sem pre export stiahnutého súboru z adresára aplikácie do externého adresára",
+          "exportedFileLocation": "Umiestnenie exportu stiahnutého súboru",
+          "export": "Exportovať",
+          "exporting": "Exportovanie...",
+          "downFilesFound": "stiahnuté súbory nájdené",
+          "close": "Zavrieť",
+          "exportMsg": "Súbory boli úspešne exportované",
+          "clearImgCacheAlert": "Medzipamäť obrázkov úspešne vymazaná",
+          "searchRes": "Výsledky vyhľadávania",
+          "about": "O aplikácii",
+          "synced": "Synchronizovaný",
+          "cancelTimerAlert": "Časovač spánku zrušený",
+          "songRemovedfromQueueCurrSong":
+              "Aktuálne prehrávanú skladbu nemožno odstrániť",
+          "radioNotAvailable":
+              "Rádio pre tohto interpreta nie je k dispozícii!",
+          "sleepTimeSetAlert": "Časovač spánku je nastavený",
+          "pipedplstSyncAlert": "Piped playlist synchronizovaný!",
+          "songRemovedAlert": "Odstránené z",
+          "songEnqueueAlert": "Skladba zaradená!",
+          "songAlreadyExists": "Skladba už existuje!",
+          "songAddedToPlaylistAlert": "Skladba pridaná do playlistu!",
+          "albumBookmarkAddAlert": "Album v záložkách!",
+          "playlistBookmarkAddAlert": "Playlist v záložkách!",
+          "playlistRemovedAlert": "Playlist odstránený!",
+          "playlistCreatedAlert": "Playlist vytvorený!",
+          "selectAuthIns": "Vybrať autorizačnú inštanciu",
+          "newVersionAvailable": "K dispozícii je nová verzia!",
+          "artistBookmarkAddAlert": "Interpret v záložkách!",
+          "albumBookmarkRemoveAlert": "Záložka albumu odstránená!",
+          "reset": "Resetovať",
+          "password": "Heslo",
+          "username": "Používateľské meno",
+          "resetblacklistedplaylist": "Resetovať playlisty z čiernej listiny",
+          "blacklistPlstResetAlert": "Resetovanie úspešné!",
+          "noBookmarks": "Žiadne záložky!",
+          "viewArtist": "Zobraziť interpreta",
+          "status": "Stav",
+          "songAlreadyOfflineAlert": "Skladba je už offline v medzipamäti",
+          "github": "GitHub",
+          "by": "od",
+          "notaValidLink": "Neplatný odkaz!",
+          "artistBookmarkRemoveAlert": "Záložka interpreta odstránená!",
+          "singles": "Single",
+          "libArtists": "Knižnica interpretov",
+          "communityplaylists": "Komunitné playlisty",
+          "recentlyPlayed": "Hrané naposledy",
+          "removePlaylist": "Odstrániť playlist",
+          "renamePlaylist": "Premenovať playlist",
+          "shareSong": "Zdieľať túto skladbu",
+          "removeFromPlaylist": "Odstrániť z playlistu",
+          "minutes": "minút",
+          "language": "Jazyk",
+          "restoreLastPlaybackSessionDes":
+              "Automaticky obnoví poslednú reláciu prehrávania pri spustení aplikácie",
+          "featuredplaylists": "Odporúčané playlisty",
+          "favorites": "Obľúbené",
+          "cachedOrOffline": "Uložené v medzipamäti/offline",
+          "playlistBlacklistAlert": "Playlist na čiernej listine!",
+          "homeContentCountDes":
+              "Vyberte si počet zobrazených položiek na domovskej obrazovke. Menší počet, rýchlejšie načítanie",
+          "cacheSongs": "Skladby medzipamäte",
+          "cacheSongsDes":
+              "Ukladá skladby do medzipamäte počas prehrávania pre budúce/offline prehrávanie, zaberie dodatočné miesto v zariadení",
+          "skipSilence": "Vynechať ticho",
+          "backgroundPlayDes":
+              "Zapnite/vypnite prehrávania hudby na pozadí (aplikácia je prístupná zo systémovej lišty, keď je spustená na pozadí)",
+          "scanning": "Skenovanie...",
+          "equalizer": "Ekvalizér",
+          "equalizerDes": "Otvorte systémový ekvalizér",
+          "clearImgCache": "Vymazať medzipamäť obrázkov",
+          "clearImgCacheDes":
+              "Pre vymazanie miniatúr/obrázkov z medzipamäte kliknite sem. (Neodporúča sa, ak nechcete obnoviť údaje o obrázkoch v medzipamäti)",
+          "ignoreBatOpt": "Ignorovať optimalizáciu batérie",
+          "search": "Hľadať",
+          "githubDes":
+              "Zobrazte zdrojový kód GitHub \nak sa vám tento projekt páči, nezabudnite dať ⭐",
+          "playlistBookmarkRemoveAlert": "Záložka playlistu odstránená!",
+          "enqueueAll": "Pridať všetky do poradia",
+          "setDiscoverContent": "Nastaviť obsah domovskej obrazovky",
+          "songRemovedfromQueue": "Odstránené z poradia!",
+          "syncedLyricsNotAvailable":
+              "Synchronizovaný text nie je k dispozícii!",
+          "notaSongVideo": "Nie je to skladba/hudobné video!",
+          "dontShowInfoAgain": "Nezobrazovať tieto informácie znova",
+          "customIns": "Vlastná inštancia",
+          "hintApiUrl": "URL API na inštanciu Piped",
+          "resetblacklistedplaylistDes":
+              "Resetuje všetky playlisty Piped na čiernej listine",
+          "stopMusicOnTaskClear": "Zastaviť hudbu",
+          "errorOccuredAlert": "Vyskytla sa chyba!",
+          "link": "Prepojiť",
+          "customInsSelectMsg": "Vyberte vlastnú inštanciu",
+          "restore": "Obnoviť",
+          "closeApp": "Zavrieť aplikáciu",
+          "restoring": "obnovovanie...",
+          "restoreMsg": "Úspešne obnovené! Zmeny sa aplikujú pri reštarte",
+          "backFilesFound": "databázy nájdené",
+          "backupMsg": "Záloha úspešne uložená!",
+          "restoreSettingsAndPlaylistsDes":
+              "Obnoví všetky nastavenia, prihlasovacie údaje a playlisty zo záložného súboru. Prepíše všetky aktuálne údaje",
+          "restoreSettingsAndPlaylists": "Obnoviť nastavenia a playlisty",
+          "backupSettingsAndPlaylistsDes":
+              "Uloží všetky nastavenia, playlisty a prihlasovacie údaje do záložného súboru",
+          "backupSettingsAndPlaylists": "Zálohovať nastavenia a playlisty",
+          "cacheHomeScreenDataDes":
+              "Zapnite ukladanie údajov obsahu domovskej obrazovky do medzipamäte, Ak je táto možnosť povolená, domovská obrazovka sa načíta okamžite",
+          "stopMusicOnTaskClearDes":
+              "Prehrávanie hudby sa zastaví, keď sa aplikácia odstráni preč zo správcu úloh",
+          "disableTransitionAnimation": "Vypnúť prechodovú animáciu",
+          "deleteDownloadData": "Odstrániť zo stiahnutých",
+          "local": "Lokálny",
+          "goToDownloadPage":
+              "Ak chcete prejsť na stránku sťahovania, kliknite sem",
+          "unlinkAlert": "Odpojené úspešne!",
+          "downloads": "Stiahnuté",
+          "upNext": "Nasledujúce",
+          "discover": "Doporučené",
+          "plain": "Obyčajný",
+          "deleteDownloadedDataAlert": "Úspešne odstránené zo stiahnutých!",
+          "linkPipedDes": "Prepojte s Piped pre playlisty",
+          "playNext": "Prehrať ďalej",
+          "unLink": "Odpojiť",
+          "linkAlert": "Prepojené úspešne!",
+          "dismiss": "Odmietnuť"
+        },
         "sr": {
           "playlistCreatednsongAddedAlert":
               "Плејлиста је направљена и песма је додата!",
           "dismiss": "Одбаци",
           "goToDownloadPage":
               "Кликните овде да бисте отишли на страницу за преузимање",
-          "songEnqueueAlert": "Песма у реду!",
+          "songEnqueueAlert": "Песма у редоследу!",
           "renamePlaylist": "Преименуј плејлисту",
           "songAddedToPlaylistAlert": "Песма је додата на плејлисту!",
           "unlinkAlert": "Веза је успешно прекинута!",
@@ -4381,7 +5242,7 @@ class Languages extends Translations {
           "noLibPlaylist": "Немате ниједну збирку плејлиста!",
           "setDiscoverContent": "Подешавања садржаја за откривање",
           "networkError1": "Упс, мрежна грешка!",
-          "songRemovedfromQueue": "Уклоњено из реда!",
+          "songRemovedfromQueue": "Уклоњено из редоследа!",
           "libSongs": "Збирка песама",
           "githubDes":
               "Погледајте изворни кôд на GitHub-у, \nако вам се свиђа овај пројекат, не заборавите да дате ⭐",
@@ -4398,12 +5259,12 @@ class Languages extends Translations {
           "selectAuthIns": "Избор инстанце аутентификације",
           "languageDes": "Подесите језик апликације",
           "stopMusicOnTaskClear": "Заустави музику при чишћењу задатака",
-          "enqueueAll": "Стави све у ред",
+          "enqueueAll": "Стави све у редослед",
           "customInsSelectMsg": "Изаберите „Прилагођена инстанца“",
           "skipSilence": "Прескочи тишину",
           "create": "Направи",
           "equalizer": "Еквилајзер",
-          "enqueueSong": "Стави ову песму у ред",
+          "enqueueSong": "Стави ову песму у редослед",
           "noBookmarks": "Нема обележивача!",
           "playlists": "Плејлисте",
           "videos": "Видео снимци",
@@ -4497,7 +5358,7 @@ class Languages extends Translations {
           "artistBookmarkRemoveAlert": "Обележивач извођача је уклоњен!",
           "operationFailed": "Операција неуспела",
           "goToAlbum": "Иди на албум",
-          "removeFromQueue": "Уклони из реда",
+          "removeFromQueue": "Уклони из редоследа",
           "shareSong": "Дели ову песму",
           "songRemovedAlert": "Уклоњено из",
           "downloads": "Преузимања",
@@ -4556,7 +5417,22 @@ class Languages extends Translations {
           "disableTransitionAnimation": "Онемогући прелазну анимацију",
           "disableTransitionAnimationDes":
               "Омогућите ову опцију да бисте онемогућили анимацију прелаза картице",
-          "openIn": "Отвори у"
+          "openIn": "Отвори у",
+          "backupMsg": "Резервна копија је успешно сачувана!",
+          "backFilesFound": "база података пронађено",
+          "restoreMsg":
+              "Успешно враћено! Промене се примењују при поновном покретању",
+          "restore": "Врати",
+          "backupSettingsAndPlaylistsDes":
+              "Чува сва подешавања, плејлисте и податке за пријаву у фајл резервне копије",
+          "backupSettingsAndPlaylists":
+              "Направи резервну копију подешавања и плејлисти",
+          "restoreSettingsAndPlaylistsDes":
+              "Враћа сва подешавања, податке за пријаву и плејлисте из фајла резервне копије. Преписује све тренутне податке",
+          "restoreSettingsAndPlaylists":
+              "Врати резервну копију подешавања и плејлисти",
+          "restoring": "враћање…",
+          "closeApp": "Затвори апликацију"
         },
         "sv": {
           "settings": "Inställningar",
@@ -4938,7 +5814,21 @@ class Languages extends Translations {
           "disableTransitionAnimation": "Geçiş animasyonunu devre dışı bırak",
           "disableTransitionAnimationDes":
               "Sekme geçiş animasyonunu devre dışı bırakmak için bu seçeneği etkinleştirin",
-          "openIn": "Uygulamada aç"
+          "openIn": "Uygulamada aç",
+          "backupSettingsAndPlaylists": "Yedekleme Ayarları ve Çalma Listeleri",
+          "restoreSettingsAndPlaylists":
+              "Ayarları ve Çalma Listelerini Geri Yükle",
+          "backupSettingsAndPlaylistsDes":
+              "Tüm ayarları, çalma listelerini ve oturum açma verilerini bir yedekleme dosyasına kaydeder",
+          "restoreSettingsAndPlaylistsDes":
+              "Tüm ayarları, oturum açma verilerini ve çalma listelerini bir yedekleme dosyasından geri yükler. Mevcut tüm verilerin üzerine yazar",
+          "backupMsg": "Yedekleme başarıyla kaydedildi!",
+          "backFilesFound": "veri tabanları bulundu",
+          "restoreMsg":
+              "Başarıyla geri yüklendi! Değişiklikler yeniden başlatıldığında uygulanır",
+          "restoring": "Geri yükleniyor...",
+          "restore": "Geri Yükle",
+          "closeApp": "Uygulamayı Kapat"
         },
         "uk": {
           "library": "Бібліотека",
@@ -5130,7 +6020,30 @@ class Languages extends Translations {
           "albumBookmarkAddAlert": "Альбом додано в закладки!",
           "albumBookmarkRemoveAlert": "Закладку альбому видалено!",
           "resetblacklistedplaylistDes":
-              "Скинути всі списки відтворення з чорного списку"
+              "Скинути всі списки відтворення з чорного списку",
+          "plain": "Звичайний",
+          "customIns": "Спеціальний екземпляр",
+          "customInsSelectMsg": "Будь ласка, виберіть спеціальний екземпляр",
+          "selectAuthInsMsg": "Виберіть екземпляр автентифікації!",
+          "backupMsg": "Резервну копію успішно збережено!",
+          "backFilesFound": "Базу даних знайдено",
+          "restoring": "відновлення...",
+          "restore": "відновлення",
+          "closeApp": "Закрити додаток",
+          "restoreSettingsAndPlaylists":
+              "Відновити налаштування та списки відтворення",
+          "restoreSettingsAndPlaylistsDes":
+              "Відновлює всі налаштування, дані для входу та списки відтворення з файлу резервної копії. Переписує всі поточні дані",
+          "restoreMsg":
+              "Успішно відновлено!Зміни застосовуються після перезавантаження",
+          "Piped": "Piped",
+          "hintApiUrl": "URL-адреса API до екземпляра Piped",
+          "linkPipedDes": "Посилання з piped для списків відтворення",
+          "backupSettingsAndPlaylists":
+              "Резервне копіювання налаштувань та списків відтворення",
+          "stopMusicOnTaskClear": "Зупинити музику на task clear",
+          "backupSettingsAndPlaylistsDes":
+              "Зберігає всі налаштування, списки відтворення та дані для входу у файл резервної копії"
         },
         "ur": {},
         "vi": {
@@ -5330,7 +6243,20 @@ class Languages extends Translations {
           "disableTransitionAnimation": "Tắt hoạt ảnh chuyển tiếp",
           "disableTransitionAnimationDes":
               "Bật tùy chọn này để tắt hoạt ảnh chuyển tiếp trang",
-          "openIn": "Mở trong"
+          "openIn": "Mở trong",
+          "backupSettingsAndPlaylists": "Sao lưu cài đặt và đánh sách phát",
+          "backupSettingsAndPlaylistsDes":
+              "Lưu tất cả cài đặt, đánh sách phát, và dữ liệu đăng nhập vào một tệp sao lưu",
+          "restoreSettingsAndPlaylists": "Khôi phục cài đặt và đánh sách phát",
+          "backFilesFound": "Tìm thấy cơ sở dữ liệu",
+          "restoreMsg":
+              "Khôi phục thành công! Thấy đổi sẽ có hiệu lực khi khởi động lại ứng dụng",
+          "restoring": "Đang khôi phục...",
+          "closeApp": "Đóng ứng dụng",
+          "restoreSettingsAndPlaylistsDes":
+              "Khôi phục tất cả cài đặt, dữ liệu đăng nhập và đánh sách phát từ file sao lưu. Ghi đè tất cả dữ liệu hiện tại",
+          "backupMsg": "Bản sao lưu được lưu thành công!",
+          "restore": "Khôi phục"
         },
         "zh_Hans": {
           "home": "首页",
@@ -5494,7 +6420,15 @@ class Languages extends Translations {
           "backgroundPlay": "后台音乐播放",
           "clearImgCacheDes": "点击此处清理已缓存的缩略图和图像。（除非为了刷新缓存图像数据，否则不推荐此操作）",
           "clearImgCache": "清理图像缓存",
-          "upNext": "接下来"
+          "upNext": "接下来",
+          "scanning": "扫描中...",
+          "close": "关闭",
+          "exporting": "输出中...",
+          "downFilesFound": "找到已下载的文件",
+          "exportDowloadedFiles": "输出已下载的文件",
+          "clearImgCacheAlert": "图像缓存清理成功",
+          "exportMsg": "文件已成功輸出",
+          "export": "输出"
         },
       };
 }

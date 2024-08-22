@@ -180,13 +180,13 @@
     "clearImgCacheAlert": "Imágenes en la caché borradas con éxito",
     "openIn": "Abrir en",
     "backupSettingsAndPlaylists": "Configuración de copia de seguridad y listas de reproducción",
-    "restoreMsg": "¡Restaurado correctamente! Los cambios se aplicarán al reiniciar",
+    "restoreMsg": "¡Restaurado correctamente! \nLos cambios se aplicarán al reiniciar",
     "backupSettingsAndPlaylistsDes": "Guarda todas las configuraciones, listas de reproducción y datos de inicio de sesión en una copia de seguridad",
     "restoreSettingsAndPlaylists": "Restaurar los ajustes y listas de reproducción",
     "restoreSettingsAndPlaylistsDes": "Restaura todos los ajustes, datos de inicio de sesión y listas de reproducción desde un archivo de copia de seguridad. Sobrescribe todos los datos actuales",
     "backupMsg": "¡Copia de seguridad guardada exitosamente!",
     "backFilesFound": "bases de datos encontradas",
-    "restoring": "restaurando...",
+    "restoring": "Restaurando...",
     "restore": "Restaurar",
     "closeApp": "Cerrar la aplicación",
     "includeDownloadedFiles": "Incluir canciones descargadas",
@@ -195,5 +195,6 @@
     "backupAppData": "Copia de seguridad de datos de la aplicación",
     "backup": "Copia de seguridad",
     "letsStrart": "Vamos a empezar..",
-    "processFiles": "Procesando archivos..."
+    "processFiles": "Procesando archivos...",
+    "restartApp": "Reiniciar la aplicación"
 }

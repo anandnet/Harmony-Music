@@ -182,10 +182,18 @@
     "backupSettingsAndPlaylistsDes": "Lưu tất cả cài đặt, đánh sách phát, và dữ liệu đăng nhập vào một tệp sao lưu",
     "restoreSettingsAndPlaylists": "Khôi phục cài đặt và đánh sách phát",
     "backFilesFound": "Tìm thấy cơ sở dữ liệu",
-    "restoreMsg": "Khôi phục thành công! Thấy đổi sẽ có hiệu lực khi khởi động lại ứng dụng",
+    "restoreMsg": "Khôi phục thành công! \nThay đổi sẽ có hiệu lực khi khởi động lại ứng dụng",
     "restoring": "Đang khôi phục...",
     "closeApp": "Đóng ứng dụng",
     "restoreSettingsAndPlaylistsDes": "Khôi phục tất cả cài đặt, dữ liệu đăng nhập và đánh sách phát từ file sao lưu. Ghi đè tất cả dữ liệu hiện tại",
     "backupMsg": "Bản sao lưu được lưu thành công!",
-    "restore": "Khôi phục"
+    "restore": "Khôi phục",
+    "backupAppData": "Sao lưu dữ liệu ứng dụng",
+    "letsStrart": "Bắt đầu..",
+    "processFiles": "Đang xử lý tập tin...",
+    "includeDownloadedFiles": "Bao gồm các bài hát đã tải về",
+    "backupInProgress": "Đang sao lưu...",
+    "restoreAppData": "Khôi phục dữ liệu ứng dụng",
+    "restartApp": "Khởi động lại ứng dụng",
+    "backup": "Sao lưu"
 }

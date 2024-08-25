@@ -189,5 +189,6 @@
     "restoreMsg": "Restaurate con successo!\nLe cambios essera applicate in le reinitio",
     "restoreSettingsAndPlaylistsDes": "Restaura tote le parametros, datos de initio de session e listas de reproduction ab un file de copia de securitate. Superscribe tote le datos actual",
     "backupInProgress": "Copia de securitate in progresso...",
-    "restartApp": "Reinitiar le app"
+    "restartApp": "Reinitiar le app",
+    "includeDownloadedFiles": "Includer cantos discargate"
 }

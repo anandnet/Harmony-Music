@@ -46,9 +46,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   bool isSongLoading = true;
   DeviceEqualizer? deviceEqualizer;
 
-  final _playList = ConcatenatingAudioSource(
-    children: [],
-  );
+  final _playList =
+      ConcatenatingAudioSource(children: [], useLazyPreparation: false);
   LibrarySongsController librarySongsController =
       Get.find<LibrarySongsController>();
 
@@ -199,17 +198,15 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   void _listenForDurationChanges() {
     _player.durationStream.listen((duration) async {
-      var index = currentIndex;
-      final newQueue = queue.value;
-      if (index == null || newQueue.isEmpty) return;
-      if (_player.shuffleModeEnabled) {
-        index = _player.shuffleIndices![index];
+      final currQueue = queue.value;
+      if (currentIndex == null || currQueue.isEmpty) return;
+      final currentSong = queue.value[currentIndex];
+      if (currentSong.duration == null) {
+        final newMediaItem = currentSong.copyWith(duration: duration);
+        Future.delayed(const Duration(milliseconds: 700), () {
+          mediaItem.add(newMediaItem);
+        });
       }
-      final oldMediaItem = newQueue[index];
-      final newMediaItem = oldMediaItem.copyWith(duration: duration);
-      newQueue[index] = newMediaItem;
-      queue.add(newQueue);
-      mediaItem.add(newMediaItem);
     });
   }
 
@@ -357,18 +354,20 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       await _player.dispose();
       super.stop();
     } else if (name == 'playByIndex') {
-      final bool restoreSession = extras!['restoreSession'] ?? false;
-      isSongLoading = true;
-      if (_playList.children.isNotEmpty) {
-        await _playList.clear();
-      }
-      final songIndex = extras['index'];
+      final songIndex = extras!['index'];
       currentIndex = songIndex;
       final isNewUrlReq = extras['newUrl'] ?? false;
       final currentSong = queue.value[currentIndex];
-      final url =
-          await checkNGetUrl(currentSong.id, generateNewUrl: isNewUrlReq);
+      final futureUrl =
+          checkNGetUrl(currentSong.id, generateNewUrl: isNewUrlReq);
+      final bool restoreSession = extras['restoreSession'] ?? false;
+      isSongLoading = true;
+      if (_playList.children.isNotEmpty) {
+        await _playList.removeRange(0, 1);
+      }
+
       mediaItem.add(currentSong);
+      final url = await futureUrl;
       currentSongUrl = url;
       if (url == null || songIndex != currentIndex) {
         return;
@@ -396,10 +395,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       } else {
         await _player.play();
       }
-      if (currentIndex == 0) {
-        cacheNextSongUrl(offset: 1);
-      }
-      cacheNextSongUrl();
     } else if (name == "checkWithCacheDb" && isPlayingUsingLockCachingSource) {
       final song = extras!['mediaItem'] as MediaItem;
       final songsCacheBox = Hive.box("SongsCache");
@@ -416,13 +411,14 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         }
       }
     } else if (name == 'setSourceNPlay') {
-      isSongLoading = true;
-      await _playList.clear();
       final currMed = (extras!['mediaItem'] as MediaItem);
+      final futureUrl = checkNGetUrl(currMed.id);
+      isSongLoading = true;
       currentIndex = 0;
+      await _playList.clear();
       mediaItem.add(currMed);
       queue.add([currMed]);
-      final url = (await checkNGetUrl(currMed.id));
+      final url = (await futureUrl);
       currentSongUrl = url;
       if (url == null) {
         return;
@@ -432,8 +428,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       await _playList.add(_createAudioSource(currMed));
       isSongLoading = false;
       await _player.play();
-      cacheNextSongUrl(offset: 1);
-      cacheNextSongUrl(offset: 2);
     } else if (name == 'toggleSkipSilence') {
       final enable = (extras!['enable'] as bool);
       await _player.setSkipSilenceEnabled(enable);
@@ -446,7 +440,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       queue.add(currentQueue);
       mediaItem.add(currentItem);
       currentIndex = 0;
-      cacheNextSongUrl();
     } else if (name == "reorderQueue") {
       final oldIndex = extras!['oldIndex'];
       int newIndex = extras['newIndex'];
@@ -512,23 +505,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     await deviceEqualizer?.endAudioEffect(_player.androidAudioSessionId!);
     await _player.stop();
     return super.stop();
-  }
-
-  Future<void> cacheNextSongUrl({int offset = 2}) async {
-    if (queue.value.length > currentIndex + offset) {
-      final songId = (queue.value[currentIndex + offset]).id;
-      if (isExpired(url: Hive.box("SongsUrlCache").get(songId)?.first) &&
-          !(Hive.box("SongDownloads").containsKey(songId)) &&
-          !(Hive.box("SongsCache").containsKey(songId))) {
-        Future.sync(() => Isolate.run(() => getSongUrlFromExplode(songId))
-                .then((value) async {
-              if (value != null) {
-                await Hive.box("SongsUrlCache").put(songId, value);
-                printWarning("Isolate: Next Song Url Cached song Id $songId");
-              }
-            }));
-      }
-    }
   }
 
 // Work around used [useNewInstanceOfExplode = false] to Fix Connection closed before full header was received issue

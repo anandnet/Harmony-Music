@@ -76,6 +76,11 @@ dependencies:
       url: https://github.com/anandnet/animated_side_bar.git
       branch: main
       ref: b53567a42b4ba3793a3cf00d478bdba0ecce33d7
+  player_response:
+    git:
+      url: https://github.com/anandnet/Player-Response.git
+      branch: main
+      ref: 734e99924e26074df6e4821106686da03154970e
   window_manager: ^0.3.7
   smtc_windows: ^0.1.2
   audio_service_mpris: ^0.1.5

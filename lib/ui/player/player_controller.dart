@@ -267,7 +267,7 @@ class PlayerController extends GetxController {
       return;
     }
 
-    currentSong.value = mediaItem;
+    //currentSong.value = mediaItem;
     _playerPanelCheck();
     await _audioHandler
         .customAction("setSourceNPlay", {'mediaItem': mediaItem});
@@ -277,7 +277,7 @@ class PlayerController extends GetxController {
     isRadioModeOn = false;
     //open player pane,set current song and push first song into playing list,
     final init = initFlagForPlayer;
-    currentSong.value = mediaItems[index];
+    //currentSong.value = mediaItems[index];
 
     //for changing home content based on last interation
     Future.delayed(const Duration(seconds: 3), () {

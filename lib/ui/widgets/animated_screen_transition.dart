@@ -41,11 +41,11 @@ class AnimatedScreenTransition extends StatelessWidget {
         return DualTransitionBuilder(
           animation: primaryAnimation,
           forwardBuilder: (context, animation, child) => SlideTransition(
-            position: forwardTween.animate(primaryAnimation),
+            position: forwardTween.animate(CurvedAnimation(parent: primaryAnimation, curve: Curves.easeOutCubic)),
             child: child,
           ),
           reverseBuilder: (context, animation, child) => SlideTransition(
-            position: reverseTween.animate(secondaryAnimation),
+            position: reverseTween.animate(CurvedAnimation(parent: secondaryAnimation, curve: Curves.easeOutCubic)),
             child: child,
           ),
           child: child,

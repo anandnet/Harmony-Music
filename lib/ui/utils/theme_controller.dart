@@ -10,6 +10,7 @@ class ThemeController extends GetxController {
   final primaryColor = Colors.deepPurple[400].obs;
   final textColor = Colors.white24.obs;
   final themedata = Rxn<ThemeData>();
+  String? currentSongId;
   late Brightness systemBrightness;
 
   ThemeController() {
@@ -53,7 +54,8 @@ class ThemeController extends GetxController {
     }
   }
 
-  void setTheme(ImageProvider imageProvider) async {
+  void setTheme(ImageProvider imageProvider, String songId) async {
+    if (songId == currentSongId) return;
     PaletteGenerator generator =
         await PaletteGenerator.fromImageProvider(imageProvider);
     //final colorList = generator.colors;
@@ -73,6 +75,7 @@ class ThemeController extends GetxController {
     themedata.value = _createThemeData(primarySwatch, ThemeType.dynamic,
         textColor: textColor.value,
         titleColorSwatch: _createMaterialColor(textColor.value));
+    currentSongId = songId;
     Hive.box('appPrefs').put("themePrimaryColor", (primaryColor.value!).value);
   }
 

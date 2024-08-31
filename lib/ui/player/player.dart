@@ -93,7 +93,8 @@ class Player extends StatelessWidget {
                             final imgFile = File(
                                 "${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${playerController.currentSong.value!.id}.png");
                             if (imgFile.existsSync()) {
-                              themeController.setTheme(FileImage(imgFile));
+                              themeController.setTheme(FileImage(imgFile),
+                                  playerController.currentSong.value!.id);
                               return Image.file(imgFile, cacheHeight: 200);
                             }
                             return const SizedBox.shrink();
@@ -104,7 +105,11 @@ class Player extends StatelessWidget {
                                         .themeModetype
                                         .value ==
                                     ThemeType.dynamic
-                                ? themeController.setTheme(imageProvider)
+                                ? Future.delayed(
+                                    const Duration(milliseconds: 250),
+                                    () => themeController.setTheme(
+                                        imageProvider,
+                                        playerController.currentSong.value!.id))
                                 : null;
                             return Image(
                               image: imageProvider,
@@ -180,7 +185,8 @@ class Player extends StatelessWidget {
                             padding: EdgeInsets.only(
                                 bottom: 90 + Get.mediaQuery.padding.bottom),
                             child: Container(
-                                constraints: const BoxConstraints(maxWidth: 500),
+                                constraints:
+                                    const BoxConstraints(maxWidth: 500),
                                 child: const PlayerControlWidget()),
                           )
                         ],

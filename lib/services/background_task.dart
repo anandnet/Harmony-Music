@@ -26,13 +26,9 @@ import 'package:player_response/player_response.dart';
 //   }
 // }
 
-Future<List<String>?> getSongUrlFromExplode(
+Future<List<dynamic>?> getStreamInfo(
   String songId,
 ) async {
   final playerResponse = (await PlayerResponse.fetch(songId));
-  if (playerResponse == null || playerResponse.playable !=true) return null;
-  return [
-    playerResponse.lowQualityAudio.url,
-    playerResponse.highestQualityAudio.url
-  ];
+  return playerResponse?.hmStreamingData;
 }

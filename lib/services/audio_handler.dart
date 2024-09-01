@@ -60,7 +60,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     _createCacheDir();
     _addEmptyList();
     _notifyAudioHandlerAboutPlaybackEvents();
-    _listenForDurationChanges();
     _listenToPlaybackForNextSong();
     _listenForSequenceStateChanges();
     _player
@@ -194,20 +193,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       return;
     }
     skipToNext();
-  }
-
-  void _listenForDurationChanges() {
-    _player.durationStream.listen((duration) async {
-      final currQueue = queue.value;
-      if (currentIndex == null || currQueue.isEmpty) return;
-      final currentSong = queue.value[currentIndex];
-      if (currentSong.duration == null) {
-        final newMediaItem = currentSong.copyWith(duration: duration);
-        Future.delayed(const Duration(milliseconds: 700), () {
-          mediaItem.add(newMediaItem);
-        });
-      }
-    });
   }
 
   void _listenForSequenceStateChanges() {
@@ -358,7 +343,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       currentIndex = songIndex;
       final isNewUrlReq = extras['newUrl'] ?? false;
       final currentSong = queue.value[currentIndex];
-      final futureUrl =
+      final futureStreamInfo =
           checkNGetUrl(currentSong.id, generateNewUrl: isNewUrlReq);
       final bool restoreSession = extras['restoreSession'] ?? false;
       isSongLoading = true;
@@ -367,12 +352,12 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       }
 
       mediaItem.add(currentSong);
-      final url = await futureUrl;
-      currentSongUrl = url;
-      if (url == null || songIndex != currentIndex) {
+      final stremInfo = await futureStreamInfo;
+      if (stremInfo == null || songIndex != currentIndex) {
+        currentSongUrl = null;
         return;
       }
-      currentSong.extras!['url'] = url;
+      currentSongUrl = currentSong.extras!['url'] = stremInfo[1]['url'];
       playbackState.add(playbackState.value.copyWith(queueIndex: currentIndex));
       await _playList.add(_createAudioSource(currentSong));
       isSongLoading = false;
@@ -412,21 +397,27 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       }
     } else if (name == 'setSourceNPlay') {
       final currMed = (extras!['mediaItem'] as MediaItem);
-      final futureUrl = checkNGetUrl(currMed.id);
+      final futureStreamInfo = checkNGetUrl(currMed.id);
       isSongLoading = true;
       currentIndex = 0;
       await _playList.clear();
       mediaItem.add(currMed);
       queue.add([currMed]);
-      final url = (await futureUrl);
-      currentSongUrl = url;
-      if (url == null) {
+      final streamInfo = (await futureStreamInfo);
+      if (streamInfo == null) {
+        currentSongUrl = null;
         return;
       }
-      currentSongUrl = url;
-      currMed.extras!['url'] = url;
+      currentSongUrl = currMed.extras!['url'] = streamInfo[1]['url'];
+
       await _playList.add(_createAudioSource(currMed));
       isSongLoading = false;
+
+      // Update new mediaItem with duration
+      Future.delayed(const Duration(milliseconds: 800), () {
+        final newMed = currMed.copyWith(duration: _player.duration);
+        mediaItem.add(newMed);
+      });
       await _player.play();
     } else if (name == 'toggleSkipSilence') {
       final enable = (extras!['enable'] as bool);
@@ -508,25 +499,34 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
 // Work around used [useNewInstanceOfExplode = false] to Fix Connection closed before full header was received issue
-  Future<String?> checkNGetUrl(String songId,
+  Future<List<dynamic>?> checkNGetUrl(String songId,
       {bool generateNewUrl = false, bool offlineReplacementUrl = false}) async {
     printINFO("Requested id : $songId");
     final songDownloadsBox = Hive.box("SongDownloads");
     if (!offlineReplacementUrl &&
         (await Hive.openBox("SongsCache")).containsKey(songId)) {
       printINFO("Got Song from cachedbox ($songId)");
-      return "file://$_cacheDir/cachedSongs/$songId.mp3";
+      return [
+        true,
+        {"url": "file://$_cacheDir/cachedSongs/$songId.mp3"}
+      ];
     } else if (!offlineReplacementUrl && songDownloadsBox.containsKey(songId)) {
       final path = songDownloadsBox.get(songId)['url'];
 
       if (path.contains(
           "${Get.find<SettingsScreenController>().supportDirPath}/Music")) {
-        return path;
+        return [
+          true,
+          {"url": path}
+        ];
       }
       //check file access and if file exist in storage
       final status = await PermissionService.getExtStoragePermission();
       if (status && await File(path).exists()) {
-        return path;
+        return [
+          true,
+          {"url": path}
+        ];
       }
       //in case file doesnot found in storage, song will be played online
       return checkNGetUrl(songId, offlineReplacementUrl: true);
@@ -534,25 +534,30 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       //check if song stream url is cached and allocate url accordingly
       final songsUrlCacheBox = Hive.box("SongsUrlCache");
       final qualityIndex = Hive.box('AppPrefs').get('streamingQuality');
-      dynamic url;
+      dynamic streamInfo;
       if (songsUrlCacheBox.containsKey(songId) && !generateNewUrl) {
-        if (isExpired(url: songsUrlCacheBox.get(songId)[qualityIndex])) {
-          url = await Isolate.run(() => getSongUrlFromExplode(songId));
-          if (url != null) songsUrlCacheBox.put(songId, url);
+        streamInfo = songsUrlCacheBox.get(songId);
+        if (streamInfo.length != 3 ||
+            isExpired(
+                url: (songsUrlCacheBox.get(songId))[qualityIndex + 1]['url'])) {
+          streamInfo = await Isolate.run(() => getStreamInfo(songId));
+          if (streamInfo != null) songsUrlCacheBox.put(songId, streamInfo);
         } else {
-          url = songsUrlCacheBox.get(songId);
           printINFO("Got URLLLLLL cachedbox ($songId)");
         }
       } else {
-        url = await Isolate.run(() => getSongUrlFromExplode(
+        streamInfo = await Isolate.run(() => getStreamInfo(
             songId)); //(await musicServices.getSongStreamUrl(songId));
-        if (url != null) {
-          songsUrlCacheBox.put(songId, url);
+        if (streamInfo != null) {
+          songsUrlCacheBox.put(songId, streamInfo);
           printERROR("Url cached in Box for songId $songId");
         }
       }
 
-      return url != null ? url[qualityIndex] : null;
+      /// if data is old it will return url String or else it will return [playbility status, streamInfo in map as per quality selected]
+      return streamInfo != null
+          ? [streamInfo[0], streamInfo[qualityIndex + 1]]
+          : null;
     }
   }
 }

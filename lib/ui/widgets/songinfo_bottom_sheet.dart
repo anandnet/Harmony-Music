@@ -18,6 +18,7 @@ import '../../models/playlist.dart';
 import '../navigator.dart';
 import 'song_download_btn.dart';
 import 'image_widget.dart';
+import 'song_info_dialog.dart';
 
 class SongInfoBottomSheet extends StatelessWidget {
   const SongInfoBottomSheet(this.song,
@@ -36,259 +37,264 @@ class SongInfoBottomSheet extends StatelessWidget {
         Get.put(SongInfoController(song, calledFromPlayer));
     return Padding(
       padding: EdgeInsets.only(bottom: Get.mediaQuery.padding.bottom),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            contentPadding:
-                const EdgeInsets.only(left: 15, top: 7, right: 10, bottom: 0),
-            leading: ImageWidget(
-              song: song,
-              size: 50,
-            ),
-            title: Text(
-              song.title,
-              maxLines: 1,
-            ),
-            subtitle: Text(song.artist!),
-            trailing: SizedBox(
-              width: 110,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  calledFromPlayer
-                      ? IconButton(
-                          onPressed: () => Share.share(
-                              "https://youtube.com/watch?v=${song.id}"),
-                          icon: Icon(
-                            Icons.share_rounded,
-                            color:
-                                Theme.of(context).textTheme.titleMedium!.color,
-                          ))
-                      : IconButton(
-                          onPressed: songInfoController.toggleFav,
-                          icon: Obx(() => Icon(
-                                songInfoController.isCurrentSongFav.isFalse
-                                    ? Icons.favorite_border_rounded
-                                    : Icons.favorite_rounded,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium!
-                                    .color,
-                              ))),
-                  SongDownloadButton(
-                    song_: song,
-                    isDownloadingDoneCallback:
-                        songInfoController.setDownloadStatus,
-                  )
-                ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              contentPadding:
+                  const EdgeInsets.only(left: 15, top: 7, right: 10, bottom: 0),
+              leading: ImageWidget(
+                song: song,
+                size: 50,
+              ),
+              title: Text(
+                song.title,
+                maxLines: 1,
+              ),
+              subtitle: Text(song.artist!),
+              trailing: SizedBox(
+                width: 110,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    calledFromPlayer
+                        ? IconButton(
+                            onPressed: () => showDialog(
+                                  context: context,
+                                  builder: (context) => SongInfoDialog(
+                                    song: song,isDownloaded: songInfoController
+                                          .isDownloaded.isTrue
+                                  ),
+                                ),
+                            icon: Icon(
+                              Icons.info,
+                              color:
+                                  Theme.of(context).textTheme.titleMedium!.color,
+                            ))
+                        : IconButton(
+                            onPressed: songInfoController.toggleFav,
+                            icon: Obx(() => Icon(
+                                  songInfoController.isCurrentSongFav.isFalse
+                                      ? Icons.favorite_border_rounded
+                                      : Icons.favorite_rounded,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .color,
+                                ))),
+                    SongDownloadButton(
+                      song_: song,
+                      isDownloadingDoneCallback:
+                          songInfoController.setDownloadStatus,
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          const Divider(),
-          ListTile(
-            visualDensity: const VisualDensity(vertical: -1),
-            leading: const Icon(Icons.sensors_rounded),
-            title: Text("startRadio".tr),
-            onTap: () {
-              Navigator.of(context).pop();
-              Get.find<PlayerController>().startRadio(song);
-            },
-          ),
-          (calledFromPlayer || calledFromQueue)
-              ? const SizedBox.shrink()
-              : ListTile(
-                  visualDensity: const VisualDensity(vertical: -1),
-                  leading: const Icon(Icons.playlist_play_rounded),
-                  title: Text("playNext".tr),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Get.find<PlayerController>().playNext(song);
-                  },
-                ),
-          ListTile(
-            visualDensity: const VisualDensity(vertical: -1),
-            leading: const Icon(Icons.playlist_add_rounded),
-            title: Text("addToPlaylist".tr),
-            onTap: () {
-              Navigator.of(context).pop();
-              showDialog(
-                context: context,
-                builder: (context) => AddToPlaylist([song]),
-              ).whenComplete(() => Get.delete<AddToPlaylistController>());
-            },
-          ),
-          (calledFromPlayer || calledFromQueue)
-              ? const SizedBox.shrink()
-              : ListTile(
-                  visualDensity: const VisualDensity(vertical: -1),
-                  leading: const Icon(Icons.merge_rounded),
-                  title: Text("enqueueSong".tr),
-                  onTap: () {
-                    Get.find<PlayerController>().enqueueSong(song).whenComplete(
-                        () => ScaffoldMessenger.of(context).showSnackBar(
-                            snackbar(context, "songEnqueueAlert".tr,
-                                size: SanckBarSize.MEDIUM)));
-                    Navigator.of(context).pop();
-                  },
-                ),
-          song.extras!['album'] != null
-              ? ListTile(
-                  visualDensity: const VisualDensity(vertical: -1),
-                  leading: const Icon(Icons.album_rounded),
-                  title: Text("goToAlbum".tr),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    if (calledFromPlayer) {
-                      Get.find<PlayerController>()
-                          .playerPanelController
-                          .close();
-                    }
-                    if (calledFromQueue) {
-                      final playerController = Get.find<PlayerController>();
-                      playerController.playerPanelController.close();
-                    }
-                    Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
-                        id: ScreenNavigationSetup.id,
-                        arguments: [true, song.extras!['album']['id'], true]);
-                  },
-                )
-              : const SizedBox.shrink(),
-          ...artistWidgetList(song, context),
-          (playlist != null &&
-                      !playlist!.isCloudPlaylist &&
-                      !(playlist!.playlistId == "LIBRP")) ||
-                  (playlist != null && playlist!.isPipedPlaylist)
-              ? ListTile(
-                  visualDensity: const VisualDensity(vertical: -1),
-                  leading: const Icon(Icons.delete_rounded),
-                  title: playlist!.title == "Library Songs"
-                      ? Text("removeFromLib".tr)
-                      : Text("removeFromPlaylist".tr),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    songInfoController
-                        .removeSongFromPlaylist(song, playlist!)
-                        .whenComplete(() => ScaffoldMessenger.of(Get.context!)
-                            .showSnackBar(snackbar(
-                                Get.context!, "Removed from ${playlist!.title}",
-                                size: SanckBarSize.MEDIUM)));
-                  },
-                )
-              : const SizedBox.shrink(),
-          (calledFromQueue)
-              ? ListTile(
-                  visualDensity: const VisualDensity(vertical: -1),
-                  leading: const Icon(Icons.delete_rounded),
-                  title: Text("removeFromQueue".tr),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    final plarcntr = Get.find<PlayerController>();
-                    if (plarcntr.currentSong.value!.id == song.id) {
-                      ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                          context, "songRemovedfromQueueCurrSong".tr,
-                          size: SanckBarSize.BIG));
-                    } else {
-                      Get.find<PlayerController>().removeFromQueue(song);
-                      ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                          context, "songRemovedfromQueue".tr,
-                          size: SanckBarSize.MEDIUM));
-                    }
-                  })
-              : const SizedBox.shrink(),
-          Obx(
-            () => (songInfoController.isDownloaded.isTrue &&
-                    (playlist?.playlistId != "SongDownloads" &&
-                        playlist?.playlistId != "SongsCache"))
-                ? ListTile(
-                    contentPadding: const EdgeInsets.only(left: 15),
+            const Divider(),
+            ListTile(
+              visualDensity: const VisualDensity(vertical: -1),
+              leading: const Icon(Icons.sensors_rounded),
+              title: Text("startRadio".tr),
+              onTap: () {
+                Navigator.of(context).pop();
+                Get.find<PlayerController>().startRadio(song);
+              },
+            ),
+            (calledFromPlayer || calledFromQueue)
+                ? const SizedBox.shrink()
+                : ListTile(
                     visualDensity: const VisualDensity(vertical: -1),
-                    leading: const Icon(Icons.delete),
-                    title: Text("deleteDownloadData".tr),
+                    leading: const Icon(Icons.playlist_play_rounded),
+                    title: Text("playNext".tr),
                     onTap: () {
                       Navigator.of(context).pop();
-                      final box = Hive.box("SongDownloads");
-                      Get.find<LibrarySongsController>()
-                          .removeSong(song, true, url: box.get(song.id)['url'])
-                          .then((value) async {
-                        box.delete(song.id).then((value) {
-                          if (playlist != null) {
-                            Get.find<PlayListNAlbumScreenController>(
-                                    tag: Key(playlist!.playlistId)
-                                        .hashCode
-                                        .toString())
-                                .checkDownloadStatus();
-                          }
-                          ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                              context, "deleteDownloadedDataAlert".tr,
-                              size: SanckBarSize.BIG));
-                        });
-                      });
+                      Get.find<PlayerController>().playNext(song);
+                    },
+                  ),
+            ListTile(
+              visualDensity: const VisualDensity(vertical: -1),
+              leading: const Icon(Icons.playlist_add_rounded),
+              title: Text("addToPlaylist".tr),
+              onTap: () {
+                Navigator.of(context).pop();
+                showDialog(
+                  context: context,
+                  builder: (context) => AddToPlaylist([song]),
+                ).whenComplete(() => Get.delete<AddToPlaylistController>());
+              },
+            ),
+            (calledFromPlayer || calledFromQueue)
+                ? const SizedBox.shrink()
+                : ListTile(
+                    visualDensity: const VisualDensity(vertical: -1),
+                    leading: const Icon(Icons.merge_rounded),
+                    title: Text("enqueueSong".tr),
+                    onTap: () {
+                      Get.find<PlayerController>().enqueueSong(song).whenComplete(
+                          () => ScaffoldMessenger.of(context).showSnackBar(
+                              snackbar(context, "songEnqueueAlert".tr,
+                                  size: SanckBarSize.MEDIUM)));
+                      Navigator.of(context).pop();
+                    },
+                  ),
+            song.extras!['album'] != null
+                ? ListTile(
+                    visualDensity: const VisualDensity(vertical: -1),
+                    leading: const Icon(Icons.album_rounded),
+                    title: Text("goToAlbum".tr),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      if (calledFromPlayer) {
+                        Get.find<PlayerController>()
+                            .playerPanelController
+                            .close();
+                      }
+                      if (calledFromQueue) {
+                        final playerController = Get.find<PlayerController>();
+                        playerController.playerPanelController.close();
+                      }
+                      Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
+                          id: ScreenNavigationSetup.id,
+                          arguments: [true, song.extras!['album']['id'], true]);
                     },
                   )
                 : const SizedBox.shrink(),
-          ),
-          ListTile(
-            leading: const Icon(Icons.open_with),
-            title: Text("openIn".tr),
-            trailing: SizedBox(
-              width: 200,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    splashRadius: 10,
-                    onPressed: () {
-                      launchUrl(
-                          Uri.parse("https://youtube.com/watch?v=${song.id}"));
+            ...artistWidgetList(song, context),
+            (playlist != null &&
+                        !playlist!.isCloudPlaylist &&
+                        !(playlist!.playlistId == "LIBRP")) ||
+                    (playlist != null && playlist!.isPipedPlaylist)
+                ? ListTile(
+                    visualDensity: const VisualDensity(vertical: -1),
+                    leading: const Icon(Icons.delete_rounded),
+                    title: playlist!.title == "Library Songs"
+                        ? Text("removeFromLib".tr)
+                        : Text("removeFromPlaylist".tr),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      songInfoController
+                          .removeSongFromPlaylist(song, playlist!)
+                          .whenComplete(() => ScaffoldMessenger.of(Get.context!)
+                              .showSnackBar(snackbar(
+                                  Get.context!, "Removed from ${playlist!.title}",
+                                  size: SanckBarSize.MEDIUM)));
                     },
-                    icon: const Icon(Ionicons.logo_youtube),
-                  ),
-                  IconButton(
-                    splashRadius: 10,
-                    onPressed: () {
-                      launchUrl(Uri.parse(
-                          "https://music.youtube.com/watch?v=${song.id}"));
-                    },
-                    icon: const Icon(Ionicons.play_circle),
                   )
-                ],
+                : const SizedBox.shrink(),
+            (calledFromQueue)
+                ? ListTile(
+                    visualDensity: const VisualDensity(vertical: -1),
+                    leading: const Icon(Icons.delete_rounded),
+                    title: Text("removeFromQueue".tr),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      final plarcntr = Get.find<PlayerController>();
+                      if (plarcntr.currentSong.value!.id == song.id) {
+                        ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                            context, "songRemovedfromQueueCurrSong".tr,
+                            size: SanckBarSize.BIG));
+                      } else {
+                        Get.find<PlayerController>().removeFromQueue(song);
+                        ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                            context, "songRemovedfromQueue".tr,
+                            size: SanckBarSize.MEDIUM));
+                      }
+                    })
+                : const SizedBox.shrink(),
+            Obx(
+              () => (songInfoController.isDownloaded.isTrue &&
+                      (playlist?.playlistId != "SongDownloads" &&
+                          playlist?.playlistId != "SongsCache"))
+                  ? ListTile(
+                      contentPadding: const EdgeInsets.only(left: 15),
+                      visualDensity: const VisualDensity(vertical: -1),
+                      leading: const Icon(Icons.delete),
+                      title: Text("deleteDownloadData".tr),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        final box = Hive.box("SongDownloads");
+                        Get.find<LibrarySongsController>()
+                            .removeSong(song, true, url: box.get(song.id)['url'])
+                            .then((value) async {
+                          box.delete(song.id).then((value) {
+                            if (playlist != null) {
+                              Get.find<PlayListNAlbumScreenController>(
+                                      tag: Key(playlist!.playlistId)
+                                          .hashCode
+                                          .toString())
+                                  .checkDownloadStatus();
+                            }
+                            ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                                context, "deleteDownloadedDataAlert".tr,
+                                size: SanckBarSize.BIG));
+                          });
+                        });
+                      },
+                    )
+                  : const SizedBox.shrink(),
+            ),
+            ListTile(
+              leading: const Icon(Icons.open_with),
+              title: Text("openIn".tr),
+              trailing: SizedBox(
+                width: 200,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                      splashRadius: 10,
+                      onPressed: () {
+                        launchUrl(
+                            Uri.parse("https://youtube.com/watch?v=${song.id}"));
+                      },
+                      icon: const Icon(Ionicons.logo_youtube),
+                    ),
+                    IconButton(
+                      splashRadius: 10,
+                      onPressed: () {
+                        launchUrl(Uri.parse(
+                            "https://music.youtube.com/watch?v=${song.id}"));
+                      },
+                      icon: const Icon(Ionicons.play_circle),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          if (!calledFromPlayer)
+            if (calledFromPlayer)
+              ListTile(
+                contentPadding: const EdgeInsets.only(left: 15),
+                visualDensity: const VisualDensity(vertical: -1),
+                leading: const Icon(Icons.timer),
+                title: Text("sleepTimer".tr),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  final playerController = Get.find<PlayerController>();
+                  showModalBottomSheet(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(10.0)),
+                    ),
+                    isScrollControlled: true,
+                    context:
+                        playerController.homeScaffoldkey.currentState!.context,
+                    barrierColor: Colors.transparent.withAlpha(100),
+                    builder: (context) => const SleepTimerBottomSheet(),
+                  );
+                },
+              ),
             ListTile(
               contentPadding: const EdgeInsets.only(left: 15),
               visualDensity: const VisualDensity(vertical: -1),
               leading: const Icon(Icons.share_rounded),
               title: Text("shareSong".tr),
-              onTap: () =>
-                  Share.share("https://youtube.com/watch?v=${song.id}"),
+              onTap: () => Share.share("https://youtube.com/watch?v=${song.id}"),
             ),
-          if (calledFromPlayer)
-            ListTile(
-              contentPadding: const EdgeInsets.only(left: 15),
-              visualDensity: const VisualDensity(vertical: -1),
-              leading: const Icon(Icons.timer),
-              title: Text("sleepTimer".tr),
-              onTap: () {
-                Navigator.of(context).pop();
-                final playerController = Get.find<PlayerController>();
-                showModalBottomSheet(
-                  constraints: const BoxConstraints(maxWidth: 500),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(10.0)),
-                  ),
-                  isScrollControlled: true,
-                  context:
-                      playerController.homeScaffoldkey.currentState!.context,
-                  barrierColor: Colors.transparent.withAlpha(100),
-                  builder: (context) => const SleepTimerBottomSheet(),
-                );
-              },
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

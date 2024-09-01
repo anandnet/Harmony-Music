@@ -196,5 +196,12 @@
     "includeDownloadedFiles": "İndirilen şarkı dosyalarını dahil et",
     "backupInProgress": "Yedekleme devam ediyor...",
     "restoreAppData": "Uygulama verilerini geri yükle",
-    "restartApp": "Uygulamayı yeniden başlat"
+    "restartApp": "Uygulamayı yeniden başlat",
+    "songInfo": "Şarkı Bilgileri",
+    "id": "Kimlik",
+    "bitrate": "Bit Hızı",
+    "loudnessDb": "Ses Yüksekliği (Db)",
+    "title": "Başlık",
+    "duration": "Süre",
+    "audioCodec": "Ses Kod Çözücü"
 }

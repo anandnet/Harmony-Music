@@ -195,5 +195,12 @@
     "backupInProgress": "バックアップ中...",
     "restoreAppData": "アプリのデータを復元",
     "restartApp": "アプリを再起動",
-    "includeDownloadedFiles": "ダウンロー済みの曲のファイルを含める"
+    "includeDownloadedFiles": "ダウンロー済みの曲のファイルを含める",
+    "songInfo": "曲の情報",
+    "title": "題名",
+    "bitrate": "ビットレート",
+    "loudnessDb": "音の大きさ:デジベル",
+    "id": "ID",
+    "duration": "長さ",
+    "audioCodec": "音声コーデック"
 }

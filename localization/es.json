@@ -196,5 +196,12 @@
     "backup": "Copia de seguridad",
     "letsStrart": "Vamos a empezar..",
     "processFiles": "Procesando archivos...",
-    "restartApp": "Reiniciar la aplicación"
+    "restartApp": "Reiniciar la aplicación",
+    "id": "Id",
+    "songInfo": "Información de la canción",
+    "title": "Título",
+    "duration": "Duración",
+    "audioCodec": "Codec de audio",
+    "bitrate": "Tasa de bits",
+    "loudnessDb": "LoudnessDb"
 }

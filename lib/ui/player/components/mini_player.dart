@@ -1,8 +1,10 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
+import '/ui/widgets/song_info_dialog.dart';
 import '/ui/player/player_controller.dart';
 import '/ui/widgets/loader.dart';
 import '../../widgets/add_to_playlist.dart';
@@ -246,7 +248,7 @@ class MiniPlayer extends StatelessWidget {
                           Expanded(
                             child: Padding(
                               padding: EdgeInsets.only(
-                                  right: size.width < 1004 ? 0 : 40.0),
+                                  right: size.width < 1004 ? 0 : 30.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -255,7 +257,7 @@ class MiniPlayer extends StatelessWidget {
                                     padding: const EdgeInsets.only(
                                         right: 20, left: 10),
                                     height: 20,
-                                    width: 180,
+                                    width: (size.width > 860) ? 220 : 180,
                                     child: Obx(() {
                                       final volume =
                                           playerController.volume.value;
@@ -377,6 +379,29 @@ class MiniPlayer extends StatelessWidget {
                                           },
                                           icon: const Icon(Icons.playlist_add),
                                         ),
+                                        if (size.width > 965)
+                                          IconButton(
+                                            onPressed: () {
+                                              final currentSong =
+                                                  playerController
+                                                      .currentSong.value;
+                                              if (currentSong != null) {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      SongInfoDialog(
+                                                          song: currentSong,
+                                                          isDownloaded: Hive.box(
+                                                                  "SongDownloads")
+                                                              .containsKey(
+                                                                  currentSong
+                                                                      .id)),
+                                                );
+                                              }
+                                            },
+                                            icon: const Icon(Icons.info,
+                                                size: 22),
+                                          ),
                                       ],
                                     ),
                                   ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 
+import '../../widgets/modified_text_field.dart';
 import '/ui/navigator.dart';
 import 'search_screen_controller.dart';
 
@@ -63,7 +64,7 @@ class SearchScreen extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    TextField(
+                    ModifiedTextField(
                       textCapitalization: TextCapitalization.sentences,
                       controller: searchScreenController.textInputController,
                       textInputAction: TextInputAction.search,

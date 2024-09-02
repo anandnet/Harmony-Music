@@ -415,6 +415,7 @@ class PlayerController extends GetxController {
   }
 
   void playPause() {
+    if(initFlagForPlayer) return;
     _audioHandler.playbackState.value.playing ? pause() : play();
   }
 

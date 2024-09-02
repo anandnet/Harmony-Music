@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lyric/lyrics_reader.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/player/player_controller.dart';
 
+import '/ui/player/components/lyrics_widget.dart';
+import '/ui/player/player_controller.dart';
 import '../../widgets/image_widget.dart';
-import '../../widgets/loader.dart';
 import '../../widgets/sleep_timer_bottom_sheet.dart';
 import '../../widgets/songinfo_bottom_sheet.dart';
 
@@ -61,67 +60,10 @@ class AlbumArtNLyrics extends StatelessWidget {
                         ),
                         child: Stack(
                           children: [
-                            Obx(
-                              () => playerController.isLyricsLoading.isTrue
-                                  ? const Center(
-                                      child: LoadingIndicator(),
-                                    )
-                                  : playerController.lyricsMode.toInt() == 1
-                                      ? Center(
-                                          child: SingleChildScrollView(
-                                            physics:
-                                                const BouncingScrollPhysics(),
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 0,
-                                                vertical:
-                                                    playerArtImageSize / 3.5),
-                                            child: Obx(
-                                              () => Text(
-                                                playerController.lyrics[
-                                                            "plainLyrics"] ==
-                                                        "NA"
-                                                    ? "lyricsNotAvailable".tr
-                                                    : playerController
-                                                        .lyrics["plainLyrics"],
-                                                textAlign: TextAlign.center,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .copyWith(
-                                                        color: Colors.white),
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      : IgnorePointer(
-                                          child: LyricsReader(
-                                            padding: const EdgeInsets.only(
-                                                left: 5, right: 5),
-                                            lyricUi: playerController.lyricUi,
-                                            position: playerController
-                                                .progressBarStatus
-                                                .value
-                                                .current
-                                                .inMilliseconds,
-                                            model: LyricsModelBuilder.create()
-                                                .bindLyricToMain(
-                                                    playerController
-                                                        .lyrics['synced']
-                                                        .toString())
-                                                .getModel(),
-                                            emptyBuilder: () => Center(
-                                              child: Text(
-                                                "syncedLyricsNotAvailable".tr,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .copyWith(
-                                                        color: Colors.white),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                            ),
+                            LyricsWidget(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 0,
+                                    vertical: playerArtImageSize / 3.5)),
                             IgnorePointer(
                               child: Container(
                                 decoration: BoxDecoration(

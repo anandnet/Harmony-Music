@@ -102,11 +102,7 @@ class InfoItem extends StatelessWidget {
             textAlign: TextAlign.start,
           ),
           TextSelectionTheme(
-            data: TextSelectionThemeData(
-              cursorColor: Theme.of(context).colorScheme.secondary,
-              selectionColor: Theme.of(context).colorScheme.secondary,
-              selectionHandleColor: Theme.of(context).colorScheme.secondary,
-            ),
+            data: Theme.of(context).textSelectionTheme,
             child: SelectableText(
               value,
               style: Theme.of(context).textTheme.titleMedium,

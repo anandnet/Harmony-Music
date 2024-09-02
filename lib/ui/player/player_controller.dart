@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:flutter_lyric/lyric_ui/ui_netease.dart';
-import 'package:harmonymusic/services/synced_lyrics_service.dart';
-import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
+import '/services/synced_lyrics_service.dart';
+import '/ui/screens/Settings/settings_screen_controller.dart';
 import '../../services/windows_audio_service.dart';
 import '../../utils/helper.dart';
 import '/models/media_Item_builder.dart';
@@ -52,6 +52,7 @@ class PlayerController extends GetxController {
   final showLyricsflag = false.obs;
   final isLyricsLoading = false.obs;
   final lyricsMode = 0.obs;
+  bool isDesktopLyricsDialogOpen = false;
   final lyricUi =
       UINetease(highlight: true, defaultSize: 20, defaultExtSize: 12);
   RxMap<String, dynamic> lyrics =
@@ -202,6 +203,9 @@ class PlayerController extends GetxController {
         }
         lyrics.value = {"synced": "", "plainLyrics": ""};
         showLyricsflag.value = false;
+        if (isDesktopLyricsDialogOpen) {
+          Navigator.pop(Get.context!);
+        }
       }
     });
   }

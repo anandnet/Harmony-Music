@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
+import '/ui/widgets/lyrics_dialog.dart';
 import '/ui/widgets/song_info_dialog.dart';
 import '/ui/player/player_controller.dart';
 import '/ui/widgets/loader.dart';
@@ -90,9 +91,30 @@ class MiniPlayer extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             playerController.currentSong.value != null
-                                ? ImageWidget(
-                                    size: 50,
-                                    song: playerController.currentSong.value!,
+                                ? InkWell(
+                                    onTap: GetPlatform.isDesktop
+                                        ? () {
+                                            playerController.showLyrics();
+                                            showDialog(
+                                                    builder: (context) =>
+                                                        const LyricsDialog(),
+                                                    context: context)
+                                                .whenComplete(() {
+                                              playerController
+                                                      .isDesktopLyricsDialogOpen =
+                                                  false;
+                                              playerController
+                                                  .showLyricsflag.value = false;
+                                            });
+                                            playerController
+                                                    .isDesktopLyricsDialogOpen =
+                                                true;
+                                          }
+                                        : null,
+                                    child: ImageWidget(
+                                      size: 50,
+                                      song: playerController.currentSong.value!,
+                                    ),
                                   )
                                 : const SizedBox(
                                     height: 50,

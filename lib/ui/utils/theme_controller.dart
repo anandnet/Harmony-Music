@@ -152,7 +152,11 @@ class ThemeController extends GetxController {
             activeTrackColor: textColor,
             valueIndicatorColor: primarySwatch[400],
             thumbColor: Colors.white,
-          )
+          ),
+          textSelectionTheme: TextSelectionThemeData(
+              cursorColor: primarySwatch[200],
+              selectionColor: primarySwatch[200],
+              selectionHandleColor: primarySwatch[200])
           //scaffoldBackgroundColor: primarySwatch[700]
           );
       return baseTheme.copyWith(
@@ -218,6 +222,10 @@ class ThemeController extends GetxController {
             valueIndicatorColor: Colors.black38,
             thumbColor: Colors.white,
           ),
+          textSelectionTheme: TextSelectionThemeData(
+              cursorColor: Colors.grey[700],
+              selectionColor: Colors.grey[700],
+              selectionHandleColor: Colors.grey[700]),
           inputDecorationTheme: const InputDecorationTheme(
               focusColor: Colors.white,
               focusedBorder: UnderlineInputBorder(
@@ -285,6 +293,11 @@ class ThemeController extends GetxController {
             valueIndicatorColor: Colors.white38,
             thumbColor: Colors.grey[800],
           ),
+          textSelectionTheme: TextSelectionThemeData(
+              cursorColor: Colors.grey[400],
+              selectionColor: Colors.grey[400],
+              selectionHandleColor: Colors.grey[400]),
+          dialogTheme: DialogTheme(backgroundColor: Colors.grey[200]),
           inputDecorationTheme: const InputDecorationTheme(
               focusColor: Colors.black,
               focusedBorder: UnderlineInputBorder(

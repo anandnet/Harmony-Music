@@ -196,5 +196,12 @@
     "letsStrart": "Хајде да почнемо…",
     "includeDownloadedFiles": "Обухвати преузете фајлове песама",
     "backupInProgress": "Прављење резервне копије је у току…",
-    "restartApp": "Рестартуј апликацију"
+    "restartApp": "Рестартуј апликацију",
+    "songInfo": "Информације о песми",
+    "title": "Наслов",
+    "id": "ID",
+    "duration": "Трајање",
+    "audioCodec": "Аудио кодек",
+    "loudnessDb": "ГласноћаDb",
+    "bitrate": "Брзина преноса"
 }

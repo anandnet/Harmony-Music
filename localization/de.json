@@ -198,5 +198,12 @@
     "includeDownloadedFiles": "Heruntergeladene Musikdateien einbeziehen",
     "backupInProgress": "Sicherung läuft...",
     "restoreAppData": "App-Daten wiederherstellen",
-    "restartApp": "App neustarten"
+    "restartApp": "App neustarten",
+    "songInfo": "Liedinfo",
+    "id": "ID",
+    "loudnessDb": "Lautstärke Db",
+    "bitrate": "Bitrate",
+    "title": "Titel",
+    "duration": "Dauer",
+    "audioCodec": "Audio Codec"
 }

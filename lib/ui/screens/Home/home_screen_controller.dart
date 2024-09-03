@@ -25,6 +25,7 @@ class HomeScreenController extends GetxController {
   final showVersionDialog = true.obs;
   //isHomeScreenOnTop var only useful if bottom nav enabled
   final isHomeSreenOnTop = true.obs;
+  final List<ScrollController> contentScrollControllers = [];
   bool reverseAnimationtransiton = false;
 
   @override
@@ -329,5 +330,21 @@ class HomeScreenController extends GetxController {
         }
       }).toList();
     }
+  }
+
+  void disposeDetachedScrollControllers({bool disposeAll = false}) {
+    final scrollControllersCopy = contentScrollControllers.toList();
+    for (final contoller in scrollControllersCopy) {
+      if (!contoller.hasClients || disposeAll) {
+        contentScrollControllers.remove(contoller);
+        contoller.dispose();
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    disposeDetachedScrollControllers(disposeAll: true);
+    super.dispose();
   }
 }

@@ -169,14 +169,22 @@ class Body extends StatelessWidget {
                   ),
                 )
               : Obx(() {
+                  // dispose all detachached scroll controllers
+                  homeScreenController.disposeDetachedScrollControllers();
                   final items = homeScreenController.isContentFetched.value
                       ? [
-                          Obx(() => QuickPicksWidget(
-                              content: homeScreenController.quickPicks.value)),
-                          ...getWidgetList(homeScreenController.middleContent),
-                          ...getWidgetList(
-                            homeScreenController.fixedContent,
-                          )
+                          Obx(() {
+                            final scrollController = ScrollController();
+                            homeScreenController.contentScrollControllers
+                                .add(scrollController);
+                            return QuickPicksWidget(
+                                content: homeScreenController.quickPicks.value,
+                                scrollController: scrollController);
+                          }),
+                          ...getWidgetList(homeScreenController.middleContent,
+                              homeScreenController),
+                          ...getWidgetList(homeScreenController.fixedContent,
+                              homeScreenController)
                         ]
                       : [const HomeShimmer()];
                   return ListView.builder(
@@ -210,9 +218,15 @@ class Body extends StatelessWidget {
     }
   }
 
-  List<Widget> getWidgetList(dynamic list) {
+  List<Widget> getWidgetList(
+      dynamic list, HomeScreenController homeScreenController) {
     return list
-        .map((content) => ContentListWidget(content: content))
+        .map((content) {
+          final scrollController = ScrollController();
+          homeScreenController.contentScrollControllers.add(scrollController);
+          return ContentListWidget(
+              content: content, scrollController: scrollController);
+        })
         .whereType<Widget>()
         .toList();
   }

@@ -192,6 +192,19 @@ class Player extends StatelessWidget {
                         ],
                       ),
               ),
+              if (GetPlatform.isDesktop)
+                Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30.0, left: 30),
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          size: 28,
+                        ),
+                        onPressed: playerController.playerPanelController.close,
+                      ),
+                    ))
             ],
           )),
     );

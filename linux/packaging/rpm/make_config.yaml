@@ -22,3 +22,5 @@ generic_name: Music Application
 
 categories:
   - Music
+
+startup_notify: true

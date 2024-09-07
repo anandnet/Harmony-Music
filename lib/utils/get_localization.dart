@@ -583,13 +583,28 @@ class Languages extends Translations {
               "Възстановява всички настройки, данни за вход и плейлисти от архивен файл. Презаписва всички текущи данни",
           "backFilesFound": "открита бази данни",
           "restoreMsg":
-              "Успешно възстановено! Промените се прилагат при рестартиране",
+              "Успешно възстановено!\nПромените се прилагат при рестартиране",
           "restore": "Възстанови",
           "closeApp": "Затвори приложението",
-          "restoring": "възстановяване...",
+          "restoring": "Възстановява се...",
           "backupSettingsAndPlaylists": "Архивиране на настройки и плейлисти",
           "restoreSettingsAndPlaylists": "Възстанови настройки и плейлисти",
-          "backupMsg": "Резервното копие е запазено успешно!"
+          "backupMsg": "Резервното копие е запазено успешно!",
+          "backupAppData": "Архивиране на данни от приложението",
+          "backup": "Архивиране",
+          "includeDownloadedFiles": "Включете изтеглени файлове с песни",
+          "backupInProgress": "Извършва се архивиране...",
+          "restoreAppData": "Възстановяване на данните от приложението",
+          "letsStrart": "Да започваме..",
+          "processFiles": "Файловете се обработват...",
+          "restartApp": "Рестартирайте приложението",
+          "songInfo": "Информация за песента",
+          "id": "Идентификация",
+          "bitrate": "Скорост на предаване",
+          "title": "Заглавие",
+          "duration": "Продължителност",
+          "audioCodec": "Аудио кодек",
+          "loudnessDb": "Сила на звукаDb"
         },
         "bn": {},
         "ca": {
@@ -1002,9 +1017,9 @@ class Languages extends Translations {
               "Obnoví všechna nastavení, přihlašovací údaje a playlisty ze záložního souboru. Přepíše všechna aktuální data",
           "backupMsg": "Záloha úspěšně uložena!",
           "backFilesFound": "databáze nalezené",
-          "restoreMsg": "Úspěšně obnoveno! Změny jsou aplikovány při restartu",
+          "restoreMsg": "Úspěšně obnoveno!\nZměny se aplikují po restartu",
           "restore": "Obnovit",
-          "restoring": "obnovování...",
+          "restoring": "Obnovování...",
           "backupSettingsAndPlaylists": "Zálohovat nastavení a playlisty",
           "closeApp": "Zavřít aplikaci",
           "disableTransitionAnimation": "Vypnout přechodovou animaci",
@@ -1019,7 +1034,22 @@ class Languages extends Translations {
           "export": "Exportovat",
           "exporting": "Exportování...",
           "scanning": "Skenování...",
-          "deleteDownloadedDataAlert": "Úspěšně odstraněno ze stažených!"
+          "deleteDownloadedDataAlert": "Úspěšně odstraněno ze stažených!",
+          "songInfo": "Informace skladby",
+          "id": "ID",
+          "title": "Název",
+          "duration": "Délka",
+          "audioCodec": "Audio kodek",
+          "bitrate": "Bitrate",
+          "loudnessDb": "Hlasitost (Db)",
+          "backupAppData": "Zálohovat data aplikace",
+          "backup": "Zálohovat",
+          "letsStrart": "Začínáme...",
+          "processFiles": "Zpracování souborů...",
+          "includeDownloadedFiles": "Zahrnout stažené skladby",
+          "backupInProgress": "Probíhá zálohování...",
+          "restoreAppData": "Obnovit data aplikace",
+          "restartApp": "Restartovat aplikaci"
         },
         "de": {
           "home": "Start",
@@ -1226,7 +1256,7 @@ class Languages extends Translations {
           "deleteDownloadedDataAlert": "Erfolgreich aus Downloads entfernt!",
           "sleepTimeSetAlert": "Dein Sleep-Timer ist gesetzt",
           "openIn": "Öffnen in",
-          "restoring": "wiederherstellen...",
+          "restoring": "Wiederherstellen...",
           "restore": "Wiederherstellen",
           "closeApp": "App schließen",
           "backupSettingsAndPlaylistsDes":
@@ -1239,7 +1269,22 @@ class Languages extends Translations {
           "backupMsg": "Sicherung erfolgreich gespeichert!",
           "backFilesFound": "Datenbanken gefunden",
           "restoreMsg":
-              "Erfolgreich wiederhergestellt! Änderungen werden beim Neustart in Kraft treten"
+              "Erfolgreich wiederhergestellt!\nÄnderungen werden beim Neustart in Kraft treten",
+          "backupAppData": "App-Daten sichern",
+          "backup": "Sicherung",
+          "letsStrart": "Lass uns anfangen...",
+          "processFiles": "Verarbeitet Dateien...",
+          "includeDownloadedFiles": "Heruntergeladene Musikdateien einbeziehen",
+          "backupInProgress": "Sicherung läuft...",
+          "restoreAppData": "App-Daten wiederherstellen",
+          "restartApp": "App neustarten",
+          "songInfo": "Liedinfo",
+          "id": "ID",
+          "loudnessDb": "Lautstärke Db",
+          "bitrate": "Bitrate",
+          "title": "Titel",
+          "duration": "Dauer",
+          "audioCodec": "Audio Codec"
         },
         "en": {
           "home": "Home",
@@ -1288,6 +1333,10 @@ class Languages extends Translations {
           "shareSong": "Share this song",
           "removeFromPlaylist": "Remove from playlist",
           "removeFromQueue": "Remove from queue",
+          "queueShufflingDeniedMsg":
+              "Queue can't be shuffled when shuffle mode is enabled",
+          "queuerearrangingDeniedMsg":
+              "Queue can't be rearranged when shuffle mode is enabled",
           "upNext": "Up Next",
           "removeFromLib": "Remove from Library Songs",
           "sleepTimer": "Sleep Timer",
@@ -1366,7 +1415,7 @@ class Languages extends Translations {
               "View GitHub source code \nif you like this project, don't forget to give a ⭐",
           "by": "by",
           "search": "Search",
-          "searchDes": "Songs,Playlist,Album or Artist",
+          "searchDes": "Songs, Playlist, Album or Artist",
           "searchRes": "Search results",
           "for1": "for",
           "videos": "Videos",
@@ -1377,6 +1426,13 @@ class Languages extends Translations {
           "about": "About",
           "synced": "Synced",
           "plain": "Plain",
+          "songInfo": "Song Info",
+          "id": "Id",
+          "title": "Title",
+          "duration": "Duration",
+          "audioCodec": "Audio Codec",
+          "bitrate": "Bitrate",
+          "loudnessDb": "LoudnessDb",
           "deleteDownloadedDataAlert": "Successfully removed from downloads!",
           "cancelTimerAlert": "Sleep timer cancelled",
           "sleepTimeSetAlert": "Your sleep timer is set",
@@ -1837,7 +1893,7 @@ class Languages extends Translations {
           "backupSettingsAndPlaylists":
               "Configuración de copia de seguridad y listas de reproducción",
           "restoreMsg":
-              "¡Restaurado correctamente! Los cambios se aplicarán al reiniciar",
+              "¡Restaurado correctamente! \nLos cambios se aplicarán al reiniciar",
           "backupSettingsAndPlaylistsDes":
               "Guarda todas las configuraciones, listas de reproducción y datos de inicio de sesión en una copia de seguridad",
           "restoreSettingsAndPlaylists":
@@ -1846,9 +1902,24 @@ class Languages extends Translations {
               "Restaura todos los ajustes, datos de inicio de sesión y listas de reproducción desde un archivo de copia de seguridad. Sobrescribe todos los datos actuales",
           "backupMsg": "¡Copia de seguridad guardada exitosamente!",
           "backFilesFound": "bases de datos encontradas",
-          "restoring": "restaurando...",
+          "restoring": "Restaurando...",
           "restore": "Restaurar",
-          "closeApp": "Cerrar la aplicación"
+          "closeApp": "Cerrar la aplicación",
+          "includeDownloadedFiles": "Incluir canciones descargadas",
+          "backupInProgress": "Copia de seguridad en progreso...",
+          "restoreAppData": "Restaurar datos de la aplicación",
+          "backupAppData": "Copia de seguridad de datos de la aplicación",
+          "backup": "Copia de seguridad",
+          "letsStrart": "Vamos a empezar..",
+          "processFiles": "Procesando archivos...",
+          "restartApp": "Reiniciar la aplicación",
+          "id": "Id",
+          "songInfo": "Información de la canción",
+          "title": "Título",
+          "duration": "Duración",
+          "audioCodec": "Codec de audio",
+          "bitrate": "Tasa de bits",
+          "loudnessDb": "LoudnessDb"
         },
         "fi": {
           "libAlbums": "Kirjaston albumit",
@@ -2629,9 +2700,9 @@ class Languages extends Translations {
           "removeMultiple": "अनेक गाने हटाएँ",
           "addMultipleSongs": "प्लेलिस्ट में गाने जोड़ें",
           "deleteDownloadData": "डाउनलोड से हटाएँ",
-          "restoreLastPlaybackSession": "पिछला प्लेबैक सत्र पुनर्स्थापित करें",
+          "restoreLastPlaybackSession": "पिछला प्लेबैक सत्र रिस्टोर करें",
           "restoreLastPlaybackSessionDes":
-              "ऐप प्रारंभ होने पर अंतिम प्लेबैक सत्र को स्वचालित रूप से पुनर्स्थापित करें",
+              "ऐप प्रारंभ होने पर अंतिम प्लेबैक सत्र को स्वचालित रूप से रिस्टोर करें",
           "cacheHomeScreenData": "होम स्क्रीन सामग्री डेटा कैश करें",
           "cacheHomeScreenDataDes":
               "होम स्क्रीन कंटेंट डेटा कैश करें, यदि यह विकल्प सक्षम है तो होम स्क्रीन तुरंत लोड हो जाएगी",
@@ -2656,13 +2727,22 @@ class Languages extends Translations {
           "backupSettingsAndPlaylistsDes":
               "सभी सेटिंग्स, प्लेलिस्ट और लॉगिन डेटा को एक बैकअप फ़ाइल में सहेजता है",
           "restoreSettingsAndPlaylistsDes":
-              "बैकअप फ़ाइल से सभी सेटिंग्स, लॉगिन डेटा और प्लेलिस्ट को पुनर्स्थापित करता है। सभी मौजूदा डेटा को ओवरराइट कर देता है",
+              "बैकअप फ़ाइल से सभी सेटिंग्स, लॉगिन डेटा और प्लेलिस्ट्स को रिस्टोर करता है। सभी मौजूदा डेटा को ओवरराइट कर देता है",
           "backupMsg": "बैकअप सफलतापूर्वक सहेजा गया!",
           "backFilesFound": "डेटाबेस मिले",
-          "restoreMsg": "सफलतापूर्वक बहाल! परिवर्तन पुनरारंभ पर लागू होते हैं",
-          "restoring": "बहाल किया जा रहा है..।",
-          "restore": "बहाल करें",
-          "closeApp": "ऐप बंद करें"
+          "restoreMsg":
+              "सफलतापूर्वक रिस्टोर हुआ! परिवर्तन रीस्टार्ट करने पर लागू होते हैं",
+          "restoring": "रिस्टोर किया जा रहा है..।",
+          "restore": "रिस्टोर करें",
+          "closeApp": "ऐप बंद करें",
+          "backup": "बैकअप",
+          "letsStrart": "चलो शुरू करो.।",
+          "processFiles": "फ़ाइलें प्रोसेस की जा रही हैं..।",
+          "restoreAppData": "एप डेटा रिस्टोर करें",
+          "restartApp": "एप को रीस्टार्ट करें",
+          "backupAppData": "ऐप डेटा का बैकअप लें",
+          "includeDownloadedFiles": "डाउनलोड की गई गाने फ़ाइलें शामिल करें",
+          "backupInProgress": "बैकअप प्रगति पर है..।"
         },
         "ia": {
           "playlistCreatednsongAddedAlert":
@@ -2880,9 +2960,24 @@ class Languages extends Translations {
           "restoring": "in restauration...",
           "restore": "Restaurar",
           "restoreMsg":
-              "Restaurate con successo! Le cambios essera applicate in le reinitio",
+              "Restaurate con successo!\nLe cambios essera applicate in le reinitio",
           "restoreSettingsAndPlaylistsDes":
-              "Restaura tote le parametros, datos de initio de session e listas de reproduction ab un file de copia de securitate. Superscribe tote le datos actual"
+              "Restaura tote le parametros, datos de initio de session e listas de reproduction ab un file de copia de securitate. Superscribe tote le datos actual",
+          "backupInProgress": "Copia de securitate in progresso...",
+          "restartApp": "Reinitiar le app",
+          "includeDownloadedFiles": "Includer cantos discargate",
+          "bitrate": "Taxa de bits",
+          "backupAppData": "Copia de securitate de datos del application",
+          "duration": "Duration",
+          "loudnessDb": "LoudnessDb",
+          "processFiles": "Files in processo...",
+          "audioCodec": "Codec de audio",
+          "restoreAppData": "Restaurar datos del application",
+          "letsStrart": "Que nos comencia...",
+          "songInfo": "Information del canto",
+          "id": "Id",
+          "title": "Titulo",
+          "backup": "Copia de securitate"
         },
         "id": {
           "playlistCreatednsongAddedAlert":
@@ -3211,7 +3306,7 @@ class Languages extends Translations {
           "networkError1": "ネットワークエラー！",
           "songRemovedfromQueue": "キューから削除しました！",
           "libSongs": "曲のライブラリ",
-          "githubDes": "GitHub でソースコードを閲覧\nこのアプリが好きなら⭐をくださいね！",
+          "githubDes": "GitHub でソースコードを閲覧\nこのアプリが好きなら⭐をください！",
           "communityplaylists": "コミュニティの再生リスト",
           "playlistRemovedAlert": "再生リストを削除しました！",
           "libAlbums": "アルバムのライブラリ",
@@ -3377,14 +3472,29 @@ class Languages extends Translations {
           "restoreSettingsAndPlaylists": "設定と再生リストを復元",
           "restoreSettingsAndPlaylistsDes":
               "すべての設定と再生リスト、ログイン情報をバックアップファイルから復元。現在のデータを上書きします",
-          "restoreMsg": "復元に成功しました！再起動で変更を適用",
+          "restoreMsg": "復元しました！\n再起動で変更を適用",
           "restoring": "復元中...",
           "restore": "復元",
           "closeApp": "アプリを閉じる",
           "backupMsg": "バックアップに成功しました！",
           "backupSettingsAndPlaylists": "設定と再生リストをバックアップ",
           "backupSettingsAndPlaylistsDes": "すべての設定と再生リスト、ログイン情報をバックアップファイルに保存",
-          "backFilesFound": "データベースを発見"
+          "backFilesFound": "データベースを発見",
+          "backupAppData": "アプリのデータをバックアップ",
+          "letsStrart": "始めましょう..",
+          "backup": "バックアップ",
+          "processFiles": "ファイル処理中...",
+          "backupInProgress": "バックアップ中...",
+          "restoreAppData": "アプリのデータを復元",
+          "restartApp": "アプリを再起動",
+          "includeDownloadedFiles": "ダウンロー済みの曲のファイルを含める",
+          "songInfo": "曲の情報",
+          "title": "題名",
+          "bitrate": "ビットレート",
+          "loudnessDb": "音の大きさ:デジベル",
+          "id": "ID",
+          "duration": "長さ",
+          "audioCodec": "音声コーデック"
         },
         "kn": {"libArtists": "歌手库"},
         "ko": {
@@ -4290,7 +4400,15 @@ class Languages extends Translations {
               "ਬੈਕਅੱਪ ਫਾਈਲ ਤੋਂ ਸਾਰੀਆਂ ਸੈਟਿੰਗਾਂ, ਲਾਗ-ਇਨ ਡਾਟਾ ਅਤੇ ਪਲੇਲਿਸਟਾਂ ਨੂੰ ਰੀਸਟੋਰ ਕਰਦਾ ਹੈ। ਸਾਰੇ ਮੌਜੂਦਾ ਡਾਟਾ ਨੂੰ ਓਵਰਰਾਈਟ ਕਰਦਾ ਹੈ",
           "backupMsg": "ਬੈਕਅੱਪ ਸਫਲਤਾਪੂਰਵਕ ਸੁਰੱਖਿਅਤ ਕੀਤਾ ਗਿਆ!",
           "restoreMsg":
-              "ਸਫਲਤਾਪੂਰਵਕ ਬਹਾਲ ਕੀਤਾ ਗਿਆ! ਮੁੜ-ਚਾਲੂ ਹੋਣ 'ਤੇ ਤਬਦੀਲੀਆਂ ਲਾਗੂ ਕੀਤੀਆਂ ਜਾਂਦੀਆਂ ਹਨ"
+              "ਸਫਲਤਾਪੂਰਵਕ ਰੀਸਟੋਰ ਕੀਤਾ ਗਿਆ!ਤਬਦੀਲੀਆਂ ਮੁੜ-ਚਾਲੂ ਕਰਨ 'ਤੇ ਲਾਗੂ ਹੁੰਦੀਆਂ ਹਨ",
+          "backupAppData": "ਐਪ ਡਾਟਾ ਬੈਕਅੱਪ ਕਰੋ",
+          "processFiles": "ਫ਼ਾਈਲਾਂ ਦੀ ਪ੍ਰੋਸੈਸਿੰਗ ਹੋ ਰਹੀ ਹੈ...",
+          "includeDownloadedFiles": "ਡਾਉਨਲੋਡ ਕੀਤੇ ਗੀਤਾਂ ਦੀਆਂ ਫਾਈਲਾਂ ਸ਼ਾਮਿਲ ਕਰੋ",
+          "backupInProgress": "ਬੈਕਅੱਪ ਜਾਰੀ ਹੈ...",
+          "restartApp": "ਐਪ ਨੂੰ ਮੁੜ-ਚਾਲੂ ਕਰੋ",
+          "letsStrart": "ਚਲੋ ਸ਼ੁਰੂ ਕਰੀਏ..",
+          "backup": "ਬੈਕਅੱਪ",
+          "restoreAppData": "ਐਪ ਡਾਟਾ ਰੀਸਟੋਰ ਕਰੋ"
         },
         "pl": {
           "home": "Główna",
@@ -4505,10 +4623,18 @@ class Languages extends Translations {
               "Przywracanie ustawień i list odtwarzania",
           "backupMsg": "Kopia zapasowa została pomyślnie zapisana!",
           "restoreMsg":
-              "Przywrócenie powiodło się! Zmiany zostaną zastosowane po ponownym uruchomieniu",
-          "restoring": "przywracanie...",
+              "Przywrócenie powiodło się!\nZmiany zostaną zastosowane po ponownym uruchomieniu",
+          "restoring": "Przywracanie...",
           "restore": "Przywracanie",
-          "closeApp": "Zamknij aplikację"
+          "closeApp": "Zamknij aplikację",
+          "letsStrart": "Zaczynajmy...",
+          "processFiles": "Przetwarzanie plików...",
+          "includeDownloadedFiles": "Dołącz pliki z pobranymi utworami",
+          "backupInProgress": "Trwa tworzenie kopii zapasowej...",
+          "restoreAppData": "Przywracanie danych aplikacji",
+          "restartApp": "Restart aplikacji",
+          "backupAppData": "Kopia zapasowa danych aplikacji",
+          "backup": "Kopia zapasowa"
         },
         "pt": {
           "renamePlaylist": "Renomear Playlist",
@@ -5190,8 +5316,8 @@ class Languages extends Translations {
           "customInsSelectMsg": "Vyberte vlastnú inštanciu",
           "restore": "Obnoviť",
           "closeApp": "Zavrieť aplikáciu",
-          "restoring": "obnovovanie...",
-          "restoreMsg": "Úspešne obnovené! Zmeny sa aplikujú pri reštarte",
+          "restoring": "Obnovovanie...",
+          "restoreMsg": "Úspešne obnovené!\nZmeny sa aplikujú pri reštarte",
           "backFilesFound": "databázy nájdené",
           "backupMsg": "Záloha úspešne uložená!",
           "restoreSettingsAndPlaylistsDes":
@@ -5219,7 +5345,22 @@ class Languages extends Translations {
           "playNext": "Prehrať ďalej",
           "unLink": "Odpojiť",
           "linkAlert": "Prepojené úspešne!",
-          "dismiss": "Odmietnuť"
+          "dismiss": "Odmietnuť",
+          "processFiles": "Spracovanie súborov...",
+          "includeDownloadedFiles": "Zahrnúť stiahnuté skladby",
+          "backupInProgress": "Prebieha zálohovanie...",
+          "restoreAppData": "Obnoviť dáta aplikácie",
+          "backup": "Zálohovať",
+          "backupAppData": "Zálohovať dáta aplikácie",
+          "letsStrart": "Začíname...",
+          "audioCodec": "Audio kodek",
+          "duration": "Dĺžka",
+          "title": "Názov",
+          "id": "ID",
+          "songInfo": "Informácie o skladbe",
+          "bitrate": "Bitrate",
+          "loudnessDb": "Hlasitosť (Db)",
+          "restartApp": "Reštartovať aplikáciu"
         },
         "sr": {
           "playlistCreatednsongAddedAlert":
@@ -5420,8 +5561,7 @@ class Languages extends Translations {
           "openIn": "Отвори у",
           "backupMsg": "Резервна копија је успешно сачувана!",
           "backFilesFound": "база података пронађено",
-          "restoreMsg":
-              "Успешно враћено! Промене се примењују при поновном покретању",
+          "restoreMsg": "Успешно враћено!\nПромене се примењују при рестарту",
           "restore": "Врати",
           "backupSettingsAndPlaylistsDes":
               "Чува сва подешавања, плејлисте и податке за пријаву у фајл резервне копије",
@@ -5431,8 +5571,23 @@ class Languages extends Translations {
               "Враћа сва подешавања, податке за пријаву и плејлисте из фајла резервне копије. Преписује све тренутне податке",
           "restoreSettingsAndPlaylists":
               "Врати резервну копију подешавања и плејлисти",
-          "restoring": "враћање…",
-          "closeApp": "Затвори апликацију"
+          "restoring": "Враћање…",
+          "closeApp": "Затвори апликацију",
+          "backupAppData": "Резервна копија података апликације",
+          "backup": "Резервна копија",
+          "processFiles": "Обрада фајлова…",
+          "restoreAppData": "Врати податке апликације",
+          "letsStrart": "Хајде да почнемо…",
+          "includeDownloadedFiles": "Обухвати преузете фајлове песама",
+          "backupInProgress": "Прављење резервне копије је у току…",
+          "restartApp": "Рестартуј апликацију",
+          "songInfo": "Информације о песми",
+          "title": "Наслов",
+          "id": "ID",
+          "duration": "Трајање",
+          "audioCodec": "Аудио кодек",
+          "loudnessDb": "ГласноћаDb",
+          "bitrate": "Брзина преноса"
         },
         "sv": {
           "settings": "Inställningar",
@@ -5770,7 +5925,7 @@ class Languages extends Translations {
           "cancelTimerAlert": "Uyku zamanlayıcısı iptal edildi",
           "sleepTimer": "Uyku zamanlayıcısı",
           "add5Minutes": "5 dakika ekle",
-          "cancelTimer": "İptal et",
+          "cancelTimer": "Zamanlayıcıyı iptal et",
           "homeContentCount": "Ana sayfadaki içerik sayısı",
           "endOfThisSong": "Bu şarkının sonunda",
           "enableBottomNav": "Alt gezinme çubuğu",
@@ -5825,10 +5980,25 @@ class Languages extends Translations {
           "backupMsg": "Yedekleme başarıyla kaydedildi!",
           "backFilesFound": "veri tabanları bulundu",
           "restoreMsg":
-              "Başarıyla geri yüklendi! Değişiklikler yeniden başlatıldığında uygulanır",
+              "Başarıyla geri yüklendi!\nDeğişiklikler yeniden başlatıldığında uygulanır",
           "restoring": "Geri yükleniyor...",
           "restore": "Geri Yükle",
-          "closeApp": "Uygulamayı Kapat"
+          "closeApp": "Uygulamayı Kapat",
+          "backupAppData": "Uygulama verilerini yedekle",
+          "backup": "Yedekle",
+          "letsStrart": "Başlayalım...",
+          "processFiles": "Dosyalar işleniyor...",
+          "includeDownloadedFiles": "İndirilen şarkı dosyalarını dahil et",
+          "backupInProgress": "Yedekleme devam ediyor...",
+          "restoreAppData": "Uygulama verilerini geri yükle",
+          "restartApp": "Uygulamayı yeniden başlat",
+          "songInfo": "Şarkı Bilgileri",
+          "id": "Kimlik",
+          "bitrate": "Bit Hızı",
+          "loudnessDb": "Ses Yüksekliği (Db)",
+          "title": "Başlık",
+          "duration": "Süre",
+          "audioCodec": "Ses Kod Çözücü"
         },
         "uk": {
           "library": "Бібліотека",
@@ -6250,13 +6420,21 @@ class Languages extends Translations {
           "restoreSettingsAndPlaylists": "Khôi phục cài đặt và đánh sách phát",
           "backFilesFound": "Tìm thấy cơ sở dữ liệu",
           "restoreMsg":
-              "Khôi phục thành công! Thấy đổi sẽ có hiệu lực khi khởi động lại ứng dụng",
+              "Khôi phục thành công! \nThay đổi sẽ có hiệu lực khi khởi động lại ứng dụng",
           "restoring": "Đang khôi phục...",
           "closeApp": "Đóng ứng dụng",
           "restoreSettingsAndPlaylistsDes":
               "Khôi phục tất cả cài đặt, dữ liệu đăng nhập và đánh sách phát từ file sao lưu. Ghi đè tất cả dữ liệu hiện tại",
           "backupMsg": "Bản sao lưu được lưu thành công!",
-          "restore": "Khôi phục"
+          "restore": "Khôi phục",
+          "backupAppData": "Sao lưu dữ liệu ứng dụng",
+          "letsStrart": "Bắt đầu..",
+          "processFiles": "Đang xử lý tập tin...",
+          "includeDownloadedFiles": "Bao gồm các bài hát đã tải về",
+          "backupInProgress": "Đang sao lưu...",
+          "restoreAppData": "Khôi phục dữ liệu ứng dụng",
+          "restartApp": "Khởi động lại ứng dụng",
+          "backup": "Sao lưu"
         },
         "zh_Hans": {
           "home": "首页",

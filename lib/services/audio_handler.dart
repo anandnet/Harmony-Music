@@ -38,13 +38,17 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   late final _cacheDir;
   late AudioPlayer _player;
   // ignore: prefer_typing_uninitialized_variables
-  var currentIndex;
+  dynamic currentIndex;
+  dynamic currentShuffleIndex;
   late String? currentSongUrl;
   bool isPlayingUsingLockCachingSource = false;
   bool loopModeEnabled = false;
+  bool shuffleModeEnabled = false;
   var networkErrorPause = false;
   bool isSongLoading = true;
   DeviceEqualizer? deviceEqualizer;
+  // list of shuffled queue songs ids
+  List<String> shuffledQueue = [];
 
   final _playList =
       ConcatenatingAudioSource(children: [], useLazyPreparation: false);
@@ -65,6 +69,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     _player
         .setSkipSilenceEnabled(Hive.box("appPrefs").get("skipSilenceEnabled"));
     loopModeEnabled = Hive.box("appPrefs").get("isLoopModeEnabled") ?? false;
+    shuffleModeEnabled =
+        Hive.box("appPrefs").get("isShuffleModeEnabled") ?? false;
     if (GetPlatform.isAndroid) {
       deviceEqualizer = DeviceEqualizer();
       _listenSessionIdStream();
@@ -121,7 +127,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
           LoopMode.one: AudioServiceRepeatMode.one,
           LoopMode.all: AudioServiceRepeatMode.all,
         }[_player.loopMode]!,
-        shuffleMode: (_player.shuffleModeEnabled)
+        shuffleMode: (shuffleModeEnabled)
             ? AudioServiceShuffleMode.all
             : AudioServiceShuffleMode.none,
         playing: playing,
@@ -207,6 +213,12 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     // notify system
     final newQueue = queue.value..addAll(mediaItems);
     queue.add(newQueue);
+
+    if (shuffleModeEnabled) {
+      final mediaItemsIds = mediaItems.toList().map((item) => item.id).toList();
+      mediaItemsIds.shuffle();
+      shuffledQueue.addAll(mediaItemsIds);
+    }
   }
 
   @override
@@ -214,10 +226,23 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     final newQueue = this.queue.value
       ..replaceRange(0, this.queue.value.length, queue);
     this.queue.add(newQueue);
+
+    if (shuffleModeEnabled) {
+      final queueIds = queue.toList().map((item) => item.id).toList();
+      final currentSongId = queueIds.removeAt(currentIndex);
+      queueIds.shuffle();
+      queueIds.insert(0, currentSongId);
+      shuffledQueue.replaceRange(0, shuffledQueue.length, queueIds);
+      currentShuffleIndex = 0;
+    }
   }
 
   @override
   Future<void> addQueueItem(MediaItem mediaItem) async {
+    if (shuffleModeEnabled) {
+      shuffledQueue.add(mediaItem.id);
+    }
+
     // notify system
     final newQueue = queue.value..add(mediaItem);
     queue.add(newQueue);
@@ -246,15 +271,17 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
   @override
-  Future<void> removeQueueItemAt(int index) async {
-    // notify system
-    final newQueue = queue.value..removeAt(index);
-    queue.add(newQueue);
-  }
-
-  @override
   // ignore: avoid_renaming_method_parameters
   Future<void> removeQueueItem(MediaItem mediaItem_) async {
+    if (shuffleModeEnabled) {
+      final id = mediaItem_.id;
+      final itemIndex = shuffledQueue.indexOf(id);
+      if (currentShuffleIndex > itemIndex) {
+        currentShuffleIndex -= 1;
+      }
+      shuffledQueue.remove(id);
+    }
+
     final currentQueue = queue.value;
     final currentSong = mediaItem.value;
     final itemIndex = currentQueue.indexOf(mediaItem_);
@@ -301,11 +328,50 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     await customAction("playByIndex", {'index': index});
   }
 
+  int _getNextSongIndex() {
+    if (shuffleModeEnabled) {
+      if (currentShuffleIndex + 1 >= shuffledQueue.length) {
+        shuffledQueue.shuffle();
+        currentShuffleIndex = 0;
+      } else {
+        currentShuffleIndex += 1;
+      }
+      return queue.value
+          .indexWhere((item) => item.id == shuffledQueue[currentShuffleIndex]);
+    }
+
+    if (queue.value.length > currentIndex + 1) {
+      return currentIndex + 1;
+    } else {
+      return currentIndex;
+    }
+  }
+
+  int _getPrevSongIndex() {
+    if (shuffleModeEnabled) {
+      if (currentShuffleIndex - 1 < 0) {
+        shuffledQueue.shuffle();
+        currentShuffleIndex = shuffledQueue.length - 1;
+      } else {
+        currentShuffleIndex -= 1;
+      }
+      return queue.value
+          .indexWhere((item) => item.id == shuffledQueue[currentShuffleIndex]);
+    }
+
+    if (currentIndex - 1 >= 0) {
+      return currentIndex - 1;
+    } else {
+      return currentIndex;
+    }
+  }
+
   @override
   Future<void> skipToNext() async {
-    if (queue.value.length > currentIndex + 1) {
+    final index = _getNextSongIndex();
+    if (index != currentIndex) {
       _player.seek(Duration.zero);
-      await customAction("playByIndex", {'index': currentIndex + 1});
+      await customAction("playByIndex", {'index': index});
     } else {
       _player.seek(Duration.zero);
       _player.pause();
@@ -319,8 +385,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       return;
     }
     _player.seek(Duration.zero);
-    if (currentIndex - 1 >= 0) {
-      await customAction("playByIndex", {'index': currentIndex - 1});
+    final index = _getPrevSongIndex();
+    if (index != currentIndex) {
+      await customAction("playByIndex", {'index': index});
     }
   }
 
@@ -330,6 +397,22 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       loopModeEnabled = false;
     } else {
       loopModeEnabled = true;
+    }
+  }
+
+  @override
+  Future<void> setShuffleMode(AudioServiceShuffleMode shuffleMode) async {
+    if (shuffleMode == AudioServiceShuffleMode.none) {
+      shuffleModeEnabled = false;
+      shuffledQueue.clear();
+    } else {
+      final queueIds = queue.value.toList().map((item) => item.id).toList();
+      final currentSongId = queueIds.removeAt(currentIndex);
+      queueIds.shuffle();
+      queueIds.insert(0, currentSongId);
+      shuffledQueue.replaceRange(0, shuffledQueue.length, queueIds);
+      currentShuffleIndex = 0;
+      shuffleModeEnabled = true;
     }
   }
 
@@ -463,8 +546,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
   Future<void> saveSessionData() async {
-    if (Get.find<SettingsScreenController>().restorePlaybackSession.isFalse)
+    if (Get.find<SettingsScreenController>().restorePlaybackSession.isFalse) {
       return;
+    }
     final currQueue = queue.value;
     if (currQueue.isNotEmpty) {
       final queueData =

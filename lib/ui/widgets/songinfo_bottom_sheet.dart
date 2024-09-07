@@ -35,6 +35,7 @@ class SongInfoBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final songInfoController =
         Get.put(SongInfoController(song, calledFromPlayer));
+    final playerController = Get.find<PlayerController>();
     return Padding(
       padding: EdgeInsets.only(bottom: Get.mediaQuery.padding.bottom),
       child: SingleChildScrollView(
@@ -63,14 +64,16 @@ class SongInfoBottomSheet extends StatelessWidget {
                             onPressed: () => showDialog(
                                   context: context,
                                   builder: (context) => SongInfoDialog(
-                                    song: song,isDownloaded: songInfoController
-                                          .isDownloaded.isTrue
-                                  ),
+                                      song: song,
+                                      isDownloaded: songInfoController
+                                          .isDownloaded.isTrue),
                                 ),
                             icon: Icon(
                               Icons.info,
-                              color:
-                                  Theme.of(context).textTheme.titleMedium!.color,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .color,
                             ))
                         : IconButton(
                             onPressed: songInfoController.toggleFav,
@@ -99,10 +102,12 @@ class SongInfoBottomSheet extends StatelessWidget {
               title: Text("startRadio".tr),
               onTap: () {
                 Navigator.of(context).pop();
-                Get.find<PlayerController>().startRadio(song);
+                playerController.startRadio(song);
               },
             ),
-            (calledFromPlayer || calledFromQueue)
+            (calledFromPlayer ||
+                    calledFromQueue ||
+                    playerController.isShuffleModeEnabled.isTrue)
                 ? const SizedBox.shrink()
                 : ListTile(
                     visualDensity: const VisualDensity(vertical: -1),
@@ -110,7 +115,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                     title: Text("playNext".tr),
                     onTap: () {
                       Navigator.of(context).pop();
-                      Get.find<PlayerController>().playNext(song);
+                      playerController.playNext(song);
                     },
                   ),
             ListTile(
@@ -132,10 +137,10 @@ class SongInfoBottomSheet extends StatelessWidget {
                     leading: const Icon(Icons.merge_rounded),
                     title: Text("enqueueSong".tr),
                     onTap: () {
-                      Get.find<PlayerController>().enqueueSong(song).whenComplete(
-                          () => ScaffoldMessenger.of(context).showSnackBar(
-                              snackbar(context, "songEnqueueAlert".tr,
-                                  size: SanckBarSize.MEDIUM)));
+                      playerController.enqueueSong(song).whenComplete(() =>
+                          ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                              context, "songEnqueueAlert".tr,
+                              size: SanckBarSize.MEDIUM)));
                       Navigator.of(context).pop();
                     },
                   ),
@@ -147,12 +152,9 @@ class SongInfoBottomSheet extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).pop();
                       if (calledFromPlayer) {
-                        Get.find<PlayerController>()
-                            .playerPanelController
-                            .close();
+                        playerController.playerPanelController.close();
                       }
                       if (calledFromQueue) {
-                        final playerController = Get.find<PlayerController>();
                         playerController.playerPanelController.close();
                       }
                       Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
@@ -177,8 +179,8 @@ class SongInfoBottomSheet extends StatelessWidget {
                       songInfoController
                           .removeSongFromPlaylist(song, playlist!)
                           .whenComplete(() => ScaffoldMessenger.of(Get.context!)
-                              .showSnackBar(snackbar(
-                                  Get.context!, "Removed from ${playlist!.title}",
+                              .showSnackBar(snackbar(Get.context!,
+                                  "Removed from ${playlist!.title}",
                                   size: SanckBarSize.MEDIUM)));
                     },
                   )
@@ -190,13 +192,12 @@ class SongInfoBottomSheet extends StatelessWidget {
                     title: Text("removeFromQueue".tr),
                     onTap: () {
                       Navigator.of(context).pop();
-                      final plarcntr = Get.find<PlayerController>();
-                      if (plarcntr.currentSong.value!.id == song.id) {
+                      if (playerController.currentSong.value!.id == song.id) {
                         ScaffoldMessenger.of(context).showSnackBar(snackbar(
                             context, "songRemovedfromQueueCurrSong".tr,
                             size: SanckBarSize.BIG));
                       } else {
-                        Get.find<PlayerController>().removeFromQueue(song);
+                        playerController.removeFromQueue(song);
                         ScaffoldMessenger.of(context).showSnackBar(snackbar(
                             context, "songRemovedfromQueue".tr,
                             size: SanckBarSize.MEDIUM));
@@ -216,7 +217,8 @@ class SongInfoBottomSheet extends StatelessWidget {
                         Navigator.of(context).pop();
                         final box = Hive.box("SongDownloads");
                         Get.find<LibrarySongsController>()
-                            .removeSong(song, true, url: box.get(song.id)['url'])
+                            .removeSong(song, true,
+                                url: box.get(song.id)['url'])
                             .then((value) async {
                           box.delete(song.id).then((value) {
                             if (playlist != null) {
@@ -246,8 +248,8 @@ class SongInfoBottomSheet extends StatelessWidget {
                     IconButton(
                       splashRadius: 10,
                       onPressed: () {
-                        launchUrl(
-                            Uri.parse("https://youtube.com/watch?v=${song.id}"));
+                        launchUrl(Uri.parse(
+                            "https://youtube.com/watch?v=${song.id}"));
                       },
                       icon: const Icon(Ionicons.logo_youtube),
                     ),
@@ -271,7 +273,6 @@ class SongInfoBottomSheet extends StatelessWidget {
                 title: Text("sleepTimer".tr),
                 onTap: () {
                   Navigator.of(context).pop();
-                  final playerController = Get.find<PlayerController>();
                   showModalBottomSheet(
                     constraints: const BoxConstraints(maxWidth: 500),
                     shape: const RoundedRectangleBorder(
@@ -291,7 +292,8 @@ class SongInfoBottomSheet extends StatelessWidget {
               visualDensity: const VisualDensity(vertical: -1),
               leading: const Icon(Icons.share_rounded),
               title: Text("shareSong".tr),
-              onTap: () => Share.share("https://youtube.com/watch?v=${song.id}"),
+              onTap: () =>
+                  Share.share("https://youtube.com/watch?v=${song.id}"),
             ),
           ],
         ),

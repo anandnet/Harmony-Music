@@ -8,6 +8,7 @@ import 'package:harmonymusic/ui/player/components/lyrics_switch.dart';
 import 'package:harmonymusic/ui/player/components/player_control.dart';
 
 import '../../utils/helper.dart';
+import '../widgets/snackbar.dart';
 import '../widgets/up_next_queue.dart';
 import '/ui/player/player_controller.dart';
 import '../screens/Settings/settings_screen_controller.dart';
@@ -78,7 +79,17 @@ class Player extends StatelessWidget {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(14))),
                                 elevation: 0,
-                                onPressed: playerController.shuffleQueue,
+                                onPressed: () {
+                                  if (playerController
+                                      .isShuffleModeEnabled.isTrue) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackbar(context,
+                                            "queueShufflingDeniedMsg".tr,
+                                            size: SanckBarSize.BIG));
+                                    return;
+                                  }
+                                  playerController.shuffleQueue();
+                                },
                                 child: const Icon(Icons.shuffle))))),
               ],
             );

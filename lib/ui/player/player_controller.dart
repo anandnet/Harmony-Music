@@ -47,6 +47,7 @@ class PlayerController extends GetxController {
   final isFirstSong = true;
   final isLastSong = true;
   final isLoopModeEnabled = false.obs;
+  final isShuffleModeEnabled = false.obs;
   final currentSong = Rxn<MediaItem>();
   final isCurrentSongFav = false.obs;
   final showLyricsflag = false.obs;
@@ -93,6 +94,8 @@ class PlayerController extends GetxController {
     _setInitLyricsMode();
     isLoopModeEnabled.value =
         Hive.box("AppPrefs").get("isLoopModeEnabled") ?? false;
+    isShuffleModeEnabled.value =
+        Hive.box("appPrefs").get("isShuffleModeEnabled") ?? false;
     if (GetPlatform.isDesktop) {
       setVolume(Hive.box("AppPrefs").get("volume") ?? 100);
     }
@@ -393,6 +396,15 @@ class PlayerController extends GetxController {
     _audioHandler.customAction("shuffleQueue");
   }
 
+  Future<void> toggleShuffleMode() async {
+    final shuffleModeEnabled = isShuffleModeEnabled.value;
+    shuffleModeEnabled
+        ? _audioHandler.setShuffleMode(AudioServiceShuffleMode.none)
+        : _audioHandler.setShuffleMode(AudioServiceShuffleMode.all);
+    isShuffleModeEnabled.value = !shuffleModeEnabled;
+    await Hive.box("AppPrefs").put("isShuffleModeEnabled", !shuffleModeEnabled);
+  }
+
   void onReorder(int oldIndex, int newIndex) {
     _audioHandler.customAction(
         "reorderQueue", {"oldIndex": oldIndex, "newIndex": newIndex});
@@ -415,7 +427,7 @@ class PlayerController extends GetxController {
   }
 
   void playPause() {
-    if(initFlagForPlayer) return;
+    if (initFlagForPlayer) return;
     _audioHandler.playbackState.value.playing ? pause() : play();
   }
 

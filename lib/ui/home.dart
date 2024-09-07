@@ -14,6 +14,7 @@ import 'player/player_controller.dart';
 import 'widgets/bottom_nav_bar.dart';
 import 'widgets/scroll_to_hide.dart';
 import 'widgets/sliding_up_panel.dart';
+import 'widgets/snackbar.dart';
 import 'widgets/up_next_queue.dart';
 
 class Home extends StatelessWidget {
@@ -119,6 +120,18 @@ class Home extends StatelessWidget {
                                           ),
                                           IconButton(
                                               onPressed: () {
+                                                if (playerController
+                                                    .isShuffleModeEnabled
+                                                    .isTrue) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(snackbar(
+                                                          context,
+                                                          "queueShufflingDeniedMsg"
+                                                              .tr,
+                                                          size: SanckBarSize
+                                                              .BIG));
+                                                  return;
+                                                }
                                                 playerController.shuffleQueue();
                                               },
                                               icon: const Icon(Icons.shuffle))

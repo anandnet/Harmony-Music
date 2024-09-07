@@ -151,8 +151,8 @@ class HomeScreenController extends GetxController {
       await Hive.box("AppPrefs")
           .put("homeScreenDataTime", DateTime.now().millisecondsSinceEpoch);
       // ignore: unused_catch_stack
-    } on NetworkError catch (_, e) {
-      printERROR("Home Content not loaded due to ${_.message}");
+    } on NetworkError catch (r, e) {
+      printERROR("Home Content not loaded due to ${r.message}");
       await Future.delayed(const Duration(seconds: 1));
       networkError.value = !silent;
     }

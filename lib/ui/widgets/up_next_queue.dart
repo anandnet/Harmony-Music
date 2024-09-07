@@ -4,6 +4,7 @@ import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
 import 'image_widget.dart';
+import 'snackbar.dart';
 import 'songinfo_bottom_sheet.dart';
 
 class UpNextQueue extends StatelessWidget {
@@ -25,7 +26,15 @@ class UpNextQueue extends StatelessWidget {
         return ReorderableListView.builder(
           scrollController:
               isQueueInSlidePanel ? playerController.scrollController : null,
-          onReorder: playerController.onReorder,
+          onReorder: (int oldIndex, int newIndex) {
+            if (playerController.isShuffleModeEnabled.isTrue) {
+              ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
+                  Get.context!, "queuerearrangingDeniedMsg".tr,
+                  size: SanckBarSize.BIG));
+              return;
+            }
+            playerController.onReorder(oldIndex, newIndex);
+          },
           onReorderStart: onReorderStart,
           onReorderEnd: onReorderEnd,
           itemCount: playerController.currentQueue.length,

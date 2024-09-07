@@ -2,6 +2,7 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
 import '/ui/widgets/lyrics_dialog.dart';
@@ -91,30 +92,9 @@ class MiniPlayer extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             playerController.currentSong.value != null
-                                ? InkWell(
-                                    onTap: GetPlatform.isDesktop
-                                        ? () {
-                                            playerController.showLyrics();
-                                            showDialog(
-                                                    builder: (context) =>
-                                                        const LyricsDialog(),
-                                                    context: context)
-                                                .whenComplete(() {
-                                              playerController
-                                                      .isDesktopLyricsDialogOpen =
-                                                  false;
-                                              playerController
-                                                  .showLyricsflag.value = false;
-                                            });
-                                            playerController
-                                                    .isDesktopLyricsDialogOpen =
-                                                true;
-                                          }
-                                        : null,
-                                    child: ImageWidget(
-                                      size: 50,
-                                      song: playerController.currentSong.value!,
-                                    ),
+                                ? ImageWidget(
+                                    size: 50,
+                                    song: playerController.currentSong.value!,
                                   )
                                 : const SizedBox(
                                     height: 50,
@@ -169,19 +149,44 @@ class MiniPlayer extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               if (isWideScreen)
-                                IconButton(
-                                    iconSize: 20,
-                                    onPressed: playerController.toggleFavourite,
-                                    icon: Obx(() => Icon(
-                                          playerController
-                                                  .isCurrentSongFav.isFalse
-                                              ? Icons.favorite_border_rounded
-                                              : Icons.favorite_rounded,
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .color,
-                                        ))),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                        iconSize: 20,
+                                        onPressed:
+                                            playerController.toggleFavourite,
+                                        icon: Obx(() => Icon(
+                                              playerController
+                                                      .isCurrentSongFav.isFalse
+                                                  ? Icons
+                                                      .favorite_border_rounded
+                                                  : Icons.favorite_rounded,
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .color,
+                                            ))),
+                                    IconButton(
+                                        iconSize: 20,
+                                        onPressed:
+                                            playerController.toggleShuffleMode,
+                                        icon: Obx(() => Icon(
+                                              Ionicons.shuffle,
+                                              color: playerController
+                                                      .isShuffleModeEnabled
+                                                      .value
+                                                  ? Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge!
+                                                      .color
+                                                  : Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge!
+                                                      .color!
+                                                      .withOpacity(0.2),
+                                            ))),
+                                  ],
+                                ),
                               if (isWideScreen)
                                 SizedBox(
                                     width: 40,
@@ -223,42 +228,82 @@ class MiniPlayer extends StatelessWidget {
                                               context, isWideScreen))),
                               SizedBox(
                                   width: 40,
-                                  child: InkWell(
-                                    onTap: (playerController
-                                                .currentQueue.isEmpty ||
+                                  child: Obx(() {
+                                    final isLastSong =
+                                        playerController.currentQueue.isEmpty ||
                                             (playerController
-                                                    .currentQueue.last.id ==
-                                                playerController
-                                                    .currentSong.value?.id))
-                                        ? null
-                                        : playerController.next,
-                                    child: Icon(
-                                      Icons.skip_next_rounded,
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium!
-                                          .color,
-                                      size: 35,
-                                    ),
-                                  )),
+                                                    .isShuffleModeEnabled
+                                                    .isFalse &&
+                                                (playerController
+                                                        .currentQueue.last.id ==
+                                                    playerController.currentSong
+                                                        .value?.id));
+                                    return InkWell(
+                                      onTap: isLastSong
+                                          ? null
+                                          : playerController.next,
+                                      child: Icon(
+                                        Icons.skip_next_rounded,
+                                        color: isLastSong
+                                            ? Theme.of(context)
+                                                .textTheme
+                                                .titleLarge!
+                                                .color!
+                                                .withOpacity(0.2)
+                                            : Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .color,
+                                        size: 35,
+                                      ),
+                                    );
+                                  })),
                               if (isWideScreen)
-                                IconButton(
-                                    iconSize: 20,
-                                    onPressed: playerController.toggleLoopMode,
-                                    icon: Icon(
-                                      Icons.all_inclusive,
-                                      color: playerController
-                                              .isLoopModeEnabled.value
-                                          ? Theme.of(context)
-                                              .textTheme
-                                              .titleLarge!
-                                              .color
-                                          : Theme.of(context)
-                                              .textTheme
-                                              .titleLarge!
-                                              .color!
-                                              .withOpacity(0.2),
-                                    )),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                        iconSize: 20,
+                                        onPressed:
+                                            playerController.toggleLoopMode,
+                                        icon: Icon(
+                                          Icons.all_inclusive,
+                                          color: playerController
+                                                  .isLoopModeEnabled.value
+                                              ? Theme.of(context)
+                                                  .textTheme
+                                                  .titleLarge!
+                                                  .color
+                                              : Theme.of(context)
+                                                  .textTheme
+                                                  .titleLarge!
+                                                  .color!
+                                                  .withOpacity(0.2),
+                                        )),
+                                    IconButton(
+                                        iconSize: 20,
+                                        onPressed: () {
+                                          playerController.showLyrics();
+                                          showDialog(
+                                                  builder: (context) =>
+                                                      const LyricsDialog(),
+                                                  context: context)
+                                              .whenComplete(() {
+                                            playerController
+                                                    .isDesktopLyricsDialogOpen =
+                                                false;
+                                            playerController
+                                                .showLyricsflag.value = false;
+                                          });
+                                          playerController
+                                              .isDesktopLyricsDialogOpen = true;
+                                        },
+                                        icon: Icon(Icons.lyrics_outlined,
+                                            color: Theme.of(context)
+                                                .textTheme
+                                                .titleLarge!
+                                                .color)),
+                                  ],
+                                ),
                               if (isWideScreen)
                                 const SizedBox(
                                   width: 20,

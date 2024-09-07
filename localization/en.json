@@ -45,6 +45,8 @@
     "shareSong": "Share this song",
     "removeFromPlaylist": "Remove from playlist",
     "removeFromQueue": "Remove from queue",
+    "queueShufflingDeniedMsg": "Queue can't be shuffled when shuffle mode is enabled",
+    "queuerearrangingDeniedMsg": "Queue can't be rearranged when shuffle mode is enabled",
     "upNext": "Up Next",
     "removeFromLib": "Remove from Library Songs",
     "sleepTimer": "Sleep Timer",

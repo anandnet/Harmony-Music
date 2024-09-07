@@ -11,6 +11,10 @@ class SearchScreenController extends GetxController {
   final historyQuerylist = [].obs;
   late Box<dynamic> queryBox;
 
+  // Desktop search bar related
+  final focusNode = FocusNode();
+  final isSearchBarInFocus = false.obs;
+
   @override
   onInit() {
     _init();
@@ -18,6 +22,11 @@ class SearchScreenController extends GetxController {
   }
 
   _init() async {
+    if(GetPlatform.isDesktop){
+      focusNode.addListener((){
+        isSearchBarInFocus.value = focusNode.hasFocus;
+      });
+    }
     queryBox = await Hive.openBox("searchQuery");
     historyQuerylist.value = queryBox.values.toList().reversed.toList();
   }
@@ -61,6 +70,7 @@ class SearchScreenController extends GetxController {
 
   @override
   void dispose() {
+    focusNode.dispose();
     textInputController.dispose();
     queryBox.close();
     super.dispose();

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '/ui/screens/Search/search_screen_controller.dart';
 import '/utils/get_localization.dart';
 import '/services/downloader.dart';
 import '/services/piped_service.dart';
@@ -84,6 +85,7 @@ Future<void> startApplicationServices() async {
   Get.lazyPut(() => SettingsScreenController(), fenix: true);
   Get.lazyPut(() => Downloader(), fenix: true);
   if (GetPlatform.isDesktop) {
+    Get.lazyPut(() => SearchScreenController(), fenix: true);
     Get.put(DesktopSystemTray());
   }
 }

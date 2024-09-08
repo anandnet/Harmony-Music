@@ -219,8 +219,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
     if (shuffleModeEnabled) {
       final mediaItemsIds = mediaItems.toList().map((item) => item.id).toList();
-      final notPlayedshuffledQueue =
-          shuffledQueue.toList().sublist(currentShuffleIndex + 1);
+      final notPlayedshuffledQueue = shuffledQueue.isNotEmpty
+          ? shuffledQueue.toList().sublist(currentShuffleIndex + 1)
+          : shuffledQueue;
       notPlayedshuffledQueue.addAll(mediaItemsIds);
       notPlayedshuffledQueue.shuffle();
       shuffledQueue.replaceRange(

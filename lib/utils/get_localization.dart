@@ -1500,6 +1500,8 @@ class Languages extends Translations {
           "stopMusicOnTaskClearDes":
               "Music playback will stop when App being swiped away from the task manager",
           "backupAppData": "Backup App data",
+          "androidBackupWarning":
+              "Not tested: Selecting the checkbox after downloading more than 60 files, process may consume a large amount of memory and could cause the phone or app to crash. Proceed at your own risk.",
           "backupSettingsAndPlaylistsDes":
               "Saves all settings, playlists and login data in a backup file",
           "backup": "Backup",

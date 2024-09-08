@@ -23,7 +23,7 @@ class BackupDialog extends StatelessWidget {
     final backupDialogController = Get.put(BackupDialogController());
     return CommonDialog(
       child: Container(
-        height: 300,
+        height: GetPlatform.isAndroid ? 350 : 300,
         padding:
             const EdgeInsets.only(top: 20, bottom: 30, left: 20, right: 20),
         child: Stack(
@@ -50,13 +50,37 @@ class BackupDialog extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      Obx(() => Text(backupDialogController.scanning.isTrue
-                          ? "scanning".tr
-                          : backupDialogController.backupRunning.isTrue
-                              ? "backupInProgress".tr
-                              : backupDialogController.isbackupCompleted.isTrue
-                                  ? "backupMsg".tr
-                                  : "letsStrart".tr))
+                      Column(
+                        children: [
+                          Obx(() => Text(
+                                backupDialogController.scanning.isTrue
+                                    ? "scanning".tr
+                                    : backupDialogController
+                                            .backupRunning.isTrue
+                                        ? "backupInProgress".tr
+                                        : backupDialogController
+                                                .isbackupCompleted.isTrue
+                                            ? "backupMsg".tr
+                                            : "letsStrart".tr,
+                                textAlign: TextAlign.center,
+                              )),
+                          Obx(() => (GetPlatform.isAndroid &&
+                                  backupDialogController
+                                      .isDownloadedfilesSeclected.isTrue)
+                              ? Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text(
+                                    "androidBackupWarning".tr,
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              : const SizedBox.shrink())
+                        ],
+                      )
                     ],
                   )),
                 ),

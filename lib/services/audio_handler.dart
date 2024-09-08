@@ -430,7 +430,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
       mediaItem.add(currentSong);
       final streamInfo = await futureStreamInfo;
-      if (streamInfo == null || songIndex != currentIndex) {
+      if (streamInfo == null || songIndex != currentIndex || !streamInfo[0]) {
         currentSongUrl = null;
         return;
       }
@@ -485,7 +485,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       mediaItem.add(currMed);
       queue.add([currMed]);
       final streamInfo = (await futureStreamInfo);
-      if (streamInfo == null) {
+      if (streamInfo == null || !streamInfo[0]) {
         currentSongUrl = null;
         return;
       }
@@ -674,13 +674,15 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       dynamic streamInfo;
       if (songsUrlCacheBox.containsKey(songId) && !generateNewUrl) {
         streamInfo = songsUrlCacheBox.get(songId);
-        if (streamInfo.length != 3 ||
-            isExpired(
+
+        if (streamInfo.length == 3 &&
+            streamInfo[0] &&
+            !isExpired(
                 url: (songsUrlCacheBox.get(songId))[qualityIndex + 1]['url'])) {
+          printINFO("Got URLLLLLL cachedbox ($songId)");
+        } else {
           streamInfo = await Isolate.run(() => getStreamInfo(songId));
           if (streamInfo != null) songsUrlCacheBox.put(songId, streamInfo);
-        } else {
-          printINFO("Got URLLLLLL cachedbox ($songId)");
         }
       } else {
         streamInfo = await Isolate.run(() => getStreamInfo(

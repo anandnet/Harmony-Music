@@ -25,6 +25,11 @@ class DesktopSearchBar extends StatelessWidget {
             onTapOutside: (event) {},
             onChanged: searchScreenController.onChanged,
             onSubmitted: (val) {
+              if (val.contains("https://")) {
+                searchScreenController.filterLinks(Uri.parse(val));
+                searchScreenController.reset();
+                return;
+              }
               Get.toNamed(ScreenNavigationSetup.searchResultScreen,
                   id: ScreenNavigationSetup.id, arguments: val);
               searchScreenController.addToHistryQueryList(val);
@@ -69,17 +74,34 @@ class DesktopSearchBar extends StatelessWidget {
                 final listToShow = isHistoryString
                     ? searchScreenController.historyQuerylist
                     : searchScreenController.suggestionList;
-                return searchScreenController.isSearchBarInFocus.isTrue &&
-                        listToShow.isNotEmpty
-                    ? ListView(
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(5.0),
-                        children: listToShow.map((item) {
-                          return SearchItem(
-                              queryString: item,
-                              isHistoryString: isHistoryString);
-                        }).toList())
-                    : const SizedBox.shrink();
+                return searchScreenController.urlPasted.isTrue
+                    ? InkWell(
+                        onTap: () {
+                          searchScreenController.filterLinks(Uri.parse(
+                              searchScreenController.textInputController.text));
+                          searchScreenController.reset();
+                        },
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          height: 50,
+                          child: Center(
+                              child: Text(
+                            "urlSearchDes".tr,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          )),
+                        ),
+                      )
+                    : searchScreenController.isSearchBarInFocus.isTrue &&
+                            listToShow.isNotEmpty
+                        ? ListView(
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.all(5.0),
+                            children: listToShow.map((item) {
+                              return SearchItem(
+                                  queryString: item,
+                                  isHistoryString: isHistoryString);
+                            }).toList())
+                        : const SizedBox.shrink();
               }),
             ))
       ],

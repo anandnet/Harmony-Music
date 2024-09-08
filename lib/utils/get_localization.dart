@@ -1422,6 +1422,8 @@ class Languages extends Translations {
           "githubDes":
               "View GitHub source code \nif you like this project, don't forget to give a ⭐",
           "by": "by",
+          "urlSearchDes":
+              "Url detected click on it to open/play associated content",
           "search": "Search",
           "searchDes": "Songs, Playlist, Album or Artist",
           "searchRes": "Search results",

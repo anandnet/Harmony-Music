@@ -71,6 +71,11 @@ class SearchScreen extends StatelessWidget {
                       textInputAction: TextInputAction.search,
                       onChanged: searchScreenController.onChanged,
                       onSubmitted: (val) {
+                        if (val.contains("https://")) {
+                          searchScreenController.filterLinks(Uri.parse(val));
+                          searchScreenController.reset();
+                          return;
+                        }
                         Get.toNamed(ScreenNavigationSetup.searchResultScreen,
                             id: ScreenNavigationSetup.id, arguments: val);
                         searchScreenController.addToHistryQueryList(val);
@@ -98,14 +103,41 @@ class SearchScreen extends StatelessWidget {
                         final list = isEmpty
                             ? searchScreenController.historyQuerylist.toList()
                             : searchScreenController.suggestionList.toList();
-                        return ListView.builder(
+                        return ListView(
                             padding: const EdgeInsets.only(top: 5, bottom: 400),
                             physics: const BouncingScrollPhysics(
                                 parent: AlwaysScrollableScrollPhysics()),
-                            itemCount: list.length,
-                            itemBuilder: (context, index) => SearchItem(
-                                queryString: list[index],
-                                isHistoryString: isEmpty));
+                            children: searchScreenController.urlPasted.isTrue
+                                ? [
+                                    InkWell(
+                                      onTap: () {
+                                        searchScreenController.filterLinks(
+                                            Uri.parse(searchScreenController
+                                                .textInputController.text));
+                                        searchScreenController.reset();
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10.0),
+                                        child: SizedBox(
+                                          width: double.maxFinite,
+                                          height: 60,
+                                          child: Center(
+                                              child: Text(
+                                            "urlSearchDes".tr,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium,
+                                          )),
+                                        ),
+                                      ),
+                                    )
+                                  ]
+                                : list
+                                    .map((item) => SearchItem(
+                                        queryString: item,
+                                        isHistoryString: isEmpty))
+                                    .toList());
                       }),
                     )
                   ],

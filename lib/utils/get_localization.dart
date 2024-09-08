@@ -1371,6 +1371,9 @@ class Languages extends Translations {
               "Caching songs while playing for future/offline playback, it will take additional space on your device",
           "skipSilence": "Skip silence",
           "skipSilenceDes": "Silence will be skipped in music playback",
+          "loudnessNormalization": "Loudness normalization",
+          "loudnessNormalizationDes":
+              "Sets same lavel of loudness for all songs (Experimental) (Will not work on songs downloaded on previous version(< v1.10.0))",
           "streamingQuality": "Streaming quality",
           "streamingQualityDes": "Quality of music stream",
           "disableTransitionAnimation": "Disable transition animation",

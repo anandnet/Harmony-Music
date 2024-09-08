@@ -245,6 +245,16 @@ class SettingsScreen extends StatelessWidget {
                   settingsController.showDownLoc();
                 },
               ),
+              ListTile(
+                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                  title: Text("loudnessNormalization".tr),
+                  subtitle: Text("loudnessNormalizationDes".tr,
+                      style: Theme.of(context).textTheme.bodyMedium),
+                  trailing: Obx(
+                    () => CustSwitch(
+                        value: settingsController.loudnessNormalizationEnabled.value,
+                        onChanged: settingsController.toggleLoudnessNormalization),
+                  )),
               if (isDesktop)
                 ListTile(
                     contentPadding: const EdgeInsets.only(left: 5, right: 10),

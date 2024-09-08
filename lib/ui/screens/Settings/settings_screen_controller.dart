@@ -24,6 +24,7 @@ class SettingsScreenController extends GetxController {
   final setBox = Hive.box("AppPrefs");
   final themeModetype = ThemeType.dynamic.obs;
   final skipSilenceEnabled = false.obs;
+  final loudnessNormalizationEnabled = false.obs;
   final noOfHomeScreenContent = 3.obs;
   final streamingQuality = AudioQuality.High.obs;
   final isIgnoringBatteryOptimizations = false.obs;
@@ -79,6 +80,8 @@ class SettingsScreenController extends GetxController {
     cacheSongs.value = setBox.get('cacheSongs');
     themeModetype.value = ThemeType.values[setBox.get('themeModeType')];
     skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
+    loudnessNormalizationEnabled.value =
+        setBox.get("loudnessNormalizationEnabled") ?? false;
     restorePlaybackSession.value =
         setBox.get("restrorePlaybackSession") ?? false;
     cacheHomeScreenData.value = setBox.get("cacheHomeScreenData") ?? true;
@@ -218,6 +221,12 @@ class SettingsScreenController extends GetxController {
     Get.find<PlayerController>().toggleSkipSilence(val);
     setBox.put('skipSilenceEnabled', val);
     skipSilenceEnabled.value = val;
+  }
+
+  void toggleLoudnessNormalization(bool val) {
+    Get.find<PlayerController>().toggleLoudnessNormalization(val);
+    setBox.put("loudnessNormalizationEnabled", val);
+    loudnessNormalizationEnabled.value = val;
   }
 
   void toggleRestorePlaybackSession(bool val) {

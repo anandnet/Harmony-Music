@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:isolate';
+import 'dart:math';
 
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
@@ -44,6 +45,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   bool isPlayingUsingLockCachingSource = false;
   bool loopModeEnabled = false;
   bool shuffleModeEnabled = false;
+  bool loudnessNormalizationEnabled = false;
   var networkErrorPause = false;
   bool isSongLoading = true;
   DeviceEqualizer? deviceEqualizer;
@@ -66,11 +68,12 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     _notifyAudioHandlerAboutPlaybackEvents();
     _listenToPlaybackForNextSong();
     _listenForSequenceStateChanges();
-    _player
-        .setSkipSilenceEnabled(Hive.box("appPrefs").get("skipSilenceEnabled"));
-    loopModeEnabled = Hive.box("appPrefs").get("isLoopModeEnabled") ?? false;
-    shuffleModeEnabled =
-        Hive.box("appPrefs").get("isShuffleModeEnabled") ?? false;
+    final appPrefsBox = Hive.box("appPrefs");
+    _player.setSkipSilenceEnabled(appPrefsBox.get("skipSilenceEnabled"));
+    loopModeEnabled = appPrefsBox.get("isLoopModeEnabled") ?? false;
+    shuffleModeEnabled = appPrefsBox.get("isShuffleModeEnabled") ?? false;
+    loudnessNormalizationEnabled =
+        appPrefsBox.get("loudnessNormalizationEnabled") ?? false;
     if (GetPlatform.isAndroid) {
       deviceEqualizer = DeviceEqualizer();
       _listenSessionIdStream();
@@ -425,12 +428,12 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       }
 
       mediaItem.add(currentSong);
-      final stremInfo = await futureStreamInfo;
-      if (stremInfo == null || songIndex != currentIndex) {
+      final streamInfo = await futureStreamInfo;
+      if (streamInfo == null || songIndex != currentIndex) {
         currentSongUrl = null;
         return;
       }
-      currentSongUrl = currentSong.extras!['url'] = stremInfo[1]['url'];
+      currentSongUrl = currentSong.extras!['url'] = streamInfo[1]['url'];
       playbackState.add(playbackState.value.copyWith(queueIndex: currentIndex));
       await _playList.add(_createAudioSource(currentSong));
       isSongLoading = false;
@@ -452,6 +455,10 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         }
       } else {
         await _player.play();
+      }
+
+      if (loudnessNormalizationEnabled) {
+        _normalizeVolume(streamInfo[1]['loudnessDb'] ?? 0);
       }
     } else if (name == "checkWithCacheDb" && isPlayingUsingLockCachingSource) {
       final song = extras!['mediaItem'] as MediaItem;
@@ -492,9 +499,36 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         mediaItem.add(newMed);
       });
       await _player.play();
+      // Normalize audio
+      if (loudnessNormalizationEnabled) {
+        _normalizeVolume(streamInfo[1]['loudnessDb'] ?? 0);
+      }
     } else if (name == 'toggleSkipSilence') {
       final enable = (extras!['enable'] as bool);
       await _player.setSkipSilenceEnabled(enable);
+    } else if (name == "toggleLoudnessNormalization") {
+      loudnessNormalizationEnabled = (extras!['enable'] as bool);
+      if (!loudnessNormalizationEnabled) {
+        _player.setVolume(1.0);
+        return;
+      }
+
+      if (loudnessNormalizationEnabled && _player.playing) {
+        final currentSongId = (queue.value[currentIndex]).id;
+        final songQualityIndex = Hive.box('AppPrefs').get('streamingQuality');
+        if (Hive.box("SongsUrlCache").containsKey(currentSongId)) {
+          _normalizeVolume((Hive.box("SongsUrlCache")
+              .get(currentSongId))[songQualityIndex + 1]["loudnessDb"]);
+          return;
+        }
+
+        if (Hive.box("SongDownloads").containsKey(currentSongId)) {
+          final streamInfo =
+              (Hive.box("SongDownloads").get(currentSongId))["streamInfo"];
+
+          _normalizeVolume(streamInfo == null ? 0 : streamInfo["loudnessDb"]);
+        }
+      }
     } else if (name == "shuffleQueue") {
       final currentQueue = queue.value;
       final currentItem = currentQueue[currentIndex];
@@ -547,6 +581,16 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     currentShuffleIndex = 0;
   }
 
+  void _normalizeVolume(double currentLoudnessDb) {
+    double loudnessDifference = -14 - currentLoudnessDb;
+
+    // Converted loudness difference to a volume multiplier
+    // We use a factor to convert dB difference to a linear scale
+    // 10^(difference / 20) converts dB difference to a linear volume factor
+    final volumeAdjustment = pow(10.0, loudnessDifference / 20.0);
+    printINFO("Normalized volume: $volumeAdjustment");
+    _player.setVolume(volumeAdjustment.toDouble().clamp(0, 1.0));
+  }
 
   Future<void> saveSessionData() async {
     if (Get.find<SettingsScreenController>().restorePlaybackSession.isFalse) {

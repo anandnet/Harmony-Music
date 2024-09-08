@@ -456,6 +456,11 @@ class PlayerController extends GetxController {
     _audioHandler.customAction("toggleSkipSilence", {"enable": enable});
   }
 
+  void toggleLoudnessNormalization(bool enable) {
+    _audioHandler
+        .customAction("toggleLoudnessNormalization", {"enable": enable});
+  }
+
   Future<void> toggleLoopMode() async {
     isLoopModeEnabled.isFalse
         ? _audioHandler.setRepeatMode(AudioServiceRepeatMode.one)

@@ -260,6 +260,13 @@ class PlayerController extends GetxController {
         if (isShuffleModeEnabled.isTrue) {
           await _audioHandler.customAction("shuffleCmd", {"index": 0});
         }
+
+        // added here to broadcast current mediaitem via Audio Service as list is updated
+        // if radio is started on current playing song
+        if (radio && (currentSong.value?.id == mediaItem?.id)) {
+          _audioHandler.customAction(
+              "upadateMediaItemInAudioService", {"index": 0});
+        }
       },
     ).then((value) async {
       if (playlistid != null) {
@@ -273,7 +280,7 @@ class PlayerController extends GetxController {
       }
     });
 
-    if (playlistid != null) {
+    if (playlistid != null || (radio && (currentSong.value?.id == mediaItem?.id))) {
       return;
     }
 

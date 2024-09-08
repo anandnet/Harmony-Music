@@ -570,6 +570,11 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     } else if (name == "shuffleCmd") {
       final songIndex = extras!['index'];
       _shuffleCmd(songIndex);
+    } else if (name == "upadateMediaItemInAudioService") {
+      //added to update media item from player controller
+      final songIndex = extras!['index'];
+      currentIndex = songIndex;
+      mediaItem.add(queue.value[currentIndex]);
     }
   }
 

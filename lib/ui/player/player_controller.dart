@@ -257,6 +257,9 @@ class PlayerController extends GetxController {
         radioContinuationParam = content['additionalParamsForNext'];
         await _audioHandler
             .updateQueue(List<MediaItem>.from(content['tracks']));
+        if (isShuffleModeEnabled.isTrue) {
+          await _audioHandler.customAction("shuffleCmd", {"index": 0});
+        }
       },
     ).then((value) async {
       if (playlistid != null) {
@@ -283,7 +286,6 @@ class PlayerController extends GetxController {
   Future<void> playPlayListSong(List<MediaItem> mediaItems, int index) async {
     isRadioModeOn = false;
     //open player pane,set current song and push first song into playing list,
-    final init = initFlagForPlayer;
     //currentSong.value = mediaItems[index];
 
     //for changing home content based on last interation
@@ -295,9 +297,10 @@ class PlayerController extends GetxController {
     });
 
     _playerPanelCheck();
-    !init
-        ? await _audioHandler.updateQueue(mediaItems)
-        : _audioHandler.addQueueItems(mediaItems);
+    await _audioHandler.updateQueue(mediaItems);
+    if (isShuffleModeEnabled.value) {
+      await _audioHandler.customAction("shuffleCmd", {"index": index});
+    }
     await _audioHandler.customAction("playByIndex", {"index": index});
   }
 
@@ -322,7 +325,7 @@ class PlayerController extends GetxController {
   ///if current queue is empty, push the song into Queue and play that song
   Future<void> enqueueSong(MediaItem mediaItem) async {
     //check if song is available in cache and allocate
-    await enqueueSongList([mediaItem]);
+    _audioHandler.addQueueItem(mediaItem);
   }
 
   ///enqueueSongList method add song List to current queue
@@ -331,11 +334,13 @@ class PlayerController extends GetxController {
       await playPlayListSong(mediaItems, 0);
       return;
     }
+    final listToEnqueue = <MediaItem>[];
     for (MediaItem item in mediaItems) {
       if (!currentQueue.contains(item)) {
-        _audioHandler.addQueueItem(item);
+        listToEnqueue.add(item);
       }
     }
+    _audioHandler.addQueueItems(listToEnqueue);
   }
 
   void playNext(MediaItem song) {

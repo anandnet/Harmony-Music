@@ -168,9 +168,10 @@ class PlayerController extends GetxController {
   void _listenForChangesInBufferedPosition() {
     _audioHandler.playbackState.listen((playbackState) {
       final oldState = progressBarStatus.value;
-      if (progressBarStatus.value.total.inSeconds!=0 && playbackState.bufferedPosition.inSeconds /
-              progressBarStatus.value.total.inSeconds >=
-          0.98) {
+      if (progressBarStatus.value.total.inSeconds != 0 &&
+          playbackState.bufferedPosition.inSeconds /
+                  progressBarStatus.value.total.inSeconds >=
+              0.98) {
         if (_newSongFlag) {
           _audioHandler.customAction(
               "checkWithCacheDb", {'mediaItem': currentSong.value!});
@@ -537,6 +538,12 @@ class PlayerController extends GetxController {
         removedSongId = box.getAt(0)['videoId'];
         box.deleteAt(0);
       }
+      final valuesCopy = box.values.toList();
+      for (int i = valuesCopy.length - 1; i >= 0; i--) {
+        if (valuesCopy[i]['videoId'] == mediaItem.id) {
+          box.deleteAt(i);
+        }
+      }
       box.add(MediaItemBuilder.toJson(mediaItem));
       try {
         final playlistController = Get.find<PlayListNAlbumScreenController>(
@@ -545,6 +552,10 @@ class PlayerController extends GetxController {
           playlistController.songList
               .removeWhere((element) => element.id == removedSongId);
         }
+        // removes current duplicate item from list
+        playlistController.songList
+            .removeWhere((element) => element.id == mediaItem.id);
+        // adds current item to list
         playlistController.addNRemoveItemsinList(mediaItem,
             action: 'add', index: 0);
 

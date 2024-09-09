@@ -79,7 +79,7 @@ dependencies:
     git:
       url: https://github.com/anandnet/Player-Response.git
       branch: main
-      ref: 8f09052ea4d2604223e6e1a8f91a772b0e62dfd0
+      ref: d7244f52d427b4aabde57be404d4316474613508
   window_manager: ^0.3.7
   smtc_windows: ^0.1.2
   audio_service_mpris: ^0.1.5

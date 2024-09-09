@@ -35,7 +35,7 @@ class SongInfoDialog extends StatelessWidget {
                 InfoItem(
                     title: "duration".tr,
                     value:
-                        "${streamInfo!["approxDurationMs"] ?? song.duration?.inMilliseconds ?? "NA"} ms"),
+                        "${streamInfo["approxDurationMs"] ?? song.duration?.inMilliseconds ?? "NA"} ms"),
                 InfoItem(
                     title: "audioCodec".tr,
                     value: streamInfo["audioCodec"] ?? "NA"),

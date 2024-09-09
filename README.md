@@ -75,6 +75,7 @@ Author of this Sotware is aware of the possibility of such damages and known def
 <a href = 'https://github.com/sigma67'>sigma67</a>'s unofficial ytmusic api project<br/>
 App UI inspired by <a href = 'https://github.com/vfsfitvnm'>vfsfitvnm</a>'s ViMusic<br/>
 Synced lyrics provided by <a href = 'https://lrclib.net' >LRCLIB</a> <br/>
+<a href = 'https://piped.video' >Piped</a> for playlists.
 
 #### Major Packages used
 * just_audio: ^0.9.35  -  provide audio player to play song  

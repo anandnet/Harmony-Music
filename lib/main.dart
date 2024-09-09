@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
 
 Future<void> startApplicationServices() async {
   Get.lazyPut(() => PipedServices(), fenix: true);
-  Get.lazyPut(() => MusicServices(true), fenix: true);
+  Get.lazyPut(() => MusicServices(), fenix: true);
   Get.lazyPut(() => ThemeController(), fenix: true);
   Get.lazyPut(() => PlayerController(), fenix: true);
   Get.lazyPut(() => HomeScreenController(), fenix: true);

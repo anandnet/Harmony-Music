@@ -5,7 +5,6 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
 import 'package:hive/hive.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '/models/album.dart';
 import '/services/utils.dart';
@@ -20,15 +19,6 @@ enum AudioQuality {
 }
 
 class MusicServices extends getx.GetxService {
-  late YoutubeExplode _yt;
-  MusicServices(bool isMain) {
-    if (isMain) {
-      init();
-    } else {
-      _yt = YoutubeExplode();
-    }
-  }
-
   final Map<String, String> _headers = {
     'user-agent': userAgent,
     'accept': '*/*',
@@ -49,6 +39,12 @@ class MusicServices extends getx.GetxService {
     }
   };
 
+  @override
+  void onInit() {
+    init();
+    super.onInit();
+  }
+
   final dio = Dio();
 
   Future<void> init() async {
@@ -61,7 +57,6 @@ class MusicServices extends getx.GetxService {
       'contentPlaybackContext': {'signatureTimestamp': signatureTimestamp},
     };
     _headers['X-Goog-Visitor-Id'] = 'CgszaE1mUm55NHNwayjXiamfBg%3D%3D';
-    _yt = YoutubeExplode();
     final appPrefsBox = Hive.box('AppPrefs');
     if (appPrefsBox.containsKey('visitorId')) {
       final visitorData = appPrefsBox.get("visitorId");
@@ -523,42 +518,6 @@ class MusicServices extends getx.GetxService {
     return [false, null];
   }
 
-  Future<List<String>?> getSongStreamUrl(String songId,
-      {int attempt = 1}) async {
-    try {
-      if (songId.substring(0, 4) == "MPED") {
-        songId = songId.substring(4);
-      }
-      final songStreamManifest =
-          await _yt.videos.streamsClient.getManifest(songId);
-      final streamUriList = songStreamManifest.audioOnly.sortByBitrate();
-
-      // for (AudioOnlyStreamInfo x in streamUriList) {
-      //   printINFO("${x.audioCodec} ${x.size} ${x.tag}");
-      // }
-
-      return [
-        streamUriList.last.url.toString(),
-        streamUriList
-            .firstWhere((element) => (element.tag == 251) || element.tag == 140)
-            .url
-            .toString()
-      ];
-    } catch (e) {
-      printERROR("Error $e.");
-      if (e.toString() == "Connection closed before full header was received" &&
-          attempt < 3) {
-        attempt = attempt + 1;
-        return getSongStreamUrl(songId, attempt: attempt);
-      }
-      return null;
-    }
-  }
-
-  StreamClient getStreamClient() {
-    return _yt.videos.streamsClient;
-  }
-
   Future<Map<String, dynamic>> search(String query,
       {String? filter,
       String? scope,
@@ -836,8 +795,10 @@ class MusicServices extends getx.GetxService {
     return result;
   }
 
-  void closeYtClient() {
-    _yt.close();
+  @override
+  void onClose() {
+    dio.close();
+    super.onClose();
   }
 }
 

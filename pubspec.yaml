@@ -40,7 +40,6 @@ dependencies:
   #http: ^0.13.5
   dio: ^5.3.3
   cached_network_image: ^3.3.1
-  youtube_explode_dart: ^2.0.2
   audio_service: ^0.18.13
   palette_generator: ^0.3.3+3
   path_provider: ^2.1.1
@@ -80,7 +79,7 @@ dependencies:
     git:
       url: https://github.com/anandnet/Player-Response.git
       branch: main
-      ref: 0771fe6a1ec1a0493a7212cceabed48cf2811a0f
+      ref: 8f09052ea4d2604223e6e1a8f91a772b0e62dfd0
   window_manager: ^0.3.7
   smtc_windows: ^0.1.2
   audio_service_mpris: ^0.1.5

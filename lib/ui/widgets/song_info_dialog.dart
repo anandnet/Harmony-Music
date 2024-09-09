@@ -13,22 +13,7 @@ class SongInfoDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<dynamic, dynamic>? streamInfo;
-    final nullVal = {
-      "audioCodec": null,
-      "bitrate": null,
-      "loudnessDb": null,
-      "approxDurationMs": null
-    };
-    if (isDownloaded) {
-      streamInfo =
-          Hive.box("SongDownloads").get(song.id)["streamInfo"] ?? nullVal;
-    } else {
-      final dbStreamData = Hive.box("SongsUrlCache").get(song.id);
-      streamInfo = dbStreamData != null
-          ? dbStreamData[Hive.box('AppPrefs').get('streamingQuality') + 1]
-          : nullVal;
-    }
+    Map<dynamic, dynamic> streamInfo = _getStreamInfo(song.id);
     return CommonDialog(
       child: SizedBox(
         height: Get.mediaQuery.size.height * .7,
@@ -82,6 +67,28 @@ class SongInfoDialog extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Map<dynamic, dynamic> _getStreamInfo(String id) {
+    Map<dynamic, dynamic> tempstreamInfo;
+    final nullVal = {
+      "audioCodec": null,
+      "bitrate": null,
+      "loudnessDb": null,
+      "approxDurationMs": null
+    };
+    if (isDownloaded) {
+      final song = Hive.box("SongDownloads").get(id);
+
+      tempstreamInfo =
+          song["streamInfo"] == null ? nullVal : song["streamInfo"][1];
+    } else {
+      final dbStreamData = Hive.box("SongsUrlCache").get(id);
+      tempstreamInfo = dbStreamData != null
+          ? dbStreamData[Hive.box('AppPrefs').get('streamingQuality') + 1]
+          : nullVal;
+    }
+    return tempstreamInfo;
   }
 }
 

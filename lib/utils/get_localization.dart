@@ -1348,6 +1348,11 @@ class Languages extends Translations {
           "endOfThisSong": "End of this song",
           "appInfo": "App Info",
           "download": "Download",
+          "networkError": "Network error! Check your network connection.",
+          "downloadError2":
+              "Requested song is not downloadable due to server restriction. You may try again",
+          "downloadError3":
+              "Downloading failed due to network error! Please try again",
           "music&Playback": "Music & Playback",
           "content": "Content",
           "personalisation": "Personalisation",

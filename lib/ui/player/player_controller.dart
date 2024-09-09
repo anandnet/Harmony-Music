@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
+import '../widgets/snackbar.dart';
 import '/services/synced_lyrics_service.dart';
 import '/ui/screens/Settings/settings_screen_controller.dart';
 import '../../services/windows_audio_service.dart';
@@ -135,7 +136,7 @@ class PlayerController extends GetxController {
       if (processingState == AudioProcessingState.loading) {
         buttonState.value = PlayButtonState.loading;
       } else if (processingState == AudioProcessingState.buffering) {
-      } else if (!isPlaying) {
+      } else if (!isPlaying || processingState == AudioProcessingState.error) {
         buttonState.value = PlayButtonState.paused;
       } else if (processingState != AudioProcessingState.completed) {
         buttonState.value = PlayButtonState.playing;
@@ -167,9 +168,9 @@ class PlayerController extends GetxController {
   void _listenForChangesInBufferedPosition() {
     _audioHandler.playbackState.listen((playbackState) {
       final oldState = progressBarStatus.value;
-      if (playbackState.bufferedPosition.inSeconds /
-              progressBarStatus.value.total.inSeconds ==
-          1) {
+      if (progressBarStatus.value.total.inSeconds!=0 && playbackState.bufferedPosition.inSeconds /
+              progressBarStatus.value.total.inSeconds >=
+          0.98) {
         if (_newSongFlag) {
           _audioHandler.customAction(
               "checkWithCacheDb", {'mediaItem': currentSong.value!});
@@ -264,8 +265,8 @@ class PlayerController extends GetxController {
         // added here to broadcast current mediaitem via Audio Service as list is updated
         // if radio is started on current playing song
         if (radio && (currentSong.value?.id == mediaItem?.id)) {
-          _audioHandler.customAction(
-              "upadateMediaItemInAudioService", {"index": 0});
+          _audioHandler
+              .customAction("upadateMediaItemInAudioService", {"index": 0});
         }
       },
     ).then((value) async {
@@ -280,7 +281,8 @@ class PlayerController extends GetxController {
       }
     });
 
-    if (playlistid != null || (radio && (currentSong.value?.id == mediaItem?.id))) {
+    if (playlistid != null ||
+        (radio && (currentSong.value?.id == mediaItem?.id))) {
       return;
     }
 
@@ -626,6 +628,20 @@ class PlayerController extends GetxController {
 
   Future<void> openEqualizer() async {
     await _audioHandler.customAction("openEqualizer");
+  }
+
+  /// Called from audio handler in case audio is not playable
+  /// or returned streamInfo null due to network error
+  void notifyPlayError(bool networkError) {
+    if (networkError) {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
+          Get.context!, "networkError1".tr,
+          size: SanckBarSize.MEDIUM));
+    } else {
+      ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
+          Get.context!, "songNotPlayable".tr,
+          size: SanckBarSize.BIG, duration: const Duration(seconds: 2)));
+    }
   }
 
   @override

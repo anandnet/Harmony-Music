@@ -125,9 +125,11 @@ class Body extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 // for Desktop search bar
-                final sscontroller = Get.find<SearchScreenController>();
-                if (sscontroller.focusNode.hasFocus) {
-                  sscontroller.focusNode.unfocus();
+                if (GetPlatform.isDesktop) {
+                  final sscontroller = Get.find<SearchScreenController>();
+                  if (sscontroller.focusNode.hasFocus) {
+                    sscontroller.focusNode.unfocus();
+                  }
                 }
               },
               child: Obx(

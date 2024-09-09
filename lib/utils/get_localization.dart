@@ -1337,6 +1337,7 @@ class Languages extends Translations {
               "Queue can't be shuffled when shuffle mode is enabled",
           "queuerearrangingDeniedMsg":
               "Queue can't be rearranged when shuffle mode is enabled",
+          "songNotPlayable": "Song is not playable due to server restriction!",
           "upNext": "Up Next",
           "removeFromLib": "Remove from Library Songs",
           "sleepTimer": "Sleep Timer",

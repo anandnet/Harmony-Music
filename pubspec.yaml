@@ -80,7 +80,7 @@ dependencies:
     git:
       url: https://github.com/anandnet/Player-Response.git
       branch: main
-      ref: eea92bff4099a351b7278d590433ddf1da6f4bc0
+      ref: 0771fe6a1ec1a0493a7212cceabed48cf2811a0f
   window_manager: ^0.3.7
   smtc_windows: ^0.1.2
   audio_service_mpris: ^0.1.5
@@ -90,6 +90,7 @@ dependencies:
   tray_manager: ^0.2.3
   widget_marquee: ^0.0.8
   restart_app: ^1.2.1
+  logger: ^2.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

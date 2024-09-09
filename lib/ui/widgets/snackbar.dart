@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 enum SanckBarSize { BIG, MEDIUM, SMALL }
 
 SnackBar snackbar(BuildContext context, String text,
-    {SanckBarSize size = SanckBarSize.MEDIUM}) {
+    {SanckBarSize size = SanckBarSize.MEDIUM,
+    Duration duration = const Duration(seconds: 1)}) {
   final scrWidth = MediaQuery.of(context).size.width;
   final hrMargin = size == SanckBarSize.BIG
       ? (scrWidth - 300) / 2
@@ -27,7 +28,7 @@ SnackBar snackbar(BuildContext context, String text,
 
     margin: EdgeInsets.only(bottom: 100.0, left: hrMargin, right: hrMargin),
     behavior: SnackBarBehavior.floating,
-    duration: const Duration(seconds: 1),
+    duration: duration,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
   );
 }

@@ -205,5 +205,20 @@
     "bitrate": "Bitrate",
     "title": "Titel",
     "duration": "Dauer",
-    "audioCodec": "Audio Codec"
+    "audioCodec": "Audio Codec",
+    "appInfo": "App Infos",
+    "download": "Herunterladen",
+    "loudnessNormalization": "Lautstärkenormalisierung",
+    "loudnessNormalizationDes": "Stellt für alle Titel die gleiche Lautstärke ein (experimentell) (Funktioniert nicht bei Titeln, die mit einer früheren Version (< v1.10.0) heruntergeladen wurden)",
+    "queueShufflingDeniedMsg": "Warteschlange kann nicht gemischt werden, wenn der Shuffle-Modus aktiviert ist",
+    "queuerearrangingDeniedMsg": "Die Warteschlange kann nicht neu geordnet werden, wenn der Shuffle-Modus aktiviert ist",
+    "songNotPlayable": "Song ist aufgrund von Servereinschränkungen nicht abspielbar!",
+    "networkError": "Netzwerkfehler! Überprüfe deine Internetverbindung.",
+    "downloadError2": "Der angeforderte Titel kann aufgrund von Serverbeschränkungen nicht heruntergeladen werden. Du kannst es erneut versuchen",
+    "downloadError3": "Herunterladen fehlgeschlagen aufgrund eines Netzwerkfehlers. Versuche es erneut",
+    "personalisation": "Personalisierung",
+    "urlSearchDes": "URL erkannt. Tippe darauf, um den zugehörigen Inhalt zu öffnen/abzuspielen",
+    "music&Playback": "Musik & Wiedergabe",
+    "content": "Inhalt",
+    "androidBackupWarning": "Nicht getestet: Wenn du das Kontrollkästchen nach dem Herunterladen von mehr als 60 Dateien aktivierst, kann der Vorgang viel Speicher beanspruchen und zum Absturz des Telefons oder der App führen. Fahre auf eigene Gefahr fort."
 }

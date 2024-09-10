@@ -202,5 +202,20 @@
     "songInfo": "Informácie o skladbe",
     "bitrate": "Bitrate",
     "loudnessDb": "Hlasitosť (Db)",
-    "restartApp": "Reštartovať aplikáciu"
+    "restartApp": "Reštartovať aplikáciu",
+    "downloadError2": "Požadovanú skladbu nie je možné stiahnuť z dôvodu obmedzenia servera. Môžete to skúsiť znova",
+    "download": "Stiahnuť",
+    "downloadError3": "Sťahovanie zlyhalo z dôvodu chyby siete! Skúste to prosím znova",
+    "content": "Obsah",
+    "personalisation": "Prispôsobenie",
+    "music&Playback": "Hudba a prehrávanie",
+    "loudnessNormalization": "Normalizácia hlasitosti",
+    "queueShufflingDeniedMsg": "Keď je zapnutý režim náhodného výberu, poradie nie je možné premiešať",
+    "queuerearrangingDeniedMsg": "Keď je zapnutý režim náhodného výberu, poradie nie je možné meniť",
+    "songNotPlayable": "Skladbu nie je možné prehrať z dôvodu obmedzenia servera!",
+    "appInfo": "Informácie o aplikácii",
+    "networkError": "Chyba siete! Skontrolujte pripojenie k internetu.",
+    "loudnessNormalizationDes": "Nastaví rovnakú úroveň hlasitosti pre všetky skladby (Experimentálne) (Nebude fungovať na skladbách stiahnutých v predchádzajúcej verzii(< v1.10.0))",
+    "urlSearchDes": "Zistená URL adresa Kliknutím na ňu otvoríte/prehráte súvisiaci obsah",
+    "androidBackupWarning": "Netestované: Po zaškrtnutí políčka po stiahnutí viac ako 60 súborov môže proces spotrebovať veľké množstvo pamäte a môže spôsobiť pád telefónu alebo aplikácie. Pokračujte na vlastné riziko."
 }

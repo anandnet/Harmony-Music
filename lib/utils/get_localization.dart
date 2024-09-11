@@ -1049,7 +1049,29 @@ class Languages extends Translations {
           "includeDownloadedFiles": "Zahrnout stažené skladby",
           "backupInProgress": "Probíhá zálohování...",
           "restoreAppData": "Obnovit data aplikace",
-          "restartApp": "Restartovat aplikaci"
+          "restartApp": "Restartovat aplikaci",
+          "songNotPlayable": "Skladbu nelze přehrát z důvodu omezení serveru!",
+          "appInfo": "Informace o aplikaci",
+          "download": "Stáhnout",
+          "networkError": "Chyba sítě! Zkontrolujte připojení k internetu.",
+          "downloadError2":
+              "Požadovanou skladbu nelze stáhnout z důvodu omezení serveru. Můžete to zkusit znovu",
+          "downloadError3":
+              "Stažení se nezdařilo kvůli chybě sítě! Zkuste to prosím znovu",
+          "music&Playback": "Hudba a přehrávání",
+          "content": "Obsah",
+          "personalisation": "Přizpůsobení",
+          "loudnessNormalization": "Normalizace hlasitosti",
+          "queueShufflingDeniedMsg":
+              "Frontu nelze zamíchat, když je povolen režim náhodného výběru",
+          "queuerearrangingDeniedMsg":
+              "Frontu nelze měnit, když je povolen režim náhodného výběru",
+          "loudnessNormalizationDes":
+              "Nastaví stejnou úroveň hlasitosti pro všechny skladby (Experimentální) (Nebude fungovat u skladeb stažených v předchozí verzi(< v1.10.0))",
+          "urlSearchDes":
+              "Zjištěná URL Kliknutím na ni otevřete/přehrajete související obsah",
+          "androidBackupWarning":
+              "Netestováno: Zaškrtnutím políčka po stažení více než 60 souborů může proces spotřebovat velké množství paměti a může způsobit pád telefonu nebo aplikace. Pokračujte na vlastní nebezpečí."
         },
         "de": {
           "home": "Start",
@@ -1284,7 +1306,30 @@ class Languages extends Translations {
           "bitrate": "Bitrate",
           "title": "Titel",
           "duration": "Dauer",
-          "audioCodec": "Audio Codec"
+          "audioCodec": "Audio Codec",
+          "appInfo": "App Infos",
+          "download": "Herunterladen",
+          "loudnessNormalization": "Lautstärkenormalisierung",
+          "loudnessNormalizationDes":
+              "Stellt für alle Titel die gleiche Lautstärke ein (experimentell) (Funktioniert nicht bei Titeln, die mit einer früheren Version (< v1.10.0) heruntergeladen wurden)",
+          "queueShufflingDeniedMsg":
+              "Warteschlange kann nicht gemischt werden, wenn der Shuffle-Modus aktiviert ist",
+          "queuerearrangingDeniedMsg":
+              "Die Warteschlange kann nicht neu geordnet werden, wenn der Shuffle-Modus aktiviert ist",
+          "songNotPlayable":
+              "Song ist aufgrund von Servereinschränkungen nicht abspielbar!",
+          "networkError": "Netzwerkfehler! Überprüfe deine Internetverbindung.",
+          "downloadError2":
+              "Der angeforderte Titel kann aufgrund von Serverbeschränkungen nicht heruntergeladen werden. Du kannst es erneut versuchen",
+          "downloadError3":
+              "Herunterladen fehlgeschlagen aufgrund eines Netzwerkfehlers. Versuche es erneut",
+          "personalisation": "Personalisierung",
+          "urlSearchDes":
+              "URL erkannt. Tippe darauf, um den zugehörigen Inhalt zu öffnen/abzuspielen",
+          "music&Playback": "Musik & Wiedergabe",
+          "content": "Inhalt",
+          "androidBackupWarning":
+              "Nicht getestet: Wenn du das Kontrollkästchen nach dem Herunterladen von mehr als 60 Dateien aktivierst, kann der Vorgang viel Speicher beanspruchen und zum Absturz des Telefons oder der App führen. Fahre auf eigene Gefahr fort."
         },
         "en": {
           "home": "Home",
@@ -1821,7 +1866,7 @@ class Languages extends Translations {
           "errorOccuredAlert": "¡Ha ocurrido un error!",
           "songs": "Canciones",
           "high": "Alta",
-          "searchDes": "Canciones,Lista de reproducción,Álbum o Artista",
+          "searchDes": "Canciones, Lista de reproducción, Álbum o Artista",
           "results": "Resultados",
           "playlistBlacklistAlert": "¡Lista de reproducción en la lista negra!",
           "artistDesNotAvailable": "¡Descripción no disponible!",
@@ -1937,7 +1982,28 @@ class Languages extends Translations {
           "duration": "Duración",
           "audioCodec": "Codec de audio",
           "bitrate": "Tasa de bits",
-          "loudnessDb": "LoudnessDb"
+          "loudnessDb": "LoudnessDb",
+          "appInfo": "Información de la aplicación",
+          "download": "Descargar",
+          "downloadError2":
+              "La canción solicitada no se puede descargar debido a una restricción del servidor. Puedes intentarlo nuevamente",
+          "content": "Contenido",
+          "loudnessNormalization": "Normalización del volumen",
+          "urlSearchDes":
+              "URL detectada haz clic en ella para abrir/reproducir el contenido asociado",
+          "queuerearrangingDeniedMsg":
+              "La cola no se puede reorganizar cuando el modo aleatorio está habilitado",
+          "songNotPlayable":
+              "¡La canción no se puede reproducir debido a la restricción del servidor!",
+          "networkError": "¡Error de red! Verifica tu conexión.",
+          "downloadError3":
+              "¡La descarga falló debido a un error de red! Inténtalo de nuevo",
+          "music&Playback": "Música y reproducción",
+          "androidBackupWarning":
+              "No probado: si seleccionas la casilla de verificación después de descargar más de 60 archivos, el proceso puede consumir una gran cantidad de memoria y provocar que el teléfono o la aplicación se bloqueen. Continúa bajo tu propio riesgo.",
+          "personalisation": "Personalización",
+          "loudnessNormalizationDes":
+              "Establece el mismo nivel de volumen para todas las canciones (Experimental) (No funcionará en canciones descargadas en versiones anteriores (< v1.10.0))"
         },
         "fi": {
           "libAlbums": "Kirjaston albumit",
@@ -5378,7 +5444,30 @@ class Languages extends Translations {
           "songInfo": "Informácie o skladbe",
           "bitrate": "Bitrate",
           "loudnessDb": "Hlasitosť (Db)",
-          "restartApp": "Reštartovať aplikáciu"
+          "restartApp": "Reštartovať aplikáciu",
+          "downloadError2":
+              "Požadovanú skladbu nie je možné stiahnuť z dôvodu obmedzenia servera. Môžete to skúsiť znova",
+          "download": "Stiahnuť",
+          "downloadError3":
+              "Sťahovanie zlyhalo z dôvodu chyby siete! Skúste to prosím znova",
+          "content": "Obsah",
+          "personalisation": "Prispôsobenie",
+          "music&Playback": "Hudba a prehrávanie",
+          "loudnessNormalization": "Normalizácia hlasitosti",
+          "queueShufflingDeniedMsg":
+              "Keď je zapnutý režim náhodného výberu, poradie nie je možné premiešať",
+          "queuerearrangingDeniedMsg":
+              "Keď je zapnutý režim náhodného výberu, poradie nie je možné meniť",
+          "songNotPlayable":
+              "Skladbu nie je možné prehrať z dôvodu obmedzenia servera!",
+          "appInfo": "Informácie o aplikácii",
+          "networkError": "Chyba siete! Skontrolujte pripojenie k internetu.",
+          "loudnessNormalizationDes":
+              "Nastaví rovnakú úroveň hlasitosti pre všetky skladby (Experimentálne) (Nebude fungovať na skladbách stiahnutých v predchádzajúcej verzii(< v1.10.0))",
+          "urlSearchDes":
+              "Zistená URL adresa Kliknutím na ňu otvoríte/prehráte súvisiaci obsah",
+          "androidBackupWarning":
+              "Netestované: Po zaškrtnutí políčka po stiahnutí viac ako 60 súborov môže proces spotrebovať veľké množstvo pamäte a môže spôsobiť pád telefónu alebo aplikácie. Pokračujte na vlastné riziko."
         },
         "sr": {
           "playlistCreatednsongAddedAlert":
@@ -5605,7 +5694,30 @@ class Languages extends Translations {
           "duration": "Трајање",
           "audioCodec": "Аудио кодек",
           "loudnessDb": "ГласноћаDb",
-          "bitrate": "Брзина преноса"
+          "bitrate": "Брзина преноса",
+          "songNotPlayable":
+              "Песма се не може пустити због ограничења сервера!",
+          "appInfo": "Информације о апликацији",
+          "download": "Преузми",
+          "downloadError2":
+              "Затражена песма се не може преузети због ограничења сервера. Можете покушати поново",
+          "music&Playback": "Музика и репродукција",
+          "content": "Садржај",
+          "personalisation": "Персонализација",
+          "queueShufflingDeniedMsg":
+              "Редослед се не може насумично мењати када је омогућен режим насумичне репродукције",
+          "networkError": "Мрежна грешка! Проверите своју интернет везу.",
+          "queuerearrangingDeniedMsg":
+              "Редослед се не може преуредити када је омогућен режим насумичне репродукције",
+          "downloadError3":
+              "Преузимање није успело због грешке на мрежи! Покушајте поново",
+          "loudnessNormalization": "Нормализација гласноће",
+          "loudnessNormalizationDes":
+              "Поставља исти ниво гласноће за све песме (експериментално) (Неће радити на песмама преузетим у претходној верзији (< v1.10.0))",
+          "urlSearchDes":
+              "Откривена URL адреса, додирните на њу да бисте отворили/пустили повезани садржај",
+          "androidBackupWarning":
+              "Није тестирано: Означавањем поља за потврду након преузимања више од 60 фајлова, процес може заузети велику количину меморије и може довести до отказивања телефона или апликације. Наставите на сопствену одговорност."
         },
         "sv": {
           "settings": "Inställningar",

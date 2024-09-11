@@ -14,6 +14,7 @@ const langMap = {
   "fj": "Fijian",
   "fr": "French",
   "ga": "Irish",
+  "gl": "Galician",
   "hi": "Hindi",
   "ia": "Interlingua",
   "id": "Indonesian",

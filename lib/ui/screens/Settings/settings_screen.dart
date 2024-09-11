@@ -323,7 +323,7 @@ class SettingsScreen extends StatelessWidget {
                       settingsController.showDownLoc();
                     },
                   ),
-                  ListTile(
+                  if(GetPlatform.isAndroid) ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),
                       title: Text("loudnessNormalization".tr),
                       subtitle: Text("loudnessNormalizationDes".tr,

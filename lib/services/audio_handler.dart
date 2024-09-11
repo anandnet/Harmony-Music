@@ -440,6 +440,10 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       await _playList.add(_createAudioSource(currentSong));
       isSongLoading = false;
 
+      if (loudnessNormalizationEnabled && GetPlatform.isAndroid) {
+        _normalizeVolume(streamInfo[1]['loudnessDb'] ?? 0);
+      }
+
       if (restoreSession) {
         if (!GetPlatform.isDesktop) {
           final position = extras['position'];
@@ -458,10 +462,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       } else {
         await _player.play();
       }
-
-      if (loudnessNormalizationEnabled) {
-        _normalizeVolume(streamInfo[1]['loudnessDb'] ?? 0);
-      }
     } else if (name == "checkWithCacheDb" && isPlayingUsingLockCachingSource) {
       final song = extras!['mediaItem'] as MediaItem;
       final songsCacheBox = Hive.box("SongsCache");
@@ -472,7 +472,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         final dbStreamData = Hive.box("SongsUrlCache").get(song.id);
         final jsonData = MediaItemBuilder.toJson(song);
         jsonData['duration'] = _player.duration!.inSeconds;
-        // playbility status and info 
+        // playbility status and info
         jsonData['streamInfo'] = dbStreamData != null
             ? [
                 true,
@@ -512,11 +512,13 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         final newMed = currMed.copyWith(duration: _player.duration);
         mediaItem.add(newMed);
       });
-      await _player.play();
+
       // Normalize audio
-      if (loudnessNormalizationEnabled) {
+      if (loudnessNormalizationEnabled && GetPlatform.isAndroid) {
         _normalizeVolume(streamInfo[1]['loudnessDb'] ?? 0);
       }
+
+      await _player.play();
     } else if (name == 'toggleSkipSilence') {
       final enable = (extras!['enable'] as bool);
       await _player.setSkipSilenceEnabled(enable);
@@ -527,20 +529,25 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         return;
       }
 
-      if (loudnessNormalizationEnabled && _player.playing) {
-        final currentSongId = (queue.value[currentIndex]).id;
-        final songQualityIndex = Hive.box('AppPrefs').get('streamingQuality');
-        if (Hive.box("SongsUrlCache").containsKey(currentSongId)) {
-          _normalizeVolume((Hive.box("SongsUrlCache")
-              .get(currentSongId))[songQualityIndex + 1]["loudnessDb"]);
-          return;
-        }
+      if (loudnessNormalizationEnabled) {
+        try {
+          final currentSongId = (queue.value[currentIndex]).id;
+          final songQualityIndex = Hive.box('AppPrefs').get('streamingQuality');
+          if (Hive.box("SongsUrlCache").containsKey(currentSongId)) {
+            _normalizeVolume((Hive.box("SongsUrlCache")
+                .get(currentSongId))[songQualityIndex + 1]["loudnessDb"]);
+            return;
+          }
 
-        if (Hive.box("SongDownloads").containsKey(currentSongId)) {
-          final streamInfo =
-              (Hive.box("SongDownloads").get(currentSongId))["streamInfo"];
+          if (Hive.box("SongDownloads").containsKey(currentSongId)) {
+            final streamInfo =
+                (Hive.box("SongDownloads").get(currentSongId))["streamInfo"];
 
-          _normalizeVolume(streamInfo == null ? 0 : streamInfo["loudnessDb"]);
+            _normalizeVolume(
+                streamInfo == null ? 0 : streamInfo[1]["loudnessDb"]);
+          }
+        } catch (e) {
+          printERROR(e);
         }
       }
     } else if (name == "shuffleQueue") {
@@ -601,13 +608,14 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   }
 
   void _normalizeVolume(double currentLoudnessDb) {
-    double loudnessDifference = -14 - currentLoudnessDb;
+    double loudnessDifference = -10 - currentLoudnessDb;
 
     // Converted loudness difference to a volume multiplier
     // We use a factor to convert dB difference to a linear scale
     // 10^(difference / 20) converts dB difference to a linear volume factor
     final volumeAdjustment = pow(10.0, loudnessDifference / 20.0);
-    printINFO("Normalized volume: $volumeAdjustment");
+    printINFO(
+        "loudness:$currentLoudnessDb Normalized volume: $volumeAdjustment");
     _player.setVolume(volumeAdjustment.toDouble().clamp(0, 1.0));
   }
 

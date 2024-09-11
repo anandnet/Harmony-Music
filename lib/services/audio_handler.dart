@@ -75,6 +75,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     shuffleModeEnabled = appPrefsBox.get("isShuffleModeEnabled") ?? false;
     loudnessNormalizationEnabled =
         appPrefsBox.get("loudnessNormalizationEnabled") ?? false;
+    _listenForDurationChanges();
     if (GetPlatform.isAndroid) {
       deviceEqualizer = DeviceEqualizer();
       _listenSessionIdStream();
@@ -205,6 +206,20 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     _player.sequenceStateStream.listen((SequenceState? sequenceState) {
       final sequence = sequenceState?.effectiveSequence;
       if (sequence == null || sequence.isEmpty) return;
+    });
+  }
+
+  void _listenForDurationChanges() {
+    _player.durationStream.listen((duration) async {
+      final currQueue = queue.value;
+      if (currentIndex == null || currQueue.isEmpty) return;
+      final currentSong = queue.value[currentIndex];
+      if (currentSong.duration == null) {
+        final newMediaItem = currentSong.copyWith(duration: duration);
+        await Future.delayed(const Duration(milliseconds: 700), () {
+          mediaItem.add(newMediaItem);
+        });
+      }
     });
   }
 
@@ -506,12 +521,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
       await _playList.add(_createAudioSource(currMed));
       isSongLoading = false;
-
-      // Update new mediaItem with duration
-      Future.delayed(const Duration(milliseconds: 800), () {
-        final newMed = currMed.copyWith(duration: _player.duration);
-        mediaItem.add(newMed);
-      });
 
       // Normalize audio
       if (loudnessNormalizationEnabled && GetPlatform.isAndroid) {

@@ -64,21 +64,22 @@ class BackupDialog extends StatelessWidget {
                                             : "letsStrart".tr,
                                 textAlign: TextAlign.center,
                               )),
-                          Obx(() => (GetPlatform.isAndroid &&
-                                  backupDialogController
-                                      .isDownloadedfilesSeclected.isTrue)
-                              ? Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text(
-                                    "androidBackupWarning".tr,
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .copyWith(fontWeight: FontWeight.bold),
-                                  ),
-                                )
-                              : const SizedBox.shrink())
+                          if (GetPlatform.isAndroid)
+                            Obx(() => (backupDialogController
+                                    .isDownloadedfilesSeclected.isTrue)
+                                ? Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Text(
+                                      "androidBackupWarning".tr,
+                                      textAlign: TextAlign.center,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                : const SizedBox.shrink())
                         ],
                       )
                     ],

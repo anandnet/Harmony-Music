@@ -1,3 +1,37 @@
+## 1.10.0
+Fixes:
+* fix: allow use of qt window decorations by @Merrit
+* fix: system tray causing crash on linux by @Merrit
+* Fixed Won't load big playlists #222
+* Fixed tab ui mismatch issue #239
+* Fixed griditem overlap in library playlist section #239
+* Fixed song restarts from beginning when radio is enabled #223
+* Fixed - Repeatative entries from Recently played can be removed #261
+* Changes in downloader & Fixed issue - Audio from videos will not download #264
+
+Features:
+* Poweramp support #82
+* Enabled backup and restore feature for Android #90 #250
+* Made App landscape mode compatible #218 #115
+* Added support for direct opening of YTM links #242
+* Added song info for current song #201
+* Added option to view lyrics in desktop mode #226
+* Added play/pause feature using spacebar #249
+* Added scrollbars for horizontal contents for desktops #249
+* Added button to minimize full screen player #249
+* Added shuffle mode #174 #252
+* Added searchbar in homescreen for desktops #249
+* Added loudness normalization feature (Android) #15 #243
+* Added app version info & customized settings screen #254
+* Added feature to browse content using url via search #203
+
+## 1.9.2
+* Fixed Showing Black screen #197
+* Fixed loading of deeplink playlist #198
+* Fixed broken things #210,#209,#198
+* Backup & restore feature for Windows by @encryptionstudio
+
+
 ## 1.9.1
 * Added volume slider for desktop app #169
 * Added open in youtube/youtube music option #189

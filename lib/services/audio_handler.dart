@@ -212,13 +212,11 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   void _listenForDurationChanges() {
     _player.durationStream.listen((duration) async {
       final currQueue = queue.value;
-      if (currentIndex == null || currQueue.isEmpty) return;
+      if (currentIndex == null || currQueue.isEmpty || duration == null) return;
       final currentSong = queue.value[currentIndex];
-      if (currentSong.duration == null) {
+      if (currentSong.duration == null || currentIndex == 0) {
         final newMediaItem = currentSong.copyWith(duration: duration);
-        await Future.delayed(const Duration(milliseconds: 700), () {
-          mediaItem.add(newMediaItem);
-        });
+        mediaItem.add(newMediaItem);
       }
     });
   }

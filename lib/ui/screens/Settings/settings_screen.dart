@@ -49,7 +49,7 @@ class SettingsScreen extends StatelessWidget {
               Obx(
                 () => settingsController.isNewVersionAvailable.value
                     ? Padding(
-                        padding: const EdgeInsets.only(top: 8.0, right: 10),
+                        padding: const EdgeInsets.only(top: 8.0, right: 10,bottom: 8.0),
                         child: Material(
                           type: MaterialType.transparency,
                           child: ListTile(

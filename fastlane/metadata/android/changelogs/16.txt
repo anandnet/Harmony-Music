@@ -1,0 +1,15 @@
+* Fixed Won't load big playlists #222
+* Fixed tab ui mismatch issue #239
+* Fixed griditem overlap in library playlist section #239
+* Fixed song restarts from beginning when radio is enabled #223
+* Fixed - Repeatative entries from Recently played can be removed #261
+* Changes in downloader & Fixed issue - Audio from videos will not download #264
+* Poweramp support #82
+* Enabled backup and restore feature for Android #90 #250
+* Made App landscape mode compatible #218 #115
+* Added support for direct opening of YTM links #242
+* Added song info for current song #201
+* Added shuffle mode #174 #252
+* Added loudness normalization feature (Android) #15 #243
+* Added app version info & customized settings screen #254
+* Added feature to browse content using url via search #203

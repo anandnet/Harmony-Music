@@ -101,15 +101,16 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                                       playListNAlbumScreenController
                                                           .songList
                                                           .toList())
-                                                  .whenComplete(() =>
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(snackbar(
-                                                              context,
-                                                              "songEnqueueAlert"
-                                                                  .tr,
-                                                              size: SanckBarSize
-                                                                  .MEDIUM)));
+                                                  .whenComplete(() {
+                                                if (context.mounted) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(snackbar(
+                                                          context,
+                                                          "songEnqueueAlert".tr,
+                                                          size: SanckBarSize
+                                                              .MEDIUM));
+                                                }
+                                              });
                                             },
                                             child: Text(
                                               "enqueueAll".tr,
@@ -161,28 +162,30 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                                   .addNremoveFromLibrary(
                                                       content,
                                                       add: add)
-                                                  .then((value) => ScaffoldMessenger
-                                                          .of(context)
-                                                      .showSnackBar(snackbar(
-                                                          context,
-                                                          value
-                                                              ? add
-                                                                  ? playListNAlbumScreenController
-                                                                          .isAlbum
-                                                                      ? "albumBookmarkAddAlert"
-                                                                          .tr
-                                                                      : "playlistBookmarkAddAlert"
-                                                                          .tr
-                                                                  : playListNAlbumScreenController
-                                                                          .isAlbum
-                                                                      ? "albumBookmarkRemoveAlert"
-                                                                          .tr
-                                                                      : "playlistBookmarkRemoveAlert"
-                                                                          .tr
-                                                              : "operationFailed"
-                                                                  .tr,
-                                                          size: SanckBarSize
-                                                              .MEDIUM)));
+                                                  .then((value) {
+                                                if (!context.mounted) return;
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(snackbar(
+                                                        context,
+                                                        value
+                                                            ? add
+                                                                ? playListNAlbumScreenController
+                                                                        .isAlbum
+                                                                    ? "albumBookmarkAddAlert"
+                                                                        .tr
+                                                                    : "playlistBookmarkAddAlert"
+                                                                        .tr
+                                                                : playListNAlbumScreenController
+                                                                        .isAlbum
+                                                                    ? "albumBookmarkRemoveAlert"
+                                                                        .tr
+                                                                    : "playlistBookmarkRemoveAlert"
+                                                                        .tr
+                                                            : "operationFailed"
+                                                                .tr,
+                                                        size: SanckBarSize
+                                                            .MEDIUM));
+                                              });
                                             },
                                             icon: Icon(
                                                 size: 20,

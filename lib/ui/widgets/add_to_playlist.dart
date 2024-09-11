@@ -108,6 +108,7 @@ class AddToPlaylist extends StatelessWidget {
                                           .playlistId,
                                       context)
                                   .then((value) {
+                                if (!context.mounted) return;
                                 if (value) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       snackbar(context,

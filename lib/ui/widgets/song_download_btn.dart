@@ -73,6 +73,7 @@ class SongDownloadButton extends StatelessWidget {
                       onPressed: () {
                         (Hive.openBox("SongsCache").then((box) {
                           if (box.containsKey(song.id)) {
+                            if (!context.mounted) return;
                             Navigator.of(context).pop();
                             ScaffoldMessenger.of(context).showSnackBar(snackbar(
                                 context, "songAlreadyOfflineAlert".tr,

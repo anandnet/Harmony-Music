@@ -85,8 +85,10 @@ class ArtistScreen extends StatelessWidget {
                               IconButton(
                                 icon: Icon(
                                   Icons.arrow_back_ios_new_rounded,
-                                  color:
-                                      Theme.of(context).textTheme.titleMedium!.color,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .color,
                                 ),
                                 onPressed: () {
                                   Get.nestedKey(ScreenNavigationSetup.id)!
@@ -100,8 +102,8 @@ class ArtistScreen extends StatelessWidget {
                             ],
                           ),
                           labelType: NavigationRailLabelType.all,
-                          selectedIndex:
-                              artistScreenController.navigationRailCurrentIndex.value,
+                          selectedIndex: artistScreenController
+                              .navigationRailCurrentIndex.value,
                         ),
                       ),
                     ),
@@ -227,8 +229,9 @@ class AboutArtist extends StatelessWidget {
                                           .isAddedToLibrary.isFalse;
                                       artistScreenController
                                           .addNremoveFromLibrary(add: add)
-                                          .then((value) => ScaffoldMessenger.of(
-                                                  context)
+                                          .then((value) {
+                                        if (context.mounted) {
+                                          ScaffoldMessenger.of(context)
                                               .showSnackBar(snackbar(
                                                   context,
                                                   value
@@ -238,7 +241,9 @@ class AboutArtist extends StatelessWidget {
                                                           : "artistBookmarkRemoveAlert"
                                                               .tr
                                                       : "operationFailed".tr,
-                                                  size: SanckBarSize.MEDIUM)));
+                                                  size: SanckBarSize.MEDIUM));
+                                        }
+                                      });
                                     },
                                     child: Obx(
                                       () => artistScreenController

@@ -40,7 +40,7 @@ class Home extends StatelessWidget {
     }
     return PopScope(
         canPop: false,
-        onPopInvoked: (didPop) async {
+        onPopInvokedWithResult: (didPop, result) async {
           if (didPop) return;
           if (playerController.playerPanelController.isPanelOpen) {
             playerController.playerPanelController.close();

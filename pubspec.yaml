@@ -34,14 +34,14 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   #cupertino_icons: ^1.0.2
-  just_audio: ^0.9.38
+  just_audio: ^0.9.40
   audio_video_progress_bar: ^2.0.3
   get: ^4.6.6
   #http: ^0.13.5
-  dio: ^5.3.3
-  cached_network_image: ^3.3.1
-  audio_service: ^0.18.13
-  palette_generator: ^0.3.3+3
+  dio: ^5.7.0
+  cached_network_image: ^3.4.0
+  audio_service: ^0.18.15
+  palette_generator: ^0.3.3+4
   path_provider: ^2.1.1
   shimmer: ^3.0.0
   hive: ^2.2.3
@@ -60,11 +60,11 @@ dependencies:
       url: https://github.com/anandnet/sdk_int.git
       ref: master
   file_picker: ^8.0.6
-  audiotags: ^1.3.0
+  audiotags: ^1.4.1
   google_fonts: ^6.1.0
   toggle_switch: ^2.1.0
   flutter_lyric: ^2.0.4+6
-  buttons_tabbar: ^1.3.8
+  buttons_tabbar: ^1.3.13
   animations: ^2.0.11
   just_audio_media_kit:
     git:
@@ -80,7 +80,7 @@ dependencies:
       url: https://github.com/anandnet/Player-Response.git
       branch: main
       ref: d7244f52d427b4aabde57be404d4316474613508
-  window_manager: ^0.3.7
+  window_manager: ^0.4.2
   smtc_windows: ^0.1.2
   audio_service_mpris: ^0.1.5
   ionicons: ^0.2.2

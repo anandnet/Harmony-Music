@@ -124,6 +124,7 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                                 .renamePlaylist(playlist!)
                                 .then((value) {
                               if (value) {
+                                if (!context.mounted) return;
                                 Navigator.of(context).pop();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     snackbar(context, "playlistRenameAlert".tr,
@@ -136,6 +137,7 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                                     createPlaylistNaddSong: isCreateNadd,
                                     songItems: songItems)
                                 .then((value) {
+                              if (!context.mounted) return;
                               if (value) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     snackbar(

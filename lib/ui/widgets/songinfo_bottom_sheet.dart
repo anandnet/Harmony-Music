@@ -137,10 +137,12 @@ class SongInfoBottomSheet extends StatelessWidget {
                     leading: const Icon(Icons.merge_rounded),
                     title: Text("enqueueSong".tr),
                     onTap: () {
-                      playerController.enqueueSong(song).whenComplete(() =>
-                          ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                              context, "songEnqueueAlert".tr,
-                              size: SanckBarSize.MEDIUM)));
+                      playerController.enqueueSong(song).whenComplete(() {
+                        if (!context.mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                            context, "songEnqueueAlert".tr,
+                            size: SanckBarSize.MEDIUM));
+                      });
                       Navigator.of(context).pop();
                     },
                   ),
@@ -228,9 +230,12 @@ class SongInfoBottomSheet extends StatelessWidget {
                                           .toString())
                                   .checkDownloadStatus();
                             }
-                            ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                                context, "deleteDownloadedDataAlert".tr,
-                                size: SanckBarSize.BIG));
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  snackbar(
+                                      context, "deleteDownloadedDataAlert".tr,
+                                      size: SanckBarSize.BIG));
+                            }
                           });
                         });
                       },

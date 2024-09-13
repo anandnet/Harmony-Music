@@ -32,7 +32,6 @@ migrate_working_dir/
 .pub/
 /build/
 /dist/
-/pubspec.lock
 
 # macOS
 **/Flutter/ephemeral/

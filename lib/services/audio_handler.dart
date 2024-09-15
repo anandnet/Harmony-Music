@@ -63,7 +63,14 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       JustAudioMediaKit.title = 'Harmony music';
       JustAudioMediaKit.protocolWhitelist = const ['http', 'https', 'file'];
     }
-    _player = AudioPlayer();
+    _player = AudioPlayer(
+        audioLoadConfiguration: const AudioLoadConfiguration(
+            androidLoadControl: AndroidLoadControl(
+      minBufferDuration: Duration(seconds: 50),
+      maxBufferDuration: Duration(seconds: 120),
+      bufferForPlaybackDuration: Duration(milliseconds: 800),
+      bufferForPlaybackAfterRebufferDuration: Duration(seconds: 3),
+    )));
     _createCacheDir();
     _addEmptyList();
     _notifyAudioHandlerAboutPlaybackEvents();

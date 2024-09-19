@@ -56,11 +56,11 @@ class MusicServices extends getx.GetxService {
     _context['playbackContext'] = {
       'contentPlaybackContext': {'signatureTimestamp': signatureTimestamp},
     };
-    _headers['X-Goog-Visitor-Id'] = 'CgszaE1mUm55NHNwayjXiamfBg%3D%3D';
+
     final appPrefsBox = Hive.box('AppPrefs');
     if (appPrefsBox.containsKey('visitorId')) {
       final visitorData = appPrefsBox.get("visitorId");
-      if (!isExpired(epoch: visitorData['exp'])) {
+      if (visitorData != null && !isExpired(epoch: visitorData['exp'])) {
         _headers['X-Goog-Visitor-Id'] = visitorData['id'];
         appPrefsBox.put("visitorId", {
           'id': visitorData['id'],
@@ -70,17 +70,21 @@ class MusicServices extends getx.GetxService {
         return;
       }
     }
-    var visitorId = await genrateVisitorId();
-    if (visitorId != null) {
-      _headers['X-Goog-Visitor-Id'] = visitorId;
-      printINFO("New Visitor id generated ($visitorId)");
-    } else {
-      visitorId = await genrateVisitorId();
-    }
-    appPrefsBox.put("visitorId", {
-      'id': visitorId,
-      'exp': DateTime.now().millisecondsSinceEpoch ~/ 1000 + 2592000
-    });
+
+      final visitorId = await genrateVisitorId();
+      if (visitorId != null) {
+        _headers['X-Goog-Visitor-Id'] = visitorId;
+        printINFO("New Visitor id generated ($visitorId)");
+        appPrefsBox.put("visitorId", {
+          'id': visitorId,
+          'exp': DateTime.now().millisecondsSinceEpoch ~/ 1000 + 2592000
+        });
+        return;
+      }
+      // not able to generate in that case
+      _headers['X-Goog-Visitor-Id'] =
+          visitorId ?? "CgttN24wcmd5UzNSWSi2lvq2BjIKCgJKUBIEGgAgYQ%3D%3D";
+    
   }
 
   Future<String?> genrateVisitorId() async {

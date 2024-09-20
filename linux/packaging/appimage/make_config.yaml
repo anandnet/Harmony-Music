@@ -9,3 +9,6 @@ keywords:
 generic_name: Music Application
 categories:
   - Music
+
+include:
+  - libmpv.so

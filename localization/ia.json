@@ -74,7 +74,7 @@
     "search": "Cercar",
     "playNext": "Reproducer sequente",
     "songs": "Cantos",
-    "searchDes": "Cantos,Listas de reproduction, Album o Artista",
+    "searchDes": "Cantos, Listas de reproduction, Album o Artista",
     "results": "Resultatos",
     "downloadLocation": "Location de discargamento",
     "songRemovedfromQueueCurrSong": "Tu non pote remover le canto actualmente in reproduction",
@@ -202,5 +202,18 @@
     "songInfo": "Information del canto",
     "id": "Id",
     "title": "Titulo",
-    "backup": "Copia de securitate"
+    "backup": "Copia de securitate",
+    "queueShufflingDeniedMsg": "Le cauda non pote esser miscite quando le modo aleatori es activate",
+    "queuerearrangingDeniedMsg": "Le cauda non pote esser rearrangiate quando le modo aleatori es activate",
+    "songNotPlayable": "Le canto non se pote reproducer a causa de un restriction de servitor!",
+    "appInfo": "Information del application",
+    "download": "Discargar",
+    "networkError": "Error de rete! Verifica tu connection.",
+    "music&Playback": "Musica e reproduction",
+    "content": "Contento",
+    "personalisation": "Personalisation",
+    "loudnessNormalization": "Normalisation del volumine",
+    "loudnessNormalizationDes": "Define le mesme nivello de volumine pro tote le cantos (Experimental) (Non functionara con le cantos discargate sur le versiones previe (< v1.10.0))",
+    "urlSearchDes": "URL detegite. Clicca lo pro aperir/reproducer le contento associate",
+    "androidBackupWarning": ""
 }

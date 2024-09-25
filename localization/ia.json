@@ -215,5 +215,7 @@
     "loudnessNormalization": "Normalisation del volumine",
     "loudnessNormalizationDes": "Define le mesme nivello de volumine pro tote le cantos (Experimental) (Non functionara con le cantos discargate sur le versiones previe (< v1.10.0))",
     "urlSearchDes": "URL detegite. Clicca lo pro aperir/reproducer le contento associate",
-    "androidBackupWarning": ""
+    "androidBackupWarning": "",
+    "downloadError3": "Falleva le discargamento a causa de un error de rete! Tenta de novo",
+    "downloadError2": "Le canto requestate non pote discargar se a causa de un restriction de servitor. Tu pote retentar lo"
 }

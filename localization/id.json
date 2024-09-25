@@ -168,7 +168,7 @@
     "disableTransitionAnimationDes": "Aktifkan opsi ini untuk mematikan animasi transisi tab",
     "queuerearrangingDeniedMsg": "Antrian tidak bisa diatur ulang ketika mode acak diaktifkan",
     "export": "Ekspor",
-    "backupInProgress": "Pencadangan sedang diproses...",
+    "backupInProgress": "Pencadangan diproses...",
     "id": "Id",
     "title": "Judul",
     "songInfo": "Info Lagu",
@@ -212,5 +212,8 @@
     "restore": "Pulihkan",
     "closeApp": "Tutup Aplikasi",
     "loudnessDb": "LoudnessDb",
-    "clearImgCacheDes": "Klik disini untuk menghapus cache dari thumbnail/gambar. (Tidak direkomendasikan kecuali ingin menyegarkan data cache dari gambar)"
+    "clearImgCacheDes": "Klik disini untuk menghapus cache dari thumbnail/gambar. (Tidak direkomendasikan kecuali ingin memperbahaui data cache dari gambar)",
+    "plain": "Polos",
+    "urlSearchDes": "Url terdeteksi, klik untuk membuka/memutar konten terkait",
+    "homeContentCountDes": "Pilih jumlah konten layar beranda home. lebih kecil memuat lebih cepat"
 }

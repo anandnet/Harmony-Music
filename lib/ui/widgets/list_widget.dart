@@ -1,7 +1,9 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
 import 'package:widget_marquee/widget_marquee.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../models/playlist.dart';
 import '../navigator.dart';
@@ -82,95 +84,111 @@ class ListWidget extends StatelessWidget {
       physics: isCompleteList
           ? const BouncingScrollPhysics()
           : const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) => ListTile(
-        onTap: () {
-          (isPlaylist || isArtistSongs)
-              ? playerController.playPlayListSong(
-                  List<MediaItem>.from(items), index)
-              : playerController.pushSongToQueue(items[index] as MediaItem);
-        },
-        onLongPress: () async {
-          showModalBottomSheet(
-            constraints: const BoxConstraints(maxWidth: 500),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
-            ),
-            isScrollControlled: true,
-            context: playerController.homeScaffoldkey.currentState!.context,
-            //constraints: BoxConstraints(maxHeight:Get.height),
-            barrierColor: Colors.transparent.withAlpha(100),
-            builder: (context) => SongInfoBottomSheet(
-              items[index] as MediaItem,
-              playlist: playlist,
-            ),
-          ).whenComplete(() => Get.delete<SongInfoController>());
-        },
-        contentPadding: const EdgeInsets.only(top: 0, left: 5, right: 30),
-        leading: ImageWidget(
-          size: 55,
-          song: items[index],
-        ),
-        title: Marquee(
-          delay: const Duration(milliseconds: 300),
-          duration: const Duration(seconds: 5),
-          id: items[index].title.hashCode.toString(),
-          child: Text(
-            items[index].title.length > 50
-                ? items[index].title.substring(0, 50)
-                : items[index].title,
-            maxLines: 1,
-            style: Theme.of(context).textTheme.titleMedium,
+      itemBuilder: (context, index) => Slidable(
+        endActionPane: ActionPane(motion: const DrawerMotion(), children: [
+          SlidableAction(
+            onPressed: (context) {
+              playerController.playNext(items[index] as MediaItem);
+              ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                  context, "Upcoming ${(items[index] as MediaItem).title}".tr,
+                  size: SanckBarSize.MEDIUM));
+            },
+            backgroundColor: Color(Colors.transparent.value),
+            foregroundColor: Colors.white,
+            icon: Icons.next_plan_outlined,
+            label: 'Play Next',
           ),
-        ),
-        subtitle: Text(
-          "${items[index].artist}",
-          maxLines: 1,
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        trailing: SizedBox(
-          width: Get.size.width > 800 ? 80 : 40,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (isPlaylist)
-                    Obx(() => playerController.currentSong.value?.id ==
-                            items[index].id
-                        ? const Icon(
-                            Icons.equalizer_rounded,
-                          )
-                        : const SizedBox.shrink()),
-                  Text(
-                    items[index].extras!['length'] ?? "",
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                ],
+        ]),
+        child: ListTile(
+          onTap: () {
+            (isPlaylist || isArtistSongs)
+                ? playerController.playPlayListSong(
+                    List<MediaItem>.from(items), index)
+                : playerController.pushSongToQueue(items[index] as MediaItem);
+          },
+          onLongPress: () async {
+            showModalBottomSheet(
+              constraints: const BoxConstraints(maxWidth: 500),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
               ),
-              if (GetPlatform.isDesktop)
-                IconButton(
-                    splashRadius: 20,
-                    onPressed: () {
-                      showModalBottomSheet(
-                        constraints: const BoxConstraints(maxWidth: 500),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(10.0)),
-                        ),
-                        isScrollControlled: true,
-                        context: playerController
-                            .homeScaffoldkey.currentState!.context,
-                        //constraints: BoxConstraints(maxHeight:Get.height),
-                        barrierColor: Colors.transparent.withAlpha(100),
-                        builder: (context) => SongInfoBottomSheet(
-                          items[index] as MediaItem,
-                          playlist: playlist,
-                        ),
-                      ).whenComplete(() => Get.delete<SongInfoController>());
-                    },
-                    icon: const Icon(Icons.more_vert))
-            ],
+              isScrollControlled: true,
+              context: playerController.homeScaffoldkey.currentState!.context,
+              //constraints: BoxConstraints(maxHeight:Get.height),
+              barrierColor: Colors.transparent.withAlpha(100),
+              builder: (context) => SongInfoBottomSheet(
+                items[index] as MediaItem,
+                playlist: playlist,
+              ),
+            ).whenComplete(() => Get.delete<SongInfoController>());
+          },
+          contentPadding: const EdgeInsets.only(top: 0, left: 5, right: 30),
+          leading: ImageWidget(
+            size: 55,
+            song: items[index],
+          ),
+          title: Marquee(
+            delay: const Duration(milliseconds: 300),
+            duration: const Duration(seconds: 5),
+            id: items[index].title.hashCode.toString(),
+            child: Text(
+              items[index].title.length > 50
+                  ? items[index].title.substring(0, 50)
+                  : items[index].title,
+              maxLines: 1,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+          subtitle: Text(
+            "${items[index].artist}",
+            maxLines: 1,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          trailing: SizedBox(
+            width: Get.size.width > 800 ? 80 : 40,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (isPlaylist)
+                      Obx(() => playerController.currentSong.value?.id ==
+                              items[index].id
+                          ? const Icon(
+                              Icons.equalizer_rounded,
+                            )
+                          : const SizedBox.shrink()),
+                    Text(
+                      items[index].extras!['length'] ?? "",
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ],
+                ),
+                if (GetPlatform.isDesktop)
+                  IconButton(
+                      splashRadius: 20,
+                      onPressed: () {
+                        showModalBottomSheet(
+                          constraints: const BoxConstraints(maxWidth: 500),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(10.0)),
+                          ),
+                          isScrollControlled: true,
+                          context: playerController
+                              .homeScaffoldkey.currentState!.context,
+                          //constraints: BoxConstraints(maxHeight:Get.height),
+                          barrierColor: Colors.transparent.withAlpha(100),
+                          builder: (context) => SongInfoBottomSheet(
+                            items[index] as MediaItem,
+                            playlist: playlist,
+                          ),
+                        ).whenComplete(() => Get.delete<SongInfoController>());
+                      },
+                      icon: const Icon(Icons.more_vert))
+              ],
+            ),
           ),
         ),
       ),

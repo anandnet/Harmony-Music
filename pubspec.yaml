@@ -28,71 +28,65 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  flutter:
-    sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  #cupertino_icons: ^1.0.2
-  just_audio: ^0.9.40
-  audio_video_progress_bar: ^2.0.3
-  get: ^4.6.6
-  #http: ^0.13.5
-  dio: ^5.7.0
-  cached_network_image: ^3.4.0
+  animations: ^2.0.11
+  app_links: ^3.5.1
+  archive: ^3.1.6
   audio_service: ^0.18.15
-  palette_generator: ^0.3.3+4
-  path_provider: ^2.1.1
-  shimmer: ^3.0.0
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
-  flutter_keyboard_visibility: ^6.0.0
-  url_launcher: ^6.2.1
-  share_plus: ^9.0.0
+  audio_service_mpris: ^0.1.5
+  audio_video_progress_bar: ^2.0.3
+  audiotags: ^1.4.1
+  buttons_tabbar: ^1.3.13
+  cached_network_image: ^3.4.0
   device_equalizer:
     git:
       url: https://github.com/anandnet/device_equalizer.git
       ref: 29ea7ff4e284101af114de64bafca25a1a0c01d8
-  app_links: ^3.5.1
-  permission_handler: ^11.0.1
-  sdk_int:
-    git:
-      url: https://github.com/anandnet/sdk_int.git
-      ref: 91b2d4e0863de4effb2c89dd7868506cbd85a1ee
+  dio: ^5.7.0
   file_picker: ^8.0.6
-  audiotags: ^1.4.1
-  google_fonts: ^6.1.0
-  toggle_switch: ^2.1.0
+  flutter:
+    sdk: flutter
+  flutter_keyboard_visibility: ^6.0.0
   flutter_lyric: ^2.0.4+6
-  buttons_tabbar: ^1.3.13
-  animations: ^2.0.11
+  flutter_slidable: ^3.1.1
+  get: ^4.6.6
+  google_fonts: ^6.1.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  ionicons: ^0.2.2
+  just_audio: ^0.9.40
   just_audio_media_kit:
     git:
       url: https://github.com/anandnet/just_audio_media_kit.git
       ref: 06de226da469f5c55dd780b215bcc45a0d6269fb
-  sidebar_with_animation:
-    git:
-      url: https://github.com/anandnet/animated_side_bar.git
-      branch: main
-      ref: b53567a42b4ba3793a3cf00d478bdba0ecce33d7
+  logger: ^2.4.0
+  palette_generator: ^0.3.3+4
+  path: ^1.8.3
+  path_provider: ^2.1.1
+  permission_handler: ^11.0.1
   player_response:
     git:
       url: https://github.com/anandnet/Player-Response.git
       branch: main
       ref: d7244f52d427b4aabde57be404d4316474613508
-  window_manager: ^0.4.2
-  smtc_windows: ^0.1.2
-  audio_service_mpris: ^0.1.5
-  ionicons: ^0.2.2
-  archive: ^3.1.6
-  path: ^1.8.3
-  tray_manager: ^0.2.3
-  widget_marquee: ^0.0.8
   restart_app: ^1.2.1
-  logger: ^2.4.0
+  sdk_int:
+    git:
+      url: https://github.com/anandnet/sdk_int.git
+      ref: 91b2d4e0863de4effb2c89dd7868506cbd85a1ee
+  share_plus: ^9.0.0
+  shimmer: ^3.0.0
+  sidebar_with_animation:
+    git:
+      url: https://github.com/anandnet/animated_side_bar.git
+      branch: main
+      ref: b53567a42b4ba3793a3cf00d478bdba0ecce33d7
+  smtc_windows: ^0.1.2
+  toggle_switch: ^2.1.0
+  tray_manager: ^0.2.3
+  url_launcher: ^6.2.1
+  widget_marquee: ^0.0.8
+  window_manager: ^0.4.2
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -100,10 +94,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
+  flutter_test:
+    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter packages.
 flutter:
   # The following line ensures that the Material Icons font is
@@ -115,13 +110,10 @@ flutter:
   assets:
     - assets/icons/
   #   - images/a_dot_ham.jpeg
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

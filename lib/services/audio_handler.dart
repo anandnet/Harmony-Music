@@ -68,8 +68,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
             androidLoadControl: AndroidLoadControl(
       minBufferDuration: Duration(seconds: 50),
       maxBufferDuration: Duration(seconds: 120),
-      bufferForPlaybackDuration: Duration(milliseconds: 800),
-      bufferForPlaybackAfterRebufferDuration: Duration(seconds: 3),
+      bufferForPlaybackDuration: Duration(milliseconds: 50),
+      bufferForPlaybackAfterRebufferDuration: Duration(seconds: 2),
     )));
     _createCacheDir();
     _addEmptyList();
@@ -447,7 +447,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
       mediaItem.add(currentSong);
       final streamInfo = await futureStreamInfo;
-      if (streamInfo == null || songIndex != currentIndex || !streamInfo[0]) {
+      if (songIndex != currentIndex) {
+        return;
+      } else if (streamInfo == null || !streamInfo[0]) {
         currentSongUrl = null;
         isSongLoading = false;
         Get.find<PlayerController>().notifyPlayError(streamInfo == null);

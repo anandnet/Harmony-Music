@@ -33,6 +33,7 @@ class Player extends StatelessWidget {
         : playerArtImageSize;
     return Scaffold(
       body: SlidingUpPanel(
+          boxShadow: const [],
           minHeight: 65 + Get.mediaQuery.padding.bottom,
           maxHeight: size.height,
           isDraggable: !GetPlatform.isDesktop,
@@ -43,7 +44,7 @@ class Player extends StatelessWidget {
               }
             },
             child: Container(
-                color: Theme.of(context).bottomSheetTheme.modalBarrierColor,
+                color: Theme.of(context).primaryColor,
                 child: Column(
                   children: [
                     SizedBox(
@@ -138,8 +139,38 @@ class Player extends StatelessWidget {
 
               BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                child: Container(
-                    color: Theme.of(context).primaryColor.withOpacity(0.90)),
+                child: Stack(
+                  children: [
+                    // opacity effect on background
+                    Positioned.fill(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.85),
+                        ),
+                      ),
+                    ),
+                    // hide queue header
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: 65 + Get.mediaQuery.padding.bottom + 150,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Theme.of(context).primaryColor,
+                              Theme.of(context).primaryColor,
+                              Colors.transparent,
+                            ],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            stops: const [0, 0.4, 1],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
               //Player Top content
@@ -194,7 +225,7 @@ class Player extends StatelessWidget {
                           Expanded(child: Container()),
                           Padding(
                             padding: EdgeInsets.only(
-                                bottom: 90 + Get.mediaQuery.padding.bottom),
+                                bottom: 80 + Get.mediaQuery.padding.bottom),
                             child: Container(
                                 constraints:
                                     const BoxConstraints(maxWidth: 500),

@@ -218,5 +218,9 @@
     "androidBackupWarning": "No probado: si seleccionas la casilla de verificación después de descargar más de 60 archivos, el proceso puede consumir una gran cantidad de memoria y provocar que el teléfono o la aplicación se bloqueen. Continúa bajo tu propio riesgo.",
     "personalisation": "Personalización",
     "loudnessNormalizationDes": "Establece el mismo nivel de volumen para todas las canciones (Experimental) (No funcionará en canciones descargadas en versiones anteriores (< v1.10.0))",
-    "queueShufflingDeniedMsg": "La cola no se puede mezclar cuando el modo aleatorio está habilitado"
+    "queueShufflingDeniedMsg": "La cola no se puede mezclar cuando el modo aleatorio está habilitado",
+    "playerUiDes": "Seleccionar la interfaz de usuario del reproductor",
+    "gesture": "Gestos",
+    "playerUi": "Interfaz de usuario del reproductor",
+    "standard": "Estándar"
 }

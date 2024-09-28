@@ -218,5 +218,9 @@
     "queuerearrangingDeniedMsg": "Frontu nelze měnit, když je povolen režim náhodného výběru",
     "loudnessNormalizationDes": "Nastaví stejnou úroveň hlasitosti pro všechny skladby (Experimentální) (Nebude fungovat u skladeb stažených v předchozí verzi(< v1.10.0))",
     "urlSearchDes": "Zjištěná URL Kliknutím na ni otevřete/přehrajete související obsah",
-    "androidBackupWarning": "Netestováno: Zaškrtnutím políčka po stažení více než 60 souborů může proces spotřebovat velké množství paměti a může způsobit pád telefonu nebo aplikace. Pokračujte na vlastní nebezpečí."
+    "androidBackupWarning": "Netestováno: Zaškrtnutím políčka po stažení více než 60 souborů může proces spotřebovat velké množství paměti a může způsobit pád telefonu nebo aplikace. Pokračujte na vlastní nebezpečí.",
+    "playerUi": "Rozhraní přehrávače",
+    "standard": "Standard",
+    "gesture": "Gesta",
+    "playerUiDes": "Vybrat uživatelské rozhraní přehrávače"
 }

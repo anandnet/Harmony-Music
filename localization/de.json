@@ -220,5 +220,9 @@
     "urlSearchDes": "URL erkannt. Tippe darauf, um den zugehörigen Inhalt zu öffnen/abzuspielen",
     "music&Playback": "Musik & Wiedergabe",
     "content": "Inhalt",
-    "androidBackupWarning": "Nicht getestet: Wenn du das Kontrollkästchen nach dem Herunterladen von mehr als 60 Dateien aktivierst, kann der Vorgang viel Speicher beanspruchen und zum Absturz des Telefons oder der App führen. Fahre auf eigene Gefahr fort."
+    "androidBackupWarning": "Nicht getestet: Wenn du das Kontrollkästchen nach dem Herunterladen von mehr als 60 Dateien aktivierst, kann der Vorgang viel Speicher beanspruchen und zum Absturz des Telefons oder der App führen. Fahre auf eigene Gefahr fort.",
+    "playerUi": "Player UI",
+    "playerUiDes": "Wähle Player Benutzeroberfläche",
+    "standard": "Standart",
+    "gesture": "Gesten"
 }

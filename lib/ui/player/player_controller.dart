@@ -30,6 +30,7 @@ class PlayerController extends GetxController {
   bool initFlagForPlayer = true;
   final isQueueReorderingInProcess = false.obs;
   PanelController playerPanelController = PanelController();
+  PanelController queuePanelController = PanelController();
   bool isRadioModeOn = false;
   String? radioContinuationParam;
   dynamic radioInitiatorItem;

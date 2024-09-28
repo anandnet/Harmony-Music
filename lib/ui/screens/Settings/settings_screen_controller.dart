@@ -27,6 +27,7 @@ class SettingsScreenController extends GetxController {
   final loudnessNormalizationEnabled = false.obs;
   final noOfHomeScreenContent = 3.obs;
   final streamingQuality = AudioQuality.High.obs;
+  final playerUi = 0.obs;
   final isIgnoringBatteryOptimizations = false.obs;
   final discoverContentType = "QP".obs;
   final isNewVersionAvailable = false.obs;
@@ -87,6 +88,7 @@ class SettingsScreenController extends GetxController {
     cacheHomeScreenData.value = setBox.get("cacheHomeScreenData") ?? true;
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
+    playerUi.value = setBox.get('playerUi') ?? 0;
     backgroundPlayEnabled.value = setBox.get("backgroundPlayEnabled") ?? true;
     downloadLocationPath.value =
         setBox.get('downloadLocationPath') ?? await _createInAppSongDownDir();
@@ -119,6 +121,11 @@ class SettingsScreenController extends GetxController {
   void setStreamingQuality(dynamic val) {
     setBox.put("streamingQuality", AudioQuality.values.indexOf(val));
     streamingQuality.value = val;
+  }
+
+  void setPlayerUi(dynamic val) {
+    setBox.put("playerUi", val);
+    playerUi.value = val;
   }
 
   void enableBottomNavBar(bool val) {
@@ -286,5 +293,4 @@ class SettingsScreenController extends GetxController {
       return (await getApplicationDocumentsDirectory()).path;
     }
   }
-  
 }

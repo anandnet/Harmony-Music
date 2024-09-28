@@ -328,6 +328,16 @@ class ThemeController extends GetxController {
   }
 }
 
+extension ComplementaryColor on Color {
+  Color get complementaryColor => getComplementaryColor(this);
+  Color getComplementaryColor(Color color) {
+    int r = 255 - color.red;
+    int g = 255 - color.green;
+    int b = 255 - color.blue;
+    return Color.fromARGB(color.alpha, r, g, b);
+  }
+}
+
 extension ColorWithHSL on Color {
   HSLColor get hsl => HSLColor.fromColor(this);
 

@@ -131,6 +131,10 @@ class SlidingUpPanel extends StatefulWidget {
   /// is fully collapsed.
   final VoidCallback? onPanelClosed;
 
+  /// If non-null, this callback is called when the panel
+  /// is fully opened and on swiping up.
+  final VoidCallback? onSwipeUp;
+
   /// If non-null and true, the SlidingUpPanel exhibits a
   /// parallax effect as the panel slides up. Essentially,
   /// the body slides up as the panel slides up.
@@ -189,6 +193,7 @@ class SlidingUpPanel extends StatefulWidget {
       this.onPanelSlide,
       this.onPanelOpened,
       this.onPanelClosed,
+      this.onSwipeUp,
       this.parallaxEnabled = false,
       this.parallaxOffset = 0.1,
       this.isDraggable = true,
@@ -458,8 +463,14 @@ class _SlidingUpPanelState extends State<SlidingUpPanel>
       return GestureDetector(
         onVerticalDragUpdate: (DragUpdateDetails dets) =>
             _onGestureSlide(dets.delta.dy),
-        onVerticalDragEnd: (DragEndDetails dets) =>
-            _onGestureEnd(dets.velocity),
+        onVerticalDragEnd: (DragEndDetails dets) {
+          _onGestureEnd(dets.velocity);
+          if (dets.primaryVelocity! < 0 && _isPanelOpen) {
+            widget.onSwipeUp!();
+          }
+        },
+        onHorizontalDragUpdate: (_) {}, // Ignore horizontal drag
+        onHorizontalDragEnd: (_) {},
         child: child,
       );
     }

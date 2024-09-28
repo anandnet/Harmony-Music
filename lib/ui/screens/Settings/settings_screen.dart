@@ -49,7 +49,8 @@ class SettingsScreen extends StatelessWidget {
               Obx(
                 () => settingsController.isNewVersionAvailable.value
                     ? Padding(
-                        padding: const EdgeInsets.only(top: 8.0, right: 10,bottom: 8.0),
+                        padding: const EdgeInsets.only(
+                            top: 8.0, right: 10, bottom: 8.0),
                         child: Material(
                           type: MaterialType.transparency,
                           child: ListTile(
@@ -142,18 +143,29 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ListTile(
+                  if (!isDesktop)
+                    ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                      title: Text("disableTransitionAnimation".tr),
-                      subtitle: Text("disableTransitionAnimationDes".tr,
+                      title: Text("playerUi".tr),
+                      subtitle: Text("playerUiDes".tr,
                           style: Theme.of(context).textTheme.bodyMedium),
                       trailing: Obx(
-                        () => CustSwitch(
-                            value: settingsController
-                                .isTransitionAnimationDisabled.isTrue,
-                            onChanged:
-                                settingsController.disableTransitionAnimation),
-                      )),
+                        () => DropdownButton(
+                          dropdownColor: Theme.of(context).cardColor,
+                          underline: const SizedBox.shrink(),
+                          value: settingsController.playerUi.value,
+                          items: [
+                            DropdownMenuItem(
+                                value: 0, child: Text("standard".tr)),
+                            DropdownMenuItem(
+                              value: 1,
+                              child: Text("gesture".tr),
+                            ),
+                          ],
+                          onChanged: settingsController.setPlayerUi,
+                        ),
+                      ),
+                    ),
                   if (!isDesktop)
                     ListTile(
                         contentPadding:
@@ -167,6 +179,18 @@ class SettingsScreen extends StatelessWidget {
                                   .isBottomNavBarEnabled.isTrue,
                               onChanged: settingsController.enableBottomNavBar),
                         )),
+                  ListTile(
+                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                      title: Text("disableTransitionAnimation".tr),
+                      subtitle: Text("disableTransitionAnimationDes".tr,
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      trailing: Obx(
+                        () => CustSwitch(
+                            value: settingsController
+                                .isTransitionAnimationDisabled.isTrue,
+                            onChanged:
+                                settingsController.disableTransitionAnimation),
+                      )),
                 ],
               ),
               CustomExpansionTile(
@@ -323,18 +347,20 @@ class SettingsScreen extends StatelessWidget {
                       settingsController.showDownLoc();
                     },
                   ),
-                  if(GetPlatform.isAndroid) ListTile(
-                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                      title: Text("loudnessNormalization".tr),
-                      subtitle: Text("loudnessNormalizationDes".tr,
-                          style: Theme.of(context).textTheme.bodyMedium),
-                      trailing: Obx(
-                        () => CustSwitch(
-                            value: settingsController
-                                .loudnessNormalizationEnabled.value,
-                            onChanged:
-                                settingsController.toggleLoudnessNormalization),
-                      )),
+                  if (GetPlatform.isAndroid)
+                    ListTile(
+                        contentPadding:
+                            const EdgeInsets.only(left: 5, right: 10),
+                        title: Text("loudnessNormalization".tr),
+                        subtitle: Text("loudnessNormalizationDes".tr,
+                            style: Theme.of(context).textTheme.bodyMedium),
+                        trailing: Obx(
+                          () => CustSwitch(
+                              value: settingsController
+                                  .loudnessNormalizationEnabled.value,
+                              onChanged: settingsController
+                                  .toggleLoudnessNormalization),
+                        )),
                   if (!isDesktop)
                     ListTile(
                         contentPadding:

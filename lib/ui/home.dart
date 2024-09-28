@@ -157,6 +157,9 @@ class Home extends StatelessWidget {
                         minHeight: playerController.playerPanelMinHeight.value,
                         maxHeight: size.height,
                         isDraggable: !isWideScreen,
+                        onSwipeUp: () {
+                          playerController.queuePanelController.open();
+                        },
                         panel: const Player(),
                         body: const ScreenNavigation(),
                         header: !isWideScreen

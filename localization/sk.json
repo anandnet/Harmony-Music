@@ -217,5 +217,9 @@
     "networkError": "Chyba siete! Skontrolujte pripojenie k internetu.",
     "loudnessNormalizationDes": "Nastaví rovnakú úroveň hlasitosti pre všetky skladby (Experimentálne) (Nebude fungovať na skladbách stiahnutých v predchádzajúcej verzii(< v1.10.0))",
     "urlSearchDes": "Zistená URL adresa Kliknutím na ňu otvoríte/prehráte súvisiaci obsah",
-    "androidBackupWarning": "Netestované: Po zaškrtnutí políčka po stiahnutí viac ako 60 súborov môže proces spotrebovať veľké množstvo pamäte a môže spôsobiť pád telefónu alebo aplikácie. Pokračujte na vlastné riziko."
+    "androidBackupWarning": "Netestované: Po zaškrtnutí políčka po stiahnutí viac ako 60 súborov môže proces spotrebovať veľké množstvo pamäte a môže spôsobiť pád telefónu alebo aplikácie. Pokračujte na vlastné riziko.",
+    "playerUi": "Rozhranie prehrávača",
+    "standard": "Štandard",
+    "gesture": "Gestá",
+    "playerUiDes": "Vybrať používateľské rozhranie prehrávača"
 }

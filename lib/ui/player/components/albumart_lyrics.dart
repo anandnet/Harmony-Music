@@ -19,7 +19,7 @@ class AlbumArtNLyrics extends StatelessWidget {
     return Obx(() => playerController.currentSong.value != null
         ? Stack(
             children: [
-              InkWell(
+              GestureDetector(
                 onLongPress: () {
                   showModalBottomSheet(
                     constraints: const BoxConstraints(maxWidth: 500),
@@ -39,6 +39,14 @@ class AlbumArtNLyrics extends StatelessWidget {
                 },
                 onTap: () {
                   playerController.showLyrics();
+                },
+                onHorizontalDragEnd: (DragEndDetails details) {
+                  if (playerController.showLyricsflag.isTrue) return;
+                  if (details.primaryVelocity! < 0) {
+                    playerController.next();
+                  } else if (details.primaryVelocity! > 0) {
+                    playerController.prev();
+                  }
                 },
                 child: ImageWidget(
                   size: playerArtImageSize,

@@ -39,137 +39,136 @@ class Home extends StatelessWidget {
       }
     }
     return PopScope(
-        canPop: false,
-        onPopInvokedWithResult: (didPop, result) async {
-          if (didPop) return;
-          if (playerController.playerPanelController.isPanelOpen) {
-            playerController.playerPanelController.close();
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        if (playerController.playerPanelController.isPanelOpen) {
+          playerController.playerPanelController.close();
+        } else {
+          if (Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.canPop()) {
+            Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
           } else {
-            if (Get.nestedKey(ScreenNavigationSetup.id)!
-                .currentState!
-                .canPop()) {
-              Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
+            if (playerController.buttonState.value == PlayButtonState.playing) {
+              SystemNavigator.pop();
             } else {
-              if (playerController.buttonState.value ==
-                  PlayButtonState.playing) {
-                SystemNavigator.pop();
-              } else {
-                await Get.find<AudioHandler>().customAction("saveSession");
-                exit(0);
-              }
+              await Get.find<AudioHandler>().customAction("saveSession");
+              exit(0);
             }
           }
+        }
+      },
+      child: CallbackShortcuts(
+        bindings: {
+          LogicalKeySet(LogicalKeyboardKey.space): playerController.playPause
         },
-        child: CallbackShortcuts(
-            bindings: {
-              LogicalKeySet(LogicalKeyboardKey.space):
-                  playerController.playPause
-            },
-            child: Obx(
-              () => Scaffold(
-                  bottomNavigationBar: settingsScreenController
-                          .isBottomNavBarEnabled.isTrue
-                      ? ScrollToHideWidget(
-                          isVisible:
-                              homeScreenController.isHomeSreenOnTop.isTrue &&
-                                  playerController.isPanelGTHOpened.isFalse,
-                          child: const BottomNavBar())
-                      : null,
-                  key: playerController.homeScaffoldkey,
-                  endDrawer: GetPlatform.isDesktop
-                      ? Container(
-                          constraints: const BoxConstraints(maxWidth: 600),
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10)),
-                            border: Border(
-                              left: BorderSide(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary),
-                              top: BorderSide(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary),
-                            ),
-                          ),
-                          margin: const EdgeInsets.only(
-                            top: 5,
-                            bottom: 106,
-                          ),
-                          child: SizedBox(
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 60,
-                                  child: ColoredBox(
-                                    color: Theme.of(context).canvasColor,
-                                    child: Center(
-                                        child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 15.0, right: 15),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                              "${playerController.currentQueue.length} ${"songs".tr}"),
-                                          Text(
-                                            "upNext".tr,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleLarge,
-                                          ),
-                                          IconButton(
-                                              onPressed: () {
-                                                if (playerController
-                                                    .isShuffleModeEnabled
-                                                    .isTrue) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(snackbar(
-                                                          context,
-                                                          "queueShufflingDeniedMsg"
-                                                              .tr,
-                                                          size: SanckBarSize
-                                                              .BIG));
-                                                  return;
-                                                }
-                                                playerController.shuffleQueue();
-                                              },
-                                              icon: const Icon(Icons.shuffle))
-                                        ],
+        child: Obx(
+          () => Scaffold(
+              bottomNavigationBar: settingsScreenController
+                      .isBottomNavBarEnabled.isTrue
+                  ? ScrollToHideWidget(
+                      isVisible: homeScreenController.isHomeSreenOnTop.isTrue &&
+                          playerController.isPanelGTHOpened.isFalse,
+                      child: const BottomNavBar())
+                  : null,
+              key: playerController.homeScaffoldkey,
+              endDrawer: GetPlatform.isDesktop
+                  ? Container(
+                      constraints: const BoxConstraints(maxWidth: 600),
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10)),
+                        border: Border(
+                          left: BorderSide(
+                              color: Theme.of(context).colorScheme.secondary),
+                          top: BorderSide(
+                              color: Theme.of(context).colorScheme.secondary),
+                        ),
+                      ),
+                      margin: const EdgeInsets.only(
+                        top: 5,
+                        bottom: 106,
+                      ),
+                      child: SizedBox(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 60,
+                              child: ColoredBox(
+                                color: Theme.of(context).canvasColor,
+                                child: Center(
+                                    child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 15.0, right: 15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                          "${playerController.currentQueue.length} ${"songs".tr}"),
+                                      Text(
+                                        "upNext".tr,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge,
                                       ),
-                                    )),
+                                      IconButton(
+                                          onPressed: () {
+                                            if (playerController
+                                                .isShuffleModeEnabled.isTrue) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackbar(
+                                                      context,
+                                                      "queueShufflingDeniedMsg"
+                                                          .tr,
+                                                      size: SanckBarSize.BIG));
+                                              return;
+                                            }
+                                            playerController.shuffleQueue();
+                                          },
+                                          icon: const Icon(Icons.shuffle))
+                                    ],
                                   ),
-                                ),
-                                const Expanded(
-                                  child: UpNextQueue(
-                                    isQueueInSlidePanel: false,
-                                  ),
-                                ),
-                              ],
+                                )),
+                              ),
                             ),
-                          ),
-                        )
-                      : null,
-                  drawerScrimColor: Colors.transparent,
-                  body: Obx(() => SlidingUpPanel(
-                        onPanelSlide: playerController.panellistener,
-                        controller: playerController.playerPanelController,
-                        minHeight: playerController.playerPanelMinHeight.value,
-                        maxHeight: size.height,
-                        isDraggable: !isWideScreen,
-                        onSwipeUp: () {
-                          playerController.queuePanelController.open();
-                        },
-                        panel: const Player(),
-                        body: const ScreenNavigation(),
-                        header: !isWideScreen
-                            ? InkWell(
-                                onTap:
-                                    playerController.playerPanelController.open,
-                                child: const MiniPlayer(),
-                              )
-                            : const MiniPlayer(),
-                      ))),
-            )));
+                            const Expanded(
+                              child: UpNextQueue(
+                                isQueueInSlidePanel: false,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : null,
+              drawerScrimColor: Colors.transparent,
+              body: Obx(() => SlidingUpPanel(
+                    onPanelSlide: playerController.panellistener,
+                    controller: playerController.playerPanelController,
+                    minHeight: playerController.playerPanelMinHeight.value,
+                    maxHeight: size.height,
+                    isDraggable: !isWideScreen,
+                    onSwipeUp: () {
+                      playerController.queuePanelController.open();
+                    },
+                    panel: const Player(),
+                    body: const ScreenNavigation(),
+                    header: !isWideScreen
+                        ? GestureDetector(
+                            onTap: playerController.playerPanelController.open,
+                            onHorizontalDragEnd: (DragEndDetails details) {
+                              if (details.primaryVelocity! < 0) {
+                                playerController.next();
+                              } else if (details.primaryVelocity! > 0) {
+                                playerController.prev();
+                              }
+                            },
+                            child: const MiniPlayer(),
+                          )
+                        : const MiniPlayer(),
+                  ))),
+        ),
+      ),
+    );
   }
 }

@@ -217,5 +217,9 @@
     "loudnessNormalizationDes": "Cài đặt cùng một mức độ lớn cho tất cả bài hát (Thử nghiệm) (Không hoạt động đối với các bài hát đã tải về trong phiên bản trước (< v1.10.0))",
     "duration": "Thời gian bài hát",
     "audioCodec": "Mã hoá tiếng",
-    "loudnessDb": "Độ ồn Db"
+    "loudnessDb": "Độ ồn Db",
+    "playerUi": "Giao diện phát nhạc",
+    "playerUiDes": "Chọn giao diện phát nhạc",
+    "standard": "Tiêu Chuẩn",
+    "gesture": "Cử chỉ"
 }

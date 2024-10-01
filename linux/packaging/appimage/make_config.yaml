@@ -7,8 +7,5 @@ keywords:
   - Streaming
 
 generic_name: Music Application
-categories:
-  - Music
-
-include:
-  - libmpv.so
+categories: 
+  - AudioVideo

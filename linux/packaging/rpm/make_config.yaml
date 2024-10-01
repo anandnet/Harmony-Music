@@ -7,7 +7,7 @@ license: GPLv3
 url: https://github.com/anandnet/Harmony-Music
 
 requires:
-  - mpv
+  - mpv-libs
   - libappindicator
 
 display_name: Harmony Music

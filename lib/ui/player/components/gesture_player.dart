@@ -107,8 +107,8 @@ class GesturePlayer extends StatelessWidget {
                                   Obx(() {
                                     return Marquee(
                                       delay: const Duration(milliseconds: 300),
-                                      duration: const Duration(seconds: 5),
-                                      id: "Current Song",
+                                      duration: const Duration(seconds: 10),
+                                      id: "${playerController.currentSong.value}_title",
                                       child: Text(
                                         playerController.currentSong.value !=
                                                 null
@@ -132,8 +132,8 @@ class GesturePlayer extends StatelessWidget {
                                   GetX<PlayerController>(builder: (controller) {
                                     return Marquee(
                                       delay: const Duration(milliseconds: 300),
-                                      duration: const Duration(seconds: 5),
-                                      id: "Current Song artists",
+                                      duration: const Duration(seconds: 10),
+                                      id: "${playerController.currentSong.value}_subtitle",
                                       child: Text(
                                         playerController.currentSong.value !=
                                                 null

@@ -106,40 +106,55 @@ class MiniPlayer extends StatelessWidget {
                           width: 10,
                         ),
                         Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 20,
-                                child: Text(
-                                  playerController.currentSong.value != null
-                                      ? playerController
-                                          .currentSong.value!.title
-                                      : "",
-                                  maxLines: 1,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                                child: Marquee(
-                                  id: "Mini player artists",
-                                  delay: const Duration(milliseconds: 300),
-                                  duration: const Duration(seconds: 5),
-                                  child: Text(
-                                    playerController.currentSong.value != null
-                                        ? playerController
-                                            .currentSong.value!.artist!
-                                        : "",
-                                    maxLines: 1,
-                                    style:
-                                        Theme.of(context).textTheme.titleSmall,
+                          child: GestureDetector(
+                            onHorizontalDragEnd: (DragEndDetails details) {
+                              if (details.primaryVelocity! < 0) {
+                                playerController.next();
+                              } else if (details.primaryVelocity! > 0) {
+                                playerController.prev();
+                              }
+                            },
+                            child: ColoredBox(
+                              color: Colors.transparent,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 20,
+                                    child: Text(
+                                      playerController.currentSong.value != null
+                                          ? playerController
+                                              .currentSong.value!.title
+                                          : "",
+                                      maxLines: 1,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
+                                    ),
                                   ),
-                                ),
+                                  SizedBox(
+                                    height: 20,
+                                    child: Marquee(
+                                      id: "${playerController.currentSong.value}_mini",
+                                      delay: const Duration(milliseconds: 300),
+                                      duration: const Duration(seconds: 5),
+                                      child: Text(
+                                        playerController.currentSong.value !=
+                                                null
+                                            ? playerController
+                                                .currentSong.value!.artist!
+                                            : "",
+                                        maxLines: 1,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
                         //player control

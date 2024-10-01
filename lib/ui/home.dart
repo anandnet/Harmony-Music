@@ -154,15 +154,8 @@ class Home extends StatelessWidget {
                     panel: const Player(),
                     body: const ScreenNavigation(),
                     header: !isWideScreen
-                        ? GestureDetector(
+                        ? InkWell(
                             onTap: playerController.playerPanelController.open,
-                            onHorizontalDragEnd: (DragEndDetails details) {
-                              if (details.primaryVelocity! < 0) {
-                                playerController.next();
-                              } else if (details.primaryVelocity! > 0) {
-                                playerController.prev();
-                              }
-                            },
                             child: const MiniPlayer(),
                           )
                         : const MiniPlayer(),

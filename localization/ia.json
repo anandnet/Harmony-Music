@@ -217,5 +217,7 @@
     "urlSearchDes": "URL detegite. Clicca lo pro aperir/reproducer le contento associate",
     "androidBackupWarning": "",
     "downloadError3": "Falleva le discargamento a causa de un error de rete! Tenta de novo",
-    "downloadError2": "Le canto requestate non pote discargar se a causa de un restriction de servitor. Tu pote retentar lo"
+    "downloadError2": "Le canto requestate non pote discargar se a causa de un restriction de servitor. Tu pote retentar lo",
+    "playerUi": "IU de reproductor",
+    "playerUiDes": "Selige le interfacie de usator del reproductor"
 }

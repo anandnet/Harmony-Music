@@ -215,5 +215,9 @@
     "clearImgCacheDes": "Klik disini untuk menghapus cache dari thumbnail/gambar. (Tidak direkomendasikan kecuali ingin memperbahaui data cache dari gambar)",
     "plain": "Polos",
     "urlSearchDes": "Url terdeteksi, klik untuk membuka/memutar konten terkait",
-    "homeContentCountDes": "Pilih jumlah konten layar beranda home. lebih kecil memuat lebih cepat"
+    "homeContentCountDes": "Pilih jumlah konten layar beranda home. lebih kecil memuat lebih cepat",
+    "playerUi": "Antarmuka Pengguna",
+    "playerUiDes": "Pilih antarmuka pengguna",
+    "standard": "Standar",
+    "gesture": "Gerakan"
 }

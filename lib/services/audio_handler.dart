@@ -442,7 +442,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       final bool restoreSession = extras['restoreSession'] ?? false;
       isSongLoading = true;
       if (_playList.children.isNotEmpty) {
-        await _playList.removeRange(0, 1);
+        await _playList.clear();
       }
 
       mediaItem.add(currentSong);

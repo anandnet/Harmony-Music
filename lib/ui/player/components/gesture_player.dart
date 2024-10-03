@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
+import '../../widgets/songinfo_bottom_sheet.dart';
 import '/models/thumbnail.dart';
 import '../../screens/Settings/settings_screen_controller.dart';
 import '../../utils/theme_controller.dart';
@@ -73,6 +74,41 @@ class GesturePlayer extends StatelessWidget {
           onDoubleTap: () {
             playerController.playPause();
           },
+          onLongPress: () {
+            showModalBottomSheet(
+              constraints: const BoxConstraints(maxWidth: 500),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+              ),
+              isScrollControlled: true,
+              context: playerController.homeScaffoldkey.currentState!.context,
+              barrierColor: Colors.transparent.withAlpha(100),
+              builder: (context) => SongInfoBottomSheet(
+                playerController.currentSong.value!,
+                calledFromPlayer: true,
+              ),
+            ).whenComplete(() => Get.delete<SongInfoController>());
+          },
+        ),
+        IgnorePointer(
+          child: Align(
+            child: Center(
+              child: Obx(
+                () => FadeTransition(
+                  opacity: playerController.gesturePlayerStateAnimation!,
+                  child: playerController.gesturePlayerVisibleState.value == 2
+                      ? const SizedBox.shrink()
+                      : Icon(
+                          playerController.gesturePlayerVisibleState.value == 1
+                              ? Icons.play_arrow
+                              : Icons.pause,
+                          size: 180,
+                          color: Colors.white,
+                        ),
+                ),
+              ),
+            ),
+          ),
         ),
         Align(
           alignment: Alignment.bottomCenter,
@@ -265,6 +301,16 @@ class GesturePlayer extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+          ),
+        ),
+        // absorb pointer to prevent the next,prev gesture from being triggered when the user tries to switch app
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: AbsorbPointer(
+            child: SizedBox(
+              height: Get.mediaQuery.padding.bottom + 20,
+              child: Container(),
             ),
           ),
         )

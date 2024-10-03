@@ -124,7 +124,12 @@ class SettingsScreenController extends GetxController {
   }
 
   void setPlayerUi(dynamic val) {
+    final playerCon = Get.find<PlayerController>();
     setBox.put("playerUi", val);
+    if (val == 1 && playerCon.gesturePlayerStateAnimationController == null) {
+     playerCon.initGesturePlayerStateAnimationController();
+    }
+
     playerUi.value = val;
   }
 

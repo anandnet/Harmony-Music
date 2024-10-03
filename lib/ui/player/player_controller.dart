@@ -18,7 +18,7 @@ import '../widgets/sliding_up_panel.dart';
 import '/models/durationstate.dart';
 import '/services/music_service.dart';
 
-class PlayerController extends GetxController {
+class PlayerController extends GetxController with GetSingleTickerProviderStateMixin {
   final _audioHandler = Get.find<AudioHandler>();
   final _musicServices = Get.find<MusicServices>();
   final currentQueue = <MediaItem>[].obs;
@@ -31,6 +31,8 @@ class PlayerController extends GetxController {
   final isQueueReorderingInProcess = false.obs;
   PanelController playerPanelController = PanelController();
   PanelController queuePanelController = PanelController();
+  AnimationController? gesturePlayerStateAnimationController;
+  Animation<double>? gesturePlayerStateAnimation;
   bool isRadioModeOn = false;
   String? radioContinuationParam;
   dynamic radioInitiatorItem;
@@ -56,6 +58,8 @@ class PlayerController extends GetxController {
   final isLyricsLoading = false.obs;
   final lyricsMode = 0.obs;
   bool isDesktopLyricsDialogOpen = false;
+  // 0 for play, 1 for pause, 2 for blank
+  final gesturePlayerVisibleState = 2.obs;
   final lyricUi =
       UINetease(highlight: true, defaultSize: 20, defaultExtSize: 12);
   RxMap<String, dynamic> lyrics =
@@ -101,6 +105,22 @@ class PlayerController extends GetxController {
     if (GetPlatform.isDesktop) {
       setVolume(Hive.box("AppPrefs").get("volume") ?? 100);
     }
+
+    if (Hive.box("AppPrefs").get("playerUi") == 1) {
+      initGesturePlayerStateAnimationController();
+    }
+  }
+
+  void initGesturePlayerStateAnimationController() {
+    gesturePlayerStateAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+
+    gesturePlayerStateAnimation = Tween<double>(begin: 1, end: 0).animate(
+        CurvedAnimation(
+            parent: gesturePlayerStateAnimationController!,
+            curve: Curves.easeIn));
   }
 
   void _setInitLyricsMode() {
@@ -212,6 +232,11 @@ class PlayerController extends GetxController {
         showLyricsflag.value = false;
         if (isDesktopLyricsDialogOpen) {
           Navigator.pop(Get.context!);
+        }
+
+        // reset player visible state when player is in gesture mode
+        if (Get.find<SettingsScreenController>().playerUi.value == 1) {
+          gesturePlayerVisibleState.value = 2;
         }
       }
     });
@@ -446,6 +471,13 @@ class PlayerController extends GetxController {
   void playPause() {
     if (initFlagForPlayer) return;
     _audioHandler.playbackState.value.playing ? pause() : play();
+    // for gesture player
+    if (Get.find<SettingsScreenController>().playerUi.value == 1) {
+      gesturePlayerVisibleState.value =
+          _audioHandler.playbackState.value.playing ? 0 : 1;
+      gesturePlayerStateAnimationController?.reset();
+      gesturePlayerStateAnimationController?.forward();
+    }
   }
 
   void prev() {
@@ -662,6 +694,7 @@ class PlayerController extends GetxController {
     _audioHandler.customAction('dispose');
     keyboardSubscription.cancel();
     scrollController.dispose();
+    gesturePlayerStateAnimationController?.dispose();
     sleepTimer?.cancel();
     if (GetPlatform.isWindows) {
       Get.delete<WindowsAudioService>();

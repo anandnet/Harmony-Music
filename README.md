@@ -36,10 +36,6 @@ A cross platform app for music streaming made with Flutter(Android, Windows, lin
 
 You can also help us in translation, click status image or <a href="https://hosted.weblate.org/projects/harmony-music/project-translations/"> here </a> to go to Weblate.
 
-# To Do
-
-* Backup & Restore
-
 # Troubleshoot
 * if you are facing Notification control issue or music playback stopped by system optimization, please enable ignore battery optimization option from settings
 
@@ -78,8 +74,9 @@ Synced lyrics provided by <a href = 'https://lrclib.net' >LRCLIB</a> <br/>
 <a href = 'https://piped.video' >Piped</a> for playlists.
 
 #### Major Packages used
-* just_audio: ^0.9.35  -  provide audio player to play song  
-* audio_service: ^0.18.12 - manage background music & platform audio services
+* just_audio: ^0.9.40  -  audio player for android
+* media_kit: ^1.1.9 - audio player for linux and windows
+* audio_service: ^0.18.15 - manage background music & platform audio services
 * get: ^4.6.6 -  package for high-performance state management, intelligent dependency injection, and route management
 * youtube_explode_dart: ^2.0.2 - Third party package to provide song url
 * hive: ^2.2.3 - offline db used 

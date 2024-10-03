@@ -30,7 +30,7 @@ class SettingsScreen extends StatelessWidget {
     return Padding(
       padding: isBottomNavActive
           ? EdgeInsets.only(left: 20, top: topPadding, right: 15)
-          : EdgeInsets.only(top: topPadding, left: 5),
+          : EdgeInsets.only(top: topPadding, left: 5,right: 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

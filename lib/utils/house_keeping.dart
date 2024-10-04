@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
+import '/models/media_Item_builder.dart';
+import '/ui/screens/Library/library_controller.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import '../services/utils.dart';
@@ -26,9 +28,7 @@ Future<void> removeExpiredSongsUrlFromDb() async {
   } catch (e) {
     printERROR("Error in removeExpiredSongsUrlFromDb: $e");
   } finally {
-    if (GetPlatform.isDesktop) {
-      removeDeletedOfflineSongsFromDb();
-    }
+    removeDeletedOfflineSongsFromDb();
   }
 }
 
@@ -37,11 +37,14 @@ Future<void> removeDeletedOfflineSongsFromDb() async {
   try {
     final songDownloadsBox = Hive.box("SongDownloads");
     final downloadedSongs = songDownloadsBox.values.toList();
+    final LibrarySongsController librarySongsController =
+        Get.find<LibrarySongsController>();
     for (var i = 0; i < downloadedSongs.length; i++) {
-      final songKey = downloadedSongs[i]['id'];
+      final songKey = downloadedSongs[i]['videoId'];
       final songUrl = downloadedSongs[i]['url'];
       if (await File(songUrl).exists() == false) {
-        await songDownloadsBox.delete(songKey);
+        await librarySongsController.removeSong(
+            MediaItemBuilder.fromJson(downloadedSongs[i]), true);
         final thumbNailPath = "$supportDir/thumbnails/$songKey.png";
         if (await File(thumbNailPath).exists()) {
           await File(thumbNailPath).delete();

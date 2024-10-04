@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../../utils/house_keeping.dart';
 import '../../widgets/add_to_playlist.dart';
 import '/ui/widgets/sort_widget.dart';
 import '../Settings/settings_screen_controller.dart';
@@ -69,6 +70,9 @@ class LibrarySongsController extends GetxController {
         .whereType<MediaItem>()
         .toList());
     isSongFetched.value = true;
+    
+    //Remove deleted songs and expired songUrl from database
+    startHouseKeeping();
   }
 
   void onSort(SortType sortType, bool isAscending) {

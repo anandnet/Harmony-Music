@@ -8,10 +8,11 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import '../../models/playlist.dart';
 import '../navigator.dart';
 import '../player/player_controller.dart';
+import 'add_to_playlist.dart';
 import 'image_widget.dart';
 import 'songinfo_bottom_sheet.dart';
 
-class ListWidget extends StatelessWidget {
+class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin{
   const ListWidget(this.items, this.title, this.isCompleteList,
       {super.key,
       this.isPlaylist = false,
@@ -85,7 +86,48 @@ class ListWidget extends StatelessWidget {
           ? const BouncingScrollPhysics()
           : const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) => Slidable(
+        startActionPane: ActionPane(motion: const DrawerMotion(), children: [
+          SlidableAction(
+            onPressed: (context) {
+              showDialog(
+                context: context,
+                builder: (context) =>
+                    AddToPlaylist([items[index] as MediaItem]),
+              ).whenComplete(() => Get.delete<AddToPlaylistController>());
+            },
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            foregroundColor: Theme.of(context).textTheme.titleMedium!.color,
+            icon: Icons.playlist_add,
+            //label: 'Add to playlist',
+          ),
+          if (playlist != null && !playlist.isCloudPlaylist)
+            SlidableAction(
+              onPressed: (context) {
+                removeSongFromPlaylist(items[index] as MediaItem, playlist);
+              },
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              foregroundColor: Theme.of(context).textTheme.titleMedium!.color,
+              icon: Icons.delete,
+              //label: 'delete',
+            ),
+        ]),
         endActionPane: ActionPane(motion: const DrawerMotion(), children: [
+          SlidableAction(
+            onPressed: (context) {
+              playerController
+                  .enqueueSong(items[index] as MediaItem)
+                  .whenComplete(() {
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                    context, "songEnqueueAlert".tr,
+                    size: SanckBarSize.MEDIUM));
+              });
+            },
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            foregroundColor: Theme.of(context).textTheme.titleMedium!.color,
+            icon: Icons.merge,
+            //label: 'Enqueue',
+          ),
           SlidableAction(
             onPressed: (context) {
               playerController.playNext(items[index] as MediaItem);
@@ -93,10 +135,10 @@ class ListWidget extends StatelessWidget {
                   context, "Upcoming ${(items[index] as MediaItem).title}".tr,
                   size: SanckBarSize.MEDIUM));
             },
-            backgroundColor: Color(Colors.transparent.value),
-            foregroundColor: Colors.white,
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            foregroundColor: Theme.of(context).textTheme.titleMedium!.color,
             icon: Icons.next_plan_outlined,
-            label: 'Play Next',
+            //label: 'Play Next',
           ),
         ]),
         child: ListTile(

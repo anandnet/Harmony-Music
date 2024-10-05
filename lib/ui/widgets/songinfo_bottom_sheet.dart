@@ -342,7 +342,7 @@ class SongInfoBottomSheet extends StatelessWidget {
   }
 }
 
-class SongInfoController extends GetxController {
+class SongInfoController extends GetxController with RemoveSongFromPlaylistMixin {
   final isCurrentSongFav = false.obs;
   final MediaItem song;
   final bool calledFromPlayer;
@@ -370,6 +370,26 @@ class SongInfoController extends GetxController {
     }
   }
 
+
+  Future<void> toggleFav() async {
+    if (calledFromPlayer) {
+      final cntrl = Get.find<PlayerController>();
+      if (cntrl.currentSong.value == song) {
+        cntrl.toggleFavourite();
+        isCurrentSongFav.value = !isCurrentSongFav.value;
+        return;
+      }
+    }
+    final box = await Hive.openBox("LIBFAV");
+    isCurrentSongFav.isFalse
+        ? box.put(song.id, MediaItemBuilder.toJson(song))
+        : box.delete(song.id);
+    isCurrentSongFav.value = !isCurrentSongFav.value;
+  }
+}
+
+
+mixin RemoveSongFromPlaylistMixin {
   Future<void> removeSongFromPlaylist(MediaItem item, Playlist playlist) async {
     final box = await Hive.openBox(playlist.playlistId);
     //Library songs case
@@ -415,21 +435,5 @@ class SongInfoController extends GetxController {
     if (playlist.playlistId == "SongDownloads" ||
         playlist.playlistId == "SongsCache") return;
     box.close();
-  }
-
-  Future<void> toggleFav() async {
-    if (calledFromPlayer) {
-      final cntrl = Get.find<PlayerController>();
-      if (cntrl.currentSong.value == song) {
-        cntrl.toggleFavourite();
-        isCurrentSongFav.value = !isCurrentSongFav.value;
-        return;
-      }
-    }
-    final box = await Hive.openBox("LIBFAV");
-    isCurrentSongFav.isFalse
-        ? box.put(song.id, MediaItemBuilder.toJson(song))
-        : box.delete(song.id);
-    isCurrentSongFav.value = !isCurrentSongFav.value;
   }
 }

@@ -97,6 +97,8 @@
     "streamingQualityDes": "Quality of music stream",
     "disableTransitionAnimation": "Disable transition animation",
     "disableTransitionAnimationDes": "Enable this option to disable tab transition animation",
+    "enableSlidableAction": "Enable slidable actions",
+    "enableSlidableActionDes": "Enable slidable actions on song tile",
     "high": "High",
     "low": "Low",
     "backgroundPlay": "Background music play",

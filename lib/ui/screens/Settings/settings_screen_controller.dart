@@ -28,6 +28,7 @@ class SettingsScreenController extends GetxController {
   final noOfHomeScreenContent = 3.obs;
   final streamingQuality = AudioQuality.High.obs;
   final playerUi = 0.obs;
+  final slidableActionEnabled = true.obs;
   final isIgnoringBatteryOptimizations = false.obs;
   final discoverContentType = "QP".obs;
   final isNewVersionAvailable = false.obs;
@@ -96,6 +97,7 @@ class SettingsScreenController extends GetxController {
         setBox.get("exportLocationPath") ?? "/storage/emulated/0/Music";
     downloadingFormat.value = setBox.get('downloadingFormat') ?? "opus";
     discoverContentType.value = setBox.get('discoverContentType') ?? "QP";
+    slidableActionEnabled.value = setBox.get('slidableActionEnabled') ?? true;
     if (setBox.containsKey("piped")) {
       isLinkedWithPiped.value = setBox.get("piped")['isLoggedIn'];
     }
@@ -148,6 +150,11 @@ class SettingsScreenController extends GetxController {
           val ? 75.0 : 75.0 + Get.mediaQuery.viewPadding.bottom;
     }
     setBox.put("isBottomNavBarEnabled", val);
+  }
+
+  void toggleSlidableAction(bool val) {
+    setBox.put("slidableActionEnabled", val);
+    slidableActionEnabled.value = val;
   }
 
   void changeDownloadingFormat(String? val) {

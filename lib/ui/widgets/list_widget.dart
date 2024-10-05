@@ -1,10 +1,11 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/widgets/snackbar.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '/ui/screens/Settings/settings_screen_controller.dart';
+import '/ui/widgets/snackbar.dart';
 import '../../models/playlist.dart';
 import '../navigator.dart';
 import '../player/player_controller.dart';
@@ -12,7 +13,7 @@ import 'add_to_playlist.dart';
 import 'image_widget.dart';
 import 'songinfo_bottom_sheet.dart';
 
-class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin{
+class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
   const ListWidget(this.items, this.title, this.isCompleteList,
       {super.key,
       this.isPlaylist = false,
@@ -86,6 +87,8 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin{
           ? const BouncingScrollPhysics()
           : const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) => Slidable(
+        enabled:
+            Get.find<SettingsScreenController>().slidableActionEnabled.isTrue,
         startActionPane: ActionPane(motion: const DrawerMotion(), children: [
           SlidableAction(
             onPressed: (context) {

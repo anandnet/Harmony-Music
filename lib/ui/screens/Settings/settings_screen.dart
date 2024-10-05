@@ -191,6 +191,18 @@ class SettingsScreen extends StatelessWidget {
                             onChanged:
                                 settingsController.disableTransitionAnimation),
                       )),
+                  ListTile(
+                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                      title: Text("enableSlidableAction".tr),
+                      subtitle: Text("enableSlidableActionDes".tr,
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      trailing: Obx(
+                        () => CustSwitch(
+                            value: settingsController
+                                .slidableActionEnabled.isTrue,
+                            onChanged:
+                                settingsController.toggleSlidableAction),
+                      )),
                 ],
               ),
               CustomExpansionTile(

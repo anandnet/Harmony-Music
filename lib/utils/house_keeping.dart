@@ -43,6 +43,7 @@ Future<void> removeDeletedOfflineSongsFromDb() async {
       final songKey = downloadedSongs[i]['videoId'];
       final songUrl = downloadedSongs[i]['url'];
       if (await File(songUrl).exists() == false) {
+        await songDownloadsBox.delete(songKey);
         await librarySongsController.removeSong(
             MediaItemBuilder.fromJson(downloadedSongs[i]), true);
         final thumbNailPath = "$supportDir/thumbnails/$songKey.png";

@@ -70,7 +70,7 @@ class LibrarySongsController extends GetxController {
         .whereType<MediaItem>()
         .toList());
     isSongFetched.value = true;
-    
+
     //Remove deleted songs and expired songUrl from database
     startHouseKeeping();
   }
@@ -98,6 +98,7 @@ class LibrarySongsController extends GetxController {
     tempListContainer.clear();
   }
 
+  /// remove song from library list and from storage only, not from database
   Future<void> removeSong(MediaItem item, bool isDownloaded,
       {String? url}) async {
     if (tempListContainer.isNotEmpty) {

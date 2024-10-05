@@ -222,5 +222,7 @@
     "playerUiDes": "Seleccionar la interfaz de usuario del reproductor",
     "gesture": "Gestos",
     "playerUi": "Interfaz de usuario del reproductor",
-    "standard": "Estándar"
+    "standard": "Estándar",
+    "enableSlidableAction": "Habilitar acciones deslizables",
+    "enableSlidableActionDes": "Activar acciones deslizables en el mosaico de las canciones"
 }

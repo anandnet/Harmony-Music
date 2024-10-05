@@ -667,7 +667,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   @override
   Future<void> stop() async {
-    await deviceEqualizer?.endAudioEffect(_player.androidAudioSessionId!);
     await _player.stop();
     return super.stop();
   }

@@ -419,7 +419,7 @@ class Languages extends Translations {
           "create": "Създаване",
           "equalizer": "Еквалайзер",
           "enqueueSong": "Поставете тази песен в опашката",
-          "noBookmarks": "Без отметки!",
+          "noBookmarks": "Няма отметки!",
           "playlists": "Плейлисти",
           "videos": "Видеоклипове",
           "enabled": "Активирано",
@@ -440,7 +440,7 @@ class Languages extends Translations {
           "username": "Потребителско име",
           "light": "Светла",
           "resetblacklistedplaylist": "Нулиране на плейлисти в черен списък",
-          "dynamic": "Динамичен",
+          "dynamic": "Динамичена",
           "selectAuthInsMsg": "Моля, изберете инстанция за удостоверяване!",
           "equalizerDes": "Отвори системния еквалайзер",
           "removePlaylist": "Премахване на плейлист",
@@ -467,7 +467,7 @@ class Languages extends Translations {
           "singles": "Сингли",
           "linkAlert": "Свързано успешно!",
           "status": "Статус",
-          "themeMode": "Тематичен режим",
+          "themeMode": "Режим на тема",
           "streamingQualityDes": "Качество на музикалния поток",
           "nomatch": "Няма намерени съвпадения за",
           "notaValidLink": "Невалидна връзка!",
@@ -487,7 +487,7 @@ class Languages extends Translations {
           "search": "Търсене",
           "skipSilenceDes":
               "Тишината ще бъде пропусната при възпроизвеждане на музика",
-          "playNext": "Изпални следващ",
+          "playNext": "Изпълни следващ",
           "errorOccuredAlert": "Възникна някаква грешка!",
           "songs": "Песни",
           "high": "Високо",
@@ -548,16 +548,16 @@ class Languages extends Translations {
           "reArrangePlaylist": "Пренареждане на плейлиста",
           "removeMultiple": "Премахнете няколко песни",
           "addMultipleSongs": "Добавете песни към плейлиста",
-          "upNext": "Следва",
+          "upNext": "Напред",
           "deleteDownloadData": "Премахване от изтеглени",
           "restoreLastPlaybackSession":
-              "Възстановете последната сесия на възпроизвеждане",
+              "Възстановяване на последната сесия на възпроизвеждане",
           "restoreLastPlaybackSessionDes":
               "Автоматично възстановяване на последната сесия на възпроизвеждане при стартиране на приложението",
           "cacheHomeScreenData":
-              "Кеширайте данните за съдържанието на началния екран",
+              "Кеш на данни за съдържанието на началния екран",
           "cacheHomeScreenDataDes":
-              "Разрешете кеширане на данни за съдържанието на началния екран, началният екран ще се зареди незабавно, ако тази опция е активирана",
+              "Разреши кеширане на данни за съдържанието на началния екран, Началният екран ще се зареди незабавно, ако тази опция е активирана",
           "exportDowloadedFiles": "Изнесете изтеглените файлове",
           "exportedFileLocation":
               "Местоположение за изнасяне на изтегления файл",
@@ -568,9 +568,9 @@ class Languages extends Translations {
           "close": "Затвори",
           "exportMsg": "Файловете са изнесени успешно",
           "exportDowloadedFilesDes":
-              "Щракнете тук, за да изнесете изтегления файл от inApp директория във външна директория",
+              "Щракнете тук, за да изнесете изтегления файл от директорията на приложението във външна директория",
           "clearImgCacheAlert": "Кешът на изображенията е изчистен успешно",
-          "disableTransitionAnimation": "Деактивирай анимация при преход",
+          "disableTransitionAnimation": "Деактивирате анимацията при преход",
           "disableTransitionAnimationDes":
               "Активирайте тази опция, за да деактивирате анимацията при преход към раздели",
           "clearImgCacheDes":
@@ -578,13 +578,13 @@ class Languages extends Translations {
           "pipedplstSyncAlert": "Piped плейлист е синхронизиран!",
           "openIn": "Отвори в",
           "backupSettingsAndPlaylistsDes":
-              "Запазва всички настройки, плейлисти и данни за влизане в архивен файл",
+              "Запазва всички настройки, плейлисти и данни за вход в архивен файл",
           "restoreSettingsAndPlaylistsDes":
               "Възстановява всички настройки, данни за вход и плейлисти от архивен файл. Презаписва всички текущи данни",
           "backFilesFound": "открита бази данни",
           "restoreMsg":
               "Успешно възстановено!\nПромените се прилагат при рестартиране",
-          "restore": "Възстанови",
+          "restore": "Възстановяване",
           "closeApp": "Затвори приложението",
           "restoring": "Възстановява се...",
           "backupSettingsAndPlaylists": "Архивиране на настройки и плейлисти",
@@ -592,7 +592,7 @@ class Languages extends Translations {
           "backupMsg": "Резервното копие е запазено успешно!",
           "backupAppData": "Архивиране на данни от приложението",
           "backup": "Архивиране",
-          "includeDownloadedFiles": "Включете изтеглени файлове с песни",
+          "includeDownloadedFiles": "Включете изтеглените файлове с песни",
           "backupInProgress": "Извършва се архивиране...",
           "restoreAppData": "Възстановяване на данните от приложението",
           "letsStrart": "Да започваме..",
@@ -604,7 +604,34 @@ class Languages extends Translations {
           "title": "Заглавие",
           "duration": "Продължителност",
           "audioCodec": "Аудио кодек",
-          "loudnessDb": "Сила на звукаDb"
+          "loudnessDb": "Сила на звукаDb",
+          "songNotPlayable":
+              "Песента не може да се възпроизведе поради ограничение на сървъра!",
+          "music&Playback": "Музика и Възпроизвеждане",
+          "queueShufflingDeniedMsg":
+              "Опашката не може да се разбърква, когато режимът на разбъркване е активиран",
+          "queuerearrangingDeniedMsg":
+              "Опашката не може да бъде пренаредена, когато режимът на разбъркване е активиран",
+          "urlSearchDes":
+              "Открит е URL адрес, щракнете върху него, за да отворите/пуснете свързано съдържание",
+          "androidBackupWarning":
+              "Не е тествано: Маркирането на квадратчето за отметка след изтегляне на повече от 60 файла, процесът може да изразходва голямо количество памет и може да доведе до срив на телефона или приложението. Продължете на свой собствен риск.",
+          "appInfo": "Информация за приложението",
+          "download": "Изтегляне",
+          "downloadError2":
+              "Заявената песен не може да бъде изтеглена поради ограничение на сървъра. Можете да опитате отново",
+          "downloadError3":
+              "Изтеглянето не бе успешно поради мрежова грешка! Моля, опитайте отново",
+          "personalisation": "Персонализиране",
+          "loudnessNormalization": "Нормализиране на силата на звука",
+          "networkError": "Мрежова грешка! Проверете вашата мрежова връзка.",
+          "content": "Съдържание",
+          "loudnessNormalizationDes":
+              "Задава едно и също ниво на силата на звука за всички песни (Експериментално) (Няма да работи с песни, изтеглени на предишна версия (< v1.10.0))",
+          "playerUi": "Плейър интерфейс",
+          "standard": "Стандартен",
+          "gesture": "Жестове",
+          "playerUiDes": "Изберете потребителски интерфейс на плейъра"
         },
         "bn": {},
         "ca": {
@@ -1071,7 +1098,11 @@ class Languages extends Translations {
           "urlSearchDes":
               "Zjištěná URL Kliknutím na ni otevřete/přehrajete související obsah",
           "androidBackupWarning":
-              "Netestováno: Zaškrtnutím políčka po stažení více než 60 souborů může proces spotřebovat velké množství paměti a může způsobit pád telefonu nebo aplikace. Pokračujte na vlastní nebezpečí."
+              "Netestováno: Zaškrtnutím políčka po stažení více než 60 souborů může proces spotřebovat velké množství paměti a může způsobit pád telefonu nebo aplikace. Pokračujte na vlastní nebezpečí.",
+          "playerUi": "Rozhraní přehrávače",
+          "standard": "Standard",
+          "gesture": "Gesta",
+          "playerUiDes": "Vybrat uživatelské rozhraní přehrávače"
         },
         "de": {
           "home": "Start",
@@ -1329,7 +1360,11 @@ class Languages extends Translations {
           "music&Playback": "Musik & Wiedergabe",
           "content": "Inhalt",
           "androidBackupWarning":
-              "Nicht getestet: Wenn du das Kontrollkästchen nach dem Herunterladen von mehr als 60 Dateien aktivierst, kann der Vorgang viel Speicher beanspruchen und zum Absturz des Telefons oder der App führen. Fahre auf eigene Gefahr fort."
+              "Nicht getestet: Wenn du das Kontrollkästchen nach dem Herunterladen von mehr als 60 Dateien aktivierst, kann der Vorgang viel Speicher beanspruchen und zum Absturz des Telefons oder der App führen. Fahre auf eigene Gefahr fort.",
+          "playerUi": "Player UI",
+          "playerUiDes": "Wähle Player Benutzeroberfläche",
+          "standard": "Standart",
+          "gesture": "Gesten"
         },
         "en": {
           "home": "Home",
@@ -1407,6 +1442,10 @@ class Languages extends Translations {
           "dark": "Dark",
           "light": "Light",
           "language": "Language",
+          "playerUi": "Player Ui",
+          "playerUiDes": "Select player user interface",
+          "standard": "Standard",
+          "gesture": "Gesture",
           "languageDes": "Set App language",
           "setDiscoverContent": "Set discover content",
           "quickpicks": "Quick Picks",
@@ -1435,6 +1474,8 @@ class Languages extends Translations {
           "disableTransitionAnimation": "Disable transition animation",
           "disableTransitionAnimationDes":
               "Enable this option to disable tab transition animation",
+          "enableSlidableAction": "Enable slidable actions",
+          "enableSlidableActionDes": "Enable slidable actions on song tile",
           "high": "High",
           "low": "Low",
           "backgroundPlay": "Background music play",
@@ -2003,7 +2044,13 @@ class Languages extends Translations {
               "No probado: si seleccionas la casilla de verificación después de descargar más de 60 archivos, el proceso puede consumir una gran cantidad de memoria y provocar que el teléfono o la aplicación se bloqueen. Continúa bajo tu propio riesgo.",
           "personalisation": "Personalización",
           "loudnessNormalizationDes":
-              "Establece el mismo nivel de volumen para todas las canciones (Experimental) (No funcionará en canciones descargadas en versiones anteriores (< v1.10.0))"
+              "Establece el mismo nivel de volumen para todas las canciones (Experimental) (No funcionará en canciones descargadas en versiones anteriores (< v1.10.0))",
+          "queueShufflingDeniedMsg":
+              "La cola no se puede mezclar cuando el modo aleatorio está habilitado",
+          "playerUiDes": "Seleccionar la interfaz de usuario del reproductor",
+          "gesture": "Gestos",
+          "playerUi": "Interfaz de usuario del reproductor",
+          "standard": "Estándar"
         },
         "fi": {
           "libAlbums": "Kirjaston albumit",
@@ -2171,92 +2218,90 @@ class Languages extends Translations {
         "fil": {},
         "fj": {},
         "fr": {
-          "libPlaylists": "Listes de lecture de bibliothèque",
+          "libPlaylists": "Playlists de la Bibliothèque",
           "networkError1": "Oups erreur réseau !",
-          "noOfflineSong": "Pas de chansons hors ligne !",
+          "noOfflineSong": "Pas de titre hors ligne !",
           "favorites": "Favoris",
-          "cachedOrOffline": "En cache/Hors ligne",
-          "emptyPlaylist": "Liste de lecture vide !",
-          "enqueueAll": "Mettre tout dans la file",
-          "renamePlaylist": "Renommer la liste de lecture",
-          "removePlaylist": "Retirer la liste de lecture",
-          "CreateNewPlaylist": "Créer une nouvelle liste de lecture",
+          "cachedOrOffline": "En Cache / Hors Ligne",
+          "emptyPlaylist": "Playlist vide !",
+          "enqueueAll": "Mettre tout en file d'attente",
+          "renamePlaylist": "Renommer la playlist",
+          "removePlaylist": "Supprimer la playlist",
+          "CreateNewPlaylist": "Créer une nouvelle playlist",
           "cancel": "Annuler",
           "create": "Créer",
-          "createnAdd": "Créer et ajouter",
-          "noBookmarks": "Pas de signets !",
+          "createnAdd": "Créer et Ajouter",
+          "noBookmarks": "Aucun élément !",
           "startRadio": "Démarrer la radio",
-          "playNext": "Jouer ensuite",
+          "playNext": "Lecture suivante",
           "removeFromQueue": "Retirer de la file",
           "removeFromCache": "Retirer du cache",
-          "themeMode": "Mode du thème",
+          "themeMode": "Mode du Thème",
           "dynamic": "Dynamique",
-          "systemDefault": "Système par défaut",
-          "dark": "sombre",
-          "light": "clair",
+          "systemDefault": "Système par Défaut",
+          "dark": "Sombre",
+          "light": "Clair",
           "setDiscoverContent": "Définir le contenu",
           "quickPics": "Sélection rapide",
           "discover": "Découvrir",
-          "trending": "Tendances",
+          "trending": "Tendance",
           "topMusicVid": "Palmarès des vidéoclips",
           "basedOnLast": "Basée sur la dernière interaction",
           "cacheSongsDes":
-              "Mettre les chansons en cache tout en jouant pour la lecture future/hors ligne, il faudra un espace supplémentaire sur votre appareil",
+              "Mettre en cache des chansons pendant la lecture pour une lecture ultérieure / hors ligne. Cela nécessitera de l'espace supplémentaire sur votre appareil",
           "skipSilence": "Ignorer le silence",
           "low": "Basse",
           "equalizer": "Égaliseur",
           "ignoreBatOptDes":
-              "Si vous êtes confronté·e à des problèmes de notification ou de lecture arrêtée par l'optimisation du système, veuillez activer cette option",
+              "Si vous rencontrez des problèmes de notification ou si la lecture est arrêtée par l'optimisation du système, veuillez activer cette option",
           "status": "État",
           "enabled": "Activé",
           "disabled": "Désactivé",
           "githubDes":
               "Voir le code source GitHub\nSi vous aimez ce projet, n'oubliez pas de donner une ⭐",
           "search": "Recherche",
-          "searchRes": "Résultats de la recherche",
+          "searchRes": "Résultats de la Recherche",
           "videos": "Vidéos",
-          "viewAll": "Voir tous",
+          "viewAll": "Tout Voir",
           "results": "Résultats",
           "nomatch": "Aucune correspondance trouvée pour",
           "subscribers": "abonnés",
-          "radioNotAvailable": "Radio non disponible pour cet artiste !",
-          "songRemovedfromQueue": "Enlevé de la file !",
+          "radioNotAvailable": "Radio non disponible pour cet artiste !",
+          "songRemovedfromQueue": "Enlevé de la file !",
           "songRemovedfromQueueCurrSong":
-              "Vous ne pouvez pas supprimer jouer actuellement chanson",
-          "songAddedToPlaylistAlert": "Chanson ajoutée à la playlist !",
-          "songAlreadyExists": "La chanson existe déjà !",
-          "songEnqueueAlert": "Chanson en file d'attente !",
+              "Vous ne pouvez pas supprimer le titre en cours de lecture",
+          "songAddedToPlaylistAlert": "Titre ajouté à la playlist !",
+          "songAlreadyExists": "Le titre existe déjà !",
+          "songEnqueueAlert": "Titre en file d'attente !",
           "songRemovedAlert": "Supprimé de",
-          "playlistCreatednsongAddedAlert":
-              "Liste de lecture créée et chanson ajoutée !",
-          "playlistRenameAlert": "Renommé avec succès !",
-          "playlistBookmarkRemoveAlert":
-              "Signet de la liste de lecture retiré !",
-          "albumBookmarkAddAlert": "Album en signet !",
-          "albumBookmarkRemoveAlert": "Signet de l'album retiré !",
-          "artistBookmarkAddAlert": "Artiste en signet !",
-          "artistBookmarkRemoveAlert": "Signet d'artiste enlevé !",
+          "playlistCreatednsongAddedAlert": "Playlist créée et titre ajouté !",
+          "playlistRenameAlert": "Renommé avec succès !",
+          "playlistBookmarkRemoveAlert": "Playlist retirée des favoris !",
+          "albumBookmarkAddAlert": "Album ajouté à mes favoris !",
+          "albumBookmarkRemoveAlert": "Album retiré des favoris !",
+          "artistBookmarkAddAlert": "Artiste ajouté à mes favoris !",
+          "artistBookmarkRemoveAlert": "Artiste retiré des favoris !",
           "dismiss": "Rejeter",
-          "operationFailed": "Opération échouée",
-          "libSongs": "Chansons de la bibliothèque",
+          "operationFailed": "L'opération a échoué",
+          "libSongs": "Titres de la Bibliothèque",
           "home": "Accueil",
-          "songs": "Chansons",
-          "playlists": "Listes de lecture",
+          "songs": "Titres",
+          "playlists": "Playlists",
           "albums": "Albums",
           "artists": "Artistes",
           "settings": "Réglages",
-          "libAlbums": "Albums de la bibliothèque",
+          "libAlbums": "Albums de la Bibliothèque",
           "retry": "Réessayez !",
-          "libArtists": "Artistes de la bibliothèque",
+          "libArtists": "Artistes de la Bibliothèque",
           "items": "éléments",
-          "recentlyPlayed": "Joué récemment",
-          "addToPlaylist": "Ajouter à la liste de lecture",
-          "noLibPlaylist": "Tu n'as pas de lib playlist !",
-          "enqueueSong": "Enqueue cette chanson",
-          "goToAlbum": "Aller à l'album",
-          "viewArtist": "Voir l'artiste",
-          "shareSong": "Partager cette chanson",
-          "cacheSongs": "Chansons en cache",
+          "recentlyPlayed": "Joué Récemment",
+          "addToPlaylist": "Ajouter à la playlist",
+          "noLibPlaylist": "Tu n'as pas de playlist !",
+          "enqueueSong": "Mettre ce titre en file d'attente",
+          "goToAlbum": "Aller à l'Album",
+          "viewArtist": "Voir l'Artiste",
+          "shareSong": "Partager ce titre",
+          "cacheSongs": "Titres en cache",
           "skipSilenceDes": "Le silence sera ignoré dans la lecture de musique",
           "streamingQuality": "Qualité de diffusion",
           "streamingQualityDes": "Qualité du flux de musique",
@@ -2265,65 +2310,66 @@ class Languages extends Translations {
           "ignoreBatOpt": "Ignorer l'optimisation de la batterie",
           "github": "GitHub",
           "by": "par",
-          "searchDes": "Chansons,Listes de lecture,Album ou Artiste",
+          "searchDes": "Titres, Playlist, Album ou Artiste",
           "for1": "pour",
           "about": "À propos",
-          "errorOccuredAlert": "Une erreur s'est produite !",
-          "playlistCreatedAlert": "Liste de lecture créée !",
-          "playlistRemovedAlert": "Liste de lecture retirée !",
-          "playlistBookmarkAddAlert": "Liste de lecture en signet !",
-          "lyricsNotAvailable": "Paroles indisponible !",
-          "artistDesNotAvailable": "Description indisponible !",
-          "newVersionAvailable": "Nouvelle version disponible !",
+          "errorOccuredAlert": "Une erreur s'est produite !",
+          "playlistCreatedAlert": "Playlist créée !",
+          "playlistRemovedAlert": "Playlist supprimée !",
+          "playlistBookmarkAddAlert": "Playlist ajouté à mes favoris !",
+          "lyricsNotAvailable": "Paroles indisponibles !",
+          "artistDesNotAvailable": "Description indisponible !",
+          "newVersionAvailable": "Nouvelle version disponible !",
           "dontShowInfoAgain": "Ne plus afficher cette info",
-          "notaSongVideo": "Pas un Song/Music-Video !",
-          "notaValidLink": "Pas un lien valable !",
+          "notaSongVideo": "Pas de Titre / Vidéo !",
+          "notaValidLink": "Ce n'est pas un lien valide !",
           "local": "Local",
           "link": "Lien",
           "unlinkAlert": "Dissociation réussie !",
-          "playlistBlacklistAlert": "Playlist sur liste noire !",
+          "playlistBlacklistAlert": "Playlist sur liste noire !",
           "reset": "Réinitialiser",
           "blacklistPlstResetAlert": "Réinitialiser avec succès !",
           "resetblacklistedplaylistDes":
-              "Réinitialiser toutes les listes de lecture de la liste noire de Piped",
+              "Réinitialiser toutes les playlists de la liste noire de Piped",
           "goToDownloadPage":
               "Cliquez ici pour accéder à la page de téléchargement",
-          "unLink": "séparer",
+          "unLink": "Dissocier",
           "linkPipedDes": "Lien avec piped pour les playlists",
-          "selectAuthIns": "Sélectionnez Auth Instance",
+          "selectAuthIns": "Sélectionnez l'Instance d'Authentification",
           "username": "Nom d'utilisateur",
           "password": "Mot de passe",
-          "linkAlert": "Liée avec succès !",
+          "linkAlert": "Lié avec succès !",
           "resetblacklistedplaylist":
-              "Réinitialiser les platlistes sur liste noire",
+              "Réinitialiser les playlists sur liste noire",
           "stopMusicOnTaskClearDes":
-              "La lecture de musique s'arrêtera quand App sera écarté du gestionnaire de tâches",
-          "stopMusicOnTaskClear": "arrêter la musique",
-          "communityplaylists": "Playlist de la communauté",
-          "languageDes": "définir la langue de l'application",
-          "customInsSelectMsg": "Veuillez sélectionner Custom Instance",
+              "La lecture de la musique s'arrête lorsque l'application est retirée du gestionnaire de tâches",
+          "stopMusicOnTaskClear": "Arrêter la musique",
+          "communityplaylists": "Playlists de la Communauté",
+          "languageDes": "Définir la langue de l'application",
+          "customInsSelectMsg":
+              "Veuillez sélectionner une Instance Personnalisée",
           "allFieldsReqMsg": "Tous les champs sont obligatoires",
           "rename": "Renommer",
           "selectAuthInsMsg":
-              "Veuillez sélectionner l'instance Authentication !",
-          "customIns": "Instance personnalisée",
+              "Veuillez sélectionner l'Instance d'Authentification !",
+          "customIns": "Instance Personnalisée",
           "Piped": "Piped",
-          "topmusicvideos": "Top Vidéos de musique",
+          "topmusicvideos": "Top Vidéos",
           "singles": "Singles",
           "language": "Langue",
           "hintApiUrl": "URL API de l'instance Piped",
           "removeFromPlaylist": "Retirer de la playlist",
-          "featuredplaylists": "Playlist mise en avant",
-          "quickpicks": "Sélections rapides",
+          "featuredplaylists": "Playlists Mises en Avant",
+          "quickpicks": "Sélections Rapides",
           "downloads": "Téléchargements",
-          "removeFromLib": "Supprimer de la bibliothèque musicale",
-          "downloadingFormat": "Télécharger le format de fichier",
-          "songAlreadyOfflineAlert": "Chanson déjà hors ligne dans le cache",
-          "downloadLocation": "Emplacement du téléchargement",
+          "removeFromLib": "Supprimer de la Bibliothèque Musicale",
+          "downloadingFormat": "Téléchargement du format de fichier",
+          "songAlreadyOfflineAlert": "Titre déjà hors ligne dans le cache",
+          "downloadLocation": "Emplacement du Téléchargement",
           "downloadingFormatDes":
               "Sélectionnez le format de fichier de téléchargement. \"Opus\" offrira la meilleure qualité",
           "library": "Bibliothèque",
-          "sleepTimer": "Minuterie de veille",
+          "sleepTimer": "Minuterie de Veille",
           "synced": "Synchronisé",
           "cancelTimerAlert": "Minuteur de veille annulé",
           "minutes": "minutes",
@@ -2331,7 +2377,7 @@ class Languages extends Translations {
           "add5Minutes": "Ajouter 5 minutes",
           "endOfThisSong": "Fin de ce titre",
           "cacheHomeScreenDataDes":
-              "Activer la mise en cache du menu principal, son chargement sera instantané si cette option est activée",
+              "Activer la mise en cache du menu principal. Son chargement sera instantané si cette option est activée",
           "cacheHomeScreenData":
               "Mettre en cache le contenu de la page d'accueil",
           "plain": "Entier",
@@ -2341,25 +2387,26 @@ class Languages extends Translations {
           "disableTransitionAnimationDes":
               "Activer cette option pour désactiver les animations de changement d'onglets",
           "scanning": "Analyse en cours...",
-          "restoreLastPlaybackSession": "Revenir à la lecture précédente",
+          "restoreLastPlaybackSession":
+              "Restaurer la dernière session de lecture",
           "openIn": "Ouvrir avec",
-          "deleteDownloadData": "Supprimer des téléchargements",
+          "deleteDownloadData": "Supprimer des Téléchargements",
           "disableTransitionAnimation":
               "Désactiver les animations de transition",
           "exportDowloadedFiles": "Exporter les fichiers téléchargés",
           "exportDowloadedFilesDes":
-              "Cliquer ici pour exporter le fichier téléchargé du dossier de l'application vers un dossier externe",
+              "Cliquez ici pour exporter le fichier téléchargé du dossier de l'application vers un dossier externe",
           "exportedFileLocation": "Lieu d'exportation du fichier",
           "exporting": "Exportation en cours...",
-          "downFilesFound": "fichier téléchargé trouvé",
+          "downFilesFound": "fichiers téléchargés trouvés",
           "close": "Fermer",
           "exportMsg": "Fichiers exportés avec succès",
           "clearImgCache": "Nettoyer le cache des images",
           "clearImgCacheDes":
-              "Cliquer ici pour vider le cache des images/miniatures (non recommandé sauf si vous voulez rafraîchir le cache des images)",
+              "Cliquez ici pour vider le cache des images / miniatures (non recommandé sauf si vous voulez rafraîchir le cache des images)",
           "deleteDownloadedDataAlert":
               "Retiré avec succès des téléchargements !",
-          "sleepTimeSetAlert": "Le minuteur de sommeil est activé",
+          "sleepTimeSetAlert": "Le minuteur de veille est activé",
           "syncedLyricsNotAvailable":
               "Les paroles synchronisées ne sont pas disponibles !",
           "cancelTimer": "Annuler le minuteur",
@@ -2368,29 +2415,68 @@ class Languages extends Translations {
           "restoreLastPlaybackSessionDes":
               "Relancer automatiquement la lecture précédente au démarrage de l'application",
           "backgroundPlayDes":
-              "Activer/désactiver la lecture de musique en arrière-plan (l'application peut être accedée depuis le menu des notifications lorsqu'elle tourne en arrière-plan)",
+              "Activer / Désactiver la lecture de musique en arrière-plan (l’application est accessible depuis la barre d’état système lorsque l'application s’exécute en arrière-plan)",
           "pipedplstSyncAlert": "Playlist piped synchronisée !",
           "export": "Exporter",
           "clearImgCacheAlert":
               "Nettoyage du cache des images réalisé avec succès",
           "homeContentCount": "Compteur de contenu du menu principal",
-          "upNext": "En haut pour la suivante",
+          "upNext": "À suivre",
           "enableBottomNav": "Barre de navigation inférieure",
           "enableBottomNavDes": "Passer à la barre de navigation inférieure",
           "backupSettingsAndPlaylists": "Musique",
           "restoreSettingsAndPlaylists":
               "Restaurer les paramètres et les listes de lecture",
-          "backupMsg": "Fichier de sauvegarde créé avec succès!",
+          "backupMsg": "Fichier de sauvegarde créé avec succès !",
           "backFilesFound": "Bases de données trouvées",
           "restoreMsg":
-              "Opération réussie ! Vos changements seront appliqués au redémarrage",
+              "Restauration réussie !\nLes modifications seront appliquées au redémarrage",
           "restoring": "Récupération en cours...",
           "restore": "Récupérer",
           "backupSettingsAndPlaylistsDes":
-              "Sauvegarde tous vos paramètres, listes de lectures et données de connexion dans un fichier de récupération",
+              "Sauvegarder tous vos paramètres, playlists et données de connexion dans un fichier de récupération",
           "restoreSettingsAndPlaylistsDes":
-              "Restaurer tous les paramètres, données de connexion et listes de lectures depuis un fichier de récupération. Supprime toutes les données actuelles",
-          "closeApp": "Fermer l'application"
+              "Restaurer tous les paramètres, données de connexion et playlists depuis un fichier de récupération. Supprime toutes les données actuelles",
+          "closeApp": "Fermer l'application",
+          "music&Playback": "Musique et Lecture",
+          "includeDownloadedFiles":
+              "Inclure les fichiers de titres téléchargés",
+          "title": "Titre",
+          "processFiles": "Traitement des fichiers...",
+          "loudnessDb": "Niveau Sonore Db",
+          "backupInProgress": "Sauvegarde en cours...",
+          "queueShufflingDeniedMsg":
+              "La file d'attente ne peut pas être mélangée lorsque le mode aléatoire est activé",
+          "restartApp": "Redémarrer l'application",
+          "restoreAppData": "Restaurer les données de l'application",
+          "queuerearrangingDeniedMsg":
+              "La file d'attente ne peut pas être réorganisée lorsque le mode aléatoire est activé",
+          "audioCodec": "Codec Audio",
+          "bitrate": "Débit Binaire",
+          "appInfo": "Informations sur l'application",
+          "download": "Téléchargement",
+          "networkError": "Erreur de réseau ! Vérifiez votre connexion réseau.",
+          "downloadError3":
+              "Le téléchargement a échoué en raison d'une erreur réseau ! Veuillez réessayer",
+          "content": "Contenu",
+          "personalisation": "Personnalisation",
+          "loudnessNormalization": "Normalisation du niveau sonore",
+          "loudnessNormalizationDes":
+              "Définit le même niveau de volume pour toutes les chansons (expérimental) (ne fonctionnera pas sur les chansons téléchargées sur la version précédente (< v1.10.0))",
+          "id": "Identifiant",
+          "urlSearchDes":
+              "URL détectée. Cliquez dessus pour ouvrir / lire le contenu associé",
+          "androidBackupWarning":
+              "Non testé : si vous cochez la case après avoir téléchargé plus de 60 fichiers, le processus peut consommer une grande quantité de mémoire et provoquer le blocage du téléphone ou de l'application. Procédez à vos propres risques.",
+          "songInfo": "Informations sur le titre",
+          "duration": "Durée",
+          "backup": "Sauvegarder",
+          "letsStrart": "Commençons...",
+          "songNotPlayable":
+              "Le titre n'est pas jouable en raison d'une restriction du serveur !",
+          "downloadError2":
+              "Le titre demandé n'est pas téléchargeable en raison d'une restriction du serveur. Vous devriez réessayer",
+          "backupAppData": "Sauvegarder les données de l'application"
         },
         "ga": {},
         "gl": {
@@ -2676,7 +2762,7 @@ class Languages extends Translations {
           "topMusicVid": "शीर्ष संगीत वीडियो",
           "cacheSongs": "कैश गाने",
           "operationFailed": "ऑपरेशन विफल",
-          "searchDes": "गाने,प्लेलिस्ट्स ,एलबम्स और कलाकार",
+          "searchDes": "गाने, प्लेलिस्ट, एल्बम और कलाकार",
           "results": "परिणाम",
           "search": "खोजें",
           "videos": "वीडियोस",
@@ -2905,7 +2991,7 @@ class Languages extends Translations {
           "search": "Cercar",
           "playNext": "Reproducer sequente",
           "songs": "Cantos",
-          "searchDes": "Cantos,Listas de reproduction, Album o Artista",
+          "searchDes": "Cantos, Listas de reproduction, Album o Artista",
           "results": "Resultatos",
           "downloadLocation": "Location de discargamento",
           "songRemovedfromQueueCurrSong":
@@ -3061,7 +3147,31 @@ class Languages extends Translations {
           "songInfo": "Information del canto",
           "id": "Id",
           "title": "Titulo",
-          "backup": "Copia de securitate"
+          "backup": "Copia de securitate",
+          "queueShufflingDeniedMsg":
+              "Le cauda non pote esser miscite quando le modo aleatori es activate",
+          "queuerearrangingDeniedMsg":
+              "Le cauda non pote esser rearrangiate quando le modo aleatori es activate",
+          "songNotPlayable":
+              "Le canto non se pote reproducer a causa de un restriction de servitor!",
+          "appInfo": "Information del application",
+          "download": "Discargar",
+          "networkError": "Error de rete! Verifica tu connection.",
+          "music&Playback": "Musica e reproduction",
+          "content": "Contento",
+          "personalisation": "Personalisation",
+          "loudnessNormalization": "Normalisation del volumine",
+          "loudnessNormalizationDes":
+              "Define le mesme nivello de volumine pro tote le cantos (Experimental) (Non functionara con le cantos discargate sur le versiones previe (< v1.10.0))",
+          "urlSearchDes":
+              "URL detegite. Clicca lo pro aperir/reproducer le contento associate",
+          "androidBackupWarning": "",
+          "downloadError3":
+              "Falleva le discargamento a causa de un error de rete! Tenta de novo",
+          "downloadError2":
+              "Le canto requestate non pote discargar se a causa de un restriction de servitor. Tu pote retentar lo",
+          "playerUi": "IU de reproductor",
+          "playerUiDes": "Selige le interfacie de usator del reproductor"
         },
         "id": {
           "playlistCreatednsongAddedAlert":
@@ -3211,7 +3321,107 @@ class Languages extends Translations {
           "songRemovedAlert": "Dihapus dari",
           "library": "Perpustakaan",
           "sleepTimer": "Pengatur Waktu Tidur",
-          "minutes": "menit"
+          "minutes": "menit",
+          "add5Minutes": "Tambah 5 menit",
+          "endOfThisSong": "Akhir dari lagu ini",
+          "synced": "Tersinkronkan",
+          "scanning": "Memindai...",
+          "clearImgCache": "Bersihkan cache gambar",
+          "openIn": "Buka di",
+          "homeContentCount": "Jumlah konten Beranda",
+          "restoreLastPlaybackSessionDes":
+              "Otomatis pulihkan sesi pemutaran terakhir saat membuka aplikasi",
+          "loudnessNormalization": "Normalisasi kenyaringan",
+          "disableTransitionAnimation": "Matikan animasi transisi",
+          "exportDowloadedFiles": "Ekspor file yang diunduh",
+          "cancelTimerAlert": "Timer tidur dibatalkan",
+          "syncedLyricsNotAvailable": "lirik yang tersinkron tidak ada!",
+          "letsStrart": "Mari mulai..",
+          "includeDownloadedFiles": "Sertakan file lagu-lagu yang diunduh",
+          "bitrate": "Bitrate",
+          "enableBottomNavDes": "Ganti ke bar navigasi bawah",
+          "close": "Tutup",
+          "exporting": "Mengekspor...",
+          "cancelTimer": "Batalkan timer",
+          "enableBottomNav": "Bar navigasi bawah",
+          "removeMultiple": "Hapus beberapa lagu",
+          "pipedplstSyncAlert": "Daftar putar yang disalurkan tersinkronkan!",
+          "processFiles": "Memproses file...",
+          "deleteDownloadedDataAlert": "Berhasil dihapus dari unduhan!",
+          "downFilesFound": "file yang terunduh ditemukan",
+          "sleepTimeSetAlert": "Timer tidur Anda telah diatur",
+          "disableTransitionAnimationDes":
+              "Aktifkan opsi ini untuk mematikan animasi transisi tab",
+          "queuerearrangingDeniedMsg":
+              "Antrian tidak bisa diatur ulang ketika mode acak diaktifkan",
+          "export": "Ekspor",
+          "backupInProgress": "Pencadangan diproses...",
+          "id": "Id",
+          "title": "Judul",
+          "songInfo": "Info Lagu",
+          "reArrangePlaylist": "Susun ulang Daftar Putar",
+          "addMultipleSongs": "Tambahkan ke daftar putar",
+          "queueShufflingDeniedMsg":
+              "Antrian tidak bisa diacak ketika mode acak diaktifkan",
+          "duration": "Durasi",
+          "audioCodec": "Codec Audio",
+          "clearImgCacheAlert": "Cache gambar telah dibersihkan",
+          "backgroundPlay": "Pemutaran lagu di latar belakang",
+          "backupAppData": "Cadangkan data Aplikasi",
+          "backupSettingsAndPlaylistsDes":
+              "Menyimpan semua pengaturan, daftar putar, dan data masuk ke file cadangan",
+          "backFilesFound": "Database ditemukan",
+          "restoreMsg":
+              "Berhasil dipulihkan!\nPerubahan akan diterapkan setelah dimulai ulang",
+          "songNotPlayable":
+              "Lagu ini tidak dapat diputar karena pembatasan server!",
+          "appInfo": "Informasi aplikasi",
+          "download": "Unduh",
+          "personalisation": "Personalisasi",
+          "upNext": "Selanjutnya",
+          "downloadError3":
+              "Pengunduhan gagal karena masalah jaringan! Mohon coba lagi",
+          "music&Playback": "Musik & Pemutaran",
+          "content": "Konten",
+          "restoreLastPlaybackSession": "Pulihkan sesi pemutaran terakhir",
+          "deleteDownloadData": "Hapus dari unduhan",
+          "networkError": "Jaringan bermasalah! Periksa koneksi jaringan anda.",
+          "downloadError2":
+              "Lagu yang diminta tidak dapat diunduh karena pembatasan server. Anda bisa mencoba lagi",
+          "androidBackupWarning":
+              "Belum dites: Memilih kotak centang setelah mengunduh lebih dari 60 file, prosesnya mungkin dapat menghabiskan banyak memori dan bisa menyebabkan perangkat seluler atau aplikasi crash. Lanjutkan dengan risiko Anda sendiri.",
+          "backup": "Cadangan",
+          "loudnessNormalizationDes":
+              "Atur level kenyaringan yang sama untuk seluruh lagu (Uji coba) (Tidak akan berfungsi untuk lagu-lagu yang diunduh pada versi sebelumnya(< v1.10.0))",
+          "backgroundPlayDes":
+              "Nyalakan/Matikan pemutaran musik di latar belakang (Aplikasi bisa diakses dari baki sistem ketika aplikasi sedang berjalan di latar belakang)",
+          "cacheHomeScreenData": "Buat cache untuk data konten Beranda",
+          "exportDowloadedFilesDes":
+              "Klik disini untuk mengekspor file yang diunduh dari direktori inApp menuju direktori eksternal",
+          "cacheHomeScreenDataDes":
+              "Aktifkan pembuatan cache data konten layar Beranda, layar Beranda bisa memuat lebih cepat jika opsi ini diaktifkan",
+          "exportedFileLocation": "Lokasi ekspor file yang terunduh",
+          "exportMsg": "Ekspor file telah sukses",
+          "restoreAppData": "Pulihkan data Aplikasi",
+          "restartApp": "Mulai ulang Aplikasi",
+          "restoreSettingsAndPlaylistsDes":
+              "Pulihkan semua pengaturan, data masuk, dan daftar putar dari file cadangan. Akan menimpa seluruh data saat ini",
+          "backupMsg": "Cadangan berhasil disimpan!",
+          "restoring": "Memulihkan...",
+          "restore": "Pulihkan",
+          "closeApp": "Tutup Aplikasi",
+          "loudnessDb": "LoudnessDb",
+          "clearImgCacheDes":
+              "Klik disini untuk menghapus cache dari thumbnail/gambar. (Tidak direkomendasikan kecuali ingin memperbahaui data cache dari gambar)",
+          "plain": "Polos",
+          "urlSearchDes":
+              "Url terdeteksi, klik untuk membuka/memutar konten terkait",
+          "homeContentCountDes":
+              "Pilih jumlah konten layar beranda home. lebih kecil memuat lebih cepat",
+          "playerUi": "Antarmuka Pengguna",
+          "playerUiDes": "Pilih antarmuka pengguna",
+          "standard": "Standar",
+          "gesture": "Gerakan"
         },
         "it": {
           "home": "Pagina principale",
@@ -3294,7 +3504,7 @@ class Languages extends Translations {
           "low": "Basso",
           "ignoreBatOptDes":
               "In caso di problemi con notifiche o la riproduzione si interrompe a causa dell'ottimizzazione sistema, abilita questa funzione",
-          "searchDes": "Canzoni,Playlist, Album o Artisti",
+          "searchDes": "Canzoni, Playlist, Album o Artisti",
           "radioNotAvailable": "La radio non è disponibile per questo artista!",
           "songRemovedfromQueue": "Rimossa dalla coda!",
           "topmusicvideos": "Top video musicali",
@@ -3368,7 +3578,102 @@ class Languages extends Translations {
           "unLink": "Scollega",
           "newVersionAvailable": "Nuova versione disponibile!",
           "dontShowInfoAgain": "Non mostrare questa informazione di nuovo",
-          "notaSongVideo": "Non è una canzone/Video musicale!"
+          "notaSongVideo": "Non è una canzone/Video musicale!",
+          "status": "Stato",
+          "playlistBookmarkRemoveAlert": "Segnalibro della playlist rimosso!",
+          "hintApiUrl": "API URL dell'istanza Piped",
+          "customIns": "Istanza personalizzata",
+          "linkPipedDes": "Collegamento con piped per le playlist",
+          "backgroundPlayDes":
+              "Abilitare/disabilitare la riproduzione della musica in background (l'app è accessibile dalla barra delle applicazioni quando è in esecuzione in background)",
+          "clearImgCacheDes":
+              "Fare clic qui per cancellare le miniature/immagini memorizzate nella cache. (Non è consigliabile, a meno che non si vogliano aggiornare i dati delle immagini nella cache)",
+          "playNext": "Riproduci il prossimo",
+          "artistBookmarkRemoveAlert": "Rimosso il segnalibro dell'artista!",
+          "openIn": "Apri in",
+          "disableTransitionAnimationDes":
+              "Attivare questa opzione per disabilitare l'animazione di transizione delle schede",
+          "viewAll": "Vedi tutti",
+          "plain": "Semplice",
+          "allFieldsReqMsg": "Tutti i campi sono obbligatori",
+          "selectAuthIns": "Selezionare l'istanza di autorizzazione",
+          "songNotPlayable":
+              "La canzone non è riproducibile a causa di una restrizione del server!",
+          "networkError": "Errore di rete! Controllare la connessione di rete.",
+          "downloadError2":
+              "Il brano richiesto non è scaricabile a causa di una restrizione del server. È possibile riprovare",
+          "downloadError3":
+              "Download fallito a causa di un errore di rete! Riprovare",
+          "music&Playback": "Musica e riproduzione",
+          "content": "Contenuto",
+          "setDiscoverContent": "Impostare la scoperta dei contenuti",
+          "loudnessNormalizationDes":
+              "Imposta lo stesso livello di loudness per tutti i brani (sperimentale) (non funziona con i brani scaricati con la versione precedente (< v1.10.0))",
+          "urlSearchDes":
+              "Url rilevato Cliccando su di esso si apre/riproduce il contenuto associato",
+          "songInfo": "Info sulla canzone",
+          "sleepTimeSetAlert": "Il timer del riposo è impostato",
+          "pipedplstSyncAlert": "Piped playlist sincronizzata!",
+          "albumBookmarkAddAlert": "Album inserito nei segnalibri!",
+          "albumBookmarkRemoveAlert": "Segnalibro dell'album rimosso!",
+          "artistBookmarkAddAlert": "Artista aggiunto ai preferiti!",
+          "playlistBlacklistAlert": "Playlist inserita nella lista di blocco!",
+          "resetblacklistedplaylist": "Ripristino delle playlist in blacklist",
+          "resetblacklistedplaylistDes":
+              "Azzeramento di tutte le playlist in blacklist",
+          "restoreSettingsAndPlaylistsDes":
+              "Ripristina tutte le impostazioni, i dati di accesso e le playlist da un file di backup. Sovrascrive tutti i dati attuali",
+          "backupMsg": "Il backup è stato salvato con successo!",
+          "backFilesFound": "database trovati",
+          "closeApp": "Chiudi App",
+          "restartApp": "Riavvi App",
+          "loudnessDb": "LoudnessDb",
+          "bitrate": "Bitrate",
+          "queuerearrangingDeniedMsg":
+              "La coda non può essere riorganizzata quando è attivata la modalità shuffle",
+          "queueShufflingDeniedMsg":
+              "La coda non può essere rimescolata quando è attivata la modalità shuffle",
+          "id": "Id",
+          "duration": "Durata",
+          "cacheHomeScreenData":
+              "Cache dei dati del contenuto della schermata iniziale",
+          "restore": "Ripristina",
+          "featuredplaylists": "Playlist in evidenza",
+          "playlistBookmarkAddAlert": "Playlist salvata nei segnalibri!",
+          "about": "Informazioni su",
+          "noBookmarks": "Nessun segnalibro!",
+          "download": "Download",
+          "appInfo": "Informazioni App",
+          "personalisation": "Personalizzazione",
+          "loudnessNormalization": "Normalizzazione del volume",
+          "cancelTimerAlert": "Timer di riposo annullato",
+          "title": "Titolo",
+          "audioCodec": "Codec Audio",
+          "customInsSelectMsg": "Selezionare l'istanza personalizzata",
+          "restoring": "Ripristino...",
+          "stopMusicOnTaskClearDes":
+              "La riproduzione musicale si interrompe quando l'app terminata dal task manager",
+          "Piped": "Piped",
+          "androidBackupWarning":
+              "Non testato: Selezionando la casella di controllo dopo aver scaricato più di 60 file, il processo potrebbe consumare una grande quantità di memoria e causare il blocco del telefono o dell'applicazione. Procedere a proprio rischio e pericolo.",
+          "restoreMsg":
+              "Ripristino riuscito!\nLe modifiche vengono applicate al riavvio",
+          "restoreAppData": "Ripristino dei dati dell'app",
+          "noLibPlaylist": "Non hai una nessuna lib per le playlist!",
+          "selectAuthInsMsg": "Selezionare l'istanza di autenticazione!",
+          "stopMusicOnTaskClear":
+              "Arresto della musica quand il processo viene chiuso",
+          "backupAppData": "Backup dei dati dell'app",
+          "backup": "Backup",
+          "letsStrart": "Iniziamo..",
+          "processFiles": "Elaborazione dei file...",
+          "includeDownloadedFiles": "Includere i file dei brani scaricati",
+          "backupInProgress": "Backup in corso...",
+          "backupSettingsAndPlaylistsDes":
+              "Salva tutte le impostazioni, le playlist e i dati di accesso in un file di backup",
+          "cacheHomeScreenDataDes":
+              "Abilita la memorizzazione nella cache dei dati del contenuto della schermata iniziale; se l'opzione è attivata, la schermata iniziale verrà caricata istantaneamente",
+          "dismiss": "Chiudi"
         },
         "ja": {
           "playlistCreatednsongAddedAlert": "再生リストを作成し曲を追加しました！",
@@ -3565,7 +3870,7 @@ class Languages extends Translations {
           "backupSettingsAndPlaylistsDes": "すべての設定と再生リスト、ログイン情報をバックアップファイルに保存",
           "backFilesFound": "データベースを発見",
           "backupAppData": "アプリのデータをバックアップ",
-          "letsStrart": "始めましょう..",
+          "letsStrart": "始める..",
           "backup": "バックアップ",
           "processFiles": "ファイル処理中...",
           "backupInProgress": "バックアップ中...",
@@ -3578,7 +3883,28 @@ class Languages extends Translations {
           "loudnessDb": "音の大きさ:デジベル",
           "id": "ID",
           "duration": "長さ",
-          "audioCodec": "音声コーデック"
+          "audioCodec": "音声コーデック",
+          "appInfo": "アプリの情報",
+          "music&Playback": "音楽と再生",
+          "loudnessNormalization": "音の大きさの正規化",
+          "download": "ダウンロード",
+          "personalisation": "カスタマイズ",
+          "networkError": "ネットワークエラー！ネットワーク接続をご確認ください。",
+          "downloadError3": "ネットワークエラーでダウンロード失敗！再度お試しください",
+          "downloadError2": "曲がサーバーの制限によりダウンロード不可能です。再試行でうまくいかもしれません",
+          "content": "コンテンツ",
+          "queueShufflingDeniedMsg": "シャッフルモードが有効の時はキューをシャッフルできません",
+          "queuerearrangingDeniedMsg": "シャッフルモードが有効の時はキューを並べ替えできません",
+          "loudnessNormalizationDes":
+              "すべての曲の音の大きさを同程度にする(実験的な設定) (バージョン1.10.0未満でダウンロードした曲では動作しません)",
+          "songNotPlayable": "曲はサーバーの制限により再生できません！",
+          "urlSearchDes": "URLをクリックして、関連コンテンツを開く/再生",
+          "androidBackupWarning":
+              "未検査: 60ファイル以上ダウンロードした後にチェックして選択すると、大量にメモリを使用し、スマホまたはアプリが落ちることがあります。自己責任で行ってください。",
+          "standard": "標準",
+          "gesture": "ジェスチャー",
+          "playerUi": "プレイヤーUI",
+          "playerUiDes": "プレイヤーの外観を選択"
         },
         "kn": {"libArtists": "歌手库"},
         "ko": {
@@ -5082,7 +5408,7 @@ class Languages extends Translations {
               "Посмотреть исходный код на GitHub\nесли вам нравится этот проект, не забудьте поставить ⭐",
           "by": "by",
           "search": "Поиск",
-          "searchDes": "Песни,Плейлист,Альбом или Исполнитель",
+          "searchDes": "Песни, Плейлист, Альбом или Исполнитель",
           "searchRes": "Результаты поиска",
           "for1": "для",
           "videos": "Видео",
@@ -5217,7 +5543,54 @@ class Languages extends Translations {
           "clearImgCacheDes":
               "Нажмите здесь чтобы очистить кэшированные миниатюры/изображения. (Не рекомендуется, если только вы не хотите обновить кэшированные изображения)",
           "openIn": "Открыть в",
-          "closeApp": "Закрыть приложение"
+          "closeApp": "Закрыть приложение",
+          "queueShufflingDeniedMsg":
+              "Очередь не может быть перемешана пока включен режим перемешивания",
+          "queuerearrangingDeniedMsg":
+              "Очередь не может быть изменена пока включен режим перемешивания",
+          "networkError": "Ошибка сети! Проверьте подключение к сети.",
+          "personalisation": "Персонализация",
+          "downloadError3":
+              "Ошибка скачивания из-за проблем с подключением! Попробуйте снова",
+          "songNotPlayable":
+              "Песня не может быть включена из-за ограничений сервера!",
+          "appInfo": "Справка",
+          "download": "Скачать",
+          "downloadError2":
+              "Запрошенная песня не может быть скачана из-за ограничений сервера. Попробуйте снова",
+          "music&Playback": "Музыка и Воспроизведение",
+          "content": "Содержание",
+          "loudnessNormalization": "Нормализация громкости",
+          "loudnessNormalizationDes":
+              "Устанавливает одинаковый уровень громкости на всех песнях (Экспериментально) (Не будет работать с песнями, скачанными на версии 1.10.0 и ниже)",
+          "urlSearchDes": "Клик по Url открывает\\проигрывает контент",
+          "bitrate": "Битрейт",
+          "loudnessDb": "Громкость (Db)",
+          "backupSettingsAndPlaylistsDes":
+              "Сохраняет все настройки, плейлисты и логин в файл бэкапа",
+          "androidBackupWarning":
+              "Не проверено: при установке флажка после загрузки более 60 файлов процесс может занять большой объем памяти и привести к крашу телефона или приложения. Действуйте на свой страх и риск.",
+          "restoreSettingsAndPlaylistsDes":
+              "Восстановляет все настройки, логин, плейлисты из бэкапа. Стирает все текущие данные",
+          "restoring": "Восстановляем...",
+          "includeDownloadedFiles": "Включать загруженные песни",
+          "songInfo": "Информация",
+          "title": "Название",
+          "restore": "Восстановить",
+          "id": "Id",
+          "duration": "Длина",
+          "audioCodec": "Кодек",
+          "backupInProgress": "Бэкап в процессе...",
+          "restoreAppData": "Восстановить данные приложения",
+          "restartApp": "Перезапустить",
+          "backupMsg": "Бэкап успешно сохранён!",
+          "backFilesFound": "база данных найдена",
+          "restoreMsg":
+              "Восстановлено успешно!\nИзменения войду в силу после перезапуска",
+          "backupAppData": "Сделать бэкап приложения",
+          "backup": "Бэкап",
+          "letsStrart": "Давайте начнём...",
+          "processFiles": "Обработка файлов..."
         },
         "sk": {
           "nomatch": "Nenašla sa žiadna zhoda pre",
@@ -5467,7 +5840,11 @@ class Languages extends Translations {
           "urlSearchDes":
               "Zistená URL adresa Kliknutím na ňu otvoríte/prehráte súvisiaci obsah",
           "androidBackupWarning":
-              "Netestované: Po zaškrtnutí políčka po stiahnutí viac ako 60 súborov môže proces spotrebovať veľké množstvo pamäte a môže spôsobiť pád telefónu alebo aplikácie. Pokračujte na vlastné riziko."
+              "Netestované: Po zaškrtnutí políčka po stiahnutí viac ako 60 súborov môže proces spotrebovať veľké množstvo pamäte a môže spôsobiť pád telefónu alebo aplikácie. Pokračujte na vlastné riziko.",
+          "playerUi": "Rozhranie prehrávača",
+          "standard": "Štandard",
+          "gesture": "Gestá",
+          "playerUiDes": "Vybrať používateľské rozhranie prehrávača"
         },
         "sr": {
           "playlistCreatednsongAddedAlert":
@@ -5717,7 +6094,11 @@ class Languages extends Translations {
           "urlSearchDes":
               "Откривена URL адреса, додирните на њу да бисте отворили/пустили повезани садржај",
           "androidBackupWarning":
-              "Није тестирано: Означавањем поља за потврду након преузимања више од 60 фајлова, процес може заузети велику количину меморије и може довести до отказивања телефона или апликације. Наставите на сопствену одговорност."
+              "Није тестирано: Означавањем поља за потврду након преузимања више од 60 фајлова, процес може заузети велику количину меморије и може довести до отказивања телефона или апликације. Наставите на сопствену одговорност.",
+          "playerUi": "Кориснички интерфејс плејера",
+          "playerUiDes": "Изаберите кориснички интерфејс плејера",
+          "standard": "Стандардан",
+          "gesture": "Покрет"
         },
         "sv": {
           "settings": "Inställningar",
@@ -6256,7 +6637,7 @@ class Languages extends Translations {
           "clearImgCache": "Очистити кеш зображень",
           "clearImgCacheAlert": "Кеш зображень успішно очищено",
           "clearImgCacheDes":
-              "Натисніть тут, щоб очистити кешовані мініатюри/зображення.  (Не рекомендується, якщо не потрібно оновити кешовані дані зображень)",
+              "Натисніть тут, щоб очистити кешовані мініатюри/зображення. (Не рекомендується, якщо не потрібно оновити кешовані дані зображень)",
           "enabled": "Увімкнено",
           "github": "GitHub",
           "githubDes":
@@ -6475,7 +6856,7 @@ class Languages extends Translations {
           "noBookmarks": "Không có đánh dấu!",
           "upNext": "Kế tiếp",
           "dynamic": "Tự động",
-          "searchDes": "Bài hát,Danh sách phát, Tập nhạc hoặc Nghệ sỹ",
+          "searchDes": "Bài hát, Danh sách phát, Tập nhạc hoặc Nghệ sỹ",
           "searchRes": "Kết quả tìm kiếm",
           "pipedplstSyncAlert": "Danh sách phát đã được đồng bộ hóa!",
           "playlistCreatednsongAddedAlert":
@@ -6564,7 +6945,39 @@ class Languages extends Translations {
           "backupInProgress": "Đang sao lưu...",
           "restoreAppData": "Khôi phục dữ liệu ứng dụng",
           "restartApp": "Khởi động lại ứng dụng",
-          "backup": "Sao lưu"
+          "backup": "Sao lưu",
+          "androidBackupWarning":
+              "Chưa thử nghiệm: Chọn hộp kiểm sau khi tải xuống hơn 60 tệp, quá trình này có thể tiêu tốn một lượng lớn bộ nhớ và có thể khiến điện thoại hoặc ứng dụng bị sập. Tiến hành theo rủi ro của riêng bạn.",
+          "appInfo": "Thông Tin Ứng Dụng",
+          "download": "Tải về",
+          "downloadError2":
+              "Không thể tải bài hát vì giới hạn của máy chủ. Bạn có thể thử lại",
+          "downloadError3": "Tải về lỗi do mạng bị lỗi. Vui lòng thử lại",
+          "content": "Nội dung",
+          "loudnessNormalization": "Cân bằng âm",
+          "urlSearchDes": "Nhấn vào liên kết được phát hiện để mở nội dung",
+          "songInfo": "Thông tin bài hát",
+          "bitrate": "Thông số bit",
+          "queueShufflingDeniedMsg":
+              "Không thể tạo ngẩu nhiên hàng đợi khi chế độ ngẩu nhiên được bật",
+          "queuerearrangingDeniedMsg":
+              "Không thể sắp xếp lại hàng đợi khi chế độ ngẩu nhiên được bật",
+          "id": "Khoá",
+          "title": "Tiêu đề",
+          "songNotPlayable":
+              "Bài hát này không thể phát được vì giới hạn của máy chủ!",
+          "networkError": "Kết nối mạng lỗi! Kiểm tra kết nối mạng.",
+          "personalisation": "Cá nhân hoá",
+          "music&Playback": "Âm nhạc & Phát nhạc",
+          "loudnessNormalizationDes":
+              "Cài đặt cùng một mức độ lớn cho tất cả bài hát (Thử nghiệm) (Không hoạt động đối với các bài hát đã tải về trong phiên bản trước (< v1.10.0))",
+          "duration": "Thời gian bài hát",
+          "audioCodec": "Mã hoá tiếng",
+          "loudnessDb": "Độ ồn Db",
+          "playerUi": "Giao diện phát nhạc",
+          "playerUiDes": "Chọn giao diện phát nhạc",
+          "standard": "Tiêu Chuẩn",
+          "gesture": "Cử chỉ"
         },
         "zh_Hans": {
           "home": "首页",

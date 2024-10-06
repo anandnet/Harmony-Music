@@ -49,6 +49,7 @@
     "queuerearrangingDeniedMsg": "Queue can't be rearranged when shuffle mode is enabled",
     "songNotPlayable": "Song is not playable due to server restriction!",
     "upNext": "Up Next",
+    "playnextMsg": "Upcoming",
     "shuffleQueue": "Shuffle Queue",
     "queueLoop": "Queue loop",
     "queueLoopNotDisMsg1": "Queue loop mode cannot be disabled when shuffle mode is enabled.",

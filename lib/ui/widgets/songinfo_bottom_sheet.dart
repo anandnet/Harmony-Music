@@ -114,6 +114,9 @@ class SongInfoBottomSheet extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).pop();
                       playerController.playNext(song);
+                      ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                          context, "${"playnextMsg".tr} ${song.title}",
+                          size: SanckBarSize.BIG));
                     },
                   ),
             ListTile(
@@ -369,7 +372,6 @@ class SongInfoController extends GetxController
     }
   }
 
-
   Future<void> toggleFav() async {
     if (calledFromPlayer) {
       final cntrl = Get.find<PlayerController>();
@@ -386,7 +388,6 @@ class SongInfoController extends GetxController
     isCurrentSongFav.value = !isCurrentSongFav.value;
   }
 }
-
 
 mixin RemoveSongFromPlaylistMixin {
   Future<void> removeSongFromPlaylist(MediaItem item, Playlist playlist) async {

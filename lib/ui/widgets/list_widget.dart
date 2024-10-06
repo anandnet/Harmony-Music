@@ -135,8 +135,8 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
             onPressed: (context) {
               playerController.playNext(items[index] as MediaItem);
               ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                  context, "Upcoming ${(items[index] as MediaItem).title}".tr,
-                  size: SanckBarSize.MEDIUM));
+                  context, "${"playnextMsg".tr} ${(items[index] as MediaItem).title}",
+                  size: SanckBarSize.BIG));
             },
             backgroundColor: Theme.of(context).colorScheme.secondary,
             foregroundColor: Theme.of(context).textTheme.titleMedium!.color,

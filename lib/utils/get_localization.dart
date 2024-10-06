@@ -391,7 +391,7 @@ class Languages extends Translations {
           "trending": "Набиращи популярност",
           "searchRes": "Резултати от търсенето",
           "cacheSongsDes":
-              "Кеширане на песни по време на възпроизвеждане за бъдещо/офлайн възпроизвеждане, това ще отнеме допълнително място на вашето устройство",
+              "Кеширане на песни по време на възпроизвеждане за бъдещо/офлайн възпроизвеждане, което ще отнеме допълнително място на вашето устройство",
           "password": "Парола",
           "noLibPlaylist": "Нямате плейлист в библиотеката!",
           "setDiscoverContent": "Задайте съдържание за откриване",
@@ -448,7 +448,7 @@ class Languages extends Translations {
           "Piped": "Piped",
           "addToPlaylist": "Добави към плейлист",
           "stopMusicOnTaskClearDes":
-              "Възпроизвеждането на музика ще спре, когато приложението се плъзне от диспечера на задачите",
+              "Възпроизвеждането на музика ще спре, когато приложението се плъзне от диспечера на задачи",
           "cachedOrOffline": "Кеширано/Офлайн",
           "retry": "Опитайте отново!",
           "artists": "Изпълнители",
@@ -538,7 +538,7 @@ class Languages extends Translations {
           "homeContentCount": "Брой начално съдържание",
           "cancelTimer": "Отмяна на таймера",
           "homeContentCountDes":
-              "Изберете броя на първоначалното съдържание на началния екран (приблизително). По-малко резултати, по-бързо зареждане",
+              "Изберете броя на първоначално съдържание на началния екран (приблизително). По-малко резултати, по-бързо зареждане",
           "sleepTimeSetAlert": "Вашият таймер за заспиване е зададен",
           "deleteDownloadedDataAlert": "Успешно премахване от изтегляния!",
           "clearImgCache": "Изчистване кеша на изображенията",
@@ -555,9 +555,9 @@ class Languages extends Translations {
           "restoreLastPlaybackSessionDes":
               "Автоматично възстановяване на последната сесия на възпроизвеждане при стартиране на приложението",
           "cacheHomeScreenData":
-              "Кеш на данни за съдържанието на началния екран",
+              "Кеширане на данни за съдържанието на началния екран",
           "cacheHomeScreenDataDes":
-              "Разреши кеширане на данни за съдържанието на началния екран, Началният екран ще се зареди незабавно, ако тази опция е активирана",
+              "Активиране кеширане на данни за съдържанието на началния екран, Началният екран ще се зареди незабавно, ако тази опция е разрешена",
           "exportDowloadedFiles": "Изнесете изтеглените файлове",
           "exportedFileLocation":
               "Местоположение за изнасяне на изтегления файл",
@@ -589,12 +589,12 @@ class Languages extends Translations {
           "restoring": "Възстановява се...",
           "backupSettingsAndPlaylists": "Архивиране на настройки и плейлисти",
           "restoreSettingsAndPlaylists": "Възстанови настройки и плейлисти",
-          "backupMsg": "Резервното копие е запазено успешно!",
+          "backupMsg": "Архивирането е успешно запазено!",
           "backupAppData": "Архивиране на данни от приложението",
           "backup": "Архивиране",
           "includeDownloadedFiles": "Включете изтеглените файлове с песни",
           "backupInProgress": "Извършва се архивиране...",
-          "restoreAppData": "Възстановяване на данните от приложението",
+          "restoreAppData": "Възстановяване на данни от приложението",
           "letsStrart": "Да започваме..",
           "processFiles": "Файловете се обработват...",
           "restartApp": "Рестартирайте приложението",
@@ -631,7 +631,10 @@ class Languages extends Translations {
           "playerUi": "Плейър интерфейс",
           "standard": "Стандартен",
           "gesture": "Жестове",
-          "playerUiDes": "Изберете потребителски интерфейс на плейъра"
+          "playerUiDes": "Изберете потребителски интерфейс на плейъра",
+          "enableSlidableAction": "Активиране на плъзгащи се действия",
+          "enableSlidableActionDes":
+              "Активирайте плъзгащи се действия върху плочката на песента"
         },
         "bn": {},
         "ca": {
@@ -1364,7 +1367,9 @@ class Languages extends Translations {
           "playerUi": "Player UI",
           "playerUiDes": "Wähle Player Benutzeroberfläche",
           "standard": "Standart",
-          "gesture": "Gesten"
+          "gesture": "Gesten",
+          "enableSlidableAction": "Aktiviere Gestenaktionen",
+          "enableSlidableActionDes": "Aktiviere Gestenaktionen beim Songtitel"
         },
         "en": {
           "home": "Home",
@@ -1419,6 +1424,13 @@ class Languages extends Translations {
               "Queue can't be rearranged when shuffle mode is enabled",
           "songNotPlayable": "Song is not playable due to server restriction!",
           "upNext": "Up Next",
+          "playnextMsg": "Upcoming",
+          "shuffleQueue": "Shuffle Queue",
+          "queueLoop": "Queue loop",
+          "queueLoopNotDisMsg1":
+              "Queue loop mode cannot be disabled when shuffle mode is enabled.",
+          "queueLoopNotDisMsg2":
+              "Queue loop mode cannot be enabled in radio mode.",
           "removeFromLib": "Remove from Library Songs",
           "sleepTimer": "Sleep Timer",
           "add5Minutes": "Add 5 minutes",
@@ -2050,7 +2062,10 @@ class Languages extends Translations {
           "playerUiDes": "Seleccionar la interfaz de usuario del reproductor",
           "gesture": "Gestos",
           "playerUi": "Interfaz de usuario del reproductor",
-          "standard": "Estándar"
+          "standard": "Estándar",
+          "enableSlidableAction": "Habilitar acciones deslizables",
+          "enableSlidableActionDes":
+              "Activar acciones deslizables en el mosaico de las canciones"
         },
         "fi": {
           "libAlbums": "Kirjaston albumit",

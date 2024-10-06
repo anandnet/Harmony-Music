@@ -18,7 +18,8 @@ import '../widgets/sliding_up_panel.dart';
 import '/models/durationstate.dart';
 import '/services/music_service.dart';
 
-class PlayerController extends GetxController with GetSingleTickerProviderStateMixin {
+class PlayerController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final _audioHandler = Get.find<AudioHandler>();
   final _musicServices = Get.find<MusicServices>();
   final currentQueue = <MediaItem>[].obs;
@@ -361,8 +362,14 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
   ///enqueueSong   append a song to current queue
   ///if current queue is empty, push the song into Queue and play that song
   Future<void> enqueueSong(MediaItem mediaItem) async {
-    //check if song is available in cache and allocate
-    _audioHandler.addQueueItem(mediaItem);
+     if (currentQueue.isEmpty) {
+      await playPlayListSong([mediaItem], 0);
+      return;
+    }
+    //check if song is available in queue and if not add it to queue
+    if (!currentQueue.contains(mediaItem)) {
+      _audioHandler.addQueueItem(mediaItem);
+    }
   }
 
   ///enqueueSongList method add song List to current queue

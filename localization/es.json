@@ -224,5 +224,10 @@
     "playerUi": "Interfaz de usuario del reproductor",
     "standard": "Estándar",
     "enableSlidableAction": "Habilitar acciones deslizables",
-    "enableSlidableActionDes": "Activar acciones deslizables en el mosaico de las canciones"
+    "enableSlidableActionDes": "Activar acciones deslizables en el mosaico de las canciones",
+    "playnextMsg": "Próximamente",
+    "shuffleQueue": "Cola aleatoria",
+    "queueLoopNotDisMsg2": "La cola en bucle no se puede activar en el modo radio.",
+    "queueLoop": "Cola continua",
+    "queueLoopNotDisMsg1": "El modo cola en bucle no puede ser desactivado cuando está habilitado el modo aleatorio."
 }

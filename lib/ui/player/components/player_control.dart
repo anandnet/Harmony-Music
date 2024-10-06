@@ -76,6 +76,7 @@ class PlayerControlWidget extends StatelessWidget {
           ),
           GetX<PlayerController>(builder: (controller) {
             return ProgressBar(
+              thumbRadius: 7,
               baseBarColor: Theme.of(context).sliderTheme.inactiveTrackColor,
               bufferedBarColor:
                   Theme.of(context).sliderTheme.valueIndicatorColor,

@@ -224,5 +224,7 @@
     "playerUi": "Player UI",
     "playerUiDes": "Wähle Player Benutzeroberfläche",
     "standard": "Standart",
-    "gesture": "Gesten"
+    "gesture": "Gesten",
+    "enableSlidableAction": "Aktiviere Gestenaktionen",
+    "enableSlidableActionDes": "Aktiviere Gestenaktionen beim Songtitel"
 }

@@ -597,6 +597,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       final currentQueue = queue.value;
       currentQueue.insert(currentIndex + 1, song);
       queue.add(currentQueue);
+      if(shuffleModeEnabled){
+        shuffledQueue.insert(currentShuffleIndex + 1, song.id);
+      }
     } else if (name == 'openEqualizer') {
       await deviceEqualizer?.open(_player.androidAudioSessionId!);
     } else if (name == "saveSession") {

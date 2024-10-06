@@ -105,9 +105,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                 playerController.startRadio(song);
               },
             ),
-            (calledFromPlayer ||
-                    calledFromQueue ||
-                    playerController.isShuffleModeEnabled.isTrue)
+            (calledFromPlayer || calledFromQueue)
                 ? const SizedBox.shrink()
                 : ListTile(
                     visualDensity: const VisualDensity(vertical: -1),
@@ -342,7 +340,8 @@ class SongInfoBottomSheet extends StatelessWidget {
   }
 }
 
-class SongInfoController extends GetxController with RemoveSongFromPlaylistMixin {
+class SongInfoController extends GetxController
+    with RemoveSongFromPlaylistMixin {
   final isCurrentSongFav = false.obs;
   final MediaItem song;
   final bool calledFromPlayer;

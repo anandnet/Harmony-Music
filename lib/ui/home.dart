@@ -111,21 +111,54 @@ class Home extends StatelessWidget {
                                             .textTheme
                                             .titleLarge,
                                       ),
-                                      IconButton(
-                                          onPressed: () {
-                                            if (playerController
-                                                .isShuffleModeEnabled.isTrue) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(snackbar(
-                                                      context,
-                                                      "queueShufflingDeniedMsg"
-                                                          .tr,
-                                                      size: SanckBarSize.BIG));
-                                              return;
-                                            }
-                                            playerController.shuffleQueue();
-                                          },
-                                          icon: const Icon(Icons.shuffle))
+                                      Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              playerController
+                                                  .toggleQueueLoopMode();
+                                            },
+                                            child: Obx(
+                                              () => Container(
+                                                height: 30,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 20),
+                                                decoration: BoxDecoration(
+                                                  color: playerController
+                                                          .isQueueLoopModeEnabled
+                                                          .isFalse
+                                                      ? Colors.white24
+                                                      : Colors.white
+                                                          .withOpacity(0.8),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
+                                                child: Center(
+                                                    child:
+                                                        Text("queueLoop".tr)),
+                                              ),
+                                            ),
+                                          ),
+                                          IconButton(
+                                              onPressed: () {
+                                                if (playerController
+                                                    .isShuffleModeEnabled
+                                                    .isTrue) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(snackbar(
+                                                          context,
+                                                          "queueShufflingDeniedMsg"
+                                                              .tr,
+                                                          size: SanckBarSize
+                                                              .BIG));
+                                                  return;
+                                                }
+                                                playerController.shuffleQueue();
+                                              },
+                                              icon: const Icon(Icons.shuffle)),
+                                        ],
+                                      )
                                     ],
                                   ),
                                 )),

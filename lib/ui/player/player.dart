@@ -1,9 +1,11 @@
+import 'dart:ui';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:harmonymusic/ui/player/components/gesture_player.dart';
-import 'package:harmonymusic/ui/player/components/standard_player.dart';
-import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 
+import '/ui/player/components/gesture_player.dart';
+import '/ui/player/components/standard_player.dart';
+import '/ui/screens/Settings/settings_screen_controller.dart';
 import '../../utils/helper.dart';
 import '../widgets/snackbar.dart';
 import '../widgets/up_next_queue.dart';
@@ -65,31 +67,91 @@ class Player extends StatelessWidget {
                       onReorderEnd: onReorderEnd,
                       onReorderStart: onReorderStart,
                     ),
-                    Positioned(
-                        bottom: 60,
-                        right: 15,
-                        child: SizedBox(
-                            height: 60,
-                            width: 60,
-                            child: FittedBox(
-                                child: FloatingActionButton(
-                                    focusElevation: 0,
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(14))),
-                                    elevation: 0,
-                                    onPressed: () {
-                                      if (playerController
-                                          .isShuffleModeEnabled.isTrue) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackbar(context,
-                                                "queueShufflingDeniedMsg".tr,
-                                                size: SanckBarSize.BIG));
-                                        return;
-                                      }
-                                      playerController.shuffleQueue();
-                                    },
-                                    child: const Icon(Icons.shuffle))))),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ClipRRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                                bottom: 10, left: 10, right: 10),
+                            decoration: BoxDecoration(
+                                boxShadow: const [
+                                  BoxShadow(
+                                      blurRadius: 5, color: Colors.black54)
+                                ],
+                                color: Theme.of(context)
+                                    .primaryColor
+                                    .withOpacity(0.5)),
+                            height: 60 + Get.mediaQuery.padding.bottom,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                //queue loop button and queue shuffle button
+                                Obx(
+                                  () => Text(
+                                    "${playerController.currentQueue.length} ${"songs".tr}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            color: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .color),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    if (playerController
+                                        .isShuffleModeEnabled.isTrue) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackbar(context,
+                                              "queueShufflingDeniedMsg".tr,
+                                              size: SanckBarSize.BIG));
+                                      return;
+                                    }
+                                    playerController.shuffleQueue();
+                                  },
+                                  child: Container(
+                                    height: 30,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white.withOpacity(0.8),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child:
+                                        Center(child: Text("shuffleQueue".tr)),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    playerController.toggleQueueLoopMode();
+                                  },
+                                  child: Obx(
+                                    () => Container(
+                                      height: 30,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      decoration: BoxDecoration(
+                                        color: playerController
+                                                .isQueueLoopModeEnabled.isFalse
+                                            ? Colors.white24
+                                            : Colors.white.withOpacity(0.8),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child:
+                                          Center(child: Text("queueLoop".tr)),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 );
               },

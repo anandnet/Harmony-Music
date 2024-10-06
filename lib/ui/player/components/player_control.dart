@@ -177,7 +177,8 @@ class PlayerControlWidget extends StatelessWidget {
 Widget _nextButton(PlayerController playerController, BuildContext context) {
   return Obx(() {
     final isLastSong = playerController.currentQueue.isEmpty ||
-        (playerController.isShuffleModeEnabled.isFalse &&
+        (!(playerController.isShuffleModeEnabled.isTrue ||
+                playerController.isQueueLoopModeEnabled.isTrue) &&
             (playerController.currentQueue.last.id ==
                 playerController.currentSong.value?.id));
     return IconButton(

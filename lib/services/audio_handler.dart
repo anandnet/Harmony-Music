@@ -45,6 +45,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   late String? currentSongUrl;
   bool isPlayingUsingLockCachingSource = false;
   bool loopModeEnabled = false;
+  bool queueLoopModeEnabled = false;
   bool shuffleModeEnabled = false;
   bool loudnessNormalizationEnabled = false;
   // var networkErrorPause = false;
@@ -80,6 +81,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     _player.setSkipSilenceEnabled(appPrefsBox.get("skipSilenceEnabled"));
     loopModeEnabled = appPrefsBox.get("isLoopModeEnabled") ?? false;
     shuffleModeEnabled = appPrefsBox.get("isShuffleModeEnabled") ?? false;
+    queueLoopModeEnabled = Hive.box("AppPrefs").get("queueLoopModeEnabled") ?? false;
     loudnessNormalizationEnabled =
         appPrefsBox.get("loudnessNormalizationEnabled") ?? false;
     _listenForDurationChanges();
@@ -358,6 +360,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
     if (queue.value.length > currentIndex + 1) {
       return currentIndex + 1;
+    } else if (queueLoopModeEnabled) {
+      return 0;
     } else {
       return currentIndex;
     }
@@ -597,7 +601,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       final currentQueue = queue.value;
       currentQueue.insert(currentIndex + 1, song);
       queue.add(currentQueue);
-      if(shuffleModeEnabled){
+      if (shuffleModeEnabled) {
         shuffledQueue.insert(currentShuffleIndex + 1, song.id);
       }
     } else if (name == 'openEqualizer') {
@@ -614,6 +618,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       final songIndex = extras!['index'];
       currentIndex = songIndex;
       mediaItem.add(queue.value[currentIndex]);
+    } else if (name == "toggleQueueLoopMode") {
+      queueLoopModeEnabled = extras!['enable'];
     }
   }
 

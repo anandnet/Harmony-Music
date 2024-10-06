@@ -40,7 +40,8 @@ class UpNextQueue extends StatelessWidget {
           itemCount: playerController.currentQueue.length,
           padding: EdgeInsets.only(
               top: isQueueInSlidePanel ? 55 : 0,
-              bottom: Get.mediaQuery.padding.bottom),
+              bottom:
+                  isQueueInSlidePanel ? 80 : 0 + Get.mediaQuery.padding.bottom),
           physics: const AlwaysScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             final homeScaffoldContext =

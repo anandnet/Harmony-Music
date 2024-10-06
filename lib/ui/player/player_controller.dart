@@ -51,6 +51,7 @@ class PlayerController extends GetxController
   final currentSongIndex = (0).obs;
   final isFirstSong = true;
   final isLastSong = true;
+  final isQueueLoopModeEnabled = false.obs;
   final isLoopModeEnabled = false.obs;
   final isShuffleModeEnabled = false.obs;
   final currentSong = Rxn<MediaItem>();
@@ -103,6 +104,9 @@ class PlayerController extends GetxController
         Hive.box("AppPrefs").get("isLoopModeEnabled") ?? false;
     isShuffleModeEnabled.value =
         Hive.box("appPrefs").get("isShuffleModeEnabled") ?? false;
+    isQueueLoopModeEnabled.value =
+        Hive.box("AppPrefs").get("queueLoopModeEnabled") ?? false;
+
     if (GetPlatform.isDesktop) {
       setVolume(Hive.box("AppPrefs").get("volume") ?? 100);
     }
@@ -319,6 +323,13 @@ class PlayerController extends GetxController
     _playerPanelCheck();
     await _audioHandler
         .customAction("setSourceNPlay", {'mediaItem': mediaItem});
+
+    // disable queue loop mode when radio is started
+    if (radio &&
+        isQueueLoopModeEnabled.isTrue &&
+        isShuffleModeEnabled.isFalse) {
+      toggleQueueLoopMode();
+    }
   }
 
   Future<void> playPlayListSong(List<MediaItem> mediaItems, int index) async {
@@ -362,7 +373,7 @@ class PlayerController extends GetxController
   ///enqueueSong   append a song to current queue
   ///if current queue is empty, push the song into Queue and play that song
   Future<void> enqueueSong(MediaItem mediaItem) async {
-     if (currentQueue.isEmpty) {
+    if (currentQueue.isEmpty) {
       await playPlayListSong([mediaItem], 0);
       return;
     }
@@ -452,6 +463,13 @@ class PlayerController extends GetxController
         : _audioHandler.setShuffleMode(AudioServiceShuffleMode.all);
     isShuffleModeEnabled.value = !shuffleModeEnabled;
     await Hive.box("AppPrefs").put("isShuffleModeEnabled", !shuffleModeEnabled);
+    // restrict queue loop mode when shuffle mode is enabled
+    if (isShuffleModeEnabled.isTrue && isQueueLoopModeEnabled.isFalse) {
+      isQueueLoopModeEnabled.value = true;
+    } else if (isShuffleModeEnabled.isFalse) {
+      isQueueLoopModeEnabled.value =
+          Hive.box("AppPrefs").get("queueLoopModeEnabled", defaultValue: false);
+    }
   }
 
   void onReorder(int oldIndex, int newIndex) {
@@ -519,6 +537,30 @@ class PlayerController extends GetxController
     isLoopModeEnabled.value = !isLoopModeEnabled.value;
     await Hive.box("AppPrefs")
         .put("isLoopModeEnabled", isLoopModeEnabled.value);
+  }
+
+  Future<void> toggleQueueLoopMode({bool showMessage = true}) async {
+    if (isShuffleModeEnabled.isTrue && isQueueLoopModeEnabled.isTrue) {
+      if (!showMessage) return;
+      ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
+          Get.context!, "queueLoopNotDisMsg1".tr,
+          size: SanckBarSize.BIG, duration: const Duration(seconds: 2)));
+      return;
+    }
+
+    if (isRadioModeOn && isQueueLoopModeEnabled.isFalse) {
+      if (!showMessage) return;
+      ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
+          Get.context!, "queueLoopNotDisMsg2".tr,
+          size: SanckBarSize.BIG, duration: const Duration(seconds: 2)));
+      return;
+    }
+
+    isQueueLoopModeEnabled.value = !isQueueLoopModeEnabled.value;
+    await _audioHandler.customAction(
+        "toggleQueueLoopMode", {"enable": isQueueLoopModeEnabled.value});
+    await Hive.box("AppPrefs")
+        .put("queueLoopModeEnabled", isQueueLoopModeEnabled.value);
   }
 
   Future<void> setVolume(int value) async {

@@ -6,6 +6,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '/utils/helper.dart';
 import '/services/piped_service.dart';
 import '/ui/widgets/sleep_timer_bottom_sheet.dart';
 import '/ui/player/player_controller.dart';
@@ -411,26 +412,31 @@ mixin RemoveSongFromPlaylistMixin {
       await box.deleteAt(index);
     }
 
-    final plstCntroller = Get.find<PlayListNAlbumScreenController>(
-        tag: Key(playlist.playlistId).hashCode.toString());
-    if (playlist.isPipedPlaylist) {
-      final res =
-          await Get.find<PipedServices>().getPlaylistSongs(playlist.playlistId);
-      final songIndex = res.indexWhere((element) => element.id == item.id);
-      if (songIndex != -1) {
-        final res = await Get.find<PipedServices>()
-            .removeFromPlaylist(playlist.playlistId, songIndex);
-        if (res.code == 1) {
-          plstCntroller.addNRemoveItemsinList(item, action: 'remove');
-        }
-      }
-      return;
-    }
-
+    // this try catch block is to handle the case when song is removed from libsongs sections
     try {
-      plstCntroller.addNRemoveItemsinList(item, action: 'remove');
-      // ignore: empty_catches
-    } catch (e) {}
+      final plstCntroller = Get.find<PlayListNAlbumScreenController>(
+          tag: Key(playlist.playlistId).hashCode.toString());
+      if (playlist.isPipedPlaylist) {
+        final res = await Get.find<PipedServices>()
+            .getPlaylistSongs(playlist.playlistId);
+        final songIndex = res.indexWhere((element) => element.id == item.id);
+        if (songIndex != -1) {
+          final res = await Get.find<PipedServices>()
+              .removeFromPlaylist(playlist.playlistId, songIndex);
+          if (res.code == 1) {
+            plstCntroller.addNRemoveItemsinList(item, action: 'remove');
+          }
+        }
+        return;
+      }
+
+      try {
+        plstCntroller.addNRemoveItemsinList(item, action: 'remove');
+        // ignore: empty_catches
+      } catch (e) {}
+    } catch (e) {
+      printERROR("Some Error in removeSongFromPlaylist (might irrelavant): $e");
+    }
 
     if (playlist.playlistId == "SongDownloads" ||
         playlist.playlistId == "SongsCache") return;

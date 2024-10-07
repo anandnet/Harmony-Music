@@ -221,5 +221,12 @@
     "standard": "標準",
     "gesture": "ジェスチャー",
     "playerUi": "プレイヤーUI",
-    "playerUiDes": "プレイヤーの外観を選択"
+    "playerUiDes": "プレイヤーの外観を選択",
+    "shuffleQueue": "キューをシャッフル",
+    "queueLoop": "キューをループ",
+    "playnextMsg": "公開予定 {Song Name}",
+    "queueLoopNotDisMsg1": "シャッフル有効時は、ループは無効にできません。",
+    "queueLoopNotDisMsg2": "ラジオモードでは、ループを有効にできません。",
+    "enableSlidableActionDes": "曲のタイルをスライドする操作を使う",
+    "enableSlidableAction": "スライドによる操作"
 }

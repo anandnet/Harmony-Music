@@ -226,5 +226,10 @@
     "standard": "Standart",
     "gesture": "Gesten",
     "enableSlidableAction": "Aktiviere Gestenaktionen",
-    "enableSlidableActionDes": "Aktiviere Gestenaktionen beim Songtitel"
+    "enableSlidableActionDes": "Aktiviere Gestenaktionen beim Songtitel",
+    "shuffleQueue": "Warteschlange mischen",
+    "queueLoop": "Warteschlange wiederholen",
+    "queueLoopNotDisMsg2": "Wiederholung kann nicht aktiviert werden wenn der Radio Modus läuft.",
+    "playnextMsg": "Nächster",
+    "queueLoopNotDisMsg1": "Wiederholen kann nicht deaktiviert werden, wenn Zufallswiedergabe aktiv ist."
 }

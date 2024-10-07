@@ -21,6 +21,7 @@ Future<void> removeExpiredSongsUrlFromDb() async {
       final songUrlKey = songsUrlCacheKeysList[i];
       final streamData = songsUrlCacheBox.get(songUrlKey)[1];
       if (streamData == null ||
+          streamData.runtimeType == String ||
           (streamData != null && isExpired(url: streamData['url'] as String))) {
         await songsUrlCacheBox.delete(songUrlKey);
       }

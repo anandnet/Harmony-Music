@@ -20,10 +20,11 @@ class StandardPlayer extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final PlayerController playerController = Get.find<PlayerController>();
     final ThemeController themeController = Get.find<ThemeController>();
-    double playerArtImageSize = size.width - ((size.height < 750) ? 90 : 60);
+    double playerArtImageSize =
+        size.width - 60; //((size.height < 750) ? 90 : 60);
     //playerArtImageSize = playerArtImageSize > 350 ? 350 : playerArtImageSize;
     final spaceAvailableForArtImage =
-        size.height - (90 + Get.mediaQuery.padding.bottom + 330);
+        size.height - (70 + Get.mediaQuery.padding.bottom + 330);
     playerArtImageSize = playerArtImageSize > spaceAvailableForArtImage
         ? spaceAvailableForArtImage
         : playerArtImageSize;
@@ -94,7 +95,7 @@ class StandardPlayer extends StatelessWidget {
                       ],
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
-                      stops: const [0, 0.5,0.8, 1],
+                      stops: const [0, 0.5, 0.8, 1],
                     ),
                   ),
                 ),
@@ -150,7 +151,10 @@ class StandardPlayer extends StatelessWidget {
                             ),
                     ),
                     const LyricsSwitch(),
-                    AlbumArtNLyrics(playerArtImageSize: playerArtImageSize),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 500),
+                        child: AlbumArtNLyrics(
+                            playerArtImageSize: playerArtImageSize)),
                     Expanded(child: Container()),
                     Padding(
                       padding: EdgeInsets.only(

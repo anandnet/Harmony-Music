@@ -221,5 +221,12 @@
     "playerUi": "Giao diện phát nhạc",
     "playerUiDes": "Chọn giao diện phát nhạc",
     "standard": "Tiêu Chuẩn",
-    "gesture": "Cử chỉ"
+    "gesture": "Cử chỉ",
+    "shuffleQueue": "Hàng đợi ngẩu nhiên",
+    "queueLoop": "Hàng đợi lập",
+    "enableSlidableAction": "Bật hành động vuốt",
+    "playnextMsg": "Tiếp theo",
+    "queueLoopNotDisMsg1": "Không thể tắt hàng đợi lập khi bật chế độ ngẩu nhiên.",
+    "queueLoopNotDisMsg2": "Không thể bật hàng đợi lập trong chế độ đài phát thanh.",
+    "enableSlidableActionDes": "Bật chế độ vuốt trên tiêu đề bài hát"
 }

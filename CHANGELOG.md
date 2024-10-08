@@ -1,3 +1,17 @@
+## 1.10.1
+* Improved song loading time (Android)
+* Added slide gesture to song tile for playing next song by @DarkNinja15
+* Optional feature: Gesture based player (Android)
+* Prettified title on Windows app #279 (Windows)
+* Fixed art img size
+* Feature: Queue loop #234
+* Fixed Stop music on task clear not working #268 (Android)
+* Transparent bottom #177 (Android)
+* Added null check on genID from Db #278
+* Enable loading on Buffering #170
+* Fixed AppImage don't play (Linux)
+
+
 ## 1.10.0
 Fixes:
 * fix: allow use of qt window decorations by @Merrit

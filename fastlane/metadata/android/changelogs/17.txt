@@ -1,0 +1,9 @@
+* Improved song loading time
+* Added slide gesture to song tile for playing next song by @DarkNinja15
+* Optional feature: Gesture based player
+* Fixed art img size
+* Feature: Queue loop
+* Fixed Stop music on task clear not working #268
+* Transparent bottom
+* Added null check on genID from Db
+* Enable loading on Buffering

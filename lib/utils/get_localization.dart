@@ -395,7 +395,7 @@ class Languages extends Translations {
           "password": "Парола",
           "noLibPlaylist": "Нямате плейлист в библиотеката!",
           "setDiscoverContent": "Задайте съдържание за откриване",
-          "networkError1": "Ами сега грешка в мрежата!",
+          "networkError1": "Ами сега, грешка в мрежата!",
           "songRemovedfromQueue": "Премахнато от опашката!",
           "libSongs": "Библиотека Песни",
           "githubDes":
@@ -412,7 +412,8 @@ class Languages extends Translations {
           "link": "Връзка",
           "selectAuthIns": "Изберете инстанция за удостоверяване",
           "languageDes": "Задайте език на приложението",
-          "stopMusicOnTaskClear": "Спрете музиката при изчистване на задачата",
+          "stopMusicOnTaskClear":
+              "Спиране на музиката при изчистване на задачата",
           "enqueueAll": "Добавете всички към опашката",
           "customInsSelectMsg": "Моля, изберете потребителска инстанция",
           "skipSilence": "Пропусни тишината",
@@ -493,7 +494,7 @@ class Languages extends Translations {
           "high": "Високо",
           "searchDes": "Песни, Плейлист, Албум или Изпълнител",
           "results": "Резултати",
-          "playlistBlacklistAlert": "Плейлистът е в черен списък!",
+          "playlistBlacklistAlert": "Плейлиста е в черен списък!",
           "artistDesNotAvailable": "Описанието не е налично!",
           "resetblacklistedplaylistDes":
               "Нулирайте всички piped плейлисти в черен списък",
@@ -570,9 +571,9 @@ class Languages extends Translations {
           "exportDowloadedFilesDes":
               "Щракнете тук, за да изнесете изтегления файл от директорията на приложението във външна директория",
           "clearImgCacheAlert": "Кешът на изображенията е изчистен успешно",
-          "disableTransitionAnimation": "Деактивирате анимацията при преход",
+          "disableTransitionAnimation": "Деактивиране на анимацията на прехода",
           "disableTransitionAnimationDes":
-              "Активирайте тази опция, за да деактивирате анимацията при преход към раздели",
+              "Активирайте тази опция, за да деактивирате анимацията на прехода между разделите",
           "clearImgCacheDes":
               "Щракнете тук, за да изчистите кеширани миниатюри/изображения. (Не се препоръчва, освен ако не искате да опресните данните от кеширани изображения)",
           "pipedplstSyncAlert": "Piped плейлист е синхронизиран!",
@@ -597,7 +598,7 @@ class Languages extends Translations {
           "restoreAppData": "Възстановяване на данни от приложението",
           "letsStrart": "Да започваме..",
           "processFiles": "Файловете се обработват...",
-          "restartApp": "Рестартирайте приложението",
+          "restartApp": "Рестартирай приложението",
           "songInfo": "Информация за песента",
           "id": "Идентификация",
           "bitrate": "Скорост на предаване",
@@ -628,13 +629,20 @@ class Languages extends Translations {
           "content": "Съдържание",
           "loudnessNormalizationDes":
               "Задава едно и също ниво на силата на звука за всички песни (Експериментално) (Няма да работи с песни, изтеглени на предишна версия (< v1.10.0))",
-          "playerUi": "Плейър интерфейс",
+          "playerUi": "Интерфейс на плейър",
           "standard": "Стандартен",
           "gesture": "Жестове",
           "playerUiDes": "Изберете потребителски интерфейс на плейъра",
           "enableSlidableAction": "Активиране на плъзгащи се действия",
           "enableSlidableActionDes":
-              "Активирайте плъзгащи се действия върху плочката на песента"
+              "Активиране на плъзгащи се действия върху фрагмент на песента",
+          "queueLoop": "Цикъл на опашката",
+          "playnextMsg": "Предстояща",
+          "shuffleQueue": "Разбъркайте опашката",
+          "queueLoopNotDisMsg1":
+              "Режимът на цикъл на опашка не може да бъде деактивиран, когато режимът на разбъркване е активиран.",
+          "queueLoopNotDisMsg2":
+              "Режимът на цикъл на опашка не може да бъде активиран в радио режим."
         },
         "bn": {},
         "ca": {
@@ -1369,7 +1377,14 @@ class Languages extends Translations {
           "standard": "Standart",
           "gesture": "Gesten",
           "enableSlidableAction": "Aktiviere Gestenaktionen",
-          "enableSlidableActionDes": "Aktiviere Gestenaktionen beim Songtitel"
+          "enableSlidableActionDes": "Aktiviere Gestenaktionen beim Songtitel",
+          "shuffleQueue": "Warteschlange mischen",
+          "queueLoop": "Warteschlange wiederholen",
+          "queueLoopNotDisMsg2":
+              "Wiederholung kann nicht aktiviert werden wenn der Radio Modus läuft.",
+          "playnextMsg": "Nächster",
+          "queueLoopNotDisMsg1":
+              "Wiederholen kann nicht deaktiviert werden, wenn Zufallswiedergabe aktiv ist."
         },
         "en": {
           "home": "Home",
@@ -2065,7 +2080,14 @@ class Languages extends Translations {
           "standard": "Estándar",
           "enableSlidableAction": "Habilitar acciones deslizables",
           "enableSlidableActionDes":
-              "Activar acciones deslizables en el mosaico de las canciones"
+              "Activar acciones deslizables en el mosaico de las canciones",
+          "playnextMsg": "Próximamente",
+          "shuffleQueue": "Cola aleatoria",
+          "queueLoopNotDisMsg2":
+              "La cola en bucle no se puede activar en el modo radio.",
+          "queueLoop": "Cola continua",
+          "queueLoopNotDisMsg1":
+              "El modo cola en bucle no puede ser desactivado cuando está habilitado el modo aleatorio."
         },
         "fi": {
           "libAlbums": "Kirjaston albumit",
@@ -2263,7 +2285,7 @@ class Languages extends Translations {
           "topMusicVid": "Palmarès des vidéoclips",
           "basedOnLast": "Basée sur la dernière interaction",
           "cacheSongsDes":
-              "Mettre en cache des chansons pendant la lecture pour une lecture ultérieure / hors ligne. Cela nécessitera de l'espace supplémentaire sur votre appareil",
+              "Mettre en cache des titres pendant la lecture pour une lecture ultérieure / hors ligne. Cela nécessitera de l'espace supplémentaire sur votre appareil",
           "skipSilence": "Ignorer le silence",
           "low": "Basse",
           "equalizer": "Égaliseur",
@@ -2282,7 +2304,7 @@ class Languages extends Translations {
           "nomatch": "Aucune correspondance trouvée pour",
           "subscribers": "abonnés",
           "radioNotAvailable": "Radio non disponible pour cet artiste !",
-          "songRemovedfromQueue": "Enlevé de la file !",
+          "songRemovedfromQueue": "Supprimé de la file !",
           "songRemovedfromQueueCurrSong":
               "Vous ne pouvez pas supprimer le titre en cours de lecture",
           "songAddedToPlaylistAlert": "Titre ajouté à la playlist !",
@@ -2292,9 +2314,9 @@ class Languages extends Translations {
           "playlistCreatednsongAddedAlert": "Playlist créée et titre ajouté !",
           "playlistRenameAlert": "Renommé avec succès !",
           "playlistBookmarkRemoveAlert": "Playlist retirée des favoris !",
-          "albumBookmarkAddAlert": "Album ajouté à mes favoris !",
+          "albumBookmarkAddAlert": "Album ajouté aux favoris !",
           "albumBookmarkRemoveAlert": "Album retiré des favoris !",
-          "artistBookmarkAddAlert": "Artiste ajouté à mes favoris !",
+          "artistBookmarkAddAlert": "Artiste ajouté aux favoris !",
           "artistBookmarkRemoveAlert": "Artiste retiré des favoris !",
           "dismiss": "Rejeter",
           "operationFailed": "L'opération a échoué",
@@ -2317,7 +2339,8 @@ class Languages extends Translations {
           "viewArtist": "Voir l'Artiste",
           "shareSong": "Partager ce titre",
           "cacheSongs": "Titres en cache",
-          "skipSilenceDes": "Le silence sera ignoré dans la lecture de musique",
+          "skipSilenceDes":
+              "Le silence sera ignoré lors de la lecture de la musique",
           "streamingQuality": "Qualité de diffusion",
           "streamingQualityDes": "Qualité du flux de musique",
           "high": "Élevée",
@@ -2331,7 +2354,7 @@ class Languages extends Translations {
           "errorOccuredAlert": "Une erreur s'est produite !",
           "playlistCreatedAlert": "Playlist créée !",
           "playlistRemovedAlert": "Playlist supprimée !",
-          "playlistBookmarkAddAlert": "Playlist ajouté à mes favoris !",
+          "playlistBookmarkAddAlert": "Playlist ajouté aux favoris !",
           "lyricsNotAvailable": "Paroles indisponibles !",
           "artistDesNotAvailable": "Description indisponible !",
           "newVersionAvailable": "Nouvelle version disponible !",
@@ -2378,11 +2401,11 @@ class Languages extends Translations {
           "quickpicks": "Sélections Rapides",
           "downloads": "Téléchargements",
           "removeFromLib": "Supprimer de la Bibliothèque Musicale",
-          "downloadingFormat": "Téléchargement du format de fichier",
+          "downloadingFormat": "Format de fichier téléchargé",
           "songAlreadyOfflineAlert": "Titre déjà hors ligne dans le cache",
           "downloadLocation": "Emplacement du Téléchargement",
           "downloadingFormatDes":
-              "Sélectionnez le format de fichier de téléchargement. \"Opus\" offrira la meilleure qualité",
+              "Sélectionnez le format de fichier de téléchargé. \"Opus\" offrira la meilleure qualité",
           "library": "Bibliothèque",
           "sleepTimer": "Minuterie de Veille",
           "synced": "Synchronisé",
@@ -2410,32 +2433,32 @@ class Languages extends Translations {
               "Désactiver les animations de transition",
           "exportDowloadedFiles": "Exporter les fichiers téléchargés",
           "exportDowloadedFilesDes":
-              "Cliquez ici pour exporter le fichier téléchargé du dossier de l'application vers un dossier externe",
+              "Cliquez ici pour exporter les fichiers téléchargés du dossier de l'application vers un dossier externe",
           "exportedFileLocation": "Lieu d'exportation du fichier",
           "exporting": "Exportation en cours...",
           "downFilesFound": "fichiers téléchargés trouvés",
           "close": "Fermer",
-          "exportMsg": "Fichiers exportés avec succès",
+          "exportMsg": "Fichiers exportés avec succès !",
           "clearImgCache": "Nettoyer le cache des images",
           "clearImgCacheDes":
-              "Cliquez ici pour vider le cache des images / miniatures (non recommandé sauf si vous voulez rafraîchir le cache des images)",
+              "Cliquez ici pour vider le cache des images / miniatures. (Non recommandé sauf si vous voulez rafraîchir le cache des images)",
           "deleteDownloadedDataAlert":
               "Retiré avec succès des téléchargements !",
           "sleepTimeSetAlert": "Le minuteur de veille est activé",
           "syncedLyricsNotAvailable":
               "Les paroles synchronisées ne sont pas disponibles !",
-          "cancelTimer": "Annuler le minuteur",
+          "cancelTimer": "Annuler la minuterie",
           "homeContentCountDes":
-              "Choisir la quantité de contenu sur l'écran d'accueil (approx.). Moins de résultats pour un chargement plus rapide",
+              "Choisir le nombre de contenus sur l'écran d'accueil (approx.). Moins de résultats pour un chargement plus rapide",
           "restoreLastPlaybackSessionDes":
-              "Relancer automatiquement la lecture précédente au démarrage de l'application",
+              "Restaurer automatiquement la dernière session de lecture au démarrage de l'application",
           "backgroundPlayDes":
-              "Activer / Désactiver la lecture de musique en arrière-plan (l’application est accessible depuis la barre d’état système lorsque l'application s’exécute en arrière-plan)",
+              "Activer / Désactiver la lecture de musique en arrière-plan (l’application est accessible depuis la barre d’état système lorsqu'elle s’exécute en arrière-plan)",
           "pipedplstSyncAlert": "Playlist piped synchronisée !",
           "export": "Exporter",
           "clearImgCacheAlert":
-              "Nettoyage du cache des images réalisé avec succès",
-          "homeContentCount": "Compteur de contenu du menu principal",
+              "Nettoyage du cache des images réalisé avec succès !",
+          "homeContentCount": "Nombre de contenus de l'accueil",
           "upNext": "À suivre",
           "enableBottomNav": "Barre de navigation inférieure",
           "enableBottomNavDes": "Passer à la barre de navigation inférieure",
@@ -2477,12 +2500,12 @@ class Languages extends Translations {
           "personalisation": "Personnalisation",
           "loudnessNormalization": "Normalisation du niveau sonore",
           "loudnessNormalizationDes":
-              "Définit le même niveau de volume pour toutes les chansons (expérimental) (ne fonctionnera pas sur les chansons téléchargées sur la version précédente (< v1.10.0))",
+              "Définit le même niveau de volume pour tous les titres (expérimental) (Cela ne fonctionnera pas sur les titres téléchargés sur la version précédente (< v1.10.0))",
           "id": "Identifiant",
           "urlSearchDes":
               "URL détectée. Cliquez dessus pour ouvrir / lire le contenu associé",
           "androidBackupWarning":
-              "Non testé : si vous cochez la case après avoir téléchargé plus de 60 fichiers, le processus peut consommer une grande quantité de mémoire et provoquer le blocage du téléphone ou de l'application. Procédez à vos propres risques.",
+              "Non testé : si vous cochez la case après avoir téléchargé plus de 60 fichiers, le processus peut consommer une grande quantité de mémoire et provoquer le blocage du téléphone ou de l'application. Procédez à vos propres risques !",
           "songInfo": "Informations sur le titre",
           "duration": "Durée",
           "backup": "Sauvegarder",
@@ -2491,7 +2514,21 @@ class Languages extends Translations {
               "Le titre n'est pas jouable en raison d'une restriction du serveur !",
           "downloadError2":
               "Le titre demandé n'est pas téléchargeable en raison d'une restriction du serveur. Vous devriez réessayer",
-          "backupAppData": "Sauvegarder les données de l'application"
+          "backupAppData": "Sauvegarder les données de l'application",
+          "playerUi": "Interface du Lecteur",
+          "playerUiDes": "Sélectionner l'interface du lecteur",
+          "standard": "Standard",
+          "gesture": "Geste",
+          "playnextMsg": "À suivre",
+          "shuffleQueue": "Lecture aléatoire de la file d'attente",
+          "queueLoop": "Lecture en boucle de la file d'attente",
+          "queueLoopNotDisMsg1":
+              "La lecture en boucle de la file d'attente ne peut pas être désactivée lorsque le mode aléatoire est activé.",
+          "queueLoopNotDisMsg2":
+              "La lecture en boucle de la file d'attente ne peut pas être activée lorsque le mode radio est activé.",
+          "enableSlidableAction": "Activer les actions coulissantes",
+          "enableSlidableActionDes":
+              "Activer les actions coulissantes sur la mosaïque de titres"
         },
         "ga": {},
         "gl": {
@@ -3186,7 +3223,8 @@ class Languages extends Translations {
           "downloadError2":
               "Le canto requestate non pote discargar se a causa de un restriction de servitor. Tu pote retentar lo",
           "playerUi": "IU de reproductor",
-          "playerUiDes": "Selige le interfacie de usator del reproductor"
+          "playerUiDes": "Selige le interfacie de usator del reproductor",
+          "enableSlidableAction": "Activar le acciones glissabile"
         },
         "id": {
           "playlistCreatednsongAddedAlert":
@@ -3203,7 +3241,7 @@ class Languages extends Translations {
           "trending": "Sedang tren",
           "searchRes": "Hasil pencarian",
           "cacheSongsDes":
-              "Menyimpan lagu dalam cache saat diputar untuk pemutaran di masa mendatang/offline, akan memerlukan ruang tambahan di perangkat Anda",
+              "Menyimpan lagu dalam cache saat diputar untuk pemutaran di masa mendatang/offline, akan memerlukan ruang tambahan di perangkat anda",
           "password": "Sandi",
           "noLibPlaylist": "Anda tidak memiliki daftar putar lib apa pun!",
           "setDiscoverContent": "Atur temukan konten",
@@ -3227,7 +3265,7 @@ class Languages extends Translations {
           "stopMusicOnTaskClear": "Hentikan musik saat tugas selesai",
           "enqueueAll": "Semua Entri",
           "customInsSelectMsg": "Silakan pilih Instans Khusus",
-          "skipSilence": "Lewati Keheningan",
+          "skipSilence": "Lewati keheningan",
           "create": "Buat",
           "equalizer": "Ekualizer",
           "enqueueSong": "Tambahkan lagu ini ke antrian",
@@ -3247,7 +3285,7 @@ class Languages extends Translations {
           "discover": "Temukan",
           "cacheSongs": "Cache lagu",
           "downloads": "Download",
-          "removeFromLib": "Hapus dari pustaka lagu",
+          "removeFromLib": "Hapus dari Pustaka Lagu",
           "songAlreadyExists": "Lagu sudah ada!",
           "libArtists": "Pustaka Artis",
           "downloadingFormat": "Mengunduh Format File",
@@ -3282,7 +3320,7 @@ class Languages extends Translations {
           "singles": "Singel",
           "linkAlert": "Berhasil ditautkan!",
           "status": "Status",
-          "themeMode": "Modus Tema",
+          "themeMode": "Mode Tema",
           "streamingQualityDes": "Kualitas streaming musik",
           "nomatch": "Tidak ditemukan kecocokan untuk",
           "notaValidLink": "Bukan tautan yang valid!",
@@ -3343,7 +3381,7 @@ class Languages extends Translations {
           "scanning": "Memindai...",
           "clearImgCache": "Bersihkan cache gambar",
           "openIn": "Buka di",
-          "homeContentCount": "Jumlah konten Beranda",
+          "homeContentCount": "Jumlah konten beranda",
           "restoreLastPlaybackSessionDes":
               "Otomatis pulihkan sesi pemutaran terakhir saat membuka aplikasi",
           "loudnessNormalization": "Normalisasi kenyaringan",
@@ -3357,7 +3395,7 @@ class Languages extends Translations {
           "enableBottomNavDes": "Ganti ke bar navigasi bawah",
           "close": "Tutup",
           "exporting": "Mengekspor...",
-          "cancelTimer": "Batalkan timer",
+          "cancelTimer": "Batalkan pengatur waktu",
           "enableBottomNav": "Bar navigasi bawah",
           "removeMultiple": "Hapus beberapa lagu",
           "pipedplstSyncAlert": "Daftar putar yang disalurkan tersinkronkan!",
@@ -3390,7 +3428,7 @@ class Languages extends Translations {
               "Berhasil dipulihkan!\nPerubahan akan diterapkan setelah dimulai ulang",
           "songNotPlayable":
               "Lagu ini tidak dapat diputar karena pembatasan server!",
-          "appInfo": "Informasi aplikasi",
+          "appInfo": "Informasi Aplikasi",
           "download": "Unduh",
           "personalisation": "Personalisasi",
           "upNext": "Selanjutnya",
@@ -3436,7 +3474,14 @@ class Languages extends Translations {
           "playerUi": "Antarmuka Pengguna",
           "playerUiDes": "Pilih antarmuka pengguna",
           "standard": "Standar",
-          "gesture": "Gerakan"
+          "gesture": "Gerakan",
+          "queueLoopNotDisMsg2":
+              "Mode antrean berulang tidak bisa diaktifkan pada mode radio.",
+          "enableSlidableAction": "Aktifkan aksi menggeser",
+          "shuffleQueue": "Acak Antrean",
+          "queueLoop": "Antrean Berulang",
+          "queueLoopNotDisMsg1":
+              "Mode antrean berulang tidak bisa dimatikan apabila mode mengacak sedang diaktifkan"
         },
         "it": {
           "home": "Pagina principale",
@@ -3919,7 +3964,14 @@ class Languages extends Translations {
           "standard": "標準",
           "gesture": "ジェスチャー",
           "playerUi": "プレイヤーUI",
-          "playerUiDes": "プレイヤーの外観を選択"
+          "playerUiDes": "プレイヤーの外観を選択",
+          "shuffleQueue": "キューをシャッフル",
+          "queueLoop": "キューをループ",
+          "playnextMsg": "公開予定 {Song Name}",
+          "queueLoopNotDisMsg1": "シャッフル有効時は、ループは無効にできません。",
+          "queueLoopNotDisMsg2": "ラジオモードでは、ループを有効にできません。",
+          "enableSlidableActionDes": "曲のタイルをスライドする操作を使う",
+          "enableSlidableAction": "スライドによる操作"
         },
         "kn": {"libArtists": "歌手库"},
         "ko": {
@@ -6113,7 +6165,16 @@ class Languages extends Translations {
           "playerUi": "Кориснички интерфејс плејера",
           "playerUiDes": "Изаберите кориснички интерфејс плејера",
           "standard": "Стандардан",
-          "gesture": "Покрет"
+          "gesture": "Покрет",
+          "playnextMsg": "Следи",
+          "queueLoop": "Понављање у редоследу",
+          "queueLoopNotDisMsg2":
+              "Режим понављања у редоследу не може се омогућити у режиму радија.",
+          "shuffleQueue": "Мешање у редоследу",
+          "enableSlidableAction": "Омогући клизне радње",
+          "enableSlidableActionDes": "Омогућите клизне радње на плочици песме",
+          "queueLoopNotDisMsg1":
+              "Режим понављања у редоследу се не може онемогућити када је омогућен режим мешања."
         },
         "sv": {
           "settings": "Inställningar",

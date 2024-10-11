@@ -1,22 +1,23 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 import '/ui/navigator.dart';
 import '/ui/widgets/sort_widget.dart';
 
-var logger = Logger();
-
 void printERROR(dynamic text, {String tag = "Harmony Music"}) {
-  logger.e("\x1B[31m[$tag]: $text\x1B[34m");
+  if (kReleaseMode) return;
+  debugPrint("\x1B[31m[$tag]: $text\x1B[0m");
 }
 
 void printWarning(dynamic text, {String tag = 'Harmony Music'}) {
-  logger.w("\x1B[33m[$tag]: $text\x1B[34m");
+  if (kReleaseMode) return;
+  debugPrint("\x1B[33m[$tag]: $text\x1B[34m");
 }
 
 void printINFO(dynamic text, {String tag = 'Harmony Music'}) {
-  logger.i("\x1B[32m[$tag]: $text\x1B[34m");
+  if (kReleaseMode) return;
+  debugPrint("\x1B[32m[$tag]: $text\x1B[34m");
 }
 
 String? getCurrentRouteName() {

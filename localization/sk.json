@@ -221,5 +221,12 @@
     "playerUi": "Rozhranie prehrávača",
     "standard": "Štandard",
     "gesture": "Gestá",
-    "playerUiDes": "Vybrať používateľské rozhranie prehrávača"
+    "playerUiDes": "Vybrať používateľské rozhranie prehrávača",
+    "enableSlidableAction": "Povoliť akcie gestami",
+    "playnextMsg": "Nasleduje",
+    "shuffleQueue": "Náhodný výber",
+    "queueLoop": "Opakovať",
+    "queueLoopNotDisMsg1": "Režim opakovania nie je možné vypnúť, keď je povolený náhodný výber.",
+    "queueLoopNotDisMsg2": "V režime rádio nie je možné zapnúť náhodný výber.",
+    "enableSlidableActionDes": "Povoliť akcie gestami pri skladbe"
 }

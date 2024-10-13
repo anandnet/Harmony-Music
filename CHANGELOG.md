@@ -1,3 +1,7 @@
+## 1.10.2
+* Fixed Song is not playable due to server restriction!
+* Added hl code #298
+
 ## 1.10.1
 * Improved song loading time (Android)
 * Added slide gesture to song tile for playing next song by @DarkNinja15

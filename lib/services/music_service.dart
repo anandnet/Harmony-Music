@@ -58,6 +58,7 @@ class MusicServices extends getx.GetxService {
     };
 
     final appPrefsBox = Hive.box('AppPrefs');
+    hlCode = appPrefsBox.get('contentLanguage') ?? "en";
     if (appPrefsBox.containsKey('visitorId')) {
       final visitorData = appPrefsBox.get("visitorId");
       if (visitorData != null && !isExpired(epoch: visitorData['exp'])) {
@@ -71,20 +72,23 @@ class MusicServices extends getx.GetxService {
       }
     }
 
-      final visitorId = await genrateVisitorId();
-      if (visitorId != null) {
-        _headers['X-Goog-Visitor-Id'] = visitorId;
-        printINFO("New Visitor id generated ($visitorId)");
-        appPrefsBox.put("visitorId", {
-          'id': visitorId,
-          'exp': DateTime.now().millisecondsSinceEpoch ~/ 1000 + 2592000
-        });
-        return;
-      }
-      // not able to generate in that case
-      _headers['X-Goog-Visitor-Id'] =
-          visitorId ?? "CgttN24wcmd5UzNSWSi2lvq2BjIKCgJKUBIEGgAgYQ%3D%3D";
-    
+    final visitorId = await genrateVisitorId();
+    if (visitorId != null) {
+      _headers['X-Goog-Visitor-Id'] = visitorId;
+      printINFO("New Visitor id generated ($visitorId)");
+      appPrefsBox.put("visitorId", {
+        'id': visitorId,
+        'exp': DateTime.now().millisecondsSinceEpoch ~/ 1000 + 2592000
+      });
+      return;
+    }
+    // not able to generate in that case
+    _headers['X-Goog-Visitor-Id'] =
+        visitorId ?? "CgttN24wcmd5UzNSWSi2lvq2BjIKCgJKUBIEGgAgYQ%3D%3D";
+  }
+
+  set hlCode(String code) {
+    _context['context']['client']['hl'] = code;
   }
 
   Future<String?> genrateVisitorId() async {
@@ -528,6 +532,7 @@ class MusicServices extends getx.GetxService {
       int limit = 30,
       bool ignoreSpelling = false}) async {
     final data = Map.of(_context);
+    data['context']['client']["hl"] = 'en';
     data['query'] = query;
 
     final Map<String, dynamic> searchResults = {};
@@ -694,6 +699,7 @@ class MusicServices extends getx.GetxService {
       channelId = channelId.substring(4);
     }
     final data = Map.from(_context);
+    data['context']['client']["hl"] = 'en';
     data['browseId'] = channelId;
     dynamic response = (await _sendRequest("browse", data)).data;
     dynamic results = nav(response, [...single_column_tab, ...section_list]);

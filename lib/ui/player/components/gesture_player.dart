@@ -21,9 +21,42 @@ class GesturePlayer extends StatelessWidget {
   Widget build(BuildContext context) {
     final PlayerController playerController = Get.find<PlayerController>();
     final ThemeController themeController = Get.find<ThemeController>();
+
     return Stack(
       children: [
         GestureDetector(
+          onTap: () {
+            // Single tap to pause/unpause
+            playerController.playPause();
+          },
+          onDoubleTap: () {
+            // Double tap to like/unlike the current song
+            playerController.toggleFavourite();
+          },
+          onHorizontalDragEnd: (DragEndDetails details) {
+            // Swipe left for next song and right for previous song
+            if (details.primaryVelocity! < 0) {
+              playerController.next();
+            } else if (details.primaryVelocity! > 0) {
+              playerController.prev();
+            }
+          },
+          onLongPress: () {
+            // Long press to show the song info
+            showModalBottomSheet(
+              constraints: const BoxConstraints(maxWidth: 500),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+              ),
+              isScrollControlled: true,
+              context: playerController.homeScaffoldkey.currentState!.context,
+              barrierColor: Colors.transparent.withAlpha(100),
+              builder: (context) => SongInfoBottomSheet(
+                playerController.currentSong.value!,
+                calledFromPlayer: true,
+              ),
+            ).whenComplete(() => Get.delete<SongInfoController>());
+          },
           child: Obx(
             () => SizedBox.expand(
               child: playerController.currentSong.value != null
@@ -38,7 +71,6 @@ class GesturePlayer extends StatelessWidget {
                         }
                         return const SizedBox.shrink();
                       },
-                      // memCacheHeight: 544,
                       imageBuilder: (context, imageProvider) {
                         Get.find<SettingsScreenController>()
                                     .themeModetype
@@ -64,31 +96,6 @@ class GesturePlayer extends StatelessWidget {
                   : Container(),
             ),
           ),
-          onHorizontalDragEnd: (DragEndDetails details) {
-            if (details.primaryVelocity! < 0) {
-              playerController.next();
-            } else if (details.primaryVelocity! > 0) {
-              playerController.prev();
-            }
-          },
-          onDoubleTap: () {
-            playerController.playPause();
-          },
-          onLongPress: () {
-            showModalBottomSheet(
-              constraints: const BoxConstraints(maxWidth: 500),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
-              ),
-              isScrollControlled: true,
-              context: playerController.homeScaffoldkey.currentState!.context,
-              barrierColor: Colors.transparent.withAlpha(100),
-              builder: (context) => SongInfoBottomSheet(
-                playerController.currentSong.value!,
-                calledFromPlayer: true,
-              ),
-            ).whenComplete(() => Get.delete<SongInfoController>());
-          },
         ),
         IgnorePointer(
           child: Align(
@@ -304,16 +311,6 @@ class GesturePlayer extends StatelessWidget {
             ),
           ),
         ),
-        // absorb pointer to prevent the next,prev gesture from being triggered when the user tries to switch app
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: AbsorbPointer(
-            child: SizedBox(
-              height: Get.mediaQuery.padding.bottom + 20,
-              child: Container(),
-            ),
-          ),
-        )
       ],
     );
   }

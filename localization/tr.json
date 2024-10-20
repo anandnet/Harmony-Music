@@ -203,5 +203,16 @@
     "loudnessDb": "Ses Yüksekliği (Db)",
     "title": "Başlık",
     "duration": "Süre",
-    "audioCodec": "Ses Kod Çözücü"
+    "audioCodec": "Ses Kod Çözücü",
+    "urlSearchDes": "URL algılandı. İlişkili içeriği açmak/oynatmak için üzerine tıklayın.",
+    "queueShufflingDeniedMsg": "Karışık oynatma aktif. Kuyruktaki şarkılar karıştırılamıyor!",
+    "queuerearrangingDeniedMsg": "Karışık oynatma aktifken kuyruktaki şarkılar düzenlenemez.",
+    "networkError": "Ağ hatası! Ağ bağlantınızı kontrol edin.",
+    "downloadError2": "Sunucu kısıtlaması nedeniyle istenen şarkı indirilemiyor. Tekrar deneyebilirsiniz.",
+    "music&Playback": "Müzik & Oynatma",
+    "content": "İçerik",
+    "personalisation": "Kişiselleştirme",
+    "songNotPlayable": "Şarkı sunucu kısıtlaması nedeniyle çalınamıyor!",
+    "downloadError3": "Ağ hatası nedeniyle indirme başarısız oldu! Lütfen tekrar deneyin.",
+    "loudnessNormalizationDes": "Tüm şarkılar için aynı ses yüksekliği seviyesini ayarlar (Deneysel) (Önceki sürümde (< v1.10.0) indirilen şarkılarda çalışmaz)"
 }

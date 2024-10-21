@@ -1,1 +1,9 @@
-{}
+{
+    "artists": "Előadók",
+    "settings": "Beállítások",
+    "home": "Kezdőlap",
+    "songs": "Számok",
+    "library": "Gyüjtemény",
+    "playlists": "Lejátszólisták",
+    "albums": "Albumok"
+}

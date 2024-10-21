@@ -1,3 +1,12 @@
 {
-    "libArtists": "歌手库"
+    "libArtists": "",
+    "artists": "ಕಲಾವಿದರು",
+    "home": "ಮುಖಪುಟ",
+    "retry": "ಮರುಪ್ರಯತ್ನಿಸಿ!",
+    "songs": "ಹಾಡುಗಳು",
+    "recentlyPlayed": "ಇತ್ತೀಚಿಗೆ ಕೇಳಿದ ಹಾಡುಗಳು",
+    "settings": "ಸಂಯೋಜನೆಗಳು",
+    "playlists": "ಪಟ್ಟಿಗಳು",
+    "favorites": "ಇಷ್ಟವಾದವು",
+    "albums": "ಆಲ್ಬಂಗಳು"
 }

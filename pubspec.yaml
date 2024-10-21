@@ -48,6 +48,7 @@ dependencies:
   flutter_keyboard_visibility: ^6.0.0
   flutter_lyric: ^2.0.4+6
   flutter_slidable: ^3.1.1
+  flutter_tailwind: ^1.3.8
   get: ^4.6.6
   google_fonts: ^6.1.0
   hive: ^2.2.3
@@ -72,7 +73,7 @@ dependencies:
     git:
       url: https://github.com/anandnet/sdk_int.git
       ref: 91b2d4e0863de4effb2c89dd7868506cbd85a1ee
-  share_plus: ^9.0.0
+  share_plus: ^10.1.0
   shimmer: ^3.0.0
   sidebar_with_animation:
     git:

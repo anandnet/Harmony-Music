@@ -60,14 +60,11 @@ class NewVersionDialog extends StatelessWidget {
             ),
             Container(
                 decoration: BoxDecoration(
-                    color: Theme.of(context).textTheme.titleLarge!.color,
-                    borderRadius: BorderRadius.circular(10)),
+                    color: Theme.of(context).textTheme.titleLarge!.color, borderRadius: BorderRadius.circular(10)),
                 child: InkWell(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 10),
-                    child: Text("dismiss".tr,
-                        style: TextStyle(color: Theme.of(context).canvasColor)),
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+                    child: Text("dismiss".tr, style: TextStyle(color: Theme.of(context).canvasColor)),
                   ),
                   onTap: () => Navigator.of(context).pop(),
                 ))

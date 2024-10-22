@@ -8,10 +8,11 @@ import '../../widgets/separate_tab_item_widget.dart';
 import 'artist_screen_controller.dart';
 
 class ArtistScreenBN extends StatelessWidget {
-  const ArtistScreenBN(
-      {super.key, required this.artistScreenController, required this.tag});
+  const ArtistScreenBN({super.key, required this.artistScreenController, required this.tag});
+
   final ArtistScreenController artistScreenController;
   final String tag;
+
   @override
   Widget build(BuildContext context) {
     final separatedContent = artistScreenController.sepataredContent;
@@ -34,19 +35,17 @@ class ArtistScreenBN extends StatelessWidget {
             isScrollable: true,
             controller: artistScreenController.tabController!,
             onTap: artistScreenController.onDestinationSelected,
-            tabs:
-                ["about".tr, "songs".tr, "videos".tr, "albums".tr, "singles".tr]
-                    .map((e) => Tab(
-                          text: e,
-                        ))
-                    .toList(),
+            tabs: ["about".tr, "songs".tr, "videos".tr, "albums".tr, "singles".tr]
+                .map((e) => Tab(
+                      text: e,
+                    ))
+                .toList(),
           ),
           title: Obx(
             () => artistScreenController.isArtistContentFetced.isTrue
                 ? Padding(
                     padding: const EdgeInsets.only(top: 25.0),
-                    child: Text(artistScreenController.artist_.name,
-                        style: Theme.of(context).textTheme.titleLarge),
+                    child: Text(artistScreenController.artist_.name, style: Theme.of(context).textTheme.titleLarge),
                   )
                 : const SizedBox.shrink(),
           )),
@@ -62,16 +61,12 @@ class ArtistScreenBN extends StatelessWidget {
               : [
                   AboutArtist(
                     artistScreenController: artistScreenController,
-                    padding: const EdgeInsets.only(
-                        top: 10, left: 15, right: 5, bottom: 200),
+                    padding: const EdgeInsets.only(top: 10, left: 15, right: 5, bottom: 200),
                   ),
                   ...["Songs", "Videos", "Albums", "Singles"].map(
                     (item) {
-                      if (artistScreenController
-                              .isSeparatedArtistContentFetced.isFalse &&
-                          artistScreenController
-                                  .navigationRailCurrentIndex.value !=
-                              0) {
+                      if (artistScreenController.isSeparatedArtistContentFetced.isFalse &&
+                          artistScreenController.navigationRailCurrentIndex.value != 0) {
                         return const Center(child: LoadingIndicator());
                       }
                       return Padding(
@@ -80,9 +75,7 @@ class ArtistScreenBN extends StatelessWidget {
                           artistControllerTag: tag,
                           hideTitle: true,
                           isResultWidget: false,
-                          items: separatedContent.containsKey(item)
-                              ? separatedContent[item]['results']
-                              : [],
+                          items: separatedContent.containsKey(item) ? separatedContent[item]['results'] : [],
                           title: item,
                           scrollController: item == "Songs"
                               ? artistScreenController.songScrollController

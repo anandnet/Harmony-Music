@@ -2,20 +2,15 @@ import '../models/thumbnail.dart';
 
 class PlaylistContent {
   PlaylistContent({required this.title, required this.playlistList});
+
   final String title;
   final List<Playlist> playlistList;
 
-  factory PlaylistContent.fromJson(Map<dynamic, dynamic> json) =>
-      PlaylistContent(
-          title: json['title'],
-          playlistList: (json['playlists'] as List)
-              .map((e) => Playlist.fromJson(e))
-              .toList());
-  Map<String, dynamic> toJson() => {
-        "type": "Playlist Content",
-        "title": title,
-        "playlists": playlistList.map((e) => e.toJson()).toList()
-      };
+  factory PlaylistContent.fromJson(Map<dynamic, dynamic> json) => PlaylistContent(
+      title: json['title'], playlistList: (json['playlists'] as List).map((e) => Playlist.fromJson(e)).toList());
+
+  Map<String, dynamic> toJson() =>
+      {"type": "Playlist Content", "title": title, "playlists": playlistList.map((e) => e.toJson()).toList()};
 }
 
 class Playlist {
@@ -27,6 +22,7 @@ class Playlist {
       this.songCount,
       this.isPipedPlaylist = false,
       this.isCloudPlaylist = true});
+
   final String playlistId;
   String title;
   final bool isPipedPlaylist;

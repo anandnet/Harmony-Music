@@ -15,9 +15,7 @@ enum SortType {
 }
 
 Set<SortType> buildSortTypeSet(
-    [bool dateRequired = false,
-    bool durationRequired = false,
-    bool recentlyPlayedRequired = false]) {
+    [bool dateRequired = false, bool durationRequired = false, bool recentlyPlayedRequired = false]) {
   Set<SortType> requiredSortTypes = {};
   if (dateRequired) {
     requiredSortTypes.add(SortType.Date);
@@ -104,8 +102,7 @@ class SortWidget extends StatelessWidget {
                   icon: const Icon(Icons.sort_by_alpha_rounded),
                   iconSize: 20,
                   splashRadius: 20,
-                  visualDensity:
-                      const VisualDensity(horizontal: -3, vertical: -3),
+                  visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
                   onPressed: () {
                     controller.onSortByName(onSort);
                   },
@@ -119,8 +116,7 @@ class SortWidget extends StatelessWidget {
                         icon: const Icon(Icons.calendar_month_rounded),
                         iconSize: 20,
                         splashRadius: 20,
-                        visualDensity:
-                            const VisualDensity(horizontal: -3, vertical: -3),
+                        visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
                         onPressed: () {
                           controller.onSortByDate(onSort);
                         },
@@ -134,8 +130,7 @@ class SortWidget extends StatelessWidget {
                         icon: const Icon(Icons.timer_rounded),
                         iconSize: 20,
                         splashRadius: 20,
-                        visualDensity:
-                            const VisualDensity(horizontal: -3, vertical: -3),
+                        visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
                         onPressed: () {
                           controller.onSortByDuration(onSort);
                         },
@@ -149,8 +144,7 @@ class SortWidget extends StatelessWidget {
                       : const Icon(Icons.arrow_upward_rounded),
                   iconSize: 20,
                   splashRadius: 20,
-                  visualDensity:
-                      const VisualDensity(horizontal: -3, vertical: -3),
+                  visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
                   onPressed: () {
                     controller.onAscendNDescend(onSort);
                   },
@@ -161,8 +155,7 @@ class SortWidget extends StatelessWidget {
                   icon: const Icon(Icons.search),
                   iconSize: 20,
                   splashRadius: 20,
-                  visualDensity:
-                      const VisualDensity(horizontal: -3, vertical: -3),
+                  visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
                   onPressed: () {
                     onSearchStart!(tag);
                     controller.toggleSearch();
@@ -204,8 +197,7 @@ class SortWidget extends StatelessWidget {
           if (controller.isSearchingEnabled.value)
             Container(
               height: 60,
-              padding:
-                  const EdgeInsets.only(top: 15, bottom: 5, left: 5, right: 20),
+              padding: const EdgeInsets.only(top: 15, bottom: 5, left: 5, right: 20),
               color: Theme.of(context).canvasColor,
               child: ModifiedTextField(
                 controller: controller.textEditingController,
@@ -233,8 +225,7 @@ class SortWidget extends StatelessWidget {
                     )),
               ),
             ),
-          if (controller.isDeletionEnabled.isTrue ||
-              controller.isAddtoPlaylistEnabled.isTrue)
+          if (controller.isDeletionEnabled.isTrue || controller.isAddtoPlaylistEnabled.isTrue)
             Container(
               height: 35,
               color: Theme.of(context).canvasColor,
@@ -253,10 +244,8 @@ class SortWidget extends StatelessWidget {
                               selectAll!(val!);
                               controller.toggleSelectAll(val);
                             },
-                            visualDensity: const VisualDensity(
-                                horizontal: -3, vertical: -3),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
+                            visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           ),
                         ),
                       ),
@@ -267,13 +256,11 @@ class SortWidget extends StatelessWidget {
                   Row(
                     children: [
                       IconButton(
-                        icon: Icon(controller.isAddtoPlaylistEnabled.isTrue
-                            ? Icons.add_circle_outline_rounded
-                            : Icons.delete),
+                        icon: Icon(
+                            controller.isAddtoPlaylistEnabled.isTrue ? Icons.add_circle_outline_rounded : Icons.delete),
                         iconSize: 20,
                         splashRadius: 18,
-                        visualDensity:
-                            const VisualDensity(horizontal: -3, vertical: -3),
+                        visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
                         onPressed: () {
                           performAdditionalOperation!();
                         },
@@ -282,8 +269,7 @@ class SortWidget extends StatelessWidget {
                         icon: const Icon(Icons.close),
                         iconSize: 20,
                         splashRadius: 18,
-                        visualDensity:
-                            const VisualDensity(horizontal: -3, vertical: -3),
+                        visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
                         onPressed: () {
                           controller.setActiveMode(OperationMode.none);
                           cancelAdditionalOperation!();
@@ -309,8 +295,7 @@ class SortWidget extends StatelessWidget {
                     icon: const Icon(Icons.check),
                     iconSize: 20,
                     splashRadius: 18,
-                    visualDensity:
-                        const VisualDensity(horizontal: -3, vertical: -3),
+                    visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
                     onPressed: () {
                       performAdditionalOperation!();
                     },
@@ -319,8 +304,7 @@ class SortWidget extends StatelessWidget {
                     icon: const Icon(Icons.close),
                     iconSize: 20,
                     splashRadius: 18,
-                    visualDensity:
-                        const VisualDensity(horizontal: -3, vertical: -3),
+                    visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
                     onPressed: () {
                       controller.setActiveMode(OperationMode.none);
                       cancelAdditionalOperation!();

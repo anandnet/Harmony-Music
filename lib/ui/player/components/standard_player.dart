@@ -20,14 +20,11 @@ class StandardPlayer extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final PlayerController playerController = Get.find<PlayerController>();
     final ThemeController themeController = Get.find<ThemeController>();
-    double playerArtImageSize =
-        size.width - 60; //((size.height < 750) ? 90 : 60);
+    double playerArtImageSize = size.width - 60; //((size.height < 750) ? 90 : 60);
     //playerArtImageSize = playerArtImageSize > 350 ? 350 : playerArtImageSize;
-    final spaceAvailableForArtImage =
-        size.height - (70 + Get.mediaQuery.padding.bottom + 330);
-    playerArtImageSize = playerArtImageSize > spaceAvailableForArtImage
-        ? spaceAvailableForArtImage
-        : playerArtImageSize;
+    final spaceAvailableForArtImage = size.height - (70 + Get.mediaQuery.padding.bottom + 330);
+    playerArtImageSize =
+        playerArtImageSize > spaceAvailableForArtImage ? spaceAvailableForArtImage : playerArtImageSize;
     return Stack(
       children: [
         Obx(
@@ -38,30 +35,23 @@ class StandardPlayer extends StatelessWidget {
                       final imgFile = File(
                           "${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${playerController.currentSong.value!.id}.png");
                       if (imgFile.existsSync()) {
-                        themeController.setTheme(FileImage(imgFile),
-                            playerController.currentSong.value!.id);
+                        themeController.setTheme(FileImage(imgFile), playerController.currentSong.value!.id);
                         return Image.file(imgFile, cacheHeight: 200);
                       }
                       return const SizedBox.shrink();
                     },
                     memCacheHeight: 200,
                     imageBuilder: (context, imageProvider) {
-                      Get.find<SettingsScreenController>()
-                                  .themeModetype
-                                  .value ==
-                              ThemeType.dynamic
-                          ? Future.delayed(
-                              const Duration(milliseconds: 250),
-                              () => themeController.setTheme(imageProvider,
-                                  playerController.currentSong.value!.id))
+                      Get.find<SettingsScreenController>().themeModetype.value == ThemeType.dynamic
+                          ? Future.delayed(const Duration(milliseconds: 250),
+                              () => themeController.setTheme(imageProvider, playerController.currentSong.value!.id))
                           : null;
                       return Image(
                         image: imageProvider,
                         fit: BoxFit.fitHeight,
                       );
                     },
-                    imageUrl:
-                        playerController.currentSong.value!.artUri.toString(),
+                    imageUrl: playerController.currentSong.value!.artUri.toString(),
                     cacheKey: "${playerController.currentSong.value!.id}_song",
                   )
                 : Container(),
@@ -130,10 +120,7 @@ class StandardPlayer extends StatelessWidget {
                     SizedBox(
                         width: size.width * .48,
                         child: Padding(
-                          padding: EdgeInsets.only(
-                              left: 10.0,
-                              right: 10,
-                              bottom: Get.mediaQuery.padding.bottom),
+                          padding: EdgeInsets.only(left: 10.0, right: 10, bottom: Get.mediaQuery.padding.bottom),
                           child: const PlayerControlWidget(),
                         ))
                     //SizedBox()
@@ -152,16 +139,13 @@ class StandardPlayer extends StatelessWidget {
                     ),
                     const LyricsSwitch(),
                     ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 500),
-                        child: AlbumArtNLyrics(
-                            playerArtImageSize: playerArtImageSize)),
+                        constraints: const BoxConstraints(maxWidth: 500),
+                        child: AlbumArtNLyrics(playerArtImageSize: playerArtImageSize)),
                     Expanded(child: Container()),
                     Padding(
-                      padding: EdgeInsets.only(
-                          bottom: 80 + Get.mediaQuery.padding.bottom),
+                      padding: EdgeInsets.only(bottom: 80 + Get.mediaQuery.padding.bottom),
                       child: Container(
-                          constraints: const BoxConstraints(maxWidth: 500),
-                          child: const PlayerControlWidget()),
+                          constraints: const BoxConstraints(maxWidth: 500), child: const PlayerControlWidget()),
                     )
                   ],
                 ),

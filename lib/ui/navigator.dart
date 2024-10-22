@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/models/artist.dart';
 import 'package:harmonymusic/models/playlist.dart';
-
 import 'package:harmonymusic/ui/screens/Artists/artist_screen.dart';
 import 'package:harmonymusic/ui/screens/Home/home_screen.dart';
 import 'package:harmonymusic/ui/screens/PlaylistNAlbum/playlistnalbum_screen.dart';

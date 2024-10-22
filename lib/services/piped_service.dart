@@ -13,8 +13,7 @@ class PipedServices extends GetxService {
 
   PipedServices() {
     final appPrefsBox = Hive.box('AppPrefs');
-    final piped = appPrefsBox.get('piped') ??
-        {"isLoggedIn": false, "token": "", "instApiUrl": ""};
+    final piped = appPrefsBox.get('piped') ?? {"isLoggedIn": false, "token": "", "instApiUrl": ""};
     _isLoggedIn = piped["isLoggedIn"];
     if (isLoggedIn) {
       _headers["Authorization"] = piped['token'];
@@ -27,21 +26,15 @@ class PipedServices extends GetxService {
   Future<Res> login(String insApiUrl, String userName, String password) async {
     final url = "$insApiUrl/login";
     try {
-      final response = await _dio
-          .post(url, data: {"username": userName, "password": password});
+      final response = await _dio.post(url, data: {"username": userName, "password": password});
       final data = response.data;
       final appPrefsBox = Hive.box('AppPrefs');
-      appPrefsBox.put("piped", {
-        "isLoggedIn": true,
-        "token": data['token'],
-        "instApiUrl": insApiUrl
-      });
+      appPrefsBox.put("piped", {"isLoggedIn": true, "token": data['token'], "instApiUrl": insApiUrl});
       _headers["Authorization"] = data['token'];
       _isLoggedIn = true;
       _insApiUrl = insApiUrl;
 
-      if (response.data.runtimeType.toString() == "_Map<String, dynamic>" &&
-          response.data.containsKey("error")) {
+      if (response.data.runtimeType.toString() == "_Map<String, dynamic>" && response.data.containsKey("error")) {
         return Res(0, errorMessage: response.data['error']);
       }
 
@@ -55,21 +48,15 @@ class PipedServices extends GetxService {
 
   void logout() {
     final appPrefsBox = Hive.box('AppPrefs');
-    appPrefsBox
-        .put("piped", {"isLoggedIn": false, "token": "", "instApiUrl": ""});
+    appPrefsBox.put("piped", {"isLoggedIn": false, "token": "", "instApiUrl": ""});
     _headers["Authorization"] = "";
     _isLoggedIn = false;
     _insApiUrl = "";
   }
 
   Future<Res> _sendRequest(String endpoint,
-      {dynamic data,
-      String reqType = "post",
-      bool isInstanceListReq = false,
-      bool isSongListReq = false}) async {
-    final url = isInstanceListReq
-        ? "https://piped-instances.kavin.rocks/"
-        : "$_insApiUrl$endpoint";
+      {dynamic data, String reqType = "post", bool isInstanceListReq = false, bool isSongListReq = false}) async {
+    final url = isInstanceListReq ? "https://piped-instances.kavin.rocks/" : "$_insApiUrl$endpoint";
     try {
       final response = reqType == "post"
           ? await _dio.post(
@@ -92,13 +79,9 @@ class PipedServices extends GetxService {
 
       if (isInstanceListReq) {
         return Res(1,
-            response: response.data
-                .map((data) =>
-                    PipedInstance(name: data['name'], apiUrl: data['api_url']))
-                .toList());
+            response: response.data.map((data) => PipedInstance(name: data['name'], apiUrl: data['api_url'])).toList());
       } else {
-        if (response.data.runtimeType.toString() == "_Map<String, dynamic>" &&
-            response.data.containsKey("error")) {
+        if (response.data.runtimeType.toString() == "_Map<String, dynamic>" && response.data.containsKey("error")) {
           return Res(0, errorMessage: response.data['error']);
         }
         return Res(1, response: response.data);
@@ -114,8 +97,7 @@ class PipedServices extends GetxService {
   }
 
   Future<Res> createPlaylist(String playlistName) async {
-    return await _sendRequest("/user/playlists/create",
-        data: {"name": playlistName});
+    return await _sendRequest("/user/playlists/create", data: {"name": playlistName});
   }
 
   Future<Res> getAllPlaylists() async {
@@ -123,28 +105,23 @@ class PipedServices extends GetxService {
   }
 
   Future<Res> renamePlaylist(String plalistId, String newName) async {
-    return await _sendRequest("/user/playlists/rename",
-        data: {"playlistId": plalistId, "newName": newName});
+    return await _sendRequest("/user/playlists/rename", data: {"playlistId": plalistId, "newName": newName});
   }
 
   Future<Res> deletePlaylist(String plalistId) async {
-    return await _sendRequest("/user/playlists/delete",
-        data: {"playlistId": plalistId});
+    return await _sendRequest("/user/playlists/delete", data: {"playlistId": plalistId});
   }
 
   Future<Res> addToPlaylist(String plalistId, List<String> videosId) async {
-    return await _sendRequest("/user/playlists/add",
-        data: {"playlistId": plalistId, "videoIds": videosId});
+    return await _sendRequest("/user/playlists/add", data: {"playlistId": plalistId, "videoIds": videosId});
   }
 
   Future<Res> removeFromPlaylist(String plalistId, int index) async {
-    return await _sendRequest("/user/playlists/remove",
-        data: {"playlistId": plalistId, "index": index});
+    return await _sendRequest("/user/playlists/remove", data: {"playlistId": plalistId, "index": index});
   }
 
   Future<List<MediaItem>> getPlaylistSongs(String playlistid) async {
-    final res = await _sendRequest("/playlists/$playlistid",
-        reqType: "get", isSongListReq: true);
+    final res = await _sendRequest("/playlists/$playlistid", reqType: "get", isSongListReq: true);
     if (res.code == 1) {
       return (res.response['relatedStreams'])
           .map((item) {
@@ -173,11 +150,13 @@ class Res {
   final int code;
   final String? errorMessage;
   final dynamic response;
+
   Res(this.code, {this.errorMessage, this.response});
 }
 
 class PipedInstance {
   final String name;
   final String apiUrl;
+
   PipedInstance({required this.name, required this.apiUrl});
 }

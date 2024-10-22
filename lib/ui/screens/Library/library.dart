@@ -3,24 +3,23 @@ import 'package:get/get.dart';
 
 import '/ui/widgets/modification_list.dart';
 import '../../../models/playlist.dart';
-import '../../widgets/piped_sync_widget.dart';
-import 'library_controller.dart';
 import '../../widgets/content_list_widget_item.dart';
 import '../../widgets/list_widget.dart';
+import '../../widgets/piped_sync_widget.dart';
 import '../../widgets/sort_widget.dart';
 import '../Settings/settings_screen_controller.dart';
+import 'library_controller.dart';
 
 class SongsLibraryWidget extends StatelessWidget {
   const SongsLibraryWidget({super.key, this.isBottomNavActive = false});
+
   final bool isBottomNavActive;
 
   @override
   Widget build(BuildContext context) {
     final topPadding = context.isLandscape ? 50.0 : 90.0;
     return Padding(
-      padding: isBottomNavActive
-          ? const EdgeInsets.only(left: 15)
-          : EdgeInsets.only(left: 5.0, top: topPadding),
+      padding: isBottomNavActive ? const EdgeInsets.only(left: 15) : EdgeInsets.only(left: 5.0, top: topPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -51,29 +50,22 @@ class SongsLibraryWidget extends StatelessWidget {
               onSearch: libSongsController.onSearch,
               onSearchClose: libSongsController.onSearchClose,
               onSearchStart: libSongsController.onSearchStart,
-              startAdditionalOperation:
-                  libSongsController.startAdditionalOperation,
+              startAdditionalOperation: libSongsController.startAdditionalOperation,
               selectAll: libSongsController.selectAll,
-              performAdditionalOperation:
-                  libSongsController.performAdditionalOperation,
-              cancelAdditionalOperation:
-                  libSongsController.cancelAdditionalOperation,
+              performAdditionalOperation: libSongsController.performAdditionalOperation,
+              cancelAdditionalOperation: libSongsController.cancelAdditionalOperation,
             );
           }),
           GetX<LibrarySongsController>(builder: (controller) {
             return controller.librarySongsList.isNotEmpty
-                ? (controller.additionalOperationMode.value ==
-                        OperationMode.none
+                ? (controller.additionalOperationMode.value == OperationMode.none
                     ? ListWidget(
                         controller.librarySongsList,
                         "library Songs",
                         true,
                         isPlaylist: true,
                         playlist: Playlist(
-                            title: "Library Songs",
-                            playlistId: "SongsCache",
-                            thumbnailUrl: "",
-                            isCloudPlaylist: false),
+                            title: "Library Songs", playlistId: "SongsCache", thumbnailUrl: "", isCloudPlaylist: false),
                       )
                     : ModificationList(
                         mode: controller.additionalOperationMode.value,
@@ -94,8 +86,8 @@ class SongsLibraryWidget extends StatelessWidget {
 }
 
 class PlaylistNAlbumLibraryWidget extends StatelessWidget {
-  const PlaylistNAlbumLibraryWidget(
-      {super.key, this.isAlbumContent = true, this.isBottomNavActive = false});
+  const PlaylistNAlbumLibraryWidget({super.key, this.isAlbumContent = true, this.isBottomNavActive = false});
+
   final bool isAlbumContent;
   final bool isBottomNavActive;
 
@@ -111,9 +103,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
     final topPadding = context.isLandscape ? 50.0 : 90.0;
 
     return Padding(
-      padding: isBottomNavActive
-          ? const EdgeInsets.only(left: 15)
-          : EdgeInsets.only(top: topPadding),
+      padding: isBottomNavActive ? const EdgeInsets.only(left: 15) : EdgeInsets.only(top: topPadding),
       child: Column(
         children: [
           Padding(
@@ -148,8 +138,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                     tag: "LibAlbumSort",
                     isAdditionalOperationRequired: false,
                     isSearchFeatureRequired: true,
-                    itemCountTitle:
-                        "${libralbumCntrller.libraryAlbums.length} ${"items".tr}",
+                    itemCountTitle: "${libralbumCntrller.libraryAlbums.length} ${"items".tr}",
                     requiredSortTypes: buildSortTypeSet(true),
                     onSort: (type, ascending) {
                       libralbumCntrller.onSort(type, ascending);
@@ -162,8 +151,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                     tag: "LibPlaylistSort",
                     isAdditionalOperationRequired: false,
                     isSearchFeatureRequired: true,
-                    itemCountTitle:
-                        "${librplstCntrller.libraryPlaylists.length} ${"items".tr}",
+                    itemCountTitle: "${librplstCntrller.libraryPlaylists.length} ${"items".tr}",
                     requiredSortTypes: buildSortTypeSet(),
                     onSort: (type, ascending) {
                       librplstCntrller.onSort(type, ascending);
@@ -179,27 +167,22 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                       ? libralbumCntrller.libraryAlbums.isNotEmpty
                       : librplstCntrller.libraryPlaylists.isNotEmpty)
                   ? LayoutBuilder(builder: (context, constraints) {
-                    //Fix for grid in mobile screen 
-                      final availableWidth = constraints.maxWidth > 300 &&
-                              constraints.maxWidth < 394
-                          ? 310.0
-                          : constraints.maxWidth;
+                      //Fix for grid in mobile screen
+                      final availableWidth =
+                          constraints.maxWidth > 300 && constraints.maxWidth < 394 ? 310.0 : constraints.maxWidth;
                       int columns = (availableWidth / itemWidth).floor();
                       return SizedBox(
                         width: availableWidth,
                         child: GridView.builder(
                             physics: const BouncingScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: columns,
                               childAspectRatio: (itemWidth / itemHeight),
                             ),
-                            controller:
-                                ScrollController(keepScrollOffset: false),
+                            controller: ScrollController(keepScrollOffset: false),
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            padding:
-                                const EdgeInsets.only(bottom: 200, top: 10),
+                            padding: const EdgeInsets.only(bottom: 200, top: 10),
                             itemCount: isAlbumContent
                                 ? libralbumCntrller.libraryAlbums.length
                                 : librplstCntrller.libraryPlaylists.length,
@@ -207,8 +190,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                                   child: ContentListItem(
                                     content: isAlbumContent
                                         ? libralbumCntrller.libraryAlbums[index]
-                                        : librplstCntrller
-                                            .libraryPlaylists[index],
+                                        : librplstCntrller.libraryPlaylists[index],
                                     isLibraryItem: true,
                                   ),
                                 )),
@@ -229,6 +211,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
 
 class LibraryArtistWidget extends StatelessWidget {
   const LibraryArtistWidget({super.key, this.isBottomNavActive = false});
+
   final bool isBottomNavActive;
 
   @override
@@ -236,9 +219,7 @@ class LibraryArtistWidget extends StatelessWidget {
     final cntrller = Get.find<LibraryArtistsController>();
     final topPadding = context.isLandscape ? 50.0 : 90.0;
     return Padding(
-      padding: isBottomNavActive
-          ? const EdgeInsets.only(left: 15)
-          : EdgeInsets.only(left: 5, top: topPadding),
+      padding: isBottomNavActive ? const EdgeInsets.only(left: 15) : EdgeInsets.only(left: 5, top: topPadding),
       child: Column(
         children: [
           isBottomNavActive

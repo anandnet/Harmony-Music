@@ -18,9 +18,7 @@ class DesktopSystemTray extends GetxService with TrayListener {
   }
 
   Future<void> initSystemTray() async {
-    String path = GetPlatform.isWindows
-        ? 'assets/icons/icon.ico'
-        : 'assets/icons/icon.png';
+    String path = GetPlatform.isWindows ? 'assets/icons/icon.ico' : 'assets/icons/icon.png';
 
     await windowManager.ensureInitialized();
     final playerController = Get.find<PlayerController>();
@@ -31,9 +29,8 @@ class DesktopSystemTray extends GetxService with TrayListener {
     final Menu menu = Menu(items: [
       MenuItem(
         label: 'Show/Hide',
-        onClick: (menuItem) async => await windowManager.isVisible()
-            ? await windowManager.hide()
-            : await windowManager.show(),
+        onClick: (menuItem) async =>
+            await windowManager.isVisible() ? await windowManager.hide() : await windowManager.show(),
       ),
       MenuItem.separator(),
       MenuItem(
@@ -113,8 +110,7 @@ class CloseWindowListener extends WindowListener {
   Future<void> onWindowClose() async {
     final settingsScrnController = Get.find<SettingsScreenController>();
     if (settingsScrnController.backgroundPlayEnabled.isTrue &&
-        Get.find<PlayerController>().buttonState.value ==
-            PlayButtonState.playing) {
+        Get.find<PlayerController>().buttonState.value == PlayButtonState.playing) {
       await windowManager.hide();
     } else {
       await Get.find<AudioHandler>().customAction("saveSession");

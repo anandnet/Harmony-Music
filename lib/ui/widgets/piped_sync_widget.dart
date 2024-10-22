@@ -7,6 +7,7 @@ import 'snackbar.dart';
 
 class PipedSyncWidget extends StatelessWidget {
   const PipedSyncWidget({super.key, required this.padding});
+
   final EdgeInsets padding;
 
   @override
@@ -22,7 +23,8 @@ class PipedSyncWidget extends StatelessWidget {
             visualDensity: const VisualDensity(vertical: -4),
             icon: const Icon(
               Icons.sync,
-            ), // <-- Icon
+            ),
+            // <-- Icon
             onPressed: () async {
               try {
                 //printINFO(librplstCntrller.controller.status);
@@ -31,13 +33,11 @@ class PipedSyncWidget extends StatelessWidget {
                 await librplstCntrller.syncPipedPlaylist();
                 librplstCntrller.controller.stop();
                 librplstCntrller.controller.reset();
-                ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-                    Get.context!, "pipedplstSyncAlert".tr,
-                    size: SanckBarSize.MEDIUM));
+                ScaffoldMessenger.of(Get.context!)
+                    .showSnackBar(snackbar(Get.context!, "pipedplstSyncAlert".tr, size: SanckBarSize.MEDIUM));
               } catch (e) {
-                ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-                    Get.context!, "errorOccuredAlert".tr,
-                    size: SanckBarSize.BIG));
+                ScaffoldMessenger.of(Get.context!)
+                    .showSnackBar(snackbar(Get.context!, "errorOccuredAlert".tr, size: SanckBarSize.BIG));
                 printERROR(e);
               }
             }),

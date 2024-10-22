@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'components/search_item.dart';
+import '/ui/navigator.dart';
 import '/ui/screens/Settings/settings_screen_controller.dart';
 import '../../widgets/modified_text_field.dart';
-import '/ui/navigator.dart';
+import 'components/search_item.dart';
 import 'search_screen_controller.dart';
 
 class SearchScreen extends StatelessWidget {

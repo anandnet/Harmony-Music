@@ -46,12 +46,10 @@ void sortSongsNVideos(
       };
       break;
     case SortType.Duration:
-      compareFunction = (a, b) =>
-          (a.duration ?? Duration.zero).compareTo(b.duration ?? Duration.zero);
+      compareFunction = (a, b) => (a.duration ?? Duration.zero).compareTo(b.duration ?? Duration.zero);
     case SortType.Name:
     default:
-      compareFunction =
-          (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase());
+      compareFunction = (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase());
       break;
   }
 
@@ -73,8 +71,7 @@ void sortAlbumNSingles(
 
   switch (sortType) {
     case SortType.Date:
-      compareFunction =
-          (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase());
+      compareFunction = (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase());
       break;
     case SortType.Name:
     default:
@@ -146,8 +143,7 @@ void sortArtist(
   switch (sortType) {
     case SortType.Name:
     default:
-      compareFunction =
-          (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      compareFunction = (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase());
       break;
   }
 
@@ -163,20 +159,16 @@ void sortArtist(
 /// Return true if new version available
 Future<bool> newVersionCheck(String currentVersion) async {
   try {
-    final tags = (await Dio()
-            .get("https://api.github.com/repos/anandnet/Harmony-Music/tags"))
-        .data;
+    final tags = (await Dio().get("https://api.github.com/repos/anandnet/Harmony-Music/tags")).data;
     final availableVersion = tags[0]['name'] as String;
     List currentVersion_ = currentVersion.substring(1).split(".");
     List availableVersion_ = availableVersion.substring(1).split(".");
     if (int.parse(availableVersion_[0]) > int.parse(currentVersion_[0])) {
       return true;
-    } else if (int.parse(availableVersion_[1]) >
-            int.parse(currentVersion_[1]) &&
+    } else if (int.parse(availableVersion_[1]) > int.parse(currentVersion_[1]) &&
         int.parse(availableVersion_[0]) == int.parse(currentVersion_[0])) {
       return true;
-    } else if (int.parse(availableVersion_[2]) >
-            int.parse(currentVersion_[2]) &&
+    } else if (int.parse(availableVersion_[2]) > int.parse(currentVersion_[2]) &&
         int.parse(availableVersion_[0]) == int.parse(currentVersion_[0]) &&
         int.parse(availableVersion_[1]) == int.parse(currentVersion_[1])) {
       return true;
@@ -189,11 +181,6 @@ Future<bool> newVersionCheck(String currentVersion) async {
 
 String getTimeString(Duration time) {
   final minutes = time.inMinutes.remainder(Duration.minutesPerHour).toString();
-  final seconds = time.inSeconds
-      .remainder(Duration.secondsPerMinute)
-      .toString()
-      .padLeft(2, '0');
-  return time.inHours > 0
-      ? "${time.inHours}:${minutes.padLeft(2, "0")}:$seconds"
-      : "$minutes:$seconds";
+  final seconds = time.inSeconds.remainder(Duration.secondsPerMinute).toString().padLeft(2, '0');
+  return time.inHours > 0 ? "${time.inHours}:${minutes.padLeft(2, "0")}:$seconds" : "$minutes:$seconds";
 }

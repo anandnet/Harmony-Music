@@ -20,7 +20,8 @@ class SideNavBar extends StatelessWidget {
                 child: Obx(
                   () => NavigationRail(
                     useIndicator: !isMobileOrTabScreen,
-                    selectedIndex: homeScreenController.tabIndex.value, //_selectedIndex,
+                    selectedIndex: homeScreenController.tabIndex.value,
+                    //_selectedIndex,
                     onDestinationSelected: homeScreenController.onSideBarTabSelected,
                     minWidth: 60,
                     leading: SizedBox(height: size.height < 750 ? 30 : 60),

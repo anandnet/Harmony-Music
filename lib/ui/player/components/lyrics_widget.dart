@@ -7,6 +7,7 @@ import '../player_controller.dart';
 
 class LyricsWidget extends StatelessWidget {
   final EdgeInsetsGeometry padding;
+
   const LyricsWidget({super.key, required this.padding});
 
   @override
@@ -32,10 +33,7 @@ class LyricsWidget extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: playerController.isDesktopLyricsDialogOpen
                               ? Theme.of(context).textTheme.titleMedium!
-                              : Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(color: Colors.white),
+                              : Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
                         ),
                       ),
                     ),
@@ -45,21 +43,16 @@ class LyricsWidget extends StatelessWidget {
                   child: LyricsReader(
                     padding: const EdgeInsets.only(left: 5, right: 5),
                     lyricUi: playerController.lyricUi,
-                    position: playerController
-                        .progressBarStatus.value.current.inMilliseconds,
+                    position: playerController.progressBarStatus.value.current.inMilliseconds,
                     model: LyricsModelBuilder.create()
-                        .bindLyricToMain(
-                            playerController.lyrics['synced'].toString())
+                        .bindLyricToMain(playerController.lyrics['synced'].toString())
                         .getModel(),
                     emptyBuilder: () => Center(
                       child: Text(
                         "syncedLyricsNotAvailable".tr,
                         style: playerController.isDesktopLyricsDialogOpen
-                              ? Theme.of(context).textTheme.titleMedium!
-                              : Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(color: Colors.white),
+                            ? Theme.of(context).textTheme.titleMedium!
+                            : Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
                       ),
                     ),
                   ),

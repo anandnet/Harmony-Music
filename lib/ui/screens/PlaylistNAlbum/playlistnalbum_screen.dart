@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '/ui/navigator.dart';
 import '/ui/screens/PlaylistNAlbum/components/playlist_content_section.dart';
 import '/ui/screens/PlaylistNAlbum/components/playlist_header_section.dart';
 import '../../widgets/loader.dart';
-import '/ui/navigator.dart';
 import 'playlistnalbum_screen_controller.dart';
 
 class PlaylistNAlbumScreen extends StatelessWidget {
@@ -38,9 +38,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                     color: Theme.of(context).textTheme.titleMedium!.color,
                   ),
                   onPressed: () {
-                    Get.nestedKey(ScreenNavigationSetup.id)!
-                        .currentState!
-                        .pop();
+                    Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
                   },
                 ),
               ),
@@ -54,40 +52,36 @@ class PlaylistNAlbumScreen extends StatelessWidget {
               ));
             } else {
               final content = playListNAlbumScreenController.contentRenderer;
-              final isOfflinePlaylist =
-                  (!playListNAlbumScreenController.isAlbum &&
-                      !content.isCloudPlaylist);
+              final isOfflinePlaylist = (!playListNAlbumScreenController.isAlbum && !content.isCloudPlaylist);
               final isWiderScreen = MediaQuery.of(context).size.width > 750;
               return Expanded(
                 child: Container(
                   color: Theme.of(context).canvasColor,
                   padding: EdgeInsets.only(top: topPadding, left: 10),
                   child: isOfflinePlaylist
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                              OfflinePlaylistHeader(content: content, tag: tag),
-                              PlaylistContentSection(content: content, tag: tag)
-                            ])
+                      ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          OfflinePlaylistHeader(content: content, tag: tag),
+                          PlaylistContentSection(content: content, tag: tag)
+                        ])
                       : isWiderScreen
                           ? Row(
                               children: [
-                                OnlinePlaylistHeader(
-                                    content: content, tag: tag),
+                                OnlinePlaylistHeader(content: content, tag: tag),
                                 const SizedBox(
                                   width: 30,
                                 ),
-                                PlaylistContentSection(
-                                    content: content, tag: tag)
+                                PlaylistContentSection(content: content, tag: tag)
                               ],
                             )
                           : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 OnlinePlaylistHeader(
-                                    content: content, tag: tag, enableSeparator: !isWiderScreen,),
-                                PlaylistContentSection(
-                                    content: content, tag: tag)
+                                  content: content,
+                                  tag: tag,
+                                  enableSeparator: !isWiderScreen,
+                                ),
+                                PlaylistContentSection(content: content, tag: tag)
                               ],
                             ),
                 ),

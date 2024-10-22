@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../Search/components/desktop_search_bar.dart';
+import '/ui/player/player_controller.dart';
 import '/ui/screens/Search/search_screen_controller.dart';
 import '/ui/widgets/animated_screen_transition.dart';
-import '../Library/library_combined.dart';
-import '../../widgets/side_nav_bar.dart';
-import '../Library/library.dart';
-import '../Search/search_screen.dart';
-import '../Settings/settings_screen_controller.dart';
-import '/ui/player/player_controller.dart';
 import '/ui/widgets/create_playlist_dialog.dart';
 import '../../navigator.dart';
 import '../../widgets/content_list_widget.dart';
 import '../../widgets/quickpickswidget.dart';
 import '../../widgets/shimmer_widgets/home_shimmer.dart';
-import 'home_screen_controller.dart';
+import '../../widgets/side_nav_bar.dart';
+import '../Library/library.dart';
+import '../Library/library_combined.dart';
+import '../Search/components/desktop_search_bar.dart';
+import '../Search/search_screen.dart';
 import '../Settings/settings_screen.dart';
+import '../Settings/settings_screen_controller.dart';
+import 'home_screen_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final PlayerController playerController = Get.find<PlayerController>();

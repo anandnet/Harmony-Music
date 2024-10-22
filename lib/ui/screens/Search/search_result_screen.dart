@@ -16,8 +16,7 @@ class SearchResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final searchResScrController = Get.put(SearchResultScreenController());
-    return GetPlatform.isDesktop ||
-            Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue
+    return GetPlatform.isDesktop || Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue
         ? const SearchResultScreenBN()
         : Scaffold(
             body: Row(
@@ -29,21 +28,15 @@ class SearchResultScreen extends StatelessWidget {
                     child: IntrinsicHeight(
                       child: Obx(
                         () => NavigationRail(
-                          onDestinationSelected:
-                              searchResScrController.onDestinationSelected,
+                          onDestinationSelected: searchResScrController.onDestinationSelected,
                           minWidth: 60,
-                          destinations: (searchResScrController
-                                      .isResultContentFetced.value &&
+                          destinations: (searchResScrController.isResultContentFetced.value &&
                                   searchResScrController.railItems.isNotEmpty)
                               ? [
                                   railDestination("results".tr),
-                                  ...(searchResScrController.railItems.map(
-                                      (element) => railDestination(element))),
+                                  ...(searchResScrController.railItems.map((element) => railDestination(element))),
                                 ]
-                              : [
-                                  railDestination("results".tr),
-                                  railDestination("")
-                                ],
+                              : [railDestination("results".tr), railDestination("")],
                           leading: Column(
                             children: [
                               SizedBox(
@@ -52,15 +45,10 @@ class SearchResultScreen extends StatelessWidget {
                               IconButton(
                                 icon: Icon(
                                   Icons.arrow_back_ios_new_rounded,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .color,
+                                  color: Theme.of(context).textTheme.titleMedium!.color,
                                 ),
                                 onPressed: () {
-                                  Get.nestedKey(ScreenNavigationSetup.id)!
-                                      .currentState!
-                                      .pop();
+                                  Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
                                 },
                               ),
                               const SizedBox(
@@ -69,8 +57,7 @@ class SearchResultScreen extends StatelessWidget {
                             ],
                           ),
                           labelType: NavigationRailLabelType.all,
-                          selectedIndex: searchResScrController
-                              .navigationRailCurrentIndex.value,
+                          selectedIndex: searchResScrController.navigationRailCurrentIndex.value,
                         ),
                       ),
                     ),
@@ -79,15 +66,11 @@ class SearchResultScreen extends StatelessWidget {
                 Expanded(
                   child: GetX<SearchResultScreenController>(
                     builder: (controller) => AnimatedScreenTransition(
-                      enabled: Get.find<SettingsScreenController>()
-                          .isTransitionAnimationDisabled
-                          .isFalse,
+                      enabled: Get.find<SettingsScreenController>().isTransitionAnimationDisabled.isFalse,
                       resverse: controller.isTabTransitionReversed,
                       child: Center(
-                        key: ValueKey<int>(
-                            controller.navigationRailCurrentIndex.toInt() * 8),
-                        child: Body(
-                            searchResScrController: searchResScrController),
+                        key: ValueKey<int>(controller.navigationRailCurrentIndex.toInt() * 8),
+                        child: Body(searchResScrController: searchResScrController),
                       ),
                     ),
                   ),
@@ -100,9 +83,7 @@ class SearchResultScreen extends StatelessWidget {
   NavigationRailDestination railDestination(String label) {
     return NavigationRailDestination(
       icon: const SizedBox.shrink(),
-      label: RotatedBox(
-          quarterTurns: -1,
-          child: Text(label.toLowerCase().removeAllWhitespace.tr)),
+      label: RotatedBox(quarterTurns: -1, child: Text(label.toLowerCase().removeAllWhitespace.tr)),
     );
   }
 }
@@ -119,8 +100,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     if (searchResScrController.navigationRailCurrentIndex.value == 0) {
       return Obx(() {
-        if (searchResScrController.isResultContentFetced.isTrue &&
-            searchResScrController.railItems.isEmpty) {
+        if (searchResScrController.isResultContentFetced.isTrue && searchResScrController.railItems.isEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -144,8 +124,7 @@ class Body extends StatelessWidget {
     } else {
       if (searchResScrController.isResultContentFetced.isTrue) {
         final topPadding = context.isLandscape ? 50.0 : 80.0;
-        final name = searchResScrController.railItems[
-            searchResScrController.navigationRailCurrentIndex.value - 1];
+        final name = searchResScrController.railItems[searchResScrController.navigationRailCurrentIndex.value - 1];
         return SeparateTabItemWidget(
           items: const [],
           title: name,

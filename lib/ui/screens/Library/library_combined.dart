@@ -21,8 +21,7 @@ class CombinedLibrary extends StatelessWidget {
         elevation: 0,
         actions: [
           Obx(() => (settingscrnController.isLinkedWithPiped.isTrue)
-              ? const PipedSyncWidget(
-                  padding: EdgeInsets.only(right: 10, top: 50))
+              ? const PipedSyncWidget(padding: EdgeInsets.only(right: 10, top: 50))
               : const SizedBox.shrink()),
           Padding(
             padding: const EdgeInsets.only(top: 50.0, right: 25),
@@ -33,10 +32,7 @@ class CombinedLibrary extends StatelessWidget {
                 child: FloatingActionButton.extended(
                     elevation: 0,
                     onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) =>
-                              const CreateNRenamePlaylistPopup());
+                      showDialog(context: context, builder: (context) => const CreateNRenamePlaylistPopup());
                     },
                     label: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,8 +59,7 @@ class CombinedLibrary extends StatelessWidget {
         ),
         title: Padding(
           padding: const EdgeInsets.only(top: 60.0, left: 5),
-          child:
-              Text('library'.tr, style: Theme.of(context).textTheme.titleLarge),
+          child: Text('library'.tr, style: Theme.of(context).textTheme.titleLarge),
         ),
       ),
       body: TabBarView(
@@ -73,8 +68,7 @@ class CombinedLibrary extends StatelessWidget {
           SongsLibraryWidget(
             isBottomNavActive: true,
           ),
-          PlaylistNAlbumLibraryWidget(
-              isAlbumContent: false, isBottomNavActive: true),
+          PlaylistNAlbumLibraryWidget(isAlbumContent: false, isBottomNavActive: true),
           PlaylistNAlbumLibraryWidget(isBottomNavActive: true),
           LibraryArtistWidget(isBottomNavActive: true),
         ],
@@ -83,8 +77,7 @@ class CombinedLibrary extends StatelessWidget {
   }
 }
 
-class CombinedLibraryController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class CombinedLibraryController extends GetxController with GetSingleTickerProviderStateMixin {
   late TabController tabController;
 
   @override

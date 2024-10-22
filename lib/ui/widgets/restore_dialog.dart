@@ -21,8 +21,7 @@ class RestoreDialog extends StatelessWidget {
     return CommonDialog(
       child: Container(
         height: 300,
-        padding:
-            const EdgeInsets.only(top: 20, bottom: 30, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 20, bottom: 30, left: 20, right: 20),
         child: Stack(
           children: [
             Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -36,31 +35,28 @@ class RestoreDialog extends StatelessWidget {
               SizedBox(
                 height: 150,
                 child: Center(
-                  child: Obx(() => restoreDialogController.restoreProgress
-                              .toInt() ==
-                          restoreDialogController.filesToRestore.toInt()
-                      ? Text(
-                          "restoreMsg".tr,
-                          textAlign: TextAlign.center,
-                        )
-                      : restoreDialogController.processingFiles.isTrue
-                          ? Text("processFiles".tr)
-                          : restoreDialogController.restoreRunning.isTrue
-                              ? Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                        "${restoreDialogController.restoreProgress.toInt()}/${restoreDialogController.filesToRestore.toInt()}",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text("restoring".tr)
-                                  ],
-                                )
-                              : Text("letsStrart".tr)),
+                  child: Obx(() =>
+                      restoreDialogController.restoreProgress.toInt() == restoreDialogController.filesToRestore.toInt()
+                          ? Text(
+                              "restoreMsg".tr,
+                              textAlign: TextAlign.center,
+                            )
+                          : restoreDialogController.processingFiles.isTrue
+                              ? Text("processFiles".tr)
+                              : restoreDialogController.restoreRunning.isTrue
+                                  ? Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                            "${restoreDialogController.restoreProgress.toInt()}/${restoreDialogController.filesToRestore.toInt()}",
+                                            style: Theme.of(context).textTheme.titleLarge),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text("restoring".tr)
+                                      ],
+                                    )
+                                  : Text("letsStrart".tr)),
                 ),
               ),
               SizedBox(
@@ -68,40 +64,32 @@ class RestoreDialog extends StatelessWidget {
                 child: Align(
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Theme.of(context).textTheme.titleLarge!.color,
-                        borderRadius: BorderRadius.circular(10)),
+                        color: Theme.of(context).textTheme.titleLarge!.color, borderRadius: BorderRadius.circular(10)),
                     child: InkWell(
                       onTap: () {
                         if (restoreDialogController.restoreProgress.toInt() ==
                             restoreDialogController.filesToRestore.toInt()) {
-                          GetPlatform.isAndroid
-                              ? Restart.restartApp()
-                              : exit(0);
+                          GetPlatform.isAndroid ? Restart.restartApp() : exit(0);
                         } else {
                           restoreDialogController.backup();
                         }
                       },
                       child: Obx(
                         () => Visibility(
-                          visible: restoreDialogController
-                                  .processingFiles.isFalse &&
+                          visible: restoreDialogController.processingFiles.isFalse &&
                               restoreDialogController.restoreRunning.isFalse,
                           replacement: const SizedBox(
                             height: 40,
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15.0, vertical: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
                             child: Obx(
                               () => Text(
-                                restoreDialogController.restoreProgress
-                                            .toInt() ==
-                                        restoreDialogController.filesToRestore
-                                            .toInt()
+                                restoreDialogController.restoreProgress.toInt() ==
+                                        restoreDialogController.filesToRestore.toInt()
                                     ? "restartApp".tr
                                     : "restore".tr,
-                                style: TextStyle(
-                                    color: Theme.of(context).canvasColor),
+                                style: TextStyle(color: Theme.of(context).canvasColor),
                               ),
                             ),
                           ),
@@ -134,12 +122,11 @@ class RestoreDialogController extends GetxController {
       return;
     }
 
-    final FilePickerResult? pickedFileResult = await FilePicker.platform
-        .pickFiles(
-            dialogTitle: "Select backup file",
-            type: GetPlatform.isWindows ? FileType.custom : FileType.any,
-            allowedExtensions: GetPlatform.isWindows ? ['hmb'] : null,
-            allowMultiple: false);
+    final FilePickerResult? pickedFileResult = await FilePicker.platform.pickFiles(
+        dialogTitle: "Select backup file",
+        type: GetPlatform.isWindows ? FileType.custom : FileType.any,
+        allowedExtensions: GetPlatform.isWindows ? ['hmb'] : null,
+        allowMultiple: false);
 
     final String? pickedFile = pickedFileResult?.files.first.path;
 
@@ -173,12 +160,11 @@ class RestoreDialogController extends GetxController {
       printINFO(filename);
       if (file.isFile) {
         final data = file.content as List<int>;
-        final targetFileDir =
-            filename.endsWith(".m4a") || filename.endsWith(".opus")
-                ? "$supportDirPath/Music"
-                : filename.endsWith(".png")
-                    ? "$supportDirPath/thumbnails"
-                    : dbDirPath;
+        final targetFileDir = filename.endsWith(".m4a") || filename.endsWith(".opus")
+            ? "$supportDirPath/Music"
+            : filename.endsWith(".png")
+                ? "$supportDirPath/thumbnails"
+                : dbDirPath;
         final outputFile = File('$targetFileDir/$filename');
         await outputFile.create(recursive: true);
         await outputFile.writeAsBytes(data);
@@ -186,8 +172,7 @@ class RestoreDialogController extends GetxController {
       }
     }
     // Clear file picker temp directory
-    final tempFilePickerDirPath =
-        "${(await getApplicationCacheDirectory()).path}/file_picker";
+    final tempFilePickerDirPath = "${(await getApplicationCacheDirectory()).path}/file_picker";
     final tempFilePickerDir = Directory(tempFilePickerDirPath);
     if (tempFilePickerDir.existsSync()) {
       await tempFilePickerDir.delete(recursive: true);

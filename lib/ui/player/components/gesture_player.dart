@@ -8,10 +8,10 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
-import '../../widgets/songinfo_bottom_sheet.dart';
 import '/models/thumbnail.dart';
 import '../../screens/Settings/settings_screen_controller.dart';
 import '../../utils/theme_controller.dart';
+import '../../widgets/songinfo_bottom_sheet.dart';
 import '../player_controller.dart';
 
 class GesturePlayer extends StatelessWidget {
@@ -32,34 +32,24 @@ class GesturePlayer extends StatelessWidget {
                         final imgFile = File(
                             "${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${playerController.currentSong.value!.id}.png");
                         if (imgFile.existsSync()) {
-                          themeController.setTheme(FileImage(imgFile),
-                              playerController.currentSong.value!.id);
+                          themeController.setTheme(FileImage(imgFile), playerController.currentSong.value!.id);
                           return Image.file(imgFile);
                         }
                         return const SizedBox.shrink();
                       },
                       // memCacheHeight: 544,
                       imageBuilder: (context, imageProvider) {
-                        Get.find<SettingsScreenController>()
-                                    .themeModetype
-                                    .value ==
-                                ThemeType.dynamic
-                            ? Future.delayed(
-                                const Duration(milliseconds: 250),
-                                () => themeController.setTheme(imageProvider,
-                                    playerController.currentSong.value!.id))
+                        Get.find<SettingsScreenController>().themeModetype.value == ThemeType.dynamic
+                            ? Future.delayed(const Duration(milliseconds: 250),
+                                () => themeController.setTheme(imageProvider, playerController.currentSong.value!.id))
                             : null;
                         return Image(
                           image: imageProvider,
                           fit: BoxFit.cover,
                         );
                       },
-                      imageUrl: Thumbnail(playerController
-                              .currentSong.value!.artUri
-                              .toString())
-                          .sizewith(544),
-                      cacheKey:
-                          "${playerController.currentSong.value!.id}_pl_song",
+                      imageUrl: Thumbnail(playerController.currentSong.value!.artUri.toString()).sizewith(544),
+                      cacheKey: "${playerController.currentSong.value!.id}_pl_song",
                     )
                   : Container(),
             ),
@@ -99,9 +89,7 @@ class GesturePlayer extends StatelessWidget {
                   child: playerController.gesturePlayerVisibleState.value == 2
                       ? const SizedBox.shrink()
                       : Icon(
-                          playerController.gesturePlayerVisibleState.value == 1
-                              ? Icons.play_arrow
-                              : Icons.pause,
+                          playerController.gesturePlayerVisibleState.value == 1 ? Icons.play_arrow : Icons.pause,
                           size: 180,
                           color: Colors.white,
                         ),
@@ -114,15 +102,12 @@ class GesturePlayer extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           child: Padding(
             padding: EdgeInsets.only(
-                bottom: Get.mediaQuery.padding.bottom != 0
-                    ? Get.mediaQuery.padding.bottom + 10
-                    : 20,
+                bottom: Get.mediaQuery.padding.bottom != 0 ? Get.mediaQuery.padding.bottom + 10 : 20,
                 left: 20,
                 right: 20),
             child: Container(
               decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(10)),
+                  color: Theme.of(context).primaryColor.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
               constraints: const BoxConstraints(maxWidth: 500),
               height: 142,
               child: ClipRRect(
@@ -130,66 +115,51 @@ class GesturePlayer extends StatelessWidget {
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                     child: Column(children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Obx(() {
-                                    return Marquee(
-                                      delay: const Duration(milliseconds: 300),
-                                      duration: const Duration(seconds: 10),
-                                      id: "${playerController.currentSong.value}_title",
-                                      child: Text(
-                                        playerController.currentSong.value !=
-                                                null
-                                            ? playerController
-                                                .currentSong.value!.title
-                                            : "NA",
-                                        textAlign: TextAlign.start,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium!
-                                            .copyWith(
-                                                color: Theme.of(context)
-                                                    .primaryColor
-                                                    .complementaryColor),
-                                      ),
-                                    );
-                                  }),
-                                  const SizedBox(
-                                    height: 7,
+                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                              Obx(() {
+                                return Marquee(
+                                  delay: const Duration(milliseconds: 300),
+                                  duration: const Duration(seconds: 10),
+                                  id: "${playerController.currentSong.value}_title",
+                                  child: Text(
+                                    playerController.currentSong.value != null
+                                        ? playerController.currentSong.value!.title
+                                        : "NA",
+                                    textAlign: TextAlign.start,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(color: Theme.of(context).primaryColor.complementaryColor),
                                   ),
-                                  GetX<PlayerController>(builder: (controller) {
-                                    return Marquee(
-                                      delay: const Duration(milliseconds: 300),
-                                      duration: const Duration(seconds: 10),
-                                      id: "${playerController.currentSong.value}_subtitle",
-                                      child: Text(
-                                        playerController.currentSong.value !=
-                                                null
-                                            ? controller
-                                                .currentSong.value!.artist!
-                                            : "NA",
-                                        textAlign: TextAlign.start,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .copyWith(
-                                                color: Theme.of(context)
-                                                    .primaryColor
-                                                    .complementaryColor,
-                                                fontWeight: FontWeight.normal),
-                                      ),
-                                    );
-                                  }),
-                                ]),
+                                );
+                              }),
+                              const SizedBox(
+                                height: 7,
+                              ),
+                              GetX<PlayerController>(builder: (controller) {
+                                return Marquee(
+                                  delay: const Duration(milliseconds: 300),
+                                  duration: const Duration(seconds: 10),
+                                  id: "${playerController.currentSong.value}_subtitle",
+                                  child: Text(
+                                    playerController.currentSong.value != null
+                                        ? controller.currentSong.value!.artist!
+                                        : "NA",
+                                    textAlign: TextAlign.start,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                        color: Theme.of(context).primaryColor.complementaryColor,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                );
+                              }),
+                            ]),
                           ),
                           SizedBox(
                             width: 75,
@@ -200,67 +170,41 @@ class GesturePlayer extends StatelessWidget {
                                 IconButton(
                                     splashRadius: 10,
                                     iconSize: 20,
-                                    visualDensity: const VisualDensity(
-                                        horizontal: -4, vertical: -4),
+                                    visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                                     onPressed: playerController.toggleFavourite,
                                     icon: Obx(() => Icon(
-                                          playerController
-                                                  .isCurrentSongFav.isFalse
+                                          playerController.isCurrentSongFav.isFalse
                                               ? Icons.favorite_border_rounded
                                               : Icons.favorite_rounded,
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .color,
+                                          color: Theme.of(context).textTheme.titleMedium!.color,
                                         ))),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Obx(() {
                                       return IconButton(
                                           splashRadius: 10,
-                                          visualDensity: const VisualDensity(
-                                              horizontal: -4, vertical: -4),
+                                          visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                                           iconSize: 18,
-                                          onPressed:
-                                              playerController.toggleLoopMode,
+                                          onPressed: playerController.toggleLoopMode,
                                           icon: Icon(
                                             Icons.all_inclusive,
-                                            color: playerController
-                                                    .isLoopModeEnabled.value
-                                                ? Theme.of(context)
-                                                    .textTheme
-                                                    .titleLarge!
-                                                    .color
-                                                : Theme.of(context)
-                                                    .textTheme
-                                                    .titleLarge!
-                                                    .color!
-                                                    .withOpacity(0.2),
+                                            color: playerController.isLoopModeEnabled.value
+                                                ? Theme.of(context).textTheme.titleLarge!.color
+                                                : Theme.of(context).textTheme.titleLarge!.color!.withOpacity(0.2),
                                           ));
                                     }),
                                     IconButton(
                                       iconSize: 18,
                                       splashRadius: 10,
-                                      visualDensity: const VisualDensity(
-                                          horizontal: -4, vertical: -4),
-                                      onPressed:
-                                          playerController.toggleShuffleMode,
+                                      visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+                                      onPressed: playerController.toggleShuffleMode,
                                       icon: Obx(
                                         () => Icon(
                                           Ionicons.shuffle,
-                                          color: playerController
-                                                  .isShuffleModeEnabled.value
-                                              ? Theme.of(context)
-                                                  .textTheme
-                                                  .titleLarge!
-                                                  .color
-                                              : Theme.of(context)
-                                                  .textTheme
-                                                  .titleLarge!
-                                                  .color!
-                                                  .withOpacity(0.2),
+                                          color: playerController.isShuffleModeEnabled.value
+                                              ? Theme.of(context).textTheme.titleLarge!.color
+                                              : Theme.of(context).textTheme.titleLarge!.color!.withOpacity(0.2),
                                         ),
                                       ),
                                     ),
@@ -277,20 +221,14 @@ class GesturePlayer extends StatelessWidget {
                       GetX<PlayerController>(builder: (controller) {
                         return ProgressBar(
                           thumbRadius: 6,
-                          baseBarColor:
-                              Theme.of(context).sliderTheme.inactiveTrackColor,
-                          bufferedBarColor:
-                              Theme.of(context).sliderTheme.valueIndicatorColor,
-                          progressBarColor:
-                              Theme.of(context).sliderTheme.activeTrackColor,
+                          baseBarColor: Theme.of(context).sliderTheme.inactiveTrackColor,
+                          bufferedBarColor: Theme.of(context).sliderTheme.valueIndicatorColor,
+                          progressBarColor: Theme.of(context).sliderTheme.activeTrackColor,
                           thumbColor: Theme.of(context).sliderTheme.thumbColor,
                           timeLabelTextStyle: Theme.of(context)
                               .textTheme
                               .titleSmall!
-                              .copyWith(
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .complementaryColor),
+                              .copyWith(color: Theme.of(context).primaryColor.complementaryColor),
                           progress: controller.progressBarStatus.value.current,
                           total: controller.progressBarStatus.value.total,
                           buffered: controller.progressBarStatus.value.buffered,

@@ -8,11 +8,13 @@ class Artist {
     required this.thumbnailUrl,
     this.subscribers,
   });
+
   final String name;
   final String browseId;
   final String? radioId;
   final String? subscribers;
   final String thumbnailUrl;
+
   factory Artist.fromJson(dynamic json) => Artist(
       name: json['artist'],
       browseId: json['browseId'],
@@ -37,6 +39,7 @@ class Artist {
 
 class ArtistContent {
   ArtistContent(this.content, {this.title = "Artists"});
+
   final List<Artist> content;
   final String title;
 }

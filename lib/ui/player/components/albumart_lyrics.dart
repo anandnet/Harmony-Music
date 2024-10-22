@@ -9,6 +9,7 @@ import '../../widgets/songinfo_bottom_sheet.dart';
 
 class AlbumArtNLyrics extends StatelessWidget {
   const AlbumArtNLyrics({super.key, required this.playerArtImageSize});
+
   final double playerArtImageSize;
 
   @override
@@ -24,12 +25,10 @@ class AlbumArtNLyrics extends StatelessWidget {
                   showModalBottomSheet(
                     constraints: const BoxConstraints(maxWidth: 500),
                     shape: const RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(10.0)),
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
                     ),
                     isScrollControlled: true,
-                    context:
-                        playerController.homeScaffoldkey.currentState!.context,
+                    context: playerController.homeScaffoldkey.currentState!.context,
                     barrierColor: Colors.transparent.withAlpha(100),
                     builder: (context) => SongInfoBottomSheet(
                       playerController.currentSong.value!,
@@ -69,9 +68,7 @@ class AlbumArtNLyrics extends StatelessWidget {
                         child: Stack(
                           children: [
                             LyricsWidget(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 0,
-                                    vertical: playerArtImageSize / 3.5)),
+                                padding: EdgeInsets.symmetric(horizontal: 0, vertical: playerArtImageSize / 3.5)),
                             IgnorePointer(
                               child: Container(
                                 decoration: BoxDecoration(
@@ -80,15 +77,11 @@ class AlbumArtNLyrics extends StatelessWidget {
                                     begin: Alignment.topCenter,
                                     end: Alignment.bottomCenter,
                                     colors: [
-                                      Theme.of(context)
-                                          .primaryColor
-                                          .withOpacity(0.90),
+                                      Theme.of(context).primaryColor.withOpacity(0.90),
                                       Colors.transparent,
                                       Colors.transparent,
                                       Colors.transparent,
-                                      Theme.of(context)
-                                          .primaryColor
-                                          .withOpacity(0.90)
+                                      Theme.of(context).primaryColor.withOpacity(0.90)
                                     ],
                                     stops: const [0, 0.2, 0.5, 0.8, 1],
                                   ),
@@ -115,24 +108,18 @@ class AlbumArtNLyrics extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(width: 1.3, color: Colors.white),
-                            color: Theme.of(context)
-                                .colorScheme
-                                .secondary
-                                .withAlpha(150)),
+                            color: Theme.of(context).colorScheme.secondary.withAlpha(150)),
                         child: IconButton(
                           onPressed: () {
                             showModalBottomSheet(
                               constraints: const BoxConstraints(maxWidth: 500),
                               shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(10.0)),
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
                               ),
                               isScrollControlled: true,
-                              context: playerController
-                                  .homeScaffoldkey.currentState!.context,
+                              context: playerController.homeScaffoldkey.currentState!.context,
                               barrierColor: Colors.transparent.withAlpha(100),
-                              builder: (context) =>
-                                  const SleepTimerBottomSheet(),
+                              builder: (context) => const SleepTimerBottomSheet(),
                             );
                           },
                           icon: const Icon(

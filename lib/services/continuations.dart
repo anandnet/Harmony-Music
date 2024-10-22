@@ -14,8 +14,7 @@ Future<List<dynamic>> getContinuations(
     bool isAdditionparamReturnReq = false}) async {
   List<dynamic> items = [];
 
-  while ((additionalParams_ != null || results.containsKey('continuations')) &&
-      (limit > 0 && items.length < limit)) {
+  while ((additionalParams_ != null || results.containsKey('continuations')) && (limit > 0 && items.length < limit)) {
     String additionalParams = additionalParams_ ??
         (reloadable
             ? getReloadableContinuationParams(results)
@@ -58,17 +57,14 @@ Future<List<dynamic>> getValidatedContinuations(
   List<dynamic> items = [];
 
   while (results.containsKey('continuations') && items.length < limit) {
-    String additionalParams =
-        getContinuationParams(results, ctokenPath: ctokenPath);
+    String additionalParams = getContinuationParams(results, ctokenPath: ctokenPath);
 
-    Map<String, dynamic> response =
-        await resendRequestUntilParsedResponseIsValid(
-            requestFunc,
-            additionalParams,
-            (response) => getParsedContinuationItems(
-                response, parseFunc, continuationType),
-            (parsed) => validateResponse(parsed, perPage, limit, items.length),
-            3);
+    Map<String, dynamic> response = await resendRequestUntilParsedResponseIsValid(
+        requestFunc,
+        additionalParams,
+        (response) => getParsedContinuationItems(response, parseFunc, continuationType),
+        (parsed) => validateResponse(parsed, perPage, limit, items.length),
+        3);
 
     results = response['results'];
     items.addAll(response['parsed']);
@@ -76,12 +72,9 @@ Future<List<dynamic>> getValidatedContinuations(
   return items;
 }
 
-Map<String, dynamic> getParsedContinuationItems(
-    Map<String, dynamic> response,
-    List<dynamic> Function(Map<String, dynamic> continuationContents) parseFunc,
-    String continuationType) {
-  Map<String, dynamic> results =
-      response['continuationContents'][continuationType];
+Map<String, dynamic> getParsedContinuationItems(Map<String, dynamic> response,
+    List<dynamic> Function(Map<String, dynamic> continuationContents) parseFunc, String continuationType) {
+  Map<String, dynamic> results = response['continuationContents'][continuationType];
   return {
     'results': results,
     'parsed': getContinuationContents(results, parseFunc),
@@ -89,18 +82,12 @@ Map<String, dynamic> getParsedContinuationItems(
 }
 
 String getContinuationParams(dynamic results, {String ctokenPath = ''}) {
-  final ctoken = nav(results, [
-    'continuations',
-    0,
-    'next${ctokenPath}ContinuationData',
-    'continuation'
-  ]);
+  final ctoken = nav(results, ['continuations', 0, 'next${ctokenPath}ContinuationData', 'continuation']);
   return getContinuationString(ctoken);
 }
 
 String getReloadableContinuationParams(dynamic results) {
-  final ctoken = nav(
-      results, ['continuations', 0, 'reloadContinuationData', 'continuation']);
+  final ctoken = nav(results, ['continuations', 0, 'reloadContinuationData', 'continuation']);
   return getContinuationString(ctoken);
 }
 
@@ -108,8 +95,7 @@ String getContinuationString(dynamic ctoken) {
   return "&ctoken=$ctoken&continuation=$ctoken";
 }
 
-List<dynamic> getContinuationContents(
-    Map<String, dynamic> continuation, Function parseFunc) {
+List<dynamic> getContinuationContents(Map<String, dynamic> continuation, Function parseFunc) {
   final terms = ['contents', 'items'];
   for (var term in terms) {
     if (continuation.containsKey(term)) {
@@ -119,12 +105,8 @@ List<dynamic> getContinuationContents(
   return [];
 }
 
-Future<Map<String, dynamic>> resendRequestUntilParsedResponseIsValid(
-    Function requestFunc,
-    String requestAdditionalParams,
-    Function parseFunc,
-    Function validateFunc,
-    int maxRetries) async {
+Future<Map<String, dynamic>> resendRequestUntilParsedResponseIsValid(Function requestFunc,
+    String requestAdditionalParams, Function parseFunc, Function validateFunc, int maxRetries) async {
   var response = await requestFunc(requestAdditionalParams);
   var parsedObject = parseFunc(response);
   var retryCounter = 0;
@@ -139,8 +121,7 @@ Future<Map<String, dynamic>> resendRequestUntilParsedResponseIsValid(
   return parsedObject;
 }
 
-bool validateResponse(
-    Map<String, dynamic> response, int perPage, int limit, int currentCount) {
+bool validateResponse(Map<String, dynamic> response, int perPage, int limit, int currentCount) {
   final remainingItemsCount = limit - currentCount;
   final expectedItemsCount = min(perPage, remainingItemsCount);
 

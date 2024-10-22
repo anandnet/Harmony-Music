@@ -5,8 +5,7 @@ import '../navigator.dart';
 import 'image_widget.dart';
 
 class ContentListItem extends StatelessWidget {
-  const ContentListItem(
-      {super.key, required this.content, this.isLibraryItem = false});
+  const ContentListItem({super.key, required this.content, this.isLibraryItem = false});
 
   ///content will be of Type class Album or Playlist
   final dynamic content;
@@ -53,17 +52,12 @@ class ContentListItem extends StatelessWidget {
                                     width: 18,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
+                                      color: Theme.of(context).colorScheme.secondary,
                                     ),
                                     child: Center(
                                         child: Text(
                                       "P",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium!
-                                          .copyWith(fontSize: 14),
+                                      style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 14),
                                     )),
                                   ),
                                 ),
@@ -75,8 +69,7 @@ class ContentListItem extends StatelessWidget {
                         height: 120,
                         width: 120,
                         decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColorLight,
-                            borderRadius: BorderRadius.circular(10)),
+                            color: Theme.of(context).primaryColorLight, borderRadius: BorderRadius.circular(10)),
                         child: Center(
                             child: Icon(
                           content.playlistId == 'LIBRP'

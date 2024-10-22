@@ -14,13 +14,11 @@ class ThemeController extends GetxController {
   late Brightness systemBrightness;
 
   ThemeController() {
-    systemBrightness =
-        WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    systemBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
     primaryColor.value = Color(Hive.box('appPrefs').get("themePrimaryColor"));
 
-    changeThemeModeType(
-        ThemeType.values[Hive.box('appPrefs').get("themeModeType")]);
+    changeThemeModeType(ThemeType.values[Hive.box('appPrefs').get("themeModeType")]);
 
     _listenSystemBrightness();
 
@@ -31,33 +29,23 @@ class ThemeController extends GetxController {
     final platformDispatcher = WidgetsBinding.instance.platformDispatcher;
     platformDispatcher.onPlatformBrightnessChanged = () {
       systemBrightness = platformDispatcher.platformBrightness;
-      changeThemeModeType(
-          ThemeType.values[Hive.box('appPrefs').get("themeModeType")],
-          sysCall: true);
+      changeThemeModeType(ThemeType.values[Hive.box('appPrefs').get("themeModeType")], sysCall: true);
     };
   }
 
   void changeThemeModeType(dynamic value, {bool sysCall = false}) {
     if (value == ThemeType.system) {
-      themedata.value = _createThemeData(
-          null,
-          systemBrightness == Brightness.light
-              ? ThemeType.light
-              : ThemeType.dark);
+      themedata.value = _createThemeData(null, systemBrightness == Brightness.light ? ThemeType.light : ThemeType.dark);
     } else {
       if (sysCall) return;
-      themedata.value = _createThemeData(
-          value == ThemeType.dynamic
-              ? _createMaterialColor(primaryColor.value!)
-              : null,
-          value);
+      themedata.value =
+          _createThemeData(value == ThemeType.dynamic ? _createMaterialColor(primaryColor.value!) : null, value);
     }
   }
 
   void setTheme(ImageProvider imageProvider, String songId) async {
     if (songId == currentSongId) return;
-    PaletteGenerator generator =
-        await PaletteGenerator.fromImageProvider(imageProvider);
+    PaletteGenerator generator = await PaletteGenerator.fromImageProvider(imageProvider);
     //final colorList = generator.colors;
     final paletteColor = generator.dominantColor ??
         generator.darkMutedColor ??
@@ -73,8 +61,7 @@ class ThemeController extends GetxController {
     }
     final primarySwatch = _createMaterialColor(primaryColor.value!);
     themedata.value = _createThemeData(primarySwatch, ThemeType.dynamic,
-        textColor: textColor.value,
-        titleColorSwatch: _createMaterialColor(textColor.value));
+        textColor: textColor.value, titleColorSwatch: _createMaterialColor(textColor.value));
     currentSongId = songId;
     Hive.box('appPrefs').put("themePrimaryColor", (primaryColor.value!).value);
   }
@@ -109,44 +96,30 @@ class ThemeController extends GetxController {
           //secondaryHeaderColor: primarySwatch[50],
           canvasColor: primarySwatch[700],
           //scaffoldBackgroundColor: primarySwatch[700],
-          bottomSheetTheme: BottomSheetThemeData(
-              backgroundColor: primarySwatch[600],
-              modalBarrierColor: primarySwatch[400]),
+          bottomSheetTheme:
+              BottomSheetThemeData(backgroundColor: primarySwatch[600], modalBarrierColor: primarySwatch[400]),
           textTheme: TextTheme(
-            titleLarge: const TextStyle(
-                fontSize: 23, fontWeight: FontWeight.bold, color: Colors.white),
-            titleMedium: const TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.white),
+            titleLarge: const TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: Colors.white),
+            titleMedium: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
             titleSmall: TextStyle(color: primarySwatch[100]),
             bodyMedium: TextStyle(color: primarySwatch[100]),
-            labelMedium: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: textColor ?? primarySwatch[50]),
+            labelMedium: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: textColor ?? primarySwatch[50]),
             labelSmall: TextStyle(
                 fontSize: 15,
-                color: titleColorSwatch != null
-                    ? titleColorSwatch[900]
-                    : primarySwatch[100],
+                color: titleColorSwatch != null ? titleColorSwatch[900] : primarySwatch[100],
                 letterSpacing: 1,
                 fontWeight: FontWeight.bold),
           ),
           indicatorColor: Colors.white,
           progressIndicatorTheme: ProgressIndicatorThemeData(
-              linearTrackColor: (primarySwatch[300])!.computeLuminance() > 0.3
-                  ? Colors.black54
-                  : Colors.white70,
+              linearTrackColor: (primarySwatch[300])!.computeLuminance() > 0.3 ? Colors.black54 : Colors.white70,
               color: textColor),
           navigationRailTheme: NavigationRailThemeData(
               backgroundColor: primarySwatch[700],
               selectedIconTheme: const IconThemeData(color: Colors.white),
               unselectedIconTheme: IconThemeData(color: primarySwatch[100]),
-              selectedLabelTextStyle: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15),
-              unselectedLabelTextStyle: TextStyle(
-                  color: primarySwatch[100], fontWeight: FontWeight.bold)),
+              selectedLabelTextStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+              unselectedLabelTextStyle: TextStyle(color: primarySwatch[100], fontWeight: FontWeight.bold)),
           sliderTheme: SliderThemeData(
             inactiveTrackColor: primarySwatch[300],
             activeTrackColor: textColor,
@@ -159,8 +132,7 @@ class ThemeController extends GetxController {
               selectionHandleColor: primarySwatch[200])
           //scaffoldBackgroundColor: primarySwatch[700]
           );
-      return baseTheme.copyWith(
-          textTheme: GoogleFonts.nunitoSansTextTheme(baseTheme.textTheme));
+      return baseTheme.copyWith(textTheme: GoogleFonts.nunitoSansTextTheme(baseTheme.textTheme));
     } else if (themeType == ThemeType.dark) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -179,10 +151,8 @@ class ThemeController extends GetxController {
           primaryColor: Colors.black,
           primaryColorDark: Colors.black,
           primaryColorLight: Colors.grey[850],
-          colorScheme: ColorScheme.fromSwatch(
-              accentColor: Colors.grey[700], brightness: Brightness.dark),
-          progressIndicatorTheme: ProgressIndicatorThemeData(
-              color: Colors.grey[700], linearTrackColor: Colors.white),
+          colorScheme: ColorScheme.fromSwatch(accentColor: Colors.grey[700], brightness: Brightness.dark),
+          progressIndicatorTheme: ProgressIndicatorThemeData(color: Colors.grey[700], linearTrackColor: Colors.white),
           textTheme: const TextTheme(
               titleLarge: TextStyle(
                 fontSize: 23,
@@ -196,8 +166,7 @@ class ThemeController extends GetxController {
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
-              labelSmall: TextStyle(
-                  fontSize: 15, letterSpacing: 1, fontWeight: FontWeight.bold),
+              labelSmall: TextStyle(fontSize: 15, letterSpacing: 1, fontWeight: FontWeight.bold),
               bodyMedium: TextStyle(color: Colors.grey)),
           navigationRailTheme: const NavigationRailThemeData(
               backgroundColor: Colors.black,
@@ -205,14 +174,9 @@ class ThemeController extends GetxController {
                 color: Colors.white,
               ),
               unselectedIconTheme: IconThemeData(color: Colors.white38),
-              selectedLabelTextStyle: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15),
-              unselectedLabelTextStyle: TextStyle(
-                  color: Colors.white38, fontWeight: FontWeight.bold)),
-          bottomSheetTheme: const BottomSheetThemeData(
-              backgroundColor: Colors.black, modalBarrierColor: Colors.black),
+              selectedLabelTextStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+              unselectedLabelTextStyle: TextStyle(color: Colors.white38, fontWeight: FontWeight.bold)),
+          bottomSheetTheme: const BottomSheetThemeData(backgroundColor: Colors.black, modalBarrierColor: Colors.black),
           sliderTheme: const SliderThemeData(
             //base bar color
             inactiveTrackColor: Colors.white30,
@@ -223,15 +187,11 @@ class ThemeController extends GetxController {
             thumbColor: Colors.white,
           ),
           textSelectionTheme: TextSelectionThemeData(
-              cursorColor: Colors.grey[700],
-              selectionColor: Colors.grey[700],
-              selectionHandleColor: Colors.grey[700]),
+              cursorColor: Colors.grey[700], selectionColor: Colors.grey[700], selectionHandleColor: Colors.grey[700]),
           inputDecorationTheme: const InputDecorationTheme(
               focusColor: Colors.white,
-              focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white))));
-      return baseTheme.copyWith(
-          textTheme: GoogleFonts.nunitoSansTextTheme(baseTheme.textTheme));
+              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white))));
+      return baseTheme.copyWith(textTheme: GoogleFonts.nunitoSansTextTheme(baseTheme.textTheme));
     } else {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
@@ -254,8 +214,8 @@ class ThemeController extends GetxController {
               brightness: Brightness.light),
           primaryColor: Colors.white,
           primaryColorLight: Colors.grey[300],
-          progressIndicatorTheme: ProgressIndicatorThemeData(
-              linearTrackColor: Colors.grey[700], color: Colors.grey[400]),
+          progressIndicatorTheme:
+              ProgressIndicatorThemeData(linearTrackColor: Colors.grey[700], color: Colors.grey[400]),
           textTheme: TextTheme(
               titleLarge: const TextStyle(
                 fontSize: 23,
@@ -269,21 +229,15 @@ class ThemeController extends GetxController {
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
-              labelSmall: const TextStyle(
-                  fontSize: 15, letterSpacing: 1, fontWeight: FontWeight.bold),
+              labelSmall: const TextStyle(fontSize: 15, letterSpacing: 1, fontWeight: FontWeight.bold),
               bodyMedium: TextStyle(color: Colors.grey[700])),
           navigationRailTheme: NavigationRailThemeData(
               backgroundColor: Colors.white,
               selectedIconTheme: const IconThemeData(color: Colors.black),
               unselectedIconTheme: IconThemeData(color: Colors.grey[800]),
-              selectedLabelTextStyle: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15),
-              unselectedLabelTextStyle: TextStyle(
-                  color: Colors.grey[800], fontWeight: FontWeight.bold)),
-          bottomSheetTheme: const BottomSheetThemeData(
-              backgroundColor: Colors.white, modalBarrierColor: Colors.white),
+              selectedLabelTextStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
+              unselectedLabelTextStyle: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.bold)),
+          bottomSheetTheme: const BottomSheetThemeData(backgroundColor: Colors.white, modalBarrierColor: Colors.white),
           sliderTheme: SliderThemeData(
             //base bar color
             inactiveTrackColor: Colors.black38,
@@ -294,16 +248,12 @@ class ThemeController extends GetxController {
             thumbColor: Colors.grey[800],
           ),
           textSelectionTheme: TextSelectionThemeData(
-              cursorColor: Colors.grey[400],
-              selectionColor: Colors.grey[400],
-              selectionHandleColor: Colors.grey[400]),
+              cursorColor: Colors.grey[400], selectionColor: Colors.grey[400], selectionHandleColor: Colors.grey[400]),
           dialogTheme: DialogTheme(backgroundColor: Colors.grey[200]),
           inputDecorationTheme: const InputDecorationTheme(
               focusColor: Colors.black,
-              focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black))));
-      return baseTheme.copyWith(
-          textTheme: GoogleFonts.nunitoSansTextTheme(baseTheme.textTheme));
+              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black))));
+      return baseTheme.copyWith(textTheme: GoogleFonts.nunitoSansTextTheme(baseTheme.textTheme));
     }
   }
 
@@ -330,6 +280,7 @@ class ThemeController extends GetxController {
 
 extension ComplementaryColor on Color {
   Color get complementaryColor => getComplementaryColor(this);
+
   Color getComplementaryColor(Color color) {
     int r = 255 - color.red;
     int g = 255 - color.green;

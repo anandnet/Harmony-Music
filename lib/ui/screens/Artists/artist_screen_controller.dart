@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-import '../../widgets/add_to_playlist.dart';
-import '/ui/widgets/sort_widget.dart';
-import '../../../models/artist.dart';
-import '../../../utils/helper.dart';
-import '../Library/library_controller.dart';
 import '/services/music_service.dart';
 import '/ui/screens/Home/home_screen_controller.dart';
 import '/ui/screens/Settings/settings_screen_controller.dart';
+import '/ui/widgets/sort_widget.dart';
+import '../../../models/artist.dart';
+import '../../../utils/helper.dart';
+import '../../widgets/add_to_playlist.dart';
+import '../Library/library_controller.dart';
 
-class ArtistScreenController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class ArtistScreenController extends GetxController with GetSingleTickerProviderStateMixin {
   final isArtistContentFetced = false.obs;
   final navigationRailCurrentIndex = 0.obs;
   final musicServices = Get.find<MusicServices>();
@@ -36,8 +35,7 @@ class ArtistScreenController extends GetxController
   void onInit() {
     final args = Get.arguments;
     _init(args[0], args[1]);
-    if (GetPlatform.isDesktop ||
-        Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue) {
+    if (GetPlatform.isDesktop || Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue) {
       tabController = TabController(vsync: this, length: 5);
       tabController?.animation?.addListener(() {
         int indexChange = tabController!.offset.round();
@@ -78,8 +76,7 @@ class ArtistScreenController extends GetxController
     artist_ = Artist(
         browseId: id,
         name: data['name'],
-        thumbnailUrl:
-            data['thumbnails'] != null ? data['thumbnails'][0]['url'] : "",
+        thumbnailUrl: data['thumbnails'] != null ? data['thumbnails'][0]['url'] : "",
         subscribers: "${data['subscribers']} subscribers",
         radioId: data["radioId"]);
   }
@@ -87,9 +84,7 @@ class ArtistScreenController extends GetxController
   Future<bool> addNremoveFromLibrary({bool add = true}) async {
     try {
       final box = await Hive.openBox("LibraryArtists");
-      add
-          ? box.put(artist_.browseId, artist_.toJson())
-          : box.delete(artist_.browseId);
+      add ? box.put(artist_.browseId, artist_.toJson()) : box.delete(artist_.browseId);
       isAddedToLibrary.value = add;
       //Update frontend
       Get.find<LibraryArtistsController>().refreshLib();
@@ -121,8 +116,7 @@ class ArtistScreenController extends GetxController
     //check if params available for continuation
     //tab browse endpoint & top result stored in [artistData], tabContent & addtionalParams for continuation stored in Separated Content
     if ((artistData[tabName]).containsKey("params")) {
-      sepataredContent[tabName] = await musicServices.getArtistRealtedContent(
-          artistData[tabName], tabName);
+      sepataredContent[tabName] = await musicServices.getArtistRealtedContent(artistData[tabName], tabName);
     } else {
       sepataredContent[tabName] = {"results": artistData[tabName]['content']};
       isSeparatedArtistContentFetced.value = true;
@@ -131,15 +125,13 @@ class ArtistScreenController extends GetxController
 
     // observered - continuation available only for song & vid
     if (val == 1 || val == 2) {
-      final scrollController =
-          val == 1 ? songScrollController : videoScrollController;
+      final scrollController = val == 1 ? songScrollController : videoScrollController;
 
       scrollController.addListener(() {
         double maxScroll = scrollController.position.maxScrollExtent;
         double currentScroll = scrollController.position.pixels;
         if (currentScroll >= maxScroll / 2 &&
-            sepataredContent[tabName]['additionalParams'] !=
-                '&ctoken=null&continuation=null') {
+            sepataredContent[tabName]['additionalParams'] != '&ctoken=null&continuation=null') {
           if (!continuationInProgress) {
             continuationInProgress = true;
             getContinuationContents(artistData[tabName], tabName);
@@ -151,8 +143,7 @@ class ArtistScreenController extends GetxController
   }
 
   Future<void> getContinuationContents(browseEndpoint, tabName) async {
-    final x = await musicServices.getArtistRealtedContent(
-        browseEndpoint, tabName,
+    final x = await musicServices.getArtistRealtedContent(browseEndpoint, tabName,
         additionalParams: sepataredContent[tabName]['additionalParams']);
     (sepataredContent[tabName]['results']).addAll(x['results']);
     sepataredContent[tabName]['additionalParams'] = x['additionalParams'];
@@ -185,8 +176,7 @@ class ArtistScreenController extends GetxController
   void onSearch(String value, String? tag) {
     final title = tag?.split("_")[0];
     final list = tempListContainer[title]!
-        .where((element) =>
-            element.title.toLowerCase().contains(value.toLowerCase()))
+        .where((element) => element.title.toLowerCase().contains(value.toLowerCase()))
         .toList();
     sepataredContent[title]['results'] = list;
     sepataredContent.refresh();
@@ -203,18 +193,10 @@ class ArtistScreenController extends GetxController
   final additionalOperationTempList = <MediaItem>[].obs;
   final additionalOperationTempMap = <int, bool>{}.obs;
 
-  void startAdditionalOperation(
-      SortWidgetController sortWidgetController_, OperationMode mode) {
+  void startAdditionalOperation(SortWidgetController sortWidgetController_, OperationMode mode) {
     sortWidgetController = sortWidgetController_;
-    final tabName = [
-      "About",
-      "Songs",
-      "Videos",
-      "Albums",
-      "Singles"
-    ][navigationRailCurrentIndex.value];
-    additionalOperationTempList.value =
-        sepataredContent[tabName]['results'].toList();
+    final tabName = ["About", "Songs", "Videos", "Albums", "Singles"][navigationRailCurrentIndex.value];
+    additionalOperationTempList.value = sepataredContent[tabName]['results'].toList();
     if (mode == OperationMode.addToPlaylist || mode == OperationMode.delete) {
       for (int i = 0; i < additionalOperationTempList.length; i++) {
         additionalOperationTempMap[i] = false;
@@ -224,8 +206,7 @@ class ArtistScreenController extends GetxController
   }
 
   void checkIfAllSelected() {
-    sortWidgetController!.isAllSelected.value =
-        !additionalOperationTempMap.containsValue(false);
+    sortWidgetController!.isAllSelected.value = !additionalOperationTempMap.containsValue(false);
   }
 
   void selectAll(bool selected) {

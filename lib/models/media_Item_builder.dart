@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:audio_service/audio_service.dart';
+
 import '../models/thumbnail.dart';
 
 class MediaItemBuilder {
@@ -22,13 +23,9 @@ class MediaItemBuilder {
     return MediaItem(
         id: json["videoId"],
         title: json["title"],
-        duration: json['duration'] != null
-            ? Duration(seconds: json['duration'])
-            : toDuration(json['length']),
+        duration: json['duration'] != null ? Duration(seconds: json['duration']) : toDuration(json['length']),
         album: album != null ? album['name'] : null,
-        artist: artistName == ""
-            ? artistName
-            : artistName.substring(0, artistName.length - 2),
+        artist: artistName == "" ? artistName : artistName.substring(0, artistName.length - 2),
         artUri: Uri.parse(Thumbnail(json["thumbnails"][0]['url']).high),
         extras: {
           'url': json['url'] ?? url,
@@ -47,9 +44,7 @@ class MediaItemBuilder {
     int sec = 0;
     final splitted = time.split(":");
     if (splitted.length == 3) {
-      sec += int.parse(splitted[0]) * 3600 +
-          int.parse(splitted[1]) * 60 +
-          int.parse(splitted[2]);
+      sec += int.parse(splitted[0]) * 3600 + int.parse(splitted[1]) * 60 + int.parse(splitted[2]);
     } else if (splitted.length == 2) {
       sec += int.parse(splitted[0]) * 60 + int.parse(splitted[1]);
     } else if (splitted.length == 1) {

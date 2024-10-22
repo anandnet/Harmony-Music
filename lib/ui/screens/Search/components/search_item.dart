@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '/ui/screens/Search/search_screen_controller.dart';
 
+import '/ui/screens/Search/search_screen_controller.dart';
 import '../../../navigator.dart';
 
 class SearchItem extends StatelessWidget {
   final String queryString;
   final bool isHistoryString;
-  const SearchItem(
-      {super.key, required this.queryString, required this.isHistoryString});
+
+  const SearchItem({super.key, required this.queryString, required this.isHistoryString});
 
   @override
   Widget build(BuildContext context) {
@@ -16,17 +16,14 @@ class SearchItem extends StatelessWidget {
     return ListTile(
       contentPadding: const EdgeInsets.only(left: 10, right: 20),
       onTap: () {
-        Get.toNamed(ScreenNavigationSetup.searchResultScreen,
-            id: ScreenNavigationSetup.id, arguments: queryString);
+        Get.toNamed(ScreenNavigationSetup.searchResultScreen, id: ScreenNavigationSetup.id, arguments: queryString);
         searchScreenController.addToHistryQueryList(queryString);
         // for Desktop searchbar
-        if(GetPlatform.isDesktop){
+        if (GetPlatform.isDesktop) {
           searchScreenController.focusNode.unfocus();
         }
       },
-      leading: isHistoryString
-          ? const Icon(Icons.history)
-          : const Icon(Icons.search_rounded),
+      leading: isHistoryString ? const Icon(Icons.history) : const Icon(Icons.search_rounded),
       minLeadingWidth: 20,
       dense: true,
       title: Text(queryString),
@@ -40,8 +37,7 @@ class SearchItem extends StatelessWidget {
                     splashRadius: 18,
                     visualDensity: const VisualDensity(horizontal: -2),
                     onPressed: () {
-                      searchScreenController
-                          .removeQueryFromHistory(queryString);
+                      searchScreenController.removeQueryFromHistory(queryString);
                     },
                     icon: Icon(
                       Icons.clear,

@@ -8,6 +8,7 @@ import 'songinfo_bottom_sheet.dart';
 
 class QuickPicksWidget extends StatelessWidget {
   const QuickPicksWidget({super.key, required this.content, this.scrollController});
+
   final QuickPicks content;
   final ScrollController? scrollController;
 

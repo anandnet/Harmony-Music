@@ -2,29 +2,28 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../screens/Search/search_result_screen_controller.dart';
 import '/models/album.dart';
 import '/models/artist.dart';
 import '/models/playlist.dart';
 import '/ui/widgets/content_list_widget.dart';
+import '../screens/Search/search_result_screen_controller.dart';
 import 'separate_tab_item_widget.dart';
 
 class ResultWidget extends StatelessWidget {
   const ResultWidget({super.key, this.isv2Used = false});
+
   final bool isv2Used;
 
   @override
   Widget build(BuildContext context) {
-    final SearchResultScreenController searchResScrController =
-        Get.find<SearchResultScreenController>();
+    final SearchResultScreenController searchResScrController = Get.find<SearchResultScreenController>();
     final topPadding = context.isLandscape ? 50.0 : 80.0;
     return Obx(
       () => Center(
         child: Padding(
           padding: const EdgeInsets.all(0.0),
           child: SingleChildScrollView(
-            padding:
-                EdgeInsets.only(bottom: 200, top: isv2Used ? 0 : topPadding),
+            padding: EdgeInsets.only(bottom: 200, top: isv2Used ? 0 : topPadding),
             child: searchResScrController.isResultContentFetced.value
                 ? Column(children: [
                     if (!isv2Used)
@@ -55,8 +54,7 @@ class ResultWidget extends StatelessWidget {
     );
   }
 
-  List<Widget> generateWidgetList(
-      SearchResultScreenController searchResScrController) {
+  List<Widget> generateWidgetList(SearchResultScreenController searchResScrController) {
     List<Widget> list = [];
     for (dynamic item in searchResScrController.resultContent.entries) {
       if (item.key == "Songs" || item.key == "Videos") {
@@ -67,8 +65,7 @@ class ResultWidget extends StatelessWidget {
         ));
       } else if (item.key == "Albums") {
         list.add(ContentListWidget(
-          content: AlbumContent(
-              title: item.key, albumList: List<Album>.from(item.value)),
+          content: AlbumContent(title: item.key, albumList: List<Album>.from(item.value)),
           isHomeContent: false,
         ));
       } else if (item.key.contains("playlist")) {

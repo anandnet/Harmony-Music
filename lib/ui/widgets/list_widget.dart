@@ -1,8 +1,8 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:widget_marquee/widget_marquee.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '/ui/screens/Settings/settings_screen_controller.dart';
 import '/ui/widgets/snackbar.dart';
@@ -15,11 +15,8 @@ import 'songinfo_bottom_sheet.dart';
 
 class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
   const ListWidget(this.items, this.title, this.isCompleteList,
-      {super.key,
-      this.isPlaylist = false,
-      this.isArtistSongs = false,
-      this.playlist,
-      this.scrollController});
+      {super.key, this.isPlaylist = false, this.isArtistSongs = false, this.playlist, this.scrollController});
+
   final List<dynamic> items;
   final String title;
   final bool isCompleteList;
@@ -45,10 +42,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
       return isCompleteList
           ? Expanded(
               child: listViewSongVid(items,
-                  isPlaylist: isPlaylist,
-                  playlist: playlist,
-                  sc: scrollController,
-                  isArtistSongs: isArtistSongs))
+                  isPlaylist: isPlaylist, playlist: playlist, sc: scrollController, isArtistSongs: isArtistSongs))
           : SizedBox(
               height: items.length * 75.0,
               child: listViewSongVid(items),
@@ -69,10 +63,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
   }
 
   Widget listViewSongVid(List<dynamic> items,
-      {bool isPlaylist = false,
-      Playlist? playlist,
-      bool isArtistSongs = false,
-      ScrollController? sc}) {
+      {bool isPlaylist = false, Playlist? playlist, bool isArtistSongs = false, ScrollController? sc}) {
     final playerController = Get.find<PlayerController>();
     return ListView.builder(
       padding: const EdgeInsets.only(
@@ -83,19 +74,15 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
       addAutomaticKeepAlives: false,
       controller: sc,
       itemCount: items.length,
-      physics: isCompleteList
-          ? const BouncingScrollPhysics()
-          : const NeverScrollableScrollPhysics(),
+      physics: isCompleteList ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) => Slidable(
-        enabled:
-            Get.find<SettingsScreenController>().slidableActionEnabled.isTrue,
+        enabled: Get.find<SettingsScreenController>().slidableActionEnabled.isTrue,
         startActionPane: ActionPane(motion: const DrawerMotion(), children: [
           SlidableAction(
             onPressed: (context) {
               showDialog(
                 context: context,
-                builder: (context) =>
-                    AddToPlaylist([items[index] as MediaItem]),
+                builder: (context) => AddToPlaylist([items[index] as MediaItem]),
               ).whenComplete(() => Get.delete<AddToPlaylistController>());
             },
             backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -117,13 +104,10 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
         endActionPane: ActionPane(motion: const DrawerMotion(), children: [
           SlidableAction(
             onPressed: (context) {
-              playerController
-                  .enqueueSong(items[index] as MediaItem)
-                  .whenComplete(() {
+              playerController.enqueueSong(items[index] as MediaItem).whenComplete(() {
                 if (!context.mounted) return;
-                ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                    context, "songEnqueueAlert".tr,
-                    size: SanckBarSize.MEDIUM));
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(snackbar(context, "songEnqueueAlert".tr, size: SanckBarSize.MEDIUM));
               });
             },
             backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -147,8 +131,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
         child: ListTile(
           onTap: () {
             (isPlaylist || isArtistSongs)
-                ? playerController.playPlayListSong(
-                    List<MediaItem>.from(items), index)
+                ? playerController.playPlayListSong(List<MediaItem>.from(items), index)
                 : playerController.pushSongToQueue(items[index] as MediaItem);
           },
           onLongPress: () async {
@@ -177,9 +160,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
             duration: const Duration(seconds: 5),
             id: items[index].title.hashCode.toString(),
             child: Text(
-              items[index].title.length > 50
-                  ? items[index].title.substring(0, 50)
-                  : items[index].title,
+              items[index].title.length > 50 ? items[index].title.substring(0, 50) : items[index].title,
               maxLines: 1,
               style: Theme.of(context).textTheme.titleMedium,
             ),
@@ -198,8 +179,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     if (isPlaylist)
-                      Obx(() => playerController.currentSong.value?.id ==
-                              items[index].id
+                      Obx(() => playerController.currentSong.value?.id == items[index].id
                           ? const Icon(
                               Icons.equalizer_rounded,
                             )
@@ -217,12 +197,10 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
                         showModalBottomSheet(
                           constraints: const BoxConstraints(maxWidth: 500),
                           shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(10.0)),
+                            borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
                           ),
                           isScrollControlled: true,
-                          context: playerController
-                              .homeScaffoldkey.currentState!.context,
+                          context: playerController.homeScaffoldkey.currentState!.context,
                           //constraints: BoxConstraints(maxHeight:Get.height),
                           barrierColor: Colors.transparent.withAlpha(100),
                           builder: (context) => SongInfoBottomSheet(
@@ -275,15 +253,12 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
             for (dynamic items in (albums[index].artists).sublist(1)) {
               artistName = "${artistName + items['name']},";
             }
-            artistName = artistName.length > 16
-                ? artistName.substring(0, 16)
-                : artistName;
+            artistName = artistName.length > 16 ? artistName.substring(0, 16) : artistName;
             return wideListTile(context,
                 album: albums[index],
                 title: albums[index].title,
                 subtitle: artistName,
-                subtitle2:
-                    "${(albums[index].artists[0]['name'])} • ${albums[index].year}");
+                subtitle2: "${(albums[index].artists[0]['name'])} • ${albums[index].year}");
           }),
     );
   }
@@ -297,9 +272,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
       controller: sc,
       itemCount: artists.length,
       itemExtent: 90,
-      physics: isCompleteList
-          ? const BouncingScrollPhysics()
-          : const NeverScrollableScrollPhysics(),
+      physics: isCompleteList ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) => ListTile(
         visualDensity: const VisualDensity(horizontal: -2, vertical: 2),
         onTap: () {
@@ -326,11 +299,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
   }
 
   Widget wideListTile(BuildContext context,
-      {dynamic album,
-      dynamic playlist,
-      required String title,
-      required String subtitle,
-      required String subtitle2}) {
+      {dynamic album, dynamic playlist, required String title, required String subtitle, required String subtitle2}) {
     return InkWell(
       onTap: () {
         if (album != null) {
@@ -338,8 +307,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
               id: ScreenNavigationSetup.id, arguments: [true, album, false]);
         } else {
           Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
-              id: ScreenNavigationSetup.id,
-              arguments: [false, playlist, false]);
+              id: ScreenNavigationSetup.id, arguments: [false, playlist, false]);
         }
       },
       child: SizedBox(

@@ -176,16 +176,16 @@ class SortWidget extends StatelessWidget {
                     if (isPlaylistRearrageFeatureRequired)
                       PopupMenuItem(
                         value: OperationMode.arrange,
-                        child: Text("reArrangePlaylist".tr),
+                        child: Text('reArrangePlaylist'.tr),
                       ),
                     if (isSongDeletetioFeatureRequired)
                       PopupMenuItem(
                         value: OperationMode.delete,
-                        child: Text("removeMultiple".tr),
+                        child: Text('removeMultiple'.tr),
                       ),
                     PopupMenuItem(
                       value: OperationMode.addToPlaylist,
-                      child: Text("addMultipleSongs".tr),
+                      child: Text('addMultipleSongs'.tr),
                     ),
                   ],
                 ),
@@ -212,7 +212,7 @@ class SortWidget extends StatelessWidget {
                     contentPadding: const EdgeInsets.all(8),
                     filled: true,
                     border: const OutlineInputBorder(),
-                    hintText: "search".tr,
+                    hintText: 'search'.tr,
                     suffixIconColor: Theme.of(context).colorScheme.secondary,
                     suffixIcon: IconButton(
                       splashRadius: 10,
@@ -250,7 +250,7 @@ class SortWidget extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 18),
-                      const Text("Select all")
+                      const Text('Select all')
                     ],
                   ),
                   Row(

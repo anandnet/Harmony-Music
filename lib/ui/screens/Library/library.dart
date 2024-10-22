@@ -30,15 +30,15 @@ class SongsLibraryWidget extends StatelessWidget {
               : Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "libSongs".tr,
+                    'libSongs'.tr,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
           Obx(() {
             final libSongsController = Get.find<LibrarySongsController>();
             return SortWidget(
-              tag: "LibSongSort",
-              itemCountTitle: "${libSongsController.librarySongsList.length}",
+              tag: 'LibSongSort',
+              itemCountTitle: '${libSongsController.librarySongsList.length}',
               itemIcon: Icons.music_note_rounded,
               titleLeftPadding: 9,
               requiredSortTypes: buildSortTypeSet(true, true),
@@ -61,11 +61,11 @@ class SongsLibraryWidget extends StatelessWidget {
                 ? (controller.additionalOperationMode.value == OperationMode.none
                     ? ListWidget(
                         controller.librarySongsList,
-                        "library Songs",
+                        'library Songs',
                         true,
                         isPlaylist: true,
                         playlist: Playlist(
-                            title: "Library Songs", playlistId: "SongsCache", thumbnailUrl: "", isCloudPlaylist: false),
+                            title: 'Library Songs', playlistId: 'SongsCache', thumbnailUrl: '', isCloudPlaylist: false),
                       )
                     : ModificationList(
                         mode: controller.additionalOperationMode.value,
@@ -74,7 +74,7 @@ class SongsLibraryWidget extends StatelessWidget {
                 : Expanded(
                     child: Center(
                         child: Text(
-                      "noOfflineSong".tr,
+                      'noOfflineSong'.tr,
                       style: Theme.of(context).textTheme.titleMedium,
                     )),
                   );
@@ -118,7 +118,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                     : Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          isAlbumContent ? "libAlbums".tr : "libPlaylists".tr,
+                          isAlbumContent ? 'libAlbums'.tr : 'libPlaylists'.tr,
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
@@ -135,7 +135,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
           Obx(
             () => isAlbumContent
                 ? SortWidget(
-                    tag: "LibAlbumSort",
+                    tag: 'LibAlbumSort',
                     isAdditionalOperationRequired: false,
                     isSearchFeatureRequired: true,
                     itemCountTitle: "${libralbumCntrller.libraryAlbums.length} ${"items".tr}",
@@ -148,7 +148,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                     onSearchStart: libralbumCntrller.onSearchStart,
                   )
                 : SortWidget(
-                    tag: "LibPlaylistSort",
+                    tag: 'LibPlaylistSort',
                     isAdditionalOperationRequired: false,
                     isSearchFeatureRequired: true,
                     itemCountTitle: "${librplstCntrller.libraryPlaylists.length} ${"items".tr}",
@@ -198,7 +198,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                     })
                   : Center(
                       child: Text(
-                      "noBookmarks".tr,
+                      'noBookmarks'.tr,
                       style: Theme.of(context).textTheme.titleMedium,
                     )),
             ),
@@ -229,13 +229,13 @@ class LibraryArtistWidget extends StatelessWidget {
               : Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "libArtists".tr,
+                    'libArtists'.tr,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
           Obx(
             () => SortWidget(
-              tag: "LibArtistSort",
+              tag: 'LibArtistSort',
               isAdditionalOperationRequired: false,
               isSearchFeatureRequired: true,
               itemCountTitle: "${cntrller.libraryArtists.length} ${"items".tr}",
@@ -248,11 +248,11 @@ class LibraryArtistWidget extends StatelessWidget {
             ),
           ),
           Obx(() => cntrller.libraryArtists.isNotEmpty
-              ? ListWidget(cntrller.libraryArtists, "Library Artists", true)
+              ? ListWidget(cntrller.libraryArtists, 'Library Artists', true)
               : Expanded(
                   child: Center(
                       child: Text(
-                  "noBookmarks".tr,
+                  'noBookmarks'.tr,
                   style: Theme.of(context).textTheme.titleMedium,
                 ))))
         ],

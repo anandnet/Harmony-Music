@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '/ui/screens/Artists/artist_screen.dart' show AboutArtist;
-import '../../navigator.dart';
-import '../../widgets/loader.dart';
-import '../../widgets/separate_tab_item_widget.dart';
-import 'artist_screen_controller.dart';
+import 'package:harmonymusic/ui/navigator.dart';
+import 'package:harmonymusic/ui/screens/Artists/artist_screen.dart' show AboutArtist;
+import 'package:harmonymusic/ui/screens/Artists/artist_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/loader.dart';
+import 'package:harmonymusic/ui/widgets/separate_tab_item_widget.dart';
 
 class ArtistScreenBN extends StatelessWidget {
   const ArtistScreenBN({super.key, required this.artistScreenController, required this.tag});
@@ -35,7 +34,7 @@ class ArtistScreenBN extends StatelessWidget {
             isScrollable: true,
             controller: artistScreenController.tabController!,
             onTap: artistScreenController.onDestinationSelected,
-            tabs: ["about".tr, "songs".tr, "videos".tr, "albums".tr, "singles".tr]
+            tabs: ['about'.tr, 'songs'.tr, 'videos'.tr, 'albums'.tr, 'singles'.tr]
                 .map((e) => Tab(
                       text: e,
                     ))
@@ -63,7 +62,7 @@ class ArtistScreenBN extends StatelessWidget {
                     artistScreenController: artistScreenController,
                     padding: const EdgeInsets.only(top: 10, left: 15, right: 5, bottom: 200),
                   ),
-                  ...["Songs", "Videos", "Albums", "Singles"].map(
+                  ...['Songs', 'Videos', 'Albums', 'Singles'].map(
                     (item) {
                       if (artistScreenController.isSeparatedArtistContentFetced.isFalse &&
                           artistScreenController.navigationRailCurrentIndex.value != 0) {
@@ -77,9 +76,9 @@ class ArtistScreenBN extends StatelessWidget {
                           isResultWidget: false,
                           items: separatedContent.containsKey(item) ? separatedContent[item]['results'] : [],
                           title: item,
-                          scrollController: item == "Songs"
+                          scrollController: item == 'Songs'
                               ? artistScreenController.songScrollController
-                              : item == "Videos"
+                              : item == 'Videos'
                                   ? artistScreenController.videoScrollController
                                   : null,
                         ),

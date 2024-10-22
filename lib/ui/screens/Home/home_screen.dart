@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '/ui/player/player_controller.dart';
-import '/ui/screens/Search/search_screen_controller.dart';
-import '/ui/widgets/animated_screen_transition.dart';
-import '/ui/widgets/create_playlist_dialog.dart';
-import '../../navigator.dart';
-import '../../widgets/content_list_widget.dart';
-import '../../widgets/quickpickswidget.dart';
-import '../../widgets/shimmer_widgets/home_shimmer.dart';
-import '../../widgets/side_nav_bar.dart';
-import '../Library/library.dart';
-import '../Library/library_combined.dart';
-import '../Search/components/desktop_search_bar.dart';
-import '../Search/search_screen.dart';
-import '../Settings/settings_screen.dart';
-import '../Settings/settings_screen_controller.dart';
-import 'home_screen_controller.dart';
+import 'package:harmonymusic/ui/navigator.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/screens/Home/home_screen_controller.dart';
+import 'package:harmonymusic/ui/screens/Library/library.dart';
+import 'package:harmonymusic/ui/screens/Library/library_combined.dart';
+import 'package:harmonymusic/ui/screens/Search/components/desktop_search_bar.dart';
+import 'package:harmonymusic/ui/screens/Search/search_screen.dart';
+import 'package:harmonymusic/ui/screens/Search/search_screen_controller.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/animated_screen_transition.dart';
+import 'package:harmonymusic/ui/widgets/content_list_widget.dart';
+import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
+import 'package:harmonymusic/ui/widgets/quickpickswidget.dart';
+import 'package:harmonymusic/ui/widgets/shimmer_widgets/home_shimmer.dart';
+import 'package:harmonymusic/ui/widgets/side_nav_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -127,7 +126,7 @@ class Body extends StatelessWidget {
                             Align(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                "home".tr,
+                                'home'.tr,
                                 style: Theme.of(context).textTheme.titleLarge,
                               ),
                             ),
@@ -135,7 +134,7 @@ class Body extends StatelessWidget {
                               child: Center(
                                 child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                                   Text(
-                                    "networkError1".tr,
+                                    'networkError1'.tr,
                                     style: Theme.of(context).textTheme.titleMedium,
                                   ),
                                   const SizedBox(
@@ -151,7 +150,7 @@ class Body extends StatelessWidget {
                                         homeScreenController.loadContentFromNetwork();
                                       },
                                       child: Text(
-                                        "retry".tr,
+                                        'retry'.tr,
                                         style: TextStyle(color: Theme.of(context).canvasColor),
                                       ),
                                     ),
@@ -192,7 +191,7 @@ class Body extends StatelessWidget {
                 child: LayoutBuilder(builder: (context, constraints) {
                   return SizedBox(
                     width: constraints.maxWidth > 800 ? 800 : constraints.maxWidth - 40,
-                    child: const Padding(padding: EdgeInsets.only(top: 15.0), child: DesktopSearchBar()),
+                    child: const Padding(padding: EdgeInsets.only(top: 15), child: DesktopSearchBar()),
                   );
                 }),
               )
@@ -215,7 +214,7 @@ class Body extends StatelessWidget {
       return const SettingsScreen();
     } else {
       return Center(
-        child: Text("${homeScreenController.tabIndex.value}"),
+        child: Text('${homeScreenController.tabIndex.value}'),
       );
     }
   }

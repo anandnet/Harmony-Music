@@ -21,22 +21,22 @@ class SongInfoDialog extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Text("songInfo".tr, style: Theme.of(context).textTheme.titleLarge),
+              child: Text('songInfo'.tr, style: Theme.of(context).textTheme.titleLarge),
             ),
             const Divider(),
             Expanded(
                 child: ListView(
               children: [
-                InfoItem(title: "id".tr, value: song.id),
-                InfoItem(title: "title".tr, value: song.title),
-                InfoItem(title: "albums".tr, value: song.album ?? "NA"),
-                InfoItem(title: "artists".tr, value: song.artist ?? "NA"),
+                InfoItem(title: 'id'.tr, value: song.id),
+                InfoItem(title: 'title'.tr, value: song.title),
+                InfoItem(title: 'albums'.tr, value: song.album ?? 'NA'),
+                InfoItem(title: 'artists'.tr, value: song.artist ?? 'NA'),
                 InfoItem(
-                    title: "duration".tr,
+                    title: 'duration'.tr,
                     value: "${streamInfo["approxDurationMs"] ?? song.duration?.inMilliseconds ?? "NA"} ms"),
-                InfoItem(title: "audioCodec".tr, value: streamInfo["audioCodec"] ?? "NA"),
-                InfoItem(title: "bitrate".tr, value: "${streamInfo["bitrate"] ?? "NA"}"),
-                InfoItem(title: "loudnessDb".tr, value: "${streamInfo["loudnessDb"] ?? "NA"}"),
+                InfoItem(title: 'audioCodec'.tr, value: streamInfo['audioCodec'] ?? 'NA'),
+                InfoItem(title: 'bitrate'.tr, value: "${streamInfo["bitrate"] ?? "NA"}"),
+                InfoItem(title: 'loudnessDb'.tr, value: "${streamInfo["loudnessDb"] ?? "NA"}"),
               ],
             )),
             const Divider(),
@@ -50,7 +50,7 @@ class SongInfoDialog extends StatelessWidget {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 25),
-                      child: Text("close".tr),
+                      child: Text('close'.tr),
                     )),
               ),
             )
@@ -62,13 +62,13 @@ class SongInfoDialog extends StatelessWidget {
 
   Map<dynamic, dynamic> _getStreamInfo(String id) {
     Map<dynamic, dynamic> tempstreamInfo;
-    final nullVal = {"audioCodec": null, "bitrate": null, "loudnessDb": null, "approxDurationMs": null};
+    final nullVal = {'audioCodec': null, 'bitrate': null, 'loudnessDb': null, 'approxDurationMs': null};
     if (isDownloaded) {
-      final song = Hive.box("SongDownloads").get(id);
+      final song = Hive.box('SongDownloads').get(id);
 
-      tempstreamInfo = song["streamInfo"] == null ? nullVal : song["streamInfo"][1];
+      tempstreamInfo = song['streamInfo'] == null ? nullVal : song['streamInfo'][1];
     } else {
-      final dbStreamData = Hive.box("SongsUrlCache").get(id);
+      final dbStreamData = Hive.box('SongsUrlCache').get(id);
       tempstreamInfo = dbStreamData != null ? dbStreamData[Hive.box('AppPrefs').get('streamingQuality') + 1] : nullVal;
     }
     return tempstreamInfo;

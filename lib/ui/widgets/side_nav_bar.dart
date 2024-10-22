@@ -30,11 +30,11 @@ class SideNavBar extends StatelessWidget {
                     labelType: isMobileOrTabScreen ? NavigationRailLabelType.all : NavigationRailLabelType.none,
                     //backgroundColor: Colors.green,
                     destinations: <NavigationRailDestination>[
-                      railDestination("home".tr, isMobileOrTabScreen, Icons.home),
-                      railDestination("songs".tr, isMobileOrTabScreen, Icons.art_track),
-                      railDestination("playlists".tr, isMobileOrTabScreen, Icons.featured_play_list),
-                      railDestination("albums".tr, isMobileOrTabScreen, Icons.album),
-                      railDestination("artists".tr, isMobileOrTabScreen, Icons.people),
+                      railDestination('home'.tr, isMobileOrTabScreen, Icons.home),
+                      railDestination('songs'.tr, isMobileOrTabScreen, Icons.art_track),
+                      railDestination('playlists'.tr, isMobileOrTabScreen, Icons.featured_play_list),
+                      railDestination('albums'.tr, isMobileOrTabScreen, Icons.album),
+                      railDestination('artists'.tr, isMobileOrTabScreen, Icons.people),
                       //railDestination("Settings")
                       const NavigationRailDestination(
                         padding: EdgeInsets.only(top: 10, bottom: 10),

@@ -21,8 +21,8 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final librPlstCntrller = Get.find<LibraryPlaylistsController>();
-    librPlstCntrller.changeCreationMode("local");
-    librPlstCntrller.textInputController.text = "";
+    librPlstCntrller.changeCreationMode('local');
+    librPlstCntrller.textInputController.text = '';
     final isPipedLinked = Get.find<PipedServices>().isLoggedIn;
     return CommonDialog(
       child: Container(
@@ -36,7 +36,7 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    renamePlaylist ? "renamePlaylist".tr : "CreateNewPlaylist".tr,
+                    renamePlaylist ? 'renamePlaylist'.tr : 'CreateNewPlaylist'.tr,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
@@ -49,10 +49,10 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                       Row(
                         children: [
                           Radio(
-                              value: "piped",
+                              value: 'piped',
                               groupValue: librPlstCntrller.playlistCreationMode.value,
                               onChanged: librPlstCntrller.changeCreationMode),
-                          Text("Piped".tr),
+                          Text('Piped'.tr),
                         ],
                       ),
                       const SizedBox(
@@ -61,10 +61,10 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                       Row(
                         children: [
                           Radio(
-                              value: "local",
+                              value: 'local',
                               groupValue: librPlstCntrller.playlistCreationMode.value,
                               onChanged: librPlstCntrller.changeCreationMode),
-                          Text("local".tr),
+                          Text('local'.tr),
                         ],
                       )
                     ],
@@ -88,7 +88,7 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                     InkWell(
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Text("cancel".tr),
+                        child: Text('cancel'.tr),
                       ),
                       onTap: () => Navigator.of(context).pop(),
                     ),
@@ -101,10 +101,10 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
                           child: Text(
                             isCreateNadd
-                                ? "createnAdd".tr
+                                ? 'createnAdd'.tr
                                 : renamePlaylist
-                                    ? "rename".tr
-                                    : "create".tr,
+                                    ? 'rename'.tr
+                                    : 'create'.tr,
                             style: TextStyle(color: Theme.of(context).canvasColor),
                           ),
                         ),
@@ -115,7 +115,7 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                                 if (!context.mounted) return;
                                 Navigator.of(context).pop();
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                    snackbar(context, "playlistRenameAlert".tr, size: SanckBarSize.MEDIUM));
+                                    snackbar(context, 'playlistRenameAlert'.tr, size: SanckBarSize.MEDIUM));
                               }
                             });
                           } else {
@@ -125,11 +125,11 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                               if (!context.mounted) return;
                               if (value) {
                                 ScaffoldMessenger.of(context).showSnackBar(snackbar(context,
-                                    isCreateNadd ? "playlistCreatednsongAddedAlert".tr : "playlistCreatedAlert".tr,
+                                    isCreateNadd ? 'playlistCreatednsongAddedAlert'.tr : 'playlistCreatedAlert'.tr,
                                     size: SanckBarSize.MEDIUM));
                               } else {
                                 ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackbar(context, "errorOccuredAlert".tr, size: SanckBarSize.MEDIUM));
+                                    .showSnackBar(snackbar(context, 'errorOccuredAlert'.tr, size: SanckBarSize.MEDIUM));
                               }
                               Navigator.of(context).pop();
                             });

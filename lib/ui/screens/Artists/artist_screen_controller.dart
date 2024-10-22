@@ -63,7 +63,7 @@ class ArtistScreenController extends GetxController with GetSingleTickerProvider
   }
 
   Future<void> _checkIfAddedToLibrary(String id) async {
-    final box = await Hive.openBox("LibraryArtists");
+    final box = await Hive.openBox('LibraryArtists');
     isAddedToLibrary.value = box.containsKey(id);
     await box.close();
   }
@@ -76,14 +76,14 @@ class ArtistScreenController extends GetxController with GetSingleTickerProvider
     artist_ = Artist(
         browseId: id,
         name: data['name'],
-        thumbnailUrl: data['thumbnails'] != null ? data['thumbnails'][0]['url'] : "",
+        thumbnailUrl: data['thumbnails'] != null ? data['thumbnails'][0]['url'] : '',
         subscribers: "${data['subscribers']} subscribers",
-        radioId: data["radioId"]);
+        radioId: data['radioId']);
   }
 
   Future<bool> addNremoveFromLibrary({bool add = true}) async {
     try {
-      final box = await Hive.openBox("LibraryArtists");
+      final box = await Hive.openBox('LibraryArtists');
       add ? box.put(artist_.browseId, artist_.toJson()) : box.delete(artist_.browseId);
       isAddedToLibrary.value = add;
       //Update frontend
@@ -97,7 +97,7 @@ class ArtistScreenController extends GetxController with GetSingleTickerProvider
   Future<void> onDestinationSelected(int val) async {
     isTabTransitionReversed = val > navigationRailCurrentIndex.value;
     navigationRailCurrentIndex.value = val;
-    final tabName = ["About", "Songs", "Videos", "Albums", "Singles"][val];
+    final tabName = ['About', 'Songs', 'Videos', 'Albums', 'Singles'][val];
 
     //cancel additional operations in case of tab change
     if (sortWidgetController != null) {
@@ -115,10 +115,10 @@ class ArtistScreenController extends GetxController with GetSingleTickerProvider
 
     //check if params available for continuation
     //tab browse endpoint & top result stored in [artistData], tabContent & addtionalParams for continuation stored in Separated Content
-    if ((artistData[tabName]).containsKey("params")) {
+    if ((artistData[tabName]).containsKey('params')) {
       sepataredContent[tabName] = await musicServices.getArtistRealtedContent(artistData[tabName], tabName);
     } else {
-      sepataredContent[tabName] = {"results": artistData[tabName]['content']};
+      sepataredContent[tabName] = {'results': artistData[tabName]['content']};
       isSeparatedArtistContentFetced.value = true;
       return;
     }
@@ -156,11 +156,11 @@ class ArtistScreenController extends GetxController with GetSingleTickerProvider
     if (sepataredContent[title] == null) {
       return;
     }
-    if (title == "Songs" || title == "Videos") {
+    if (title == 'Songs' || title == 'Videos') {
       final songlist = sepataredContent[title]['results'].toList();
       sortSongsNVideos(songlist, sortType, isAscending);
       sepataredContent[title]['results'] = songlist;
-    } else if (title == "Albums" || title == "Singles") {
+    } else if (title == 'Albums' || title == 'Singles') {
       final albumList = sepataredContent[title]['results'].toList();
       sortAlbumNSingles(albumList, sortType, isAscending);
       sepataredContent[title]['results'] = albumList;
@@ -169,12 +169,12 @@ class ArtistScreenController extends GetxController with GetSingleTickerProvider
   }
 
   void onSearchStart(String? tag) {
-    final title = tag?.split("_")[0];
+    final title = tag?.split('_')[0];
     tempListContainer[title!] = sepataredContent[title]['results'].toList();
   }
 
   void onSearch(String value, String? tag) {
-    final title = tag?.split("_")[0];
+    final title = tag?.split('_')[0];
     final list = tempListContainer[title]!
         .where((element) => element.title.toLowerCase().contains(value.toLowerCase()))
         .toList();
@@ -183,7 +183,7 @@ class ArtistScreenController extends GetxController with GetSingleTickerProvider
   }
 
   void onSearchClose(String? tag) {
-    final title = tag?.split("_")[0];
+    final title = tag?.split('_')[0];
     sepataredContent[title]['results'] = (tempListContainer[title]!).toList();
     sepataredContent.refresh();
     (tempListContainer[title]!).clear();
@@ -195,7 +195,7 @@ class ArtistScreenController extends GetxController with GetSingleTickerProvider
 
   void startAdditionalOperation(SortWidgetController sortWidgetController_, OperationMode mode) {
     sortWidgetController = sortWidgetController_;
-    final tabName = ["About", "Songs", "Videos", "Albums", "Singles"][navigationRailCurrentIndex.value];
+    final tabName = ['About', 'Songs', 'Videos', 'Albums', 'Singles'][navigationRailCurrentIndex.value];
     additionalOperationTempList.value = sepataredContent[tabName]['results'].toList();
     if (mode == OperationMode.addToPlaylist || mode == OperationMode.delete) {
       for (int i = 0; i < additionalOperationTempList.length; i++) {

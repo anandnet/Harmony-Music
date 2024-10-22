@@ -30,7 +30,7 @@ class GesturePlayer extends StatelessWidget {
                   ? CachedNetworkImage(
                       errorWidget: (context, url, error) {
                         final imgFile = File(
-                            "${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${playerController.currentSong.value!.id}.png");
+                            '${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${playerController.currentSong.value!.id}.png');
                         if (imgFile.existsSync()) {
                           themeController.setTheme(FileImage(imgFile), playerController.currentSong.value!.id);
                           return Image.file(imgFile);
@@ -49,7 +49,7 @@ class GesturePlayer extends StatelessWidget {
                         );
                       },
                       imageUrl: Thumbnail(playerController.currentSong.value!.artUri.toString()).sizeWidth(544),
-                      cacheKey: "${playerController.currentSong.value!.id}_pl_song",
+                      cacheKey: '${playerController.currentSong.value!.id}_pl_song',
                     )
                   : Container(),
             ),
@@ -126,11 +126,11 @@ class GesturePlayer extends StatelessWidget {
                                 return Marquee(
                                   delay: const Duration(milliseconds: 300),
                                   duration: const Duration(seconds: 10),
-                                  id: "${playerController.currentSong.value}_title",
+                                  id: '${playerController.currentSong.value}_title',
                                   child: Text(
                                     playerController.currentSong.value != null
                                         ? playerController.currentSong.value!.title
-                                        : "NA",
+                                        : 'NA',
                                     textAlign: TextAlign.start,
                                     style: Theme.of(context)
                                         .textTheme
@@ -146,11 +146,11 @@ class GesturePlayer extends StatelessWidget {
                                 return Marquee(
                                   delay: const Duration(milliseconds: 300),
                                   duration: const Duration(seconds: 10),
-                                  id: "${playerController.currentSong.value}_subtitle",
+                                  id: '${playerController.currentSong.value}_subtitle',
                                   child: Text(
                                     playerController.currentSong.value != null
                                         ? controller.currentSong.value!.artist!
-                                        : "NA",
+                                        : 'NA',
                                     textAlign: TextAlign.start,
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context).textTheme.titleSmall!.copyWith(

@@ -16,9 +16,9 @@ class ThemeController extends GetxController {
   ThemeController() {
     systemBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
-    primaryColor.value = Color(Hive.box('appPrefs').get("themePrimaryColor"));
+    primaryColor.value = Color(Hive.box('appPrefs').get('themePrimaryColor'));
 
-    changeThemeModeType(ThemeType.values[Hive.box('appPrefs').get("themeModeType")]);
+    changeThemeModeType(ThemeType.values[Hive.box('appPrefs').get('themeModeType')]);
 
     _listenSystemBrightness();
 
@@ -29,7 +29,7 @@ class ThemeController extends GetxController {
     final platformDispatcher = WidgetsBinding.instance.platformDispatcher;
     platformDispatcher.onPlatformBrightnessChanged = () {
       systemBrightness = platformDispatcher.platformBrightness;
-      changeThemeModeType(ThemeType.values[Hive.box('appPrefs').get("themeModeType")], sysCall: true);
+      changeThemeModeType(ThemeType.values[Hive.box('appPrefs').get('themeModeType')], sysCall: true);
     };
   }
 
@@ -63,7 +63,7 @@ class ThemeController extends GetxController {
     themedata.value = _createThemeData(primarySwatch, ThemeType.dynamic,
         textColor: textColor.value, titleColorSwatch: _createMaterialColor(textColor.value));
     currentSongId = songId;
-    Hive.box('appPrefs').put("themePrimaryColor", (primaryColor.value!).value);
+    Hive.box('appPrefs').put('themePrimaryColor', (primaryColor.value!).value);
   }
 
   ThemeData _createThemeData(MaterialColor? primarySwatch, ThemeType themeType,
@@ -293,15 +293,15 @@ extension ColorWithHSL on Color {
   HSLColor get hsl => HSLColor.fromColor(this);
 
   Color withSaturation(double saturation) {
-    return hsl.withSaturation(clampDouble(saturation, 0.0, 1.0)).toColor();
+    return hsl.withSaturation(clampDouble(saturation, 0, 1)).toColor();
   }
 
   Color withLightness(double lightness) {
-    return hsl.withLightness(clampDouble(lightness, 0.0, 1.0)).toColor();
+    return hsl.withLightness(clampDouble(lightness, 0, 1)).toColor();
   }
 
   Color withHue(double hue) {
-    return hsl.withHue(clampDouble(hue, 0.0, 360.0)).toColor();
+    return hsl.withHue(clampDouble(hue, 0, 360)).toColor();
   }
 }
 

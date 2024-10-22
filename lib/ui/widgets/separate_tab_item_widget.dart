@@ -57,20 +57,20 @@ class SeparateTabItemWidget extends StatelessWidget {
                           onPressed: () {
                             searchResController!.viewAllCallback(title);
                           },
-                          child: Text("viewAll".tr, style: Theme.of(Get.context!).textTheme.titleSmall))
+                          child: Text('viewAll'.tr, style: Theme.of(Get.context!).textTheme.titleSmall))
                 ],
               ),
             ),
           isCompleteList
               ? Obx(() => SortWidget(
-                    tag: "${title}_$artistControllerTag",
-                    isAdditionalOperationRequired: artistController != null && (title == "Songs" || title == "Videos"),
+                    tag: '${title}_$artistControllerTag',
+                    isAdditionalOperationRequired: artistController != null && (title == 'Songs' || title == 'Videos'),
                     isSearchFeatureRequired: artistController != null,
                     titleLeftPadding: 9,
                     itemCountTitle:
                         "${isResultWidget ? (searchResController?.separatedResultContent[title] ?? []).length : (artistController?.sepataredContent[title] != null ? artistController?.sepataredContent[title]['results'] : []).length} ${"items".tr}",
                     requiredSortTypes: buildSortTypeSet(
-                        title == 'Albums' || title == "Singles", title == "Songs" || title == "Videos"),
+                        title == 'Albums' || title == 'Singles', title == 'Songs' || title == 'Videos'),
                     onSort: (type, ascending) {
                       isResultWidget
                           ? searchResController!.onSort(type, ascending, title)

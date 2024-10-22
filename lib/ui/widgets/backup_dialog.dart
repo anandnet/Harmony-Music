@@ -27,11 +27,11 @@ class BackupDialog extends StatelessWidget {
         padding: const EdgeInsets.only(top: 20, bottom: 30, left: 20, right: 20),
         child: Stack(
           children: [
-            Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Column(children: [
               Container(
-                padding: const EdgeInsets.only(bottom: 10.0, top: 10),
+                padding: const EdgeInsets.only(bottom: 10, top: 10),
                 child: Text(
-                  "backupAppData".tr,
+                  'backupAppData'.tr,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -52,20 +52,20 @@ class BackupDialog extends StatelessWidget {
                         children: [
                           Obx(() => Text(
                                 backupDialogController.scanning.isTrue
-                                    ? "scanning".tr
+                                    ? 'scanning'.tr
                                     : backupDialogController.backupRunning.isTrue
-                                        ? "backupInProgress".tr
+                                        ? 'backupInProgress'.tr
                                         : backupDialogController.isbackupCompleted.isTrue
-                                            ? "backupMsg".tr
-                                            : "letsStrart".tr,
+                                            ? 'backupMsg'.tr
+                                            : 'letsStrart'.tr,
                                 textAlign: TextAlign.center,
                               )),
                           if (GetPlatform.isAndroid)
                             Obx(() => (backupDialogController.isDownloadedfilesSeclected.isTrue)
                                 ? Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
+                                    padding: const EdgeInsets.only(top: 8),
                                     child: Text(
-                                      "androidBackupWarning".tr,
+                                      'androidBackupWarning'.tr,
                                       textAlign: TextAlign.center,
                                       style:
                                           Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold),
@@ -80,7 +80,7 @@ class BackupDialog extends StatelessWidget {
               ),
               if (!GetPlatform.isDesktop)
                 Obx(() => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                         Checkbox(
                           value: backupDialogController.isDownloadedfilesSeclected.value,
@@ -93,7 +93,7 @@ class BackupDialog extends StatelessWidget {
                                   backupDialogController.isDownloadedfilesSeclected.value = value!;
                                 },
                         ),
-                        Text("includeDownloadedFiles".tr),
+                        Text('includeDownloadedFiles'.tr),
                       ]),
                     )),
               SizedBox(
@@ -118,10 +118,10 @@ class BackupDialog extends StatelessWidget {
                             height: 40,
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                             child: Obx(
                               () => Text(
-                                backupDialogController.isbackupCompleted.isTrue ? "close".tr : "backup".tr,
+                                backupDialogController.isbackupCompleted.isTrue ? 'close'.tr : 'backup'.tr,
                                 style: TextStyle(color: Theme.of(context).canvasColor),
                               ),
                             ),
@@ -153,10 +153,10 @@ class BackupDialogController extends GetxController {
     filesToExport.addAll(await processDirectoryInIsolate(dbDir));
     if (isDownloadedfilesSeclected.value) {
       List<String> downlodedSongFilePaths =
-          Hive.box("SongDownloads").values.map<String>((data) => data['url']).toList();
+          Hive.box('SongDownloads').values.map<String>((data) => data['url']).toList();
       filesToExport.addAll(downlodedSongFilePaths);
       try {
-        filesToExport.addAll(await processDirectoryInIsolate("$supportDirPath/thumbnails", extensionFilter: ".png"));
+        filesToExport.addAll(await processDirectoryInIsolate('$supportDirPath/thumbnails', extensionFilter: '.png'));
       } catch (e) {
         printERROR(e);
       }
@@ -173,7 +173,7 @@ class BackupDialogController extends GetxController {
     }
 
     final String? pickedFolderPath =
-        await FilePicker.platform.getDirectoryPath(dialogTitle: "Select backup file folder");
+        await FilePicker.platform.getDirectoryPath(dialogTitle: 'Select backup file folder');
     if (pickedFolderPath == '/' || pickedFolderPath == null) {
       return;
     }
@@ -184,10 +184,9 @@ class BackupDialogController extends GetxController {
     scanning.value = false;
 
     backupRunning.value = true;
-    final exportDirPath = pickedFolderPath.toString();
+    final exportDirPath = pickedFolderPath;
 
-    compressFilesInBackground(filesToExport, '$exportDirPath/${DateTime.now().millisecondsSinceEpoch.toString()}.hmb')
-        .then((_) {
+    compressFilesInBackground(filesToExport, '$exportDirPath/${DateTime.now().millisecondsSinceEpoch}.hmb').then((_) {
       backupRunning.value = false;
       isbackupCompleted.value = true;
     }).catchError((e) {
@@ -269,11 +268,11 @@ Future<void> compressFilesInBackground(List<String> filePaths, String zipFilePat
   });
 }
 
-Future<List<String>> processDirectoryInIsolate(String dbDir, {String extensionFilter = ".hive"}) async {
+Future<List<String>> processDirectoryInIsolate(String dbDir, {String extensionFilter = '.hive'}) async {
   // Use Isolate.run to execute the function in a new isolate
   return await Isolate.run(() async {
     // List files in the directory
-    final filesEntityList = await Directory(dbDir).list(recursive: false).toList();
+    final filesEntityList = await Directory(dbDir).list().toList();
 
     // Filter out .hive files
     final filesPath = filesEntityList

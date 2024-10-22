@@ -92,13 +92,13 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                                   .whenComplete(() {
                                                 if (context.mounted) {
                                                   ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                                                      context, "songEnqueueAlert".tr,
+                                                      context, 'songEnqueueAlert'.tr,
                                                       size: SanckBarSize.MEDIUM));
                                                 }
                                               });
                                             },
                                             child: Text(
-                                              "enqueueAll".tr,
+                                              'enqueueAll'.tr,
                                               style: Theme.of(context).textTheme.titleSmall,
                                             ),
                                           ),
@@ -138,12 +138,12 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                                     value
                                                         ? add
                                                             ? playListNAlbumScreenController.isAlbum
-                                                                ? "albumBookmarkAddAlert".tr
-                                                                : "playlistBookmarkAddAlert".tr
+                                                                ? 'albumBookmarkAddAlert'.tr
+                                                                : 'playlistBookmarkAddAlert'.tr
                                                             : playListNAlbumScreenController.isAlbum
-                                                                ? "albumBookmarkRemoveAlert".tr
-                                                                : "playlistBookmarkRemoveAlert".tr
-                                                        : "operationFailed".tr,
+                                                                ? 'albumBookmarkRemoveAlert'.tr
+                                                                : 'playlistBookmarkRemoveAlert'.tr
+                                                        : 'operationFailed'.tr,
                                                     size: SanckBarSize.MEDIUM));
                                               });
                                             },
@@ -171,7 +171,7 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                             Get.find<LibraryPlaylistsController>()
                                                 .blacklistPipedPlaylist(content as Playlist);
                                             ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-                                                Get.context!, "playlistBlacklistAlert".tr,
+                                                Get.context!, 'playlistBlacklistAlert'.tr,
                                                 size: SanckBarSize.MEDIUM));
                                           }),
                                     IconButton(
@@ -179,12 +179,12 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                         splashRadius: 10,
                                         onPressed: () {
                                           if (playListNAlbumScreenController.isAlbum) {
-                                            Share.share("https://youtube.com/playlist?list=${content.audioPlaylistId}");
+                                            Share.share('https://youtube.com/playlist?list=${content.audioPlaylistId}');
                                           } else if (content.isPipedPlaylist) {
-                                            Share.share("https://piped.video/playlist?list=${content.playlistId}");
+                                            Share.share('https://piped.video/playlist?list=${content.playlistId}');
                                           } else {
-                                            final isPlaylistIdPrefixAvlbl = content.playlistId.substring(0, 2) == "VL";
-                                            String url = "https://youtube.com/playlist?list=";
+                                            final isPlaylistIdPrefixAvlbl = content.playlistId.substring(0, 2) == 'VL';
+                                            String url = 'https://youtube.com/playlist?list=';
 
                                             url = isPlaylistIdPrefixAvlbl
                                                 ? url + content.playlistId.substring(2)
@@ -216,7 +216,7 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                                     children: [
                                                       Center(
                                                           child: Text(
-                                                              "${controller.playlistDownloadingProgress.value}/${playListNAlbumScreenController.songList.length}",
+                                                              '${controller.playlistDownloadingProgress.value}/${playListNAlbumScreenController.songList.length}',
                                                               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                                                   fontSize: 10, fontWeight: FontWeight.bold))),
                                                       const Center(
@@ -276,7 +276,11 @@ class OnlinePlaylistHeader extends StatelessWidget {
 }
 
 class OfflinePlaylistHeader extends StatelessWidget {
-  const OfflinePlaylistHeader({super.key, required this.content, required this.tag});
+  const OfflinePlaylistHeader({
+    required this.content,
+    required this.tag,
+    super.key,
+  });
 
   final dynamic content;
   final String tag;
@@ -298,10 +302,10 @@ class OfflinePlaylistHeader extends StatelessWidget {
         ),
         ((!playListNAlbumScreenController.isAlbum &&
                     !content.isCloudPlaylist &&
-                    content.playlistId != "LIBFAV" &&
-                    content.playlistId != "SongsCache" &&
-                    content.playlistId != "LIBRP" &&
-                    content.playlistId != "SongDownloads") ||
+                    content.playlistId != 'LIBFAV' &&
+                    content.playlistId != 'SongsCache' &&
+                    content.playlistId != 'LIBRP' &&
+                    content.playlistId != 'SongDownloads') ||
                 (!playListNAlbumScreenController.isAlbum && content.isPipedPlaylist))
             ? Row(
                 children: [
@@ -323,7 +327,7 @@ class OfflinePlaylistHeader extends StatelessWidget {
                                         children: [
                                           Center(
                                               child: Text(
-                                                  "${controller.playlistDownloadingProgress.value}/${playListNAlbumScreenController.songList.length}",
+                                                  '${controller.playlistDownloadingProgress.value}/${playListNAlbumScreenController.songList.length}',
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .titleMedium!
@@ -367,7 +371,7 @@ class OfflinePlaylistHeader extends StatelessWidget {
                               children: [
                                 ListTile(
                                   leading: const Icon(Icons.edit_rounded),
-                                  title: Text("renamePlaylist".tr),
+                                  title: Text('renamePlaylist'.tr),
                                   onTap: () {
                                     Navigator.of(context).pop();
                                     showDialog(
@@ -379,7 +383,7 @@ class OfflinePlaylistHeader extends StatelessWidget {
                                 ),
                                 ListTile(
                                   leading: const Icon(Icons.delete_rounded),
-                                  title: Text("removePlaylist".tr),
+                                  title: Text('removePlaylist'.tr),
                                   onTap: () {
                                     Navigator.of(context).pop();
                                     playListNAlbumScreenController
@@ -387,7 +391,7 @@ class OfflinePlaylistHeader extends StatelessWidget {
                                         .then((value) {
                                       Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
                                       ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-                                          Get.context!, value ? "playlistRemovedAlert".tr : "operationFailed".tr,
+                                          Get.context!, value ? 'playlistRemovedAlert'.tr : 'operationFailed'.tr,
                                           size: SanckBarSize.MEDIUM));
                                     });
                                   },

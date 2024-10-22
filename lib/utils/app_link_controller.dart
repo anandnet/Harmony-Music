@@ -55,36 +55,36 @@ mixin ProcessLink {
       Navigator.of(Get.context!).pop();
     }
 
-    if (uri.host == "youtube.com" ||
-        uri.host == "music.youtube.com" ||
-        uri.host == "youtu.be" ||
-        uri.host == "www.youtube.com" ||
-        uri.host == "m.youtube.com") {
-      printINFO("pathsegmet: ${uri.pathSegments} params:${uri.queryParameters}");
-      if (uri.pathSegments[0] == "playlist" && uri.queryParameters.containsKey("list")) {
+    if (uri.host == 'youtube.com' ||
+        uri.host == 'music.youtube.com' ||
+        uri.host == 'youtu.be' ||
+        uri.host == 'www.youtube.com' ||
+        uri.host == 'm.youtube.com') {
+      printINFO('pathsegmet: ${uri.pathSegments} params:${uri.queryParameters}');
+      if (uri.pathSegments[0] == 'playlist' && uri.queryParameters.containsKey('list')) {
         final browseId = uri.queryParameters['list'];
         await openPlaylistOrAlbum(browseId!);
-      } else if (uri.pathSegments[0] == "shorts") {
+      } else if (uri.pathSegments[0] == 'shorts') {
         ScaffoldMessenger.of(Get.context!)
-            .showSnackBar(snackbar(Get.context!, "notaSongVideo".tr, size: SanckBarSize.MEDIUM));
-      } else if (uri.pathSegments[0] == "watch") {
+            .showSnackBar(snackbar(Get.context!, 'notaSongVideo'.tr, size: SanckBarSize.MEDIUM));
+      } else if (uri.pathSegments[0] == 'watch') {
         final songId = uri.queryParameters['v'];
         await playSong(songId!);
-      } else if (uri.pathSegments[0] == "channel") {
+      } else if (uri.pathSegments[0] == 'channel') {
         final browseId = uri.pathSegments[1];
         await openArtist(browseId);
-      } else if ((uri.queryParameters.isEmpty || uri.query.contains("si=")) && uri.host == "youtu.be") {
+      } else if ((uri.queryParameters.isEmpty || uri.query.contains('si=')) && uri.host == 'youtu.be') {
         final songId = uri.pathSegments[0];
         await playSong(songId);
       }
     } else {
       ScaffoldMessenger.of(Get.context!)
-          .showSnackBar(snackbar(Get.context!, "notaValidLink".tr, size: SanckBarSize.MEDIUM));
+          .showSnackBar(snackbar(Get.context!, 'notaValidLink'.tr, size: SanckBarSize.MEDIUM));
     }
   }
 
   Future<void> openPlaylistOrAlbum(String browseId) async {
-    if (browseId.contains("OLAK5uy")) {
+    if (browseId.contains('OLAK5uy')) {
       Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
           id: ScreenNavigationSetup.id, arguments: [true, browseId, true]);
     } else {
@@ -111,7 +111,7 @@ mixin ProcessLink {
       Get.find<PlayerController>().playPlayListSong(List.from(result[1]), 0);
     } else {
       ScaffoldMessenger.of(Get.context!)
-          .showSnackBar(snackbar(Get.context!, "notaSongVideo".tr, size: SanckBarSize.MEDIUM));
+          .showSnackBar(snackbar(Get.context!, 'notaSongVideo'.tr, size: SanckBarSize.MEDIUM));
     }
   }
 }

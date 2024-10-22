@@ -2,16 +2,15 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/playlist.dart';
+import 'package:harmonymusic/ui/navigator.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/add_to_playlist.dart';
+import 'package:harmonymusic/ui/widgets/image_widget.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
+import 'package:harmonymusic/ui/widgets/songinfo_bottom_sheet.dart';
 import 'package:widget_marquee/widget_marquee.dart';
-
-import '/ui/screens/Settings/settings_screen_controller.dart';
-import '/ui/widgets/snackbar.dart';
-import '../../models/playlist.dart';
-import '../navigator.dart';
-import '../player/player_controller.dart';
-import 'add_to_playlist.dart';
-import 'image_widget.dart';
-import 'songinfo_bottom_sheet.dart';
 
 class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
   const ListWidget(this.items, this.title, this.isCompleteList,
@@ -33,12 +32,12 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
       return Expanded(
         child: Center(
           child: Text(
-            "No ${title.toLowerCase().tr}!",
+            'No ${title.toLowerCase().tr}!',
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
       );
-    } else if (title == "Videos" || title.contains("Songs")) {
+    } else if (title == 'Videos' || title.contains('Songs')) {
       return isCompleteList
           ? Expanded(
               child: listViewSongVid(items,
@@ -47,9 +46,9 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
               height: items.length * 75.0,
               child: listViewSongVid(items),
             );
-    } else if (title.contains("playlists")) {
+    } else if (title.contains('playlists')) {
       return listViewPlaylists(items, sc: scrollController);
-    } else if (title == "Albums" || title == "Singles") {
+    } else if (title == 'Albums' || title == 'Singles') {
       return listViewAlbums(items, sc: scrollController);
     } else if (title.contains('Artists')) {
       return isCompleteList
@@ -107,7 +106,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
               playerController.enqueueSong(items[index] as MediaItem).whenComplete(() {
                 if (!context.mounted) return;
                 ScaffoldMessenger.of(context)
-                    .showSnackBar(snackbar(context, "songEnqueueAlert".tr, size: SanckBarSize.MEDIUM));
+                    .showSnackBar(snackbar(context, 'songEnqueueAlert'.tr, size: SanckBarSize.MEDIUM));
               });
             },
             backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -166,7 +165,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
             ),
           ),
           subtitle: Text(
-            "${items[index].artist}",
+            '${items[index].artist}',
             maxLines: 1,
             style: Theme.of(context).textTheme.titleSmall,
           ),
@@ -185,7 +184,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
                             )
                           : const SizedBox.shrink()),
                     Text(
-                      items[index].extras!['length'] ?? "",
+                      items[index].extras!['length'] ?? '',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ],
@@ -232,8 +231,8 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
           itemBuilder: (context, index) => wideListTile(context,
               playlist: playlists[index],
               title: playlists[index].title,
-              subtitle: playlists[index]?.description ?? "NA",
-              subtitle2: "")),
+              subtitle: playlists[index]?.description ?? 'NA',
+              subtitle2: '')),
     );
   }
 
@@ -249,7 +248,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
           itemExtent: 120,
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
-            String artistName = "";
+            String artistName = '';
             for (dynamic items in (albums[index].artists).sublist(1)) {
               artistName = "${artistName + items['name']},";
             }

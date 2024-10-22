@@ -113,7 +113,7 @@ Future<void> startApplicationServices() async {
   }
 }
 
-initHive() async {
+Future<void> initHive() async {
   String applicationDataDirectoryPath;
   if (GetPlatform.isDesktop) {
     applicationDataDirectoryPath = '${(await getApplicationSupportDirectory()).path}/db';

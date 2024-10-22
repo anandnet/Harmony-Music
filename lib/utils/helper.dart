@@ -5,19 +5,19 @@ import 'package:get/get.dart';
 import '/ui/navigator.dart';
 import '/ui/widgets/sort_widget.dart';
 
-void printERROR(dynamic text, {String tag = "Harmony Music"}) {
+void printERROR(dynamic text, {String tag = 'Harmony Music'}) {
   if (kReleaseMode) return;
-  debugPrint("\x1B[31m[$tag]: $text\x1B[0m");
+  debugPrint('\x1B[31m[$tag]: $text\x1B[0m');
 }
 
 void printWarning(dynamic text, {String tag = 'Harmony Music'}) {
   if (kReleaseMode) return;
-  debugPrint("\x1B[33m[$tag]: $text\x1B[34m");
+  debugPrint('\x1B[33m[$tag]: $text\x1B[34m');
 }
 
 void printINFO(dynamic text, {String tag = 'Harmony Music'}) {
   if (kReleaseMode) return;
-  debugPrint("\x1B[32m[$tag]: $text\x1B[34m");
+  debugPrint('\x1B[32m[$tag]: $text\x1B[34m');
 }
 
 String? getCurrentRouteName() {
@@ -159,10 +159,10 @@ void sortArtist(
 /// Return true if new version available
 Future<bool> newVersionCheck(String currentVersion) async {
   try {
-    final tags = (await Dio().get("https://api.github.com/repos/anandnet/Harmony-Music/tags")).data;
+    final tags = (await Dio().get('https://api.github.com/repos/anandnet/Harmony-Music/tags')).data;
     final availableVersion = tags[0]['name'] as String;
-    List currentVersion_ = currentVersion.substring(1).split(".");
-    List availableVersion_ = availableVersion.substring(1).split(".");
+    List currentVersion_ = currentVersion.substring(1).split('.');
+    List availableVersion_ = availableVersion.substring(1).split('.');
     if (int.parse(availableVersion_[0]) > int.parse(currentVersion_[0])) {
       return true;
     } else if (int.parse(availableVersion_[1]) > int.parse(currentVersion_[1]) &&
@@ -182,5 +182,5 @@ Future<bool> newVersionCheck(String currentVersion) async {
 String getTimeString(Duration time) {
   final minutes = time.inMinutes.remainder(Duration.minutesPerHour).toString();
   final seconds = time.inSeconds.remainder(Duration.secondsPerMinute).toString().padLeft(2, '0');
-  return time.inHours > 0 ? "${time.inHours}:${minutes.padLeft(2, "0")}:$seconds" : "$minutes:$seconds";
+  return time.inHours > 0 ? "${time.inHours}:${minutes.padLeft(2, "0")}:$seconds" : '$minutes:$seconds';
 }

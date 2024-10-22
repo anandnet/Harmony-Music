@@ -574,6 +574,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
+  json2dart_safe:
+    dependency: "direct main"
+    description:
+      name: json2dart_safe
+      sha256: c53e7c62e6fef0b3723c2bb2a34485da41e373dfbad169e999f7088d723e6449
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.8"
   json_annotation:
     dependency: transitive
     description:

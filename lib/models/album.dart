@@ -14,18 +14,19 @@ class AlbumContent {
 }
 
 class Album {
-  Album(
-      {required this.title,
-      required this.browseId,
-      required this.artists,
-      this.year,
-      this.description,
-      this.audioPlaylistId,
-      required this.thumbnailUrl});
+  Album({
+    required this.title,
+    required this.browseId,
+    required this.artists,
+    required this.thumbnailUrl,
+    this.year,
+    this.description,
+    this.audioPlaylistId,
+  });
 
   final String browseId;
   final String? audioPlaylistId;
-  final String title;
+  String title;
   final String? description;
   final List<Map<dynamic, dynamic>>? artists;
   final String? year;

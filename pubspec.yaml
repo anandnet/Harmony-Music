@@ -57,6 +57,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   ionicons: ^0.2.2
+  json2dart_safe: ^1.5.8
   just_audio: ^0.9.40
   just_audio_media_kit:
     git:

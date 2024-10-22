@@ -26,6 +26,19 @@ class Artist {
               : json['subscribers']['text'],
       thumbnailUrl: Thumbnail(json['thumbnails'][0]['url']).high);
 
+  /*
+    Artist.fromJson(Map json) {
+    name = json.asString('artist');
+    browseId = json.asString('browseId');
+    radioId = json.asString('radioId');
+    subscribers = json.asString('subscribers');
+    List tempList = json['thumbnails'];
+
+    /// check condition if tempList[] as Map as List
+    thumbnailUrl = json.asString(Thumbnail((tempList[0] as Map)['url']).high);
+  }
+   */
+
   Map<String, dynamic> toJson() => {
         'artist': name,
         'browseId': browseId,

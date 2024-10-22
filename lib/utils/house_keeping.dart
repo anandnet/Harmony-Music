@@ -15,7 +15,7 @@ void startHouseKeeping() {
 
 Future<void> removeExpiredSongsUrlFromDb() async {
   try {
-    final songsUrlCacheBox = Hive.box("SongsUrlCache");
+    final songsUrlCacheBox = Hive.box('SongsUrlCache');
     final songsUrlCacheKeysList = songsUrlCacheBox.keys.whereType<String>().toList();
     for (var i = 0; i < songsUrlCacheKeysList.length; i++) {
       final songUrlKey = songsUrlCacheKeysList[i];
@@ -27,7 +27,7 @@ Future<void> removeExpiredSongsUrlFromDb() async {
       }
     }
   } catch (e) {
-    printERROR("Error in removeExpiredSongsUrlFromDb: $e");
+    printERROR('Error in removeExpiredSongsUrlFromDb: $e');
   } finally {
     removeDeletedOfflineSongsFromDb();
   }
@@ -36,7 +36,7 @@ Future<void> removeExpiredSongsUrlFromDb() async {
 Future<void> removeDeletedOfflineSongsFromDb() async {
   final supportDir = (await getApplicationSupportDirectory()).path;
   try {
-    final songDownloadsBox = Hive.box("SongDownloads");
+    final songDownloadsBox = Hive.box('SongDownloads');
     final downloadedSongs = songDownloadsBox.values.toList();
     final LibrarySongsController librarySongsController = Get.find<LibrarySongsController>();
     for (var i = 0; i < downloadedSongs.length; i++) {
@@ -45,13 +45,13 @@ Future<void> removeDeletedOfflineSongsFromDb() async {
       if (await File(songUrl).exists() == false) {
         await songDownloadsBox.delete(songKey);
         await librarySongsController.removeSong(MediaItemBuilder.fromJson(downloadedSongs[i]), true);
-        final thumbNailPath = "$supportDir/thumbnails/$songKey.png";
+        final thumbNailPath = '$supportDir/thumbnails/$songKey.png';
         if (await File(thumbNailPath).exists()) {
           await File(thumbNailPath).delete();
         }
       }
     }
   } catch (e) {
-    printERROR("Error in removeDeletedOfflineSongsFromDb: $e");
+    printERROR('Error in removeDeletedOfflineSongsFromDb: $e');
   }
 }

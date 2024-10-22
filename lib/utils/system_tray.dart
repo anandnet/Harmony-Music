@@ -26,7 +26,7 @@ class DesktopSystemTray extends GetxService with TrayListener {
     await trayManager.setIcon(path);
 
     // create context menu
-    final Menu menu = Menu(items: [
+    final menu = Menu(items: [
       MenuItem(
         label: 'Show/Hide',
         onClick: (menuItem) async =>

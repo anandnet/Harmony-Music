@@ -3,16 +3,15 @@ import 'dart:io';
 Future<void> generate() async {
   const filename = './lib/utils/get_localization.dart';
 
-  String allLangData = "";
+  String allLangData = '';
 
   var myDir = Directory('./localization');
   myDir.listSync(recursive: true, followLinks: false).forEach((entity) {
-    if (entity.uri.toString().contains("generator")) {
+    if (entity.uri.toString().contains('generator')) {
       return;
     }
     String fileContent = (entity as File).readAsStringSync();
-    allLangData =
-        """$allLangData"${entity.uri.pathSegments.last.split(".")[0]}" : $fileContent,""";
+    allLangData = """$allLangData"${entity.uri.pathSegments.last.split(".")[0]}" : $fileContent,""";
   });
 
   String content = """

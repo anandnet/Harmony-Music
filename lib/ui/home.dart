@@ -76,7 +76,60 @@ class Home extends StatelessWidget {
                       top: 5,
                       bottom: 106,
                     ),
-                    child: SizedBox(
+                    child: sizedBox.child(
+                      column.children([
+                        sizedBox.h60.child(
+                          ColoredBox(
+                            color: Theme.of(context).canvasColor,
+                            child: Center(
+                              child: padding.pl16.pr16.child(
+                                row.spaceBetween.children([
+                                  '${playerController.currentQueue.length} ${'songs'.tr}'.text.mk,
+                                  Text(
+                                    "upNext".tr,
+                                    style: Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                  row.children(
+                                    [
+                                      InkWell(
+                                        onTap: () {
+                                          playerController.toggleQueueLoopMode();
+                                        },
+                                        child: Obx(
+                                          () => Container(
+                                            height: 30,
+                                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                                            decoration: BoxDecoration(
+                                              color: playerController.isQueueLoopModeEnabled.isFalse
+                                                  ? Colors.white24
+                                                  : Colors.white.withOpacity(0.8),
+                                              borderRadius: BorderRadius.circular(20),
+                                            ),
+                                            child: Center(child: Text("queueLoop".tr)),
+                                          ),
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(Icons.shuffle),
+                                      )
+                                    ],
+                                  ),
+                                ]),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: UpNextQueue(
+                            isQueueInSlidePanel: false,
+                          ),
+                        )
+                      ]),
+                    ),
+
+                    /*
+           child: SizedBox(
                       child: Column(
                         children: [
                           SizedBox(
@@ -140,6 +193,7 @@ class Home extends StatelessWidget {
                         ],
                       ),
                     ),
+           */
                   )
                 : null,
             body: Obx(

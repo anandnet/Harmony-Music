@@ -2,25 +2,25 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
 
-import 'package:audio_service/audio_service.dart';
-import 'package:device_equalizer/device_equalizer.dart';
-import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_media_kit/just_audio_media_kit.dart';
-// ignore: unused_import, implementation_imports, depend_on_referenced_packages
-import "package:media_kit/src/player/platform_player.dart" show MPVLogLevel;
 import 'package:path_provider/path_provider.dart';
+import 'package:audio_service/audio_service.dart';
+import 'package:device_equalizer/device_equalizer.dart';
 
-import '/models/media_Item_builder.dart';
-import '/services/background_task.dart';
-import '/services/permission_service.dart';
-import '/services/utils.dart';
 import '/ui/player/player_controller.dart';
 import '../ui/screens/Home/home_screen_controller.dart';
-import '../ui/screens/Library/library_controller.dart';
-import '../ui/screens/Settings/settings_screen_controller.dart';
+import '/services/background_task.dart';
+import '/services/permission_service.dart';
 import '../utils/helper.dart';
+import '/models/media_Item_builder.dart';
+import '/services/utils.dart';
+import '../ui/screens/Settings/settings_screen_controller.dart';
+import '../ui/screens/Library/library_controller.dart';
+// ignore: unused_import, implementation_imports, depend_on_referenced_packages
+import "package:media_kit/src/player/platform_player.dart" show MPVLogLevel;
 
 Future<AudioHandler> initAudioService() async {
   return await AudioService.init(
@@ -39,7 +39,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   // ignore: prefer_typing_uninitialized_variables
   late final _cacheDir;
   late AudioPlayer _player;
-
   // ignore: prefer_typing_uninitialized_variables
   dynamic currentIndex;
   int currentShuffleIndex = 0;
@@ -49,11 +48,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   bool queueLoopModeEnabled = false;
   bool shuffleModeEnabled = false;
   bool loudnessNormalizationEnabled = false;
-
   // var networkErrorPause = false;
   bool isSongLoading = true;
   DeviceEqualizer? deviceEqualizer;
-
   // list of shuffled queue songs ids
   List<String> shuffledQueue = [];
 

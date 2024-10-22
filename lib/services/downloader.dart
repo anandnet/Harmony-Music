@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audio_service/audio_service.dart';
-import 'package:audiotags/audiotags.dart';
 import 'package:dio/dio.dart';
+import 'package:audiotags/audiotags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -11,12 +11,12 @@ import 'package:harmonymusic/ui/screens/PlaylistNAlbum/playlistnalbum_screen_con
 import 'package:hive/hive.dart';
 import 'package:player_response/player_response.dart';
 
-import '/models/media_Item_builder.dart';
-import '/services/permission_service.dart';
-import '/utils/helper.dart';
-import '../ui/screens/Library/library_controller.dart';
-import '../ui/screens/Settings/settings_screen_controller.dart';
 import '../ui/widgets/snackbar.dart';
+import '/services/permission_service.dart';
+import '../ui/screens/Settings/settings_screen_controller.dart';
+import '/utils/helper.dart';
+import '/models/media_Item_builder.dart';
+import '../ui/screens/Library/library_controller.dart';
 //import '../models/thumbnail.dart' as th;
 
 class Downloader extends GetxService {

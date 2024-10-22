@@ -4,12 +4,12 @@ import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '/services/music_service.dart';
-import '/ui/player/player_controller.dart';
 import '/ui/widgets/songinfo_bottom_sheet.dart';
 import '/utils/helper.dart';
-import '../ui/navigator.dart';
 import '../ui/widgets/loader.dart';
+import '/services/music_service.dart';
+import '/ui/player/player_controller.dart';
+import '../ui/navigator.dart';
 import '../ui/widgets/snackbar.dart';
 
 class AppLinksController extends GetxController with ProcessLink {

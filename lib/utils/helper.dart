@@ -72,7 +72,6 @@ void sortAlbumNSingles(
   switch (sortType) {
     case SortType.Date:
       compareFunction = (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase());
-      break;
     case SortType.Name:
     default:
       compareFunction = (a, b) {

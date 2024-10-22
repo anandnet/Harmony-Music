@@ -1,13 +1,12 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/media_Item_builder.dart';
+import 'package:harmonymusic/services/utils.dart';
+import 'package:harmonymusic/ui/screens/Library/library_controller.dart';
+import 'package:harmonymusic/utils/helper.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-
-import '/models/media_Item_builder.dart';
-import '/ui/screens/Library/library_controller.dart';
-import '../services/utils.dart';
-import 'helper.dart';
 
 void startHouseKeeping() {
   removeExpiredSongsUrlFromDb();
@@ -38,7 +37,7 @@ Future<void> removeDeletedOfflineSongsFromDb() async {
   try {
     final songDownloadsBox = Hive.box('SongDownloads');
     final downloadedSongs = songDownloadsBox.values.toList();
-    final LibrarySongsController librarySongsController = Get.find<LibrarySongsController>();
+    final librarySongsController = Get.find<LibrarySongsController>();
     for (var i = 0; i < downloadedSongs.length; i++) {
       final songKey = downloadedSongs[i]['videoId'];
       final songUrl = downloadedSongs[i]['url'];

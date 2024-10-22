@@ -218,6 +218,22 @@ packages:
       url: "https://github.com/anandnet/device_equalizer.git"
     source: git
     version: "0.0.1"
+  device_info:
+    dependency: transitive
+    description:
+      name: device_info
+      sha256: f4a8156cb7b7480d969cb734907d18b333c8f0bc0b1ad0b342cdcecf30d62c48
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3"
+  device_info_platform_interface:
+    dependency: transitive
+    description:
+      name: device_info_platform_interface
+      sha256: b148e0bf9640145d09a4f8dea96614076f889e7f7f8b5ecab1c7e5c2dbc73c1b
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   dio:
     dependency: "direct main"
     description:
@@ -266,6 +282,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.1.3"
+  file_utils:
+    dependency: transitive
+    description:
+      name: file_utils
+      sha256: d1e64389a22649095c8405c9e177272caf05139255931c9ff30d53b5c9bcaa34
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   fixnum:
     dependency: transitive
     description:
@@ -343,6 +367,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_lyric:
     dependency: "direct main"
     description:
@@ -412,6 +441,30 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_ume_kit_console_plus:
+    dependency: "direct main"
+    description:
+      name: flutter_ume_kit_console_plus
+      sha256: "7bbfaca49de2150e0253a991aef76b90d18f2e91b54215868fca89f69362300f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
+  flutter_ume_kit_device_plus:
+    dependency: "direct main"
+    description:
+      name: flutter_ume_kit_device_plus
+      sha256: "7a5628fa4e1a28a5e1d11b8dffa373563386fc8308379486118db1d62edad2c8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
+  flutter_ume_plus:
+    dependency: "direct main"
+    description:
+      name: flutter_ume_plus
+      sha256: dbe4b9ba5d5f249a9da241810db1c7b53edf496d5aac46ff9dd4e48b814835ff
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -433,6 +486,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.6.6"
+  globbing:
+    dependency: transitive
+    description:
+      name: globbing
+      sha256: "4f89cfaf6fa74c9c1740a96259da06bd45411ede56744e28017cc534a12b6e2d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   google_fonts:
     dependency: "direct main"
     description:
@@ -489,6 +550,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.3.0"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.19.0"
   ionicons:
     dependency: "direct main"
     description:
@@ -513,6 +582,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.9.0"
+  json_shrink_widget:
+    dependency: transitive
+    description:
+      name: json_shrink_widget
+      sha256: "16bfe99fe42a91c5a9cd5999f2f7003fc8691c96c1181cd5ef7762c5fc0af150"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   just_audio:
     dependency: "direct main"
     description:
@@ -658,6 +735,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  oktoast:
+    dependency: transitive
+    description:
+      name: oktoast
+      sha256: f1366c5c793ddfb8f55bc6fc3e45db43c45debf173b765fb4c5ec096cbdeb84a
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.4.0"
   palette_generator:
     dependency: "direct main"
     description:
@@ -884,6 +969,62 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.1"
+  shared_preferences:
+    dependency: transitive
+    description:
+      name: shared_preferences
+      sha256: "746e5369a43170c25816cc472ee016d3a66bc13fcf430c0bc41ad7b4b2922051"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.2"
+  shared_preferences_android:
+    dependency: transitive
+    description:
+      name: shared_preferences_android
+      sha256: "3b9febd815c9ca29c9e3520d50ec32f49157711e143b7a4ca039eb87e8ade5ab"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.3"
+  shared_preferences_foundation:
+    dependency: transitive
+    description:
+      name: shared_preferences_foundation
+      sha256: "07e050c7cd39bad516f8d64c455f04508d09df104be326d8c02551590a0d513d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.3"
+  shared_preferences_linux:
+    dependency: transitive
+    description:
+      name: shared_preferences_linux
+      sha256: "580abfd40f415611503cae30adf626e6656dfb2f0cee8f465ece7b6defb40f2f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
+  shared_preferences_platform_interface:
+    dependency: transitive
+    description:
+      name: shared_preferences_platform_interface
+      sha256: "57cbf196c486bc2cf1f02b85784932c6094376284b3ad5779d1b1c6c6a816b80"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
+  shared_preferences_web:
+    dependency: transitive
+    description:
+      name: shared_preferences_web
+      sha256: d2ca4132d3946fec2184261726b355836a82c33d7d5b67af32692aff18a4684e
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.2"
+  shared_preferences_windows:
+    dependency: transitive
+    description:
+      name: shared_preferences_windows
+      sha256: "94ef0f72b2d71bc3e700e025db3710911bd51a71cefb65cc609dd0d9a982e3c1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
   shelf:
     dependency: transitive
     description:
@@ -954,6 +1095,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
+  sp_util:
+    dependency: "direct main"
+    description:
+      name: sp_util
+      sha256: "9da43dce5de79c17a787d0626bf01538d63090ca32521200d22a232171c495dc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3"
   sprintf:
     dependency: transitive
     description:
@@ -1034,6 +1183,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.0+3"
+  system_info:
+    dependency: transitive
+    description:
+      name: system_info
+      sha256: cc51ed8a89f1d2d4113e6d578838583884d453242de5180a096ad5e85d476193
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   term_glyph:
     dependency: transitive
     description:
@@ -1082,6 +1239,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  ume_kit_monitor:
+    dependency: "direct main"
+    description:
+      name: ume_kit_monitor
+      sha256: eb51052e078818808e93d958acdd6368b7eb03c20e6225aac3df388ea6415b23
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.6"
   universal_platform:
     dependency: transitive
     description:

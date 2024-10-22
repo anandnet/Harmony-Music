@@ -1,9 +1,16 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_ume_kit_console_plus/flutter_ume_kit_console_plus.dart';
+import 'package:flutter_ume_kit_device_plus/flutter_ume_kit_device_plus.dart';
+import 'package:flutter_ume_plus/flutter_ume_plus.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/navigator.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:ume_kit_monitor/monitor/awesome_monitor.dart';
+import 'package:ume_kit_monitor/monitor/monitor_action_widget.dart';
+import 'package:ume_kit_monitor/monitor_plugin.dart';
 
 import '/ui/screens/Search/search_screen_controller.dart';
 import '/utils/get_localization.dart';
@@ -28,7 +35,13 @@ Future<void> main() async {
   startApplicationServices();
   Get.put<AudioHandler>(await initAudioService(), permanent: true);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  runApp(const MyApp());
+
+  PluginManager.instance
+    ..register(const MonitorPlugin())
+    ..register(const MonitorActionsPlugin())
+    ..register(Console())
+    ..register(const DeviceInfoPanel());
+  runApp(const UMEWidget(enable: true, child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -47,6 +60,22 @@ class MyApp extends StatelessWidget {
       }
       return null;
     });
+
+    Monitor.init(context, actions: [
+      MonitorActionWidget(
+        title: 'DebugPage',
+        onTap: () async {},
+      ),
+    ]);
+
+    /// why cannot retrieve current-route?
+    final currentRoute = Get.currentRoute;
+    debugPrint('current-route: $currentRoute');
+    Monitor.instance.put('page', currentRoute);
+    // Monitor.instance.put('response', 'response-api');
+    // Monitor.instance.put('curl', 'curl-value');
+    Monitor.instance.putsConsole(['contents : $currentRoute']);
+
     return GetX<ThemeController>(builder: (controller) {
       return GetMaterialApp(
           title: 'Harmony Music',
@@ -54,13 +83,10 @@ class MyApp extends StatelessWidget {
           home: const Home(),
           debugShowCheckedModeBanner: false,
           translations: Languages(),
-          locale: Locale(
-              Hive.box("AppPrefs").get('currentAppLanguageCode') ?? "en"),
+          locale: Locale(Hive.box("AppPrefs").get('currentAppLanguageCode') ?? "en"),
           fallbackLocale: const Locale("en"),
           builder: (context, child) {
-            final scale = MediaQuery.of(context)
-                .textScaler
-                .clamp(minScaleFactor: 1.0, maxScaleFactor: 1.1);
+            final scale = MediaQuery.of(context).textScaler.clamp(minScaleFactor: 1.0, maxScaleFactor: 1.1);
             return MediaQuery(
               data: MediaQuery.of(context).copyWith(textScaler: scale),
               child: child!,
@@ -82,6 +108,7 @@ Future<void> startApplicationServices() async {
   Get.lazyPut(() => LibraryArtistsController(), fenix: true);
   Get.lazyPut(() => SettingsScreenController(), fenix: true);
   Get.lazyPut(() => Downloader(), fenix: true);
+
   if (GetPlatform.isDesktop) {
     Get.lazyPut(() => SearchScreenController(), fenix: true);
     Get.put(DesktopSystemTray());
@@ -91,11 +118,9 @@ Future<void> startApplicationServices() async {
 initHive() async {
   String applicationDataDirectoryPath;
   if (GetPlatform.isDesktop) {
-    applicationDataDirectoryPath =
-        "${(await getApplicationSupportDirectory()).path}/db";
+    applicationDataDirectoryPath = "${(await getApplicationSupportDirectory()).path}/db";
   } else {
-    applicationDataDirectoryPath =
-        (await getApplicationDocumentsDirectory()).path;
+    applicationDataDirectoryPath = (await getApplicationDocumentsDirectory()).path;
   }
   await Hive.initFlutter(applicationDataDirectoryPath);
   await Hive.openBox("SongsCache");

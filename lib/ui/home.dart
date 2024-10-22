@@ -90,111 +90,40 @@ class Home extends StatelessWidget {
                                     "upNext".tr,
                                     style: Theme.of(context).textTheme.titleLarge,
                                   ),
-                                  row.children(
-                                    [
-                                      InkWell(
-                                        onTap: () {
-                                          playerController.toggleQueueLoopMode();
-                                        },
-                                        child: Obx(
-                                          () => Container(
-                                            height: 30,
-                                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                                            decoration: BoxDecoration(
-                                              color: playerController.isQueueLoopModeEnabled.isFalse
-                                                  ? Colors.white24
-                                                  : Colors.white.withOpacity(0.8),
-                                              borderRadius: BorderRadius.circular(20),
-                                            ),
-                                            child: Center(child: Text("queueLoop".tr)),
+                                  row.children([
+                                    InkWell(
+                                      onTap: () => playerController.toggleQueueLoopMode(),
+                                      child: Obx(
+                                        () => Container(
+                                          height: 30,
+                                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                                          decoration: BoxDecoration(
+                                            color: playerController.isQueueLoopModeEnabled.isFalse
+                                                ? Colors.white24
+                                                : Colors.white.withOpacity(0.8),
+                                            borderRadius: BorderRadius.circular(20),
                                           ),
+                                          child: Center(child: Text("queueLoop".tr)),
                                         ),
                                       ),
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(Icons.shuffle),
-                                      )
-                                    ],
-                                  ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(Icons.shuffle),
+                                    ),
+                                  ]),
                                 ]),
                               ),
                             ),
                           ),
                         ),
-                        Expanded(
+                        const Expanded(
                           child: UpNextQueue(
                             isQueueInSlidePanel: false,
                           ),
                         )
                       ]),
                     ),
-
-                    /*
-           child: SizedBox(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 60,
-                            child: ColoredBox(
-                              color: Theme.of(context).canvasColor,
-                              child: Center(
-                                  child: Padding(
-                                padding: const EdgeInsets.only(left: 15.0, right: 15),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("${playerController.currentQueue.length} ${"songs".tr}"),
-                                    Text(
-                                      "upNext".tr,
-                                      style: Theme.of(context).textTheme.titleLarge,
-                                    ),
-                                    Row(
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            playerController.toggleQueueLoopMode();
-                                          },
-                                          child: Obx(
-                                            () => Container(
-                                              height: 30,
-                                              padding: const EdgeInsets.symmetric(horizontal: 20),
-                                              decoration: BoxDecoration(
-                                                color: playerController.isQueueLoopModeEnabled.isFalse
-                                                    ? Colors.white24
-                                                    : Colors.white.withOpacity(0.8),
-                                                borderRadius: BorderRadius.circular(20),
-                                              ),
-                                              child: Center(child: Text("queueLoop".tr)),
-                                            ),
-                                          ),
-                                        ),
-                                        IconButton(
-                                            onPressed: () {
-                                              if (playerController.isShuffleModeEnabled.isTrue) {
-                                                ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                                                    context, "queueShufflingDeniedMsg".tr,
-                                                    size: SanckBarSize.BIG));
-                                                return;
-                                              }
-                                              playerController.shuffleQueue();
-                                            },
-                                            icon: const Icon(Icons.shuffle)),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )),
-                            ),
-                          ),
-                          const Expanded(
-                            child: UpNextQueue(
-                              isQueueInSlidePanel: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-           */
                   )
                 : null,
             body: Obx(

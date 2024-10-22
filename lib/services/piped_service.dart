@@ -150,11 +150,13 @@ class Res {
   final int code;
   final String? errorMessage;
   final dynamic response;
+
   Res(this.code, {this.errorMessage, this.response});
 }
 
 class PipedInstance {
   final String name;
   final String apiUrl;
+
   PipedInstance({required this.name, required this.apiUrl});
 }

@@ -48,7 +48,7 @@ class GesturePlayer extends StatelessWidget {
                           fit: BoxFit.cover,
                         );
                       },
-                      imageUrl: Thumbnail(playerController.currentSong.value!.artUri.toString()).sizewith(544),
+                      imageUrl: Thumbnail(playerController.currentSong.value!.artUri.toString()).sizeWidth(544),
                       cacheKey: "${playerController.currentSong.value!.id}_pl_song",
                     )
                   : Container(),

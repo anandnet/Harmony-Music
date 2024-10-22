@@ -1,4 +1,5 @@
 import 'dart:core';
+
 import 'package:player_response/player_response.dart';
 
 //Not in use for now
@@ -27,9 +28,9 @@ import 'package:player_response/player_response.dart';
 // }
 
 Future<List<dynamic>?> getStreamInfo(String songId) async {
-  if (songId.substring(0, 4) == "MPED") {
+  if (songId.substring(0, 4) == 'MPED') {
     songId = songId.substring(4);
   }
-  final playerResponse = (await PlayerResponse.fetch(songId, option: 1));
+  final playerResponse = await PlayerResponse.fetch(songId, option: 1);
   return playerResponse?.hmStreamingData;
 }

@@ -8,10 +8,10 @@ Future<List<dynamic>> getContinuations(
     int limit,
     Future<dynamic> Function(String additionalParams) requestFunc,
     dynamic Function(Map<String, dynamic> continuationContents) parseFunc,
-    {String ctokenPath = "",
+    {String ctokenPath = '',
     bool reloadable = false,
     String? additionalParams_,
-    bool isAdditionparamReturnReq = false}) async {
+    bool isAdditionParamReturnReq = false}) async {
   List<dynamic> items = [];
 
   while ((additionalParams_ != null || results.containsKey('continuations')) && (limit > 0 && items.length < limit)) {
@@ -36,7 +36,7 @@ Future<List<dynamic>> getContinuations(
     }
     items.addAll(contents);
   }
-  if (isAdditionparamReturnReq) {
+  if (isAdditionParamReturnReq) {
     String additionalParam = (reloadable
         ? getReloadableContinuationParams(results)
         : getContinuationParams(results, ctokenPath: ctokenPath));
@@ -53,13 +53,13 @@ Future<List<dynamic>> getValidatedContinuations(
     int perPage,
     Future<dynamic> Function(dynamic additionalParams) requestFunc,
     List<dynamic> Function(Map<String, dynamic> continuationContents) parseFunc,
-    {String ctokenPath = ""}) async {
+    {String ctokenPath = ''}) async {
   List<dynamic> items = [];
 
   while (results.containsKey('continuations') && items.length < limit) {
     String additionalParams = getContinuationParams(results, ctokenPath: ctokenPath);
 
-    Map<String, dynamic> response = await resendRequestUntilParsedResponseIsValid(
+    var response = await resendRequestUntilParsedResponseIsValid(
         requestFunc,
         additionalParams,
         (response) => getParsedContinuationItems(response, parseFunc, continuationType),
@@ -92,7 +92,7 @@ String getReloadableContinuationParams(dynamic results) {
 }
 
 String getContinuationString(dynamic ctoken) {
-  return "&ctoken=$ctoken&continuation=$ctoken";
+  return '&ctoken=$ctoken&continuation=$ctoken';
 }
 
 List<dynamic> getContinuationContents(Map<String, dynamic> continuation, Function parseFunc) {

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '/ui/navigator.dart';
-import '/ui/screens/PlaylistNAlbum/components/playlist_content_section.dart';
-import '/ui/screens/PlaylistNAlbum/components/playlist_header_section.dart';
-import '../../widgets/loader.dart';
-import 'playlistnalbum_screen_controller.dart';
+import 'package:harmonymusic/ui/navigator.dart';
+import 'package:harmonymusic/ui/screens/PlaylistNAlbum/components/playlist_content_section.dart';
+import 'package:harmonymusic/ui/screens/PlaylistNAlbum/components/playlist_header_section.dart';
+import 'package:harmonymusic/ui/screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/loader.dart';
 
 class PlaylistNAlbumScreen extends StatelessWidget {
   ///PlaylistScreen renders playlist content
@@ -52,7 +51,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
               ));
             } else {
               final content = playListNAlbumScreenController.contentRenderer;
-              final isOfflinePlaylist = (!playListNAlbumScreenController.isAlbum && !content.isCloudPlaylist);
+              final isOfflinePlaylist = !playListNAlbumScreenController.isAlbum && !content.isCloudPlaylist;
               final isWiderScreen = MediaQuery.of(context).size.width > 750;
               return Expanded(
                 child: Container(

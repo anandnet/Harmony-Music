@@ -140,7 +140,7 @@ class MusicServices extends getx.GetxService {
 
       parseFunc(contents) => parseMixedContent(contents);
       final x =
-          (await getContinuations(sectionList, 'sectionListContinuation', limit - home.length, requestFunc, parseFunc));
+          await getContinuations(sectionList, 'sectionListContinuation', limit - home.length, requestFunc, parseFunc);
       // inspect(x);
       home.addAll([...x]);
     }
@@ -271,8 +271,8 @@ class MusicServices extends getx.GetxService {
     final reg = RegExp(r'\"MPRE.+?\"');
     final matchs = reg.firstMatch(response.data.toString());
     if (matchs != null) {
-      final x = (matchs[0])!;
-      final res = (x.substring(1)).split('\\')[0];
+      final x = matchs[0]!;
+      final res = x.substring(1).split('\\')[0];
       return res;
     }
     return audioPlaylistId;
@@ -365,7 +365,7 @@ class MusicServices extends getx.GetxService {
 
       int secondSubtitleRunCount = header['secondSubtitle']['runs'].length;
       String count =
-          (((header['secondSubtitle']['runs'][secondSubtitleRunCount % 3]['text']).split(' ')[0]).split(',') as List)
+          (header['secondSubtitle']['runs'][secondSubtitleRunCount % 3]['text'].split(' ')[0].split(',') as List)
               .join();
       int songCount = int.parse(count);
       if (header['secondSubtitle']['runs'].length > 1) {
@@ -386,7 +386,7 @@ class MusicServices extends getx.GetxService {
           playlist['tracks'] = [
             ...(playlist['tracks']),
             ...(await getContinuations(results, 'musicPlaylistShelfContinuation',
-                songsToGet - (playlist['tracks']).length as int, requestFunc, parseFunc))
+                songsToGet - playlist['tracks'].length as int, requestFunc, parseFunc))
           ];
         }
       }
@@ -454,7 +454,7 @@ class MusicServices extends getx.GetxService {
         [];
     return res
         .map<String?>((item) {
-          return (nav(item, ['searchSuggestionRenderer', 'navigationEndpoint', 'searchEndpoint', 'query'])).toString();
+          return nav(item, ['searchSuggestionRenderer', 'navigationEndpoint', 'searchEndpoint', 'query']).toString();
         })
         .whereType<String>()
         .toList();
@@ -466,7 +466,7 @@ class MusicServices extends getx.GetxService {
     data['videoId'] = songId;
     final response = (await _sendRequest('player', data)).data;
     final category = nav(response, ['microformat', 'microformatDataRenderer', 'category']);
-    if (category == 'Music' || (response['videoDetails']).containsKey('musicVideoType')) {
+    if (category == 'Music' || response['videoDetails'].containsKey('musicVideoType')) {
       final list = await getWatchPlaylist(videoId: songId);
       return [true, list['tracks']];
     }
@@ -513,7 +513,7 @@ class MusicServices extends getx.GetxService {
 
     dynamic results;
 
-    if ((response['contents']).containsKey('tabbedSearchResultsRenderer')) {
+    if (response['contents'].containsKey('tabbedSearchResultsRenderer')) {
       final tabIndex = scope == null || filter != null ? 0 : scopes.indexOf(scope) + 1;
       results = response['contents']['tabbedSearchResultsRenderer']['tabs'][tabIndex]['tabRenderer']['content'];
     } else {
@@ -535,7 +535,7 @@ class MusicServices extends getx.GetxService {
         //searchResults.add(topResult);
         results = nav(res, ['musicCardShelfRenderer', 'contents']);
         if (results != null) {
-          if ((results[0]).containsKey('messageRenderer')) {
+          if (results[0].containsKey('messageRenderer')) {
             category = nav(results[0], ['messageRenderer', ...text_run_text]);
             results = results.sublist(1);
           }
@@ -684,7 +684,7 @@ class MusicServices extends getx.GetxService {
         result['additionalParams'] = '&ctoken=${null}&continuation=${null}';
       } else if (contents.containsKey('gridRenderer')) {
         result['results'] =
-            (contents['gridRenderer']['items']).map((video) => parseVideo(video['musicTwoRowItemRenderer'])).toList();
+            contents['gridRenderer']['items'].map((video) => parseVideo(video['musicTwoRowItemRenderer'])).toList();
         result['additionalParams'] = '&ctoken=${null}&continuation=${null}';
       } else {
         final continuationKey =

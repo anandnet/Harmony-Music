@@ -115,7 +115,7 @@ class ArtistScreenController extends GetxController with GetSingleTickerProvider
 
     //check if params available for continuation
     //tab browse endpoint & top result stored in [artistData], tabContent & addtionalParams for continuation stored in Separated Content
-    if ((artistData[tabName]).containsKey('params')) {
+    if (artistData[tabName].containsKey('params')) {
       sepataredContent[tabName] = await musicServices.getArtistRealtedContent(artistData[tabName], tabName);
     } else {
       sepataredContent[tabName] = {'results': artistData[tabName]['content']};
@@ -145,7 +145,7 @@ class ArtistScreenController extends GetxController with GetSingleTickerProvider
   Future<void> getContinuationContents(browseEndpoint, tabName) async {
     final x = await musicServices.getArtistRealtedContent(browseEndpoint, tabName,
         additionalParams: sepataredContent[tabName]['additionalParams']);
-    (sepataredContent[tabName]['results']).addAll(x['results']);
+    sepataredContent[tabName]['results'].addAll(x['results']);
     sepataredContent[tabName]['additionalParams'] = x['additionalParams'];
     sepataredContent.refresh();
 

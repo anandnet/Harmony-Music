@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'nav_parser.dart';
+import 'package:harmonymusic/services/nav_parser.dart';
 
 Future<List<dynamic>> getContinuations(
     dynamic results,

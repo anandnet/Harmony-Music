@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/navigator.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/screens/Artists/artist_screen_controller.dart';
+import 'package:harmonymusic/ui/screens/Artists/artist_screen_v2.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/animated_screen_transition.dart';
+import 'package:harmonymusic/ui/widgets/image_widget.dart';
+import 'package:harmonymusic/ui/widgets/loader.dart';
+import 'package:harmonymusic/ui/widgets/separate_tab_item_widget.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
 import 'package:share_plus/share_plus.dart';
-
-import '/ui/player/player_controller.dart';
-import '/ui/screens/Artists/artist_screen_v2.dart';
-import '/ui/screens/Settings/settings_screen_controller.dart';
-import '/ui/widgets/image_widget.dart';
-import '../../navigator.dart';
-import '../../widgets/animated_screen_transition.dart';
-import '../../widgets/loader.dart';
-import '../../widgets/separate_tab_item_widget.dart';
-import '../../widgets/snackbar.dart';
-import 'artist_screen_controller.dart';
 
 class ArtistScreen extends StatelessWidget {
   const ArtistScreen({super.key});
@@ -20,7 +19,7 @@ class ArtistScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final playerController = Get.find<PlayerController>();
     final tag = key.hashCode.toString();
-    final ArtistScreenController artistScreenController = Get.isRegistered<ArtistScreenController>(tag: tag)
+    final artistScreenController = Get.isRegistered<ArtistScreenController>(tag: tag)
         ? Get.find<ArtistScreenController>(tag: tag)
         : Get.put(ArtistScreenController(), tag: tag);
     return Scaffold(
@@ -39,7 +38,7 @@ class ArtistScreen extends StatelessWidget {
                     final radioId = artistScreenController.artist_.radioId;
                     if (radioId == null) {
                       ScaffoldMessenger.of(context)
-                          .showSnackBar(snackbar(context, "radioNotAvailable".tr, size: SanckBarSize.BIG));
+                          .showSnackBar(snackbar(context, 'radioNotAvailable'.tr, size: SanckBarSize.BIG));
                       return;
                     }
                     playerController.startRadio(null, playlistid: artistScreenController.artist_.radioId);
@@ -62,8 +61,8 @@ class ArtistScreen extends StatelessWidget {
                         () => NavigationRail(
                           onDestinationSelected: artistScreenController.onDestinationSelected,
                           minWidth: 60,
-                          destinations: ["about".tr, "songs".tr, "videos".tr, "albums".tr, "singles".tr]
-                              .map((e) => railDestination(e))
+                          destinations: ['about'.tr, 'songs'.tr, 'videos'.tr, 'albums'.tr, 'singles'.tr]
+                              .map(railDestination)
                               .toList(),
                           leading: Column(
                             children: [
@@ -126,7 +125,7 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ArtistScreenController artistScreenController = Get.find<ArtistScreenController>(tag: tag);
+    final artistScreenController = Get.find<ArtistScreenController>(tag: tag);
 
     final tabIndex = artistScreenController.navigationRailCurrentIndex.value;
 
@@ -140,7 +139,7 @@ class Body extends StatelessWidget {
             ));
     } else {
       final separatedContent = artistScreenController.sepataredContent;
-      final currentTabName = ["About", "Songs", "Videos", "Albums", "Singles"][tabIndex];
+      final currentTabName = ['About', 'Songs', 'Videos', 'Albums', 'Singles'][tabIndex];
       return Obx(() {
         if (artistScreenController.isSeparatedArtistContentFetced.isFalse &&
             artistScreenController.navigationRailCurrentIndex.value != 0) {
@@ -152,9 +151,9 @@ class Body extends StatelessWidget {
           items: separatedContent.containsKey(currentTabName) ? separatedContent[currentTabName]['results'] : [],
           title: currentTabName,
           topPadding: context.isLandscape ? 50.0 : 80.0,
-          scrollController: currentTabName == "Songs"
+          scrollController: currentTabName == 'Songs'
               ? artistScreenController.songScrollController
-              : currentTabName == "Videos"
+              : currentTabName == 'Videos'
                   ? artistScreenController.videoScrollController
                   : null,
         );
@@ -176,7 +175,7 @@ class AboutArtist extends StatelessWidget {
     return Align(
       alignment: Alignment.topCenter,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8),
         child: SingleChildScrollView(
           padding: padding,
           child: artistScreenController.isArtistContentFetced.value
@@ -199,16 +198,16 @@ class AboutArtist extends StatelessWidget {
                               children: [
                                 InkWell(
                                     onTap: () {
-                                      final bool add = artistScreenController.isAddedToLibrary.isFalse;
+                                      final add = artistScreenController.isAddedToLibrary.isFalse;
                                       artistScreenController.addNremoveFromLibrary(add: add).then((value) {
                                         if (context.mounted) {
                                           ScaffoldMessenger.of(context).showSnackBar(snackbar(
                                               context,
                                               value
                                                   ? add
-                                                      ? "artistBookmarkAddAlert".tr
-                                                      : "artistBookmarkRemoveAlert".tr
-                                                  : "operationFailed".tr,
+                                                      ? 'artistBookmarkAddAlert'.tr
+                                                      : 'artistBookmarkRemoveAlert'.tr
+                                                  : 'operationFailed'.tr,
                                               size: SanckBarSize.MEDIUM));
                                         }
                                       });
@@ -227,7 +226,7 @@ class AboutArtist extends StatelessWidget {
                                     ),
                                     splashRadius: 18,
                                     onPressed: () => Share.share(
-                                        "https://music.youtube.com/channel/${artistScreenController.artist_.browseId}")),
+                                        'https://music.youtube.com/channel/${artistScreenController.artist_.browseId}')),
                               ],
                             ),
                           )
@@ -241,7 +240,7 @@ class AboutArtist extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
-                    (artistData.containsKey("description") && artistData["description"] != null)
+                    (artistData.containsKey('description') && artistData['description'] != null)
                         ? Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -253,7 +252,7 @@ class AboutArtist extends StatelessWidget {
                             height: 300,
                             child: Center(
                               child: Text(
-                                "artistDesNotAvailable".tr,
+                                'artistDesNotAvailable'.tr,
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
                             ),

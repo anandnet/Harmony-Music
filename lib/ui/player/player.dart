@@ -2,22 +2,21 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '/ui/player/components/gesture_player.dart';
-import '/ui/player/components/standard_player.dart';
-import '/ui/player/player_controller.dart';
-import '/ui/screens/Settings/settings_screen_controller.dart';
-import '../../utils/helper.dart';
-import '../widgets/sliding_up_panel.dart';
-import '../widgets/snackbar.dart';
-import '../widgets/up_next_queue.dart';
+import 'package:harmonymusic/ui/player/components/gesture_player.dart';
+import 'package:harmonymusic/ui/player/components/standard_player.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/sliding_up_panel.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
+import 'package:harmonymusic/ui/widgets/up_next_queue.dart';
+import 'package:harmonymusic/utils/helper.dart';
 
 class Player extends StatelessWidget {
   const Player({super.key});
 
   @override
   Widget build(BuildContext context) {
-    printINFO("player");
+    printINFO('player');
     final size = MediaQuery.of(context).size;
     final PlayerController playerController = Get.find<PlayerController>();
     final settingsScreenController = Get.find<SettingsScreenController>();
@@ -89,7 +88,7 @@ class Player extends StatelessWidget {
                                   onTap: () {
                                     if (playerController.isShuffleModeEnabled.isTrue) {
                                       ScaffoldMessenger.of(context).showSnackBar(
-                                          snackbar(context, "queueShufflingDeniedMsg".tr, size: SanckBarSize.BIG));
+                                          snackbar(context, 'queueShufflingDeniedMsg'.tr, size: SanckBarSize.BIG));
                                       return;
                                     }
                                     playerController.shuffleQueue();
@@ -101,13 +100,11 @@ class Player extends StatelessWidget {
                                       color: Colors.white.withOpacity(0.8),
                                       borderRadius: BorderRadius.circular(20),
                                     ),
-                                    child: Center(child: Text("shuffleQueue".tr)),
+                                    child: Center(child: Text('shuffleQueue'.tr)),
                                   ),
                                 ),
                                 InkWell(
-                                  onTap: () {
-                                    playerController.toggleQueueLoopMode();
-                                  },
+                                  onTap: playerController.toggleQueueLoopMode,
                                   child: Obx(
                                     () => Container(
                                       height: 30,
@@ -118,7 +115,7 @@ class Player extends StatelessWidget {
                                             : Colors.white.withOpacity(0.8),
                                         borderRadius: BorderRadius.circular(20),
                                       ),
-                                      child: Center(child: Text("queueLoop".tr)),
+                                      child: Center(child: Text('queueLoop'.tr)),
                                     ),
                                   ),
                                 ),

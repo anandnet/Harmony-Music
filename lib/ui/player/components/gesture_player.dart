@@ -5,25 +5,47 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/thumbnail.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/utils/theme_controller.dart';
+import 'package:harmonymusic/ui/widgets/songinfo_bottom_sheet.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:widget_marquee/widget_marquee.dart';
-
-import '/models/thumbnail.dart';
-import '../../screens/Settings/settings_screen_controller.dart';
-import '../../utils/theme_controller.dart';
-import '../../widgets/songinfo_bottom_sheet.dart';
-import '../player_controller.dart';
 
 class GesturePlayer extends StatelessWidget {
   const GesturePlayer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final PlayerController playerController = Get.find<PlayerController>();
-    final ThemeController themeController = Get.find<ThemeController>();
+    final playerController = Get.find<PlayerController>();
+    final themeController = Get.find<ThemeController>();
     return Stack(
       children: [
         GestureDetector(
+          onHorizontalDragEnd: (DragEndDetails details) {
+            if (details.primaryVelocity! < 0) {
+              playerController.next();
+            } else if (details.primaryVelocity! > 0) {
+              playerController.prev();
+            }
+          },
+          onDoubleTap: playerController.playPause,
+          onLongPress: () {
+            showModalBottomSheet(
+              constraints: const BoxConstraints(maxWidth: 500),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+              ),
+              isScrollControlled: true,
+              context: playerController.homeScaffoldkey.currentState!.context,
+              barrierColor: Colors.transparent.withAlpha(100),
+              builder: (context) => SongInfoBottomSheet(
+                playerController.currentSong.value!,
+                calledFromPlayer: true,
+              ),
+            ).whenComplete(() => Get.delete<SongInfoController>());
+          },
           child: Obx(
             () => SizedBox.expand(
               child: playerController.currentSong.value != null
@@ -54,31 +76,6 @@ class GesturePlayer extends StatelessWidget {
                   : Container(),
             ),
           ),
-          onHorizontalDragEnd: (DragEndDetails details) {
-            if (details.primaryVelocity! < 0) {
-              playerController.next();
-            } else if (details.primaryVelocity! > 0) {
-              playerController.prev();
-            }
-          },
-          onDoubleTap: () {
-            playerController.playPause();
-          },
-          onLongPress: () {
-            showModalBottomSheet(
-              constraints: const BoxConstraints(maxWidth: 500),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
-              ),
-              isScrollControlled: true,
-              context: playerController.homeScaffoldkey.currentState!.context,
-              barrierColor: Colors.transparent.withAlpha(100),
-              builder: (context) => SongInfoBottomSheet(
-                playerController.currentSong.value!,
-                calledFromPlayer: true,
-              ),
-            ).whenComplete(() => Get.delete<SongInfoController>());
-          },
         ),
         IgnorePointer(
           child: Align(
@@ -125,7 +122,6 @@ class GesturePlayer extends StatelessWidget {
                               Obx(() {
                                 return Marquee(
                                   delay: const Duration(milliseconds: 300),
-                                  duration: const Duration(seconds: 10),
                                   id: '${playerController.currentSong.value}_title',
                                   child: Text(
                                     playerController.currentSong.value != null
@@ -145,7 +141,6 @@ class GesturePlayer extends StatelessWidget {
                               GetX<PlayerController>(builder: (controller) {
                                 return Marquee(
                                   delay: const Duration(milliseconds: 300),
-                                  duration: const Duration(seconds: 10),
                                   id: '${playerController.currentSong.value}_subtitle',
                                   child: Text(
                                     playerController.currentSong.value != null
@@ -164,7 +159,6 @@ class GesturePlayer extends StatelessWidget {
                           SizedBox(
                             width: 75,
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 IconButton(

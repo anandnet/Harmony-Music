@@ -1,9 +1,8 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/utils/helper.dart';
 import 'package:hive/hive.dart';
-
-import '../utils/helper.dart';
 
 class PipedServices extends GetxService {
   final Map<String, dynamic> _headers = {};
@@ -56,7 +55,7 @@ class PipedServices extends GetxService {
 
   Future<Res> _sendRequest(String endpoint,
       {dynamic data, String reqType = 'post', bool isInstanceListReq = false, bool isSongListReq = false}) async {
-    final url = isInstanceListReq ? 'https://piped-instances.kavin.rocks/' : "$_insApiUrl$endpoint";
+    final url = isInstanceListReq ? 'https://piped-instances.kavin.rocks/' : '$_insApiUrl$endpoint';
     try {
       final response = reqType == 'post'
           ? await _dio.post(
@@ -93,40 +92,40 @@ class PipedServices extends GetxService {
   }
 
   Future<Res> getAllInstanceList() async {
-    return await _sendRequest('', isInstanceListReq: true, reqType: 'get');
+    return _sendRequest('', isInstanceListReq: true, reqType: 'get');
   }
 
   Future<Res> createPlaylist(String playlistName) async {
-    return await _sendRequest('/user/playlists/create', data: {'name': playlistName});
+    return _sendRequest('/user/playlists/create', data: {'name': playlistName});
   }
 
   Future<Res> getAllPlaylists() async {
-    return await _sendRequest('/user/playlists', reqType: 'get');
+    return _sendRequest('/user/playlists', reqType: 'get');
   }
 
   Future<Res> renamePlaylist(String plalistId, String newName) async {
-    return await _sendRequest('/user/playlists/rename', data: {'playlistId': plalistId, 'newName': newName});
+    return _sendRequest('/user/playlists/rename', data: {'playlistId': plalistId, 'newName': newName});
   }
 
   Future<Res> deletePlaylist(String plalistId) async {
-    return await _sendRequest('/user/playlists/delete', data: {'playlistId': plalistId});
+    return _sendRequest('/user/playlists/delete', data: {'playlistId': plalistId});
   }
 
   Future<Res> addToPlaylist(String plalistId, List<String> videosId) async {
-    return await _sendRequest('/user/playlists/add', data: {'playlistId': plalistId, 'videoIds': videosId});
+    return _sendRequest('/user/playlists/add', data: {'playlistId': plalistId, 'videoIds': videosId});
   }
 
   Future<Res> removeFromPlaylist(String plalistId, int index) async {
-    return await _sendRequest('/user/playlists/remove', data: {'playlistId': plalistId, 'index': index});
+    return _sendRequest('/user/playlists/remove', data: {'playlistId': plalistId, 'index': index});
   }
 
   Future<List<MediaItem>> getPlaylistSongs(String playlistid) async {
     final res = await _sendRequest('/playlists/$playlistid', reqType: 'get', isSongListReq: true);
     if (res.code == 1) {
-      return (res.response['relatedStreams'])
+      return res.response['relatedStreams']
           .map((item) {
             return MediaItem(
-                id: (item['url']).split('?v=')[1],
+                id: item['url'].split('?v=')[1],
                 title: item['title'],
                 artist: item['uploaderName'],
                 duration: Duration(seconds: item['duration']),

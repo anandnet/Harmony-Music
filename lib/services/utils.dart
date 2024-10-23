@@ -1,12 +1,12 @@
 import 'dart:math';
 
-import 'nav_parser.dart';
+import 'package:harmonymusic/services/nav_parser.dart';
 
 int getDatestamp() {
-  final DateTime now = DateTime.now();
-  final DateTime epoch = DateTime.fromMillisecondsSinceEpoch(0);
-  final Duration difference = now.difference(epoch);
-  final int days = difference.inDays;
+  final now = DateTime.now();
+  final epoch = DateTime.fromMillisecondsSinceEpoch(0);
+  final difference = now.difference(epoch);
+  final days = difference.inDays;
   return days;
 }
 
@@ -14,9 +14,9 @@ int? parseDuration(String? duration) {
   if (duration == null) {
     return null;
   }
-  List<int> mappedIncrements = List.generate(3, (i) => max(0, 3600 - 60 * i));
-  List<String> times = duration.split(":").reversed.toList();
-  int seconds = 0;
+  var mappedIncrements = List<int>.generate(3, (i) => max(0, 3600 - 60 * i));
+  var times = duration.split(':').reversed.toList();
+  var seconds = 0;
   for (var i = 0; i < times.length; i++) {
     seconds += mappedIncrements[i] * int.parse(times[i]);
   }
@@ -33,7 +33,7 @@ int sumTotalDuration(Map<String, dynamic> item) {
   }
 
   List tracks = item['tracks'];
-  int totalDuration = 0;
+  var totalDuration = 0;
 
   for (var track in tracks) {
     if (track.extras['duration_seconds'] != null) {
@@ -47,7 +47,7 @@ int sumTotalDuration(Map<String, dynamic> item) {
 String? getItemText(Map<String, dynamic> item, int index, {int runIndex = 0, bool noneIfAbsent = false}) {
   dynamic column = getFlexColumnItem(item, index);
   if (column == null) {
-    return noneIfAbsent ? null : "";
+    return noneIfAbsent ? null : '';
   }
   List<dynamic> runs = column['text']['runs'];
   if (noneIfAbsent && runs.length < runIndex + 1) {
@@ -67,7 +67,7 @@ Map<String, dynamic>? getFixedColumnItem(Map<String, dynamic> item, int index) {
 ///Check if Steam Url or given epoch is expired
 bool isExpired({String? url, int? epoch}) {
   if (url != null) {
-    RegExpMatch? match = RegExp(".expire=([0-9]+)?&").firstMatch(url);
+    var match = RegExp('.expire=([0-9]+)?&').firstMatch(url);
     if (match != null) {
       epoch = int.parse(match[1]!);
     }
@@ -112,7 +112,7 @@ dynamic findObjectByKey(List objectList, dynamic key, {String? nested, bool isKe
 }
 
 List<dynamic> findObjectsByKey(List<dynamic> objectList, String key, {String? nested}) {
-  List<dynamic> objects = [];
+  var objects = <dynamic>[];
   for (dynamic item in objectList) {
     if (nested != null) {
       item = item[nested];
@@ -125,7 +125,7 @@ List<dynamic> findObjectsByKey(List<dynamic> objectList, String key, {String? ne
 }
 
 String? getSearchParams(String? filter, String? scope, bool ignoreSpelling) {
-  String filteredParam1 = 'EgWKAQI';
+  var filteredParam1 = 'EgWKAQI';
   String? params;
   String? param1;
   String? param2;
@@ -193,5 +193,5 @@ String? _getParam2(String filter) {
 }
 
 dynamic getDotSeparatorIndex(List<dynamic> runs) {
-  return runs.indexWhere(((element) => ({'text': " • "}).toString() == element.toString()));
+  return runs.indexWhere((element) => {'text': ' • '}.toString() == element.toString());
 }

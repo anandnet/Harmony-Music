@@ -197,7 +197,7 @@ class Downloader extends GetxService {
               genre: song.genre,
               pictures: [
                 Picture(
-                    bytes: (await NetworkAssetBundle(Uri.parse((imageUrl))).load(imageUrl)).buffer.asUint8List(),
+                    bytes: (await NetworkAssetBundle(Uri.parse(imageUrl)).load(imageUrl)).buffer.asUint8List(),
                     mimeType: MimeType.png,
                     pictureType: PictureType.coverFront)
               ]);

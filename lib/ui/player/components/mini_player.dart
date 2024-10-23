@@ -1,19 +1,18 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/widgets/add_to_playlist.dart';
+import 'package:harmonymusic/ui/widgets/image_widget.dart';
+import 'package:harmonymusic/ui/widgets/loader.dart';
+import 'package:harmonymusic/ui/widgets/lyrics_dialog.dart';
+import 'package:harmonymusic/ui/widgets/mini_player_progress_bar.dart';
+import 'package:harmonymusic/ui/widgets/sleep_timer_bottom_sheet.dart';
+import 'package:harmonymusic/ui/widgets/song_download_btn.dart';
+import 'package:harmonymusic/ui/widgets/song_info_dialog.dart';
 import 'package:hive/hive.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:widget_marquee/widget_marquee.dart';
-
-import '/ui/player/player_controller.dart';
-import '/ui/widgets/loader.dart';
-import '/ui/widgets/lyrics_dialog.dart';
-import '/ui/widgets/song_info_dialog.dart';
-import '../../widgets/add_to_playlist.dart';
-import '../../widgets/image_widget.dart';
-import '../../widgets/mini_player_progress_bar.dart';
-import '../../widgets/sleep_timer_bottom_sheet.dart';
-import '../../widgets/song_download_btn.dart';
 
 class MiniPlayer extends StatelessWidget {
   const MiniPlayer({super.key});
@@ -25,7 +24,7 @@ class MiniPlayer extends StatelessWidget {
     final isWideScreen = size.width > 800;
     return Obx(() {
       return Visibility(
-        visible: playerController.isPlayerpanelTopVisible.value,
+        visible: playerController.isPlayerPanelTopVisible.value,
         child: Opacity(
           opacity: playerController.playerPaneOpacity.value,
           child: Container(
@@ -47,7 +46,7 @@ class MiniPlayer extends StatelessWidget {
                         )
                       : GetX<PlayerController>(builder: (controller) {
                           return Padding(
-                            padding: const EdgeInsets.only(left: 15.0, top: 8, right: 15, bottom: 0),
+                            padding: const EdgeInsets.only(left: 15, top: 8, right: 15),
                             child: ProgressBar(
                               timeLabelLocation: TimeLabelLocation.sides,
                               thumbRadius: 7,
@@ -66,13 +65,11 @@ class MiniPlayer extends StatelessWidget {
                           );
                         }),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 7),
+                    padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 7),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             playerController.currentSong.value != null
                                 ? ImageWidget(
@@ -108,7 +105,7 @@ class MiniPlayer extends StatelessWidget {
                                     child: Text(
                                       playerController.currentSong.value != null
                                           ? playerController.currentSong.value!.title
-                                          : "",
+                                          : '',
                                       maxLines: 1,
                                       style: Theme.of(context).textTheme.titleMedium,
                                     ),
@@ -116,13 +113,13 @@ class MiniPlayer extends StatelessWidget {
                                   SizedBox(
                                     height: 20,
                                     child: Marquee(
-                                      id: "${playerController.currentSong.value}_mini",
+                                      id: '${playerController.currentSong.value}_mini',
                                       delay: const Duration(milliseconds: 300),
                                       duration: const Duration(seconds: 5),
                                       child: Text(
                                         playerController.currentSong.value != null
                                             ? playerController.currentSong.value!.artist!
-                                            : "",
+                                            : '',
                                         maxLines: 1,
                                         style: Theme.of(context).textTheme.titleSmall,
                                       ),
@@ -273,8 +270,8 @@ class MiniPlayer extends StatelessWidget {
                                             child: SliderTheme(
                                               data: SliderTheme.of(context).copyWith(
                                                 trackHeight: 2,
-                                                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6.0),
-                                                overlayShape: const RoundSliderOverlayShape(overlayRadius: 10.0),
+                                                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
+                                                overlayShape: const RoundSliderOverlayShape(overlayRadius: 10),
                                               ),
                                               child: Slider(
                                                 value: playerController.volume.value / 100,
@@ -301,13 +298,13 @@ class MiniPlayer extends StatelessWidget {
                                         ),
                                         if (size.width > 860)
                                           Padding(
-                                            padding: const EdgeInsets.only(left: 10.0),
+                                            padding: const EdgeInsets.only(left: 10),
                                             child: IconButton(
                                               onPressed: () {
                                                 showModalBottomSheet(
                                                   constraints: const BoxConstraints(maxWidth: 500),
                                                   shape: const RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+                                                    borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                                                   ),
                                                   isScrollControlled: true,
                                                   context: playerController.homeScaffoldkey.currentState!.context,
@@ -351,7 +348,7 @@ class MiniPlayer extends StatelessWidget {
                                                   builder: (context) => SongInfoDialog(
                                                       song: currentSong,
                                                       isDownloaded:
-                                                          Hive.box("SongDownloads").containsKey(currentSong.id)),
+                                                          Hive.box('SongDownloads').containsKey(currentSong.id)),
                                                 );
                                               }
                                             },
@@ -412,7 +409,7 @@ class MiniPlayer extends StatelessWidget {
             Icons.play_arrow_rounded,
             color: Theme.of(context).textTheme.titleMedium!.color,
           ),
-          iconSize: 35.0,
+          iconSize: 35,
           onPressed: () {},
         );
       }

@@ -5,27 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_lyric/lyric_ui/ui_netease.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/durationstate.dart';
+import 'package:harmonymusic/models/media_Item_builder.dart';
+import 'package:harmonymusic/services/music_service.dart';
+import 'package:harmonymusic/services/synced_lyrics_service.dart';
+import 'package:harmonymusic/services/windows_audio_service.dart';
+import 'package:harmonymusic/ui/screens/Home/home_screen_controller.dart';
+import 'package:harmonymusic/ui/screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/sliding_up_panel.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
+import 'package:harmonymusic/utils/helper.dart';
 import 'package:hive/hive.dart';
-
-import '/models/durationstate.dart';
-import '/models/media_Item_builder.dart';
-import '/services/music_service.dart';
-import '/services/synced_lyrics_service.dart';
-import '/ui/screens/Settings/settings_screen_controller.dart';
-import '../../services/windows_audio_service.dart';
-import '../../utils/helper.dart';
-import '../screens/Home/home_screen_controller.dart';
-import '../screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
-import '../widgets/sliding_up_panel.dart';
-import '../widgets/snackbar.dart';
 
 class PlayerController extends GetxController with GetSingleTickerProviderStateMixin {
   final _audioHandler = Get.find<AudioHandler>();
   final _musicServices = Get.find<MusicServices>();
   final currentQueue = <MediaItem>[].obs;
 
-  final playerPaneOpacity = (1.0).obs;
-  final isPlayerpanelTopVisible = true.obs;
+  final playerPaneOpacity = 1.0.obs;
+  final isPlayerPanelTopVisible = true.obs;
   final isPanelGTHOpened = false.obs;
   final playerPanelMinHeight = 0.0.obs;
   bool initFlagForPlayer = true;
@@ -46,7 +45,7 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
 
   final progressBarStatus = ProgressBarState(buffered: Duration.zero, current: Duration.zero, total: Duration.zero).obs;
 
-  final currentSongIndex = (0).obs;
+  final currentSongIndex = 0.obs;
   final isFirstSong = true;
   final isLastSong = true;
   final isQueueLoopModeEnabled = false.obs;
@@ -127,9 +126,9 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
   void panellistener(double x) {
     if (x >= 0 && x <= 0.2) {
       playerPaneOpacity.value = 1 - (x * 5);
-      isPlayerpanelTopVisible.value = true;
+      isPlayerPanelTopVisible.value = true;
     } else if (x > 0.2) {
-      isPlayerpanelTopVisible.value = false;
+      isPlayerPanelTopVisible.value = false;
     }
 
     if (x > 0.6) {
@@ -246,7 +245,7 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
     if (restrorePrevSessionEnabled) {
       final prevSessionData = await Hive.openBox('prevSessionData');
       if (prevSessionData.keys.isNotEmpty) {
-        final songList = (prevSessionData.get('queue') as List).map((e) => MediaItemBuilder.fromJson(e)).toList();
+        final songList = (prevSessionData.get('queue') as List).map(MediaItemBuilder.fromJson).toList();
         final int currentIndex = prevSessionData.get('index');
         final int position = prevSessionData.get('position');
         prevSessionData.close();
@@ -362,7 +361,7 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
       return;
     }
     final listToEnqueue = <MediaItem>[];
-    for (MediaItem item in mediaItems) {
+    for (var item in mediaItems) {
       if (!currentQueue.contains(item)) {
         listToEnqueue.add(item);
       }
@@ -375,9 +374,9 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
       enqueueSong(song);
       return;
     }
-    int index = -1;
-    for (int i = 0; i < currentQueue.length; i++) {
-      if (song.id == (currentQueue[i]).id) {
+    var index = -1;
+    for (var i = 0; i < currentQueue.length; i++) {
+      if (song.id == currentQueue[i].id) {
         index = i;
         break;
       }
@@ -579,7 +578,7 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
         box.deleteAt(0);
       }
       final valuesCopy = box.values.toList();
-      for (int i = valuesCopy.length - 1; i >= 0; i--) {
+      for (var i = valuesCopy.length - 1; i >= 0; i--) {
         if (valuesCopy[i]['videoId'] == mediaItem.id) {
           box.deleteAt(i);
         }
@@ -607,7 +606,7 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
     if ((lyrics['synced'].isEmpty && lyrics['plainLyrics'].isEmpty) && showLyricsflag.value) {
       isLyricsLoading.value = true;
       try {
-        final Map<String, dynamic>? lyricsR =
+        final lyricsR =
             await SyncedLyricsService.getSyncedLyrics(currentSong.value!, progressBarStatus.value.total.inSeconds);
         if (lyricsR != null) {
           lyrics.value = lyricsR;

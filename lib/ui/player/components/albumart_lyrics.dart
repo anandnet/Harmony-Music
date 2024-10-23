@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '/ui/player/components/lyrics_widget.dart';
-import '/ui/player/player_controller.dart';
-import '../../widgets/image_widget.dart';
-import '../../widgets/sleep_timer_bottom_sheet.dart';
-import '../../widgets/songinfo_bottom_sheet.dart';
+import 'package:harmonymusic/ui/player/components/lyrics_widget.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/widgets/image_widget.dart';
+import 'package:harmonymusic/ui/widgets/sleep_timer_bottom_sheet.dart';
+import 'package:harmonymusic/ui/widgets/songinfo_bottom_sheet.dart';
 
 class AlbumArtNLyrics extends StatelessWidget {
   const AlbumArtNLyrics({super.key, required this.playerArtImageSize});
@@ -25,7 +24,7 @@ class AlbumArtNLyrics extends StatelessWidget {
                   showModalBottomSheet(
                     constraints: const BoxConstraints(maxWidth: 500),
                     shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                     ),
                     isScrollControlled: true,
                     context: playerController.homeScaffoldkey.currentState!.context,
@@ -36,9 +35,7 @@ class AlbumArtNLyrics extends StatelessWidget {
                     ),
                   ).whenComplete(() => Get.delete<SongInfoController>());
                 },
-                onTap: () {
-                  playerController.showLyrics();
-                },
+                onTap: playerController.showLyrics,
                 onHorizontalDragEnd: (DragEndDetails details) {
                   if (playerController.showLyricsflag.isTrue) return;
                   if (details.primaryVelocity! < 0) {
@@ -55,9 +52,7 @@ class AlbumArtNLyrics extends StatelessWidget {
               ),
               Obx(() => playerController.showLyricsflag.isTrue
                   ? InkWell(
-                      onTap: () {
-                        playerController.showLyrics();
-                      },
+                      onTap: playerController.showLyrics,
                       child: Container(
                         height: playerArtImageSize,
                         width: playerArtImageSize,
@@ -67,8 +62,7 @@ class AlbumArtNLyrics extends StatelessWidget {
                         ),
                         child: Stack(
                           children: [
-                            LyricsWidget(
-                                padding: EdgeInsets.symmetric(horizontal: 0, vertical: playerArtImageSize / 3.5)),
+                            LyricsWidget(padding: EdgeInsets.symmetric(vertical: playerArtImageSize / 3.5)),
                             IgnorePointer(
                               child: Container(
                                 decoration: BoxDecoration(
@@ -101,7 +95,7 @@ class AlbumArtNLyrics extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8),
                       child: Container(
                         height: 50,
                         width: 60,
@@ -114,7 +108,7 @@ class AlbumArtNLyrics extends StatelessWidget {
                             showModalBottomSheet(
                               constraints: const BoxConstraints(maxWidth: 500),
                               shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                               ),
                               isScrollControlled: true,
                               context: playerController.homeScaffoldkey.currentState!.context,

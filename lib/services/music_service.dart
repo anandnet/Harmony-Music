@@ -5,14 +5,13 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
+import 'package:harmonymusic/models/album.dart';
+import 'package:harmonymusic/services/constant.dart';
+import 'package:harmonymusic/services/continuations.dart';
+import 'package:harmonymusic/services/nav_parser.dart';
+import 'package:harmonymusic/services/utils.dart';
+import 'package:harmonymusic/utils/helper.dart';
 import 'package:hive/hive.dart';
-
-import '/models/album.dart';
-import '/services/utils.dart';
-import '../utils/helper.dart';
-import 'constant.dart';
-import 'continuations.dart';
-import 'nav_parser.dart';
 
 enum AudioQuality {
   Low,
@@ -479,7 +478,7 @@ class MusicServices extends getx.GetxService {
     data['context']['client']['hl'] = 'en';
     data['query'] = query;
 
-    final Map<String, dynamic> searchResults = {};
+    final searchResults = <String, dynamic>{};
     final filters = ['albums', 'artists', 'playlists', 'community_playlists', 'featured_playlists', 'songs', 'videos'];
 
     if (filter != null && !filters.contains(filter)) {
@@ -625,7 +624,7 @@ class MusicServices extends getx.GetxService {
     dynamic response = (await _sendRequest('browse', data)).data;
     dynamic results = nav(response, [...single_column_tab, ...section_list]);
 
-    Map<String, dynamic> artist = {'description': null, 'views': null};
+    var artist = <String, dynamic>{'description': null, 'views': null};
     Map<String, dynamic> header =
         (response['header']['musicImmersiveHeaderRenderer']) ?? response['header']['musicVisualHeaderRenderer'];
     artist['name'] = nav(header, title_text);

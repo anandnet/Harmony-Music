@@ -22,7 +22,7 @@ import 'package:media_kit/src/player/platform_player.dart' show MPVLogLevel;
 import 'package:path_provider/path_provider.dart';
 
 Future<AudioHandler> initAudioService() async {
-  return await AudioService.init(
+  return AudioService.init(
     builder: MyAudioHandler.new,
     config: const AudioServiceConfig(
       androidNotificationIcon: 'mipmap/ic_launcher_monochrome',
@@ -66,7 +66,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     _player = AudioPlayer(
         audioLoadConfiguration: const AudioLoadConfiguration(
             androidLoadControl: AndroidLoadControl(
-      minBufferDuration: Duration(seconds: 50),
       maxBufferDuration: Duration(seconds: 120),
       bufferForPlaybackDuration: Duration(milliseconds: 50),
       bufferForPlaybackAfterRebufferDuration: Duration(seconds: 2),
@@ -154,7 +153,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         printERROR('Error message: ${e.message}');
       } else {
         printERROR('An error occurred: $e');
-        Duration curPos = _player.position;
+        var curPos = _player.position;
         await _player.stop();
 
         if (isPlayingUsingLockCachingSource && e.toString().contains('Connection closed while receiving data')) {
@@ -622,7 +621,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     }
     final currQueue = queue.value;
     if (currQueue.isNotEmpty) {
-      final queueData = currQueue.map((e) => MediaItemBuilder.toJson(e)).toList();
+      final queueData = currQueue.map(MediaItemBuilder.toJson).toList();
       final currIndex = currentIndex ?? 0;
       final position = _player.position.inMilliseconds;
       final prevSessionData = await Hive.openBox('prevSessionData');

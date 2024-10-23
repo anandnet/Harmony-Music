@@ -74,7 +74,6 @@ class QuickPicksWidget extends StatelessWidget {
                           ),
                           isScrollControlled: true,
                           context: playerController.homeScaffoldKey.currentState!.context,
-                          //constraints: BoxConstraints(maxHeight:Get.height),
                           barrierColor: Colors.transparent.withAlpha(100),
                           builder: (context) => SongInfoBottomSheet(content.songList[item]),
                         ).whenComplete(() => Get.delete<SongInfoController>());

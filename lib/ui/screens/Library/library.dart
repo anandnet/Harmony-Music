@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '/ui/widgets/modification_list.dart';
-import '../../../models/playlist.dart';
-import '../../widgets/content_list_widget_item.dart';
-import '../../widgets/list_widget.dart';
-import '../../widgets/piped_sync_widget.dart';
-import '../../widgets/sort_widget.dart';
-import '../Settings/settings_screen_controller.dart';
-import 'library_controller.dart';
+import 'package:harmonymusic/models/playlist.dart';
+import 'package:harmonymusic/ui/screens/Library/library_controller.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
+import 'package:harmonymusic/ui/widgets/list_widget.dart';
+import 'package:harmonymusic/ui/widgets/modification_list.dart';
+import 'package:harmonymusic/ui/widgets/piped_sync_widget.dart';
+import 'package:harmonymusic/ui/widgets/sort_widget.dart';
 
 class SongsLibraryWidget extends StatelessWidget {
   const SongsLibraryWidget({super.key, this.isBottomNavActive = false});
@@ -19,7 +18,7 @@ class SongsLibraryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final topPadding = context.isLandscape ? 50.0 : 90.0;
     return Padding(
-      padding: isBottomNavActive ? const EdgeInsets.only(left: 15) : EdgeInsets.only(left: 5.0, top: topPadding),
+      padding: isBottomNavActive ? const EdgeInsets.only(left: 15) : EdgeInsets.only(left: 5, top: topPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -107,7 +106,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 5.0),
+            padding: const EdgeInsets.only(left: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -177,11 +176,10 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                             physics: const BouncingScrollPhysics(),
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: columns,
-                              childAspectRatio: (itemWidth / itemHeight),
+                              childAspectRatio: itemWidth / itemHeight,
                             ),
                             controller: ScrollController(keepScrollOffset: false),
                             shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
                             padding: const EdgeInsets.only(bottom: 200, top: 10),
                             itemCount: isAlbumContent
                                 ? libralbumCntrller.libraryAlbums.length

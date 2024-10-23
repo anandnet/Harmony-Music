@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/playlist.dart';
+import 'package:harmonymusic/services/downloader.dart';
+import 'package:harmonymusic/ui/navigator.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/screens/Library/library_controller.dart';
+import 'package:harmonymusic/ui/screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
+import 'package:harmonymusic/ui/widgets/image_widget.dart';
+import 'package:harmonymusic/ui/widgets/loader.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../../../models/playlist.dart';
-import '../../../../services/downloader.dart';
-import '../../../navigator.dart';
-import '../../../player/player_controller.dart';
-import '../../../widgets/create_playlist_dialog.dart';
-import '../../../widgets/image_widget.dart';
-import '../../../widgets/loader.dart';
-import '../../../widgets/snackbar.dart';
-import '../../Library/library_controller.dart';
-import '../playlistnalbum_screen_controller.dart';
-
 class PlaylistDescription extends StatelessWidget {
-  const PlaylistDescription({super.key, required this.description, this.enableSeparator = false});
+  const PlaylistDescription({
+    required this.description,
+    super.key,
+    this.enableSeparator = false,
+  });
 
   final bool enableSeparator;
   final String description;
@@ -25,7 +28,7 @@ class PlaylistDescription extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 10.0),
+          padding: const EdgeInsets.only(top: 10),
           child: Text(
             description,
             maxLines: 2,
@@ -39,7 +42,12 @@ class PlaylistDescription extends StatelessWidget {
 }
 
 class OnlinePlaylistHeader extends StatelessWidget {
-  const OnlinePlaylistHeader({super.key, required this.content, required this.tag, this.enableSeparator = false});
+  const OnlinePlaylistHeader({
+    required this.content,
+    required this.tag,
+    super.key,
+    this.enableSeparator = false,
+  });
 
   final dynamic content;
   final String tag;
@@ -51,7 +59,7 @@ class OnlinePlaylistHeader extends StatelessWidget {
     return (!playListNAlbumScreenController.isAlbum && !content.isCloudPlaylist)
         ? const SizedBox.shrink()
         : Padding(
-            padding: const EdgeInsets.only(top: 10.0),
+            padding: const EdgeInsets.only(top: 10),
             child: Obx(() {
               return !playListNAlbumScreenController.isSearchingOn.value
                   ? Column(
@@ -74,7 +82,7 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                             playlist: content,
                                           ),
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(8),
                                       child: Align(
                                         alignment: Alignment.bottomLeft,
                                         child: Container(
@@ -91,9 +99,8 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                                   .enqueueSongList(playListNAlbumScreenController.songList.toList())
                                                   .whenComplete(() {
                                                 if (context.mounted) {
-                                                  ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                                                      context, 'songEnqueueAlert'.tr,
-                                                      size: SanckBarSize.MEDIUM));
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(snackbar(context, 'songEnqueueAlert'.tr));
                                                 }
                                               });
                                             },
@@ -143,8 +150,7 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                                             : playListNAlbumScreenController.isAlbum
                                                                 ? 'albumBookmarkRemoveAlert'.tr
                                                                 : 'playlistBookmarkRemoveAlert'.tr
-                                                        : 'operationFailed'.tr,
-                                                    size: SanckBarSize.MEDIUM));
+                                                        : 'operationFailed'.tr));
                                               });
                                             },
                                             icon: Icon(
@@ -154,9 +160,7 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                                     : Icons.bookmark_added_rounded)),
                                     if (playListNAlbumScreenController.isAddedToLibrary.isTrue)
                                       IconButton(
-                                          onPressed: () {
-                                            playListNAlbumScreenController.syncPlaylistNAlbumSong();
-                                          },
+                                          onPressed: playListNAlbumScreenController.syncPlaylistNAlbumSong,
                                           icon: const Icon(Icons.cloud_sync)),
                                     if (!playListNAlbumScreenController.isAlbum && content.isPipedPlaylist)
                                       IconButton(
@@ -170,9 +174,8 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                             Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
                                             Get.find<LibraryPlaylistsController>()
                                                 .blacklistPipedPlaylist(content as Playlist);
-                                            ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-                                                Get.context!, 'playlistBlacklistAlert'.tr,
-                                                size: SanckBarSize.MEDIUM));
+                                            ScaffoldMessenger.of(Get.context!)
+                                                .showSnackBar(snackbar(Get.context!, 'playlistBlacklistAlert'.tr));
                                           }),
                                     IconButton(
                                         visualDensity: const VisualDensity(vertical: -3),
@@ -184,7 +187,7 @@ class OnlinePlaylistHeader extends StatelessWidget {
                                             Share.share('https://piped.video/playlist?list=${content.playlistId}');
                                           } else {
                                             final isPlaylistIdPrefixAvlbl = content.playlistId.substring(0, 2) == 'VL';
-                                            String url = 'https://youtube.com/playlist?list=';
+                                            var url = 'https://youtube.com/playlist?list=';
 
                                             url = isPlaylistIdPrefixAvlbl
                                                 ? url + content.playlistId.substring(2)
@@ -249,7 +252,7 @@ class OnlinePlaylistHeader extends StatelessWidget {
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
+                          padding: const EdgeInsets.only(top: 8),
                           child: Container(
                             constraints: const BoxConstraints(maxWidth: 300),
                             child: Text(
@@ -361,7 +364,7 @@ class OfflinePlaylistHeader extends StatelessWidget {
                         showModalBottomSheet(
                           constraints: const BoxConstraints(maxWidth: 500),
                           shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+                            borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                           ),
                           context: Get.find<PlayerController>().homeScaffoldkey.currentState!.context,
                           barrierColor: Colors.transparent.withAlpha(100),
@@ -391,8 +394,7 @@ class OfflinePlaylistHeader extends StatelessWidget {
                                         .then((value) {
                                       Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
                                       ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-                                          Get.context!, value ? 'playlistRemovedAlert'.tr : 'operationFailed'.tr,
-                                          size: SanckBarSize.MEDIUM));
+                                          Get.context!, value ? 'playlistRemovedAlert'.tr : 'operationFailed'.tr));
                                     });
                                   },
                                 )

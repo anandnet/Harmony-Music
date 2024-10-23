@@ -109,7 +109,7 @@ class HomeScreenController extends GetxController {
       } else if (contentType == 'BOLI') {
         final songId = box.get('recentSongId');
         if (songId != null) {
-          final rel = (await _musicServices.getContentRelatedToSong(songId));
+          final rel = await _musicServices.getContentRelatedToSong(songId);
           final con = rel.removeAt(0);
           quickPicks.value = QuickPicks(List<MediaItem>.from(con['contents']));
           middleContentTemp.addAll(rel);
@@ -143,14 +143,14 @@ class HomeScreenController extends GetxController {
   ) {
     List contentTemp = [];
     for (var content in contents) {
-      if ((content['contents'][0]).runtimeType == Playlist) {
-        final tmp = PlaylistContent(
-            playlistList: (content['contents']).whereType<Playlist>().toList(), title: content['title']);
+      if (content['contents'][0].runtimeType == Playlist) {
+        final tmp =
+            PlaylistContent(playlistList: content['contents'].whereType<Playlist>().toList(), title: content['title']);
         if (tmp.playlistList.length >= 2) {
           contentTemp.add(tmp);
         }
-      } else if ((content['contents'][0]).runtimeType == Album) {
-        final tmp = AlbumContent(albumList: (content['contents']).whereType<Album>().toList(), title: content['title']);
+      } else if (content['contents'][0].runtimeType == Album) {
+        final tmp = AlbumContent(albumList: content['contents'].whereType<Album>().toList(), title: content['title']);
         if (tmp.albumList.length >= 2) {
           contentTemp.add(tmp);
         }
@@ -183,7 +183,7 @@ class HomeScreenController extends GetxController {
         try {
           final value = await _musicServices.getContentRelatedToSong(songId);
           middleContent.value = _setContentList(value);
-          if (value.isNotEmpty && (value[0]['title']).contains('like')) {
+          if (value.isNotEmpty && value[0]['title'].contains('like')) {
             quickPicks_ = QuickPicks(List<MediaItem>.from(value[0]['contents']));
             Hive.box('AppPrefs').put('recentSongId', songId);
           }
@@ -293,10 +293,10 @@ class HomeScreenController extends GetxController {
 
   void disposeDetachedScrollControllers({bool disposeAll = false}) {
     final scrollControllersCopy = contentScrollControllers.toList();
-    for (final contoller in scrollControllersCopy) {
-      if (!contoller.hasClients || disposeAll) {
-        contentScrollControllers.remove(contoller);
-        contoller.dispose();
+    for (final controller in scrollControllersCopy) {
+      if (!controller.hasClients || disposeAll) {
+        contentScrollControllers.remove(controller);
+        controller.dispose();
       }
     }
   }

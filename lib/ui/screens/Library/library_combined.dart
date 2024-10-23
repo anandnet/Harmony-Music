@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '/ui/screens/Settings/settings_screen_controller.dart';
-import '/ui/widgets/piped_sync_widget.dart';
-import '../../widgets/create_playlist_dialog.dart';
-import 'library.dart';
+import 'package:harmonymusic/ui/screens/Library/library.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/create_playlist_dialog.dart';
+import 'package:harmonymusic/ui/widgets/piped_sync_widget.dart';
 
 class CombinedLibrary extends StatelessWidget {
   const CombinedLibrary({super.key});
@@ -24,7 +23,7 @@ class CombinedLibrary extends StatelessWidget {
               ? const PipedSyncWidget(padding: EdgeInsets.only(right: 10, top: 50))
               : const SizedBox.shrink()),
           Padding(
-            padding: const EdgeInsets.only(top: 50.0, right: 25),
+            padding: const EdgeInsets.only(top: 50, right: 25),
             child: SizedBox(
               height: 40,
               width: 50,
@@ -51,14 +50,14 @@ class CombinedLibrary extends StatelessWidget {
           splashFactory: NoSplash.splashFactory,
           controller: tabCon.tabController,
           tabs: [
-            Tab(text: "songs".tr),
-            Tab(text: "playlists".tr),
-            Tab(text: "albums".tr),
-            Tab(text: "artists".tr),
+            Tab(text: 'songs'.tr),
+            Tab(text: 'playlists'.tr),
+            Tab(text: 'albums'.tr),
+            Tab(text: 'artists'.tr),
           ],
         ),
         title: Padding(
-          padding: const EdgeInsets.only(top: 60.0, left: 5),
+          padding: const EdgeInsets.only(top: 60, left: 5),
           child: Text('library'.tr, style: Theme.of(context).textTheme.titleLarge),
         ),
       ),

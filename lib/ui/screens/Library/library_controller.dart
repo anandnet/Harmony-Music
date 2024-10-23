@@ -3,19 +3,18 @@ import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/album.dart';
+import 'package:harmonymusic/models/artist.dart';
+import 'package:harmonymusic/models/media_Item_builder.dart';
+import 'package:harmonymusic/models/playlist.dart';
+import 'package:harmonymusic/services/piped_service.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/add_to_playlist.dart';
+import 'package:harmonymusic/ui/widgets/sort_widget.dart';
+import 'package:harmonymusic/utils/helper.dart';
+import 'package:harmonymusic/utils/house_keeping.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-
-import '/models/album.dart';
-import '/models/artist.dart';
-import '/models/media_Item_builder.dart';
-import '/models/playlist.dart';
-import '/services/piped_service.dart';
-import '/ui/widgets/sort_widget.dart';
-import '../../../utils/helper.dart';
-import '../../../utils/house_keeping.dart';
-import '../../widgets/add_to_playlist.dart';
-import '../Settings/settings_screen_controller.dart';
 
 class LibrarySongsController extends GetxController {
   late RxList<MediaItem> librarySongsList = RxList();
@@ -33,7 +32,7 @@ class LibrarySongsController extends GetxController {
   Future<void> init() async {
     // Make sure that song cached in system or not cleared by system
     // if cleared then it will remove from database as well
-    List<String> songsList = [];
+    var songsList = <String>[];
     final cacheDir = (await getTemporaryDirectory()).path;
     if (Directory('$cacheDir/cachedSongs/').existsSync()) {
       final downloadedFiles = Directory('$cacheDir/cachedSongs')
@@ -41,7 +40,7 @@ class LibrarySongsController extends GetxController {
           .where((f) => !['mime', 'part'].contains(f.path.replaceAll(RegExp(r'^.*\.'), '')));
       songsList.addAll(downloadedFiles
           .map((e) {
-            RegExpMatch? match = RegExp('.cachedSongs/([^#]*)?.mp3').firstMatch(e.path);
+            var match = RegExp('.cachedSongs/([^#]*)?.mp3').firstMatch(e.path);
             if (match != null) {
               return match[1]!;
             }
@@ -58,14 +57,10 @@ class LibrarySongsController extends GetxController {
       }
     }
 
-    librarySongsList.value =
-        box.values.map<MediaItem?>((item) => MediaItemBuilder.fromJson(item)).whereType<MediaItem>().toList();
+    librarySongsList.value = box.values.map<MediaItem?>(MediaItemBuilder.fromJson).whereType<MediaItem>().toList();
 
-    librarySongsList.addAll(Hive.box('SongDownloads')
-        .values
-        .map<MediaItem?>((item) => MediaItemBuilder.fromJson(item))
-        .whereType<MediaItem>()
-        .toList());
+    librarySongsList.addAll(
+        Hive.box('SongDownloads').values.map<MediaItem?>(MediaItemBuilder.fromJson).whereType<MediaItem>().toList());
     isSongFetched.value = true;
 
     //Remove deleted songs and expired songUrl from database
@@ -73,9 +68,9 @@ class LibrarySongsController extends GetxController {
   }
 
   void onSort(SortType sortType, bool isAscending) {
-    final songlist = librarySongsList.toList();
-    sortSongsNVideos(songlist, sortType, isAscending);
-    librarySongsList.value = songlist;
+    final songList = librarySongsList.toList();
+    sortSongsNVideos(songList, sortType, isAscending);
+    librarySongsList.value = songList;
   }
 
   void onSearchStart(String? tag) {
@@ -83,9 +78,9 @@ class LibrarySongsController extends GetxController {
   }
 
   void onSearch(String value, String? tag) {
-    final songlist =
+    final songList =
         tempListContainer.where((element) => element.title.toLowerCase().contains(value.toLowerCase())).toList();
-    librarySongsList.value = songlist;
+    librarySongsList.value = songList;
   }
 
   void onSearchClose(String? tag) {
@@ -99,7 +94,7 @@ class LibrarySongsController extends GetxController {
       tempListContainer.remove(item);
     }
     librarySongsList.remove(item);
-    String filePath = '';
+    var filePath = '';
     if (isDownloaded) {
       filePath = item.extras!['url'] ?? url;
     } else {
@@ -107,8 +102,8 @@ class LibrarySongsController extends GetxController {
       filePath = '$cacheDir/cachedSongs/${item.id}.mp3';
     }
 
-    if (await (File(filePath)).exists()) {
-      await (File(filePath)).delete();
+    if (await File(filePath).exists()) {
+      await File(filePath).delete();
     }
 
     final thumbFile = File('${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${item.id}.png');
@@ -137,7 +132,7 @@ class LibrarySongsController extends GetxController {
   }
 
   void selectAll(bool selected) {
-    for (int i = 0; i < additionalOperationTempList.length; i++) {
+    for (var i = 0; i < additionalOperationTempList.length; i++) {
       additionalOperationTempMap[i] = selected;
     }
   }
@@ -164,7 +159,7 @@ class LibrarySongsController extends GetxController {
   Future<void> deleteMultipleSongs(List<MediaItem> songs) async {
     final downloadsBox = await Hive.openBox('SongDownloads');
     final cacheBox = await Hive.openBox('SongsCache');
-    for (MediaItem element in songs) {
+    for (var element in songs) {
       if (downloadsBox.containsKey(element.id)) {
         await downloadsBox.delete(element.id);
         removeSong(element, true);
@@ -218,7 +213,7 @@ class LibraryPlaylistsController extends GetxController with GetTickerProviderSt
     super.onInit();
   }
 
-  void refreshLib() async {
+  Future<void> refreshLib() async {
     final box = await Hive.openBox('LibraryPlaylists');
     libraryPlaylists.value = [
       ...initPlst,
@@ -235,7 +230,7 @@ class LibraryPlaylistsController extends GetxController with GetTickerProviderSt
   }
 
   void removePipedPlaylists() {
-    for (Playlist plst in libraryPlaylists.toList()) {
+    for (var plst in libraryPlaylists.toList()) {
       if (plst.isPipedPlaylist) {
         libraryPlaylists.remove(plst);
       }
@@ -279,7 +274,7 @@ class LibraryPlaylistsController extends GetxController with GetTickerProviderSt
       }
 
       //remove playist if removed from cloud
-      for (Playlist playlist in libraryPlaylists.toList()) {
+      for (var playlist in libraryPlaylists.toList()) {
         if (!cloudpipedPlaylistsId.contains(playlist.playlistId) && playlist.isPipedPlaylist) {
           libraryPlaylists.removeWhere((element) => element.playlistId == playlist.playlistId);
         }
@@ -289,7 +284,7 @@ class LibraryPlaylistsController extends GetxController with GetTickerProviderSt
   }
 
   Future<bool> renamePlaylist(Playlist playlist) async {
-    String title = textInputController.text;
+    var title = textInputController.text;
     if (title != '') {
       if (playlist.isPipedPlaylist) {
         final res = await Get.find<PipedServices>().renamePlaylist(playlist.playlistId, title);
@@ -297,7 +292,7 @@ class LibraryPlaylistsController extends GetxController with GetTickerProviderSt
         playlist.newTitle = title;
       } else {
         final box = await Hive.openBox('LibraryPlaylists');
-        title = "${title[0].toUpperCase()}${title.substring(1).toLowerCase()}";
+        title = '${title[0].toUpperCase()}${title.substring(1).toLowerCase()}';
         playlist.newTitle = title;
         box.put(playlist.playlistId, playlist.toJson());
       }
@@ -312,9 +307,9 @@ class LibraryPlaylistsController extends GetxController with GetTickerProviderSt
   }
 
   Future<bool> createNewPlaylist({bool createPlaylistNaddSong = false, List<MediaItem>? songItems}) async {
-    String title = textInputController.text;
+    var title = textInputController.text;
     if (title != '') {
-      title = "${title[0].toUpperCase()}${title.substring(1).toLowerCase()}";
+      title = '${title[0].toUpperCase()}${title.substring(1).toLowerCase()}';
       dynamic newplst;
 
       if (playlistCreationMode.value == 'piped') {
@@ -323,7 +318,7 @@ class LibraryPlaylistsController extends GetxController with GetTickerProviderSt
         if (res.code == 1) {
           newplst = Playlist(
               title: title,
-              playlistId: "${res.response['playlistId']}",
+              playlistId: '${res.response['playlistId']}',
               thumbnailUrl: songItems != null ? songItems[0].artUri.toString() : '',
               description: 'Piped Playlist',
               isCloudPlaylist: true,
@@ -348,11 +343,11 @@ class LibraryPlaylistsController extends GetxController with GetTickerProviderSt
 
       if (createPlaylistNaddSong && playlistCreationMode.value == 'local') {
         final plastbox = await Hive.openBox(newplst.playlistId);
-        for (MediaItem item in songItems!) {
+        for (var item in songItems!) {
           plastbox.add(MediaItemBuilder.toJson(item));
         }
         plastbox.close();
-      } else if ((createPlaylistNaddSong && playlistCreationMode.value == 'piped')) {
+      } else if (createPlaylistNaddSong && playlistCreationMode.value == 'piped') {
         final songIds = songItems!.map((e) => e.id).toList();
         await Get.find<PipedServices>().addToPlaylist(newplst.playlistId, songIds);
       }
@@ -417,7 +412,7 @@ class LibraryAlbumsController extends GetxController {
     super.onInit();
   }
 
-  void refreshLib() async {
+  Future<void> refreshLib() async {
     final box = await Hive.openBox('LibraryAlbums');
     libraryAlbums.value = box.values.map<Album?>((item) => Album.fromJson(item)).whereType<Album>().toList();
 
@@ -458,9 +453,9 @@ class LibraryArtistsController extends GetxController {
     super.onInit();
   }
 
-  void refreshLib() async {
+  Future<void> refreshLib() async {
     final box = await Hive.openBox('LibraryArtists');
-    libraryArtists.value = box.values.map<Artist?>((item) => Artist.fromJson(item)).whereType<Artist>().toList();
+    libraryArtists.value = box.values.map<Artist?>(Artist.fromJson).whereType<Artist>().toList();
     isContentFetched.value = true;
     box.close();
   }

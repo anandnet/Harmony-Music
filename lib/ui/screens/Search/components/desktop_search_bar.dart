@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
-import '/ui/screens/Search/search_screen_controller.dart';
-import '../../../navigator.dart';
-import 'search_item.dart';
+import 'package:harmonymusic/ui/navigator.dart';
+import 'package:harmonymusic/ui/screens/Search/components/search_item.dart';
+import 'package:harmonymusic/ui/screens/Search/search_screen_controller.dart';
 
 class DesktopSearchBar extends StatelessWidget {
   const DesktopSearchBar({super.key});
@@ -22,7 +21,7 @@ class DesktopSearchBar extends StatelessWidget {
             onTapOutside: (event) {},
             onChanged: searchScreenController.onChanged,
             onSubmitted: (val) {
-              if (val.contains("https://")) {
+              if (val.contains('https://')) {
                 searchScreenController.filterLinks(Uri.parse(val));
                 searchScreenController.reset();
                 return;
@@ -33,7 +32,7 @@ class DesktopSearchBar extends StatelessWidget {
             },
             focusNode: searchScreenController.focusNode,
             backgroundColor: WidgetStatePropertyAll<Color>(Theme.of(context).colorScheme.secondary),
-            hintText: "searchDes".tr,
+            hintText: 'searchDes'.tr,
             leading: IconButton(
                 onPressed: () {
                   if (searchScreenController.focusNode.hasFocus) {
@@ -51,7 +50,7 @@ class DesktopSearchBar extends StatelessWidget {
           ),
         ),
         Padding(
-            padding: const EdgeInsets.only(top: 10.0),
+            padding: const EdgeInsets.only(top: 10),
             child: Container(
               decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondary, borderRadius: BorderRadius.circular(20)),
@@ -73,7 +72,7 @@ class DesktopSearchBar extends StatelessWidget {
                           height: 50,
                           child: Center(
                               child: Text(
-                            "urlSearchDes".tr,
+                            'urlSearchDes'.tr,
                             style: Theme.of(context).textTheme.titleMedium,
                           )),
                         ),
@@ -81,7 +80,7 @@ class DesktopSearchBar extends StatelessWidget {
                     : searchScreenController.isSearchBarInFocus.isTrue && listToShow.isNotEmpty
                         ? ListView(
                             shrinkWrap: true,
-                            padding: const EdgeInsets.all(5.0),
+                            padding: const EdgeInsets.all(5),
                             children: listToShow.map((item) {
                               return SearchItem(queryString: item, isHistoryString: isHistoryString);
                             }).toList())

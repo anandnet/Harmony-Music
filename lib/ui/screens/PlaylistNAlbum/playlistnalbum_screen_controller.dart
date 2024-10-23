@@ -76,7 +76,7 @@ class PlayListNAlbumScreenController extends GetxController {
 
   Future<void> _checkIfAddedToLibrary(String id) async {
     //check
-    box = isAlbum ? await Hive.openBox("LibraryAlbums") : await Hive.openBox("LibraryPlaylists");
+    box = isAlbum ? await Hive.openBox('LibraryAlbums') : await Hive.openBox('LibraryPlaylists');
     isAddedToLibrary.value = box.containsKey(id);
   }
 
@@ -107,8 +107,8 @@ class PlayListNAlbumScreenController extends GetxController {
   Future<void> fetchSongsfromDatabase(id) async {
     box = await Hive.openBox(id);
     final List<MediaItem> songList_ =
-        box.values.map<MediaItem?>((item) => MediaItemBuilder.fromJson(item)).whereType<MediaItem>().toList();
-    songList.value = id == "LIBRP" ? songList_.reversed.toList() : songList_;
+        box.values.map<MediaItem?>(MediaItemBuilder.fromJson).whereType<MediaItem>().toList();
+    songList.value = id == 'LIBRP' ? songList_.reversed.toList() : songList_;
     isContentFetched.value = true;
     checkDownloadStatus();
   }
@@ -156,7 +156,7 @@ class PlayListNAlbumScreenController extends GetxController {
         Get.find<LibraryPlaylistsController>().syncPipedPlaylist();
         return (res.code == 1);
       } else {
-        final box = isAlbum ? await Hive.openBox("LibraryAlbums") : await Hive.openBox("LibraryPlaylists");
+        final box = isAlbum ? await Hive.openBox('LibraryAlbums') : await Hive.openBox('LibraryPlaylists');
         final id = isAlbum ? content.browseId : content.playlistId;
         if (add) {
           box.put(id, content.toJson());
@@ -183,7 +183,7 @@ class PlayListNAlbumScreenController extends GetxController {
   void checkDownloadStatus() {
     bool downloaded = true;
     for (MediaItem item in songList) {
-      if (!Hive.box("SongDownloads").containsKey(item.id)) {
+      if (!Hive.box('SongDownloads').containsKey(item.id)) {
         downloaded = false;
         break;
       }
@@ -265,7 +265,7 @@ class PlayListNAlbumScreenController extends GetxController {
   }
 
   Future<void> deleteMultipleSongs(List<MediaItem> songs) async {
-    final isoffline = id == "SongsCache" || id == "SongDownloads";
+    final isoffline = id == 'SongsCache' || id == 'SongDownloads';
 
     final box_ = await Hive.openBox(id);
     for (MediaItem element in songs) {
@@ -273,7 +273,7 @@ class PlayListNAlbumScreenController extends GetxController {
       await box_.deleteAt(index);
 
       if (isoffline) {
-        await Get.find<LibrarySongsController>().removeSong(element, id == "SongDownloads");
+        await Get.find<LibrarySongsController>().removeSong(element, id == 'SongDownloads');
       }
 
       songList.removeWhere((song) => song.id == element.id);
@@ -303,7 +303,7 @@ class PlayListNAlbumScreenController extends GetxController {
   @override
   void onClose() {
     tempListContainer.clear();
-    if (id != "SongDownloads") box.close();
+    if (id != 'SongDownloads') box.close();
     Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();
   }

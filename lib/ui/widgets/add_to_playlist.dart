@@ -90,12 +90,12 @@ class AddToPlaylist extends StatelessWidget {
                           itemBuilder: (context, index) => ListTile(
                             leading: const Icon(Icons.playlist_play_rounded),
                             title: Text(
-                              (addToPlaylistController.playlists[index]).title,
+                              addToPlaylistController.playlists[index].title,
                             ),
                             onTap: () {
                               addToPlaylistController
                                   .addSongsToPlaylist(
-                                      songItems, (addToPlaylistController.playlists[index]).playlistId, context)
+                                      songItems, addToPlaylistController.playlists[index].playlistId, context)
                                   .then((value) {
                                 if (!context.mounted) return;
                                 if (value) {

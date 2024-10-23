@@ -1,19 +1,18 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/navigator.dart';
+import 'package:harmonymusic/ui/screens/Search/search_result_screen_controller.dart';
 import 'package:harmonymusic/ui/widgets/loader.dart';
 import 'package:harmonymusic/ui/widgets/search_related_widgets.dart';
-
-import '../../navigator.dart';
-import '../../widgets/separate_tab_item_widget.dart';
-import 'search_result_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/separate_tab_item_widget.dart';
 
 class SearchResultScreenBN extends StatelessWidget {
   const SearchResultScreenBN({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final SearchResultScreenController searchResScrController = Get.find<SearchResultScreenController>();
+    final searchResScrController = Get.find<SearchResultScreenController>();
     final topPadding = context.isLandscape ? 50.0 : 80.0;
     return Scaffold(
       body: Padding(
@@ -48,7 +47,7 @@ class SearchResultScreenBN extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Obx(
                         () => Text(
-                          "${"for1".tr} \"${searchResScrController.queryString.value}\"",
+                          '${"for1".tr} \"${searchResScrController.queryString.value}\"',
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),

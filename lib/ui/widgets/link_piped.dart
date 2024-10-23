@@ -75,7 +75,7 @@ class LinkPiped extends StatelessWidget {
                             pipedLinkedController.errorText.value,
                             textAlign: TextAlign.center,
                           )))),
-                  Container(
+                  DecoratedBox(
                       decoration: BoxDecoration(
                           color: Theme.of(context).textTheme.titleLarge!.color,
                           borderRadius: BorderRadius.circular(10)),
@@ -146,8 +146,7 @@ class PipedLinkedController extends GetxController {
         printINFO('Login Successfull');
         Get.find<SettingsScreenController>().isLinkedWithPiped.value = true;
         Navigator.of(Get.context!).pop();
-        ScaffoldMessenger.of(Get.context!)
-            .showSnackBar(snackbar(Get.context!, 'linkAlert'.tr, size: SanckBarSize.MEDIUM));
+        ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(Get.context!, 'linkAlert'.tr));
         Get.find<LibraryPlaylistsController>().syncPipedPlaylist();
       } else {
         errorText.value = res.errorMessage ?? 'errorOccuredAlert'.tr;

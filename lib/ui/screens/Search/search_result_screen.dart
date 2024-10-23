@@ -32,10 +32,10 @@ class SearchResultScreen extends StatelessWidget {
                           destinations: (searchResScrController.isResultContentFetced.value &&
                                   searchResScrController.railItems.isNotEmpty)
                               ? [
-                                  railDestination("results".tr),
-                                  ...(searchResScrController.railItems.map((element) => railDestination(element))),
+                                  railDestination('results'.tr),
+                                  ...(searchResScrController.railItems.map(railDestination)),
                                 ]
-                              : [railDestination("results".tr), railDestination("")],
+                              : [railDestination('results'.tr), railDestination('')],
                           leading: Column(
                             children: [
                               SizedBox(
@@ -105,7 +105,7 @@ class Body extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "nomatch".tr,
+                  'nomatch'.tr,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text("'${searchResScrController.queryString.value}'"),

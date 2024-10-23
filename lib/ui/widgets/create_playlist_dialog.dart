@@ -1,13 +1,12 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '/services/piped_service.dart';
-import '/ui/widgets/snackbar.dart';
-import '../../models/playlist.dart';
-import '../screens/Library/library_controller.dart';
-import 'common_dialog_widget.dart';
-import 'modified_text_field.dart';
+import 'package:harmonymusic/models/playlist.dart';
+import 'package:harmonymusic/services/piped_service.dart';
+import 'package:harmonymusic/ui/screens/Library/library_controller.dart';
+import 'package:harmonymusic/ui/widgets/common_dialog_widget.dart';
+import 'package:harmonymusic/ui/widgets/modified_text_field.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
 
 class CreateNRenamePlaylistPopup extends StatelessWidget {
   const CreateNRenamePlaylistPopup(
@@ -44,7 +43,6 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
               if (isPipedLinked && !renamePlaylist)
                 Obx(
                   () => Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Row(
                         children: [
@@ -81,13 +79,13 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 20.0),
+                padding: const EdgeInsets.only(top: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     InkWell(
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(10),
                         child: Text('cancel'.tr),
                       ),
                       onTap: () => Navigator.of(context).pop(),
@@ -98,7 +96,7 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10)),
                       child: InkWell(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                           child: Text(
                             isCreateNadd
                                 ? 'createnAdd'.tr
@@ -114,8 +112,7 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                               if (value) {
                                 if (!context.mounted) return;
                                 Navigator.of(context).pop();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    snackbar(context, 'playlistRenameAlert'.tr, size: SanckBarSize.MEDIUM));
+                                ScaffoldMessenger.of(context).showSnackBar(snackbar(context, 'playlistRenameAlert'.tr));
                               }
                             });
                           } else {
@@ -125,11 +122,9 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                               if (!context.mounted) return;
                               if (value) {
                                 ScaffoldMessenger.of(context).showSnackBar(snackbar(context,
-                                    isCreateNadd ? 'playlistCreatednsongAddedAlert'.tr : 'playlistCreatedAlert'.tr,
-                                    size: SanckBarSize.MEDIUM));
+                                    isCreateNadd ? 'playlistCreatednsongAddedAlert'.tr : 'playlistCreatedAlert'.tr));
                               } else {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackbar(context, 'errorOccuredAlert'.tr, size: SanckBarSize.MEDIUM));
+                                ScaffoldMessenger.of(context).showSnackBar(snackbar(context, 'errorOccuredAlert'.tr));
                               }
                               Navigator.of(context).pop();
                             });

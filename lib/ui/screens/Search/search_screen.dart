@@ -105,7 +105,7 @@ class SearchScreen extends StatelessWidget {
                                         searchScreenController.reset();
                                       },
                                       child: Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                        padding: const EdgeInsets.symmetric(vertical: 10),
                                         child: SizedBox(
                                           width: double.maxFinite,
                                           height: 60,

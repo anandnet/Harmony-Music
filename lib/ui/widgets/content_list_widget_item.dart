@@ -13,7 +13,7 @@ class ContentListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAlbum = content.runtimeType.toString() == "Album";
+    final isAlbum = content.runtimeType.toString() == 'Album';
     return InkWell(
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
@@ -46,7 +46,7 @@ class ContentListItem extends StatelessWidget {
                               Align(
                                 alignment: Alignment.bottomRight,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8),
                                   child: Container(
                                     height: 18,
                                     width: 18,
@@ -98,11 +98,11 @@ class ContentListItem extends StatelessWidget {
                   Text(
                     isAlbum
                         ? isLibraryItem
-                            ? ""
+                            ? ''
                             : "${content.artists[0]['name'] ?? ""} | ${content.year ?? ""}"
                         : isLibraryItem
-                            ? ""
-                            : content.description ?? "",
+                            ? ''
+                            : content.description ?? '',
                     maxLines: 1,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),

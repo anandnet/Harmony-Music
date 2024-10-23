@@ -9,11 +9,15 @@ class SongInfoDialog extends StatelessWidget {
   final MediaItem song;
   final bool isDownloaded;
 
-  const SongInfoDialog({super.key, required this.song, required this.isDownloaded});
+  const SongInfoDialog({
+    required this.song,
+    required this.isDownloaded,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    Map<dynamic, dynamic> streamInfo = _getStreamInfo(song.id);
+    var streamInfo = _getStreamInfo(song.id);
     return CommonDialog(
       child: SizedBox(
         height: Get.mediaQuery.size.height * .7,
@@ -43,7 +47,6 @@ class SongInfoDialog extends StatelessWidget {
             SizedBox(
               height: 50,
               child: Align(
-                alignment: Alignment.center,
                 child: InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
@@ -79,7 +82,7 @@ class InfoItem extends StatelessWidget {
   final String title;
   final String value;
 
-  const InfoItem({super.key, required this.title, required this.value});
+  const InfoItem({required this.title, required this.value, super.key});
 
   @override
   Widget build(BuildContext context) {

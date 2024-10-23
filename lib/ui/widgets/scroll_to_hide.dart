@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ScrollToHideWidget extends StatelessWidget {
-  const ScrollToHideWidget({super.key, required this.isVisible, required this.child});
+  const ScrollToHideWidget({
+    required this.isVisible,
+    required this.child,
+    super.key,
+  });
 
   final Widget child;
   final bool isVisible;

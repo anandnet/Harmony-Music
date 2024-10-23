@@ -3,14 +3,13 @@ import 'dart:async';
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '/services/music_service.dart';
-import '/ui/player/player_controller.dart';
-import '/ui/widgets/songinfo_bottom_sheet.dart';
-import '/utils/helper.dart';
-import '../ui/navigator.dart';
-import '../ui/widgets/loader.dart';
-import '../ui/widgets/snackbar.dart';
+import 'package:harmonymusic/services/music_service.dart';
+import 'package:harmonymusic/ui/navigator.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/widgets/loader.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
+import 'package:harmonymusic/ui/widgets/songinfo_bottom_sheet.dart';
+import 'package:harmonymusic/utils/helper.dart';
 
 class AppLinksController extends GetxController with ProcessLink {
   late AppLinks _appLinks;
@@ -65,8 +64,7 @@ mixin ProcessLink {
         final browseId = uri.queryParameters['list'];
         await openPlaylistOrAlbum(browseId!);
       } else if (uri.pathSegments[0] == 'shorts') {
-        ScaffoldMessenger.of(Get.context!)
-            .showSnackBar(snackbar(Get.context!, 'notaSongVideo'.tr, size: SanckBarSize.MEDIUM));
+        ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(Get.context!, 'notaSongVideo'.tr));
       } else if (uri.pathSegments[0] == 'watch') {
         final songId = uri.queryParameters['v'];
         await playSong(songId!);
@@ -78,8 +76,7 @@ mixin ProcessLink {
         await playSong(songId);
       }
     } else {
-      ScaffoldMessenger.of(Get.context!)
-          .showSnackBar(snackbar(Get.context!, 'notaValidLink'.tr, size: SanckBarSize.MEDIUM));
+      ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(Get.context!, 'notaValidLink'.tr));
     }
   }
 
@@ -110,8 +107,7 @@ mixin ProcessLink {
     if (result[0]) {
       Get.find<PlayerController>().playPlayListSong(List.from(result[1]), 0);
     } else {
-      ScaffoldMessenger.of(Get.context!)
-          .showSnackBar(snackbar(Get.context!, 'notaSongVideo'.tr, size: SanckBarSize.MEDIUM));
+      ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(Get.context!, 'notaSongVideo'.tr));
     }
   }
 }

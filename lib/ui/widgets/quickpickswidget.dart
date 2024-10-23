@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '/models/quick_picks.dart';
-import '../player/player_controller.dart';
-import 'image_widget.dart';
-import 'songinfo_bottom_sheet.dart';
+import 'package:harmonymusic/models/quick_picks.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/widgets/image_widget.dart';
+import 'package:harmonymusic/ui/widgets/songinfo_bottom_sheet.dart';
 
 class QuickPicksWidget extends StatelessWidget {
   const QuickPicksWidget({super.key, required this.content, this.scrollController});
@@ -67,7 +66,7 @@ class QuickPicksWidget extends StatelessWidget {
                           showModalBottomSheet(
                             constraints: const BoxConstraints(maxWidth: 500),
                             shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+                              borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                             ),
                             isScrollControlled: true,
                             context: playerController.homeScaffoldkey.currentState!.context,
@@ -83,7 +82,7 @@ class QuickPicksWidget extends StatelessWidget {
                                   showModalBottomSheet(
                                     constraints: const BoxConstraints(maxWidth: 500),
                                     shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+                                      borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                                     ),
                                     isScrollControlled: true,
                                     context: playerController.homeScaffoldkey.currentState!.context,

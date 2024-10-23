@@ -32,7 +32,6 @@ class SettingsScreen extends StatelessWidget {
           ? EdgeInsets.only(left: 20, top: topPadding, right: 15)
           : EdgeInsets.only(top: topPadding, left: 5, right: 5),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Align(
             alignment: Alignment.centerLeft,
@@ -224,7 +223,7 @@ class SettingsScreen extends StatelessWidget {
                           onChanged: settingsController.toggleCacheHomeScreenData),
                     )),
                 ListTile(
-                  contentPadding: const EdgeInsets.only(left: 5, right: 10, top: 0),
+                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
                   title: Text('Piped'.tr),
                   subtitle: Text('linkPipedDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
                   trailing: TextButton(
@@ -245,7 +244,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 Obx(() => (settingsController.isLinkedWithPiped.isTrue)
                     ? ListTile(
-                        contentPadding: const EdgeInsets.only(left: 5, right: 10, top: 0),
+                        contentPadding: const EdgeInsets.only(left: 5, right: 10),
                         title: Text('resetblacklistedplaylist'.tr),
                         subtitle: Text('resetblacklistedplaylistDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
                         trailing: TextButton(
@@ -255,8 +254,8 @@ class SettingsScreen extends StatelessWidget {
                             ),
                             onPressed: () async {
                               await Get.find<LibraryPlaylistsController>().resetBlacklistedPlaylist();
-                              ScaffoldMessenger.of(Get.context!).showSnackBar(
-                                  snackbar(Get.context!, 'blacklistPlstResetAlert'.tr, size: SanckBarSize.MEDIUM));
+                              ScaffoldMessenger.of(Get.context!)
+                                  .showSnackBar(snackbar(Get.context!, 'blacklistPlstResetAlert'.tr));
                             }),
                       )
                     : const SizedBox.shrink()),
@@ -350,7 +349,7 @@ class SettingsScreen extends StatelessWidget {
                       )),
                   if (!isDesktop)
                     ListTile(
-                      contentPadding: const EdgeInsets.only(left: 5, right: 10, top: 0),
+                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
                       title: Text('equalizer'.tr),
                       subtitle: Text('equalizerDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
                       onTap: () async {
@@ -430,7 +429,7 @@ class SettingsScreen extends StatelessWidget {
                               style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 15),
                             ),
                           ),
-                          contentPadding: const EdgeInsets.only(left: 5, right: 10, top: 0),
+                          contentPadding: const EdgeInsets.only(left: 5, right: 10),
                           title: Text('downloadLocation'.tr),
                           subtitle: Obx(() => Text(
                               settingsController.isCurrentPathsupportDownDir
@@ -458,7 +457,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   if (GetPlatform.isAndroid)
                     ListTile(
-                      contentPadding: const EdgeInsets.only(left: 5, right: 10, top: 0),
+                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
                       title: Text('exportedFileLocation'.tr),
                       subtitle: Obx(() => Text(settingsController.exportLocationPath.value,
                           style: Theme.of(context).textTheme.bodyMedium)),

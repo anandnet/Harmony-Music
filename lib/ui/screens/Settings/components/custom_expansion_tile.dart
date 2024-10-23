@@ -5,7 +5,12 @@ class CustomExpansionTile extends StatelessWidget {
   final IconData icon;
   final List<Widget> children;
 
-  const CustomExpansionTile({super.key, required this.children, required this.icon, required this.title});
+  const CustomExpansionTile({
+    required this.children,
+    required this.icon,
+    required this.title,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

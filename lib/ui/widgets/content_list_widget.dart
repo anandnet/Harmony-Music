@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '/ui/widgets/content_list_widget_item.dart';
-import '../screens/Search/search_result_screen_controller.dart';
+import 'package:harmonymusic/ui/screens/Search/search_result_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/content_list_widget_item.dart';
 
 class ContentListWidget extends StatelessWidget {
   ///ContentListWidget is used to render a section of Content like a list of Albums or Playlists in HomeScreen
@@ -15,7 +14,7 @@ class ContentListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAlbumContent = content.runtimeType.toString() == "AlbumContent";
+    final isAlbumContent = content.runtimeType.toString() == 'AlbumContent';
     // ignore: avoid_unnecessary_containers
     return Container(
       child: Column(
@@ -26,7 +25,7 @@ class ContentListWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  !isHomeContent && content.title.length > 12 ? "${content.title.substring(0, 12)}..." : content.title,
+                  !isHomeContent && content.title.length > 12 ? '${content.title.substring(0, 12)}...' : content.title,
                   //maxLines: 2,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
@@ -36,7 +35,7 @@ class ContentListWidget extends StatelessWidget {
                           final scrresController = Get.find<SearchResultScreenController>();
                           scrresController.viewAllCallback(content.title);
                         },
-                        child: Text("viewAll".tr, style: Theme.of(Get.context!).textTheme.titleSmall))
+                        child: Text('viewAll'.tr, style: Theme.of(Get.context!).textTheme.titleSmall))
                     : const SizedBox.shrink()
               ],
             ),

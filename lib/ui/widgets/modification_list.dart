@@ -31,7 +31,7 @@ class ModificationList extends StatelessWidget {
             itemBuilder: (context, index) => ListTile(
                   key: Key('$index'),
                   onTap: () {},
-                  contentPadding: const EdgeInsets.only(top: 0, left: 5, right: 40),
+                  contentPadding: const EdgeInsets.only(left: 5, right: 40),
                   leading: ImageWidget(
                     size: 55,
                     song: items[index],
@@ -75,7 +75,7 @@ class ModificationList extends StatelessWidget {
               controller.additionalOperationTempMap[index] = !controller.additionalOperationTempMap[index]!;
               controller.checkIfAllSelected();
             },
-            contentPadding: const EdgeInsets.only(top: 0, left: 5, right: 30),
+            contentPadding: const EdgeInsets.only(left: 5, right: 30),
             leading: SizedBox(
               width: 100,
               child: Row(

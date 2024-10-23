@@ -96,7 +96,7 @@ class SettingsScreenController extends GetxController {
     }
     stopPlyabackOnSwipeAway.value = setBox.get('stopPlyabackOnSwipeAway') ?? false;
     if (GetPlatform.isAndroid) {
-      isIgnoringBatteryOptimizations.value = (await Permission.ignoreBatteryOptimizations.isGranted);
+      isIgnoringBatteryOptimizations.value = await Permission.ignoreBatteryOptimizations.isGranted;
     }
   }
 

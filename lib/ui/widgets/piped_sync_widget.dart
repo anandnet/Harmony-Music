@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/screens/Library/library_controller.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
 import 'package:harmonymusic/utils/helper.dart';
 
-import '../screens/Library/library_controller.dart';
-import 'snackbar.dart';
-
 class PipedSyncWidget extends StatelessWidget {
-  const PipedSyncWidget({super.key, required this.padding});
+  const PipedSyncWidget({
+    required this.padding,
+    super.key,
+  });
 
   final EdgeInsets padding;
 
@@ -33,11 +35,10 @@ class PipedSyncWidget extends StatelessWidget {
                 await librplstCntrller.syncPipedPlaylist();
                 librplstCntrller.controller.stop();
                 librplstCntrller.controller.reset();
-                ScaffoldMessenger.of(Get.context!)
-                    .showSnackBar(snackbar(Get.context!, "pipedplstSyncAlert".tr, size: SanckBarSize.MEDIUM));
+                ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(Get.context!, 'pipedplstSyncAlert'.tr));
               } catch (e) {
                 ScaffoldMessenger.of(Get.context!)
-                    .showSnackBar(snackbar(Get.context!, "errorOccuredAlert".tr, size: SanckBarSize.BIG));
+                    .showSnackBar(snackbar(Get.context!, 'errorOccuredAlert'.tr, size: SanckBarSize.BIG));
                 printERROR(e);
               }
             }),

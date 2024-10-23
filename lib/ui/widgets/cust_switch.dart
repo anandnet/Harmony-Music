@@ -3,7 +3,11 @@ import 'package:get/get.dart';
 import 'package:harmonymusic/ui/utils/theme_controller.dart';
 
 class CustSwitch extends StatelessWidget {
-  const CustSwitch({super.key, this.onChanged, required this.value});
+  const CustSwitch({
+    required this.value,
+    super.key,
+    this.onChanged,
+  });
 
   final void Function(bool)? onChanged;
   final bool value;

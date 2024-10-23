@@ -2,8 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'modified_text_field.dart';
+import 'package:harmonymusic/ui/widgets/modified_text_field.dart';
 
 enum OperationMode { arrange, delete, addToPlaylist, none }
 
@@ -32,8 +31,9 @@ Set<SortType> buildSortTypeSet(
 class SortWidget extends StatelessWidget {
   /// Additional operations - Delete Multiple songs, Rearrage offline playlist, Add Multiple songs to playlist
   const SortWidget({
-    super.key,
     required this.tag,
+    required this.onSort,
+    super.key,
     this.itemCountTitle = '',
     this.titleLeftPadding = 18,
     this.isAdditionalOperationRequired = true,
@@ -49,7 +49,6 @@ class SortWidget extends StatelessWidget {
     this.selectAll,
     this.performAdditionalOperation,
     this.cancelAdditionalOperation,
-    required this.onSort,
   });
 
   /// unique identifier for each sortwidget

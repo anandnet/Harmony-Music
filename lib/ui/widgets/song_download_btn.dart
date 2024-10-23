@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/services/downloader.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/widgets/loader.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
 import 'package:hive/hive.dart';
-
-import 'loader.dart';
-import 'snackbar.dart';
 
 class SongDownloadButton extends StatelessWidget {
   const SongDownloadButton({super.key, this.calledFromPlayer = false, this.song_, this.isDownloadingDoneCallback});
@@ -22,14 +21,14 @@ class SongDownloadButton extends StatelessWidget {
     return Obx(() {
       final song = calledFromPlayer ? playerController.currentSong.value : song_;
       if (song == null && calledFromPlayer) return const SizedBox.shrink();
-      final isDownloadingDone = (downloader.songQueue.contains(song) &&
+      final isDownloadingDone = downloader.songQueue.contains(song) &&
           downloader.currentSong == song &&
-          downloader.songDownloadingProgress.value == 100);
+          downloader.songDownloadingProgress.value == 100;
       if (isDownloadingDoneCallback != null) {
         isDownloadingDoneCallback!(isDownloadingDone);
       }
 
-      return (isDownloadingDone || Hive.box("SongDownloads").containsKey(song!.id))
+      return (isDownloadingDone || Hive.box('SongDownloads').containsKey(song!.id))
           ? Icon(
               Icons.download_done,
               color: Theme.of(context).textTheme.titleMedium!.color,
@@ -41,7 +40,7 @@ class SongDownloadButton extends StatelessWidget {
                       Align(
                         alignment: Alignment.center,
                         child: Text(
-                          "${downloader.songDownloadingProgress.value}%",
+                          '${downloader.songDownloadingProgress.value}%',
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!
@@ -63,16 +62,16 @@ class SongDownloadButton extends StatelessWidget {
                         color: Theme.of(context).textTheme.titleMedium!.color,
                       ),
                       onPressed: () {
-                        (Hive.openBox("SongsCache").then((box) {
+                        Hive.openBox('SongsCache').then((box) {
                           if (box.containsKey(song.id)) {
                             if (!context.mounted) return;
                             Navigator.of(context).pop();
                             ScaffoldMessenger.of(context)
-                                .showSnackBar(snackbar(context, "songAlreadyOfflineAlert".tr, size: SanckBarSize.BIG));
+                                .showSnackBar(snackbar(context, 'songAlreadyOfflineAlert'.tr, size: SanckBarSize.BIG));
                           } else {
                             downloader.download(song);
                           }
-                        }));
+                        });
                       },
                     );
     });

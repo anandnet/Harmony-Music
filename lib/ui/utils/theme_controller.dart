@@ -43,9 +43,9 @@ class ThemeController extends GetxController {
     }
   }
 
-  void setTheme(ImageProvider imageProvider, String songId) async {
+  Future<void> setTheme(ImageProvider imageProvider, String songId) async {
     if (songId == currentSongId) return;
-    PaletteGenerator generator = await PaletteGenerator.fromImageProvider(imageProvider);
+    var generator = await PaletteGenerator.fromImageProvider(imageProvider);
     //final colorList = generator.colors;
     final paletteColor = generator.dominantColor ??
         generator.darkMutedColor ??
@@ -112,7 +112,7 @@ class ThemeController extends GetxController {
           ),
           indicatorColor: Colors.white,
           progressIndicatorTheme: ProgressIndicatorThemeData(
-              linearTrackColor: (primarySwatch[300])!.computeLuminance() > 0.3 ? Colors.black54 : Colors.white70,
+              linearTrackColor: primarySwatch[300]!.computeLuminance() > 0.3 ? Colors.black54 : Colors.white70,
               color: textColor),
           navigationRailTheme: NavigationRailThemeData(
               backgroundColor: primarySwatch[700],
@@ -208,10 +208,7 @@ class ThemeController extends GetxController {
           brightness: Brightness.light,
           canvasColor: Colors.white,
           colorScheme: ColorScheme.fromSwatch(
-              accentColor: Colors.grey[400],
-              backgroundColor: Colors.white,
-              cardColor: Colors.white,
-              brightness: Brightness.light),
+              accentColor: Colors.grey[400], backgroundColor: Colors.white, cardColor: Colors.white),
           primaryColor: Colors.white,
           primaryColorLight: Colors.grey[300],
           progressIndicatorTheme:
@@ -250,9 +247,8 @@ class ThemeController extends GetxController {
           textSelectionTheme: TextSelectionThemeData(
               cursorColor: Colors.grey[400], selectionColor: Colors.grey[400], selectionHandleColor: Colors.grey[400]),
           dialogTheme: DialogTheme(backgroundColor: Colors.grey[200]),
-          inputDecorationTheme: const InputDecorationTheme(
-              focusColor: Colors.black,
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black))));
+          inputDecorationTheme:
+              const InputDecorationTheme(focusColor: Colors.black, focusedBorder: UnderlineInputBorder()));
       return baseTheme.copyWith(textTheme: GoogleFonts.nunitoSansTextTheme(baseTheme.textTheme));
     }
   }

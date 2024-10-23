@@ -539,7 +539,6 @@ class _SlidingUpPanelState extends State<SlidingUpPanel> with SingleTickerProvid
         SpringDescription.withDampingRatio(
           mass: 1.0,
           stiffness: 500.0,
-          ratio: 1.0,
         ),
         _ac.value,
         targetPos,
@@ -559,7 +558,7 @@ class _SlidingUpPanelState extends State<SlidingUpPanel> with SingleTickerProvid
 
   //open the panel
   Future<void> _open() {
-    return _ac.fling(velocity: 1.0);
+    return _ac.fling();
   }
 
   //hide the panel (completely offscreen)

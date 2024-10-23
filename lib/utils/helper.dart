@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-
-import '/ui/navigator.dart';
-import '/ui/widgets/sort_widget.dart';
+import 'package:harmonymusic/ui/navigator.dart';
+import 'package:harmonymusic/ui/widgets/sort_widget.dart';
 
 void printERROR(dynamic text, {String tag = 'Harmony Music'}) {
   if (kReleaseMode) return;

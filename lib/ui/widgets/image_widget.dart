@@ -4,21 +4,20 @@ import 'package:audio_service/audio_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/album.dart';
+import 'package:harmonymusic/models/artist.dart';
+import 'package:harmonymusic/models/playlist.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 import 'package:shimmer/shimmer.dart';
-
-import '/models/artist.dart';
-import '../../models/album.dart';
-import '../../models/playlist.dart';
-import '../screens/Settings/settings_screen_controller.dart';
 
 class ImageWidget extends StatelessWidget {
   const ImageWidget({
+    required this.size,
     super.key,
     this.song,
     this.playlist,
     this.album,
     this.artist,
-    required this.size,
     this.isPlayerArtImage = false,
   });
 
@@ -31,7 +30,7 @@ class ImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl = song != null
+    var imageUrl = song != null
         ? song!.artUri.toString()
         : playlist != null
             ? playlist!.thumbnailUrl
@@ -40,7 +39,7 @@ class ImageWidget extends StatelessWidget {
                 : artist != null
                     ? artist!.thumbnailUrl
                     : '';
-    String cacheKey = song != null
+    var cacheKey = song != null
         ? '${song!.id}_song'
         : playlist != null
             ? '${playlist!.playlistId}_playlist'
@@ -95,18 +94,16 @@ class ImageWidget extends StatelessWidget {
                     child:
                         Image.asset("assets/icons/${song != null ? "song" : artist != null ? "artist" : "album"}.png"));
               },
-              progressIndicatorBuilder: ((_, __, ___) => Shimmer.fromColors(
+              progressIndicatorBuilder: (_, __, ___) => Shimmer.fromColors(
                   baseColor: Colors.grey[500]!,
                   highlightColor: Colors.grey[300]!,
-                  enabled: true,
-                  direction: ShimmerDirection.ltr,
                   child: Container(
                     decoration: BoxDecoration(
                       shape: artist != null ? BoxShape.circle : BoxShape.rectangle,
                       borderRadius: artist != null ? null : BorderRadius.circular(10),
                       color: Colors.white54,
                     ),
-                  ))),
+                  )),
             ),
           );
   }

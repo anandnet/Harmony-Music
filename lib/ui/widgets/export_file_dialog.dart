@@ -2,11 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/services/permission_service.dart';
 import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/common_dialog_widget.dart';
 import 'package:harmonymusic/ui/widgets/loader.dart';
-
-import '../../services/permission_service.dart';
-import 'common_dialog_widget.dart';
 
 class ExportFileDialog extends StatelessWidget {
   const ExportFileDialog({super.key});
@@ -20,11 +19,11 @@ class ExportFileDialog extends StatelessWidget {
         padding: const EdgeInsets.only(top: 20, bottom: 30, left: 20, right: 20),
         child: Stack(
           children: [
-            Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Column(children: [
               Container(
-                padding: const EdgeInsets.only(bottom: 10.0, top: 10),
+                padding: const EdgeInsets.only(bottom: 10, top: 10),
                 child: Text(
-                  "exportDowloadedFiles".tr,
+                  'exportDowloadedFiles'.tr,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -33,18 +32,18 @@ class ExportFileDialog extends StatelessWidget {
                 child: Center(
                   child: Obx(() => exportFileDialogController.exportProgress.toInt() ==
                           exportFileDialogController.filesToExport.length
-                      ? Text("exportMsg".tr)
+                      ? Text('exportMsg'.tr)
                       : exportFileDialogController.exportRunning.isTrue
                           ? Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                    "${exportFileDialogController.exportProgress.toInt()}/${exportFileDialogController.filesToExport.length}",
+                                    '${exportFileDialogController.exportProgress.toInt()}/${exportFileDialogController.filesToExport.length}',
                                     style: Theme.of(context).textTheme.titleLarge),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                Text("exporting".tr)
+                                Text('exporting'.tr)
                               ],
                             )
                           : exportFileDialogController.ready.isTrue
@@ -57,7 +56,7 @@ class ExportFileDialog extends StatelessWidget {
                                         const SizedBox(
                                           height: 10,
                                         ),
-                                        Text("scanning".tr)
+                                        Text('scanning'.tr)
                                       ],
                                     )
                                   : const SizedBox()),
@@ -66,7 +65,7 @@ class ExportFileDialog extends StatelessWidget {
               SizedBox(
                 width: double.maxFinite,
                 child: Align(
-                  child: Container(
+                  child: DecoratedBox(
                     decoration: BoxDecoration(
                         color: Theme.of(context).textTheme.titleLarge!.color, borderRadius: BorderRadius.circular(10)),
                     child: InkWell(
@@ -79,13 +78,13 @@ class ExportFileDialog extends StatelessWidget {
                         }
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                         child: Obx(
                           () => Text(
                             exportFileDialogController.exportProgress.toInt() ==
                                     exportFileDialogController.filesToExport.length
-                                ? "close".tr
-                                : "export".tr,
+                                ? 'close'.tr
+                                : 'export'.tr,
                             style: TextStyle(color: Theme.of(context).canvasColor),
                           ),
                         ),
@@ -117,7 +116,7 @@ class ExportFileDialogController extends GetxController {
 
   Future<void> scanFilesToExport() async {
     final supportDirPath = Get.find<SettingsScreenController>().supportDirPath;
-    final filesEntityList = Directory("$supportDirPath/Music").listSync(recursive: false);
+    final filesEntityList = Directory('$supportDirPath/Music').listSync();
     final filesPath = filesEntityList.map((entity) => entity.path).toList();
     filesToExport.addAll(filesPath);
     scanning.value = false;
@@ -133,7 +132,7 @@ class ExportFileDialogController extends GetxController {
     exportRunning.value = true;
     final exportDirPath = Get.find<SettingsScreenController>().exportLocationPath.toString();
     final length_ = filesToExport.length;
-    for (int i = 0; i < length_; i++) {
+    for (var i = 0; i < length_; i++) {
       final filePath = filesToExport[i];
       final newFilePath = "$exportDirPath/${filePath.split("/").last}";
       await File(filePath).copy(newFilePath);

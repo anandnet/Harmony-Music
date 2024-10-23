@@ -7,13 +7,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/services/permission_service.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/common_dialog_widget.dart';
+import 'package:harmonymusic/ui/widgets/loader.dart';
+import 'package:harmonymusic/utils/helper.dart';
 import 'package:hive/hive.dart';
-
-import '/ui/screens/Settings/settings_screen_controller.dart';
-import '/ui/widgets/loader.dart';
-import '/utils/helper.dart';
-import '../../services/permission_service.dart';
-import 'common_dialog_widget.dart';
 
 class BackupDialog extends StatelessWidget {
   const BackupDialog({super.key});
@@ -152,8 +151,7 @@ class BackupDialogController extends GetxController {
     final dbDir = await Get.find<SettingsScreenController>().dbDir;
     filesToExport.addAll(await processDirectoryInIsolate(dbDir));
     if (isDownloadedfilesSeclected.value) {
-      List<String> downlodedSongFilePaths =
-          Hive.box('SongDownloads').values.map<String>((data) => data['url']).toList();
+      var downlodedSongFilePaths = Hive.box('SongDownloads').values.map<String>((data) => data['url']).toList();
       filesToExport.addAll(downlodedSongFilePaths);
       try {
         filesToExport.addAll(await processDirectoryInIsolate('$supportDirPath/thumbnails', extensionFilter: '.png'));
@@ -172,8 +170,7 @@ class BackupDialogController extends GetxController {
       return;
     }
 
-    final String? pickedFolderPath =
-        await FilePicker.platform.getDirectoryPath(dialogTitle: 'Select backup file folder');
+    final pickedFolderPath = await FilePicker.platform.getDirectoryPath(dialogTitle: 'Select backup file folder');
     if (pickedFolderPath == '/' || pickedFolderPath == null) {
       return;
     }
@@ -197,15 +194,15 @@ class BackupDialogController extends GetxController {
 
 // Function to convert file paths to base64-encoded file data
 List<String> filePathsToBase64(List<String> filePaths) {
-  List<String> base64Data = [];
+  var base64Data = <String>[];
 
-  for (String path in filePaths) {
+  for (var path in filePaths) {
     try {
       // Read the file data as bytes
-      File file = File(path);
+      var file = File(path);
       List<int> fileData = file.readAsBytesSync();
       // Convert bytes to base64
-      String base64String = base64Encode(fileData);
+      var base64String = base64Encode(fileData);
       base64Data.add(base64String);
     } catch (e) {
       printERROR('Error reading file $path: $e');
@@ -217,12 +214,12 @@ List<String> filePathsToBase64(List<String> filePaths) {
 
 // Function to convert file paths to file data (List<int>)
 List<List<int>> filePathsToFileData(List<String> filePaths) {
-  List<List<int>> filesData = [];
+  var filesData = <List<int>>[];
 
-  for (String path in filePaths) {
+  for (var path in filePaths) {
     try {
       // Read the file data as bytes
-      File file = File(path);
+      var file = File(path);
       List<int> fileData = file.readAsBytesSync();
       filesData.add(fileData);
     } catch (e) {
@@ -241,7 +238,7 @@ void _compressFiles(Map<String, dynamic> params) {
 
   final archive = Archive();
 
-  for (int i = 0; i < filesData.length; i++) {
+  for (var i = 0; i < filesData.length; i++) {
     final fileData = filesData[i];
     final fileName = fileNames[i];
     final file = ArchiveFile(fileName, fileData.length, fileData);
@@ -256,8 +253,8 @@ void _compressFiles(Map<String, dynamic> params) {
 // Example usage
 Future<void> compressFilesInBackground(List<String> filePaths, String zipFilePath) async {
   // Convert file paths to file data
-  final List<List<int>> filesData = filePathsToFileData(filePaths);
-  final List<String> fileNames = filePaths.map((path) => path.split(GetPlatform.isWindows ? '\\' : '/').last).toList();
+  final filesData = filePathsToFileData(filePaths);
+  final fileNames = filePaths.map((path) => path.split(GetPlatform.isWindows ? '\\' : '/').last).toList();
 
   printINFO(fileNames);
   // Use compute to run the compression in the background
@@ -270,7 +267,7 @@ Future<void> compressFilesInBackground(List<String> filePaths, String zipFilePat
 
 Future<List<String>> processDirectoryInIsolate(String dbDir, {String extensionFilter = '.hive'}) async {
   // Use Isolate.run to execute the function in a new isolate
-  return await Isolate.run(() async {
+  return Isolate.run(() async {
     // List files in the directory
     final filesEntityList = await Directory(dbDir).list().toList();
 

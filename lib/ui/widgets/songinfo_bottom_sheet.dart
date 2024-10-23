@@ -250,7 +250,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                   showModalBottomSheet(
                     constraints: const BoxConstraints(maxWidth: 500),
                     shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                     ),
                     isScrollControlled: true,
                     context: playerController.homeScaffoldkey.currentState!.context,

@@ -202,8 +202,8 @@ class SlidingUpPanel extends StatefulWidget {
       this.header,
       this.footer})
       : assert(panel != null || panelBuilder != null),
-        assert(0 <= backdropOpacity && backdropOpacity <= 1.0),
-        assert(snapPoint == null || 0 < snapPoint && snapPoint < 1.0);
+        assert(0 <= backdropOpacity && backdropOpacity <= 1),
+        assert(snapPoint == null || 0 < snapPoint && snapPoint < 1);
 
   @override
   State<SlidingUpPanel> createState() => _SlidingUpPanelState();
@@ -472,8 +472,8 @@ class _SlidingUpPanelState extends State<SlidingUpPanel> with SingleTickerProvid
 
   // handles when user stops sliding
   void _onGestureEnd(Velocity v) {
-    double minFlingVelocity = 365.0;
-    double kSnap = 8;
+    var minFlingVelocity = 365.0;
+    var kSnap = 8;
 
     //let the current animation finish before starting a new one
     if (_ac.isAnimating) return;
@@ -483,7 +483,7 @@ class _SlidingUpPanelState extends State<SlidingUpPanel> with SingleTickerProvid
     if (_isPanelOpen && _scrollingEnabled) return;
 
     //check if the velocity is sufficient to constitute fling to end
-    double visualVelocity = -v.pixelsPerSecond.dy / (widget.maxHeight - widget.minHeight);
+    var visualVelocity = -v.pixelsPerSecond.dy / (widget.maxHeight - widget.minHeight);
 
     // reverse visual velocity to account for slide direction
     if (widget.slideDirection == SlideDirection.DOWN) {
@@ -491,10 +491,9 @@ class _SlidingUpPanelState extends State<SlidingUpPanel> with SingleTickerProvid
     }
 
     // get minimum distances to figure out where the panel is at
-    double d2Close = _ac.value;
-    double d2Open = 1 - _ac.value;
-    double d2Snap =
-        ((widget.snapPoint ?? 3) - _ac.value).abs(); // large value if null results in not every being the min
+    var d2Close = _ac.value;
+    var d2Open = 1 - _ac.value;
+    var d2Snap = ((widget.snapPoint ?? 3) - _ac.value).abs(); // large value if null results in not every being the min
     double minDistance = min(d2Close, min(d2Snap, d2Open));
 
     // check if velocity is sufficient for a fling
@@ -598,7 +597,7 @@ class _SlidingUpPanelState extends State<SlidingUpPanel> with SingleTickerProvid
   //set the panel position to value - must
   //be between 0.0 and 1.0
   set _panelPosition(double value) {
-    assert(0.0 <= value && value <= 1.0);
+    assert(0 <= value && value <= 1);
     _ac.value = value;
   }
 

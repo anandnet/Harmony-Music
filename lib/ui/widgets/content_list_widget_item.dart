@@ -56,7 +56,7 @@ class ContentListItem extends StatelessWidget {
                                     ),
                                     child: Center(
                                         child: Text(
-                                      "P",
+                                      'P',
                                       style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 14),
                                     )),
                                   ),

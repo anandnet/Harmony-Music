@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '/ui/player/player_controller.dart';
-import 'snackbar.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
 
 class SleepTimerBottomSheet extends StatelessWidget {
   const SleepTimerBottomSheet({super.key});
@@ -18,7 +17,7 @@ class SleepTimerBottomSheet extends StatelessWidget {
           children: [
             ListTile(
               leading: const Icon(Icons.timer),
-              title: Text("sleepTimer".tr),
+              title: Text('sleepTimer'.tr),
             ),
             const Divider(),
             if (playerController.isSleepTimerActive.isTrue)
@@ -37,7 +36,7 @@ class SleepTimerBottomSheet extends StatelessWidget {
                       final sec = ((leftDurationInSec % 3600) % 60).toString().padLeft(2, '0');
 
                       return Text(
-                        "$hrs:$min:$sec",
+                        '$hrs:$min:$sec',
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 35),
                       );
                     }),
@@ -50,7 +49,7 @@ class SleepTimerBottomSheet extends StatelessWidget {
               ),
             if (playerController.isSleepTimerActive.isTrue)
               Padding(
-                padding: const EdgeInsets.only(bottom: 20.0, top: 20),
+                padding: const EdgeInsets.only(bottom: 20, top: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -63,13 +62,13 @@ class SleepTimerBottomSheet extends StatelessWidget {
                               color: Theme.of(context).textTheme.titleMedium!.color!,
                             ),
                           ),
-                          child: Text("add5Minutes".tr)),
+                          child: Text('add5Minutes'.tr)),
                     OutlinedButton(
                         onPressed: () {
                           Future.delayed(const Duration(milliseconds: 200), playerController.cancelSleepTimer);
                           Navigator.of(context).pop();
                           ScaffoldMessenger.of(context)
-                              .showSnackBar(snackbar(context, "cancelTimerAlert".tr, size: SanckBarSize.BIG));
+                              .showSnackBar(snackbar(context, 'cancelTimerAlert'.tr, size: SanckBarSize.BIG));
                         },
                         style: OutlinedButton.styleFrom(
                           foregroundColor: Theme.of(context).textTheme.titleMedium!.color!,
@@ -77,7 +76,7 @@ class SleepTimerBottomSheet extends StatelessWidget {
                             color: Theme.of(context).textTheme.titleMedium!.color!,
                           ),
                         ),
-                        child: Text("cancelTimer".tr))
+                        child: Text('cancelTimer'.tr))
                   ],
                 ),
               ),
@@ -98,10 +97,10 @@ class SleepTimerBottomSheet extends StatelessWidget {
                   playerController.startSleepTimer(dur);
                 });
                 ScaffoldMessenger.of(context)
-                    .showSnackBar(snackbar(context, "sleepTimeSetAlert".tr, size: SanckBarSize.BIG));
+                    .showSnackBar(snackbar(context, 'sleepTimeSetAlert'.tr, size: SanckBarSize.BIG));
               },
               leading: Padding(
-                padding: const EdgeInsets.only(left: 10.0),
+                padding: const EdgeInsets.only(left: 10),
                 child: Text(
                   "$dur ${'minutes'.tr}",
                   style: Theme.of(context).textTheme.titleMedium,
@@ -115,9 +114,9 @@ class SleepTimerBottomSheet extends StatelessWidget {
         playerController.sleepEndOfSong();
       },
       leading: Padding(
-        padding: const EdgeInsets.only(left: 10.0),
+        padding: const EdgeInsets.only(left: 10),
         child: Text(
-          "endOfThisSong".tr,
+          'endOfThisSong'.tr,
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),

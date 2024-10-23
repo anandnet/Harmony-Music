@@ -40,7 +40,7 @@ class BottomNavBar extends StatelessWidget {
 
   String modifyNgetlabel(String label) {
     if (label.length > 9) {
-      return "${label.substring(0, 8)}..";
+      return '${label.substring(0, 8)}..';
     }
     return label;
   }

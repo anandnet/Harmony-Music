@@ -48,7 +48,7 @@ class SideNavBar extends StatelessWidget {
               ),
             )
           : Padding(
-              padding: const EdgeInsets.only(bottom: 100.0),
+              padding: const EdgeInsets.only(bottom: 100),
               child: SideBarAnimated(
                 onTap: homeScreenController.onSideBarTabSelected,
                 sideBarColor: Theme.of(context).primaryColor.withAlpha(250),

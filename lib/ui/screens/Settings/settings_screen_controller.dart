@@ -3,20 +3,19 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/services/permission_service.dart';
+import 'package:harmonymusic/services/piped_service.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/screens/Home/home_screen_controller.dart';
+import 'package:harmonymusic/ui/screens/Library/library_controller.dart';
+import 'package:harmonymusic/ui/utils/theme_controller.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
+import 'package:harmonymusic/utils/helper.dart';
+import 'package:harmonymusic/utils/update_check_flag_file.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import '/services/music_service.dart';
-import '/services/piped_service.dart';
-import '/ui/player/player_controller.dart';
-import '/ui/utils/theme_controller.dart';
-import '../../../utils/helper.dart';
-import '../../../utils/update_check_flag_file.dart';
-import '../../widgets/snackbar.dart';
-import '../Home/home_screen_controller.dart';
-import '../Library/library_controller.dart';
 
 class SettingsScreenController extends GetxController {
   late String _supportDir;

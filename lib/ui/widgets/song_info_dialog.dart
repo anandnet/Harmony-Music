@@ -20,7 +20,7 @@ class SongInfoDialog extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text('songInfo'.tr, style: Theme.of(context).textTheme.titleLarge),
             ),
             const Divider(),
@@ -49,7 +49,7 @@ class SongInfoDialog extends StatelessWidget {
                       Navigator.of(context).pop();
                     },
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 25),
+                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                       child: Text('close'.tr),
                     )),
               ),
@@ -84,7 +84,7 @@ class InfoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

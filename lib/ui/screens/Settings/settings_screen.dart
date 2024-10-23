@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/services/music_service.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/screens/Library/library_controller.dart';
+import 'package:harmonymusic/ui/screens/Settings/components/custom_expansion_tile.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/utils/theme_controller.dart';
+import 'package:harmonymusic/ui/widgets/backup_dialog.dart';
+import 'package:harmonymusic/ui/widgets/common_dialog_widget.dart';
+import 'package:harmonymusic/ui/widgets/cust_switch.dart';
+import 'package:harmonymusic/ui/widgets/export_file_dialog.dart';
+import 'package:harmonymusic/ui/widgets/link_piped.dart';
+import 'package:harmonymusic/ui/widgets/restore_dialog.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
 import 'package:harmonymusic/utils/helper.dart';
 import 'package:harmonymusic/utils/lang_mapping.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '/services/music_service.dart';
-import '/ui/player/player_controller.dart';
-import '/ui/utils/theme_controller.dart';
-import '/ui/widgets/link_piped.dart';
-import '../../widgets/backup_dialog.dart';
-import '../../widgets/common_dialog_widget.dart';
-import '../../widgets/cust_switch.dart';
-import '../../widgets/export_file_dialog.dart';
-import '../../widgets/restore_dialog.dart';
-import '../../widgets/snackbar.dart';
-import '../Library/library_controller.dart';
-import 'components/custom_expansion_tile.dart';
-import 'settings_screen_controller.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key, this.isBottomNavActive = false});
@@ -50,7 +49,7 @@ class SettingsScreen extends StatelessWidget {
               Obx(
                 () => settingsController.isNewVersionAvailable.value
                     ? Padding(
-                        padding: const EdgeInsets.only(top: 8.0, right: 10, bottom: 8.0),
+                        padding: const EdgeInsets.only(top: 8, right: 10, bottom: 8),
                         child: Material(
                           type: MaterialType.transparency,
                           child: ListTile(
@@ -210,7 +209,7 @@ class SettingsScreen extends StatelessWidget {
                       dropdownColor: Theme.of(context).cardColor,
                       underline: const SizedBox.shrink(),
                       value: settingsController.noOfHomeScreenContent.value,
-                      items: ([3, 5, 7, 9, 11]).map((e) => DropdownMenuItem(value: e, child: Text('$e'))).toList(),
+                      items: [3, 5, 7, 9, 11].map((e) => DropdownMenuItem(value: e, child: Text('$e'))).toList(),
                       onChanged: settingsController.setContentNumber,
                     ),
                   ),
@@ -298,9 +297,7 @@ class SettingsScreen extends StatelessWidget {
                         onChanged: settingsController.setStreamingQuality,
                       ),
                     ),
-                    onLongPress: () {
-                      settingsController.showDownLoc();
-                    },
+                    onLongPress: settingsController.showDownLoc,
                   ),
                   if (GetPlatform.isAndroid)
                     ListTile(
@@ -427,13 +424,11 @@ class SettingsScreen extends StatelessWidget {
                   Obx(() => settingsController.hideDloc.isFalse || isDesktop
                       ? ListTile(
                           trailing: TextButton(
+                            onPressed: settingsController.resetDownloadLocation,
                             child: Text(
                               'reset'.tr,
                               style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 15),
                             ),
-                            onPressed: () {
-                              settingsController.resetDownloadLocation();
-                            },
                           ),
                           contentPadding: const EdgeInsets.only(left: 5, right: 10, top: 0),
                           title: Text('downloadLocation'.tr),
@@ -539,7 +534,7 @@ class SettingsScreen extends StatelessWidget {
             ],
           )),
           Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
+            padding: const EdgeInsets.only(bottom: 20),
             child: Text(
               "${settingsController.currentVersion} ${"by".tr} anandnet",
               style: Theme.of(context).textTheme.bodySmall,
@@ -564,7 +559,7 @@ class ThemeSelectorDialog extends StatelessWidget {
         padding: const EdgeInsets.only(top: 30, left: 5, right: 30, bottom: 10),
         child: Column(children: [
           Padding(
-            padding: const EdgeInsets.only(left: 20.0, bottom: 5),
+            padding: const EdgeInsets.only(left: 20, bottom: 5),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -585,7 +580,7 @@ class ThemeSelectorDialog extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: InkWell(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: Text('cancel'.tr),
                 ),
                 onTap: () => Navigator.of(context).pop(),
@@ -609,7 +604,7 @@ class DiscoverContentSelectorDialog extends StatelessWidget {
         padding: const EdgeInsets.only(top: 30, left: 5, right: 30, bottom: 10),
         child: Column(children: [
           Padding(
-            padding: const EdgeInsets.only(left: 20.0, bottom: 5),
+            padding: const EdgeInsets.only(left: 20, bottom: 5),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -636,7 +631,7 @@ class DiscoverContentSelectorDialog extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: InkWell(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: Text('cancel'.tr),
                 ),
                 onTap: () => Navigator.of(context).pop(),

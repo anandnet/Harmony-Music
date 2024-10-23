@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '/ui/navigator.dart';
-import '/ui/screens/Settings/settings_screen_controller.dart';
-import '../../widgets/modified_text_field.dart';
-import 'components/search_item.dart';
-import 'search_screen_controller.dart';
+import 'package:harmonymusic/ui/navigator.dart';
+import 'package:harmonymusic/ui/screens/Search/components/search_item.dart';
+import 'package:harmonymusic/ui/screens/Search/search_screen_controller.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/modified_text_field.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -52,7 +51,7 @@ class SearchScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "search".tr,
+                        'search'.tr,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
@@ -65,7 +64,7 @@ class SearchScreen extends StatelessWidget {
                       textInputAction: TextInputAction.search,
                       onChanged: searchScreenController.onChanged,
                       onSubmitted: (val) {
-                        if (val.contains("https://")) {
+                        if (val.contains('https://')) {
                           searchScreenController.filterLinks(Uri.parse(val));
                           searchScreenController.reset();
                           return;
@@ -79,7 +78,7 @@ class SearchScreen extends StatelessWidget {
                       decoration: InputDecoration(
                           contentPadding: const EdgeInsets.only(left: 5),
                           focusColor: Colors.white,
-                          hintText: "searchDes".tr,
+                          hintText: 'searchDes'.tr,
                           suffix: IconButton(
                             onPressed: searchScreenController.reset,
                             icon: const Icon(Icons.close),
@@ -90,7 +89,7 @@ class SearchScreen extends StatelessWidget {
                     Expanded(
                       child: Obx(() {
                         final isEmpty = searchScreenController.suggestionList.isEmpty ||
-                            searchScreenController.textInputController.text == "";
+                            searchScreenController.textInputController.text == '';
                         final list = isEmpty
                             ? searchScreenController.historyQuerylist.toList()
                             : searchScreenController.suggestionList.toList();
@@ -112,7 +111,7 @@ class SearchScreen extends StatelessWidget {
                                           height: 60,
                                           child: Center(
                                               child: Text(
-                                            "urlSearchDes".tr,
+                                            'urlSearchDes'.tr,
                                             style: Theme.of(context).textTheme.titleMedium,
                                           )),
                                         ),

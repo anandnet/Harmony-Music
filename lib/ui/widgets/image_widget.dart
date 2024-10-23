@@ -39,16 +39,16 @@ class ImageWidget extends StatelessWidget {
                 ? album!.thumbnailUrl
                 : artist != null
                     ? artist!.thumbnailUrl
-                    : "";
+                    : '';
     String cacheKey = song != null
-        ? "${song!.id}_song"
+        ? '${song!.id}_song'
         : playlist != null
-            ? "${playlist!.playlistId}_playlist"
+            ? '${playlist!.playlistId}_playlist'
             : album != null
-                ? "${album!.browseId}_album"
+                ? '${album!.browseId}_album'
                 : artist != null
-                    ? "${artist!.browseId}_artist"
-                    : "";
+                    ? '${artist!.browseId}_artist'
+                    : '';
 
     return GetPlatform.isWeb
         ? Image.network(
@@ -75,7 +75,7 @@ class ImageWidget extends StatelessWidget {
                 // if thumb exist in app storage
                 if (song != null) {
                   final imgFile =
-                      File("${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${song!.id}.png");
+                      File('${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${song!.id}.png');
                   if (imgFile.existsSync()) {
                     return Image.file(
                       imgFile,

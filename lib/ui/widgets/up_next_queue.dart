@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/widgets/image_widget.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
+import 'package:harmonymusic/ui/widgets/songinfo_bottom_sheet.dart';
 import 'package:widget_marquee/widget_marquee.dart';
-
-import 'image_widget.dart';
-import 'snackbar.dart';
-import 'songinfo_bottom_sheet.dart';
 
 class UpNextQueue extends StatelessWidget {
   const UpNextQueue({super.key, this.onReorderEnd, this.onReorderStart, this.isQueueInSlidePanel = true});
@@ -25,7 +24,7 @@ class UpNextQueue extends StatelessWidget {
           onReorder: (int oldIndex, int newIndex) {
             if (playerController.isShuffleModeEnabled.isTrue) {
               ScaffoldMessenger.of(Get.context!)
-                  .showSnackBar(snackbar(Get.context!, "queuerearrangingDeniedMsg".tr, size: SanckBarSize.BIG));
+                  .showSnackBar(snackbar(Get.context!, 'queuerearrangingDeniedMsg'.tr, size: SanckBarSize.BIG));
               return;
             }
             playerController.onReorder(oldIndex, newIndex);
@@ -73,7 +72,7 @@ class UpNextQueue extends StatelessWidget {
                   title: Marquee(
                     delay: const Duration(milliseconds: 300),
                     duration: const Duration(seconds: 5),
-                    id: "queue${playerController.currentQueue[index].title.hashCode}",
+                    id: 'queue${playerController.currentQueue[index].title.hashCode}',
                     child: Text(
                       playerController.currentQueue[index].title,
                       maxLines: 1,
@@ -81,7 +80,7 @@ class UpNextQueue extends StatelessWidget {
                     ),
                   ),
                   subtitle: Text(
-                    "${playerController.currentQueue[index].artist}",
+                    '${playerController.currentQueue[index].artist}',
                     maxLines: 1,
                     style: playerController.currentSongIndex.value == index
                         ? Theme.of(homeScaffoldContext).textTheme.titleSmall!.copyWith(
@@ -106,7 +105,7 @@ class UpNextQueue extends StatelessWidget {
                                   color: Colors.white,
                                 )
                               : Text(
-                                  playerController.currentQueue[index].extras!['length'] ?? "",
+                                  playerController.currentQueue[index].extras!['length'] ?? '',
                                   style: Theme.of(homeScaffoldContext).textTheme.titleSmall,
                                 ),
                         ],

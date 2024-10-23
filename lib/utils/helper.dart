@@ -44,7 +44,6 @@ void sortSongsNVideos(
         }
         return a.extras!['date'].compareTo(b.extras!['date']);
       };
-      break;
     case SortType.Duration:
       compareFunction = (a, b) => (a.duration ?? Duration.zero).compareTo(b.duration ?? Duration.zero);
     case SortType.Name:
@@ -56,7 +55,7 @@ void sortSongsNVideos(
   songlist.sort(compareFunction);
 
   if (!isAscending) {
-    List reversed = songlist.reversed.toList();
+    var reversed = songlist.reversed.toList();
     songlist.clear();
     songlist.addAll(reversed);
   }
@@ -86,7 +85,7 @@ void sortAlbumNSingles(
   albumList.sort(compareFunction);
 
   if (!isAscending) {
-    List reversed = albumList.reversed.toList();
+    var reversed = albumList.reversed.toList();
     albumList.clear();
     albumList.addAll(reversed);
   }
@@ -116,7 +115,6 @@ void sortPlayLists(
         }
         return blp.compareTo(alp);
       };
-      break;
     case SortType.Name:
     default:
       compareFunction = titleSort;
@@ -126,7 +124,7 @@ void sortPlayLists(
   playlists.sort(compareFunction);
 
   if (!isAscending) {
-    List reversed = playlists.reversed.toList();
+    var reversed = playlists.reversed.toList();
     playlists.clear();
     playlists.addAll(reversed);
   }
@@ -149,7 +147,7 @@ void sortArtist(
   artistList.sort(compareFunction);
 
   if (!isAscending) {
-    List reversed = artistList.reversed.toList();
+    var reversed = artistList.reversed.toList();
     artistList.clear();
     artistList.addAll(reversed);
   }

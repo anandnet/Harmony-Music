@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/services/music_service.dart';
+import 'package:harmonymusic/utils/app_link_controller.dart' show ProcessLink;
 import 'package:hive/hive.dart';
-
-import '/services/music_service.dart';
-import '/utils/app_link_controller.dart' show ProcessLink;
 
 class SearchScreenController extends GetxController with ProcessLink {
   final textInputController = TextEditingController();
@@ -29,12 +28,12 @@ class SearchScreenController extends GetxController with ProcessLink {
         isSearchBarInFocus.value = focusNode.hasFocus;
       });
     }
-    queryBox = await Hive.openBox("searchQuery");
+    queryBox = await Hive.openBox('searchQuery');
     historyQuerylist.value = queryBox.values.toList().reversed.toList();
   }
 
   Future<void> onChanged(String text) async {
-    if (text.contains("https://")) {
+    if (text.contains('https://')) {
       urlPasted.value = true;
       return;
     }
@@ -65,7 +64,7 @@ class SearchScreenController extends GetxController with ProcessLink {
 
   void reset() {
     urlPasted.value = false;
-    textInputController.text = "";
+    textInputController.text = '';
     suggestionList.clear();
   }
 

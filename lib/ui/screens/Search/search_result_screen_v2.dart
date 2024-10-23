@@ -40,7 +40,7 @@ class SearchResultScreenBN extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "searchRes".tr,
+                        'searchRes'.tr,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
@@ -66,7 +66,7 @@ class SearchResultScreenBN extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "nomatch".tr,
+                              'nomatch'.tr,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Text("'${searchResScrController.queryString.value}'"),
@@ -78,7 +78,7 @@ class SearchResultScreenBN extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(left: 15.0, top: 10),
+                            padding: const EdgeInsets.only(left: 15, top: 10),
                             child: ButtonsTabBar(
                               onTap: searchResScrController.onDestinationSelected,
 
@@ -99,7 +99,7 @@ class SearchResultScreenBN extends StatelessWidget {
                               ),
                               // Add your tabs here
                               tabs: [
-                                Tab(text: "results".tr),
+                                Tab(text: 'results'.tr),
                                 ...searchResScrController.railItems.map((item) => Tab(
                                       text: item.toLowerCase().removeAllWhitespace.tr,
                                     ))
@@ -108,7 +108,7 @@ class SearchResultScreenBN extends StatelessWidget {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
+                              padding: const EdgeInsets.only(left: 15),
                               child: TabBarView(
                                 controller: searchResScrController.tabController,
                                 children: [
@@ -116,7 +116,7 @@ class SearchResultScreenBN extends StatelessWidget {
                                     isv2Used: true,
                                   ),
                                   ...searchResScrController.railItems.map((tabName) {
-                                    if (tabName == "Songs" || tabName == "Videos") {
+                                    if (tabName == 'Songs' || tabName == 'Videos') {
                                       return SeparateTabItemWidget(
                                         isResultWidget: true,
                                         hideTitle: true,

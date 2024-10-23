@@ -79,23 +79,25 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       minTextAdapt: true,
       builder: (_, child) {
-        return GetX<ThemeController>(builder: (controller) {
-          return GetMaterialApp(
-              title: 'Harmony Music',
-              theme: controller.themedata.value,
-              home: const Home(),
-              debugShowCheckedModeBanner: false,
-              translations: Languages(),
-              locale: Locale(Hive.box('AppPrefs').get('currentAppLanguageCode') ?? 'en'),
-              fallbackLocale: const Locale('en'),
-              builder: (context, child) {
-                final scale = MediaQuery.of(context).textScaler.clamp(minScaleFactor: 1, maxScaleFactor: 1.1);
-                return MediaQuery(
-                  data: MediaQuery.of(context).copyWith(textScaler: scale),
-                  child: child!,
-                );
-              });
-        });
+        return GetX<ThemeController>(
+          builder: (controller) {
+            return GetMaterialApp(
+                title: 'Harmony Music',
+                theme: controller.themedata.value,
+                home: const Home(),
+                debugShowCheckedModeBanner: false,
+                translations: Languages(),
+                locale: Locale(Hive.box('AppPrefs').get('currentAppLanguageCode') ?? 'en'),
+                fallbackLocale: const Locale('en'),
+                builder: (context, child) {
+                  final scale = MediaQuery.of(context).textScaler.clamp(minScaleFactor: 1, maxScaleFactor: 1.1);
+                  return MediaQuery(
+                    data: MediaQuery.of(context).copyWith(textScaler: scale),
+                    child: child!,
+                  );
+                });
+          },
+        );
       },
     );
   }

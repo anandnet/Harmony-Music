@@ -213,7 +213,7 @@ class SongInfoBottomSheet extends StatelessWidget {
           ListTile(
             leading: Icons.open_with.icon.mk,
             title: 'openIn'.tr.text.mk,
-            trailing: sizedBox.w360.child(
+            trailing: sizedBox.w300.child(
               row.spaceEvenly.children([
                 IconButton(
                   splashRadius: 10,
@@ -327,9 +327,9 @@ class SongInfoController extends GetxController with RemoveSongFromPlaylistMixin
 
   Future<void> toggleFav() async {
     if (calledFromPlayer) {
-      final cntrl = Get.find<PlayerController>();
-      if (cntrl.currentSong.value == song) {
-        cntrl.toggleFavourite();
+      final ctrl = Get.find<PlayerController>();
+      if (ctrl.currentSong.value == song) {
+        ctrl.toggleFavourite();
         isCurrentSongFav.value = !isCurrentSongFav.value;
         return;
       }

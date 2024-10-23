@@ -40,7 +40,7 @@ class SongInfoBottomSheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              contentPadding: const EdgeInsets.only(left: 15, top: 7, right: 10, bottom: 0),
+              contentPadding: const EdgeInsets.only(left: 15, top: 7, right: 10),
               leading: ImageWidget(
                 song: song,
                 size: 50,
@@ -55,25 +55,26 @@ class SongInfoBottomSheet extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    calledFromPlayer
-                        ? IconButton(
-                            onPressed: () => showDialog(
-                                  context: context,
-                                  builder: (context) =>
-                                      SongInfoDialog(song: song, isDownloaded: songInfoController.isDownloaded.isTrue),
-                                ),
-                            icon: Icon(
-                              Icons.info,
-                              color: Theme.of(context).textTheme.titleMedium!.color,
-                            ))
-                        : IconButton(
-                            onPressed: songInfoController.toggleFav,
-                            icon: Obx(() => Icon(
-                                  songInfoController.isCurrentSongFav.isFalse
-                                      ? Icons.favorite_border_rounded
-                                      : Icons.favorite_rounded,
-                                  color: Theme.of(context).textTheme.titleMedium!.color,
-                                ))),
+                    if (calledFromPlayer)
+                      IconButton(
+                          onPressed: () => showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    SongInfoDialog(song: song, isDownloaded: songInfoController.isDownloaded.isTrue),
+                              ),
+                          icon: Icon(
+                            Icons.info,
+                            color: Theme.of(context).textTheme.titleMedium!.color,
+                          ))
+                    else
+                      IconButton(
+                          onPressed: songInfoController.toggleFav,
+                          icon: Obx(() => Icon(
+                                songInfoController.isCurrentSongFav.isFalse
+                                    ? Icons.favorite_border_rounded
+                                    : Icons.favorite_rounded,
+                                color: Theme.of(context).textTheme.titleMedium!.color,
+                              ))),
                     SongDownloadButton(
                       song_: song,
                       isDownloadingDoneCallback: songInfoController.setDownloadStatus,
@@ -92,19 +93,20 @@ class SongInfoBottomSheet extends StatelessWidget {
                 playerController.startRadio(song);
               },
             ),
-            (calledFromPlayer || calledFromQueue)
-                ? const SizedBox.shrink()
-                : ListTile(
-                    visualDensity: const VisualDensity(vertical: -1),
-                    leading: const Icon(Icons.playlist_play_rounded),
-                    title: Text('playNext'.tr),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      playerController.playNext(song);
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(snackbar(context, "${"playnextMsg".tr} ${song.title}", size: SanckBarSize.BIG));
-                    },
-                  ),
+            if (calledFromPlayer || calledFromQueue)
+              const SizedBox.shrink()
+            else
+              ListTile(
+                visualDensity: const VisualDensity(vertical: -1),
+                leading: const Icon(Icons.playlist_play_rounded),
+                title: Text('playNext'.tr),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  playerController.playNext(song);
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(snackbar(context, "${"playnextMsg".tr} ${song.title}", size: SanckBarSize.BIG));
+                },
+              ),
             ListTile(
               visualDensity: const VisualDensity(vertical: -1),
               leading: const Icon(Icons.playlist_add_rounded),
@@ -117,72 +119,73 @@ class SongInfoBottomSheet extends StatelessWidget {
                 ).whenComplete(() => Get.delete<AddToPlaylistController>());
               },
             ),
-            (calledFromPlayer || calledFromQueue)
-                ? const SizedBox.shrink()
-                : ListTile(
-                    visualDensity: const VisualDensity(vertical: -1),
-                    leading: const Icon(Icons.merge_rounded),
-                    title: Text('enqueueSong'.tr),
-                    onTap: () {
-                      playerController.enqueueSong(song).whenComplete(() {
-                        if (!context.mounted) return;
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(snackbar(context, 'songEnqueueAlert'.tr, size: SanckBarSize.MEDIUM));
-                      });
-                      Navigator.of(context).pop();
-                    },
-                  ),
-            song.extras!['album'] != null
-                ? ListTile(
-                    visualDensity: const VisualDensity(vertical: -1),
-                    leading: const Icon(Icons.album_rounded),
-                    title: Text('goToAlbum'.tr),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      if (calledFromPlayer) {
-                        playerController.playerPanelController.close();
-                      }
-                      if (calledFromQueue) {
-                        playerController.playerPanelController.close();
-                      }
-                      Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
-                          id: ScreenNavigationSetup.id, arguments: [true, song.extras!['album']['id'], true]);
-                    },
-                  )
-                : const SizedBox.shrink(),
+            if (calledFromPlayer || calledFromQueue)
+              const SizedBox.shrink()
+            else
+              ListTile(
+                visualDensity: const VisualDensity(vertical: -1),
+                leading: const Icon(Icons.merge_rounded),
+                title: Text('enqueueSong'.tr),
+                onTap: () {
+                  playerController.enqueueSong(song).whenComplete(() {
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(snackbar(context, 'songEnqueueAlert'.tr));
+                  });
+                  Navigator.of(context).pop();
+                },
+              ),
+            if (song.extras!['album'] != null)
+              ListTile(
+                visualDensity: const VisualDensity(vertical: -1),
+                leading: const Icon(Icons.album_rounded),
+                title: Text('goToAlbum'.tr),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  if (calledFromPlayer) {
+                    playerController.playerPanelController.close();
+                  }
+                  if (calledFromQueue) {
+                    playerController.playerPanelController.close();
+                  }
+                  Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
+                      id: ScreenNavigationSetup.id, arguments: [true, song.extras!['album']['id'], true]);
+                },
+              )
+            else
+              const SizedBox.shrink(),
             ...artistWidgetList(song, context),
-            (playlist != null && !playlist!.isCloudPlaylist && !(playlist!.playlistId == 'LIBRP')) ||
-                    (playlist != null && playlist!.isPipedPlaylist)
-                ? ListTile(
-                    visualDensity: const VisualDensity(vertical: -1),
-                    leading: const Icon(Icons.delete_rounded),
-                    title:
-                        playlist!.title == 'Library Songs' ? Text('removeFromLib'.tr) : Text('removeFromPlaylist'.tr),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      songInfoController.removeSongFromPlaylist(song, playlist!).whenComplete(() =>
-                          ScaffoldMessenger.of(Get.context!).showSnackBar(
-                              snackbar(Get.context!, 'Removed from ${playlist!.title}', size: SanckBarSize.MEDIUM)));
-                    },
-                  )
-                : const SizedBox.shrink(),
-            (calledFromQueue)
-                ? ListTile(
-                    visualDensity: const VisualDensity(vertical: -1),
-                    leading: const Icon(Icons.delete_rounded),
-                    title: Text('removeFromQueue'.tr),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      if (playerController.currentSong.value!.id == song.id) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(snackbar(context, 'songRemovedfromQueueCurrSong'.tr, size: SanckBarSize.BIG));
-                      } else {
-                        playerController.removeFromQueue(song);
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(snackbar(context, 'songRemovedfromQueue'.tr, size: SanckBarSize.MEDIUM));
-                      }
-                    })
-                : const SizedBox.shrink(),
+            if ((playlist != null && !playlist!.isCloudPlaylist && !(playlist!.playlistId == 'LIBRP')) ||
+                (playlist != null && playlist!.isPipedPlaylist))
+              ListTile(
+                visualDensity: const VisualDensity(vertical: -1),
+                leading: const Icon(Icons.delete_rounded),
+                title: playlist!.title == 'Library Songs' ? Text('removeFromLib'.tr) : Text('removeFromPlaylist'.tr),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  songInfoController.removeSongFromPlaylist(song, playlist!).whenComplete(() =>
+                      ScaffoldMessenger.of(Get.context!)
+                          .showSnackBar(snackbar(Get.context!, 'Removed from ${playlist!.title}')));
+                },
+              )
+            else
+              const SizedBox.shrink(),
+            if (calledFromQueue)
+              ListTile(
+                  visualDensity: const VisualDensity(vertical: -1),
+                  leading: const Icon(Icons.delete_rounded),
+                  title: Text('removeFromQueue'.tr),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    if (playerController.currentSong.value!.id == song.id) {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(snackbar(context, 'songRemovedfromQueueCurrSong'.tr, size: SanckBarSize.BIG));
+                    } else {
+                      playerController.removeFromQueue(song);
+                      ScaffoldMessenger.of(context).showSnackBar(snackbar(context, 'songRemovedfromQueue'.tr));
+                    }
+                  })
+            else
+              const SizedBox.shrink(),
             Obx(
               () => (songInfoController.isDownloaded.isTrue &&
                       (playlist?.playlistId != 'SongDownloads' && playlist?.playlistId != 'SongsCache'))
@@ -253,7 +256,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                       borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                     ),
                     isScrollControlled: true,
-                    context: playerController.homeScaffoldkey.currentState!.context,
+                    context: playerController.homeScaffoldKey.currentState!.context,
                     barrierColor: Colors.transparent.withAlpha(100),
                     builder: (context) => const SleepTimerBottomSheet(),
                   );
@@ -293,7 +296,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                       playerController.playerPanelController.close();
                     }
                     await Get.toNamed(ScreenNavigationSetup.artistScreen,
-                        id: ScreenNavigationSetup.id, preventDuplicates: true, arguments: [true, e['id']]);
+                        id: ScreenNavigationSetup.id, arguments: [true, e['id']]);
                   },
                   tileColor: Colors.transparent,
                   leading: const Icon(Icons.person_rounded),
@@ -388,7 +391,7 @@ mixin RemoveSongFromPlaylistMixin {
         // ignore: empty_catches
       } catch (e) {}
     } catch (e) {
-      printERROR('Some Error in removeSongFromPlaylist (might irrelavant): $e');
+      printERROR('Some Error in removeSongFromPlaylist (might irrelevant): $e');
     }
 
     if (playlist.playlistId == 'SongDownloads' || playlist.playlistId == 'SongsCache') return;

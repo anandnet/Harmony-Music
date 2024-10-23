@@ -18,7 +18,7 @@ class Player extends StatelessWidget {
   Widget build(BuildContext context) {
     printINFO('player');
     final size = MediaQuery.of(context).size;
-    final PlayerController playerController = Get.find<PlayerController>();
+    final playerController = Get.find<PlayerController>();
     final settingsScreenController = Get.find<SettingsScreenController>();
     return Scaffold(
         body: Obx(() => SlidingUpPanel(
@@ -30,12 +30,12 @@ class Player extends StatelessWidget {
               collapsed: InkWell(
                 onTap: () {
                   if (GetPlatform.isDesktop) {
-                    playerController.homeScaffoldkey.currentState!.openEndDrawer();
+                    playerController.homeScaffoldKey.currentState!.openEndDrawer();
                   } else {
                     playerController.queuePanelController.open();
                   }
                 },
-                child: Container(
+                child: ColoredBox(
                   color: Theme.of(context).primaryColor,
                   child: Column(
                     children: [

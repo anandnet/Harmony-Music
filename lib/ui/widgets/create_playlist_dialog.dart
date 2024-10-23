@@ -90,7 +90,7 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                       ),
                       onTap: () => Navigator.of(context).pop(),
                     ),
-                    Container(
+                    DecoratedBox(
                       decoration: BoxDecoration(
                           color: Theme.of(context).textTheme.titleLarge!.color,
                           borderRadius: BorderRadius.circular(10)),

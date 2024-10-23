@@ -7,7 +7,10 @@ import 'package:harmonymusic/ui/widgets/sleep_timer_bottom_sheet.dart';
 import 'package:harmonymusic/ui/widgets/songinfo_bottom_sheet.dart';
 
 class AlbumArtNLyrics extends StatelessWidget {
-  const AlbumArtNLyrics({super.key, required this.playerArtImageSize});
+  const AlbumArtNLyrics({
+    required this.playerArtImageSize,
+    super.key,
+  });
 
   final double playerArtImageSize;
 
@@ -27,7 +30,7 @@ class AlbumArtNLyrics extends StatelessWidget {
                       borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                     ),
                     isScrollControlled: true,
-                    context: playerController.homeScaffoldkey.currentState!.context,
+                    context: playerController.homeScaffoldKey.currentState!.context,
                     barrierColor: Colors.transparent.withAlpha(100),
                     builder: (context) => SongInfoBottomSheet(
                       playerController.currentSong.value!,
@@ -111,7 +114,7 @@ class AlbumArtNLyrics extends StatelessWidget {
                                 borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                               ),
                               isScrollControlled: true,
-                              context: playerController.homeScaffoldkey.currentState!.context,
+                              context: playerController.homeScaffoldKey.currentState!.context,
                               barrierColor: Colors.transparent.withAlpha(100),
                               builder: (context) => const SleepTimerBottomSheet(),
                             );

@@ -36,7 +36,7 @@ class UpNextQueue extends StatelessWidget {
               top: isQueueInSlidePanel ? 55 : 0, bottom: isQueueInSlidePanel ? 80 : 0 + Get.mediaQuery.padding.bottom),
           physics: const AlwaysScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            final homeScaffoldContext = playerController.homeScaffoldkey.currentContext!;
+            final homeScaffoldContext = playerController.homeScaffoldKey.currentContext!;
             //print("${playerController.currentSongIndex.value == index} $index");
             return Material(
               key: Key('$index'),
@@ -52,7 +52,7 @@ class UpNextQueue extends StatelessWidget {
                         borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
                       ),
                       isScrollControlled: true,
-                      context: playerController.homeScaffoldkey.currentState!.context,
+                      context: playerController.homeScaffoldKey.currentState!.context,
                       //constraints: BoxConstraints(maxHeight:Get.height),
                       barrierColor: Colors.transparent.withAlpha(100),
                       builder: (context) => SongInfoBottomSheet(
@@ -99,15 +99,16 @@ class UpNextQueue extends StatelessWidget {
                             const Icon(
                               Icons.drag_handle_rounded,
                             ),
-                          playerController.currentSongIndex.value == index
-                              ? const Icon(
-                                  Icons.equalizer_rounded,
-                                  color: Colors.white,
-                                )
-                              : Text(
-                                  playerController.currentQueue[index].extras!['length'] ?? '',
-                                  style: Theme.of(homeScaffoldContext).textTheme.titleSmall,
-                                ),
+                          if (playerController.currentSongIndex.value == index)
+                            const Icon(
+                              Icons.equalizer_rounded,
+                              color: Colors.white,
+                            )
+                          else
+                            Text(
+                              playerController.currentQueue[index].extras!['length'] ?? '',
+                              style: Theme.of(homeScaffoldContext).textTheme.titleSmall,
+                            ),
                         ],
                       ),
                     ),

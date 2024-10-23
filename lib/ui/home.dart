@@ -60,7 +60,7 @@ class Home extends StatelessWidget {
         bindings: {LogicalKeySet(LogicalKeyboardKey.space): playerController.playPause},
         child: Obx(
           () => Scaffold(
-            key: playerController.homeScaffoldkey,
+            key: playerController.homeScaffoldKey,
             drawerScrimColor: Colors.transparent,
             endDrawer: GetPlatform.isDesktop || isWideScreen
                 ? Container(

@@ -107,34 +107,36 @@ class SortWidget extends StatelessWidget {
                   },
                 ),
               ),
-              requiredSortTypes.contains(SortType.Date)
-                  ? Obx(() => IconButton(
-                        color: controller.sortType.value == SortType.Date
-                            ? Theme.of(context).textTheme.bodySmall!.color
-                            : Theme.of(context).colorScheme.secondary,
-                        icon: const Icon(Icons.calendar_month_rounded),
-                        iconSize: 20,
-                        splashRadius: 20,
-                        visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
-                        onPressed: () {
-                          controller.onSortByDate(onSort);
-                        },
-                      ))
-                  : const SizedBox.shrink(),
-              requiredSortTypes.contains(SortType.Duration)
-                  ? Obx(() => IconButton(
-                        color: controller.sortType.value == SortType.Duration
-                            ? Theme.of(context).textTheme.bodySmall!.color
-                            : Theme.of(context).colorScheme.secondary,
-                        icon: const Icon(Icons.timer_rounded),
-                        iconSize: 20,
-                        splashRadius: 20,
-                        visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
-                        onPressed: () {
-                          controller.onSortByDuration(onSort);
-                        },
-                      ))
-                  : const SizedBox.shrink(),
+              if (requiredSortTypes.contains(SortType.Date))
+                Obx(() => IconButton(
+                      color: controller.sortType.value == SortType.Date
+                          ? Theme.of(context).textTheme.bodySmall!.color
+                          : Theme.of(context).colorScheme.secondary,
+                      icon: const Icon(Icons.calendar_month_rounded),
+                      iconSize: 20,
+                      splashRadius: 20,
+                      visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
+                      onPressed: () {
+                        controller.onSortByDate(onSort);
+                      },
+                    ))
+              else
+                const SizedBox.shrink(),
+              if (requiredSortTypes.contains(SortType.Duration))
+                Obx(() => IconButton(
+                      color: controller.sortType.value == SortType.Duration
+                          ? Theme.of(context).textTheme.bodySmall!.color
+                          : Theme.of(context).colorScheme.secondary,
+                      icon: const Icon(Icons.timer_rounded),
+                      iconSize: 20,
+                      splashRadius: 20,
+                      visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
+                      onPressed: () {
+                        controller.onSortByDuration(onSort);
+                      },
+                    ))
+              else
+                const SizedBox.shrink(),
               const Expanded(child: SizedBox()),
               Obx(
                 () => IconButton(
@@ -235,7 +237,7 @@ class SortWidget extends StatelessWidget {
                   Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 5.0),
+                        padding: const EdgeInsets.only(left: 5),
                         child: Obx(
                           () => Checkbox(
                             value: controller.isAllSelected.value,

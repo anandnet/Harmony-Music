@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../navigator.dart';
-import 'image_widget.dart';
+import 'package:harmonymusic/ui/navigator.dart';
+import 'package:harmonymusic/ui/widgets/image_widget.dart';
 
 class ContentListItem extends StatelessWidget {
   const ContentListItem({super.key, required this.content, this.isLibraryItem = false});

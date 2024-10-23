@@ -301,7 +301,7 @@ class MiniPlayer extends StatelessWidget {
                                       children: [
                                         IconButton(
                                           onPressed: () {
-                                            playerController.homeScaffoldkey.currentState!.openEndDrawer();
+                                            playerController.homeScaffoldKey.currentState!.openEndDrawer();
                                           },
                                           icon: const Icon(Icons.queue_music),
                                         ),
@@ -316,7 +316,7 @@ class MiniPlayer extends StatelessWidget {
                                                     borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                                                   ),
                                                   isScrollControlled: true,
-                                                  context: playerController.homeScaffoldkey.currentState!.context,
+                                                  context: playerController.homeScaffoldKey.currentState!.context,
                                                   barrierColor: Colors.transparent.withAlpha(100),
                                                   builder: (context) => const SleepTimerBottomSheet(),
                                                 );

@@ -33,7 +33,7 @@ class ScreenNavigation extends StatelessWidget {
           if (settings.name == ScreenNavigationSetup.homeScreen) {
             return GetPageRoute(page: () => const HomeScreen(), settings: settings);
           } else if (settings.name == ScreenNavigationSetup.playlistNAlbumScreen) {
-            final args = settings.arguments as List;
+            final args = settings.arguments! as List;
             final id = args[2]
                 ? args[1]
                 : args[0]
@@ -45,7 +45,7 @@ class ScreenNavigation extends StatelessWidget {
           } else if (settings.name == ScreenNavigationSetup.searchResultScreen) {
             return GetPageRoute(page: () => const SearchResultScreen(), settings: settings);
           } else if (settings.name == ScreenNavigationSetup.artistScreen) {
-            final args = settings.arguments as List;
+            final args = settings.arguments! as List;
             final id = args[0] ? args[1] : (args[1] as Artist).browseId;
             return GetPageRoute(
                 page: () => ArtistScreen(

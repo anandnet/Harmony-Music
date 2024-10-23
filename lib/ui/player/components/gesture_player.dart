@@ -38,7 +38,7 @@ class GesturePlayer extends StatelessWidget {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
               ),
               isScrollControlled: true,
-              context: playerController.homeScaffoldkey.currentState!.context,
+              context: playerController.homeScaffoldKey.currentState!.context,
               barrierColor: Colors.transparent.withAlpha(100),
               builder: (context) => SongInfoBottomSheet(
                 playerController.currentSong.value!,

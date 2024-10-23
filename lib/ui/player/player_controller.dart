@@ -60,10 +60,10 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
 
   // 0 for play, 1 for pause, 2 for blank
   final gesturePlayerVisibleState = 2.obs;
-  final lyricUi = UINetease(highlight: true, defaultSize: 20, defaultExtSize: 12);
+  final lyricUi = UINetease(defaultSize: 20, defaultExtSize: 12);
   RxMap<String, dynamic> lyrics = <String, dynamic>{'synced': '', 'plainLyrics': ''}.obs;
   ScrollController scrollController = ScrollController();
-  final GlobalKey<ScaffoldState> homeScaffoldkey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> homeScaffoldKey = GlobalKey<ScaffoldState>();
 
   final buttonState = PlayButtonState.paused.obs;
 
@@ -87,7 +87,7 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
     super.onReady();
   }
 
-  void _init() async {
+  Future<void> _init() async {
     //_createAppDocDir();
     _listenForChangesInPlayerState();
     _listenForChangesInPosition();
@@ -678,8 +678,7 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
   /// or returned streamInfo null due to network error
   void notifyPlayError(bool networkError) {
     if (networkError) {
-      ScaffoldMessenger.of(Get.context!)
-          .showSnackBar(snackbar(Get.context!, 'networkError1'.tr, size: SanckBarSize.MEDIUM));
+      ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(Get.context!, 'networkError1'.tr));
     } else {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
           snackbar(Get.context!, 'songNotPlayable'.tr, size: SanckBarSize.BIG, duration: const Duration(seconds: 2)));

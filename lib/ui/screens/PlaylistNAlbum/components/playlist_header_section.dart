@@ -368,7 +368,7 @@ class OfflinePlaylistHeader extends StatelessWidget {
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                       ),
-                      context: Get.find<PlayerController>().homeScaffoldkey.currentState!.context,
+                      context: Get.find<PlayerController>().homeScaffoldKey.currentState!.context,
                       barrierColor: Colors.transparent.withAlpha(100),
                       builder: (context) => SizedBox(
                         height: 140,

@@ -138,7 +138,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
               ),
               isScrollControlled: true,
-              context: playerController.homeScaffoldkey.currentState!.context,
+              context: playerController.homeScaffoldKey.currentState!.context,
               //constraints: BoxConstraints(maxHeight:Get.height),
               barrierColor: Colors.transparent.withAlpha(100),
               builder: (context) => SongInfoBottomSheet(
@@ -197,7 +197,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
                             borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                           ),
                           isScrollControlled: true,
-                          context: playerController.homeScaffoldkey.currentState!.context,
+                          context: playerController.homeScaffoldKey.currentState!.context,
                           //constraints: BoxConstraints(maxHeight:Get.height),
                           barrierColor: Colors.transparent.withAlpha(100),
                           builder: (context) => SongInfoBottomSheet(
@@ -244,7 +244,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
           itemExtent: 120,
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
-            String artistName = '';
+            var artistName = '';
             for (dynamic items in albums[index].artists.sublist(1)) {
               artistName = "${artistName + items['name']},";
             }

@@ -12,10 +12,10 @@ Future<List<dynamic>> getContinuations(
     bool reloadable = false,
     String? additionalParams_,
     bool isAdditionParamReturnReq = false}) async {
-  List<dynamic> items = [];
+  var items = <dynamic>[];
 
   while ((additionalParams_ != null || results.containsKey('continuations')) && (limit > 0 && items.length < limit)) {
-    String additionalParams = additionalParams_ ??
+    var additionalParams = additionalParams_ ??
         (reloadable
             ? getReloadableContinuationParams(results)
             : getContinuationParams(results, ctokenPath: ctokenPath));
@@ -30,14 +30,14 @@ Future<List<dynamic>> getContinuations(
       break;
     }
 
-    List<dynamic> contents = getContinuationContents(results, parseFunc);
+    var contents = getContinuationContents(results, parseFunc);
     if (contents.isEmpty) {
       break;
     }
     items.addAll(contents);
   }
   if (isAdditionParamReturnReq) {
-    String additionalParam = (reloadable
+    var additionalParam = (reloadable
         ? getReloadableContinuationParams(results)
         : getContinuationParams(results, ctokenPath: ctokenPath));
     return [items, additionalParam];
@@ -54,10 +54,10 @@ Future<List<dynamic>> getValidatedContinuations(
     Future<dynamic> Function(dynamic additionalParams) requestFunc,
     List<dynamic> Function(Map<String, dynamic> continuationContents) parseFunc,
     {String ctokenPath = ''}) async {
-  List<dynamic> items = [];
+  var items = <dynamic>[];
 
   while (results.containsKey('continuations') && items.length < limit) {
-    String additionalParams = getContinuationParams(results, ctokenPath: ctokenPath);
+    var additionalParams = getContinuationParams(results, ctokenPath: ctokenPath);
 
     var response = await resendRequestUntilParsedResponseIsValid(
         requestFunc,

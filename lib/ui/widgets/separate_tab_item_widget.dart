@@ -9,9 +9,9 @@ import 'package:harmonymusic/ui/widgets/sort_widget.dart';
 
 class SeparateTabItemWidget extends StatelessWidget {
   const SeparateTabItemWidget(
-      {super.key,
-      required this.items,
+      {required this.items,
       required this.title,
+      super.key,
       this.isCompleteList = true,
       this.isResultWidget = true,
       this.hideTitle = false,
@@ -50,74 +50,82 @@ class SeparateTabItemWidget extends StatelessWidget {
                     title.toLowerCase().removeAllWhitespace.tr,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  isCompleteList
-                      ? const SizedBox.shrink()
-                      : TextButton(
-                          onPressed: () {
-                            searchResController!.viewAllCallback(title);
-                          },
-                          child: Text('viewAll'.tr, style: Theme.of(Get.context!).textTheme.titleSmall))
+                  if (isCompleteList)
+                    const SizedBox.shrink()
+                  else
+                    TextButton(
+                        onPressed: () {
+                          searchResController!.viewAllCallback(title);
+                        },
+                        child: Text(
+                          'viewAll'.tr,
+                          style: Theme.of(Get.context!).textTheme.titleSmall,
+                        ))
                 ],
               ),
             ),
-          isCompleteList
-              ? Obx(() => SortWidget(
-                    tag: '${title}_$artistControllerTag',
-                    isAdditionalOperationRequired: artistController != null && (title == 'Songs' || title == 'Videos'),
-                    isSearchFeatureRequired: artistController != null,
-                    titleLeftPadding: 9,
-                    itemCountTitle:
-                        "${isResultWidget ? (searchResController?.separatedResultContent[title] ?? []).length : (artistController?.sepataredContent[title] != null ? artistController?.sepataredContent[title]['results'] : []).length} ${"items".tr}",
-                    requiredSortTypes: buildSortTypeSet(
-                        title == 'Albums' || title == 'Singles', title == 'Songs' || title == 'Videos'),
-                    onSort: (type, ascending) {
-                      isResultWidget
-                          ? searchResController!.onSort(type, ascending, title)
-                          : artistController?.onSort(type, ascending, title);
-                    },
-                    onSearch: artistController?.onSearch,
-                    onSearchClose: artistController?.onSearchClose,
-                    onSearchStart: artistController?.onSearchStart,
-                    startAdditionalOperation: artistController?.startAdditionalOperation,
-                    selectAll: artistController?.selectAll,
-                    performAdditionalOperation: artistController?.performAdditionalOperation,
-                    cancelAdditionalOperation: artistController?.cancelAdditionalOperation,
-                  ))
-              : const SizedBox.shrink(),
-          isCompleteList
-              ? isResultWidget
-                  ? GetX<SearchResultScreenController>(builder: (controller) {
-                      if (controller.isSeparatedResultContentFetced.isTrue) {
-                        return ListWidget(
-                          controller.separatedResultContent[title],
-                          title,
-                          isCompleteList,
-                          scrollController: scrollController,
-                        );
-                      } else {
-                        return const Expanded(child: Center(child: LoadingIndicator()));
-                      }
-                    })
-                  : (artistController!.isArtistContentFetced.isTrue
-                      ? Obx(() => (artistController.additionalOperationMode.value == OperationMode.none
-                          ? ListWidget(
-                              items,
-                              title,
-                              isCompleteList,
-                              isArtistSongs: true,
-                              scrollController: scrollController,
-                            )
-                          : ModificationList(
-                              mode: artistController.additionalOperationMode.value,
-                              artistScreenController: artistController,
-                            )))
-                      : const Expanded(child: Center(child: LoadingIndicator())))
-              : ListWidget(
-                  items,
-                  title,
-                  isCompleteList,
-                  scrollController: scrollController,
-                ),
+          if (isCompleteList)
+            Obx(() => SortWidget(
+                  tag: '${title}_$artistControllerTag',
+                  isAdditionalOperationRequired: artistController != null && (title == 'Songs' || title == 'Videos'),
+                  isSearchFeatureRequired: artistController != null,
+                  titleLeftPadding: 9,
+                  itemCountTitle:
+                      "${isResultWidget ? (searchResController?.separatedResultContent[title] ?? []).length : (artistController?.sepataredContent[title] != null ? artistController?.sepataredContent[title]['results'] : []).length} ${"items".tr}",
+                  requiredSortTypes:
+                      buildSortTypeSet(title == 'Albums' || title == 'Singles', title == 'Songs' || title == 'Videos'),
+                  onSort: (type, ascending) {
+                    isResultWidget
+                        ? searchResController!.onSort(type, ascending, title)
+                        : artistController?.onSort(type, ascending, title);
+                  },
+                  onSearch: artistController?.onSearch,
+                  onSearchClose: artistController?.onSearchClose,
+                  onSearchStart: artistController?.onSearchStart,
+                  startAdditionalOperation: artistController?.startAdditionalOperation,
+                  selectAll: artistController?.selectAll,
+                  performAdditionalOperation: artistController?.performAdditionalOperation,
+                  cancelAdditionalOperation: artistController?.cancelAdditionalOperation,
+                ))
+          else
+            const SizedBox.shrink(),
+          if (isCompleteList)
+            isResultWidget
+                ? GetX<SearchResultScreenController>(builder: (controller) {
+                    if (controller.isSeparatedResultContentFetced.isTrue) {
+                      return ListWidget(
+                        controller.separatedResultContent[title],
+                        title,
+                        isCompleteList,
+                        scrollController: scrollController,
+                      );
+                    } else {
+                      return const Expanded(child: Center(child: LoadingIndicator()));
+                    }
+                  })
+                : (artistController!.isArtistContentFetced.isTrue
+                    ? Obx(
+                        () => (artistController.additionalOperationMode.value == OperationMode.none
+                            ? ListWidget(
+                                items,
+                                title,
+                                isCompleteList,
+                                isArtistSongs: true,
+                                scrollController: scrollController,
+                              )
+                            : ModificationList(
+                                mode: artistController.additionalOperationMode.value,
+                                artistScreenController: artistController,
+                              )),
+                      )
+                    : const Expanded(child: Center(child: LoadingIndicator())))
+          else
+            ListWidget(
+              items,
+              title,
+              isCompleteList,
+              scrollController: scrollController,
+            ),
         ],
       ),
     );

@@ -430,7 +430,7 @@ class MusicServices extends getx.GetxService {
       [...single_column_tab, ...section_list, 1, 'musicCarouselShelfRenderer'],
     );
     if (results != null) {
-      List contents = [];
+      var contents = [];
       if (results.runtimeType.toString().contains('Iterable') || results.runtimeType.toString().contains('List')) {
         for (dynamic result in results) {
           contents.add(parseAlbum(result['musicTwoRowItemRenderer']));
@@ -527,7 +527,7 @@ class MusicServices extends getx.GetxService {
 
     String? type;
 
-    for (var res in results) {
+    for (final res in results) {
       String category;
       if (res.containsKey('musicCardShelfRenderer')) {
         //final topResult = parseTopResult(res['musicCardShelfRenderer'], ['artist', 'playlist', 'song', 'video', 'station']);

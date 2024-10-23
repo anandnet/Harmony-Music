@@ -34,36 +34,37 @@ class MiniPlayer extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  !isWideScreen
-                      ? GetX<PlayerController>(
-                          builder: (controller) => Container(
-                              height: 3,
-                              color: Theme.of(context).progressIndicatorTheme.color,
-                              child: MiniPlayerProgressBar(
-                                  progressBarStatus: controller.progressBarStatus.value,
-                                  progressBarColor:
-                                      Theme.of(context).progressIndicatorTheme.linearTrackColor ?? Colors.white)),
-                        )
-                      : GetX<PlayerController>(builder: (controller) {
-                          return Padding(
-                            padding: const EdgeInsets.only(left: 15, top: 8, right: 15),
-                            child: ProgressBar(
-                              timeLabelLocation: TimeLabelLocation.sides,
-                              thumbRadius: 7,
-                              barHeight: 4,
-                              thumbGlowRadius: 15,
-                              baseBarColor: Theme.of(context).sliderTheme.inactiveTrackColor,
-                              bufferedBarColor: Theme.of(context).sliderTheme.valueIndicatorColor,
-                              progressBarColor: Theme.of(context).sliderTheme.activeTrackColor,
-                              thumbColor: Theme.of(context).sliderTheme.thumbColor,
-                              timeLabelTextStyle: Theme.of(context).textTheme.titleMedium,
-                              progress: controller.progressBarStatus.value.current,
-                              total: controller.progressBarStatus.value.total,
-                              buffered: controller.progressBarStatus.value.buffered,
-                              onSeek: controller.seek,
-                            ),
-                          );
-                        }),
+                  if (!isWideScreen)
+                    GetX<PlayerController>(
+                      builder: (controller) => Container(
+                          height: 3,
+                          color: Theme.of(context).progressIndicatorTheme.color,
+                          child: MiniPlayerProgressBar(
+                              progressBarStatus: controller.progressBarStatus.value,
+                              progressBarColor:
+                                  Theme.of(context).progressIndicatorTheme.linearTrackColor ?? Colors.white)),
+                    )
+                  else
+                    GetX<PlayerController>(builder: (controller) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 15, top: 8, right: 15),
+                        child: ProgressBar(
+                          timeLabelLocation: TimeLabelLocation.sides,
+                          thumbRadius: 7,
+                          barHeight: 4,
+                          thumbGlowRadius: 15,
+                          baseBarColor: Theme.of(context).sliderTheme.inactiveTrackColor,
+                          bufferedBarColor: Theme.of(context).sliderTheme.valueIndicatorColor,
+                          progressBarColor: Theme.of(context).sliderTheme.activeTrackColor,
+                          thumbColor: Theme.of(context).sliderTheme.thumbColor,
+                          timeLabelTextStyle: Theme.of(context).textTheme.titleMedium,
+                          progress: controller.progressBarStatus.value.current,
+                          total: controller.progressBarStatus.value.total,
+                          buffered: controller.progressBarStatus.value.buffered,
+                          onSeek: controller.seek,
+                        ),
+                      );
+                    }),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 7),
                     child: Row(
@@ -71,15 +72,16 @@ class MiniPlayer extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            playerController.currentSong.value != null
-                                ? ImageWidget(
-                                    size: 50,
-                                    song: playerController.currentSong.value!,
-                                  )
-                                : const SizedBox(
-                                    height: 50,
-                                    width: 50,
-                                  ),
+                            if (playerController.currentSong.value != null)
+                              ImageWidget(
+                                size: 50,
+                                song: playerController.currentSong.value!,
+                              )
+                            else
+                              const SizedBox(
+                                height: 50,
+                                width: 50,
+                              ),
                           ],
                         ),
                         const SizedBox(
@@ -174,16 +176,23 @@ class MiniPlayer extends StatelessWidget {
                                         size: 35,
                                       ),
                                     )),
-                              isWideScreen
-                                  ? Container(
-                                      decoration: BoxDecoration(
-                                          color: Theme.of(context).colorScheme.secondary,
-                                          borderRadius: BorderRadius.circular(10)),
-                                      width: 58,
-                                      height: 58,
-                                      child: Center(child: _playButton(context, isWideScreen)))
-                                  : SizedBox.square(
-                                      dimension: 50, child: Center(child: _playButton(context, isWideScreen))),
+                              if (isWideScreen)
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context).colorScheme.secondary,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  width: 58,
+                                  height: 58,
+                                  child: Center(
+                                    child: _playButton(context, isWideScreen),
+                                  ),
+                                )
+                              else
+                                SizedBox.square(
+                                    dimension: 50,
+                                    child: Center(
+                                      child: _playButton(context, isWideScreen),
+                                    )),
                               SizedBox(
                                   width: 40,
                                   child: Obx(() {

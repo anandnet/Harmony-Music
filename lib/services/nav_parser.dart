@@ -637,9 +637,9 @@ dynamic parseSearchResult(
         searchResult['resultType'] = 'artist';
       } else {
         Map<String, dynamic> flexItem2 = getFlexColumnItem(data, 1);
-        List<dynamic> runs = [
+        var runs = <dynamic>[
           for (int i = 0; i < flexItem2['text']['runs'].length; i++)
-            if (i % 2 == 0) flexItem2['text']['runs'][i]['text']
+            if (i.isEven) {flexItem2['text']['runs'][i]['text']}
         ];
         if (runs.length > 1) {
           searchResult['artist'] = runs[1];

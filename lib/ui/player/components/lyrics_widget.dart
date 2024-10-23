@@ -7,7 +7,10 @@ import 'package:harmonymusic/ui/widgets/loader.dart';
 class LyricsWidget extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
-  const LyricsWidget({super.key, required this.padding});
+  const LyricsWidget({
+    required this.padding,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

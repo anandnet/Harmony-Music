@@ -78,7 +78,7 @@ class Downloader extends GetxService {
     //check if playlist download in queue => download playlistsongs else download from general songs queue
     if (playlistQueue.isNotEmpty) {
       isJobRunning.value = true;
-      for (var playlistId in playlistQueue.keys.toList()) {
+      for (final playlistId in playlistQueue.keys.toList()) {
         //checked in case download cancel request
         if (playlistQueue.containsKey(playlistId)) {
           currentPlaylistId.value = playlistId;
@@ -107,7 +107,7 @@ class Downloader extends GetxService {
   }
 
   Future<void> downloadSongList(List<MediaItem> jobSongList, {bool isPlaylist = false}) async {
-    for (var song in jobSongList) {
+    for (final song in jobSongList) {
       // intrrupt downloading task in case of playlist download cancel request
       if (isPlaylist && !playlistQueue.containsKey(currentPlaylistId.value)) {
         currentPlaylistId.value = '';

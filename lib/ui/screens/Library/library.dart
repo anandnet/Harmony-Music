@@ -22,17 +22,15 @@ class SongsLibraryWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          isBottomNavActive
-              ? const SizedBox(
-                  height: 10,
-                )
-              : Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'libSongs'.tr,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
+          if (isBottomNavActive)
+            const SizedBox(height: 10)
+          else
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'libSongs'.tr,
+                  style: Theme.of(context).textTheme.titleLarge,
+                )),
           Obx(() {
             final libSongsController = Get.find<LibrarySongsController>();
             return SortWidget(
@@ -97,8 +95,8 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
     final settingscrnController = Get.find<SettingsScreenController>();
     final size = MediaQuery.of(context).size;
 
-    const double itemHeight = 180;
-    const double itemWidth = 130;
+    const itemHeight = 180;
+    const itemWidth = 130;
     final topPadding = context.isLandscape ? 50.0 : 90.0;
 
     return Padding(
@@ -110,24 +108,23 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                isBottomNavActive
-                    ? const SizedBox(
-                        height: 10,
-                      )
-                    : Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          isAlbumContent ? 'libAlbums'.tr : 'libPlaylists'.tr,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                      ),
-                (settingscrnController.isBottomNavBarEnabled.isTrue ||
-                        isAlbumContent ||
-                        settingscrnController.isLinkedWithPiped.isFalse)
-                    ? const SizedBox.shrink()
-                    : PipedSyncWidget(
-                        padding: EdgeInsets.only(right: size.width * .05),
-                      )
+                if (isBottomNavActive)
+                  const SizedBox(height: 10)
+                else
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        isAlbumContent ? 'libAlbums'.tr : 'libPlaylists'.tr,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      )),
+                if (settingscrnController.isBottomNavBarEnabled.isTrue ||
+                    isAlbumContent ||
+                    settingscrnController.isLinkedWithPiped.isFalse)
+                  const SizedBox.shrink()
+                else
+                  PipedSyncWidget(
+                    padding: EdgeInsets.only(right: size.width * .05),
+                  )
               ],
             ),
           ),
@@ -220,17 +217,15 @@ class LibraryArtistWidget extends StatelessWidget {
       padding: isBottomNavActive ? const EdgeInsets.only(left: 15) : EdgeInsets.only(left: 5, top: topPadding),
       child: Column(
         children: [
-          isBottomNavActive
-              ? const SizedBox(
-                  height: 10,
-                )
-              : Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'libArtists'.tr,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
+          if (isBottomNavActive)
+            const SizedBox(height: 10)
+          else
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'libArtists'.tr,
+                  style: Theme.of(context).textTheme.titleLarge,
+                )),
           Obx(
             () => SortWidget(
               tag: 'LibArtistSort',

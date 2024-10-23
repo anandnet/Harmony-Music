@@ -1,6 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_ume_kit_console_plus/flutter_ume_kit_console_plus.dart';
 import 'package:flutter_ume_kit_device_plus/flutter_ume_kit_device_plus.dart';
 import 'package:flutter_ume_plus/flutter_ume_plus.dart';
@@ -73,24 +74,30 @@ class MyApp extends StatelessWidget {
     // Monitor.instance.put('response', 'response-api');
     // Monitor.instance.put('curl', 'curl-value');
     Monitor.instance.putsConsole(['contents : $currentRoute']);
-
-    return GetX<ThemeController>(builder: (controller) {
-      return GetMaterialApp(
-          title: 'Harmony Music',
-          theme: controller.themedata.value,
-          home: const Home(),
-          debugShowCheckedModeBanner: false,
-          translations: Languages(),
-          locale: Locale(Hive.box('AppPrefs').get('currentAppLanguageCode') ?? 'en'),
-          fallbackLocale: const Locale('en'),
-          builder: (context, child) {
-            final scale = MediaQuery.of(context).textScaler.clamp(minScaleFactor: 1, maxScaleFactor: 1.1);
-            return MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaler: scale),
-              child: child!,
-            );
-          });
-    });
+    return ScreenUtilInit(
+      designSize: const Size(750, 1624),
+      splitScreenMode: true,
+      minTextAdapt: true,
+      builder: (_, child) {
+        return GetX<ThemeController>(builder: (controller) {
+          return GetMaterialApp(
+              title: 'Harmony Music',
+              theme: controller.themedata.value,
+              home: const Home(),
+              debugShowCheckedModeBanner: false,
+              translations: Languages(),
+              locale: Locale(Hive.box('AppPrefs').get('currentAppLanguageCode') ?? 'en'),
+              fallbackLocale: const Locale('en'),
+              builder: (context, child) {
+                final scale = MediaQuery.of(context).textScaler.clamp(minScaleFactor: 1, maxScaleFactor: 1.1);
+                return MediaQuery(
+                  data: MediaQuery.of(context).copyWith(textScaler: scale),
+                  child: child!,
+                );
+              });
+        });
+      },
+    );
   }
 }
 

@@ -22,9 +22,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PlayerController playerController = Get.find<PlayerController>();
-    final HomeScreenController homeScreenController = Get.find<HomeScreenController>();
-    final SettingsScreenController settingsScreenController = Get.find<SettingsScreenController>();
+    final playerController = Get.find<PlayerController>();
+    final homeScreenController = Get.find<HomeScreenController>();
+    final settingsScreenController = Get.find<SettingsScreenController>();
 
     return Scaffold(
         floatingActionButton: Obx(

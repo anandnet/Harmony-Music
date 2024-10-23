@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/screens/Home/home_screen_controller.dart';
 import 'package:sidebar_with_animation/animated_side_bar.dart';
@@ -47,9 +48,8 @@ class SideNavBar extends StatelessWidget {
                 ),
               ),
             )
-          : Padding(
-              padding: const EdgeInsets.only(bottom: 100),
-              child: SideBarAnimated(
+          : padding.pb100.child(
+              SideBarAnimated(
                 onTap: homeScreenController.onSideBarTabSelected,
                 sideBarColor: Theme.of(context).primaryColor.withAlpha(250),
                 animatedContainerColor: Theme.of(context).colorScheme.secondary,
@@ -106,7 +106,9 @@ class SideNavBar extends StatelessWidget {
             icon: Icon(icon),
             label: Text(label),
             padding: const EdgeInsets.only(left: 10),
-            indicatorShape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+            indicatorShape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
             indicatorColor: Colors.amber);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/models/quick_picks.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
@@ -6,19 +7,22 @@ import 'package:harmonymusic/ui/widgets/image_widget.dart';
 import 'package:harmonymusic/ui/widgets/songinfo_bottom_sheet.dart';
 
 class QuickPicksWidget extends StatelessWidget {
-  const QuickPicksWidget({super.key, required this.content, this.scrollController});
+  const QuickPicksWidget({
+    required this.content,
+    super.key,
+    this.scrollController,
+  });
 
   final QuickPicks content;
   final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
-    final PlayerController playerController = Get.find<PlayerController>();
+    final playerController = Get.find<PlayerController>();
     return SizedBox(
       height: 340,
       width: double.infinity,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Align(
               alignment: Alignment.centerLeft,
@@ -55,7 +59,7 @@ class QuickPicksWidget extends StatelessWidget {
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         subtitle: Text(
-                          "${content.songList[item].artist}",
+                          '${content.songList[item].artist}',
                           maxLines: 1,
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
@@ -70,7 +74,6 @@ class QuickPicksWidget extends StatelessWidget {
                             ),
                             isScrollControlled: true,
                             context: playerController.homeScaffoldKey.currentState!.context,
-                            //constraints: BoxConstraints(maxHeight:Get.height),
                             barrierColor: Colors.transparent.withAlpha(100),
                             builder: (context) => SongInfoBottomSheet(content.songList[item]),
                           ).whenComplete(() => Get.delete<SongInfoController>());

@@ -61,7 +61,11 @@ class SearchScreen extends StatelessWidget {
                       searchScreenController.reset();
                       return;
                     }
-                    Get.toNamed(ScreenNavigationSetup.searchResultScreen, id: ScreenNavigationSetup.id, arguments: val);
+                    Get.toNamed(
+                      ScreenNavigationSetup.searchResultScreen,
+                      id: ScreenNavigationSetup.id,
+                      arguments: val,
+                    );
                     searchScreenController.addToHistoryQueryList(val);
                   },
                   autofocus: settingsScreenController.isBottomNavBarEnabled.isFalse,

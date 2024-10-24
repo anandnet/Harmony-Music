@@ -47,7 +47,7 @@ class SearchScreenController extends GetxController with ProcessLink {
     await onChanged(txt);
   }
 
-  Future<void> addToHistryQueryList(String txt) async {
+  Future<void> addToHistoryQueryList(String txt) async {
     if (historyQuerylist.length > 9) {
       final queryForRemoval = queryBox.getAt(0);
       await queryBox.deleteAt(0);

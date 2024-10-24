@@ -62,7 +62,7 @@ class SearchScreen extends StatelessWidget {
                       return;
                     }
                     Get.toNamed(ScreenNavigationSetup.searchResultScreen, id: ScreenNavigationSetup.id, arguments: val);
-                    searchScreenController.addToHistryQueryList(val);
+                    searchScreenController.addToHistoryQueryList(val);
                   },
                   autofocus: settingsScreenController.isBottomNavBarEnabled.isFalse,
                   cursorColor: Theme.of(context).textTheme.bodySmall!.color,

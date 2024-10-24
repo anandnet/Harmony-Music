@@ -27,7 +27,7 @@ class DesktopSearchBar extends StatelessWidget {
                 return;
               }
               Get.toNamed(ScreenNavigationSetup.searchResultScreen, id: ScreenNavigationSetup.id, arguments: val);
-              searchScreenController.addToHistryQueryList(val);
+              searchScreenController.addToHistoryQueryList(val);
               searchScreenController.focusNode.unfocus();
             },
             focusNode: searchScreenController.focusNode,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/models/playlist.dart';
 import 'package:harmonymusic/ui/screens/Library/library_controller.dart';
@@ -40,7 +41,7 @@ class SongsLibraryWidget extends StatelessWidget {
               titleLeftPadding: 9,
               requiredSortTypes: buildSortTypeSet(true, true),
               isSearchFeatureRequired: true,
-              isSongDeletetioFeatureRequired: true,
+              isSongDeletionFeatureRequired: true,
               onSort: (type, ascending) {
                 libSongsController.onSort(type, ascending);
               },
@@ -90,9 +91,9 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final libralbumCntrller = Get.find<LibraryAlbumsController>();
-    final librplstCntrller = Get.find<LibraryPlaylistsController>();
-    final settingscrnController = Get.find<SettingsScreenController>();
+    final libraryAlbumCtrl = Get.find<LibraryAlbumsController>();
+    final libraryPlaylistCtrl = Get.find<LibraryPlaylistsController>();
+    final settingsScreenCtrl = Get.find<SettingsScreenController>();
     final size = MediaQuery.of(context).size;
 
     const itemHeight = 180;
@@ -100,33 +101,28 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
     final topPadding = context.isLandscape ? 50.0 : 90.0;
 
     return Padding(
-      padding: isBottomNavActive ? const EdgeInsets.only(left: 15) : EdgeInsets.only(top: topPadding),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                if (isBottomNavActive)
-                  const SizedBox(height: 10)
-                else
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        isAlbumContent ? 'libAlbums'.tr : 'libPlaylists'.tr,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      )),
-                if (settingscrnController.isBottomNavBarEnabled.isTrue ||
-                    isAlbumContent ||
-                    settingscrnController.isLinkedWithPiped.isFalse)
-                  const SizedBox.shrink()
-                else
-                  PipedSyncWidget(
-                    padding: EdgeInsets.only(right: size.width * .05),
-                  )
-              ],
-            ),
+        padding: isBottomNavActive ? const EdgeInsets.only(left: 15) : EdgeInsets.only(top: topPadding),
+        child: column.children([
+          padding.pl8.child(
+            row.spaceBetween.children([
+              if (isBottomNavActive)
+                const SizedBox(height: 10)
+              else
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      isAlbumContent ? 'libAlbums'.tr : 'libPlaylists'.tr,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    )),
+              if (settingsScreenCtrl.isBottomNavBarEnabled.isTrue ||
+                  isAlbumContent ||
+                  settingsScreenCtrl.isLinkedWithPiped.isFalse)
+                const SizedBox.shrink()
+              else
+                PipedSyncWidget(
+                  padding: EdgeInsets.only(right: size.width * .05),
+                )
+            ]),
           ),
           Obx(
             () => isAlbumContent
@@ -134,34 +130,34 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                     tag: 'LibAlbumSort',
                     isAdditionalOperationRequired: false,
                     isSearchFeatureRequired: true,
-                    itemCountTitle: "${libralbumCntrller.libraryAlbums.length} ${"items".tr}",
+                    itemCountTitle: "${libraryAlbumCtrl.libraryAlbums.length} ${"items".tr}",
                     requiredSortTypes: buildSortTypeSet(true),
                     onSort: (type, ascending) {
-                      libralbumCntrller.onSort(type, ascending);
+                      libraryAlbumCtrl.onSort(type, ascending);
                     },
-                    onSearch: libralbumCntrller.onSearch,
-                    onSearchClose: libralbumCntrller.onSearchClose,
-                    onSearchStart: libralbumCntrller.onSearchStart,
+                    onSearch: libraryAlbumCtrl.onSearch,
+                    onSearchClose: libraryAlbumCtrl.onSearchClose,
+                    onSearchStart: libraryAlbumCtrl.onSearchStart,
                   )
                 : SortWidget(
                     tag: 'LibPlaylistSort',
                     isAdditionalOperationRequired: false,
                     isSearchFeatureRequired: true,
-                    itemCountTitle: "${librplstCntrller.libraryPlaylists.length} ${"items".tr}",
+                    itemCountTitle: "${libraryPlaylistCtrl.libraryPlaylists.length} ${"items".tr}",
                     requiredSortTypes: buildSortTypeSet(),
                     onSort: (type, ascending) {
-                      librplstCntrller.onSort(type, ascending);
+                      libraryPlaylistCtrl.onSort(type, ascending);
                     },
-                    onSearch: librplstCntrller.onSearch,
-                    onSearchClose: librplstCntrller.onSearchClose,
-                    onSearchStart: librplstCntrller.onSearchStart,
+                    onSearch: libraryPlaylistCtrl.onSearch,
+                    onSearchClose: libraryPlaylistCtrl.onSearchClose,
+                    onSearchStart: libraryPlaylistCtrl.onSearchStart,
                   ),
           ),
           Expanded(
             child: Obx(
               () => (isAlbumContent
-                      ? libralbumCntrller.libraryAlbums.isNotEmpty
-                      : librplstCntrller.libraryPlaylists.isNotEmpty)
+                      ? libraryAlbumCtrl.libraryAlbums.isNotEmpty
+                      : libraryPlaylistCtrl.libraryPlaylists.isNotEmpty)
                   ? LayoutBuilder(builder: (context, constraints) {
                       //Fix for grid in mobile screen
                       final availableWidth =
@@ -179,13 +175,13 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                             shrinkWrap: true,
                             padding: const EdgeInsets.only(bottom: 200, top: 10),
                             itemCount: isAlbumContent
-                                ? libralbumCntrller.libraryAlbums.length
-                                : librplstCntrller.libraryPlaylists.length,
+                                ? libraryAlbumCtrl.libraryAlbums.length
+                                : libraryPlaylistCtrl.libraryPlaylists.length,
                             itemBuilder: (context, index) => Center(
                                   child: ContentListItem(
                                     content: isAlbumContent
-                                        ? libralbumCntrller.libraryAlbums[index]
-                                        : librplstCntrller.libraryPlaylists[index],
+                                        ? libraryAlbumCtrl.libraryAlbums[index]
+                                        : libraryPlaylistCtrl.libraryPlaylists[index],
                                     isLibraryItem: true,
                                   ),
                                 )),
@@ -198,9 +194,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                     )),
             ),
           )
-        ],
-      ),
-    );
+        ]));
   }
 }
 

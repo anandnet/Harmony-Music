@@ -69,7 +69,7 @@ class HomeScreen extends StatelessWidget {
           Expanded(
             child: Obx(() => AnimatedScreenTransition(
                 enabled: settingsScreenController.isTransitionAnimationDisabled.isFalse,
-                resverse: homeScreenController.reverseAnimationtransiton,
+                resverse: homeScreenController.reverseAnimationTransition,
                 horizontalTransition: settingsScreenController.isBottomNavBarEnabled.isTrue,
                 child: Center(
                   key: ValueKey<int>(homeScreenController.tabIndex.value),

@@ -24,9 +24,9 @@ class HomeScreenController extends GetxController {
   final showVersionDialog = true.obs;
 
   //isHomeScreenOnTop var only useful if bottom nav enabled
-  final isHomeSreenOnTop = true.obs;
+  final isHomeScreenOnTop = true.obs;
   final List<ScrollController> contentScrollControllers = [];
-  bool reverseAnimationtransiton = false;
+  bool reverseAnimationTransition = false;
 
   @override
   onInit() {
@@ -201,12 +201,12 @@ class HomeScreenController extends GetxController {
   }
 
   void onSideBarTabSelected(int index) {
-    reverseAnimationtransiton = index > tabIndex.value;
+    reverseAnimationTransition = index > tabIndex.value;
     tabIndex.value = index;
   }
 
   void onBottonBarTabSelected(int index) {
-    reverseAnimationtransiton = index > tabIndex.value;
+    reverseAnimationTransition = index > tabIndex.value;
     tabIndex.value = index;
   }
 
@@ -234,7 +234,7 @@ class HomeScreenController extends GetxController {
       final isResultScreenOnTop = currentRoute == '/searchResultScreen';
       final playerCon = Get.find<PlayerController>();
 
-      isHomeSreenOnTop.value = isHomeOnTop;
+      isHomeScreenOnTop.value = isHomeOnTop;
 
       // Set miniplayer height accordingly
       if (!playerCon.initFlagForPlayer) {

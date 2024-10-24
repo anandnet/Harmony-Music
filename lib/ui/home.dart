@@ -25,7 +25,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     printINFO('Home');
-    final PlayerController playerController = Get.find<PlayerController>();
+    final playerController = Get.find<PlayerController>();
     final settingsScreenController = Get.find<SettingsScreenController>();
     final homeScreenController = Get.find<HomeScreenController>();
     final size = MediaQuery.of(context).size;
@@ -102,13 +102,15 @@ class Home extends StatelessWidget {
                                                 : Colors.white.withOpacity(0.8),
                                             borderRadius: BorderRadius.circular(20),
                                           ),
-                                          child: Center(child: Text('queueLoop'.tr)),
+                                          child: Center(
+                                            child: 'queueLoop'.tr.text.mk,
+                                          ),
                                         ),
                                       ),
                                     ),
                                     IconButton(
                                       onPressed: () {},
-                                      icon: const Icon(Icons.shuffle),
+                                      icon: Icons.shuffle.icon.mk,
                                     ),
                                   ]),
                                 ]),
@@ -148,7 +150,7 @@ class Home extends StatelessWidget {
             bottomNavigationBar: settingsScreenController.isBottomNavBarEnabled.isTrue
                 ? ScrollToHideWidget(
                     isVisible:
-                        homeScreenController.isHomeSreenOnTop.isTrue && playerController.isPanelGTHOpened.isFalse,
+                        homeScreenController.isHomeScreenOnTop.isTrue && playerController.isPanelGTHOpened.isFalse,
                     child: const BottomNavBar())
                 : null,
           ),

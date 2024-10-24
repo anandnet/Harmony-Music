@@ -27,12 +27,12 @@ class PlaylistContentSection extends StatelessWidget {
             () => SortWidget(
               tag: playListNAlbumScreenController.isAlbum ? content.browseId : content.playlistId,
               isSearchFeatureRequired: true,
-              isPlaylistRearrageFeatureRequired: !playListNAlbumScreenController.isAlbum &&
+              isPlaylistRearrangeFeatureRequired: !playListNAlbumScreenController.isAlbum &&
                   !content.isCloudPlaylist &&
                   content.playlistId != 'LIBRP' &&
                   content.playlistId != 'SongDownloads' &&
                   content.playlistId != 'SongsCache',
-              isSongDeletetioFeatureRequired: !playListNAlbumScreenController.isAlbum && !content.isCloudPlaylist,
+              isSongDeletionFeatureRequired: !playListNAlbumScreenController.isAlbum && !content.isCloudPlaylist,
               itemCountTitle: '${playListNAlbumScreenController.songList.length}',
               itemIcon: Icons.music_note_rounded,
               titleLeftPadding: 9,

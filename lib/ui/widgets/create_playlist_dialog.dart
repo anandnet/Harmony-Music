@@ -128,12 +128,13 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                     top: 5,
                     right: 8,
                     child: SizedBox(
-                        height: 15,
-                        width: 15,
-                        child: CircularProgressIndicator(
-                          backgroundColor: Colors.transparent,
-                          strokeWidth: 2,
-                        )),
+                      height: 15,
+                      width: 15,
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.transparent,
+                        strokeWidth: 2,
+                      ),
+                    ),
                   )
                 : const SizedBox.shrink()),
           ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/models/playlist.dart';
 import 'package:harmonymusic/services/downloader.dart';
@@ -58,222 +59,208 @@ class OnlinePlaylistHeader extends StatelessWidget {
     final playListNAlbumScreenController = Get.find<PlayListNAlbumScreenController>(tag: tag);
     return (!playListNAlbumScreenController.isAlbum && !content.isCloudPlaylist)
         ? const SizedBox.shrink()
-        : Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Obx(() {
+        : padding.pt22.child(
+            Obx(() {
               return !playListNAlbumScreenController.isSearchingOn.value
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox.square(
-                                dimension: 200,
-                                child: Stack(
-                                  children: [
-                                    if (playListNAlbumScreenController.isAlbum)
-                                      ImageWidget(
-                                        size: 200,
-                                        album: content,
-                                      )
-                                    else
-                                      ImageWidget(
-                                        size: 200,
-                                        playlist: content,
-                                      ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Align(
-                                        alignment: Alignment.bottomLeft,
-                                        child: Container(
-                                          constraints: const BoxConstraints(maxWidth: 180, minWidth: 110),
-                                          padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
-                                          decoration: BoxDecoration(
-                                              color: Theme.of(context).canvasColor.withOpacity(.8),
-                                              borderRadius: BorderRadius.circular(15)),
-                                          height: 27,
-                                          //width: 110,
-                                          child: InkWell(
-                                            onTap: () {
-                                              Get.find<PlayerController>()
-                                                  .enqueueSongList(playListNAlbumScreenController.songList.toList())
-                                                  .whenComplete(() {
-                                                if (context.mounted) {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(snackbar(context, 'songEnqueueAlert'.tr));
-                                                }
-                                              });
-                                            },
-                                            child: Text(
-                                              'enqueueAll'.tr,
-                                              style: Theme.of(context).textTheme.titleSmall,
-                                            ),
-                                          ),
+                  ? column.crossStart.children([
+                      row.crossStart.children([
+                        SizedBox.square(
+                            dimension: 200,
+                            child: Stack(
+                              children: [
+                                if (playListNAlbumScreenController.isAlbum)
+                                  ImageWidget(
+                                    size: 200,
+                                    album: content,
+                                  )
+                                else
+                                  ImageWidget(
+                                    size: 200,
+                                    playlist: content,
+                                  ),
+                                padding.p16.child(
+                                  Align(
+                                    alignment: Alignment.bottomLeft,
+                                    child: Container(
+                                      constraints: const BoxConstraints(maxWidth: 180, minWidth: 110),
+                                      padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context).canvasColor.withOpacity(.8),
+                                          borderRadius: BorderRadius.circular(15)),
+                                      height: 27,
+                                      child: InkWell(
+                                        onTap: () {
+                                          Get.find<PlayerController>()
+                                              .enqueueSongList(playListNAlbumScreenController.songList.toList())
+                                              .whenComplete(() {
+                                            if (context.mounted) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackbar(context, 'songEnqueueAlert'.tr));
+                                            }
+                                          });
+                                        },
+                                        child: Text(
+                                          'enqueueAll'.tr,
+                                          style: Theme.of(context).textTheme.titleSmall,
                                         ),
                                       ),
-                                    )
-                                  ],
-                                )),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            // side tool bar
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: Container(
-                                height: playListNAlbumScreenController.isAddedToLibrary.isFalse ? 130 : 180,
-                                width: 47,
-                                decoration: BoxDecoration(
-                                    color: Theme.of(context).colorScheme.secondary.withOpacity(.7),
-                                    borderRadius: const BorderRadius.all(Radius.circular(10))),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    if (!playListNAlbumScreenController.isAlbum && content.isPipedPlaylist)
-                                      const SizedBox.shrink()
-                                    else
-                                      IconButton(
-                                          visualDensity: const VisualDensity(vertical: -4),
-                                          splashRadius: 10,
-                                          onPressed: () {
-                                            final add = playListNAlbumScreenController.isAddedToLibrary.isFalse;
-                                            playListNAlbumScreenController
-                                                .addNremoveFromLibrary(content, add: add)
-                                                .then((value) {
-                                              if (!context.mounted) return;
-                                              ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                                                  context,
-                                                  value
-                                                      ? add
-                                                          ? playListNAlbumScreenController.isAlbum
-                                                              ? 'albumBookmarkAddAlert'.tr
-                                                              : 'playlistBookmarkAddAlert'.tr
-                                                          : playListNAlbumScreenController.isAlbum
-                                                              ? 'albumBookmarkRemoveAlert'.tr
-                                                              : 'playlistBookmarkRemoveAlert'.tr
-                                                      : 'operationFailed'.tr));
-                                            });
-                                          },
-                                          icon: Icon(
-                                              size: 20,
-                                              playListNAlbumScreenController.isAddedToLibrary.isFalse
-                                                  ? Icons.bookmark_add_rounded
-                                                  : Icons.bookmark_added_rounded)),
-                                    if (playListNAlbumScreenController.isAddedToLibrary.isTrue)
-                                      IconButton(
-                                          onPressed: playListNAlbumScreenController.syncPlaylistNAlbumSong,
-                                          icon: const Icon(Icons.cloud_sync)),
-                                    if (!playListNAlbumScreenController.isAlbum && content.isPipedPlaylist)
-                                      IconButton(
-                                          icon: const Icon(
-                                            Icons.block,
-                                            size: 20,
-                                          ),
-                                          visualDensity: const VisualDensity(vertical: -4),
-                                          splashRadius: 10,
-                                          onPressed: () {
-                                            Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
-                                            Get.find<LibraryPlaylistsController>()
-                                                .blacklistPipedPlaylist(content as Playlist);
-                                            ScaffoldMessenger.of(Get.context!)
-                                                .showSnackBar(snackbar(Get.context!, 'playlistBlacklistAlert'.tr));
-                                          }),
-                                    IconButton(
-                                        visualDensity: const VisualDensity(vertical: -3),
-                                        splashRadius: 10,
-                                        onPressed: () {
-                                          if (playListNAlbumScreenController.isAlbum) {
-                                            Share.share('https://youtube.com/playlist?list=${content.audioPlaylistId}');
-                                          } else if (content.isPipedPlaylist) {
-                                            Share.share('https://piped.video/playlist?list=${content.playlistId}');
-                                          } else {
-                                            final isPlaylistIdPrefixAvlbl = content.playlistId.substring(0, 2) == 'VL';
-                                            var url = 'https://youtube.com/playlist?list=';
-
-                                            url = isPlaylistIdPrefixAvlbl
-                                                ? url + content.playlistId.substring(2)
-                                                : url + content.playlistId;
-                                            Share.share(url);
-                                          }
-                                        },
-                                        icon: const Icon(
-                                          Icons.share,
-                                          size: 20,
-                                        )),
-                                    GetX<Downloader>(builder: (controller) {
-                                      final id = playListNAlbumScreenController.isAlbum
-                                          ? content.browseId
-                                          : content.playlistId;
-                                      return IconButton(
-                                        onPressed: () {
-                                          if (playListNAlbumScreenController.isDownloaded.isTrue) {
-                                            return;
-                                          }
-                                          controller.downloadPlaylist(
-                                              id, playListNAlbumScreenController.songList.toList());
-                                        },
-                                        icon: playListNAlbumScreenController.isDownloaded.isTrue
-                                            ? const Icon(Icons.download_done_rounded)
-                                            : controller.playlistQueue.containsKey(id) &&
-                                                    controller.currentPlaylistId.toString() == id
-                                                ? Stack(
-                                                    children: [
-                                                      Center(
-                                                          child: Text(
-                                                              '${controller.playlistDownloadingProgress.value}/${playListNAlbumScreenController.songList.length}',
-                                                              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                                                  fontSize: 10, fontWeight: FontWeight.bold))),
-                                                      const Center(
-                                                          child: LoadingIndicator(
-                                                        dimension: 30,
-                                                      ))
-                                                    ],
-                                                  )
-                                                : controller.playlistQueue.containsKey(id)
-                                                    ? const Stack(
-                                                        children: [
-                                                          Center(
-                                                              child: Icon(
-                                                            Icons.hourglass_bottom_rounded,
-                                                            size: 20,
-                                                          )),
-                                                          Center(
-                                                              child: LoadingIndicator(
-                                                            dimension: 30,
-                                                          ))
-                                                        ],
-                                                      )
-                                                    : const Icon(Icons.download_rounded),
-                                      );
-                                    })
-                                  ],
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8),
+                              ],
+                            )),
+                        const SizedBox(width: 5),
+                        // side tool bar
+                        Align(
+                          alignment: Alignment.topRight,
                           child: Container(
-                            constraints: const BoxConstraints(maxWidth: 300),
-                            child: Text(
-                              content.title,
-                              style: Theme.of(context).textTheme.titleLarge,
-                              textAlign: TextAlign.start,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            height: playListNAlbumScreenController.isAddedToLibrary.isFalse ? 130 : 180,
+                            width: 47,
+                            decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.secondary.withOpacity(.7),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10),
+                                )),
+                            child: column.spaceAround.children([
+                              if (!playListNAlbumScreenController.isAlbum && content.isPipedPlaylist)
+                                const SizedBox.shrink()
+                              else
+                                IconButton(
+                                  visualDensity: const VisualDensity(vertical: -4),
+                                  splashRadius: 10,
+                                  onPressed: () {
+                                    final add = playListNAlbumScreenController.isAddedToLibrary.isFalse;
+                                    playListNAlbumScreenController
+                                        .addNremoveFromLibrary(content, add: add)
+                                        .then((value) {
+                                      if (!context.mounted) return;
+                                      ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                                          context,
+                                          value
+                                              ? add
+                                                  ? playListNAlbumScreenController.isAlbum
+                                                      ? 'albumBookmarkAddAlert'.tr
+                                                      : 'playlistBookmarkAddAlert'.tr
+                                                  : playListNAlbumScreenController.isAlbum
+                                                      ? 'albumBookmarkRemoveAlert'.tr
+                                                      : 'playlistBookmarkRemoveAlert'.tr
+                                              : 'operationFailed'.tr));
+                                    });
+                                  },
+                                  icon: Icon(
+                                      size: 20,
+                                      playListNAlbumScreenController.isAddedToLibrary.isFalse
+                                          ? Icons.bookmark_add_rounded
+                                          : Icons.bookmark_added_rounded),
+                                ),
+                              if (playListNAlbumScreenController.isAddedToLibrary.isTrue)
+                                IconButton(
+                                    onPressed: playListNAlbumScreenController.syncPlaylistNAlbumSong,
+                                    icon: const Icon(Icons.cloud_sync)),
+                              if (!playListNAlbumScreenController.isAlbum && content.isPipedPlaylist)
+                                IconButton(
+                                    icon: Icons.block.icon.s42.mk,
+                                    visualDensity: const VisualDensity(vertical: -4),
+                                    splashRadius: 10,
+                                    onPressed: () {
+                                      Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
+                                      Get.find<LibraryPlaylistsController>()
+                                          .blacklistPipedPlaylist(content as Playlist);
+                                      ScaffoldMessenger.of(Get.context!)
+                                          .showSnackBar(snackbar(Get.context!, 'playlistBlacklistAlert'.tr));
+                                    }),
+                              IconButton(
+                                visualDensity: const VisualDensity(vertical: -3),
+                                splashRadius: 10,
+                                onPressed: () {
+                                  if (playListNAlbumScreenController.isAlbum) {
+                                    Share.share('https://youtube.com/playlist?list=${content.audioPlaylistId}');
+                                  } else if (content.isPipedPlaylist) {
+                                    Share.share('https://piped.video/playlist?list=${content.playlistId}');
+                                  } else {
+                                    final isPlaylistIdPrefixAvlbl = content.playlistId.substring(0, 2) == 'VL';
+                                    var url = 'https://youtube.com/playlist?list=';
+
+                                    url = isPlaylistIdPrefixAvlbl
+                                        ? url + content.playlistId.substring(2)
+                                        : url + content.playlistId;
+                                    Share.share(url);
+                                  }
+                                },
+                                icon: Icons.share.icon.s42.mk,
+                              ),
+                              GetX<Downloader>(builder: (controller) {
+                                final id =
+                                    playListNAlbumScreenController.isAlbum ? content.browseId : content.playlistId;
+                                return IconButton(
+                                  onPressed: () {
+                                    if (playListNAlbumScreenController.isDownloaded.isTrue) {
+                                      return;
+                                    }
+                                    controller.downloadPlaylist(id, playListNAlbumScreenController.songList.toList());
+                                  },
+                                  icon: playListNAlbumScreenController.isDownloaded.isTrue
+                                      // ? const Icon(Icons.download_done_rounded)
+                                      ? Icons.download_done_rounded.icon.mk
+                                      : controller.playlistQueue.containsKey(id) &&
+                                              controller.currentPlaylistId.toString() == id
+                                          ? Stack(
+                                              children: [
+                                                Center(
+                                                    child: Text(
+                                                        '${controller.playlistDownloadingProgress.value}/${playListNAlbumScreenController.songList.length}',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleMedium!
+                                                            .copyWith(fontSize: 10, fontWeight: FontWeight.bold))),
+                                                const Center(
+                                                    child: LoadingIndicator(
+                                                  dimension: 30,
+                                                ))
+                                              ],
+                                            )
+                                          : controller.playlistQueue.containsKey(id)
+                                              ? const Stack(
+                                                  children: [
+                                                    Center(
+                                                      child: Icon(
+                                                        Icons.hourglass_bottom_rounded,
+                                                        size: 20,
+                                                      ),
+                                                    ),
+                                                    Center(
+                                                        child: LoadingIndicator(
+                                                      dimension: 30,
+                                                    ))
+                                                  ],
+                                                )
+                                              : Icons.download_rounded.icon.mk,
+                                );
+                                // : Text('123'));
+                              })
+                            ]),
                           ),
                         ),
+                      ]),
+                      padding.pt16.child(
                         Container(
                           constraints: const BoxConstraints(maxWidth: 300),
-                          child: PlaylistDescription(
-                            description: content.description,
-                            enableSeparator: enableSeparator,
+                          child: Text(
+                            content.title,
+                            style: Theme.of(context).textTheme.titleLarge,
+                            textAlign: TextAlign.start,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        )
-                      ],
-                    )
+                        ),
+                      ),
+                      Container(
+                        constraints: const BoxConstraints(maxWidth: 300),
+                        child: PlaylistDescription(
+                          description: content.description,
+                          enableSeparator: enableSeparator,
+                        ),
+                      )
+                    ])
                   : const SizedBox.shrink();
             }),
           );

@@ -49,7 +49,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
             ));
           } else {
             final content = playListNAlbumScreenController.contentRenderer;
-            final isOfflinePlaylist = !playListNAlbumScreenController.isAlbum && !content.isCloudPlaylist;
+            final isOfflinePlaylist = !playListNAlbumScreenController.isAlbum;
             final isWiderScreen = MediaQuery.of(context).size.width > 750;
             return Expanded(
               child: Container(

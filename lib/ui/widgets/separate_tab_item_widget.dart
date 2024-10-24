@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/screens/Artists/artist_screen_controller.dart';
 import 'package:harmonymusic/ui/screens/Search/search_result_screen_controller.dart';
@@ -41,28 +42,25 @@ class SeparateTabItemWidget extends StatelessWidget {
       child: Column(
         children: [
           if (!hideTitle)
-            SizedBox(
-              height: 30,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    title.toLowerCase().removeAllWhitespace.tr,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  if (isCompleteList)
-                    const SizedBox.shrink()
-                  else
-                    TextButton(
-                        onPressed: () {
-                          searchResController!.viewAllCallback(title);
-                        },
-                        child: Text(
-                          'viewAll'.tr,
-                          style: Theme.of(Get.context!).textTheme.titleSmall,
-                        ))
-                ],
-              ),
+            sizedBox.h56.child(
+              row.spaceBetween.children([
+                Text(
+                  title.toLowerCase().removeAllWhitespace.tr,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                if (isCompleteList)
+                  const SizedBox.shrink()
+                else
+                  TextButton(
+                    onPressed: () {
+                      searchResController!.viewAllCallback(title);
+                    },
+                    child: Text(
+                      'viewAll'.tr,
+                      style: Theme.of(Get.context!).textTheme.titleSmall,
+                    ),
+                  )
+              ]),
             ),
           if (isCompleteList)
             Obx(() => SortWidget(
@@ -100,7 +98,9 @@ class SeparateTabItemWidget extends StatelessWidget {
                         scrollController: scrollController,
                       );
                     } else {
-                      return const Expanded(child: Center(child: LoadingIndicator()));
+                      return const Expanded(
+                        child: Center(child: LoadingIndicator()),
+                      );
                     }
                   })
                 : (artistController!.isArtistContentFetced.isTrue

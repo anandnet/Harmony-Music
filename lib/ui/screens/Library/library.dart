@@ -162,7 +162,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                       //Fix for grid in mobile screen
                       final availableWidth =
                           constraints.maxWidth > 300 && constraints.maxWidth < 394 ? 310.0 : constraints.maxWidth;
-                      int columns = (availableWidth / itemWidth).floor();
+                      var columns = (availableWidth / itemWidth).floor();
                       return SizedBox(
                         width: availableWidth,
                         child: GridView.builder(

@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/models/artist.dart';
@@ -24,26 +25,25 @@ class ResultWidget extends StatelessWidget {
           child: SingleChildScrollView(
             padding: EdgeInsets.only(bottom: 200, top: isv2Used ? 0 : topPadding),
             child: searchResScrController.isResultContentFetced.value
-                ? Column(children: [
+                ? column.children([
                     if (!isv2Used)
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'searchRes'.tr,
-                          style: Theme.of(context).textTheme.titleLarge,
+                      column.children([
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'searchRes'.tr,
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
                         ),
-                      ),
-                    if (!isv2Used)
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "${"for1".tr} \"${searchResScrController.queryString.value}\"",
-                          style: Theme.of(context).textTheme.titleMedium,
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '${"for1".tr} "${searchResScrController.queryString.value}"',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
                         ),
-                      ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                      ]),
+                    const SizedBox(height: 10),
                     ...generateWidgetList(searchResScrController),
                   ])
                 : const SizedBox.shrink(),

@@ -1,6 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/models/playlist.dart';
 import 'package:harmonymusic/ui/navigator.dart';
@@ -13,8 +14,16 @@ import 'package:harmonymusic/ui/widgets/songinfo_bottom_sheet.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
 class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
-  const ListWidget(this.items, this.title, this.isCompleteList,
-      {super.key, this.isPlaylist = false, this.isArtistSongs = false, this.playlist, this.scrollController});
+  const ListWidget(
+    this.items,
+    this.title,
+    this.isCompleteList, {
+    super.key,
+    this.isPlaylist = false,
+    this.isArtistSongs = false,
+    this.playlist,
+    this.scrollController,
+  });
 
   final List<dynamic> items;
   final String title;
@@ -168,48 +177,40 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
             style: Theme.of(context).textTheme.titleSmall,
           ),
           trailing: SizedBox(
-            width: Get.size.width > 800 ? 80 : 40,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (isPlaylist)
-                      Obx(() => playerController.currentSong.value?.id == items[index].id
-                          ? const Icon(
-                              Icons.equalizer_rounded,
-                            )
-                          : const SizedBox.shrink()),
-                    Text(
-                      items[index].extras!['length'] ?? '',
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ],
-                ),
+              width: Get.size.width > 800 ? 80 : 40,
+              child: row.end.children([
+                column.center.children([
+                  if (isPlaylist)
+                    Obx(() => playerController.currentSong.value?.id == items[index].id
+                        ? Icons.equalizer_rounded.icon.mk
+                        : const SizedBox.shrink()),
+                  Text(
+                    items[index].extras!['length'] ?? '',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ]),
                 if (GetPlatform.isDesktop)
                   IconButton(
-                      splashRadius: 20,
-                      onPressed: () {
-                        showModalBottomSheet(
-                          constraints: const BoxConstraints(maxWidth: 500),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                          ),
-                          isScrollControlled: true,
-                          context: playerController.homeScaffoldKey.currentState!.context,
-                          //constraints: BoxConstraints(maxHeight:Get.height),
-                          barrierColor: Colors.transparent.withAlpha(100),
-                          builder: (context) => SongInfoBottomSheet(
-                            items[index] as MediaItem,
-                            playlist: playlist,
-                          ),
-                        ).whenComplete(() => Get.delete<SongInfoController>());
-                      },
-                      icon: const Icon(Icons.more_vert))
-              ],
-            ),
-          ),
+                    splashRadius: 20,
+                    onPressed: () {
+                      showModalBottomSheet(
+                        constraints: const BoxConstraints(maxWidth: 500),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                        ),
+                        isScrollControlled: true,
+                        context: playerController.homeScaffoldKey.currentState!.context,
+                        //constraints: BoxConstraints(maxHeight:Get.height),
+                        barrierColor: Colors.transparent.withAlpha(100),
+                        builder: (context) => SongInfoBottomSheet(
+                          items[index] as MediaItem,
+                          playlist: playlist,
+                        ),
+                      ).whenComplete(() => Get.delete<SongInfoController>());
+                    },
+                    icon: Icons.more_vert.icon.mk,
+                  )
+              ])),
         ),
       ),
     );

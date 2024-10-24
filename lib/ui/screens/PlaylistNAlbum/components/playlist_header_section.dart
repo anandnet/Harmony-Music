@@ -280,122 +280,120 @@ class OfflinePlaylistHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final playListNAlbumScreenController = Get.find<PlayListNAlbumScreenController>(tag: tag);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width - 170,
-          child: Text(
-            content.title,
-            style: Theme.of(context).textTheme.titleLarge,
-            textAlign: TextAlign.start,
-            overflow: TextOverflow.ellipsis,
-          ),
+    return row.spaceBetween.children([
+      SizedBox(
+        width: MediaQuery.of(context).size.width - 170,
+        child: Text(
+          content.title,
+          style: Theme.of(context).textTheme.titleLarge,
+          textAlign: TextAlign.start,
+          overflow: TextOverflow.ellipsis,
         ),
-        if ((!playListNAlbumScreenController.isAlbum &&
-                !content.isCloudPlaylist &&
-                content.playlistId != 'LIBFAV' &&
-                content.playlistId != 'SongsCache' &&
-                content.playlistId != 'LIBRP' &&
-                content.playlistId != 'SongDownloads') ||
-            (!playListNAlbumScreenController.isAlbum && content.isPipedPlaylist))
-          Row(
-            children: [
-              if (!content.isPipedPlaylist)
-                GetX<Downloader>(builder: (controller) {
-                  final id = playListNAlbumScreenController.isAlbum ? content.browseId : content.playlistId;
-                  return IconButton(
-                    onPressed: () {
-                      if (playListNAlbumScreenController.isDownloaded.isTrue) {
-                        return;
-                      }
-                      controller.downloadPlaylist(id, playListNAlbumScreenController.songList.toList());
-                    },
-                    icon: playListNAlbumScreenController.isDownloaded.isTrue
-                        ? const Icon(Icons.download_done_rounded)
-                        : controller.playlistQueue.containsKey(id) && controller.currentPlaylistId.toString() == id
-                            ? Stack(
+      ),
+      if ((!playListNAlbumScreenController.isAlbum &&
+              !content.isCloudPlaylist &&
+              content.playlistId != 'LIBFAV' &&
+              content.playlistId != 'SongsCache' &&
+              content.playlistId != 'LIBRP' &&
+              content.playlistId != 'SongDownloads') ||
+          (!playListNAlbumScreenController.isAlbum && content.isPipedPlaylist))
+        row.children([
+          if (!content.isPipedPlaylist)
+            GetX<Downloader>(builder: (controller) {
+              final id = playListNAlbumScreenController.isAlbum ? content.browseId : content.playlistId;
+              return IconButton(
+                onPressed: () {
+                  if (playListNAlbumScreenController.isDownloaded.isTrue) {
+                    return;
+                  }
+                  controller.downloadPlaylist(id, playListNAlbumScreenController.songList.toList());
+                },
+                icon: playListNAlbumScreenController.isDownloaded.isTrue
+                    ? const Icon(Icons.download_done_rounded)
+                    : controller.playlistQueue.containsKey(id) && controller.currentPlaylistId.toString() == id
+                        ? Stack(
+                            children: [
+                              Center(
+                                  child: Text(
+                                      '${controller.playlistDownloadingProgress.value}/${playListNAlbumScreenController.songList.length}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(fontSize: 10, fontWeight: FontWeight.bold))),
+                              const Center(
+                                  child: LoadingIndicator(
+                                dimension: 30,
+                              ))
+                            ],
+                          )
+                        : controller.playlistQueue.containsKey(id)
+                            ? const Stack(
                                 children: [
                                   Center(
-                                      child: Text(
-                                          '${controller.playlistDownloadingProgress.value}/${playListNAlbumScreenController.songList.length}',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .copyWith(fontSize: 10, fontWeight: FontWeight.bold))),
-                                  const Center(
+                                    child: Icon(
+                                      Icons.hourglass_bottom_rounded,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  Center(
                                       child: LoadingIndicator(
                                     dimension: 30,
                                   ))
                                 ],
                               )
-                            : controller.playlistQueue.containsKey(id)
-                                ? const Stack(
-                                    children: [
-                                      Center(
-                                          child: Icon(
-                                        Icons.hourglass_bottom_rounded,
-                                        size: 20,
-                                      )),
-                                      Center(
-                                          child: LoadingIndicator(
-                                        dimension: 30,
-                                      ))
-                                    ],
-                                  )
-                                : const Icon(Icons.download_rounded),
-                  );
-                })
-              else
-                const SizedBox.shrink(),
-              IconButton(
-                  onPressed: () {
-                    showModalBottomSheet(
-                      constraints: const BoxConstraints(maxWidth: 500),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                      ),
-                      context: Get.find<PlayerController>().homeScaffoldKey.currentState!.context,
-                      barrierColor: Colors.transparent.withAlpha(100),
-                      builder: (context) => SizedBox(
-                        height: 140,
-                        child: Column(
-                          children: [
-                            ListTile(
-                              leading: const Icon(Icons.edit_rounded),
-                              title: Text('renamePlaylist'.tr),
-                              onTap: () {
-                                Navigator.of(context).pop();
-                                showDialog(
-                                  context: context,
-                                  builder: (context) =>
-                                      CreateNRenamePlaylistPopup(renamePlaylist: true, playlist: content),
-                                );
-                              },
+                            : Icons.download_rounded.icon.mk,
+              );
+            })
+          else
+            const SizedBox.shrink(),
+          IconButton(
+            icon: Icons.more_vert_rounded.icon.mk,
+            onPressed: () {
+              showModalBottomSheet(
+                constraints: const BoxConstraints(maxWidth: 500),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                ),
+                context: Get.find<PlayerController>().homeScaffoldKey.currentState!.context,
+                barrierColor: Colors.transparent.withAlpha(100),
+                builder: (context) {
+                  return sizedBox.h260.child(
+                    column.children([
+                      ListTile(
+                        leading: Icons.edit_rounded.icon.mk,
+                        title: 'renamePlaylist'.tr.text.mk,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          showDialog(
+                            context: context,
+                            builder: (context) => CreateNRenamePlaylistPopup(
+                              renamePlaylist: true,
+                              playlist: content,
                             ),
-                            ListTile(
-                              leading: const Icon(Icons.delete_rounded),
-                              title: Text('removePlaylist'.tr),
-                              onTap: () {
-                                Navigator.of(context).pop();
-                                playListNAlbumScreenController.addNremoveFromLibrary(content, add: false).then((value) {
-                                  Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
-                                  ScaffoldMessenger.of(Get.context!).showSnackBar(
-                                      snackbar(Get.context!, value ? 'playlistRemovedAlert'.tr : 'operationFailed'.tr));
-                                });
-                              },
-                            )
-                          ],
-                        ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                  icon: const Icon(Icons.more_vert_rounded)),
-            ],
+                      ListTile(
+                        leading: Icons.delete_rounded.icon.mk,
+                        title: 'removePlaylist'.tr.text.mk,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          playListNAlbumScreenController.addNremoveFromLibrary(content, add: false).then((value) {
+                            Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
+                            ScaffoldMessenger.of(Get.context!).showSnackBar(
+                                snackbar(Get.context!, value ? 'playlistRemovedAlert'.tr : 'operationFailed'.tr));
+                          });
+                        },
+                      )
+                    ]),
+                  );
+                },
+              );
+            },
           )
-        else
-          const SizedBox.shrink()
-      ],
-    );
+        ])
+      else
+        const SizedBox.shrink()
+    ]);
   }
 }

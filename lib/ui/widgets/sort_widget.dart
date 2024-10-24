@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/home.dart';
 import 'package:harmonymusic/ui/widgets/modified_text_field.dart';
 
 enum OperationMode { arrange, delete, addToPlaylist, none }

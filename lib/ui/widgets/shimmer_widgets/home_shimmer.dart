@@ -79,9 +79,7 @@ class HomeShimmer extends StatelessWidget {
                   child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                          height: 120,
-                          child: BasicShimmerContainer(Size(120, 120))),
+                      SizedBox(height: 120, child: BasicShimmerContainer(Size(120, 120))),
                       SizedBox(height: 5),
                       BasicShimmerContainer(Size(115, 20)),
                       SizedBox(height: 5),

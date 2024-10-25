@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/screens/Artists/artist_screen_controller.dart';
+import 'package:harmonymusic/ui/screens/Library/library_controller.dart';
+import 'package:harmonymusic/ui/screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/image_widget.dart';
+import 'package:harmonymusic/ui/widgets/sort_widget.dart' show OperationMode;
 import 'package:widget_marquee/widget_marquee.dart';
-
-import '/ui/screens/Artists/artist_screen_controller.dart';
-import '/ui/screens/Library/library_controller.dart';
-import '/ui/screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
-import '/ui/widgets/sort_widget.dart' show OperationMode;
-import 'image_widget.dart';
 
 class ModificationList extends StatelessWidget {
   const ModificationList(
@@ -15,6 +14,7 @@ class ModificationList extends StatelessWidget {
       this.librarySongsController,
       this.playListNAlbumScreenController,
       this.artistScreenController});
+
   final OperationMode mode;
   final PlayListNAlbumScreenController? playListNAlbumScreenController;
   final LibrarySongsController? librarySongsController;
@@ -22,9 +22,7 @@ class ModificationList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    dynamic controller = librarySongsController ??
-        playListNAlbumScreenController ??
-        artistScreenController;
+    dynamic controller = librarySongsController ?? playListNAlbumScreenController ?? artistScreenController;
     final items = controller!.additionalOperationTempList;
     if (mode == OperationMode.arrange) {
       return Expanded(
@@ -33,8 +31,7 @@ class ModificationList extends StatelessWidget {
             itemBuilder: (context, index) => ListTile(
                   key: Key('$index'),
                   onTap: () {},
-                  contentPadding:
-                      const EdgeInsets.only(top: 0, left: 5, right: 40),
+                  contentPadding: const EdgeInsets.only(left: 5, right: 40),
                   leading: ImageWidget(
                     size: 55,
                     song: items[index],
@@ -44,15 +41,13 @@ class ModificationList extends StatelessWidget {
                     duration: const Duration(seconds: 5),
                     id: items[index].title.hashCode.toString(),
                     child: Text(
-                      items[index].title.length > 50
-                          ? items[index].title.substring(0, 50)
-                          : items[index].title,
+                      items[index].title.length > 50 ? items[index].title.substring(0, 50) : items[index].title,
                       maxLines: 1,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   subtitle: Text(
-                    "${items[index].artist}",
+                    '${items[index].artist}',
                     maxLines: 1,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
@@ -70,19 +65,17 @@ class ModificationList extends StatelessWidget {
               controller.additionalOperationTempList.value = list;
             }),
       );
-    } else if (mode == OperationMode.addToPlaylist ||
-        mode == OperationMode.delete) {
+    } else if (mode == OperationMode.addToPlaylist || mode == OperationMode.delete) {
       return Expanded(
         child: ListView.builder(
           padding: const EdgeInsets.only(right: 5, bottom: 200),
           itemCount: items.length,
           itemBuilder: (context, index) => ListTile(
             onTap: () {
-              controller.additionalOperationTempMap[index] =
-                  !controller.additionalOperationTempMap[index]!;
+              controller.additionalOperationTempMap[index] = !controller.additionalOperationTempMap[index]!;
               controller.checkIfAllSelected();
             },
-            contentPadding: const EdgeInsets.only(top: 0, left: 5, right: 30),
+            contentPadding: const EdgeInsets.only(left: 5, right: 30),
             leading: SizedBox(
               width: 100,
               child: Row(
@@ -95,10 +88,8 @@ class ModificationList extends StatelessWidget {
                         controller.additionalOperationTempMap[index] = val!;
                         controller.checkIfAllSelected();
                       },
-                      visualDensity:
-                          const VisualDensity(horizontal: -3, vertical: -3),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                      visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     ),
                   ),
                   ImageWidget(
@@ -113,15 +104,13 @@ class ModificationList extends StatelessWidget {
               duration: const Duration(seconds: 5),
               id: items[index].title.hashCode.toString(),
               child: Text(
-                items[index].title.length > 50
-                    ? items[index].title.substring(0, 50)
-                    : items[index].title,
+                items[index].title.length > 50 ? items[index].title.substring(0, 50) : items[index].title,
                 maxLines: 1,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
             subtitle: Text(
-              "${items[index].artist}",
+              '${items[index].artist}',
               maxLines: 1,
               style: Theme.of(context).textTheme.titleSmall,
             ),

@@ -31,10 +31,7 @@ class ModifiedTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shortcuts(
-        shortcuts: {
-          LogicalKeySet(LogicalKeyboardKey.space):
-              const DoNothingAndStopPropagationTextIntent()
-        },
+        shortcuts: {LogicalKeySet(LogicalKeyboardKey.space): const DoNothingAndStopPropagationTextIntent()},
         child: TextField(
             controller: controller,
             cursorColor: cursorColor,

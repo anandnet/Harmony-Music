@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'search_item.dart';
-import '/ui/screens/Search/search_screen_controller.dart';
-
-import '../../../navigator.dart';
+import 'package:harmonymusic/ui/navigator.dart';
+import 'package:harmonymusic/ui/screens/Search/components/search_item.dart';
+import 'package:harmonymusic/ui/screens/Search/search_screen_controller.dart';
 
 class DesktopSearchBar extends StatelessWidget {
   const DesktopSearchBar({super.key});
@@ -16,69 +15,56 @@ class DesktopSearchBar extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Shortcuts(
-          shortcuts: {
-            LogicalKeySet(LogicalKeyboardKey.space):
-                const DoNothingAndStopPropagationTextIntent()
-          },
+          shortcuts: {LogicalKeySet(LogicalKeyboardKey.space): const DoNothingAndStopPropagationTextIntent()},
           child: SearchBar(
             controller: searchScreenController.textInputController,
             onTapOutside: (event) {},
             onChanged: searchScreenController.onChanged,
             onSubmitted: (val) {
-              if (val.contains("https://")) {
+              if (val.contains('https://')) {
                 searchScreenController.filterLinks(Uri.parse(val));
                 searchScreenController.reset();
                 return;
               }
-              Get.toNamed(ScreenNavigationSetup.searchResultScreen,
-                  id: ScreenNavigationSetup.id, arguments: val);
-              searchScreenController.addToHistryQueryList(val);
+              Get.toNamed(ScreenNavigationSetup.searchResultScreen, id: ScreenNavigationSetup.id, arguments: val);
+              searchScreenController.addToHistoryQueryList(val);
               searchScreenController.focusNode.unfocus();
             },
             focusNode: searchScreenController.focusNode,
-            backgroundColor: WidgetStatePropertyAll<Color>(
-                Theme.of(context).colorScheme.secondary),
-            hintText: "searchDes".tr,
+            backgroundColor: WidgetStatePropertyAll<Color>(Theme.of(context).colorScheme.secondary),
+            hintText: 'searchDes'.tr,
             leading: IconButton(
                 onPressed: () {
                   if (searchScreenController.focusNode.hasFocus) {
                     searchScreenController.focusNode.unfocus();
                   }
                 },
-                icon: Obx(() => Icon(
-                    searchScreenController.isSearchBarInFocus.isTrue
-                        ? Icons.arrow_back_rounded
-                        : Icons.search))),
+                icon: Obx(() =>
+                    Icon(searchScreenController.isSearchBarInFocus.isTrue ? Icons.arrow_back_rounded : Icons.search))),
             trailing: [
               Obx(() => searchScreenController.isSearchBarInFocus.isTrue
-                  ? IconButton(
-                      onPressed: searchScreenController.reset,
-                      icon: const Icon(Icons.clear_rounded))
+                  ? IconButton(onPressed: searchScreenController.reset, icon: const Icon(Icons.clear_rounded))
                   : const SizedBox.shrink())
             ],
-            padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(
-                EdgeInsets.only(left: 15, right: 15)),
+            padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(EdgeInsets.only(left: 15, right: 15)),
           ),
         ),
         Padding(
-            padding: const EdgeInsets.only(top: 10.0),
+            padding: const EdgeInsets.only(top: 10),
             child: Container(
               decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary,
-                  borderRadius: BorderRadius.circular(20)),
+                  color: Theme.of(context).colorScheme.secondary, borderRadius: BorderRadius.circular(20)),
               constraints: const BoxConstraints(minHeight: 0, maxHeight: 300),
               child: Obx(() {
-                final isHistoryString =
-                    searchScreenController.textInputController.text.isEmpty &&
-                        searchScreenController.suggestionList.isEmpty;
-                final listToShow = isHistoryString
-                    ? searchScreenController.historyQuerylist
-                    : searchScreenController.suggestionList;
+                final isHistoryString = searchScreenController.textInputController.text.isEmpty &&
+                    searchScreenController.suggestionList.isEmpty;
+                final listToShow =
+                    isHistoryString ? searchScreenController.historyQuerylist : searchScreenController.suggestionList;
                 return searchScreenController.urlPasted.isTrue
                     ? InkWell(
                         onTap: () {
-                          searchScreenController.filterLinks(Uri.parse(
-                              searchScreenController.textInputController.text));
+                          searchScreenController
+                              .filterLinks(Uri.parse(searchScreenController.textInputController.text));
                           searchScreenController.reset();
                         },
                         child: SizedBox(
@@ -86,20 +72,17 @@ class DesktopSearchBar extends StatelessWidget {
                           height: 50,
                           child: Center(
                               child: Text(
-                            "urlSearchDes".tr,
+                            'urlSearchDes'.tr,
                             style: Theme.of(context).textTheme.titleMedium,
                           )),
                         ),
                       )
-                    : searchScreenController.isSearchBarInFocus.isTrue &&
-                            listToShow.isNotEmpty
+                    : searchScreenController.isSearchBarInFocus.isTrue && listToShow.isNotEmpty
                         ? ListView(
                             shrinkWrap: true,
-                            padding: const EdgeInsets.all(5.0),
+                            padding: const EdgeInsets.all(5),
                             children: listToShow.map((item) {
-                              return SearchItem(
-                                  queryString: item,
-                                  isHistoryString: isHistoryString);
+                              return SearchItem(queryString: item, isHistoryString: isHistoryString);
                             }).toList())
                         : const SizedBox.shrink();
               }),

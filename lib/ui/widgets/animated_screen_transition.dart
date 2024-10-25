@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 
 class AnimatedScreenTransition extends StatelessWidget {
   const AnimatedScreenTransition(
-      {super.key,
-      this.enabled = true,
-      this.resverse = false,
-      this.horizontalTransition = false,
-      required this.child});
+      {super.key, this.enabled = true, this.resverse = false, this.horizontalTransition = false, required this.child});
+
   final bool enabled;
   final bool resverse;
   final Widget child;
@@ -34,9 +31,7 @@ class AnimatedScreenTransition extends StatelessWidget {
           : Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero);
     }
     return PageTransitionSwitcher(
-      duration: horizontalTransition
-          ? const Duration(milliseconds: 400)
-          : const Duration(milliseconds: 450),
+      duration: horizontalTransition ? const Duration(milliseconds: 400) : const Duration(milliseconds: 450),
       transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
         return DualTransitionBuilder(
           animation: primaryAnimation,

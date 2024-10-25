@@ -13,14 +13,12 @@ class DesktopSystemTray extends GetxService with TrayListener {
   @override
   void onInit() {
     trayManager.addListener(this);
-    Future.delayed(const Duration(seconds: 2), () => initSystemTray());
+    Future.delayed(const Duration(seconds: 2), initSystemTray);
     super.onInit();
   }
 
   Future<void> initSystemTray() async {
-    String path = GetPlatform.isWindows
-        ? 'assets/icons/icon.ico'
-        : 'assets/icons/icon.png';
+    var path = GetPlatform.isWindows ? 'assets/icons/icon.ico' : 'assets/icons/icon.png';
 
     await windowManager.ensureInitialized();
     final playerController = Get.find<PlayerController>();
@@ -28,12 +26,11 @@ class DesktopSystemTray extends GetxService with TrayListener {
     await trayManager.setIcon(path);
 
     // create context menu
-    final Menu menu = Menu(items: [
+    final menu = Menu(items: [
       MenuItem(
         label: 'Show/Hide',
-        onClick: (menuItem) async => await windowManager.isVisible()
-            ? await windowManager.hide()
-            : await windowManager.show(),
+        onClick: (menuItem) async =>
+            await windowManager.isVisible() ? await windowManager.hide() : await windowManager.show(),
       ),
       MenuItem.separator(),
       MenuItem(
@@ -64,7 +61,7 @@ class DesktopSystemTray extends GetxService with TrayListener {
       MenuItem(
         label: 'Quit',
         onClick: (menuItem) async {
-          await Get.find<AudioHandler>().customAction("saveSession");
+          await Get.find<AudioHandler>().customAction('saveSession');
           exit(0);
         },
       ),
@@ -113,11 +110,10 @@ class CloseWindowListener extends WindowListener {
   Future<void> onWindowClose() async {
     final settingsScrnController = Get.find<SettingsScreenController>();
     if (settingsScrnController.backgroundPlayEnabled.isTrue &&
-        Get.find<PlayerController>().buttonState.value ==
-            PlayButtonState.playing) {
+        Get.find<PlayerController>().buttonState.value == PlayButtonState.playing) {
       await windowManager.hide();
     } else {
-      await Get.find<AudioHandler>().customAction("saveSession");
+      await Get.find<AudioHandler>().customAction('saveSession');
       exit(0);
     }
   }

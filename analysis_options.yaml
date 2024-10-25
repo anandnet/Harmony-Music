@@ -8,6 +8,10 @@
 # The following line activates a set of recommended lints for Flutter apps,
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
+analyzer:
+  errors:
+    library_private_types_in_public_api: ignore
+    lines_longer_than_80_chars: ignore
 
 linter:
   # The lint rules applied to this project can be customized in the
@@ -21,9 +25,252 @@ linter:
   # or a specific dart file by using the `// ignore: name_of_lint` and
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
+
+  # fvm flutter analyze
   rules:
+    - always_declare_return_types
+    #- always_put_control_body_on_new_line
+    - always_put_required_named_parameters_first
+    - always_use_package_imports
+    - annotate_overrides
+    - annotate_redeclares
+    - avoid_annotating_with_dynamic
+    - avoid_bool_literals_in_conditional_expressions
+    - avoid_catching_errors
+    #- avoid_classes_with_only_static_members
+    - avoid_double_and_int_checks
+    - avoid_dynamic_calls
+    - avoid_empty_else
+    #- avoid_equals_and_hash_code_on_mutable_classes
+    - avoid_escaping_inner_quotes
+    - avoid_field_initializers_in_const_classes
+    - avoid_final_parameters
+    - avoid_function_literals_in_foreach_calls
+    - avoid_implementing_value_types
+    - avoid_init_to_null
+    - avoid_js_rounded_ints
+    - avoid_multiple_declarations_per_line
+    - avoid_null_checks_in_equality_operators
+    - avoid_print
+    - avoid_private_typedef_functions
+    - avoid_redundant_argument_values
+    - avoid_relative_lib_imports
+    - avoid_renaming_method_parameters
+    - avoid_return_types_on_setters
+    - avoid_returning_null_for_void
+    - avoid_returning_this
+    - avoid_setters_without_getters
+    - avoid_shadowing_type_parameters
+    - avoid_single_cascade_in_expression_statements
+    - avoid_slow_async_io
+    - avoid_type_to_string
+    - avoid_types_as_parameter_names
+    - avoid_unnecessary_containers
+    - avoid_unused_constructor_parameters
+    - avoid_void_async
+    - avoid_web_libraries_in_flutter
+    - await_only_futures
+    - camel_case_extensions
+    - camel_case_types
+    - cancel_subscriptions
+    #- cascade_invocations
+    - cast_nullable_to_non_nullable
+    - close_sinks
+    - collection_methods_unrelated_type
+    - combinators_ordering
+    - comment_references
+    - conditional_uri_does_not_exist
+    - constant_identifier_names
+    - control_flow_in_finally
+    - curly_braces_in_flow_control_structures
+    #- dangling_library_doc_comments
+    - depend_on_referenced_packages
+    - deprecated_consistency
+    - deprecated_member_use_from_same_package
+    #- diagnostic_describe_all_properties
+    - directives_ordering
+    #- do_not_use_environment
+    - empty_catches
+    - empty_constructor_bodies
+    - empty_statements
+    - eol_at_end_of_file
+    - exhaustive_cases
+    - file_names
+    - flutter_style_todos
+    - hash_and_equals
+    - implementation_imports
+    - implicit_call_tearoffs
+    - implicit_reopen
+    - invalid_case_patterns
+    - join_return_with_assignment
+    - leading_newlines_in_multiline_strings
+    - library_annotations
+    - library_names
+    - library_prefixes
+    - literal_only_boolean_expressions
+    - matching_super_parameters
+    - missing_code_block_language_in_doc_comment
+    - missing_whitespace_between_adjacent_strings
+    - no_adjacent_strings_in_list
+    # - no_default_cases
+    - no_duplicate_case_values
+    - no_leading_underscores_for_library_prefixes
+    - no_leading_underscores_for_local_identifiers
+    - no_literal_bool_comparisons
+    - no_logic_in_create_state
+    - no_runtimeType_toString
+    - no_self_assignments
+    - no_wildcard_variable_uses
+    - non_constant_identifier_names
+    - noop_primitive_operations
+    - null_check_on_nullable_type_parameter
+    - null_closures
+    - one_member_abstracts
+    - only_throw_errors
+    - overridden_fields
+    - package_api_docs
+    - package_names
+    - package_prefixed_library_names
+    #- parameter_assignments
+    - prefer_adjacent_string_concatenation
+    - prefer_asserts_in_initializer_lists
+    - prefer_asserts_with_message
+    - prefer_collection_literals
+    - prefer_conditional_assignment
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - prefer_const_literals_to_create_immutables
+    # - prefer_constructors_over_static_methods
+    - prefer_contains
+    - prefer_single_quotes
+    - prefer_final_fields
+    - prefer_final_in_for_each
+    #- prefer_final_locals
+    - prefer_for_elements_to_map_fromIterable
+    #- prefer_foreach
+    - prefer_function_declarations_over_variables
+    - prefer_generic_function_type_aliases
+    - prefer_if_elements_to_conditional_expressions
+    - prefer_if_null_operators
+    - prefer_initializing_formals
+    - prefer_inlined_adds
+    - prefer_int_literals
+    - prefer_interpolation_to_compose_strings
+    - prefer_is_empty
+    - prefer_is_not_empty
+    - prefer_is_not_operator
+    - prefer_iterable_whereType
+    - prefer_mixin
+    - prefer_null_aware_method_calls
+    - prefer_null_aware_operators
+    - prefer_spread_collections
+    - prefer_typing_uninitialized_variables
+    - prefer_void_to_null
+    - provide_deprecation_message
+    - recursive_getters
+    #- require_trailing_commas
+    - secure_pubspec_urls
+    - sized_box_for_whitespace
+    - sized_box_shrink_expand
+    - slash_for_doc_comments
+    - sort_child_properties_last
+    - sort_pub_dependencies
+    - sort_unnamed_constructors_first
+    - test_types_in_equals
+    - throw_in_finally
+    - tighten_type_of_initializing_formals
+    - type_annotate_public_apis
+    - type_init_formals
+    - type_literal_in_constant_pattern
+    - unnecessary_await_in_return
+    - unnecessary_brace_in_string_interps
+    - unnecessary_breaks
+    - unnecessary_const
+    - unnecessary_constructor_name
+    - unnecessary_getters_setters
+    - unnecessary_lambdas
+    - unnecessary_late
+    - unnecessary_library_directive
+    - unnecessary_library_name
+    - unnecessary_new
+    - unnecessary_null_aware_assignments
+    - unnecessary_null_aware_operator_on_extension_on_nullable
+    - unnecessary_null_checks
+    - unnecessary_null_in_if_null_operators
+    - unnecessary_nullable_for_final_variable_declarations
+    - unnecessary_overrides
+    - unnecessary_parenthesis
+    - unnecessary_raw_strings
+    - unnecessary_statements
+    - unnecessary_string_escapes
+    - unnecessary_string_interpolations
+    - unnecessary_this
+    - unnecessary_to_list_in_spreads
+    - unreachable_from_main
+    - unrelated_type_equality_checks
+    - unsafe_html
+    - use_build_context_synchronously
+    - use_colored_box
+    - use_decorated_box
+    - use_enums
+    - use_full_hex_values_for_flutter_colors
+    - use_function_type_syntax_for_parameters
+    - use_if_null_to_convert_nulls_to_bools
+    - use_is_even_rather_than_modulo
+    - use_key_in_widget_constructors
+    #- use_late_for_private_fields_and_variables
+    - use_named_constants
+    - use_raw_strings
+    - use_rethrow_when_possible
+    - use_setters_to_change_properties
+    - use_string_buffers
+    - use_string_in_part_of_directives
+    - use_super_parameters
+    - use_test_throws_matchers
+    - use_to_and_as_if_applicable
+    - valid_regexps
+    - void_checks
+    - omit_local_variable_types
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+#    prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+#    avoid_print: true  # 避免使用 print
+#    # always_declare_return_types: true  # 要求始终声明返回类型
+#    annotate_overrides: true  # 要求在覆盖的方法上使用 @override
+#    avoid_empty_else: true  # 避免空的 else 块
+#    unnecessary_new: true
+#    curly_braces_in_flow_control_structures: true  # 控制结构中始终使用大括号
+#    avoid_unused_constructor_parameters: true  # 避免未使用的构造函数参数
+#    # always_specify_types: true  # 始终显式声明类型
+#    avoid_redundant_argument_values: true  # 避免冗余的参数值
+#    prefer_const_constructors: true  # 使用 const 构造函数
+#    unnecessary_const: true  # 避免不必要的 const
+#    avoid_init_to_null: true  # 避免将变量初始化为 null
+#    camel_case_types: true
+#    non_constant_identifier_names: true
+#    constant_identifier_names: true
+#    directives_ordering: true
+#    always_put_required_named_parameters_first: true
+#    sized_box_for_whitespace: true
+#    use_full_hex_values_for_flutter_colors: true
+#    void_checks: true
+#    unrelated_type_equality_checks: true
+#    await_only_futures: true
+#    provide_deprecation_message: true
+#    comment_references: true
+#    prefer_const_literals_to_create_immutables: true  # 在可能的地方使用 const 字面量创建不可变对象
+#    avoid_unnecessary_containers: true  # 避免不必要的容器
+#    avoid_returning_null_for_void: true  # 避免在 void 函数中返回 null
+#    unnecessary_breaks: true
+#    unnecessary_await_in_return: true
+#    unnecessary_brace_in_string_interps: true
+#    unnecessary_lambdas: true
+#    unnecessary_null_checks: true
+#    library_private_types_in_public_api: ignore
+#    lines_longer_than_80_chars: ignore
+#    depend_on_referenced_packages: ignore
+#    omit_local_variable_types: true
+
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

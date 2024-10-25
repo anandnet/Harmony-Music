@@ -5,6 +5,7 @@ import 'basic_container.dart';
 
 class SongListShimmer extends StatelessWidget {
   const SongListShimmer({super.key, this.itemCount = 10, this.topPadding = 0});
+
   final int itemCount;
   final double topPadding;
 

@@ -1,18 +1,17 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/album.dart';
+import 'package:harmonymusic/models/media_Item_builder.dart';
+import 'package:harmonymusic/models/playlist.dart';
+import 'package:harmonymusic/services/music_service.dart';
+import 'package:harmonymusic/services/piped_service.dart';
+import 'package:harmonymusic/ui/screens/Home/home_screen_controller.dart';
+import 'package:harmonymusic/ui/screens/Library/library_controller.dart';
+import 'package:harmonymusic/ui/widgets/add_to_playlist.dart';
+import 'package:harmonymusic/ui/widgets/sort_widget.dart';
+import 'package:harmonymusic/utils/helper.dart';
 import 'package:hive/hive.dart';
-
-import '../../widgets/add_to_playlist.dart';
-import '../../widgets/sort_widget.dart';
-import '../Home/home_screen_controller.dart';
-import '/services/piped_service.dart';
-import '../../../utils/helper.dart';
-import '/models/playlist.dart';
-import '/models/album.dart';
-import '../../../models/media_Item_builder.dart';
-import '../../../services/music_service.dart';
-import '../Library/library_controller.dart';
 
 class PlayListNAlbumScreenController extends GetxController {
   final MusicServices _musicServices = Get.find<MusicServices>();
@@ -59,8 +58,7 @@ class PlayListNAlbumScreenController extends GetxController {
     _checkNFetchSongs(id, isIdOnly, isPipedPlaylist);
   }
 
-  Future<void> _checkNFetchSongs(
-      String id, bool isIdOnly, bool isPipedPlaylist) async {
+  Future<void> _checkNFetchSongs(String id, bool isIdOnly, bool isPipedPlaylist) async {
     await _checkIfAddedToLibrary(id);
     if (isAddedToLibrary.isTrue) {
       final songsBox = await Hive.openBox(id);
@@ -78,27 +76,20 @@ class PlayListNAlbumScreenController extends GetxController {
 
   Future<void> _checkIfAddedToLibrary(String id) async {
     //check
-    box = isAlbum
-        ? await Hive.openBox("LibraryAlbums")
-        : await Hive.openBox("LibraryPlaylists");
+    box = isAlbum ? await Hive.openBox('LibraryAlbums') : await Hive.openBox('LibraryPlaylists');
     isAddedToLibrary.value = box.containsKey(id);
   }
 
-  void addNRemoveItemsinList(MediaItem? item,
-      {required String action, int? index}) {
+  void addNRemoveItemsinList(MediaItem? item, {required String action, int? index}) {
     if (action == 'add') {
       if (tempListContainer.isNotEmpty) {
-        index != null
-            ? tempListContainer.insert(index, item!)
-            : tempListContainer.add(item!);
+        index != null ? tempListContainer.insert(index, item!) : tempListContainer.add(item!);
         return;
       }
       index != null ? songList.insert(index, item!) : songList.add(item!);
     } else {
       if (tempListContainer.isNotEmpty) {
-        index != null
-            ? tempListContainer.removeAt(index)
-            : tempListContainer.remove(item);
+        index != null ? tempListContainer.removeAt(index) : tempListContainer.remove(item);
       }
       index != null ? songList.removeAt(index) : songList.remove(item);
     }
@@ -115,17 +106,14 @@ class PlayListNAlbumScreenController extends GetxController {
 
   Future<void> fetchSongsfromDatabase(id) async {
     box = await Hive.openBox(id);
-    final List<MediaItem> songList_ = box.values
-        .map<MediaItem?>((item) => MediaItemBuilder.fromJson(item))
-        .whereType<MediaItem>()
-        .toList();
-    songList.value = id == "LIBRP" ? songList_.reversed.toList() : songList_;
+    final List<MediaItem> songList_ =
+        box.values.map<MediaItem?>(MediaItemBuilder.fromJson).whereType<MediaItem>().toList();
+    songList.value = id == 'LIBRP' ? songList_.reversed.toList() : songList_;
     isContentFetched.value = true;
     checkDownloadStatus();
   }
 
-  Future<void> _fetchSong(
-      String id, bool isIdOnly, bool isPipedPlaylist) async {
+  Future<void> _fetchSong(String id, bool isIdOnly, bool isPipedPlaylist) async {
     isContentFetched.value = false;
 
     if (isPipedPlaylist) {
@@ -164,14 +152,11 @@ class PlayListNAlbumScreenController extends GetxController {
     try {
       if (!isAlbum && content.isPipedPlaylist && !add) {
         //remove piped playlist from lib
-        final res =
-            await Get.find<PipedServices>().deletePlaylist(content.playlistId);
+        final res = await Get.find<PipedServices>().deletePlaylist(content.playlistId);
         Get.find<LibraryPlaylistsController>().syncPipedPlaylist();
         return (res.code == 1);
       } else {
-        final box = isAlbum
-            ? await Hive.openBox("LibraryAlbums")
-            : await Hive.openBox("LibraryPlaylists");
+        final box = isAlbum ? await Hive.openBox('LibraryAlbums') : await Hive.openBox('LibraryPlaylists');
         final id = isAlbum ? content.browseId : content.playlistId;
         if (add) {
           box.put(id, content.toJson());
@@ -184,9 +169,7 @@ class PlayListNAlbumScreenController extends GetxController {
         isAddedToLibrary.value = add;
       }
       //Update frontend
-      isAlbum
-          ? Get.find<LibraryAlbumsController>().refreshLib()
-          : Get.find<LibraryPlaylistsController>().refreshLib();
+      isAlbum ? Get.find<LibraryAlbumsController>().refreshLib() : Get.find<LibraryPlaylistsController>().refreshLib();
       if (!isAlbum && !content.isCloudPlaylist && !add) {
         final plstbox = await Hive.openBox(content.playlistId);
         plstbox.deleteFromDisk();
@@ -200,7 +183,7 @@ class PlayListNAlbumScreenController extends GetxController {
   void checkDownloadStatus() {
     bool downloaded = true;
     for (MediaItem item in songList) {
-      if (!Hive.box("SongDownloads").containsKey(item.id)) {
+      if (!Hive.box('SongDownloads').containsKey(item.id)) {
         downloaded = false;
         break;
       }
@@ -220,10 +203,8 @@ class PlayListNAlbumScreenController extends GetxController {
   }
 
   void onSearch(String value, String? tag) {
-    final songlist = tempListContainer
-        .where((element) =>
-            element.title.toLowerCase().contains(value.toLowerCase()))
-        .toList();
+    final songlist =
+        tempListContainer.where((element) => element.title.toLowerCase().contains(value.toLowerCase())).toList();
     songList.value = songlist;
   }
 
@@ -237,8 +218,7 @@ class PlayListNAlbumScreenController extends GetxController {
   final additionalOperationTempList = <MediaItem>[].obs;
   final additionalOperationTempMap = <int, bool>{}.obs;
 
-  void startAdditionalOperation(
-      SortWidgetController sortWidgetController_, OperationMode mode) {
+  void startAdditionalOperation(SortWidgetController sortWidgetController_, OperationMode mode) {
     sortWidgetController = sortWidgetController_;
     additionalOperationTempList.value = songList.toList();
     if (mode == OperationMode.addToPlaylist || mode == OperationMode.delete) {
@@ -250,8 +230,7 @@ class PlayListNAlbumScreenController extends GetxController {
   }
 
   void checkIfAllSelected() {
-    sortWidgetController!.isAllSelected.value =
-        !additionalOperationTempMap.containsValue(false);
+    sortWidgetController!.isAllSelected.value = !additionalOperationTempMap.containsValue(false);
   }
 
   void selectAll(bool selected) {
@@ -286,18 +265,15 @@ class PlayListNAlbumScreenController extends GetxController {
   }
 
   Future<void> deleteMultipleSongs(List<MediaItem> songs) async {
-    final isoffline = id == "SongsCache" || id == "SongDownloads";
+    final isoffline = id == 'SongsCache' || id == 'SongDownloads';
 
     final box_ = await Hive.openBox(id);
     for (MediaItem element in songs) {
-      final index = box_.values
-          .toList()
-          .indexWhere((ele) => ele['videoId'] == element.id);
+      final index = box_.values.toList().indexWhere((ele) => ele['videoId'] == element.id);
       await box_.deleteAt(index);
 
       if (isoffline) {
-        await Get.find<LibrarySongsController>()
-            .removeSong(element, id == "SongDownloads");
+        await Get.find<LibrarySongsController>().removeSong(element, id == 'SongDownloads');
       }
 
       songList.removeWhere((song) => song.id == element.id);
@@ -327,7 +303,7 @@ class PlayListNAlbumScreenController extends GetxController {
   @override
   void onClose() {
     tempListContainer.clear();
-    if (id != "SongDownloads") box.close();
+    if (id != 'SongDownloads') box.close();
     Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();
   }

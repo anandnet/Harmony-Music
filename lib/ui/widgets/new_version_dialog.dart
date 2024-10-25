@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/screens/Home/home_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/common_dialog_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../screens/Home/home_screen_controller.dart';
-import 'common_dialog_widget.dart';
 
 class NewVersionDialog extends StatelessWidget {
   const NewVersionDialog({super.key});
@@ -15,10 +14,9 @@ class NewVersionDialog extends StatelessWidget {
         height: 320,
         padding: const EdgeInsets.only(top: 40, bottom: 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "newVersionAvailable".tr,
+              'newVersionAvailable'.tr,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Padding(
@@ -54,20 +52,17 @@ class NewVersionDialog extends StatelessWidget {
                         },
                         shape: const CircleBorder());
                   }),
-                  Text("dontShowInfoAgain".tr)
+                  Text('dontShowInfoAgain'.tr)
                 ],
               ),
             ),
-            Container(
+            DecoratedBox(
                 decoration: BoxDecoration(
-                    color: Theme.of(context).textTheme.titleLarge!.color,
-                    borderRadius: BorderRadius.circular(10)),
+                    color: Theme.of(context).textTheme.titleLarge!.color, borderRadius: BorderRadius.circular(10)),
                 child: InkWell(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 10),
-                    child: Text("dismiss".tr,
-                        style: TextStyle(color: Theme.of(context).canvasColor)),
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    child: Text('dismiss'.tr, style: TextStyle(color: Theme.of(context).canvasColor)),
                   ),
                   onTap: () => Navigator.of(context).pop(),
                 ))

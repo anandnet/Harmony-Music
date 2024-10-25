@@ -70,8 +70,13 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
     return const SizedBox.shrink();
   }
 
-  Widget listViewSongVid(List<dynamic> items,
-      {bool isPlaylist = false, Playlist? playlist, bool isArtistSongs = false, ScrollController? sc}) {
+  Widget listViewSongVid(
+    List<dynamic> items, {
+    bool isPlaylist = false,
+    Playlist? playlist,
+    bool isArtistSongs = false,
+    ScrollController? sc,
+  }) {
     final playerController = Get.find<PlayerController>();
     return ListView.builder(
       padding: const EdgeInsets.only(
@@ -176,8 +181,9 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
             maxLines: 1,
             style: Theme.of(context).textTheme.titleSmall,
           ),
+          // sized-box
           trailing: SizedBox(
-              width: Get.size.width > 800 ? 80 : 40,
+              width: Get.size.width > 800 ? 80 : 50,
               child: row.end.children([
                 column.center.children([
                   if (isPlaylist)

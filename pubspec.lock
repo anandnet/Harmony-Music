@@ -432,10 +432,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_tailwind
-      sha256: "2262427eed9a92eb1950211cbecf10ec95138ba7188d8580d3589070160c4d83"
+      sha256: "05349af21b67f394d5c7096fb18978eb3977bdce51103757c331014ccd147ac4"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.8"
+    version: "1.3.9"
   flutter_test:
     dependency: "direct dev"
     description: flutter

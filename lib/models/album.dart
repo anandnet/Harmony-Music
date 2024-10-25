@@ -1,7 +1,10 @@
 import 'package:harmonymusic/models/thumbnail.dart';
 
 class AlbumContent {
-  AlbumContent({required this.title, required this.albumList});
+  AlbumContent({
+    required this.title,
+    required this.albumList,
+  });
 
   final String title;
   final List<Album> albumList;

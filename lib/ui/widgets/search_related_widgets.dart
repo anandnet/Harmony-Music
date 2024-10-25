@@ -64,7 +64,10 @@ class ResultWidget extends StatelessWidget {
         ));
       } else if (item.key == 'Albums') {
         list.add(ContentListWidget(
-          content: AlbumContent(title: item.key, albumList: List<Album>.from(item.value)),
+          content: AlbumContent(
+            title: item.key,
+            albumList: List<Album>.from(item.value),
+          ),
           isHomeContent: false,
         ));
       } else if (item.key.contains('playlist')) {

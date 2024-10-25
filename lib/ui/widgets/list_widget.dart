@@ -225,18 +225,19 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
   Widget listViewPlaylists(List<dynamic> playlists, {ScrollController? sc}) {
     return Expanded(
       child: ListView.builder(
-          padding: const EdgeInsets.only(
-            bottom: 210,
-          ),
-          controller: sc,
-          itemCount: playlists.length,
-          itemExtent: 120,
-          physics: const BouncingScrollPhysics(),
-          itemBuilder: (context, index) => wideListTile(context,
-              playlist: playlists[index],
-              title: playlists[index].title,
-              subtitle: playlists[index]?.description ?? 'NA',
-              subtitle2: '')),
+        padding: const EdgeInsets.only(
+          bottom: 210,
+        ),
+        controller: sc,
+        itemCount: playlists.length,
+        itemExtent: 120,
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, index) => wideListTile(context,
+            playlist: playlists[index],
+            title: playlists[index].title,
+            subtitle: playlists[index]?.description ?? 'NA',
+            subtitle2: ''),
+      ),
     );
   }
 
@@ -318,47 +319,37 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
               id: ScreenNavigationSetup.id, arguments: [false, playlist, false]);
         }
       },
-      child: SizedBox(
-        height: 120,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10, bottom: 10),
-          child: Row(
-            children: [
-              ImageWidget(
-                size: 100,
-                album: album,
-                playlist: playlist,
+      child: sizedBox.child(
+        padding.pt10.pb10.child(
+          row.children([
+            ImageWidget(
+              size: 100,
+              album: album,
+              playlist: playlist,
+            ),
+            const SizedBox(width: 20),
+            Expanded(
+              child: padding.pr10.child(
+                column.center.crossStart.children([
+                  Text(
+                    title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Text(
+                    subtitle,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  Text(
+                    subtitle2,
+                    maxLines: 1,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ]),
               ),
-              const SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                  child: Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      subtitle,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                    Text(
-                      subtitle2,
-                      maxLines: 1,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ],
-                ),
-              ))
-            ],
-          ),
+            ),
+          ]),
         ),
       ),
     );

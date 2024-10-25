@@ -79,5 +79,6 @@
     "cancelTimer": "Anulare temporizator",
     "basedOnLast": "Bazat de ultima interacțiune",
     "restoreLastPlaybackSession": "Restaurați ultima sesiune de redare",
-    "openIn": "Deschide cu"
+    "openIn": "Deschide cu",
+    "queueShufflingDeniedMsg": "Coada nu poate fi amestecată când mod de amestecare este activată"
 }

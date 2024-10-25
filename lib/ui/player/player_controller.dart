@@ -259,14 +259,21 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
 
   ///pushSongToPlaylist method clear previous song queue, plays the tapped song and push related
   ///songs into Queue
-  Future<void> pushSongToQueue(MediaItem? mediaItem, {String? playlistid, bool radio = false}) async {
+  Future<void> pushSongToQueue(
+    MediaItem? mediaItem, {
+    String? playlistid,
+    bool radio = false,
+  }) async {
     isRadioModeOn = radio;
 
     Future.delayed(
       Duration.zero,
       () async {
-        final content =
-            await _musicServices.getWatchPlaylist(videoId: mediaItem?.id ?? '', radio: radio, playlistId: playlistid);
+        final content = await _musicServices.getWatchPlaylist(
+          videoId: mediaItem?.id ?? '',
+          radio: radio,
+          playlistId: playlistid,
+        );
         radioContinuationParam = content['additionalParamsForNext'];
         await _audioHandler.updateQueue(List<MediaItem>.from(content['tracks']));
         if (isShuffleModeEnabled.isTrue) {
@@ -506,7 +513,7 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
     if (isShuffleModeEnabled.isTrue && isQueueLoopModeEnabled.isTrue) {
       if (!showMessage) return;
       ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(Get.context!, 'queueLoopNotDisMsg1'.tr,
-          size: SanckBarSize.BIG, duration: const Duration(seconds: 2)));
+          size: SanckBarSize.SMALL, duration: const Duration(seconds: 2)));
       return;
     }
 

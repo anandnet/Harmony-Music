@@ -151,7 +151,8 @@ class Home extends StatelessWidget {
                 ? ScrollToHideWidget(
                     isVisible:
                         homeScreenController.isHomeScreenOnTop.isTrue && playerController.isPanelGTHOpened.isFalse,
-                    child: const BottomNavBar())
+                    child: const BottomNavBar(),
+                  )
                 : null,
           ),
         ),

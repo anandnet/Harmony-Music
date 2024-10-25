@@ -61,8 +61,7 @@ class HomeScreenController extends GetxController {
       final List quickPicksData = homeScreenData.get('quickPicks');
       final List middleContentData = homeScreenData.get('middleContent') ?? [];
       final List fixedContentData = homeScreenData.get('fixedContent') ?? [];
-      quickPicks.value =
-          QuickPicks(quickPicksData.map((e) => MediaItemBuilder.fromJson(e)).toList(), title: quickPicksType);
+      quickPicks.value = QuickPicks(quickPicksData.map(MediaItemBuilder.fromJson).toList(), title: quickPicksType);
       middleContent.value = middleContentData
           .map((e) => e['type'] == 'Album Content' ? AlbumContent.fromJson(e) : PlaylistContent.fromJson(e))
           .toList();

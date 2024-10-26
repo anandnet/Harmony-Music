@@ -1,5 +1,6 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/widgets/loader.dart';
@@ -12,56 +13,49 @@ class PlayerControlWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final playerController = Get.find<PlayerController>();
-    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Obx(() {
-                return Marquee(
-                  delay: const Duration(milliseconds: 300),
-                  id: '${playerController.currentSong.value}_title',
-                  child: Text(
-                    playerController.currentSong.value != null ? playerController.currentSong.value!.title : 'NA',
-                    textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.labelMedium!,
-                  ),
-                );
-              }),
-              const SizedBox(
-                height: 10,
+    return column.center.children([
+      row.spaceBetween.children([
+        Expanded(
+          child: column.crossStart.children([
+            Obx(() {
+              return Marquee(
+                delay: const Duration(milliseconds: 300),
+                id: '${playerController.currentSong.value}_title',
+                child: Text(
+                  playerController.currentSong.value != null ? playerController.currentSong.value!.title : 'NA',
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context).textTheme.labelMedium!,
+                ),
+              );
+            }),
+            const SizedBox(height: 10),
+            GetX<PlayerController>(builder: (controller) {
+              return Marquee(
+                delay: const Duration(milliseconds: 300),
+                id: '${playerController.currentSong.value}_subtitle',
+                child: Text(
+                  playerController.currentSong.value != null ? controller.currentSong.value!.artist! : 'NA',
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+              );
+            }),
+          ]),
+        ),
+        sizedBox.w110.child(
+          IconButton(
+            onPressed: playerController.toggleFavourite,
+            icon: Obx(
+              () => Icon(
+                playerController.isCurrentSongFav.isFalse ? Icons.favorite_border_rounded : Icons.favorite_rounded,
+                color: Theme.of(context).textTheme.titleMedium!.color,
               ),
-              GetX<PlayerController>(builder: (controller) {
-                return Marquee(
-                  delay: const Duration(milliseconds: 300),
-                  id: '${playerController.currentSong.value}_subtitle',
-                  child: Text(
-                    playerController.currentSong.value != null ? controller.currentSong.value!.artist! : 'NA',
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelSmall,
-                  ),
-                );
-              }),
-            ]),
+            ),
           ),
-          SizedBox(
-            width: 55,
-            child: IconButton(
-                onPressed: playerController.toggleFavourite,
-                icon: Obx(() => Icon(
-                      playerController.isCurrentSongFav.isFalse
-                          ? Icons.favorite_border_rounded
-                          : Icons.favorite_rounded,
-                      color: Theme.of(context).textTheme.titleMedium!.color,
-                    ))),
-          ),
-        ],
-      ),
-      const SizedBox(
-        height: 20,
-      ),
+        ),
+      ]),
+      const SizedBox(height: 20),
       GetX<PlayerController>(builder: (controller) {
         return ProgressBar(
           thumbRadius: 7,
@@ -76,32 +70,32 @@ class PlayerControlWidget extends StatelessWidget {
           onSeek: controller.seek,
         );
       }),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          IconButton(
-              onPressed: playerController.toggleShuffleMode,
-              icon: Obx(() => Icon(
-                    Ionicons.shuffle,
-                    color: playerController.isShuffleModeEnabled.value
-                        ? Theme.of(context).textTheme.titleLarge!.color
-                        : Theme.of(context).textTheme.titleLarge!.color!.withOpacity(0.2),
-                  ))),
-          _previousButton(playerController, context),
-          CircleAvatar(radius: 35, child: _playButton()),
-          _nextButton(playerController, context),
-          Obx(() {
-            return IconButton(
-                onPressed: playerController.toggleLoopMode,
-                icon: Icon(
-                  Icons.all_inclusive,
-                  color: playerController.isLoopModeEnabled.value
+      row.spaceEvenly.children([
+        IconButton(
+            onPressed: playerController.toggleShuffleMode,
+            icon: Obx(() => Icon(
+                  Ionicons.shuffle,
+                  color: playerController.isShuffleModeEnabled.value
                       ? Theme.of(context).textTheme.titleLarge!.color
                       : Theme.of(context).textTheme.titleLarge!.color!.withOpacity(0.2),
-                ));
-          }),
-        ],
-      ),
+                ))),
+        _previousButton(playerController, context),
+        CircleAvatar(
+          radius: 35,
+          child: _playButton(),
+        ),
+        _nextButton(playerController, context),
+        Obx(() {
+          return IconButton(
+              onPressed: playerController.toggleLoopMode,
+              icon: Icon(
+                Icons.all_inclusive,
+                color: playerController.isLoopModeEnabled.value
+                    ? Theme.of(context).textTheme.titleLarge!.color
+                    : Theme.of(context).textTheme.titleLarge!.color!.withOpacity(0.2),
+              ));
+        }),
+      ]),
     ]);
   }
 

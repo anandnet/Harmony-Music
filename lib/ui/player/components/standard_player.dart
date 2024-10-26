@@ -138,8 +138,9 @@ class StandardPlayer extends StatelessWidget {
                     ),
                     const LyricsSwitch(),
                     ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 500),
-                        child: AlbumArtNLyrics(playerArtImageSize: playerArtImageSize)),
+                      constraints: const BoxConstraints(maxWidth: 500),
+                      child: AlbumArtNLyrics(playerArtImageSize: playerArtImageSize),
+                    ),
                     Expanded(child: Container()),
                     Padding(
                       padding: EdgeInsets.only(bottom: 80 + Get.mediaQuery.padding.bottom),

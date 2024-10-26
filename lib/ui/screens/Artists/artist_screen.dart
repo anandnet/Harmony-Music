@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/res/tailwind_ext.dart';
 import 'package:harmonymusic/ui/navigator.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/screens/Artists/artist_screen_controller.dart';
@@ -223,27 +224,17 @@ class AboutArtist extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    child: Text(
-                      artistScreenController.artist_.name,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
+                    child: artistScreenController.artist_.name.tr.text.titleLarge.mk,
                   ),
                   if (artistData.containsKey('description') && artistData['description'] != null)
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        '"${artistData["description"]}"',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
+                      child: '"${artistData["description"]}"'.tr.text.titleSmall.mk,
                     )
                   else
-                    SizedBox(
-                      height: 300,
-                      child: Center(
-                        child: Text(
-                          'artistDesNotAvailable'.tr,
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
+                    sizedBox.h300.child(
+                      Center(
+                        child: 'artistDesNotAvailable'.tr.text.titleSmall.mk,
                       ),
                     ),
                 ])

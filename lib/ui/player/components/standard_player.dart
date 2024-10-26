@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/components/albumart_lyrics.dart';
 import 'package:harmonymusic/ui/player/components/lyrics_switch.dart';
@@ -154,17 +154,14 @@ class StandardPlayer extends StatelessWidget {
         ),
         if (GetPlatform.isDesktop)
           Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 30, left: 30),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    size: 28,
-                  ),
-                  onPressed: playerController.playerPanelController.close,
-                ),
-              ))
+            alignment: Alignment.topLeft,
+            child: padding.pt60.pl60.child(
+              IconButton(
+                onPressed: playerController.playerPanelController.close,
+                icon: Icons.keyboard_arrow_down_rounded.icon.s56.mk,
+              ),
+            ),
+          )
       ],
     );
   }

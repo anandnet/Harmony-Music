@@ -1,6 +1,5 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/widgets/add_to_playlist.dart';
@@ -213,16 +212,6 @@ class MiniPlayer extends StatelessWidget {
                                       ),
                                     );
                                   })),
-                              if (!isWideScreen)
-                                sizedBox.child(
-                                  InkWell(
-                                    onTap: () {
-                                      /// Close this mini-player
-                                      debugPrint('Click cancel');
-                                    },
-                                    child: Icons.cancel_rounded.icon.s50.mk,
-                                  ),
-                                ),
                               if (isWideScreen)
                                 Row(
                                   children: [

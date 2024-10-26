@@ -64,6 +64,8 @@ class QuickPicksWidget extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       onTap: () {
+                        /// should be here
+                        /// check why it not sliding up the ui
                         playerController.pushSongToQueue(content.songList[item]);
                       },
                       onLongPress: () {

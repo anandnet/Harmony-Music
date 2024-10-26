@@ -36,13 +36,17 @@ class SideNavBar extends StatelessWidget {
                       railDestination('playlists'.tr, isMobileOrTabScreen, Icons.featured_play_list),
                       railDestination('albums'.tr, isMobileOrTabScreen, Icons.album),
                       railDestination('artists'.tr, isMobileOrTabScreen, Icons.people),
-                      //railDestination("Settings")
                       const NavigationRailDestination(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
                         icon: Icon(Icons.settings_rounded),
                         label: SizedBox.shrink(),
                         selectedIcon: Icon(Icons.settings_rounded),
-                      )
+                      ),
+
+                      /// testing
+                      railDestination('Test'.tr, isMobileOrTabScreen, Icons.sports_volleyball),
+
+                      ///
                     ],
                   ),
                 ),
@@ -88,6 +92,13 @@ class SideNavBar extends StatelessWidget {
                     iconUnselected: Icons.settings_outlined,
                     text: 'settings'.tr,
                   ),
+
+                  ///
+                  SideBarItem(
+                    iconSelected: Icons.phone,
+                    iconUnselected: Icons.phone,
+                    text: 'Testing'.tr,
+                  ),
                 ],
               ),
             ),
@@ -100,7 +111,12 @@ class SideNavBar extends StatelessWidget {
             icon: const SizedBox.shrink(),
             label: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),
-                child: isMobileOrTabScreen ? RotatedBox(quarterTurns: -1, child: Text(label)) : Text(label)),
+                child: isMobileOrTabScreen
+                    ? RotatedBox(
+                        quarterTurns: -1,
+                        child: Text(label),
+                      )
+                    : Text(label)),
           )
         : NavigationRailDestination(
             icon: Icon(icon),

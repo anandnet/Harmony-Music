@@ -208,9 +208,17 @@ class Body extends StatelessWidget {
       return const LibraryArtistWidget();
     } else if (homeScreenController.tabIndex.value == 5) {
       return const SettingsScreen();
-    } else {
+    }
+
+    ///
+    else if (homeScreenController.tabIndex.value == 6) {
+      return const Text('Testing screen');
+    }
+
+    ///
+    else {
       return Center(
-        child: '${homeScreenController.tabIndex.value}'.text.mk,
+        child: 'Screen Index: ${homeScreenController.tabIndex.value}'.text.mk,
       );
     }
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/navigator.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
@@ -64,25 +65,20 @@ class ArtistScreen extends StatelessWidget {
                           destinations: ['about'.tr, 'songs'.tr, 'videos'.tr, 'albums'.tr, 'singles'.tr]
                               .map(railDestination)
                               .toList(),
-                          leading: Column(
-                            children: [
-                              SizedBox(
-                                height: context.isLandscape ? 20.0 : 45.0,
-                              ),
-                              IconButton(
-                                icon: Icon(
-                                  Icons.arrow_back_ios_new_rounded,
-                                  color: Theme.of(context).textTheme.titleMedium!.color,
-                                ),
-                                onPressed: () {
-                                  Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
-                                },
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
+                          leading: column.children([
+                            SizedBox(
+                              height: context.isLandscape ? 20.0 : 45.0,
+                            ),
+                            IconButton(
+                              icon: Icons.arrow_back_ios_new_rounded.icon
+                                  .color(Theme.of(context).textTheme.titleMedium!.color)
+                                  .mk,
+                              onPressed: () {
+                                Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
+                              },
+                            ),
+                            const SizedBox(height: 10),
+                          ]),
                           labelType: NavigationRailLabelType.all,
                           selectedIndex: artistScreenController.navigationRailCurrentIndex.value,
                         ),
@@ -117,8 +113,8 @@ class ArtistScreen extends StatelessWidget {
 
 class Body extends StatelessWidget {
   const Body({
-    super.key,
     required this.tag,
+    super.key,
   });
 
   final String tag;
@@ -179,86 +175,78 @@ class AboutArtist extends StatelessWidget {
         child: SingleChildScrollView(
           padding: padding,
           child: artistScreenController.isArtistContentFetced.value
-              ? Column(
-                  children: [
-                    SizedBox(
-                      height: 200,
-                      width: 260,
-                      child: Stack(
-                        children: [
-                          Center(
-                            child: ImageWidget(
-                              size: 200,
-                              artist: artistScreenController.artist_,
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: Column(
-                              children: [
-                                InkWell(
-                                    onTap: () {
-                                      final add = artistScreenController.isAddedToLibrary.isFalse;
-                                      artistScreenController.addNremoveFromLibrary(add: add).then((value) {
-                                        if (context.mounted) {
-                                          ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                                              context,
-                                              value
-                                                  ? add
-                                                      ? 'artistBookmarkAddAlert'.tr
-                                                      : 'artistBookmarkRemoveAlert'.tr
-                                                  : 'operationFailed'.tr,
-                                              size: SanckBarSize.MEDIUM));
-                                        }
-                                      });
-                                    },
-                                    child: Obx(
-                                      () => artistScreenController.isArtistContentFetced.isFalse
-                                          ? const SizedBox.shrink()
-                                          : Icon(artistScreenController.isAddedToLibrary.isFalse
-                                              ? Icons.bookmark_add_rounded
-                                              : Icons.bookmark_added_rounded),
-                                    )),
-                                IconButton(
-                                    icon: const Icon(
-                                      Icons.share,
-                                      size: 20,
-                                    ),
-                                    splashRadius: 18,
-                                    onPressed: () => Share.share(
-                                        'https://music.youtube.com/channel/${artistScreenController.artist_.browseId}')),
-                              ],
-                            ),
-                          )
-                        ],
+              ? column.children([
+                  container.h400.child(
+                    Stack(children: [
+                      Center(
+                        child: ImageWidget(
+                          size: 200,
+                          artist: artistScreenController.artist_,
+                        ),
                       ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: column.children([
+                          InkWell(
+                              onTap: () {
+                                final add = artistScreenController.isAddedToLibrary.isFalse;
+                                artistScreenController.addNremoveFromLibrary(add: add).then((value) {
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      snackbar(
+                                          context,
+                                          value
+                                              ? add
+                                                  ? 'artistBookmarkAddAlert'.tr
+                                                  : 'artistBookmarkRemoveAlert'.tr
+                                              : 'operationFailed'.tr),
+                                    );
+                                  }
+                                });
+                              },
+                              child: Obx(
+                                () => artistScreenController.isArtistContentFetced.isFalse
+                                    ? const SizedBox.shrink()
+                                    : Icon(artistScreenController.isAddedToLibrary.isFalse
+                                        ? Icons.bookmark_add_rounded
+                                        : Icons.bookmark_added_rounded),
+                              )),
+                          IconButton(
+                            icon: Icons.share.icon.s40.mk,
+                            splashRadius: 18,
+                            onPressed: () => Share.share(
+                                'https://music.youtube.com/channel/${artistScreenController.artist_.browseId}'),
+                          ),
+                        ]),
+                      )
+                    ]),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    child: Text(
+                      artistScreenController.artist_.name,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  ),
+                  if (artistData.containsKey('description') && artistData['description'] != null)
+                    Align(
+                      alignment: Alignment.centerLeft,
                       child: Text(
-                        artistScreenController.artist_.name,
-                        style: Theme.of(context).textTheme.titleLarge,
+                        '"${artistData["description"]}"',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    )
+                  else
+                    SizedBox(
+                      height: 300,
+                      child: Center(
+                        child: Text(
+                          'artistDesNotAvailable'.tr,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
                       ),
                     ),
-                    (artistData.containsKey('description') && artistData['description'] != null)
-                        ? Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "\"${artistData["description"]}\"",
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                          )
-                        : SizedBox(
-                            height: 300,
-                            child: Center(
-                              child: Text(
-                                'artistDesNotAvailable'.tr,
-                                style: Theme.of(context).textTheme.titleSmall,
-                              ),
-                            ),
-                          ),
-                  ],
-                )
+                ])
               : const SizedBox.shrink(),
         ),
       ),

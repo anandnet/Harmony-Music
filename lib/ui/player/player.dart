@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/components/gesture_player.dart';
 import 'package:harmonymusic/ui/player/components/standard_player.dart';
@@ -38,19 +39,15 @@ class Player extends StatelessWidget {
             },
             child: ColoredBox(
               color: Theme.of(context).primaryColor,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 65,
-                    child: Center(
-                        child: Icon(
-                      color: Theme.of(context).textTheme.titleMedium!.color,
-                      Icons.keyboard_arrow_up_rounded,
-                      size: 40,
-                    )),
+              child: column.children([
+                sizedBox.h130.child(
+                  Center(
+                    child: Icons.keyboard_arrow_up_rounded.icon.s80
+                        .color(Theme.of(context).textTheme.titleMedium!.color)
+                        .mk,
                   ),
-                ],
-              ),
+                )
+              ]),
             ),
           ),
           panelBuilder: (ScrollController sc, onReorderStart, onReorderEnd) {
@@ -94,30 +91,28 @@ class Player extends StatelessWidget {
                                 }
                                 playerController.shuffleQueue();
                               },
-                              child: Container(
-                                height: 30,
-                                padding: const EdgeInsets.symmetric(horizontal: 20),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Center(child: Text('shuffleQueue'.tr)),
-                              ),
+                              child: container.h58.ph40.rounded40
+                                  .color(
+                                    Colors.white.withOpacity(0.8),
+                                  )
+                                  .child(
+                                    Center(
+                                      child: 'shuffleQueue'.tr.text.mk,
+                                    ),
+                                  ),
                             ),
                             InkWell(
                               onTap: playerController.toggleQueueLoopMode,
                               child: Obx(
-                                () => Container(
-                                  height: 30,
-                                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                                  decoration: BoxDecoration(
-                                    color: playerController.isQueueLoopModeEnabled.isFalse
-                                        ? Colors.white24
-                                        : Colors.white.withOpacity(0.8),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Center(child: Text('queueLoop'.tr)),
-                                ),
+                                () => container.h58.ph40.rounded40
+                                    .color(
+                                      playerController.isQueueLoopModeEnabled.isFalse
+                                          ? Colors.white24
+                                          : Colors.white.withOpacity(0.8),
+                                    )
+                                    .child(Center(
+                                      child: 'QueueLoop'.tr.text.mk,
+                                    )),
                               ),
                             ),
                           ],

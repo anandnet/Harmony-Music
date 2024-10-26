@@ -189,29 +189,30 @@ class AboutArtist extends StatelessWidget {
                         alignment: Alignment.topRight,
                         child: column.children([
                           InkWell(
-                              onTap: () {
-                                final add = artistScreenController.isAddedToLibrary.isFalse;
-                                artistScreenController.addNremoveFromLibrary(add: add).then((value) {
-                                  if (context.mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      snackbar(
-                                          context,
-                                          value
-                                              ? add
-                                                  ? 'artistBookmarkAddAlert'.tr
-                                                  : 'artistBookmarkRemoveAlert'.tr
-                                              : 'operationFailed'.tr),
-                                    );
-                                  }
-                                });
-                              },
-                              child: Obx(
-                                () => artistScreenController.isArtistContentFetced.isFalse
-                                    ? const SizedBox.shrink()
-                                    : Icon(artistScreenController.isAddedToLibrary.isFalse
-                                        ? Icons.bookmark_add_rounded
-                                        : Icons.bookmark_added_rounded),
-                              )),
+                            onTap: () {
+                              final add = artistScreenController.isAddedToLibrary.isFalse;
+                              artistScreenController.addNremoveFromLibrary(add: add).then((value) {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    snackbar(
+                                        context,
+                                        value
+                                            ? add
+                                                ? 'artistBookmarkAddAlert'.tr
+                                                : 'artistBookmarkRemoveAlert'.tr
+                                            : 'operationFailed'.tr),
+                                  );
+                                }
+                              });
+                            },
+                            child: Obx(
+                              () => artistScreenController.isArtistContentFetced.isFalse
+                                  ? const SizedBox.shrink()
+                                  : Icon(artistScreenController.isAddedToLibrary.isFalse
+                                      ? Icons.bookmark_add_rounded
+                                      : Icons.bookmark_added_rounded),
+                            ),
+                          ),
                           IconButton(
                             icon: Icons.share.icon.s40.mk,
                             splashRadius: 18,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/res/tailwind_ext.dart';
 import 'package:harmonymusic/ui/navigator.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/screens/Home/home_screen_controller.dart';
@@ -122,32 +123,21 @@ class Body extends StatelessWidget {
                         child: column.children([
                           Align(
                             alignment: Alignment.topLeft,
-                            child: Text(
-                              'home'.tr,
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
+                            child: 'home'.tr.text.titleLarge.mk,
                           ),
                           Expanded(
                             child: Center(
                               child: column.center.children([
-                                Text(
-                                  'networkError1'.tr,
-                                  style: Theme.of(context).textTheme.titleMedium,
-                                ),
+                                'networkError1'.tr.text.titleMedium.mk,
                                 const SizedBox(height: 10),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                                  decoration: BoxDecoration(
-                                      color: Theme.of(context).textTheme.titleLarge!.color,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: InkWell(
-                                    onTap: homeScreenController.loadContentFromNetwork,
-                                    child: Text(
-                                      'retry'.tr,
-                                      style: TextStyle(color: Theme.of(context).canvasColor),
-                                    ),
-                                  ),
-                                ),
+                                container.ph30.pv30.rounded20
+                                    .color(Theme.of(context).textTheme.titleLarge!.color)
+                                    .child(
+                                      InkWell(
+                                        onTap: homeScreenController.loadContentFromNetwork,
+                                        child: 'retry'.tr.text.color(Theme.of(context).canvasColor).mk,
+                                      ),
+                                    )
                               ]),
                             ),
                           )

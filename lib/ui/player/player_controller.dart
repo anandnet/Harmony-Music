@@ -388,8 +388,8 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
         break;
       }
     }
-    final currentIndx = currentSongIndex.value;
-    if (index == currentIndx) {
+    final currentIndex = currentSongIndex.value;
+    if (index == currentIndex) {
       return;
     }
     if (index != -1) {
@@ -399,7 +399,7 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
       onReorder(index, currentSongIndex.value + 1);
     } else {
       //Will add song just below the current song
-      (currentIndx == currentQueue.length - 1)
+      (currentIndex == currentQueue.length - 1)
           ? enqueueSong(song)
           : _audioHandler.customAction('addPlayNextItem', {'mediaItem': song});
     }

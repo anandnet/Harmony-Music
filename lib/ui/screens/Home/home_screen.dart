@@ -19,6 +19,8 @@ import 'package:harmonymusic/ui/widgets/quickpickswidget.dart';
 import 'package:harmonymusic/ui/widgets/shimmer_widgets/home_shimmer.dart';
 import 'package:harmonymusic/ui/widgets/side_nav_bar.dart';
 
+import '../../widgets/sliding_up_panel.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -202,7 +204,30 @@ class Body extends StatelessWidget {
 
     ///
     else if (homeScreenController.tabIndex.value == 6) {
-      return const Text('Testing screen');
+      // return const Text('Testing screen');
+      BorderRadiusGeometry radius = const BorderRadius.only(
+        topLeft: Radius.circular(24),
+        topRight: Radius.circular(24),
+      );
+      return Scaffold(
+        body: SlidingUpPanel(
+          panel: const Center(
+            child: Text('This is the sliding Widget'),
+          ),
+          collapsed: DecoratedBox(
+            decoration: BoxDecoration(color: Colors.blueGrey, borderRadius: radius),
+            child: const Center(
+              child: Icon(Icons.arrow_drop_down),
+            ),
+          ),
+          minHeight: 300,
+          // maxHeight: 300,
+          body: const Center(
+            child: Text('This is the Widget behind the sliding panel'),
+          ),
+          borderRadius: radius,
+        ),
+      );
     }
 
     ///

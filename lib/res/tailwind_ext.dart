@@ -47,6 +47,8 @@ extension TextStyleExt<T extends CompletedTextStyleBuilder> on T {
   T get titleMedium => this..style = Theme.of(Get.context!).textTheme.titleMedium;
 
   T get titleSmall => this..style = Theme.of(Get.context!).textTheme.titleSmall;
+
+  T get bodyMedium => this..style = Theme.of(Get.context!).textTheme.bodyMedium;
 }
 
 /// define the shadow

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/res/tailwind_ext.dart';
 import 'package:harmonymusic/services/music_service.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:harmonymusic/ui/screens/Library/library_controller.dart';
@@ -28,17 +30,13 @@ class SettingsScreen extends StatelessWidget {
     final topPadding = context.isLandscape ? 50.0 : 90.0;
     final isDesktop = GetPlatform.isDesktop;
     return Padding(
-      padding: isBottomNavActive
-          ? EdgeInsets.only(left: 20, top: topPadding, right: 15)
-          : EdgeInsets.only(top: topPadding, left: 5, right: 5),
-      child: Column(
-        children: [
+        padding: isBottomNavActive
+            ? EdgeInsets.only(left: 20, top: topPadding, right: 15)
+            : EdgeInsets.only(top: topPadding, left: 5, right: 5),
+        child: column.children([
           Align(
             alignment: Alignment.centerLeft,
-            child: Text(
-              'settings'.tr,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+            child: 'settings'.tr.text.titleLarge.mk,
           ),
           Expanded(
               child: ListView(
@@ -82,17 +80,18 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   ListTile(
                     contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                    title: Text('themeMode'.tr),
+                    title: 'themeMode'.tr.text.mk,
                     subtitle: Obx(
-                      () => Text(
-                          settingsController.themeModetype.value == ThemeType.dynamic
+                      () => (settingsController.themeModetype.value == ThemeType.dynamic
                               ? 'dynamic'.tr
                               : settingsController.themeModetype.value == ThemeType.system
                                   ? 'systemDefault'.tr
                                   : settingsController.themeModetype.value == ThemeType.dark
                                       ? 'dark'.tr
-                                      : 'light'.tr,
-                          style: Theme.of(context).textTheme.bodyMedium),
+                                      : 'light'.tr)
+                          .text
+                          .bodyMedium
+                          .mk,
                     ),
                     onTap: () => showDialog(
                       context: context,
@@ -101,8 +100,8 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   ListTile(
                     contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                    title: Text('language'.tr),
-                    subtitle: Text('languageDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                    title: 'language'.tr.text.mk,
+                    subtitle: 'languageDes'.tr.text.bodyMedium.mk,
                     trailing: Obx(
                       () => DropdownButton(
                         menuMaxHeight: Get.height - 250,
@@ -121,9 +120,7 @@ class SettingsScreen extends StatelessWidget {
                           return Container(
                             alignment: Alignment.centerRight,
                             constraints: const BoxConstraints(minWidth: 50),
-                            child: Text(
-                              item.value,
-                            ),
+                            child: item.value.text.mk,
                           );
                         }).toList(),
                         onChanged: settingsController.setAppLanguage,
@@ -133,18 +130,21 @@ class SettingsScreen extends StatelessWidget {
                   if (!isDesktop)
                     ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                      title: Text('playerUi'.tr),
-                      subtitle: Text('playerUiDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                      title: 'playerUi'.tr.text.mk,
+                      subtitle: 'playerUiDes'.tr.text.bodyMedium.mk,
                       trailing: Obx(
                         () => DropdownButton(
                           dropdownColor: Theme.of(context).cardColor,
                           underline: const SizedBox.shrink(),
                           value: settingsController.playerUi.value,
                           items: [
-                            DropdownMenuItem(value: 0, child: Text('standard'.tr)),
+                            DropdownMenuItem(
+                              value: 0,
+                              child: 'standard'.tr.text.mk,
+                            ),
                             DropdownMenuItem(
                               value: 1,
-                              child: Text('gesture'.tr),
+                              child: 'gesture'.tr.text.mk,
                             ),
                           ],
                           onChanged: settingsController.setPlayerUi,
@@ -154,26 +154,27 @@ class SettingsScreen extends StatelessWidget {
                   if (!isDesktop)
                     ListTile(
                         contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                        title: Text('enableBottomNav'.tr),
-                        subtitle: Text('enableBottomNavDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                        title: 'enableBottomNav'.tr.text.mk,
+                        subtitle: 'enableBottomNavDes'.tr.text.bodyMedium.mk,
                         trailing: Obx(
                           () => CustSwitch(
                               value: settingsController.isBottomNavBarEnabled.isTrue,
                               onChanged: settingsController.enableBottomNavBar),
                         )),
                   ListTile(
-                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                      title: Text('disableTransitionAnimation'.tr),
-                      subtitle: Text('disableTransitionAnimationDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
-                      trailing: Obx(
-                        () => CustSwitch(
-                            value: settingsController.isTransitionAnimationDisabled.isTrue,
-                            onChanged: settingsController.disableTransitionAnimation),
-                      )),
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: 'disableTransitionAnimation'.tr.text.mk,
+                    subtitle: 'disableTransitionAnimationDes'.tr.text.bodyMedium.mk,
+                    trailing: Obx(
+                      () => CustSwitch(
+                          value: settingsController.isTransitionAnimationDisabled.isTrue,
+                          onChanged: settingsController.disableTransitionAnimation),
+                    ),
+                  ),
                   ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                      title: Text('enableSlidableAction'.tr),
-                      subtitle: Text('enableSlidableActionDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                      title: 'enableSlidableAction'.tr.text.mk,
+                      subtitle: 'enableSlidableActionDes'.tr.text.bodyMedium.mk,
                       trailing: Obx(
                         () => CustSwitch(
                             value: settingsController.slidableActionEnabled.isTrue,
@@ -539,9 +540,7 @@ class SettingsScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
-        ],
-      ),
-    );
+        ]));
   }
 }
 
@@ -554,17 +553,12 @@ class ThemeSelectorDialog extends StatelessWidget {
     return CommonDialog(
       child: Container(
         height: 300,
-        //color: Theme.of(context).cardColor,
         padding: const EdgeInsets.only(top: 30, left: 5, right: 30, bottom: 10),
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20, bottom: 5),
-            child: Align(
+        child: column.children([
+          padding.pl40.pb10.child(
+            Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                'themeMode'.tr,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+              child: 'themeMode'.tr.text.titleLarge.mk,
             ),
           ),
           radioWidget(
@@ -576,14 +570,14 @@ class ThemeSelectorDialog extends StatelessWidget {
           radioWidget(label: 'dark'.tr, controller: settingsController, value: ThemeType.dark),
           radioWidget(label: 'light'.tr, controller: settingsController, value: ThemeType.light),
           Align(
-              alignment: Alignment.centerRight,
-              child: InkWell(
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Text('cancel'.tr),
-                ),
-                onTap: () => Navigator.of(context).pop(),
-              ))
+            alignment: Alignment.centerRight,
+            child: InkWell(
+              onTap: () => Navigator.of(context).pop(),
+              child: padding.p16.child(
+                'cancel'.tr.text.mk,
+              ),
+            ),
+          )
         ]),
       ),
     );

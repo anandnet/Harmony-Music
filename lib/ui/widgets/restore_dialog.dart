@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:archive/archive_io.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/res/tailwind_ext.dart';
 import 'package:harmonymusic/services/permission_service.dart';
 import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 import 'package:harmonymusic/ui/widgets/common_dialog_widget.dart';
@@ -23,39 +25,29 @@ class RestoreDialog extends StatelessWidget {
         padding: const EdgeInsets.only(top: 20, bottom: 30, left: 20, right: 20),
         child: Stack(
           children: [
-            Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-              Container(
-                padding: const EdgeInsets.only(bottom: 10, top: 10),
-                child: Text(
-                  'restoreAppData'.tr,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
+            Column(children: [
+              container.pb20.pt20.child(
+                'restoreAppData'.tr.text.titleMedium.mk,
               ),
-              SizedBox(
-                height: 150,
-                child: Center(
-                  child: Obx(() =>
-                      restoreDialogController.restoreProgress.toInt() == restoreDialogController.filesToRestore.toInt()
-                          ? Text(
-                              'restoreMsg'.tr,
-                              textAlign: TextAlign.center,
-                            )
-                          : restoreDialogController.processingFiles.isTrue
-                              ? Text('processFiles'.tr)
-                              : restoreDialogController.restoreRunning.isTrue
-                                  ? Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                            '${restoreDialogController.restoreProgress.toInt()}/${restoreDialogController.filesToRestore.toInt()}',
-                                            style: Theme.of(context).textTheme.titleLarge),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text('restoring'.tr)
-                                      ],
-                                    )
-                                  : Text('letsStrart'.tr)),
+              sizedBox.h280.child(
+                Center(
+                  child: Obx(
+                    () => restoreDialogController.restoreProgress.toInt() ==
+                            restoreDialogController.filesToRestore.toInt()
+                        ? 'restoreMsg'.tr.text.center.mk
+                        : restoreDialogController.processingFiles.isTrue
+                            ? 'processFiles'.tr.text.mk
+                            : restoreDialogController.restoreRunning.isTrue
+                                ? column.center.children([
+                                    '${restoreDialogController.restoreProgress.toInt()}/${restoreDialogController.filesToRestore.toInt()}'
+                                        .text
+                                        .titleLarge
+                                        .mk,
+                                    const SizedBox(height: 10),
+                                    Text('restoring'.tr),
+                                  ])
+                                : 'letsStrart'.tr.text.mk,
+                  ),
                 ),
               ),
               SizedBox(
@@ -63,7 +55,9 @@ class RestoreDialog extends StatelessWidget {
                 child: Align(
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                        color: Theme.of(context).textTheme.titleLarge!.color, borderRadius: BorderRadius.circular(10)),
+                      color: Theme.of(context).textTheme.titleLarge!.color,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: InkWell(
                       onTap: () {
                         if (restoreDialogController.restoreProgress.toInt() ==
@@ -77,20 +71,17 @@ class RestoreDialog extends StatelessWidget {
                         () => Visibility(
                           visible: restoreDialogController.processingFiles.isFalse &&
                               restoreDialogController.restoreRunning.isFalse,
-                          replacement: const SizedBox(
-                            height: 40,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                            child: Obx(
-                              () => Text(
-                                restoreDialogController.restoreProgress.toInt() ==
-                                        restoreDialogController.filesToRestore.toInt()
-                                    ? 'restartApp'.tr
-                                    : 'restore'.tr,
-                                style: TextStyle(color: Theme.of(context).canvasColor),
-                              ),
-                            ),
+                          replacement: const SizedBox(height: 40),
+                          child: padding.ph28.pv18.child(
+                            Obx(() {
+                              return (restoreDialogController.restoreProgress.toInt() ==
+                                          restoreDialogController.filesToRestore.toInt()
+                                      ? 'restartApp'.tr
+                                      : 'restore'.tr)
+                                  .text
+                                  .canvasColor
+                                  .mk;
+                            }),
                           ),
                         ),
                       ),

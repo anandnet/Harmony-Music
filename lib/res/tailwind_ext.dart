@@ -42,6 +42,11 @@ extension TextStyleExt<T extends CompletedTextStyleBuilder> on T {
       decoration: TextDecoration.underline,
     );
 
+  T get canvasColor => this
+    ..style = TextStyle(
+      color: Theme.of(Get.context!).canvasColor,
+    );
+
   T get titleLarge => this..style = Theme.of(Get.context!).textTheme.titleLarge;
 
   T get titleMedium => this..style = Theme.of(Get.context!).textTheme.titleMedium;
@@ -49,6 +54,8 @@ extension TextStyleExt<T extends CompletedTextStyleBuilder> on T {
   T get titleSmall => this..style = Theme.of(Get.context!).textTheme.titleSmall;
 
   T get bodyMedium => this..style = Theme.of(Get.context!).textTheme.bodyMedium;
+
+  T get bodySmall => this..style = Theme.of(Get.context!).textTheme.bodySmall;
 }
 
 /// define the shadow

@@ -69,54 +69,52 @@ class Player extends StatelessWidget {
                             boxShadow: const [BoxShadow(blurRadius: 5, color: Colors.black54)],
                             color: Theme.of(context).primaryColor.withOpacity(0.5)),
                         height: 60 + Get.mediaQuery.padding.bottom,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            //queue loop button and queue shuffle button
-                            Obx(
-                              () => Text(
-                                "${playerController.currentQueue.length} ${"songs".tr}",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(color: Theme.of(context).textTheme.titleMedium!.color),
-                              ),
+                        child: row.spaceEvenly.children([
+                          //queue loop button and queue shuffle button
+                          Obx(
+                            () => Text(
+                              "${playerController.currentQueue.length} ${"songs".tr}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(color: Theme.of(context).textTheme.titleMedium!.color),
                             ),
-                            InkWell(
-                              onTap: () {
-                                if (playerController.isShuffleModeEnabled.isTrue) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      snackbar(context, 'queueShufflingDeniedMsg'.tr, size: SanckBarSize.BIG));
-                                  return;
-                                }
-                                playerController.shuffleQueue();
-                              },
-                              child: container.h58.ph40.rounded40
-                                  .color(
-                                    Colors.white.withOpacity(0.8),
-                                  )
-                                  .child(
-                                    Center(
-                                      child: 'shuffleQueue'.tr.text.mk,
-                                    ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              if (playerController.isShuffleModeEnabled.isTrue) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  snackbar(context, 'queueShufflingDeniedMsg'.tr, size: SanckBarSize.BIG),
+                                );
+                                return;
+                              }
+                              playerController.shuffleQueue();
+                            },
+                            child: container.h58.ph40.rounded40
+                                .color(
+                                  Colors.white.withOpacity(0.8),
+                                )
+                                .child(
+                                  Center(
+                                    child: 'shuffleQueue'.tr.text.mk,
                                   ),
+                                ),
+                          ),
+                          InkWell(
+                            onTap: playerController.toggleQueueLoopMode,
+                            child: Obx(
+                              () => container.h58.ph40.rounded40
+                                  .color(
+                                    playerController.isQueueLoopModeEnabled.isFalse
+                                        ? Colors.white24
+                                        : Colors.white.withOpacity(0.8),
+                                  )
+                                  .child(Center(
+                                    child: 'QueueLoop'.tr.text.mk,
+                                  )),
                             ),
-                            InkWell(
-                              onTap: playerController.toggleQueueLoopMode,
-                              child: Obx(
-                                () => container.h58.ph40.rounded40
-                                    .color(
-                                      playerController.isQueueLoopModeEnabled.isFalse
-                                          ? Colors.white24
-                                          : Colors.white.withOpacity(0.8),
-                                    )
-                                    .child(Center(
-                                      child: 'QueueLoop'.tr.text.mk,
-                                    )),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ]),
                       ),
                     ),
                   ),

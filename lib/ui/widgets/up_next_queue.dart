@@ -7,7 +7,12 @@ import 'package:harmonymusic/ui/widgets/songinfo_bottom_sheet.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
 class UpNextQueue extends StatelessWidget {
-  const UpNextQueue({super.key, this.onReorderEnd, this.onReorderStart, this.isQueueInSlidePanel = true});
+  const UpNextQueue({
+    super.key,
+    this.onReorderEnd,
+    this.onReorderStart,
+    this.isQueueInSlidePanel = true,
+  });
 
   final void Function(int)? onReorderStart;
   final void Function(int)? onReorderEnd;
@@ -23,8 +28,13 @@ class UpNextQueue extends StatelessWidget {
           scrollController: isQueueInSlidePanel ? playerController.scrollController : null,
           onReorder: (int oldIndex, int newIndex) {
             if (playerController.isShuffleModeEnabled.isTrue) {
-              ScaffoldMessenger.of(Get.context!)
-                  .showSnackBar(snackbar(Get.context!, 'queuerearrangingDeniedMsg'.tr, size: SanckBarSize.BIG));
+              ScaffoldMessenger.of(Get.context!).showSnackBar(
+                snackbar(
+                  Get.context!,
+                  'queuerearrangingDeniedMsg'.tr,
+                  size: SanckBarSize.BIG,
+                ),
+              );
               return;
             }
             playerController.onReorder(oldIndex, newIndex);
@@ -33,11 +43,12 @@ class UpNextQueue extends StatelessWidget {
           onReorderEnd: onReorderEnd,
           itemCount: playerController.currentQueue.length,
           padding: EdgeInsets.only(
-              top: isQueueInSlidePanel ? 55 : 0, bottom: isQueueInSlidePanel ? 80 : 0 + Get.mediaQuery.padding.bottom),
+            top: isQueueInSlidePanel ? 55 : 0,
+            bottom: isQueueInSlidePanel ? 80 : 0 + Get.mediaQuery.padding.bottom,
+          ),
           physics: const AlwaysScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             final homeScaffoldContext = playerController.homeScaffoldKey.currentContext!;
-            //print("${playerController.currentSongIndex.value == index} $index");
             return Material(
               key: Key('$index'),
               child: Obx(

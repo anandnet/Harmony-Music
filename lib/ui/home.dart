@@ -135,7 +135,7 @@ class Home extends StatelessWidget {
                         child: const MiniPlayer(),
                       )
                     : const MiniPlayer(),
-                onPanelSlide: playerController.panellistener,
+                onPanelSlide: playerController.panelListener,
                 controller: playerController.playerPanelController,
                 minHeight: playerController.playerPanelMinHeight.value,
                 maxHeight: size.height,

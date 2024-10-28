@@ -123,7 +123,7 @@ class PlayerController extends GetxController with GetSingleTickerProviderStateM
     lyricsMode.value = Hive.box('AppPrefs').get('lyricsMode') ?? 0;
   }
 
-  void panellistener(double x) {
+  void panelListener(double x) {
     if (x >= 0 && x <= 0.2) {
       playerPaneOpacity.value = 1 - (x * 5);
       isPlayerPanelTopVisible.value = true;

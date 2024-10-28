@@ -182,98 +182,113 @@ class SettingsScreen extends StatelessWidget {
                       )),
                 ],
               ),
-              CustomExpansionTile(title: 'content'.tr, icon: Icons.music_video, children: [
-                ListTile(
-                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                  title: Text('setDiscoverContent'.tr),
-                  subtitle: Obx(() => Text(
-                      settingsController.discoverContentType.value == 'QP'
-                          ? 'quickpicks'.tr
-                          : settingsController.discoverContentType.value == 'TMV'
-                              ? 'topmusicvideos'.tr
-                              : settingsController.discoverContentType.value == 'TR'
-                                  ? 'trending'.tr
-                                  : 'basedOnLast'.tr,
-                      style: Theme.of(context).textTheme.bodyMedium)),
-                  onTap: () => showDialog(
-                    context: context,
-                    builder: (context) => const DiscoverContentSelectorDialog(),
-                  ),
-                ),
-                ListTile(
-                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                  title: Text('homeContentCount'.tr),
-                  subtitle: Text('homeContentCountDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
-                  trailing: Obx(
-                    () => DropdownButton(
-                      dropdownColor: Theme.of(context).cardColor,
-                      underline: const SizedBox.shrink(),
-                      value: settingsController.noOfHomeScreenContent.value,
-                      items: [3, 5, 7, 9, 11].map((e) => DropdownMenuItem(value: e, child: Text('$e'))).toList(),
-                      onChanged: settingsController.setContentNumber,
+              CustomExpansionTile(
+                title: 'content'.tr,
+                icon: Icons.music_video,
+                children: [
+                  ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: 'setDiscoverContent'.tr.text.mk,
+                    subtitle: Obx(
+                      () => (settingsController.discoverContentType.value == 'QP'
+                              ? 'quickpicks'.tr
+                              : settingsController.discoverContentType.value == 'TMV'
+                                  ? 'topmusicvideos'.tr
+                                  : settingsController.discoverContentType.value == 'TR'
+                                      ? 'trending'.tr
+                                      : 'basedOnLast'.tr)
+                          .text
+                          .bodyMedium
+                          .mk,
+                    ),
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => const DiscoverContentSelectorDialog(),
                     ),
                   ),
-                ),
-                ListTile(
+                  ListTile(
                     contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                    title: Text('cacheHomeScreenData'.tr),
-                    subtitle: Text('cacheHomeScreenDataDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                    title: 'homeContentCount'.tr.text.mk,
+                    subtitle: 'homeContentCountDes'.tr.text.mk,
+                    trailing: Obx(
+                      () => DropdownButton(
+                        dropdownColor: Theme.of(context).cardColor,
+                        underline: const SizedBox.shrink(),
+                        value: settingsController.noOfHomeScreenContent.value,
+                        items: [3, 5, 7, 9, 11]
+                            .map((e) => DropdownMenuItem(
+                                  value: e,
+                                  child: '$e'.text.mk,
+                                ))
+                            .toList(),
+                        onChanged: settingsController.setContentNumber,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: 'cacheHomeScreenData'.tr.text.mk,
+                    subtitle: 'cacheHomeScreenDataDes'.tr.text.bodyMedium.mk,
                     trailing: Obx(
                       () => CustSwitch(
                           value: settingsController.cacheHomeScreenData.value,
                           onChanged: settingsController.toggleCacheHomeScreenData),
-                    )),
-                ListTile(
-                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                  title: Text('Piped'.tr),
-                  subtitle: Text('linkPipedDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
-                  trailing: TextButton(
-                      child: Obx(() => Text(
-                            settingsController.isLinkedWithPiped.value ? 'unLink'.tr : 'link'.tr,
-                            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 15),
-                          )),
-                      onPressed: () {
-                        if (settingsController.isLinkedWithPiped.isFalse) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => const LinkPiped(),
-                          ).whenComplete(() => Get.delete<PipedLinkedController>());
-                        } else {
-                          settingsController.unlinkPiped();
-                        }
-                      }),
-                ),
-                Obx(() => (settingsController.isLinkedWithPiped.isTrue)
-                    ? ListTile(
-                        contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                        title: Text('resetblacklistedplaylist'.tr),
-                        subtitle: Text('resetblacklistedplaylistDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
-                        trailing: TextButton(
-                            child: Text(
-                              'reset'.tr,
-                              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 15),
-                            ),
-                            onPressed: () async {
-                              await Get.find<LibraryPlaylistsController>().resetBlacklistedPlaylist();
-                              ScaffoldMessenger.of(Get.context!)
-                                  .showSnackBar(snackbar(Get.context!, 'blacklistPlstResetAlert'.tr));
-                            }),
-                      )
-                    : const SizedBox.shrink()),
-                ListTile(
-                  contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                  title: Text('clearImgCache'.tr),
-                  subtitle: Text(
-                    'clearImgCacheDes'.tr,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                   ),
-                  isThreeLine: true,
-                  onTap: () {
-                    settingsController.clearImagesCache().then((value) => ScaffoldMessenger.of(Get.context!)
-                        .showSnackBar(snackbar(Get.context!, 'clearImgCacheAlert'.tr, size: SanckBarSize.BIG)));
-                  },
-                ),
-              ]),
+                  ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: 'Piped'.tr.text.mk,
+                    subtitle: 'linkPipedDes'.tr.text.bodyMedium.mk,
+                    trailing: TextButton(
+                        child: Obx(
+                          () => (settingsController.isLinkedWithPiped.value ? 'unLink'.tr : 'link'.tr)
+                              .text
+                              .titleMedium
+                              .f15
+                              .mk,
+                        ),
+                        onPressed: () {
+                          if (settingsController.isLinkedWithPiped.isFalse) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => const LinkPiped(),
+                            ).whenComplete(() => Get.delete<PipedLinkedController>());
+                          } else {
+                            settingsController.unlinkPiped();
+                          }
+                        }),
+                  ),
+                  Obx(
+                    () => (settingsController.isLinkedWithPiped.isTrue)
+                        ? ListTile(
+                            contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                            title: 'resetblacklistedplaylist'.tr.text.mk,
+                            subtitle: 'resetblacklistedplaylistDes'.tr.text.bodyMedium.mk,
+                            trailing: TextButton(
+                                child: 'reset'.tr.text.titleMedium.f15.mk,
+                                onPressed: () async {
+                                  await Get.find<LibraryPlaylistsController>().resetBlacklistedPlaylist();
+                                  ScaffoldMessenger.of(Get.context!)
+                                      .showSnackBar(snackbar(Get.context!, 'blacklistPlstResetAlert'.tr));
+                                }),
+                          )
+                        : const SizedBox.shrink(),
+                  ),
+                  ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: Text('clearImgCache'.tr),
+                    subtitle: Text(
+                      'clearImgCacheDes'.tr,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    isThreeLine: true,
+                    onTap: () {
+                      settingsController.clearImagesCache().then((value) => ScaffoldMessenger.of(Get.context!)
+                          .showSnackBar(snackbar(Get.context!, 'clearImgCacheAlert'.tr, size: SanckBarSize.BIG)));
+                    },
+                  ),
+                ],
+              ),
               CustomExpansionTile(
                 title: 'music&Playback'.tr,
                 icon: Icons.music_note,
@@ -593,42 +608,34 @@ class DiscoverContentSelectorDialog extends StatelessWidget {
     return CommonDialog(
       child: Container(
         height: 300,
-        //color: Theme.of(context).cardColor,
         padding: const EdgeInsets.only(top: 30, left: 5, right: 30, bottom: 10),
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20, bottom: 5),
-            child: Align(
+        child: column.children([
+          padding.pl40.pb10.child(
+            Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                'setDiscoverContent'.tr,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+              child: 'setDiscoverContent'.tr.text.titleLarge.mk,
             ),
           ),
-          SizedBox(
-            height: 180,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  radioWidget(label: 'quickpicks'.tr, controller: settingsController, value: 'QP'),
-                  radioWidget(label: 'topmusicvideos'.tr, controller: settingsController, value: 'TMV'),
-                  radioWidget(label: 'trending'.tr, controller: settingsController, value: 'TR'),
-                  radioWidget(label: 'basedOnLast'.tr, controller: settingsController, value: 'BOLI'),
-                ],
-              ),
+          sizedBox.h350.child(
+            SingleChildScrollView(
+              child: column.children([
+                radioWidget(label: 'quickpicks'.tr, controller: settingsController, value: 'QP'),
+                radioWidget(label: 'topmusicvideos'.tr, controller: settingsController, value: 'TMV'),
+                radioWidget(label: 'trending'.tr, controller: settingsController, value: 'TR'),
+                radioWidget(label: 'basedOnLast'.tr, controller: settingsController, value: 'BOLI'),
+              ]),
             ),
           ),
-          const Expanded(child: SizedBox()),
+          spacer,
           Align(
-              alignment: Alignment.centerRight,
-              child: InkWell(
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Text('cancel'.tr),
-                ),
-                onTap: () => Navigator.of(context).pop(),
-              ))
+            alignment: Alignment.centerRight,
+            child: InkWell(
+              child: padding.p12.child(
+                'cancel'.tr.text.mk,
+              ),
+              onTap: () => Navigator.of(context).pop(),
+            ),
+          ),
         ]),
       ),
     );

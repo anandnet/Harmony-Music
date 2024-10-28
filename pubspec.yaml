@@ -47,12 +47,18 @@ dependencies:
     sdk: flutter
   flutter_keyboard_visibility: ^6.0.0
   flutter_lyric: ^2.0.4+6
+  flutter_screenutil: ^5.9.3
   flutter_slidable: ^3.1.1
+  flutter_tailwind: ^1.3.9
+  flutter_ume_kit_console_plus: ^4.1.0
+  flutter_ume_kit_device_plus: ^4.1.0
+  flutter_ume_plus: ^4.1.0
   get: ^4.6.6
   google_fonts: ^6.1.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   ionicons: ^0.2.2
+  json2dart_safe: ^1.5.8
   just_audio: ^0.9.40
   just_audio_media_kit:
     git:
@@ -72,7 +78,7 @@ dependencies:
     git:
       url: https://github.com/anandnet/sdk_int.git
       ref: 91b2d4e0863de4effb2c89dd7868506cbd85a1ee
-  share_plus: ^9.0.0
+  share_plus: ^10.1.0
   shimmer: ^3.0.0
   sidebar_with_animation:
     git:
@@ -80,8 +86,10 @@ dependencies:
       branch: main
       ref: b53567a42b4ba3793a3cf00d478bdba0ecce33d7
   smtc_windows: ^0.1.2
+  sp_util: ^2.0.3
   toggle_switch: ^2.1.0
   tray_manager: ^0.2.3
+  ume_kit_monitor: ^2.0.6
   url_launcher: ^6.2.1
   widget_marquee: ^0.0.8
   window_manager: ^0.4.2

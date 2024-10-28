@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/services/music_service.dart';
+import 'package:harmonymusic/utils/app_link_controller.dart' show ProcessLink;
 import 'package:hive/hive.dart';
-
-import '/utils/app_link_controller.dart' show ProcessLink;
-import '/services/music_service.dart';
 
 class SearchScreenController extends GetxController with ProcessLink {
   final textInputController = TextEditingController();
@@ -24,18 +23,18 @@ class SearchScreenController extends GetxController with ProcessLink {
   }
 
   _init() async {
-    if(GetPlatform.isDesktop){
-      focusNode.addListener((){
+    if (GetPlatform.isDesktop) {
+      focusNode.addListener(() {
         isSearchBarInFocus.value = focusNode.hasFocus;
       });
     }
-    queryBox = await Hive.openBox("searchQuery");
+    queryBox = await Hive.openBox('searchQuery');
     historyQuerylist.value = queryBox.values.toList().reversed.toList();
   }
 
   Future<void> onChanged(String text) async {
-    if(text.contains("https://")){
-      urlPasted.value = true; 
+    if (text.contains('https://')) {
+      urlPasted.value = true;
       return;
     }
     urlPasted.value = false;
@@ -44,12 +43,11 @@ class SearchScreenController extends GetxController with ProcessLink {
 
   Future<void> suggestionInput(String txt) async {
     textInputController.text = txt;
-    textInputController.selection =
-        TextSelection.collapsed(offset: textInputController.text.length);
+    textInputController.selection = TextSelection.collapsed(offset: textInputController.text.length);
     await onChanged(txt);
   }
 
-  Future<void> addToHistryQueryList(String txt) async {
+  Future<void> addToHistoryQueryList(String txt) async {
     if (historyQuerylist.length > 9) {
       final queryForRemoval = queryBox.getAt(0);
       await queryBox.deleteAt(0);
@@ -66,7 +64,7 @@ class SearchScreenController extends GetxController with ProcessLink {
 
   void reset() {
     urlPasted.value = false;
-    textInputController.text = "";
+    textInputController.text = '';
     suggestionList.clear();
   }
 

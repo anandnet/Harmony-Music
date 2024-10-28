@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lyric/lyrics_reader.dart';
 import 'package:get/get.dart';
-
-import '../../widgets/loader.dart';
-import '../player_controller.dart';
+import 'package:harmonymusic/ui/player/player_controller.dart';
+import 'package:harmonymusic/ui/widgets/loader.dart';
 
 class LyricsWidget extends StatelessWidget {
   final EdgeInsetsGeometry padding;
-  const LyricsWidget({super.key, required this.padding});
+
+  const LyricsWidget({
+    required this.padding,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +29,13 @@ class LyricsWidget extends StatelessWidget {
                       () => TextSelectionTheme(
                         data: Theme.of(context).textSelectionTheme,
                         child: SelectableText(
-                          playerController.lyrics["plainLyrics"] == "NA"
-                              ? "lyricsNotAvailable".tr
-                              : playerController.lyrics["plainLyrics"],
+                          playerController.lyrics['plainLyrics'] == 'NA'
+                              ? 'lyricsNotAvailable'.tr
+                              : playerController.lyrics['plainLyrics'],
                           textAlign: TextAlign.center,
                           style: playerController.isDesktopLyricsDialogOpen
                               ? Theme.of(context).textTheme.titleMedium!
-                              : Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(color: Colors.white),
+                              : Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
                         ),
                       ),
                     ),
@@ -45,21 +45,16 @@ class LyricsWidget extends StatelessWidget {
                   child: LyricsReader(
                     padding: const EdgeInsets.only(left: 5, right: 5),
                     lyricUi: playerController.lyricUi,
-                    position: playerController
-                        .progressBarStatus.value.current.inMilliseconds,
+                    position: playerController.progressBarStatus.value.current.inMilliseconds,
                     model: LyricsModelBuilder.create()
-                        .bindLyricToMain(
-                            playerController.lyrics['synced'].toString())
+                        .bindLyricToMain(playerController.lyrics['synced'].toString())
                         .getModel(),
                     emptyBuilder: () => Center(
                       child: Text(
-                        "syncedLyricsNotAvailable".tr,
+                        'syncedLyricsNotAvailable'.tr,
                         style: playerController.isDesktopLyricsDialogOpen
-                              ? Theme.of(context).textTheme.titleMedium!
-                              : Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(color: Colors.white),
+                            ? Theme.of(context).textTheme.titleMedium!
+                            : Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
                       ),
                     ),
                   ),

@@ -6,14 +6,15 @@ import 'package:archive/archive_io.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tailwind/flutter_tailwind.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/res/tailwind_ext.dart';
+import 'package:harmonymusic/services/permission_service.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/common_dialog_widget.dart';
+import 'package:harmonymusic/ui/widgets/loader.dart';
+import 'package:harmonymusic/utils/helper.dart';
 import 'package:hive/hive.dart';
-
-import '/ui/screens/Settings/settings_screen_controller.dart';
-import '/ui/widgets/loader.dart';
-import '/utils/helper.dart';
-import '../../services/permission_service.dart';
-import 'common_dialog_widget.dart';
 
 class BackupDialog extends StatelessWidget {
   const BackupDialog({super.key});
@@ -24,138 +25,105 @@ class BackupDialog extends StatelessWidget {
     return CommonDialog(
       child: Container(
         height: GetPlatform.isAndroid ? 350 : 300,
-        padding:
-            const EdgeInsets.only(top: 20, bottom: 30, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 20, bottom: 30, left: 20, right: 20),
         child: Stack(
           children: [
-            Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-              Container(
-                padding: const EdgeInsets.only(bottom: 10.0, top: 10),
-                child: Text(
-                  "backupAppData".tr,
-                  style: Theme.of(context).textTheme.titleMedium,
+            column.children(
+              [
+                container.pb18.pt18.child(
+                  'backupAppData'.tr.text.titleMedium.mk,
                 ),
-              ),
-              Expanded(
-                child: SizedBox(
-                  height: 100,
-                  child: Center(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Obx(() => (backupDialogController.scanning.isTrue ||
-                              backupDialogController.backupRunning.isTrue)
-                          ? const LoadingIndicator()
-                          : const SizedBox.shrink()),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Column(
-                        children: [
-                          Obx(() => Text(
-                                backupDialogController.scanning.isTrue
-                                    ? "scanning".tr
-                                    : backupDialogController
-                                            .backupRunning.isTrue
-                                        ? "backupInProgress".tr
-                                        : backupDialogController
-                                                .isbackupCompleted.isTrue
-                                            ? "backupMsg".tr
-                                            : "letsStrart".tr,
-                                textAlign: TextAlign.center,
-                              )),
-                          if (GetPlatform.isAndroid)
-                            Obx(() => (backupDialogController
-                                    .isDownloadedfilesSeclected.isTrue)
-                                ? Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Text(
-                                      "androidBackupWarning".tr,
-                                      textAlign: TextAlign.center,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .copyWith(
-                                              fontWeight: FontWeight.bold),
-                                    ),
-                                  )
-                                : const SizedBox.shrink())
-                        ],
-                      )
-                    ],
-                  )),
-                ),
-              ),
-              if (!GetPlatform.isDesktop)
-                Obx(() => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Checkbox(
-                              value: backupDialogController
-                                  .isDownloadedfilesSeclected.value,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5)),
-                              onChanged:
-                                  backupDialogController.scanning.isTrue ||
-                                          backupDialogController
-                                              .backupRunning.isTrue ||
-                                          backupDialogController
-                                              .isbackupCompleted.isTrue
-                                      ? null
-                                      : (bool? value) {
-                                          backupDialogController
-                                              .isDownloadedfilesSeclected
-                                              .value = value!;
-                                        },
-                            ),
-                            Text("includeDownloadedFiles".tr),
-                          ]),
-                    )),
-              SizedBox(
-                width: double.maxFinite,
-                child: Align(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).textTheme.titleLarge!.color,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: InkWell(
-                      onTap: () {
-                        if (backupDialogController.isbackupCompleted.isTrue) {
-                          Navigator.of(context).pop();
-                        } else {
-                          backupDialogController.backup();
-                        }
-                      },
-                      child: Obx(
-                        () => Visibility(
-                          visible:
-                              !(backupDialogController.backupRunning.isTrue ||
-                                  backupDialogController.scanning.isTrue),
-                          replacement: const SizedBox(
-                            height: 40,
+                Expanded(
+                  child: sizedBox.h100.child(
+                    Center(
+                      child: column.center.children([
+                        Obx(() =>
+                            (backupDialogController.scanning.isTrue || backupDialogController.backupRunning.isTrue)
+                                ? const LoadingIndicator()
+                                : const SizedBox.shrink()),
+                        const SizedBox(height: 10),
+                        column.children([
+                          Obx(
+                            () => (backupDialogController.scanning.isTrue
+                                    ? 'scanning'.tr
+                                    : backupDialogController.backupRunning.isTrue
+                                        ? 'backupInProgress'.tr
+                                        : backupDialogController.isbackupCompleted.isTrue
+                                            ? 'backupMsg'.tr
+                                            : 'letsStrart')
+                                .text
+                                .center
+                                .mk,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15.0, vertical: 10),
-                            child: Obx(
-                              () => Text(
-                                backupDialogController.isbackupCompleted.isTrue
-                                    ? "close".tr
-                                    : "backup".tr,
-                                style: TextStyle(
-                                    color: Theme.of(context).canvasColor),
-                              ),
+                          if (GetPlatform.isAndroid)
+                            Obx(
+                              () => (backupDialogController.isDownloadedfilesSeclected.isTrue)
+                                  ? padding.pt16.child('androidBackupWarning'.tr.text.bold.center.titleSmall.mk)
+                                  : const SizedBox.shrink(),
+                            )
+                        ]),
+                      ]),
+                    ),
+                  ),
+                ),
+                if (!GetPlatform.isDesktop)
+                  Obx(
+                    () => padding.pv16.child(
+                      row.center.children([
+                        Checkbox(
+                          value: backupDialogController.isDownloadedfilesSeclected.value,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                          onChanged: backupDialogController.scanning.isTrue ||
+                                  backupDialogController.backupRunning.isTrue ||
+                                  backupDialogController.isbackupCompleted.isTrue
+                              ? null
+                              : (bool? value) {
+                                  backupDialogController.isDownloadedfilesSeclected.value = value!;
+                                },
+                        ),
+                        'includeDownloadedFiles'.tr.text.mk,
+                      ]),
+                    ),
+                  ),
+                SizedBox(
+                  width: double.maxFinite,
+                  child: Align(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).textTheme.titleLarge!.color,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          if (backupDialogController.isbackupCompleted.isTrue) {
+                            Navigator.of(context).pop();
+                          } else {
+                            backupDialogController.backup();
+                          }
+                        },
+                        child: Obx(
+                          () => Visibility(
+                            visible: !(backupDialogController.backupRunning.isTrue ||
+                                backupDialogController.scanning.isTrue),
+                            replacement: const SizedBox(
+                              height: 40,
+                            ),
+                            child: padding.ph28.pv18.child(
+                              Obx(() {
+                                return (backupDialogController.isbackupCompleted.isTrue ? 'close'.tr : 'backup'.tr)
+                                    .text
+                                    .canvasColor
+                                    .mk;
+                              }),
                             ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
-            ]),
+                )
+              ],
+            ),
           ],
         ),
       ),
@@ -175,15 +143,10 @@ class BackupDialogController extends GetxController {
     final dbDir = await Get.find<SettingsScreenController>().dbDir;
     filesToExport.addAll(await processDirectoryInIsolate(dbDir));
     if (isDownloadedfilesSeclected.value) {
-      List<String> downlodedSongFilePaths = Hive.box("SongDownloads")
-          .values
-          .map<String>((data) => data['url'])
-          .toList();
+      var downlodedSongFilePaths = Hive.box('SongDownloads').values.map<String>((data) => data['url']).toList();
       filesToExport.addAll(downlodedSongFilePaths);
       try {
-        filesToExport.addAll(await processDirectoryInIsolate(
-            "$supportDirPath/thumbnails",
-            extensionFilter: ".png"));
+        filesToExport.addAll(await processDirectoryInIsolate('$supportDirPath/thumbnails', extensionFilter: '.png'));
       } catch (e) {
         printERROR(e);
       }
@@ -199,8 +162,7 @@ class BackupDialogController extends GetxController {
       return;
     }
 
-    final String? pickedFolderPath = await FilePicker.platform
-        .getDirectoryPath(dialogTitle: "Select backup file folder");
+    final pickedFolderPath = await FilePicker.platform.getDirectoryPath(dialogTitle: 'Select backup file folder');
     if (pickedFolderPath == '/' || pickedFolderPath == null) {
       return;
     }
@@ -211,11 +173,9 @@ class BackupDialogController extends GetxController {
     scanning.value = false;
 
     backupRunning.value = true;
-    final exportDirPath = pickedFolderPath.toString();
+    final exportDirPath = pickedFolderPath;
 
-    compressFilesInBackground(filesToExport,
-            '$exportDirPath/${DateTime.now().millisecondsSinceEpoch.toString()}.hmb')
-        .then((_) {
+    compressFilesInBackground(filesToExport, '$exportDirPath/${DateTime.now().millisecondsSinceEpoch}.hmb').then((_) {
       backupRunning.value = false;
       isbackupCompleted.value = true;
     }).catchError((e) {
@@ -226,15 +186,15 @@ class BackupDialogController extends GetxController {
 
 // Function to convert file paths to base64-encoded file data
 List<String> filePathsToBase64(List<String> filePaths) {
-  List<String> base64Data = [];
+  var base64Data = <String>[];
 
-  for (String path in filePaths) {
+  for (var path in filePaths) {
     try {
       // Read the file data as bytes
-      File file = File(path);
+      var file = File(path);
       List<int> fileData = file.readAsBytesSync();
       // Convert bytes to base64
-      String base64String = base64Encode(fileData);
+      var base64String = base64Encode(fileData);
       base64Data.add(base64String);
     } catch (e) {
       printERROR('Error reading file $path: $e');
@@ -246,12 +206,12 @@ List<String> filePathsToBase64(List<String> filePaths) {
 
 // Function to convert file paths to file data (List<int>)
 List<List<int>> filePathsToFileData(List<String> filePaths) {
-  List<List<int>> filesData = [];
+  var filesData = <List<int>>[];
 
-  for (String path in filePaths) {
+  for (var path in filePaths) {
     try {
       // Read the file data as bytes
-      File file = File(path);
+      var file = File(path);
       List<int> fileData = file.readAsBytesSync();
       filesData.add(fileData);
     } catch (e) {
@@ -270,7 +230,7 @@ void _compressFiles(Map<String, dynamic> params) {
 
   final archive = Archive();
 
-  for (int i = 0; i < filesData.length; i++) {
+  for (var i = 0; i < filesData.length; i++) {
     final fileData = filesData[i];
     final fileName = fileNames[i];
     final file = ArchiveFile(fileName, fileData.length, fileData);
@@ -283,13 +243,10 @@ void _compressFiles(Map<String, dynamic> params) {
 }
 
 // Example usage
-Future<void> compressFilesInBackground(
-    List<String> filePaths, String zipFilePath) async {
+Future<void> compressFilesInBackground(List<String> filePaths, String zipFilePath) async {
   // Convert file paths to file data
-  final List<List<int>> filesData = filePathsToFileData(filePaths);
-  final List<String> fileNames = filePaths
-      .map((path) => path.split(GetPlatform.isWindows ? '\\' : '/').last)
-      .toList();
+  final filesData = filePathsToFileData(filePaths);
+  final fileNames = filePaths.map((path) => path.split(GetPlatform.isWindows ? '\\' : '/').last).toList();
 
   printINFO(fileNames);
   // Use compute to run the compression in the background
@@ -300,13 +257,11 @@ Future<void> compressFilesInBackground(
   });
 }
 
-Future<List<String>> processDirectoryInIsolate(String dbDir,
-    {String extensionFilter = ".hive"}) async {
+Future<List<String>> processDirectoryInIsolate(String dbDir, {String extensionFilter = '.hive'}) async {
   // Use Isolate.run to execute the function in a new isolate
-  return await Isolate.run(() async {
+  return Isolate.run(() async {
     // List files in the directory
-    final filesEntityList =
-        await Directory(dbDir).list(recursive: false).toList();
+    final filesEntityList = await Directory(dbDir).list().toList();
 
     // Filter out .hive files
     final filesPath = filesEntityList

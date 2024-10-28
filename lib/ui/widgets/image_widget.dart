@@ -4,23 +4,23 @@ import 'package:audio_service/audio_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/album.dart';
+import 'package:harmonymusic/models/artist.dart';
+import 'package:harmonymusic/models/playlist.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 import 'package:shimmer/shimmer.dart';
-
-import '../screens/Settings/settings_screen_controller.dart';
-import '/models/artist.dart';
-import '../../models/album.dart';
-import '../../models/playlist.dart';
 
 class ImageWidget extends StatelessWidget {
   const ImageWidget({
+    required this.size,
     super.key,
     this.song,
     this.playlist,
     this.album,
     this.artist,
-    required this.size,
     this.isPlayerArtImage = false,
   });
+
   final MediaItem? song;
   final Playlist? playlist;
   final Album? album;
@@ -30,7 +30,7 @@ class ImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl = song != null
+    var imageUrl = song != null
         ? song!.artUri.toString()
         : playlist != null
             ? playlist!.thumbnailUrl
@@ -38,16 +38,16 @@ class ImageWidget extends StatelessWidget {
                 ? album!.thumbnailUrl
                 : artist != null
                     ? artist!.thumbnailUrl
-                    : "";
-    String cacheKey = song != null
-        ? "${song!.id}_song"
+                    : '';
+    var cacheKey = song != null
+        ? '${song!.id}_song'
         : playlist != null
-            ? "${playlist!.playlistId}_playlist"
+            ? '${playlist!.playlistId}_playlist'
             : album != null
-                ? "${album!.browseId}_album"
+                ? '${album!.browseId}_album'
                 : artist != null
-                    ? "${artist!.browseId}_artist"
-                    : "";
+                    ? '${artist!.browseId}_artist'
+                    : '';
 
     return GetPlatform.isWeb
         ? Image.network(
@@ -73,15 +73,14 @@ class ImageWidget extends StatelessWidget {
               errorWidget: (context, url, error) {
                 // if thumb exist in app storage
                 if (song != null) {
-                  final imgFile = File(
-                      "${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${song!.id}.png");
+                  final imgFile =
+                      File('${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${song!.id}.png');
                   if (imgFile.existsSync()) {
                     return Image.file(
                       imgFile,
                       height: size,
                       width: size,
-                      cacheHeight:
-                          (song != null && !isPlayerArtImage) ? 140 : null,
+                      cacheHeight: (song != null && !isPlayerArtImage) ? 140 : null,
                     );
                   }
                 }
@@ -89,28 +88,22 @@ class ImageWidget extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.secondary,
-                      shape:
-                          artist != null ? BoxShape.circle : BoxShape.rectangle,
-                      borderRadius:
-                          artist != null ? null : BorderRadius.circular(10),
+                      shape: artist != null ? BoxShape.circle : BoxShape.rectangle,
+                      borderRadius: artist != null ? null : BorderRadius.circular(10),
                     ),
-                    child: Image.asset(
-                        "assets/icons/${song != null ? "song" : artist != null ? "artist" : "album"}.png"));
+                    child:
+                        Image.asset("assets/icons/${song != null ? "song" : artist != null ? "artist" : "album"}.png"));
               },
-              progressIndicatorBuilder: ((_, __, ___) => Shimmer.fromColors(
+              progressIndicatorBuilder: (_, __, ___) => Shimmer.fromColors(
                   baseColor: Colors.grey[500]!,
                   highlightColor: Colors.grey[300]!,
-                  enabled: true,
-                  direction: ShimmerDirection.ltr,
                   child: Container(
                     decoration: BoxDecoration(
-                      shape:
-                          artist != null ? BoxShape.circle : BoxShape.rectangle,
-                      borderRadius:
-                          artist != null ? null : BorderRadius.circular(10),
+                      shape: artist != null ? BoxShape.circle : BoxShape.rectangle,
+                      borderRadius: artist != null ? null : BorderRadius.circular(10),
                       color: Colors.white54,
                     ),
-                  ))),
+                  )),
             ),
           );
   }

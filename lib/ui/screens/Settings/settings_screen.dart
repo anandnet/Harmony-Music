@@ -157,7 +157,7 @@ class SettingsScreen extends StatelessWidget {
                       title: 'enableBottomNav'.tr.text.mk,
                       subtitle: 'enableBottomNavDes'.tr.text.bodyMedium.mk,
                       trailing: Obx(
-                        () => CustSwitch(
+                        () => CustomSwitch(
                             value: settingsController.isBottomNavBarEnabled.isTrue,
                             onChanged: settingsController.enableBottomNavBar),
                       )),
@@ -166,7 +166,7 @@ class SettingsScreen extends StatelessWidget {
                   title: 'disableTransitionAnimation'.tr.text.mk,
                   subtitle: 'disableTransitionAnimationDes'.tr.text.bodyMedium.mk,
                   trailing: Obx(
-                    () => CustSwitch(
+                    () => CustomSwitch(
                         value: settingsController.isTransitionAnimationDisabled.isTrue,
                         onChanged: settingsController.disableTransitionAnimation),
                   ),
@@ -176,7 +176,7 @@ class SettingsScreen extends StatelessWidget {
                     title: 'enableSlidableAction'.tr.text.mk,
                     subtitle: 'enableSlidableActionDes'.tr.text.bodyMedium.mk,
                     trailing: Obx(
-                      () => CustSwitch(
+                      () => CustomSwitch(
                           value: settingsController.slidableActionEnabled.isTrue,
                           onChanged: settingsController.toggleSlidableAction),
                     )),
@@ -230,7 +230,7 @@ class SettingsScreen extends StatelessWidget {
                   title: 'cacheHomeScreenData'.tr.text.mk,
                   subtitle: 'cacheHomeScreenDataDes'.tr.text.bodyMedium.mk,
                   trailing: Obx(
-                    () => CustSwitch(
+                    () => CustomSwitch(
                         value: settingsController.cacheHomeScreenData.value,
                         onChanged: settingsController.toggleCacheHomeScreenData),
                   ),
@@ -317,7 +317,7 @@ class SettingsScreen extends StatelessWidget {
                     title: 'loudnessNormalization'.tr.text.mk,
                     subtitle: 'loudnessNormalizationDes'.tr.text.bodyMedium.mk,
                     trailing: Obx(
-                      () => CustSwitch(
+                      () => CustomSwitch(
                           value: settingsController.loudnessNormalizationEnabled.value,
                           onChanged: settingsController.toggleLoudnessNormalization),
                     ),
@@ -328,7 +328,7 @@ class SettingsScreen extends StatelessWidget {
                     title: 'cacheSongs'.tr.text.mk,
                     subtitle: 'cacheSongsDes'.tr.text.bodyMedium.mk,
                     trailing: Obx(
-                      () => CustSwitch(
+                      () => CustomSwitch(
                           value: settingsController.cacheSongs.value,
                           onChanged: settingsController.toggleCachingSongsValue),
                     ),
@@ -339,7 +339,7 @@ class SettingsScreen extends StatelessWidget {
                     title: 'skipSilence'.tr.text.mk,
                     subtitle: 'skipSilenceDes'.tr.text.bodyMedium.mk,
                     trailing: Obx(
-                      () => CustSwitch(
+                      () => CustomSwitch(
                           value: settingsController.skipSilenceEnabled.value,
                           onChanged: settingsController.toggleSkipSilence),
                     ),
@@ -350,7 +350,7 @@ class SettingsScreen extends StatelessWidget {
                     title: 'backgroundPlay'.tr.text.mk,
                     subtitle: 'backgroundPlayDes'.tr.text.bodyMedium.mk,
                     trailing: Obx(
-                      () => CustSwitch(
+                      () => CustomSwitch(
                           value: settingsController.backgroundPlayEnabled.value,
                           onChanged: settingsController.toggleBackgroundPlay),
                     ),
@@ -360,7 +360,7 @@ class SettingsScreen extends StatelessWidget {
                   title: 'restoreLastPlaybackSession'.tr.text.mk,
                   subtitle: 'restoreLastPlaybackSessionDes'.tr.text.bodyMedium.mk,
                   trailing: Obx(
-                    () => CustSwitch(
+                    () => CustomSwitch(
                         value: settingsController.restorePlaybackSession.value,
                         onChanged: settingsController.toggleRestorePlaybackSession),
                   ),
@@ -384,9 +384,10 @@ class SettingsScreen extends StatelessWidget {
                     title: 'stopMusicOnTaskClear'.tr.text.mk,
                     subtitle: 'stopMusicOnTaskClearDes'.tr.text.bodyMedium.mk,
                     trailing: Obx(
-                      () => CustSwitch(
-                          value: settingsController.stopPlyabackOnSwipeAway.value,
-                          onChanged: settingsController.toggleStopPlyabackOnSwipeAway),
+                      () => CustomSwitch(
+                        value: settingsController.stopPlyabackOnSwipeAway.value,
+                        onChanged: settingsController.toggleStopPlayBackOnSwipeAway,
+                      ),
                     ),
                   ),
                 if (GetPlatform.isAndroid)
@@ -629,22 +630,29 @@ class DiscoverContentSelectorDialog extends StatelessWidget {
   }
 }
 
-Widget radioWidget({required String label, required SettingsScreenController controller, required value}) {
-  return Obx(() => ListTile(
-        visualDensity: const VisualDensity(vertical: -4),
-        onTap: () {
-          if (value.runtimeType == ThemeType) {
-            controller.onThemeChange(value);
-          } else {
-            controller.onContentChange(value);
-            Navigator.of(Get.context!).pop();
-          }
-        },
-        leading: Radio(
-            value: value,
-            groupValue:
-                value.runtimeType == ThemeType ? controller.themeModetype.value : controller.discoverContentType.value,
-            onChanged: value.runtimeType == ThemeType ? controller.onThemeChange : controller.onContentChange),
-        title: Text(label),
-      ));
+Widget radioWidget({
+  required String label,
+  required SettingsScreenController controller,
+  required value,
+}) {
+  return Obx(
+    () => ListTile(
+      visualDensity: const VisualDensity(vertical: -4),
+      onTap: () {
+        if (value.runtimeType == ThemeType) {
+          controller.onThemeChange(value);
+        } else {
+          controller.onContentChange(value);
+          Navigator.of(Get.context!).pop();
+        }
+      },
+      leading: Radio(
+        value: value,
+        groupValue:
+            value.runtimeType == ThemeType ? controller.themeModetype.value : controller.discoverContentType.value,
+        onChanged: value.runtimeType == ThemeType ? controller.onThemeChange : controller.onContentChange,
+      ),
+      title: Text(label),
+    ),
+  );
 }

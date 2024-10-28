@@ -33,19 +33,20 @@ class ArtistScreen extends StatelessWidget {
             width: 60,
             child: FittedBox(
               child: FloatingActionButton(
-                  focusElevation: 0,
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(14))),
-                  elevation: 0,
-                  onPressed: () async {
-                    final radioId = artistScreenController.artist_.radioId;
-                    if (radioId == null) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(snackbar(context, 'radioNotAvailable'.tr, size: SanckBarSize.BIG));
-                      return;
-                    }
-                    playerController.startRadio(null, playlistid: artistScreenController.artist_.radioId);
-                  },
-                  child: const Icon(Icons.sensors_rounded)),
+                focusElevation: 0,
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(14))),
+                elevation: 0,
+                onPressed: () async {
+                  final radioId = artistScreenController.artist_.radioId;
+                  if (radioId == null) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(snackbar(context, 'radioNotAvailable'.tr, size: SanckBarSize.BIG));
+                    return;
+                  }
+                  playerController.startRadio(null, playlistid: artistScreenController.artist_.radioId);
+                },
+                child: const Icon(Icons.sensors_rounded),
+              ),
             ),
           ),
         ),
@@ -160,8 +161,11 @@ class Body extends StatelessWidget {
 }
 
 class AboutArtist extends StatelessWidget {
-  const AboutArtist(
-      {super.key, required this.artistScreenController, this.padding = const EdgeInsets.only(bottom: 90, top: 70)});
+  const AboutArtist({
+    required this.artistScreenController,
+    super.key,
+    this.padding = const EdgeInsets.only(bottom: 90, top: 70),
+  });
 
   final EdgeInsetsGeometry padding;
   final ArtistScreenController artistScreenController;
@@ -208,16 +212,19 @@ class AboutArtist extends StatelessWidget {
                             child: Obx(
                               () => artistScreenController.isArtistContentFetced.isFalse
                                   ? const SizedBox.shrink()
-                                  : Icon(artistScreenController.isAddedToLibrary.isFalse
-                                      ? Icons.bookmark_add_rounded
-                                      : Icons.bookmark_added_rounded),
+                                  : Icon(
+                                      artistScreenController.isAddedToLibrary.isFalse
+                                          ? Icons.bookmark_add_rounded
+                                          : Icons.bookmark_added_rounded,
+                                    ),
                             ),
                           ),
                           IconButton(
                             icon: Icons.share.icon.s40.mk,
                             splashRadius: 18,
                             onPressed: () => Share.share(
-                                'https://music.youtube.com/channel/${artistScreenController.artist_.browseId}'),
+                              'https://music.youtube.com/channel/${artistScreenController.artist_.browseId}',
+                            ),
                           ),
                         ]),
                       )

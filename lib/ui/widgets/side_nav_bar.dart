@@ -110,13 +110,14 @@ class SideNavBar extends StatelessWidget {
         ? NavigationRailDestination(
             icon: const SizedBox.shrink(),
             label: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: isMobileOrTabScreen
-                    ? RotatedBox(
-                        quarterTurns: -1,
-                        child: Text(label),
-                      )
-                    : Text(label)),
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: isMobileOrTabScreen
+                  ? RotatedBox(
+                      quarterTurns: -1,
+                      child: Text(label),
+                    )
+                  : Text(label),
+            ),
           )
         : NavigationRailDestination(
             icon: Icon(icon),
@@ -125,6 +126,7 @@ class SideNavBar extends StatelessWidget {
             indicatorShape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
-            indicatorColor: Colors.amber);
+            indicatorColor: Colors.amber,
+          );
   }
 }

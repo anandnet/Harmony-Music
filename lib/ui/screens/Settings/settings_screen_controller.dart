@@ -278,7 +278,7 @@ class SettingsScreenController extends GetxController {
     box.close();
   }
 
-  void toggleStopPlyabackOnSwipeAway(bool val) {
+  void toggleStopPlayBackOnSwipeAway(bool val) {
     setBox.put('stopPlyabackOnSwipeAway', val);
     stopPlyabackOnSwipeAway.value = val;
   }

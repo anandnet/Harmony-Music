@@ -48,10 +48,11 @@ class ScreenNavigation extends StatelessWidget {
             final args = settings.arguments! as List;
             final id = args[0] ? args[1] : (args[1] as Artist).browseId;
             return GetPageRoute(
-                page: () => ArtistScreen(
-                      key: Key(id),
-                    ),
-                settings: settings);
+              page: () => ArtistScreen(
+                key: Key(id),
+              ),
+              settings: settings,
+            );
           }
           return null;
         });

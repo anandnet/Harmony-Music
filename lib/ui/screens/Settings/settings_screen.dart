@@ -295,19 +295,16 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   ListTile(
                     contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                    title: Text('streamingQuality'.tr),
-                    subtitle: Text('streamingQualityDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                    title: 'streamingQuality'.tr.text.mk,
+                    subtitle: 'streamingQualityDes'.tr.text.bodyMedium.mk,
                     trailing: Obx(
                       () => DropdownButton(
                         dropdownColor: Theme.of(context).cardColor,
                         underline: const SizedBox.shrink(),
                         value: settingsController.streamingQuality.value,
                         items: [
-                          DropdownMenuItem(value: AudioQuality.Low, child: Text('low'.tr)),
-                          DropdownMenuItem(
-                            value: AudioQuality.High,
-                            child: Text('high'.tr),
-                          ),
+                          DropdownMenuItem(value: AudioQuality.Low, child: 'low'.tr.text.mk),
+                          DropdownMenuItem(value: AudioQuality.High, child: 'high'.tr.text.mk),
                         ],
                         onChanged: settingsController.setStreamingQuality,
                       ),
@@ -316,58 +313,63 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   if (GetPlatform.isAndroid)
                     ListTile(
-                        contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                        title: Text('loudnessNormalization'.tr),
-                        subtitle: Text('loudnessNormalizationDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
-                        trailing: Obx(
-                          () => CustSwitch(
-                              value: settingsController.loudnessNormalizationEnabled.value,
-                              onChanged: settingsController.toggleLoudnessNormalization),
-                        )),
-                  if (!isDesktop)
-                    ListTile(
-                        contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                        title: Text('cacheSongs'.tr),
-                        subtitle: Text('cacheSongsDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
-                        trailing: Obx(
-                          () => CustSwitch(
-                              value: settingsController.cacheSongs.value,
-                              onChanged: settingsController.toggleCachingSongsValue),
-                        )),
-                  if (!isDesktop)
-                    ListTile(
-                        contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                        title: Text('skipSilence'.tr),
-                        subtitle: Text('skipSilenceDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
-                        trailing: Obx(
-                          () => CustSwitch(
-                              value: settingsController.skipSilenceEnabled.value,
-                              onChanged: settingsController.toggleSkipSilence),
-                        )),
-                  if (isDesktop)
-                    ListTile(
-                        contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                        title: Text('backgroundPlay'.tr),
-                        subtitle: Text('backgroundPlayDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
-                        trailing: Obx(
-                          () => CustSwitch(
-                              value: settingsController.backgroundPlayEnabled.value,
-                              onChanged: settingsController.toggleBackgroundPlay),
-                        )),
-                  ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                      title: Text('restoreLastPlaybackSession'.tr),
-                      subtitle: Text('restoreLastPlaybackSessionDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                      title: 'loudnessNormalization'.tr.text.mk,
+                      subtitle: 'loudnessNormalizationDes'.tr.text.bodyMedium.mk,
                       trailing: Obx(
                         () => CustSwitch(
-                            value: settingsController.restorePlaybackSession.value,
-                            onChanged: settingsController.toggleRestorePlaybackSession),
-                      )),
+                            value: settingsController.loudnessNormalizationEnabled.value,
+                            onChanged: settingsController.toggleLoudnessNormalization),
+                      ),
+                    ),
                   if (!isDesktop)
                     ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                      title: Text('equalizer'.tr),
-                      subtitle: Text('equalizerDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                      title: 'cacheSongs'.tr.text.mk,
+                      subtitle: 'cacheSongsDes'.tr.text.bodyMedium.mk,
+                      trailing: Obx(
+                        () => CustSwitch(
+                            value: settingsController.cacheSongs.value,
+                            onChanged: settingsController.toggleCachingSongsValue),
+                      ),
+                    ),
+                  if (!isDesktop)
+                    ListTile(
+                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                      title: 'skipSilence'.tr.text.mk,
+                      subtitle: 'skipSilenceDes'.tr.text.bodyMedium.mk,
+                      trailing: Obx(
+                        () => CustSwitch(
+                            value: settingsController.skipSilenceEnabled.value,
+                            onChanged: settingsController.toggleSkipSilence),
+                      ),
+                    ),
+                  if (isDesktop)
+                    ListTile(
+                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                      title: 'backgroundPlay'.tr.text.mk,
+                      subtitle: 'backgroundPlayDes'.tr.text.bodyMedium.mk,
+                      trailing: Obx(
+                        () => CustSwitch(
+                            value: settingsController.backgroundPlayEnabled.value,
+                            onChanged: settingsController.toggleBackgroundPlay),
+                      ),
+                    ),
+                  ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: 'restoreLastPlaybackSession'.tr.text.mk,
+                    subtitle: 'restoreLastPlaybackSessionDes'.tr.text.bodyMedium.mk,
+                    trailing: Obx(
+                      () => CustSwitch(
+                          value: settingsController.restorePlaybackSession.value,
+                          onChanged: settingsController.toggleRestorePlaybackSession),
+                    ),
+                  ),
+                  if (!isDesktop)
+                    ListTile(
+                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                      title: 'equalizer'.tr.text.mk,
+                      subtitle: 'equalizerDes'.tr.text.bodyMedium.mk,
                       onTap: () async {
                         try {
                           await Get.find<PlayerController>().openEqualizer();
@@ -379,37 +381,38 @@ class SettingsScreen extends StatelessWidget {
                   if (!isDesktop)
                     ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                      title: Text('stopMusicOnTaskClear'.tr),
-                      subtitle: Text('stopMusicOnTaskClearDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                      title: 'stopMusicOnTaskClear'.tr.text.mk,
+                      subtitle: 'stopMusicOnTaskClearDes'.tr.text.bodyMedium.mk,
                       trailing: Obx(
                         () => CustSwitch(
                             value: settingsController.stopPlyabackOnSwipeAway.value,
                             onChanged: settingsController.toggleStopPlyabackOnSwipeAway),
                       ),
                     ),
-                  GetPlatform.isAndroid
-                      ? Obx(
-                          () => ListTile(
-                            contentPadding: const EdgeInsets.only(left: 5, right: 10),
-                            title: Text('ignoreBatOpt'.tr),
-                            onTap: settingsController.isIgnoringBatteryOptimizations.isFalse
-                                ? settingsController.enableIgnoringBatteryOptimizations
-                                : null,
-                            subtitle: Obx(() => RichText(
-                                  text: TextSpan(
-                                    text:
-                                        "${"status".tr}: ${settingsController.isIgnoringBatteryOptimizations.isTrue ? "enabled".tr : "disabled".tr}\n",
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                          text: 'ignoreBatOptDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
-                                    ],
-                                  ),
-                                )),
+                  if (GetPlatform.isAndroid)
+                    Obx(
+                      () => ListTile(
+                        contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                        title: 'ignoreBatOpt'.tr.text.mk,
+                        onTap: settingsController.isIgnoringBatteryOptimizations.isFalse
+                            ? settingsController.enableIgnoringBatteryOptimizations
+                            : null,
+                        subtitle: Obx(
+                          () => RichText(
+                            text: TextSpan(
+                              text:
+                                  "${"status".tr}: ${settingsController.isIgnoringBatteryOptimizations.isTrue ? "enabled".tr : "disabled".tr}\n",
+                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+                              children: <TextSpan>[
+                                TextSpan(text: 'ignoreBatOptDes'.tr, style: Theme.of(context).textTheme.bodyMedium),
+                              ],
+                            ),
                           ),
-                        )
-                      : const SizedBox.shrink(),
+                        ),
+                      ),
+                    )
+                  else
+                    const SizedBox.shrink(),
                 ],
               ),
               CustomExpansionTile(

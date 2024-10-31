@@ -452,6 +452,10 @@ class PlayerController extends GetxController
     _audioHandler.removeQueueItem(song);
   }
 
+  void clearQueue() {
+    _audioHandler.customAction("clearQueue");
+  }
+
   void shuffleQueue() {
     _audioHandler.customAction("shuffleQueue");
   }

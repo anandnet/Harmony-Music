@@ -50,92 +50,101 @@ class UpNextQueue extends StatelessWidget {
             return Material(
               key: Key('$index'),
               child: Obx(
-                () => ListTile(
-                  onTap: () {
-                    playerController.seekByIndex(index);
+                () => Dismissible(
+                  key: Key(playerController.currentQueue[index].id),
+                  direction: DismissDirection.horizontal,
+                  confirmDismiss: (direction) async => playerController.currentSongIndex.value != index,
+                  onDismissed: (direction) {
+                    playerController
+                        .removeFromQueue(playerController.currentQueue[index]);
                   },
-                  onLongPress: () {
-                    showModalBottomSheet(
-                      constraints: const BoxConstraints(maxWidth: 500),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(10.0)),
-                      ),
-                      isScrollControlled: true,
-                      context: playerController
-                          .homeScaffoldkey.currentState!.context,
-                      //constraints: BoxConstraints(maxHeight:Get.height),
-                      barrierColor: Colors.transparent.withAlpha(100),
-                      builder: (context) => SongInfoBottomSheet(
-                        playerController.currentQueue[index],
-                        calledFromQueue: true,
-                      ),
-                    ).whenComplete(() => Get.delete<SongInfoController>());
-                  },
-                  contentPadding:
-                      const EdgeInsets.only(top: 0, left: 30, right: 25),
-                  tileColor: playerController.currentSongIndex.value == index
-                      ? Theme.of(homeScaffoldContext).colorScheme.secondary
-                      : Theme.of(homeScaffoldContext)
-                          .bottomSheetTheme
-                          .backgroundColor,
-                  leading: ImageWidget(
-                    size: 50,
-                    song: playerController.currentQueue[index],
-                  ),
-                  title: Marquee(
-                    delay: const Duration(milliseconds: 300),
-                    duration: const Duration(seconds: 5),
-                    id: "queue${playerController.currentQueue[index].title.hashCode}",
-                    child: Text(
-                      playerController.currentQueue[index].title,
-                      maxLines: 1,
-                      style:
-                          Theme.of(homeScaffoldContext).textTheme.titleMedium,
+                  child: ListTile(
+                    onTap: () {
+                      playerController.seekByIndex(index);
+                    },
+                    onLongPress: () {
+                      showModalBottomSheet(
+                        constraints: const BoxConstraints(maxWidth: 500),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(10.0)),
+                        ),
+                        isScrollControlled: true,
+                        context: playerController
+                            .homeScaffoldkey.currentState!.context,
+                        //constraints: BoxConstraints(maxHeight:Get.height),
+                        barrierColor: Colors.transparent.withAlpha(100),
+                        builder: (context) => SongInfoBottomSheet(
+                          playerController.currentQueue[index],
+                          calledFromQueue: true,
+                        ),
+                      ).whenComplete(() => Get.delete<SongInfoController>());
+                    },
+                    contentPadding:
+                        const EdgeInsets.only(top: 0, left: 30, right: 25),
+                    tileColor: playerController.currentSongIndex.value == index
+                        ? Theme.of(homeScaffoldContext).colorScheme.secondary
+                        : Theme.of(homeScaffoldContext)
+                            .bottomSheetTheme
+                            .backgroundColor,
+                    leading: ImageWidget(
+                      size: 50,
+                      song: playerController.currentQueue[index],
                     ),
-                  ),
-                  subtitle: Text(
-                    "${playerController.currentQueue[index].artist}",
-                    maxLines: 1,
-                    style: playerController.currentSongIndex.value == index
-                        ? Theme.of(homeScaffoldContext)
-                            .textTheme
-                            .titleSmall!
-                            .copyWith(
-                                color: Theme.of(homeScaffoldContext)
-                                    .textTheme
-                                    .titleMedium!
-                                    .color!
-                                    .withOpacity(0.35))
-                        : Theme.of(homeScaffoldContext).textTheme.titleSmall,
-                  ),
-                  trailing: ReorderableDragStartListener(
-                    enabled: !GetPlatform.isDesktop,
-                    index: index,
-                    child: Container(
-                      padding: EdgeInsets.only(
-                          right: (GetPlatform.isDesktop) ? 20 : 5, left: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          if (!GetPlatform.isDesktop)
-                            const Icon(
-                              Icons.drag_handle_rounded,
-                            ),
-                          playerController.currentSongIndex.value == index
-                              ? const Icon(
-                                  Icons.equalizer_rounded,
-                                  color: Colors.white,
-                                )
-                              : Text(
-                                  playerController.currentQueue[index]
-                                          .extras!['length'] ??
-                                      "",
-                                  style: Theme.of(homeScaffoldContext)
+                    title: Marquee(
+                      delay: const Duration(milliseconds: 300),
+                      duration: const Duration(seconds: 5),
+                      id: "queue${playerController.currentQueue[index].title.hashCode}",
+                      child: Text(
+                        playerController.currentQueue[index].title,
+                        maxLines: 1,
+                        style:
+                            Theme.of(homeScaffoldContext).textTheme.titleMedium,
+                      ),
+                    ),
+                    subtitle: Text(
+                      "${playerController.currentQueue[index].artist}",
+                      maxLines: 1,
+                      style: playerController.currentSongIndex.value == index
+                          ? Theme.of(homeScaffoldContext)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(
+                                  color: Theme.of(homeScaffoldContext)
                                       .textTheme
-                                      .titleSmall,
-                                ),
-                        ],
+                                      .titleMedium!
+                                      .color!
+                                      .withOpacity(0.35))
+                          : Theme.of(homeScaffoldContext).textTheme.titleSmall,
+                    ),
+                    trailing: ReorderableDragStartListener(
+                      enabled: !GetPlatform.isDesktop,
+                      index: index,
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            right: (GetPlatform.isDesktop) ? 20 : 5, left: 20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            if (!GetPlatform.isDesktop)
+                              const Icon(
+                                Icons.drag_handle_rounded,
+                              ),
+                            playerController.currentSongIndex.value == index
+                                ? const Icon(
+                                    Icons.equalizer_rounded,
+                                    color: Colors.white,
+                                  )
+                                : Text(
+                                    playerController.currentQueue[index]
+                                            .extras!['length'] ??
+                                        "",
+                                    style: Theme.of(homeScaffoldContext)
+                                        .textTheme
+                                        .titleSmall,
+                                  ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

@@ -81,7 +81,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     _player.setSkipSilenceEnabled(appPrefsBox.get("skipSilenceEnabled"));
     loopModeEnabled = appPrefsBox.get("isLoopModeEnabled") ?? false;
     shuffleModeEnabled = appPrefsBox.get("isShuffleModeEnabled") ?? false;
-    queueLoopModeEnabled = Hive.box("AppPrefs").get("queueLoopModeEnabled") ?? false;
+    queueLoopModeEnabled =
+        Hive.box("AppPrefs").get("queueLoopModeEnabled") ?? false;
     loudnessNormalizationEnabled =
         appPrefsBox.get("loudnessNormalizationEnabled") ?? false;
     _listenForDurationChanges();
@@ -620,6 +621,16 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       mediaItem.add(queue.value[currentIndex]);
     } else if (name == "toggleQueueLoopMode") {
       queueLoopModeEnabled = extras!['enable'];
+    } else if (name == "clearQueue") {
+      customAction("reorderQueue", {'oldIndex': currentIndex, 'newIndex': 0});
+      final newQueue = queue.value;
+      newQueue.removeRange(1, newQueue.length);
+      queue.add(newQueue);
+      if (shuffleModeEnabled) {
+        shuffledQueue.clear();
+        shuffledQueue.add(newQueue[0].id);
+        currentShuffleIndex = 0;
+      }
     }
   }
 

@@ -103,6 +103,27 @@ class Player extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
+                                    playerController.toggleQueueLoopMode();
+                                  },
+                                  child: Obx(
+                                    () => Container(
+                                      height: 30,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      decoration: BoxDecoration(
+                                        color: playerController
+                                                .isQueueLoopModeEnabled.isFalse
+                                            ? Colors.white24
+                                            : Colors.white.withOpacity(0.8),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child:
+                                          Center(child: Text("queueLoop".tr)),
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
                                     if (playerController
                                         .isShuffleModeEnabled.isTrue) {
                                       ScaffoldMessenger.of(context)
@@ -116,34 +137,31 @@ class Player extends StatelessWidget {
                                   child: Container(
                                     height: 30,
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
+                                        horizontal: 15),
                                     decoration: BoxDecoration(
                                       color: Colors.white.withOpacity(0.8),
                                       borderRadius: BorderRadius.circular(20),
                                     ),
-                                    child:
-                                        Center(child: Text("shuffleQueue".tr)),
+                                    child: const Center(
+                                        child: Icon(Icons.shuffle_rounded,
+                                            color: Colors.black)),
                                   ),
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    playerController.toggleQueueLoopMode();
+                                    playerController.clearQueue();
                                   },
-                                  child: Obx(
-                                    () => Container(
-                                      height: 30,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      decoration: BoxDecoration(
-                                        color: playerController
-                                                .isQueueLoopModeEnabled.isFalse
-                                            ? Colors.white24
-                                            : Colors.white.withOpacity(0.8),
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child:
-                                          Center(child: Text("queueLoop".tr)),
+                                  child: Container(
+                                    height: 30,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white.withOpacity(0.8),
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
+                                    child: const Center(
+                                        child: Icon(Icons.playlist_remove,
+                                            color: Colors.black)),
                                   ),
                                 ),
                               ],

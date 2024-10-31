@@ -214,5 +214,18 @@
     "personalisation": "Kişiselleştirme",
     "songNotPlayable": "Şarkı sunucu kısıtlaması nedeniyle çalınamıyor!",
     "downloadError3": "Ağ hatası nedeniyle indirme başarısız oldu! Lütfen tekrar deneyin.",
-    "loudnessNormalizationDes": "Tüm şarkılar için aynı ses yüksekliği seviyesini ayarlar (Deneysel) (Önceki sürümde (< v1.10.0) indirilen şarkılarda çalışmaz)"
+    "loudnessNormalizationDes": "Tüm şarkılar için aynı ses yüksekliği seviyesini ayarlar (Deneysel) (Önceki sürümde (< v1.10.0) indirilen şarkılarda çalışmaz)",
+    "appInfo": "App Bilgisi",
+    "playerUi": "Çalıcı UI",
+    "playerUiDes": "Çalıcı UI'ını seç",
+    "gesture": "Hareket",
+    "standard": "Standard",
+    "enableSlidableAction": "Kaydırma eylemlerini aç",
+    "playnextMsg": "Sırada",
+    "shuffleQueue": "Karma Sırası",
+    "queueLoop": "Sıra döngüsü",
+    "queueLoopNotDisMsg1": "Sıra döngüsü, karma modu devrede iken devre dışı bırakılamıyor.",
+    "queueLoopNotDisMsg2": "Sırayı döndür, radyo modunda kullanılamıyor.",
+    "loudnessNormalization": "Yükseklik normalisation'ı",
+    "download": "İndir"
 }

@@ -640,7 +640,10 @@ class Languages extends Translations {
           "queueLoopNotDisMsg1":
               "Режимът повторение на опашката не може да бъде деактивиран, когато режимът на разбъркване е активиран.",
           "queueLoopNotDisMsg2":
-              "Режимът повторение на опашката не може да бъде активиран в радио режим."
+              "Режимът повторение на опашката не може да бъде активиран в радио режим.",
+          "autoDownFavSong": "Автоматично изтегляне на любими песни",
+          "autoDownFavSongDes":
+              "Автоматично изтегляне на любими песни, когато бъдат добавени към любими"
         },
         "bn": {},
         "ca": {
@@ -2096,7 +2099,10 @@ class Languages extends Translations {
               "La cola en bucle no se puede activar en el modo radio.",
           "queueLoop": "Cola continua",
           "queueLoopNotDisMsg1":
-              "El modo cola en bucle no puede ser desactivado cuando está habilitado el modo aleatorio."
+              "El modo cola en bucle no puede ser desactivado cuando está habilitado el modo aleatorio.",
+          "autoDownFavSong": "Descarga automática de canciones favoritas",
+          "autoDownFavSongDes":
+              "Descarga automática de canciones cuando se añaden a favoritas"
         },
         "et": {
           "home": "Avaleht",

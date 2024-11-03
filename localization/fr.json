@@ -231,5 +231,7 @@
     "queueLoopNotDisMsg1": "La lecture en boucle de la file d'attente ne peut pas être désactivée lorsque le mode aléatoire est activé.",
     "queueLoopNotDisMsg2": "La lecture en boucle de la file d'attente ne peut pas être activée lorsque le mode radio est activé.",
     "enableSlidableAction": "Activer les actions coulissantes",
-    "enableSlidableActionDes": "Activer les actions coulissantes sur la mosaïque de titres"
+    "enableSlidableActionDes": "Activer les actions coulissantes sur la mosaïque de titres",
+    "autoDownFavSong": "Téléchargement automatique des chansons préférées",
+    "autoDownFavSongDes": "Télécharger automatiquement les titres préférés lorsqu'ils sont ajoutés aux favoris"
 }

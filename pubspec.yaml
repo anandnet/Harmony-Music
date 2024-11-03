@@ -66,7 +66,7 @@ dependencies:
     git:
       url: https://github.com/anandnet/Player-Response.git
       branch: main
-      ref: 4fd875aa4fa86437a4aa79e83312e5b6949e25ff
+      ref: b5fc5b4473a1fa14cdbaec2f111693ba481fef18
   restart_app: ^1.2.1
   sdk_int:
     git:

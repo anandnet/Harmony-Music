@@ -387,7 +387,6 @@ class OfflinePlaylistHeader extends StatelessWidget {
         ),
         ((!playListNAlbumScreenController.isAlbum &&
                     !content.isCloudPlaylist &&
-                    content.playlistId != "LIBFAV" &&
                     content.playlistId != "SongsCache" &&
                     content.playlistId != "LIBRP" &&
                     content.playlistId != "SongDownloads") ||
@@ -454,65 +453,66 @@ class OfflinePlaylistHeader extends StatelessWidget {
                           );
                         })
                       : const SizedBox.shrink(),
-                  IconButton(
-                      onPressed: () {
-                        showModalBottomSheet(
-                          constraints: const BoxConstraints(maxWidth: 500),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(10.0)),
-                          ),
-                          context: Get.find<PlayerController>()
-                              .homeScaffoldkey
-                              .currentState!
-                              .context,
-                          barrierColor: Colors.transparent.withAlpha(100),
-                          builder: (context) => SizedBox(
-                            height: 140,
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  leading: const Icon(Icons.edit_rounded),
-                                  title: Text("renamePlaylist".tr),
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) =>
-                                          CreateNRenamePlaylistPopup(
-                                              renamePlaylist: true,
-                                              playlist: content),
-                                    );
-                                  },
-                                ),
-                                ListTile(
-                                  leading: const Icon(Icons.delete_rounded),
-                                  title: Text("removePlaylist".tr),
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                    playListNAlbumScreenController
-                                        .addNremoveFromLibrary(content,
-                                            add: false)
-                                        .then((value) {
-                                      Get.nestedKey(ScreenNavigationSetup.id)!
-                                          .currentState!
-                                          .pop();
-                                      ScaffoldMessenger.of(Get.context!)
-                                          .showSnackBar(snackbar(
-                                              Get.context!,
-                                              value
-                                                  ? "playlistRemovedAlert".tr
-                                                  : "operationFailed".tr,
-                                              size: SanckBarSize.MEDIUM));
-                                    });
-                                  },
-                                )
-                              ],
+                  if (content.playlistId != "LIBFAV")
+                    IconButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                            constraints: const BoxConstraints(maxWidth: 500),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(10.0)),
                             ),
-                          ),
-                        );
-                      },
-                      icon: const Icon(Icons.more_vert_rounded)),
+                            context: Get.find<PlayerController>()
+                                .homeScaffoldkey
+                                .currentState!
+                                .context,
+                            barrierColor: Colors.transparent.withAlpha(100),
+                            builder: (context) => SizedBox(
+                              height: 140,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    leading: const Icon(Icons.edit_rounded),
+                                    title: Text("renamePlaylist".tr),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            CreateNRenamePlaylistPopup(
+                                                renamePlaylist: true,
+                                                playlist: content),
+                                      );
+                                    },
+                                  ),
+                                  ListTile(
+                                    leading: const Icon(Icons.delete_rounded),
+                                    title: Text("removePlaylist".tr),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      playListNAlbumScreenController
+                                          .addNremoveFromLibrary(content,
+                                              add: false)
+                                          .then((value) {
+                                        Get.nestedKey(ScreenNavigationSetup.id)!
+                                            .currentState!
+                                            .pop();
+                                        ScaffoldMessenger.of(Get.context!)
+                                            .showSnackBar(snackbar(
+                                                Get.context!,
+                                                value
+                                                    ? "playlistRemovedAlert".tr
+                                                    : "operationFailed".tr,
+                                                size: SanckBarSize.MEDIUM));
+                                      });
+                                    },
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.more_vert_rounded)),
                 ],
               )
             : const SizedBox.shrink()

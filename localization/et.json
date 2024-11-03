@@ -128,7 +128,7 @@
     "closeApp": "Sulge rakendus",
     "restartApp": "Käivita rakendus uuesti",
     "singles": "Singlid",
-    "artists": "Esitajaid",
+    "artists": "Esitajad",
     "queueLoopNotDisMsg2": "Esitusjärjekorra kordamine ei ole võimalik, kui raadiorežiim on juba kasutusel.",
     "deleteDownloadData": "Eemalda allalaadimiste kaustast",
     "add5Minutes": "Lisa 5 minutit",
@@ -226,5 +226,7 @@
     "backupAppData": "Tee rakenduse andmestest varukoopia",
     "androidBackupWarning": "Pole testitud: Märkeruudu valimine peale enam kui 60 faili allalaadimist tekitab olukorra, kus rakenduse protsess haarab suure hulga mälu, mis võib põhjustada nii rakenduse kui ka nutiseadme kokkujooksmist. Jätka omal vastutusel.",
     "backup": "Varunda",
-    "restoreAppData": "Taasta rakenduse andmed varukoopiast"
+    "restoreAppData": "Taasta rakenduse andmed varukoopiast",
+    "autoDownFavSongDes": "Kui lugu on lisatud lemmikuks, siis laadi ta automaatselt alla",
+    "autoDownFavSong": "Laadi lemmiklood automaatselt alla"
 }

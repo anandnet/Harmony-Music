@@ -231,5 +231,7 @@
     "queueLoop": "Wiederholen",
     "queueLoopNotDisMsg2": "Wiederholung kann nicht aktiviert werden wenn der Radio Modus läuft.",
     "playnextMsg": "Nächster",
-    "queueLoopNotDisMsg1": "Wiederholen kann nicht deaktiviert werden, wenn Zufallswiedergabe aktiv ist."
+    "queueLoopNotDisMsg1": "Wiederholen kann nicht deaktiviert werden, wenn Zufallswiedergabe aktiv ist.",
+    "autoDownFavSongDes": "Lade Lieder automatisch herunter wenn sie zu Favoriten hinzugefügt werden",
+    "autoDownFavSong": "Lade Favoriten automatisch herunter"
 }

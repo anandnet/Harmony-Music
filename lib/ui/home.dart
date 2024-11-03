@@ -48,7 +48,12 @@ class Home extends StatelessWidget {
           if (Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.canPop()) {
             Get.nestedKey(ScreenNavigationSetup.id)!.currentState!.pop();
           } else {
-            if (playerController.buttonState.value == PlayButtonState.playing) {
+            if (homeScreenController.tabIndex.value != 0) {
+              settingsScreenController.isBottomNavBarEnabled.isTrue
+                  ? homeScreenController.onBottonBarTabSelected(0)
+                  : homeScreenController.onSideBarTabSelected(0);
+            } else if (playerController.buttonState.value ==
+                PlayButtonState.playing) {
               SystemNavigator.pop();
             } else {
               await Get.find<AudioHandler>().customAction("saveSession");

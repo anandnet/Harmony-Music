@@ -348,7 +348,6 @@ class LibraryPlaylistsController extends GetxController
       {bool createPlaylistNaddSong = false, List<MediaItem>? songItems}) async {
     String title = textInputController.text;
     if (title != "") {
-      title = "${title[0].toUpperCase()}${title.substring(1).toLowerCase()}";
       dynamic newplst;
 
       if (playlistCreationMode.value == "piped") {

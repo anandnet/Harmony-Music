@@ -53,7 +53,8 @@ class UpNextQueue extends StatelessWidget {
                 () => Dismissible(
                   key: Key(playerController.currentQueue[index].id),
                   direction: DismissDirection.horizontal,
-                  confirmDismiss: (direction) async => playerController.currentSongIndex.value != index,
+                  confirmDismiss: (direction) async =>
+                      playerController.currentSongIndex.value != index,
                   onDismissed: (direction) {
                     playerController
                         .removeFromQueue(playerController.currentQueue[index]);
@@ -81,15 +82,35 @@ class UpNextQueue extends StatelessWidget {
                       ).whenComplete(() => Get.delete<SongInfoController>());
                     },
                     contentPadding:
-                        const EdgeInsets.only(top: 0, left: 30, right: 25),
+                        const EdgeInsets.only(top: 0, left: 0, right: 25),
                     tileColor: playerController.currentSongIndex.value == index
                         ? Theme.of(homeScaffoldContext).colorScheme.secondary
                         : Theme.of(homeScaffoldContext)
                             .bottomSheetTheme
                             .backgroundColor,
-                    leading: ImageWidget(
-                      size: 50,
-                      song: playerController.currentQueue[index],
+                    leading: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (GetPlatform.isDesktop)
+                          IconButton(
+                              onPressed: () {
+                                if (playerController.currentSongIndex.value ==
+                                    index) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      snackbar(context,
+                                          "songRemovedfromQueueCurrSong".tr,
+                                          size: SanckBarSize.BIG));
+                                } else {
+                                  playerController.removeFromQueue(
+                                      playerController.currentQueue[index]);
+                                }
+                              },
+                              icon: const Icon(Icons.close)),
+                        ImageWidget(
+                          size: 50,
+                          song: playerController.currentQueue[index],
+                        ),
+                      ],
                     ),
                     title: Marquee(
                       delay: const Duration(milliseconds: 300),

@@ -24,6 +24,7 @@ class UpNextQueue extends StatelessWidget {
       color: Theme.of(context).bottomSheetTheme.backgroundColor,
       child: Obx(() {
         return ReorderableListView.builder(
+          footer: SizedBox(height: Get.mediaQuery.padding.bottom),
           scrollController:
               isQueueInSlidePanel ? playerController.scrollController : null,
           onReorder: (int oldIndex, int newIndex) {
@@ -40,8 +41,7 @@ class UpNextQueue extends StatelessWidget {
           itemCount: playerController.currentQueue.length,
           padding: EdgeInsets.only(
               top: isQueueInSlidePanel ? 55 : 0,
-              bottom:
-                  isQueueInSlidePanel ? 80 : 0 + Get.mediaQuery.padding.bottom),
+              bottom: isQueueInSlidePanel ? 80 : 0),
           physics: const AlwaysScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             final homeScaffoldContext =
@@ -81,8 +81,10 @@ class UpNextQueue extends StatelessWidget {
                         ),
                       ).whenComplete(() => Get.delete<SongInfoController>());
                     },
-                    contentPadding:
-                        const EdgeInsets.only(top: 0, left: 0, right: 25),
+                    contentPadding: EdgeInsets.only(
+                        top: 0,
+                        left: GetPlatform.isAndroid ? 30 : 0,
+                        right: 25),
                     tileColor: playerController.currentSongIndex.value == index
                         ? Theme.of(homeScaffoldContext).colorScheme.secondary
                         : Theme.of(homeScaffoldContext)

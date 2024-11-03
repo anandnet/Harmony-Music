@@ -1,3 +1,15 @@
+## 1.10.3
+* Fixed Song is not playable due to server restriction!
+* Added option to swipe to queue item removal and queue clear 
+* Desktop Full Screen player (Will open on clicking song title in mini player)
+* Automatically download favorite songs #164 (Enable it from settings)
+* Redirect to home before exiting 
+* Enabled download option for fav playlist
+* Fixed Can't capitalize letters in playlist titles
+* Fixed Last song in queue is covered on Android
+* Fixed search button height in Android
+* Fixed opening of album from song when album is already bookmarked
+
 ## 1.10.2
 * Fixed Song is not playable due to server restriction!
 * Added hl code #298

@@ -1,0 +1,9 @@
+* Fixed Song is not playable due to server restriction!
+* Added option to swipe to queue item removal and queue clear 
+* Automatically download favorite songs #164 (Enable it from settings)
+* Redirect to home before exiting 
+* Enabled download option for fav playlist
+* Fixed Can't capitalize letters in playlist titles
+* Fixed Last song in queue is covered on Android
+* Fixed search button height in Android
+* Fixed opening of album from song when album is already bookmarked

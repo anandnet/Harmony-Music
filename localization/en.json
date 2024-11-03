@@ -63,6 +63,8 @@
     "endOfThisSong": "End of this song",
     "appInfo": "App Info",
     "download": "Download",
+    "autoDownFavSong": "Auto download favorite songs",
+    "autoDownFavSongDes": "Automatically download favorite songs when added to favorites",
     "networkError": "Network error! Check your network connection.",
     "downloadError2": "Requested song is not downloadable due to server restriction. You may try again",
     "downloadError3": "Downloading failed due to network error! Please try again",

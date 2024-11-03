@@ -30,7 +30,7 @@ class SettingsScreen extends StatelessWidget {
     return Padding(
       padding: isBottomNavActive
           ? EdgeInsets.only(left: 20, top: topPadding, right: 15)
-          : EdgeInsets.only(top: topPadding, left: 5,right: 5),
+          : EdgeInsets.only(top: topPadding, left: 5, right: 5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -198,10 +198,9 @@ class SettingsScreen extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyMedium),
                       trailing: Obx(
                         () => CustSwitch(
-                            value: settingsController
-                                .slidableActionEnabled.isTrue,
-                            onChanged:
-                                settingsController.toggleSlidableAction),
+                            value:
+                                settingsController.slidableActionEnabled.isTrue,
+                            onChanged: settingsController.toggleSlidableAction),
                       )),
                 ],
               ),
@@ -491,6 +490,19 @@ class SettingsScreen extends StatelessWidget {
                 title: "download".tr,
                 icon: Icons.download_rounded,
                 children: [
+                  ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: Text("autoDownFavSong".tr),
+                    subtitle: Text("autoDownFavSongDes".tr,
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    trailing: Obx(
+                      () => CustSwitch(
+                          value: settingsController
+                              .autoDownloadFavoriteSongEnabled.value,
+                          onChanged: settingsController
+                              .toggleAutoDownloadFavoriteSong),
+                    ),
+                  ),
                   ListTile(
                     contentPadding: const EdgeInsets.only(left: 5, right: 10),
                     title: Text("downloadingFormat".tr),

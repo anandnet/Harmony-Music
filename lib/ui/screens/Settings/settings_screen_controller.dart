@@ -39,6 +39,7 @@ class SettingsScreenController extends GetxController {
   final exportLocationPath = "".obs;
   final downloadingFormat = "".obs;
   final hideDloc = true.obs;
+  final autoDownloadFavoriteSongEnabled = false.obs;
   final isTransitionAnimationDisabled = false.obs;
   final isBottomNavBarEnabled = false.obs;
   final backgroundPlayEnabled = true.obs;
@@ -107,6 +108,8 @@ class SettingsScreenController extends GetxController {
       isIgnoringBatteryOptimizations.value =
           (await Permission.ignoreBatteryOptimizations.isGranted);
     }
+    autoDownloadFavoriteSongEnabled.value =
+        setBox.get("autoDownloadFavoriteSongEnabled") ?? false;
   }
 
   void setAppLanguage(String? val) {
@@ -131,7 +134,7 @@ class SettingsScreenController extends GetxController {
     final playerCon = Get.find<PlayerController>();
     setBox.put("playerUi", val);
     if (val == 1 && playerCon.gesturePlayerStateAnimationController == null) {
-     playerCon.initGesturePlayerStateAnimationController();
+      playerCon.initGesturePlayerStateAnimationController();
     }
 
     playerUi.value = val;
@@ -267,6 +270,11 @@ class SettingsScreenController extends GetxController {
       await Hive.openBox("homeScreenData");
       Get.find<HomeScreenController>().cachedHomeScreenData(updateAll: true);
     }
+  }
+
+  void toggleAutoDownloadFavoriteSong(bool val) {
+    setBox.put("autoDownloadFavoriteSongEnabled", val);
+    autoDownloadFavoriteSongEnabled.value = val;
   }
 
   void toggleBackgroundPlay(bool val) {

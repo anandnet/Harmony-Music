@@ -418,7 +418,7 @@ class Languages extends Translations {
           "skipSilence": "Пропусни тишината",
           "create": "Създай",
           "equalizer": "Еквалайзер",
-          "enqueueSong": "Постави тази песен в опашката",
+          "enqueueSong": "Добави в опашката",
           "noBookmarks": "Няма отметки!",
           "playlists": "Плейлисти",
           "videos": "Видеоклипове",
@@ -432,7 +432,7 @@ class Languages extends Translations {
           "newVersionAvailable": "Налична е нова версия!",
           "items": "елементи",
           "subscribers": "абонати",
-          "startRadio": "Стартирай радио",
+          "startRadio": "Стартирай радиото",
           "discover": "Открийте",
           "cacheSongs": "Кеш на песни",
           "songAlreadyExists": "Песента вече съществува!",
@@ -1461,6 +1461,9 @@ class Languages extends Translations {
           "endOfThisSong": "End of this song",
           "appInfo": "App Info",
           "download": "Download",
+          "autoDownFavSong": "Auto download favorite songs",
+          "autoDownFavSongDes":
+              "Automatically download favorite songs when added to favorites",
           "networkError": "Network error! Check your network connection.",
           "downloadError2":
               "Requested song is not downloadable due to server restriction. You may try again",
@@ -5587,7 +5590,7 @@ class Languages extends Translations {
           "skipSilenceDes": "Silêncio será pulado quando houver",
           "errorOccuredAlert": "Aconteceu algum erro!",
           "high": "Alta",
-          "searchDes": "Músicas, Playlists, Álbum ou Artista",
+          "searchDes": "Músicas,Playlist,Álbum ou Artista",
           "results": "Resultados",
           "playlistBlacklistAlert": "Playlist adicionada à lista negra!",
           "artistDesNotAvailable": "Descrição não disponível!",
@@ -5661,8 +5664,8 @@ class Languages extends Translations {
           "backupMsg": "Backup salvo com sucesso!",
           "backFilesFound": "bancos de dados encontrados",
           "restoreMsg":
-              "Restaurado com sucesso! As alterações serão aplicadas na reinicialização",
-          "restoring": "restaurando...",
+              "Restauração concluída com sucesso! Mudanças são aplicadas no reinício do app",
+          "restoring": "Restaurando...",
           "cacheHomeScreenData":
               "Armazenar dados de conteúdo da tela inicial em cache",
           "deleteDownloadedDataAlert": "Removido com sucesso dos downloads",
@@ -5693,7 +5696,37 @@ class Languages extends Translations {
           "gesture": "Gestos",
           "playerUiDes": "Tipo de interface do player",
           "loudnessNormalizationDes":
-              "Define o mesmo volume para todas as músicas (Experimental) (Não funcionará em músicas baixadas antes da versão (< v1.10.0))"
+              "Define o mesmo volume para todas as músicas (Experimental) (Não funcionará em músicas baixadas antes da versão (< v1.10.0))",
+          "androidBackupWarning":
+              "Não testado: Ao selecionar a caixa de verificação depois de descarregar mais de 60 ficheiros, o processo pode consumir uma grande quantidade de memória e pode fazer com que o telemóvel ou a aplicação falhe. Proceda por sua conta e risco.",
+          "loudnessDb": "Intensidade",
+          "id": "ID",
+          "bitrate": "Bitrate",
+          "queueShufflingDeniedMsg":
+              "A fila não pode ser misturada quando o modo de mistura está ativo",
+          "backupAppData": "Fazer cópia de segurança",
+          "title": "Título",
+          "backup": "Cópia de segurança",
+          "queuerearrangingDeniedMsg":
+              "A fila não pode ser reordenada quando o modo aleatório está ativado",
+          "songInfo": "Detalhes",
+          "duration": "Duração",
+          "letsStrart": "Vamos começar...",
+          "includeDownloadedFiles": "Incluir ficheiros de músicas transferidas",
+          "songNotPlayable":
+              "A canção não pode ser reproduzida devido a restrições do servidor!",
+          "restartApp": "Reiniciar Aplicação",
+          "playnextMsg": "Seguinte",
+          "queueLoopNotDisMsg1":
+              "O modo de ciclo não pode ser desativado quando o modo aleatório está ativado.",
+          "enableSlidableAction": "Ativar gestos",
+          "enableSlidableActionDes": "Ativar gestos no título do som",
+          "urlSearchDes":
+              "URL detectado clique nele para abrir/reproduzir o conteúdo associado",
+          "audioCodec": "Codec",
+          "processFiles": "Processando os ficheiros...",
+          "backupInProgress": "Cópia de segurança em curso...",
+          "restoreAppData": "Restaurar dados da aplicação"
         },
         "ro": {
           "minutes": "minute",
@@ -6983,7 +7016,21 @@ class Languages extends Translations {
           "downloadError3":
               "Ağ hatası nedeniyle indirme başarısız oldu! Lütfen tekrar deneyin.",
           "loudnessNormalizationDes":
-              "Tüm şarkılar için aynı ses yüksekliği seviyesini ayarlar (Deneysel) (Önceki sürümde (< v1.10.0) indirilen şarkılarda çalışmaz)"
+              "Tüm şarkılar için aynı ses yüksekliği seviyesini ayarlar (Deneysel) (Önceki sürümde (< v1.10.0) indirilen şarkılarda çalışmaz)",
+          "appInfo": "App Bilgisi",
+          "playerUi": "Çalıcı UI",
+          "playerUiDes": "Çalıcı UI'ını seç",
+          "gesture": "Hareket",
+          "standard": "Standard",
+          "enableSlidableAction": "Kaydırma eylemlerini aç",
+          "playnextMsg": "Sırada",
+          "shuffleQueue": "Karma Sırası",
+          "queueLoop": "Sıra döngüsü",
+          "queueLoopNotDisMsg1":
+              "Sıra döngüsü, karma modu devrede iken devre dışı bırakılamıyor.",
+          "queueLoopNotDisMsg2": "Sırayı döndür, radyo modunda kullanılamıyor.",
+          "loudnessNormalization": "Yükseklik normalisation'ı",
+          "download": "İndir"
         },
         "uk": {
           "library": "Бібліотека",

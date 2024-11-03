@@ -107,7 +107,7 @@ class StandardPlayer extends StatelessWidget {
         //Player Top content
         Padding(
           padding: const EdgeInsets.only(left: 25, right: 25),
-          child: (GetPlatform.isMobile && context.isLandscape)
+          child: (context.isLandscape)
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

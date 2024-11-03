@@ -114,6 +114,9 @@ class MiniPlayer extends StatelessWidget {
                                 playerController.prev();
                               }
                             },
+                            onTap: () {
+                              playerController.playerPanelController.open();
+                            },
                             child: ColoredBox(
                               color: Colors.transparent,
                               child: Column(

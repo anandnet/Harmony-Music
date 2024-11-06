@@ -228,5 +228,7 @@
     "queueLoop": "Opakovať",
     "queueLoopNotDisMsg1": "Režim opakovania nie je možné vypnúť, keď je povolený náhodný výber.",
     "queueLoopNotDisMsg2": "V režime rádio nie je možné zapnúť náhodný výber.",
-    "enableSlidableActionDes": "Povoliť akcie gestami pri skladbe"
+    "enableSlidableActionDes": "Povoliť akcie gestami pri skladbe",
+    "autoDownFavSong": "Automaticky sťahovať obľúbené skladby",
+    "autoDownFavSongDes": "Po pridaní do obľúbených položiek automaticky stiahne obľúbené skladby"
 }

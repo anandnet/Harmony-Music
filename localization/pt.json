@@ -228,5 +228,7 @@
     "audioCodec": "Codec",
     "processFiles": "Processando os ficheiros...",
     "backupInProgress": "Cópia de segurança em curso...",
-    "restoreAppData": "Restaurar dados da aplicação"
+    "restoreAppData": "Restaurar dados da aplicação",
+    "autoDownFavSong": "Download automático de músicas favoritas",
+    "autoDownFavSongDes": "Baixe músicas favoritas automaticamente quando adicionadas aos favoritos"
 }

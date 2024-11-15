@@ -1,1 +1,25 @@
-{}
+{
+    "home": "خانه",
+    "songs": "آهنگ",
+    "playlists": "لیست پخش",
+    "singles": "تکی",
+    "artists": "خواننده ها",
+    "settings": "تنظیمات",
+    "library": "کتابخانه",
+    "libSongs": "کتابخانه آهنگ ها",
+    "libAlbums": "کتابخانه آلبوم ها",
+    "libArtists": "کتابخانه خوننده ها",
+    "communityplaylists": "لیست پخش عمومی",
+    "featuredplaylists": "لیست پخش ویژه",
+    "items": "آیتم ها",
+    "retry": "دوباره امتحان کنید !",
+    "networkError1": "خطای اینترنت!",
+    "noOfflineSong": "آهنگ آفلاینی وجود ندارد!",
+    "recentlyPlayed": "لیست پخش تازه",
+    "favorites": "محبوب ها",
+    "cachedOrOffline": "کش شده / آفلاین",
+    "downloads": "دانلود ها",
+    "emptyPlaylist": "لیست پخش خالی !",
+    "albums": "آلبوم ها",
+    "libPlaylists": "کتابخانه لیست پخش"
+}

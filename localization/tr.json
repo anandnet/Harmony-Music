@@ -110,7 +110,7 @@
     "skipSilenceDes": "Şarkı çalma sırasında sessizlik atlanacak",
     "errorOccuredAlert": "Bir hata oluştu!",
     "high": "Yüksek",
-    "searchDes": "Şarkılar, Çalma Listesi, Albüm veya Sanatçı",
+    "searchDes": "Şarkılar, Çalma Listesi, Albüm ya da Sanatçı",
     "results": "Sonuç",
     "playlistBlacklistAlert": "Çalma listesi kara listeye alındı!",
     "artistDesNotAvailable": "Açıklama mevcut değil!",
@@ -215,7 +215,7 @@
     "songNotPlayable": "Şarkı sunucu kısıtlaması nedeniyle çalınamıyor!",
     "downloadError3": "Ağ hatası nedeniyle indirme başarısız oldu! Lütfen tekrar deneyin.",
     "loudnessNormalizationDes": "Tüm şarkılar için aynı ses yüksekliği seviyesini ayarlar (Deneysel) (Önceki sürümde (< v1.10.0) indirilen şarkılarda çalışmaz)",
-    "appInfo": "App Bilgisi",
+    "appInfo": "Uygulama Hakkında",
     "playerUi": "Çalıcı UI",
     "playerUiDes": "Çalıcı UI'ını seç",
     "gesture": "Hareket",
@@ -227,5 +227,8 @@
     "queueLoopNotDisMsg1": "Sıra döngüsü, karma modu devrede iken devre dışı bırakılamıyor.",
     "queueLoopNotDisMsg2": "Sırayı döndür, radyo modunda kullanılamıyor.",
     "loudnessNormalization": "Yükseklik normalisation'ı",
-    "download": "İndir"
+    "download": "İndir",
+    "autoDownFavSongDes": "Favorilere eklendiğinde favori şarkıları otomatik olarak indir",
+    "autoDownFavSong": "Favori şarkıları otomatik indir",
+    "enableSlidableActionDes": "Şarkı döşemesinde kaydırılabilir eylemleri etkinleştir"
 }

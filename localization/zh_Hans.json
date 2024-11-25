@@ -193,7 +193,7 @@
     "disableTransitionAnimation": "禁用过渡动画",
     "restartApp": "重启应用",
     "reArrangePlaylist": "重排播放列表",
-    "removeMultiple": "群删歌曲",
+    "removeMultiple": "移除多首歌曲",
     "addMultipleSongs": "添加到播放列表",
     "songNotPlayable": "由于服务器限制，歌曲无法播放！",
     "queueShufflingDeniedMsg": "随机播放启用时无法随机重排队列",
@@ -229,5 +229,7 @@
     "backupInProgress": "备份正在进行中...",
     "restoreAppData": "恢复应用数据",
     "restore": "恢复",
-    "closeApp": "关闭应用"
+    "closeApp": "关闭应用",
+    "autoDownFavSong": "自动下载收藏的歌曲",
+    "autoDownFavSongDes": "当添加到收藏夹时自动下载收藏的歌曲"
 }

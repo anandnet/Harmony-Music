@@ -228,5 +228,7 @@
     "playnextMsg": "Tiếp theo",
     "queueLoopNotDisMsg1": "Không thể tắt hàng đợi lập khi bật chế độ ngẩu nhiên.",
     "queueLoopNotDisMsg2": "Không thể bật hàng đợi lập trong chế độ đài phát thanh.",
-    "enableSlidableActionDes": "Bật chế độ vuốt trên tiêu đề bài hát"
+    "enableSlidableActionDes": "Bật chế độ vuốt trên tiêu đề bài hát",
+    "autoDownFavSongDes": "Tự động tải bài hát về sau khi thêm vào danh sách yêu thích",
+    "autoDownFavSong": "Tự động tải về những bài hát được thích"
 }

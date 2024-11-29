@@ -223,5 +223,12 @@
     "downloadError2": "Żądany utwór nie może zostać pobrany z powodu ograniczeń serwera. Możesz spróbować ponownie",
     "downloadError3": "Pobieranie nie powiodło się z powodu błędu sieci! Spróbuj ponownie",
     "duration": "Czas trwania",
-    "audioCodec": "Kodek dźwięku"
+    "audioCodec": "Kodek dźwięku",
+    "playerUiDes": "Wybierz interfejs użytkownika odtwarzacza",
+    "standard": "Standard",
+    "urlSearchDes": "Wykryty adres URL - kliknij go, aby otworzyć/odtworzyć powiązaną zawartość",
+    "queueLoopNotDisMsg2": "Tryb pętli kolejki nie może być włączony w trybie radiowym.",
+    "enableSlidableAction": "Włącz przesuwalne akcje",
+    "enableSlidableActionDes": "Włącz przesuwalne akcje na kafelku utworu",
+    "bitrate": "Szybkość transmisji"
 }

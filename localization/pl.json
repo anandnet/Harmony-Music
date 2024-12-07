@@ -230,5 +230,8 @@
     "queueLoopNotDisMsg2": "Tryb pętli kolejki nie może być włączony w trybie radiowym.",
     "enableSlidableAction": "Włącz przesuwalne akcje",
     "enableSlidableActionDes": "Włącz przesuwalne akcje na kafelku utworu",
-    "bitrate": "Szybkość transmisji"
+    "bitrate": "Szybkość transmisji",
+    "playerUi": "Interfejs użytkownika gracza",
+    "playnextMsg": "Nadchodzące",
+    "loudnessDb": "GłośnośćDb"
 }

@@ -227,7 +227,7 @@
     "playnextMsg": "公開予定 {Song Name}",
     "queueLoopNotDisMsg1": "シャッフル有効時は、ループは無効にできません。",
     "queueLoopNotDisMsg2": "ラジオモードでは、ループを有効にできません。",
-    "enableSlidableActionDes": "曲のタイルをスライドする操作を使う",
+    "enableSlidableActionDes": "Enable slideable actions on song tiles",
     "enableSlidableAction": "スライドによる操作",
     "autoDownFavSongDes": "お気に入りに追加した曲を自動でダウンロード",
     "autoDownFavSong": "お気に入りの曲を自動ダウンロード"

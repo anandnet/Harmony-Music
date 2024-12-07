@@ -221,8 +221,12 @@
     "standard": "Standar",
     "gesture": "Gerakan",
     "queueLoopNotDisMsg2": "Mode antrean berulang tidak bisa diaktifkan pada mode radio.",
-    "enableSlidableAction": "Aktifkan aksi menggeser",
+    "enableSlidableAction": "Aktifkan tindakan yang dapat digeser",
     "shuffleQueue": "Acak Antrean",
-    "queueLoop": "Antrean Berulang",
-    "queueLoopNotDisMsg1": "Mode antrean berulang tidak bisa dimatikan apabila mode mengacak sedang diaktifkan"
+    "queueLoop": "Loop antrian",
+    "queueLoopNotDisMsg1": "Mode loop antrean tidak dapat dinonaktifkan saat mode acak diaktifkan.",
+    "enableSlidableActionDes": "Aktifkan tindakan yang dapat digeser pada ubin lagu",
+    "autoDownFavSong": "Unduh otomatis lagu favorit",
+    "autoDownFavSongDes": "Unduh lagu favorit secara otomatis saat ditambahkan ke favorit",
+    "playnextMsg": "Mendatang"
 }

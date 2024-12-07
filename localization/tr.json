@@ -230,5 +230,6 @@
     "download": "İndir",
     "autoDownFavSongDes": "Favorilere eklendiğinde favori şarkıları otomatik olarak indir",
     "autoDownFavSong": "Favori şarkıları otomatik indir",
-    "enableSlidableActionDes": "Şarkı döşemesinde kaydırılabilir eylemleri etkinleştir"
+    "enableSlidableActionDes": "Şarkı döşemesinde kaydırılabilir eylemleri etkinleştir",
+    "androidBackupWarning": "Test edilmedi: 60'tan fazla dosya indirdikten sonra onay kutusunu seçmek, işlem büyük miktarda bellek tüketebilir ve telefonun veya uygulamanın çökmesine neden olabilir. Kendi riskinizle devam edin."
 }

@@ -215,5 +215,18 @@
     "backupInProgress": "Backup in corso...",
     "backupSettingsAndPlaylistsDes": "Salva tutte le impostazioni, le playlist e i dati di accesso in un file di backup",
     "cacheHomeScreenDataDes": "Abilita la memorizzazione nella cache dei dati del contenuto della schermata iniziale; se l'opzione è attivata, la schermata iniziale verrà caricata istantaneamente",
-    "dismiss": "Chiudi"
+    "dismiss": "Chiudi",
+    "autoDownFavSong": "Scarica automaticamente le canzoni preferite",
+    "autoDownFavSongDes": "Scarica automaticamente i brani preferiti quando vengono aggiunti ai preferiti",
+    "playerUiDes": "Seleziona l'interfaccia utente del lettore",
+    "gesture": "Gesto",
+    "queueLoop": "Ciclo di coda",
+    "enableSlidableActionDes": "Abilita le azioni scorrevoli sul riquadro del brano",
+    "playnextMsg": "Prossimamente",
+    "queueLoopNotDisMsg1": "La modalità di riproduzione in loop non può essere disattivata quando è abilitata la modalità casuale.",
+    "enableSlidableAction": "Abilita le azioni scorrevoli",
+    "standard": "Standard",
+    "shuffleQueue": "Coda di riproduzione casuale",
+    "queueLoopNotDisMsg2": "La modalità loop di coda non può essere abilitata in modalità radio.",
+    "playerUi": "Interfaccia utente del lettore"
 }

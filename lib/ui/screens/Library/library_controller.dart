@@ -322,7 +322,7 @@ class LibraryPlaylistsController extends GetxController
 
   Future<bool> renamePlaylist(Playlist playlist) async {
     String title = textInputController.text;
-    if (title.isNotEmpty && title.trim().isNotEmpty) {
+    if (title.trim().isNotEmpty) {
       if (playlist.isPipedPlaylist) {
         final res = await Get.find<PipedServices>()
             .renamePlaylist(playlist.playlistId, title);
@@ -347,7 +347,7 @@ class LibraryPlaylistsController extends GetxController
   Future<bool> createNewPlaylist(
       {bool createPlaylistNaddSong = false, List<MediaItem>? songItems}) async {
     String title = textInputController.text;
-    if (title.isNotEmpty && title.trim().isNotEmpty) {
+    if (title.trim().isNotEmpty) {
       dynamic newplst;
 
       if (playlistCreationMode.value == "piped") {

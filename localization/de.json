@@ -172,7 +172,7 @@
     "plain": "Einfach",
     "cacheHomeScreenDataDes": "Aktivieren das Zwischenspeichern des Inhalts des Startbildschirms. Der Startbildschirm wird sofort geladen, wenn diese Option aktiviert ist",
     "cacheHomeScreenData": "Inhalt des Startbildschirms zwischenspeichern",
-    "disableTransitionAnimation": "Übergangsanimatiomen Ausschalten",
+    "disableTransitionAnimation": "Übergangsanimationen Ausschalten",
     "disableTransitionAnimationDes": "Aktiviere dies, um Tabübergangsanimationen abzuschalten",
     "exportDowloadedFiles": "Exportiere heruntergeladene Dateien",
     "exportDowloadedFilesDes": "Klicke hier, um die heruntergeladenen Dateien vom inApp Verzeichnis zu einem externen Verzeichnis zu exportieren",

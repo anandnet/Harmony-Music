@@ -10,6 +10,8 @@ const langMap = {
   "eo": "Esperanto",
   "es": "Spanish",
   "et": "Estonian",
+  "eu": "Basque",
+  'fa': "Persian",
   "fi": "Finnish",
   "fil": "Filipino",
   "fj": "Fijian",

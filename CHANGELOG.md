@@ -1,3 +1,7 @@
+## 1.10.4
+* Fixed stream issues
+* Fixed cross platform data restore issue
+
 ## 1.10.3
 * Fixed Song is not playable due to server restriction!
 * Added option to swipe to queue item removal and queue clear 

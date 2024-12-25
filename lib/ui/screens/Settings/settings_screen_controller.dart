@@ -75,25 +75,33 @@ class SettingsScreenController extends GetxController {
   }
 
   Future<void> _setInitValue() async {
+    final isDesktop = GetPlatform.isDesktop;
     currentAppLanguageCode.value = setBox.get('currentAppLanguageCode') ?? "en";
-    isBottomNavBarEnabled.value = setBox.get("isBottomNavBarEnabled") ?? false;
+    isBottomNavBarEnabled.value =
+        isDesktop ? false : (setBox.get("isBottomNavBarEnabled") ?? false);
     noOfHomeScreenContent.value = setBox.get("noOfHomeScreenContent") ?? 3;
     isTransitionAnimationDisabled.value =
         setBox.get("isTransitionAnimationDisabled") ?? false;
     cacheSongs.value = setBox.get('cacheSongs');
     themeModetype.value = ThemeType.values[setBox.get('themeModeType')];
-    skipSilenceEnabled.value = setBox.get("skipSilenceEnabled");
-    loudnessNormalizationEnabled.value =
-        setBox.get("loudnessNormalizationEnabled") ?? false;
+    skipSilenceEnabled.value =
+        isDesktop ? false : setBox.get("skipSilenceEnabled");
+    loudnessNormalizationEnabled.value = isDesktop
+        ? false
+        : (setBox.get("loudnessNormalizationEnabled") ?? false);
     restorePlaybackSession.value =
         setBox.get("restrorePlaybackSession") ?? false;
     cacheHomeScreenData.value = setBox.get("cacheHomeScreenData") ?? true;
     streamingQuality.value =
         AudioQuality.values[setBox.get('streamingQuality')];
-    playerUi.value = setBox.get('playerUi') ?? 0;
+    playerUi.value = isDesktop ? 0 : (setBox.get('playerUi') ?? 0);
     backgroundPlayEnabled.value = setBox.get("backgroundPlayEnabled") ?? true;
-    downloadLocationPath.value =
+    final downloadPath =
         setBox.get('downloadLocationPath') ?? await _createInAppSongDownDir();
+    downloadLocationPath.value = (isDesktop && downloadPath.contains("emulated"))
+        ? await _createInAppSongDownDir()
+        : downloadPath;
+
     exportLocationPath.value =
         setBox.get("exportLocationPath") ?? "/storage/emulated/0/Music";
     downloadingFormat.value = setBox.get('downloadingFormat') ?? "opus";

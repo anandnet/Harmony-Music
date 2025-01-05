@@ -58,12 +58,24 @@ class MyApp extends StatelessWidget {
               Hive.box("AppPrefs").get('currentAppLanguageCode') ?? "en"),
           fallbackLocale: const Locale("en"),
           builder: (context, child) {
-            final scale = MediaQuery.of(context)
-                .textScaler
+            final mQuery = MediaQuery.of(context);
+            final scale = mQuery.textScaler
                 .clamp(minScaleFactor: 1.0, maxScaleFactor: 1.1);
-            return MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaler: scale),
-              child: child!,
+            return Stack(
+              children: [
+                MediaQuery(
+                    data: mQuery.copyWith(textScaler: scale), child: child!),
+                GestureDetector(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      color: Colors.transparent,
+                      height: mQuery.padding.bottom,
+                      width: mQuery.size.width,
+                    ),
+                  ),
+                )
+              ],
             );
           });
     });

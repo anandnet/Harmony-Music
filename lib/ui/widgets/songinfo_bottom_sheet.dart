@@ -67,9 +67,8 @@ class SongInfoBottomSheet extends StatelessWidget {
                             onPressed: () => showDialog(
                                   context: context,
                                   builder: (context) => SongInfoDialog(
-                                      song: song,
-                                      isDownloaded: songInfoController
-                                          .isDownloaded.isTrue),
+                                    song: song,
+                                  ),
                                 ),
                             icon: Icon(
                               Icons.info,

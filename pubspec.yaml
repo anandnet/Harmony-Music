@@ -62,11 +62,6 @@ dependencies:
   path: ^1.8.3
   path_provider: ^2.1.1
   permission_handler: ^11.0.1
-  player_response:
-    git:
-      url: https://github.com/anandnet/Player-Response.git
-      branch: main
-      ref: 14635d4d1c8511a17097490fd3ad9236627a4924
   restart_app: ^1.2.1
   sdk_int:
     git:
@@ -85,6 +80,10 @@ dependencies:
   url_launcher: ^6.2.1
   widget_marquee: ^0.0.8
   window_manager: ^0.4.2
+  youtube_explode_dart:
+    git:
+      url: https://github.com/anandnet/youtube_explode_dart.git
+      ref: cf2cda27b06d2e2811c20e930d1ba0b4d1685fb9
 dev_dependencies:
 
   # The "flutter_lints" package below contains a set of recommended lints to

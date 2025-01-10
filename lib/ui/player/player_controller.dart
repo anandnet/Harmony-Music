@@ -737,16 +737,10 @@ class PlayerController extends GetxController
 
   /// Called from audio handler in case audio is not playable
   /// or returned streamInfo null due to network error
-  void notifyPlayError(bool networkError) {
-    if (networkError) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-          Get.context!, "networkError1".tr,
-          size: SanckBarSize.MEDIUM));
-    } else {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-          Get.context!, "songNotPlayable".tr,
-          size: SanckBarSize.BIG, duration: const Duration(seconds: 2)));
-    }
+  void notifyPlayError(String message) {
+    ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
+        Get.context!, message == "networkError" ? message.tr : message,
+        size: SanckBarSize.MEDIUM));
   }
 
   @override

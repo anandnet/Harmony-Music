@@ -7,10 +7,10 @@ import 'package:audiotags/audiotags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
 import 'package:hive/hive.dart';
-import 'package:player_response/player_response.dart';
 
+import '/services/stream_service.dart';
+import '/ui/screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
 import '../ui/widgets/snackbar.dart';
 import '/services/permission_service.dart';
 import '../ui/screens/Settings/settings_screen_controller.dart';
@@ -144,21 +144,24 @@ class Downloader extends GetxService {
     final settingsScreenController = Get.find<SettingsScreenController>();
     final downloadingFormat = settingsScreenController.downloadingFormat.string;
 
-    final playerResponse = await PlayerResponse.fetch(song.id);
-    if (playerResponse == null) {
-      printINFO("Network error! Check your network connection.");
-      ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-          Get.context!, "networkError".tr,
-          size: SanckBarSize.BIG,
-          duration: const Duration(seconds: 2),
-          top: !GetPlatform.isDesktop));
-      complete.complete();
-      return complete.future;
-    }
+    final playerResponse = await StreamProvider.fetch(song.id);
+    // if (!playerResponse.playable) {
+    //   printINFO("Network error! Check your network connection.");
+    //   ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
+    //       Get.context!, playerResponse.statusMSG,
+    //       size: SanckBarSize.BIG,
+    //       duration: const Duration(seconds: 2),
+    //       top: !GetPlatform.isDesktop));
+    //   complete.complete();
+    //   return complete.future;
+    // }
 
     if (!playerResponse.playable) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
-          Get.context!, "downloadError2".tr,
+          Get.context!,
+          playerResponse.statusMSG == "networkError"
+              ? playerResponse.statusMSG.tr
+              : playerResponse.statusMSG,
           size: SanckBarSize.BIG,
           duration: const Duration(seconds: 2),
           top: !GetPlatform.isDesktop));
@@ -168,15 +171,17 @@ class Downloader extends GetxService {
     }
 
     Audio requiredAudioStream = downloadingFormat == "opus"
-        ? playerResponse.highestBitrateOpusAudio
-        : playerResponse.highestBitrateMp4aAudio;
+        ? playerResponse.highestBitrateOpusAudio!
+        : playerResponse.highestBitrateMp4aAudio!;
 
     final dirPath = settingsScreenController.downloadLocationPath.string;
+    final actualDownformat =
+        requiredAudioStream.audioCodec.name.contains("mp") ? "m4a" : "opus";
     final RegExp invalidChar =
         RegExp(r'Container.|\/|\\|\"|\<|\>|\*|\?|\:|\!|\[|\]|\¡|\||\%');
     final songTitle =
         "${song.title} (${song.artist})".replaceAll(invalidChar, "");
-    String filePath = "$dirPath/$songTitle.$downloadingFormat";
+    String filePath = "$dirPath/$songTitle.$actualDownformat";
     printINFO("Downloading filePath: $filePath");
     final totalBytes = requiredAudioStream.size;
 
@@ -240,7 +245,8 @@ class Downloader extends GetxService {
             size: SanckBarSize.BIG,
             duration: const Duration(seconds: 2),
             top: !GetPlatform.isDesktop));
-        printINFO("Downloading failed due to network error! Please try again");
+        printINFO(
+            "Downloading failed due to network/stream error! Please try again");
         complete.complete();
       },
     );

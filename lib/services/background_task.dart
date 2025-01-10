@@ -1,5 +1,5 @@
 import 'dart:core';
-import 'package:player_response/player_response.dart';
+import 'package:harmonymusic/services/stream_service.dart';
 
 //Not in use for now
 // Future<List<String>?> getSongUrlFromPiped(String songId,
@@ -26,10 +26,12 @@ import 'package:player_response/player_response.dart';
 //   }
 // }
 
-Future<List<dynamic>?> getStreamInfo(String songId) async {
+Future<Map<String, dynamic>> getStreamInfo(
+  String songId,
+) async {
   if (songId.substring(0, 4) == "MPED") {
     songId = songId.substring(4);
   }
-  final playerResponse = (await PlayerResponse.fetch(songId));
-  return playerResponse?.hmStreamingData;
+  final playerResponse = (await StreamProvider.fetch(songId));
+  return playerResponse.hmStreamingData;
 }

@@ -1354,7 +1354,7 @@ Map<String, Map<String, String>> get keys => {
     "autoDownFavSongDes": "Automatically download favorite songs when added to favorites",
     "networkError": "Network error! Check your network connection.",
     "downloadError2": "Requested song is not downloadable due to server restriction. You may try again",
-    "downloadError3": "Downloading failed due to network error! Please try again",
+    "downloadError3": "Downloading failed due to network/stream error! Please try again",
     "music&Playback": "Music & Playback",
     "content": "Content",
     "personalisation": "Personalisation",

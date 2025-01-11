@@ -31,7 +31,7 @@
     "cancelTimer": "Katkesta taimer",
     "endOfThisSong": "Selle loo lõpuni",
     "appInfo": "Rakenduse teave",
-    "downloadError3": "Allalaadimine ei õnnestunud võrguühenduse vea tõttu! Palun proovi uuesti",
+    "downloadError3": "Allalaadimine ei õnnestunud võrguühenduse või meediavoo vea tõttu! Palun proovi uuesti",
     "music&Playback": "Muusika ja taasesitus",
     "content": "Sisu",
     "personalisation": "Muuda rakendus isikupäraseks",

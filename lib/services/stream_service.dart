@@ -14,7 +14,7 @@ class StreamProvider {
 
     try {
       final res = await yt.videos.streamsClient.getManifest(videoId);
-      final audio = res.audioOnly.sortByBitrate();
+      final audio = res.audioOnly;
       return StreamProvider(
           playable: true,
           statusMSG: "OK",
@@ -50,6 +50,11 @@ class StreamProvider {
           playable: false,
           statusMSG: "Song is unavailable",
         );
+      } else if (e is YoutubeExplodeException) {
+        return StreamProvider(
+          playable: false,
+          statusMSG: e.message,
+        );
       } else {
         return StreamProvider(
           playable: false,
@@ -59,7 +64,6 @@ class StreamProvider {
     }
   }
 
-  Audio? get highestBitrateAudio => audioFormats?[0];
 
   Audio? get highestQualityAudio =>
       audioFormats?.lastWhere((item) => item.itag == 251 || item.itag == 140);

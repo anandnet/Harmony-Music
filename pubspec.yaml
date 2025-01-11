@@ -83,7 +83,7 @@ dependencies:
   youtube_explode_dart:
     git:
       url: https://github.com/anandnet/youtube_explode_dart.git
-      ref: cf2cda27b06d2e2811c20e930d1ba0b4d1685fb9
+      ref: 4255f3abf89943315869b9ef0bc10bc19ace241f
 dev_dependencies:
 
   # The "flutter_lints" package below contains a set of recommended lints to

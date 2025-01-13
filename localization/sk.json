@@ -205,7 +205,7 @@
     "restartApp": "Reštartovať aplikáciu",
     "downloadError2": "Požadovanú skladbu nie je možné stiahnuť z dôvodu obmedzenia servera. Môžete to skúsiť znova",
     "download": "Stiahnuť",
-    "downloadError3": "Sťahovanie zlyhalo z dôvodu chyby siete! Skúste to prosím znova",
+    "downloadError3": "Sťahovanie zlyhalo z dôvodu chyby siete/streamu! Skúste to prosím znova",
     "content": "Obsah",
     "personalisation": "Prispôsobenie",
     "music&Playback": "Hudba a prehrávanie",

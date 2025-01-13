@@ -206,7 +206,7 @@
     "appInfo": "Informations sur l'application",
     "download": "Téléchargement",
     "networkError": "Erreur de réseau ! Vérifiez votre connexion réseau.",
-    "downloadError3": "Le téléchargement a échoué en raison d'une erreur réseau ! Veuillez réessayer",
+    "downloadError3": "Le téléchargement a échoué en raison d'une erreur de réseau / flux ! Veuillez réessayer",
     "content": "Contenu",
     "personalisation": "Personnalisation",
     "loudnessNormalization": "Normalisation du niveau sonore",

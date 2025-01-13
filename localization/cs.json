@@ -209,7 +209,7 @@
     "download": "Stáhnout",
     "networkError": "Chyba sítě! Zkontrolujte připojení k internetu.",
     "downloadError2": "Požadovanou skladbu nelze stáhnout z důvodu omezení serveru. Můžete to zkusit znovu",
-    "downloadError3": "Stažení se nezdařilo kvůli chybě sítě! Zkuste to prosím znovu",
+    "downloadError3": "Stažení se nezdařilo kvůli chybě sítě/streamu! Zkuste to prosím znovu",
     "music&Playback": "Hudba a přehrávání",
     "content": "Obsah",
     "personalisation": "Přizpůsobení",

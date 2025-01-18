@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/navigator.dart';
+import 'package:harmonymusic/ui/screens/Search/search_screen_controller.dart';
 
 import '../screens/Search/search_result_screen_controller.dart';
 import '/models/album.dart';
@@ -17,6 +21,8 @@ class ResultWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final SearchResultScreenController searchResScrController =
         Get.find<SearchResultScreenController>();
+    final SearchScreenController searchScreenController =
+        Get.find<SearchScreenController>();
     final topPadding = context.isLandscape ? 50.0 : 80.0;
     return Obx(
       () => Center(
@@ -28,19 +34,29 @@ class ResultWidget extends StatelessWidget {
             child: searchResScrController.isResultContentFetced.value
                 ? Column(children: [
                     if (!isv2Used)
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "searchRes".tr,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                      ),
-                    if (!isv2Used)
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "${"for1".tr} \"${searchResScrController.queryString.value}\"",
-                          style: Theme.of(context).textTheme.titleMedium,
+                      GestureDetector(
+                        onTap: () {
+                          searchScreenController.textInputController.text =
+                              searchResScrController.queryString.value;
+                          Navigator.pop(context);
+                        },
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "searchRes".tr,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "${"for1".tr} \"${searchResScrController.queryString.value}\"",
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     const SizedBox(

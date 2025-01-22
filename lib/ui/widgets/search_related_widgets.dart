@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/navigator.dart';
 import 'package:harmonymusic/ui/screens/Search/search_screen_controller.dart';
 
 import '../screens/Search/search_result_screen_controller.dart';

@@ -215,7 +215,7 @@
     "songNotPlayable": "Song ist aufgrund von Servereinschränkungen nicht abspielbar!",
     "networkError": "Netzwerkfehler! Überprüfe deine Internetverbindung.",
     "downloadError2": "Der angeforderte Titel kann aufgrund von Serverbeschränkungen nicht heruntergeladen werden. Du kannst es erneut versuchen",
-    "downloadError3": "Herunterladen fehlgeschlagen aufgrund eines Netzwerkfehlers. Versuche es erneut",
+    "downloadError3": "Herunterladen fehlgeschlagen aufgrund eines Netzwerk-/Streamfehlers! Versuche es erneut",
     "personalisation": "Personalisierung",
     "urlSearchDes": "URL erkannt. Tippe darauf, um den zugehörigen Inhalt zu öffnen/abzuspielen",
     "music&Playback": "Musik & Wiedergabe",
@@ -233,5 +233,9 @@
     "playnextMsg": "Nächster",
     "queueLoopNotDisMsg1": "Wiederholen kann nicht deaktiviert werden, wenn Zufallswiedergabe aktiv ist.",
     "autoDownFavSongDes": "Lade Lieder automatisch herunter wenn sie zu Favoriten hinzugefügt werden",
-    "autoDownFavSong": "Lade Favoriten automatisch herunter"
+    "autoDownFavSong": "Lade Favoriten automatisch herunter",
+    "resetToDefault": "Standardeinstellungen wiederherstellen",
+    "resetToDefaultMsg": "Zurücksetzen der Einstellungen abgeschlossen, bitte starte die App neu",
+    "resetToDefaultDes": "Setze die App-Einstellungen auf die Standards zurück (Neustart erforderlich)",
+    "misc": "Sonstiges"
 }

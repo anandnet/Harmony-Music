@@ -1,3 +1,9 @@
+## 1.11.0
+* Fixed Stream issues
+* Added feature to restore settings to default
+* Fixed: Android swipe gesture navigation cause half-way drag on player page #367
+* Updated language data
+
 ## 1.10.4
 * Fixed stream issues
 * Fixed cross platform data restore issue

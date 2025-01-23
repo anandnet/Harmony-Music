@@ -101,18 +101,17 @@ class PlayerController extends GetxController
     _listenForPlaylistChange();
     _listenForKeyboardActivity();
     _setInitLyricsMode();
-    isLoopModeEnabled.value =
-        Hive.box("AppPrefs").get("isLoopModeEnabled") ?? false;
-    isShuffleModeEnabled.value =
-        Hive.box("appPrefs").get("isShuffleModeEnabled") ?? false;
+    final appPrefs = Hive.box("AppPrefs");
+    isLoopModeEnabled.value = appPrefs.get("isLoopModeEnabled") ?? false;
+    isShuffleModeEnabled.value = appPrefs.get("isShuffleModeEnabled") ?? false;
     isQueueLoopModeEnabled.value =
-        Hive.box("AppPrefs").get("queueLoopModeEnabled") ?? false;
+        appPrefs.get("queueLoopModeEnabled") ?? false;
 
     if (GetPlatform.isDesktop) {
-      setVolume(Hive.box("AppPrefs").get("volume") ?? 100);
+      setVolume(appPrefs.get("volume") ?? 100);
     }
 
-    if (Hive.box("AppPrefs").get("playerUi") == 1) {
+    if (appPrefs.get("playerUi") ?? 0 == 1) {
       initGesturePlayerStateAnimationController();
     }
   }
@@ -579,7 +578,7 @@ class PlayerController extends GetxController
     if (volume.value != 0) {
       vol = 0;
     } else {
-      vol = await Hive.box("AppPrefs").get("volume");
+      vol = await Hive.box("AppPrefs").get("volume", defaultValue: 10);
       if (vol == 0) {
         vol = 10;
         await Hive.box("AppPrefs").put("volume", vol);

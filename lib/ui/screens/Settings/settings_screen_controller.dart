@@ -82,8 +82,8 @@ class SettingsScreenController extends GetxController {
     noOfHomeScreenContent.value = setBox.get("noOfHomeScreenContent") ?? 3;
     isTransitionAnimationDisabled.value =
         setBox.get("isTransitionAnimationDisabled") ?? false;
-    cacheSongs.value = setBox.get('cacheSongs');
-    themeModetype.value = ThemeType.values[setBox.get('themeModeType')];
+    cacheSongs.value = setBox.get('cacheSongs') ?? false;
+    themeModetype.value = ThemeType.values[setBox.get('themeModeType') ?? 0];
     skipSilenceEnabled.value =
         isDesktop ? false : setBox.get("skipSilenceEnabled");
     loudnessNormalizationEnabled.value = isDesktop
@@ -98,9 +98,10 @@ class SettingsScreenController extends GetxController {
     backgroundPlayEnabled.value = setBox.get("backgroundPlayEnabled") ?? true;
     final downloadPath =
         setBox.get('downloadLocationPath') ?? await _createInAppSongDownDir();
-    downloadLocationPath.value = (isDesktop && downloadPath.contains("emulated"))
-        ? await _createInAppSongDownDir()
-        : downloadPath;
+    downloadLocationPath.value =
+        (isDesktop && downloadPath.contains("emulated"))
+            ? await _createInAppSongDownDir()
+            : downloadPath;
 
     exportLocationPath.value =
         setBox.get("exportLocationPath") ?? "/storage/emulated/0/Music";
@@ -305,6 +306,10 @@ class SettingsScreenController extends GetxController {
     ScaffoldMessenger.of(Get.context!).showSnackBar(
         snackbar(Get.context!, "unlinkAlert".tr, size: SanckBarSize.MEDIUM));
     box.close();
+  }
+
+  Future<void> resetAppSettingsToDefault() async {
+    await setBox.clear();
   }
 
   void toggleStopPlyabackOnSwipeAway(bool val) {

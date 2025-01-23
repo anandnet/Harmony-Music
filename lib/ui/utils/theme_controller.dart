@@ -17,10 +17,10 @@ class ThemeController extends GetxController {
     systemBrightness =
         WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
-    primaryColor.value = Color(Hive.box('appPrefs').get("themePrimaryColor"));
+    primaryColor.value = Color(Hive.box('appPrefs').get("themePrimaryColor") ?? 4278199603);
 
     changeThemeModeType(
-        ThemeType.values[Hive.box('appPrefs').get("themeModeType")]);
+        ThemeType.values[Hive.box('appPrefs').get("themeModeType") ?? 0]);
 
     _listenSystemBrightness();
 

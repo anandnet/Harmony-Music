@@ -105,7 +105,7 @@ class SettingsScreenController extends GetxController {
 
     exportLocationPath.value =
         setBox.get("exportLocationPath") ?? "/storage/emulated/0/Music";
-    downloadingFormat.value = setBox.get('downloadingFormat') ?? "opus";
+    downloadingFormat.value = setBox.get('downloadingFormat') ?? "m4a";
     discoverContentType.value = setBox.get('discoverContentType') ?? "QP";
     slidableActionEnabled.value = setBox.get('slidableActionEnabled') ?? true;
     if (setBox.containsKey("piped")) {

@@ -7,11 +7,10 @@ class StreamProvider {
   final String statusMSG;
   StreamProvider(
       {required this.playable, this.audioFormats, this.statusMSG = ""});
-  static int retry = 0;
 
   static Future<StreamProvider> fetch(String videoId) async {
     final yt = YoutubeExplode();
-
+    
     try {
       final res = await yt.videos.streamsClient.getManifest(videoId);
       final audio = res.audioOnly;
@@ -38,7 +37,7 @@ class StreamProvider {
       } else if (e is VideoUnplayableException) {
         return StreamProvider(
           playable: false,
-          statusMSG: "Song is unplayable",
+          statusMSG: e.reason ?? "Song is unplayable",
         );
       } else if (e is VideoRequiresPurchaseException) {
         return StreamProvider(
@@ -64,9 +63,9 @@ class StreamProvider {
     }
   }
 
-
   Audio? get highestQualityAudio =>
-      audioFormats?.lastWhere((item) => item.itag == 251 || item.itag == 140);
+      audioFormats?.lastWhere((item) => item.itag == 251 || item.itag == 140,
+          orElse: () => audioFormats!.first);
 
   Audio? get highestBitrateMp4aAudio =>
       audioFormats?.lastWhere((item) => item.itag == 140 || item.itag == 139,
@@ -77,7 +76,8 @@ class StreamProvider {
           orElse: () => audioFormats!.first);
 
   Audio? get lowQualityAudio =>
-      audioFormats?.lastWhere((item) => item.itag == 249 || item.itag == 139);
+      audioFormats?.lastWhere((item) => item.itag == 249 || item.itag == 139,
+          orElse: () => audioFormats!.first);
 
   Map<String, dynamic> get hmStreamingData {
     return {

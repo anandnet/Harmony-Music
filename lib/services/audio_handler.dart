@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
 
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -448,7 +449,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
           checkNGetUrl(currentSong.id, generateNewUrl: isNewUrlReq);
       final bool restoreSession = extras['restoreSession'] ?? false;
       isSongLoading = true;
-      playbackState.add(playbackState.value.copyWith(processingState: AudioProcessingState.loading));
+      playbackState.add(playbackState.value
+          .copyWith(processingState: AudioProcessingState.loading));
       if (_playList.children.isNotEmpty) {
         await _playList.clear();
       }
@@ -461,14 +463,16 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         currentSongUrl = null;
         isSongLoading = false;
         Get.find<PlayerController>().notifyPlayError(streamInfo.statusMSG);
-        playbackState.add(playbackState.value
-            .copyWith(processingState: AudioProcessingState.error,errorCode: 404,errorMessage: streamInfo.statusMSG));
+        playbackState.add(playbackState.value.copyWith(
+            processingState: AudioProcessingState.error,
+            errorCode: 404,
+            errorMessage: streamInfo.statusMSG));
         return;
       }
       currentSongUrl = currentSong.extras!['url'] = streamInfo.audio!.url;
       playbackState.add(playbackState.value.copyWith(queueIndex: currentIndex));
       await _playList.add(_createAudioSource(currentSong));
-      
+
       isSongLoading = false;
       if (loudnessNormalizationEnabled && GetPlatform.isAndroid) {
         _normalizeVolume(streamInfo.audio!.loudnessDb);
@@ -776,7 +780,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       }
 
       if (streamInfo == null) {
-        final streamInfoJson = await Isolate.run(() => getStreamInfo(songId));
+        final token = RootIsolateToken.instance;
+        final streamInfoJson =
+            await Isolate.run(() => getStreamInfo(songId, token));
         streamInfo = HMStreamingData.fromJson(streamInfoJson);
         if (streamInfo.playable) songsUrlCacheBox.put(songId, streamInfoJson);
       }

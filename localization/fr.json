@@ -233,5 +233,9 @@
     "enableSlidableAction": "Activer les actions coulissantes",
     "enableSlidableActionDes": "Activer les actions coulissantes sur la mosaïque de titres",
     "autoDownFavSong": "Téléchargement automatique des titres préférés",
-    "autoDownFavSongDes": "Télécharger automatiquement les titres préférés lorsqu'ils sont ajoutés aux favoris"
+    "autoDownFavSongDes": "Télécharger automatiquement les titres préférés lorsqu'ils sont ajoutés aux favoris",
+    "misc": "Divers",
+    "resetToDefault": "Restaurer les paramètres par défaut",
+    "resetToDefaultDes": "Réinitialiser les paramètres de l'application aux valeurs par défaut (redémarrage requis)",
+    "resetToDefaultMsg": "La réinitialisation des paramètres par défaut est terminée. Veuillez redémarrer l'application."
 }

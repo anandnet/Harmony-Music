@@ -228,5 +228,9 @@
     "backup": "Varunda",
     "restoreAppData": "Taasta rakenduse andmed varukoopiast",
     "autoDownFavSongDes": "Kui lugu on lisatud lemmikuks, siis laadi ta automaatselt alla",
-    "autoDownFavSong": "Laadi lemmiklood automaatselt alla"
+    "autoDownFavSong": "Laadi lemmiklood automaatselt alla",
+    "resetToDefaultMsg": "Vaikimisi seadistuste taastamine lõppes, palun käivita rakendus uuesti",
+    "misc": "Varia",
+    "resetToDefaultDes": "Taasta rakenduse vaikimisi seadistused (eeldab rakenduse uuesti käivitamist)",
+    "resetToDefault": "Taasta vaikimisi seadistused"
 }

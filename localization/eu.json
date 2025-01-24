@@ -228,5 +228,9 @@
     "cacheHomeScreenData": "Hasierako pantailaren edukiaren datuak katxeatu",
     "exportDowloadedFiles": "Deskargatutako fitxategiak deskargatu",
     "local": "Lokala",
-    "link": "Esteka"
+    "link": "Esteka",
+    "misc": "Miszelanea",
+    "resetToDefault": "Berrezarri lehenetsitako ezarpenak",
+    "resetToDefaultDes": "Berrezarri aplikazioaren ezarpenak lehenespenetara (Berrabiarazi behar da)",
+    "resetToDefaultMsg": "Ezarpenak lehenetsitakoetara itzultzea gauzatu da, Berrabiarazi aplikazioa, mesedez"
 }

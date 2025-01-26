@@ -227,8 +227,12 @@
     "playnextMsg": "公開予定 {Song Name}",
     "queueLoopNotDisMsg1": "シャッフル有効時は、ループは無効にできません。",
     "queueLoopNotDisMsg2": "ラジオモードでは、ループを有効にできません。",
-    "enableSlidableActionDes": "Enable slideable actions on song tiles",
+    "enableSlidableActionDes": "曲のタイルをスライドする操作を使う",
     "enableSlidableAction": "スライドによる操作",
     "autoDownFavSongDes": "お気に入りに追加した曲を自動でダウンロード",
-    "autoDownFavSong": "お気に入りの曲を自動ダウンロード"
+    "autoDownFavSong": "お気に入りの曲を自動ダウンロード",
+    "resetToDefault": "初期設定に戻す",
+    "resetToDefaultDes": "アプリの設定を初期値に戻す (要再起動)",
+    "resetToDefaultMsg": "設定の初期化が完了、アプリを再起動してください",
+    "misc": "ほか"
 }

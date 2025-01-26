@@ -231,5 +231,9 @@
     "restore": "恢复",
     "closeApp": "关闭应用",
     "autoDownFavSong": "自动下载收藏的歌曲",
-    "autoDownFavSongDes": "当添加到收藏夹时自动下载收藏的歌曲"
+    "autoDownFavSongDes": "当添加到收藏夹时自动下载收藏的歌曲",
+    "misc": "其他",
+    "resetToDefault": "恢复默认设置",
+    "resetToDefaultMsg": "已恢复为默认设置，请重启应用程序",
+    "resetToDefaultDes": "恢复为默认设置（需要重启应用程序）"
 }

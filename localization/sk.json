@@ -230,5 +230,9 @@
     "queueLoopNotDisMsg2": "V režime rádio nie je možné zapnúť náhodný výber.",
     "enableSlidableActionDes": "Povoliť akcie gestami pri skladbe",
     "autoDownFavSong": "Automaticky sťahovať obľúbené skladby",
-    "autoDownFavSongDes": "Po pridaní do obľúbených položiek automaticky stiahne obľúbené skladby"
+    "autoDownFavSongDes": "Po pridaní do obľúbených položiek automaticky stiahne obľúbené skladby",
+    "resetToDefaultMsg": "Obnovenie predvolených nastavení je dokončené, reštartujte aplikáciu",
+    "misc": "Rôzne",
+    "resetToDefault": "Obnoviť predvolené nastavenia",
+    "resetToDefaultDes": "Obnoviť predvolené nastavenia aplikácie (vyžaduje sa reštart)"
 }

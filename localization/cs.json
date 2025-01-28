@@ -231,5 +231,9 @@
     "enableSlidableAction": "Povolit akce gesty",
     "enableSlidableActionDes": "Povolit akce gesty na dlaždici skladby",
     "autoDownFavSong": "Automaticky stáhnout oblíbené skladby",
-    "autoDownFavSongDes": "Automaticky stáhne oblíbené skladby po přidání do oblíbených položek"
+    "autoDownFavSongDes": "Automaticky stáhne oblíbené skladby po přidání do oblíbených položek",
+    "misc": "Různé",
+    "resetToDefault": "Obnovit výchozí nastavení",
+    "resetToDefaultDes": "Obnovit výchozí nastavení aplikace (nutný restart)",
+    "resetToDefaultMsg": "Obnovení výchozího nastavení bylo dokončeno, restartujte aplikaci"
 }

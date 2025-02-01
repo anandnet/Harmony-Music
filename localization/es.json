@@ -231,5 +231,9 @@
     "queueLoop": "Cola continua",
     "queueLoopNotDisMsg1": "El modo cola en bucle no puede ser desactivado cuando está habilitado el modo aleatorio.",
     "autoDownFavSong": "Descarga automática de canciones favoritas",
-    "autoDownFavSongDes": "Descarga automática de canciones cuando se añaden a favoritas"
+    "autoDownFavSongDes": "Descarga automática de canciones cuando se añaden a favoritas",
+    "misc": "Varios",
+    "resetToDefault": "Restaurar configuración predeterminada",
+    "resetToDefaultDes": "Restaura la configuración de la aplicación a los valores predeterminados (es necesario reiniciar)",
+    "resetToDefaultMsg": "Se ha restaurado la configuración a los valores predeterminados, Reinicie la aplicación"
 }

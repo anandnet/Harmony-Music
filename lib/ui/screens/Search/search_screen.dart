@@ -70,7 +70,10 @@ class SearchScreen extends StatelessWidget {
                       controller: searchScreenController.textInputController,
                       textInputAction: TextInputAction.search,
                       onChanged: searchScreenController.onChanged,
-                      onSubmitted: (val) {
+                      onSubmitted: (String val) {
+                        val = val.trim();
+                        if (val.isEmpty) return;
+
                         if (val.contains("https://")) {
                           searchScreenController.filterLinks(Uri.parse(val));
                           searchScreenController.reset();

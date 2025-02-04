@@ -37,22 +37,19 @@ dependencies:
   audiotags: ^1.4.1
   buttons_tabbar: ^1.3.13
   cached_network_image: ^3.4.0
-  device_equalizer:
-    git:
-      url: https://github.com/anandnet/device_equalizer.git
-      ref: 29ea7ff4e284101af114de64bafca25a1a0c01d8
   dio: ^5.7.0
   file_picker: ^8.0.6
   flutter:
     sdk: flutter
   flutter_keyboard_visibility: ^6.0.0
   flutter_lyric: ^2.0.4+6
-  flutter_slidable: ^3.1.1
+  flutter_slidable: ^4.0.0
   get: ^4.6.6
   google_fonts: ^6.1.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   ionicons: ^0.2.2
+  jni: ^0.14.0
   just_audio: ^0.9.40
   just_audio_media_kit:
     git:
@@ -63,10 +60,6 @@ dependencies:
   path_provider: ^2.1.1
   permission_handler: ^11.0.1
   restart_app: ^1.2.1
-  sdk_int:
-    git:
-      url: https://github.com/anandnet/sdk_int.git
-      ref: 91b2d4e0863de4effb2c89dd7868506cbd85a1ee
   share_plus: ^9.0.0
   shimmer: ^3.0.0
   sidebar_with_animation:
@@ -94,6 +87,7 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
+  jnigen: ^0.14.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

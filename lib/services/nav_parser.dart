@@ -132,14 +132,14 @@ const subtitle = ['subtitle', 'runs', 0, 'text'];
 const subtitle3 = ['subtitle', 'runs', 4, 'text'];
 const feedback_token = ['feedbackEndpoint', 'feedbackToken'];
 const musicPlaylistShelfRenderer = [
-            "contents",
-            "twoColumnBrowseResultsRenderer",
-            "secondaryContents",
-            "sectionListRenderer",
-            "contents",
-            0,
-            "musicPlaylistShelfRenderer",
-          ];
+  "contents",
+  "twoColumnBrowseResultsRenderer",
+  "secondaryContents",
+  "sectionListRenderer",
+  "contents",
+  0,
+  "musicPlaylistShelfRenderer",
+];
 
 List<Map<String, dynamic>> parseMixedContent(List<dynamic> rows) {
   List<Map<String, dynamic>> items = [];
@@ -482,26 +482,44 @@ List<dynamic> parsePlaylistItems(List<dynamic> results,
       continue;
     }
     dynamic data = result['musicResponsiveListItemRenderer'];
-    dynamic videoId;
+    String? videoId;
+
+    if (!isAlbum) {
+      videoId = nav(data, ['playlistItemData', 'videoId']);
+    } else {
+      final creditId = nav(data, [
+        'menu',
+        'menuRenderer',
+        'items',
+        5,
+        'menuNavigationItemRenderer',
+        'navigationEndpoint',
+        'browseEndpoint',
+        'browseId'
+      ]);
+      videoId = creditId?.split("MPTC")[1];
+    }
 
     // if the item has a menu, find its setVideoId
-    if (data.containsKey('menu')) {
-      for (dynamic item in nav(data, menu_items)) {
-        if (item.containsKey('menuServiceItemRenderer')) {
-          dynamic menuService = nav(item, menu_service);
-          //inspect(menuService);
+    if (videoId == null) {
+      if (data.containsKey('menu')) {
+        for (dynamic item in nav(data, menu_items)) {
+          if (item.containsKey('menuServiceItemRenderer')) {
+            dynamic menuService = nav(item, menu_service);
+            //inspect(menuService);
 
-          if (menuService.containsKey('playlistEditEndpoint')) {
-            videoId = menuService['playlistEditEndpoint']['actions'][0]
-                ['removedVideoId'];
-            // print("$videoId");
+            if (menuService.containsKey('playlistEditEndpoint')) {
+              videoId = menuService['playlistEditEndpoint']['actions'][0]
+                  ['removedVideoId'];
+              // print("$videoId");
+            }
           }
         }
       }
     }
 
     // if item is not playable, the videoId was retrieved above
-    if (nav(data, play_button) != null) {
+    if (videoId == null && nav(data, play_button) != null) {
       if (nav(data, play_button).containsKey('playNavigationEndpoint')) {
         videoId = nav(data, play_button)['playNavigationEndpoint']
             ['watchEndpoint']['videoId'];

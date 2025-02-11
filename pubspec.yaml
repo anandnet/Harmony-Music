@@ -59,7 +59,6 @@ dependencies:
   path: ^1.8.3
   path_provider: ^2.1.1
   permission_handler: ^11.0.1
-  restart_app: ^1.2.1
   share_plus: ^9.0.0
   shimmer: ^3.0.0
   sidebar_with_animation:
@@ -68,6 +67,7 @@ dependencies:
       branch: main
       ref: b53567a42b4ba3793a3cf00d478bdba0ecce33d7
   smtc_windows: ^0.1.2
+  terminate_restart: ^1.0.9
   toggle_switch: ^2.1.0
   tray_manager: ^0.2.3
   url_launcher: ^6.2.1

@@ -91,6 +91,8 @@
     "basedOnLast": "Based on last interaction",
     "restoreLastPlaybackSession": "Restore last playback session",
     "restoreLastPlaybackSessionDes": "Automatically restore the last playback session on app start",
+    "autoOpenPlayer":"Auto open player screen",
+    "autoOpenPlayerDes":"Enable/disable auto opening of player full screen on selection of song for play",
     "homeContentCount": "Home content count",
     "homeContentCountDes": "Select the number of initial homescreen-content(approx). Lesser results faster loading",
     "enableBottomNav": "Bottom navigation bar",

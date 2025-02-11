@@ -30,6 +30,7 @@ class SettingsScreenController extends GetxController {
   final playerUi = 0.obs;
   final slidableActionEnabled = true.obs;
   final isIgnoringBatteryOptimizations = false.obs;
+  final autoOpenPlayer = false.obs;
   final discoverContentType = "QP".obs;
   final isNewVersionAvailable = false.obs;
   final isLinkedWithPiped = false.obs;
@@ -89,6 +90,7 @@ class SettingsScreenController extends GetxController {
     loudnessNormalizationEnabled.value = isDesktop
         ? false
         : (setBox.get("loudnessNormalizationEnabled") ?? false);
+    autoOpenPlayer.value = (setBox.get("autoOpenPlayer") ?? true);
     restorePlaybackSession.value =
         setBox.get("restrorePlaybackSession") ?? false;
     cacheHomeScreenData.value = setBox.get("cacheHomeScreenData") ?? true;
@@ -295,6 +297,11 @@ class SettingsScreenController extends GetxController {
     await Permission.ignoreBatteryOptimizations.request();
     isIgnoringBatteryOptimizations.value =
         await Permission.ignoreBatteryOptimizations.isGranted;
+  }
+
+  void toggleAutoOpenPlayer(bool val) {
+    setBox.put('autoOpenPlayer', val);
+    autoOpenPlayer.value = val;
   }
 
   Future<void> unlinkPiped() async {

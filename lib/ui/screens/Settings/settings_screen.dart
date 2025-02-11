@@ -424,6 +424,17 @@ class SettingsScreen extends StatelessWidget {
                             onChanged: settingsController
                                 .toggleRestorePlaybackSession),
                       )),
+                  ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: Text("autoOpenPlayer".tr),
+                    subtitle: Text("autoOpenPlayerDes".tr,
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    trailing: Obx(
+                      () => CustSwitch(
+                          value: settingsController.autoOpenPlayer.value,
+                          onChanged: settingsController.toggleAutoOpenPlayer),
+                    ),
+                  ),
                   if (!isDesktop)
                     ListTile(
                       contentPadding:

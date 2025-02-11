@@ -28,7 +28,7 @@ class SongInfoDialog extends StatelessWidget {
               children: [
                 InfoItem(title: "id".tr, value: song.id),
                 InfoItem(title: "title".tr, value: song.title),
-                InfoItem(title: "albums".tr, value: song.album ?? "NA"),
+                InfoItem(title: "album".tr, value: song.album ?? "NA"),
                 InfoItem(title: "artists".tr, value: song.artist ?? "NA"),
                 InfoItem(
                     title: "duration".tr,

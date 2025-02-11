@@ -68,7 +68,7 @@ class SongsLibraryWidget extends StatelessWidget {
                         controller.librarySongsList,
                         "library Songs",
                         true,
-                        isPlaylist: true,
+                        isPlaylistOrAlbum: true,
                         playlist: Playlist(
                             title: "Library Songs",
                             playlistId: "SongsCache",

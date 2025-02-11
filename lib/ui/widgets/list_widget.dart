@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '/models/album.dart';
+import '../../models/artist.dart';
+import '../../models/playling_from.dart';
 import '/ui/screens/Settings/settings_screen_controller.dart';
 import '/ui/widgets/snackbar.dart';
 import '../../models/playlist.dart';
@@ -17,9 +20,11 @@ import 'songinfo_bottom_sheet.dart';
 class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
   const ListWidget(this.items, this.title, this.isCompleteList,
       {super.key,
-      this.isPlaylist = false,
+      this.isPlaylistOrAlbum = false,
       this.isArtistSongs = false,
       this.playlist,
+      this.album,
+      this.artist,
       this.scrollController});
   final List<dynamic> items;
   final String title;
@@ -28,8 +33,10 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
 
   /// Valid for songlist
   final bool isArtistSongs;
-  final bool isPlaylist;
+  final bool isPlaylistOrAlbum;
   final Playlist? playlist;
+  final Album? album;
+  final Artist? artist;
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +53,10 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
       return isCompleteList
           ? Expanded(
               child: listViewSongVid(items,
-                  isPlaylist: isPlaylist,
+                  isPlaylistOrAlbum: isPlaylistOrAlbum,
                   playlist: playlist,
+                  album: album,
+                  artist: artist,
                   sc: scrollController,
                   isArtistSongs: isArtistSongs))
           : SizedBox(
@@ -70,8 +79,10 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
   }
 
   Widget listViewSongVid(List<dynamic> items,
-      {bool isPlaylist = false,
+      {bool isPlaylistOrAlbum = false,
       Playlist? playlist,
+      Album? album,
+      Artist? artist,
       bool isArtistSongs = false,
       ScrollController? sc}) {
     final playerController = Get.find<PlayerController>();
@@ -166,9 +177,22 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
           ]),
           child: ListTile(
             onTap: () {
-              (isPlaylist || isArtistSongs)
+              (isPlaylistOrAlbum || isArtistSongs)
                   ? playerController.playPlayListSong(
-                      List<MediaItem>.from(items), index)
+                      List<MediaItem>.from(items), index,
+                      playfrom: isPlaylistOrAlbum
+                          ? PlaylingFrom(
+                              type: playlist != null
+                                  ? PlaylingFromType.PLAYLIST
+                                  : PlaylingFromType.ALBUM,
+                              name: playlist?.title ?? album!.title)
+                          : isArtistSongs
+                              ? PlaylingFrom(
+                                  type: PlaylingFromType.ARTIST,
+                                  name: artist?.name ?? ".........")
+                              : PlaylingFrom(
+                                  type: PlaylingFromType.SELECTION,
+                                ))
                   : playerController.pushSongToQueue(items[index] as MediaItem);
             },
             onLongPress: () async {
@@ -218,7 +242,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (isPlaylist)
+                      if (isPlaylistOrAlbum)
                         Obx(() => playerController.currentSong.value?.id ==
                                 items[index].id
                             ? const Icon(

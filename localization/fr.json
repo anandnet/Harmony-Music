@@ -239,5 +239,12 @@
     "resetToDefaultDes": "Réinitialiser les paramètres de l'application aux valeurs par défaut (redémarrage requis)",
     "resetToDefaultMsg": "La réinitialisation des paramètres par défaut est terminée. Veuillez redémarrer l'application",
     "autoOpenPlayerDes": "Activer / Désactiver l'ouverture automatique du plein écran du lecteur lors de la sélection du titre à lire",
-    "autoOpenPlayer": "Ouverture automatique de l'écran du lecteur"
+    "autoOpenPlayer": "Ouverture automatique de l'écran du lecteur",
+    "album": "Album",
+    "playingfromAlbum": "LECTURE DE L'ALBUM",
+    "playingfromPlaylist": "LECTURE DE LA PLAYLIST",
+    "playingfromSelection": "LECTURE DE LA SÉLECTION",
+    "playingfromArtist": "LECTURE DE L'ARTISTE",
+    "randomRadio": "Radio Aléatoire",
+    "randomSelection": "Sélection Aléatoire"
 }

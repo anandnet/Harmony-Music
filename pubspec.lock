@@ -1058,11 +1058,12 @@ packages:
   terminate_restart:
     dependency: "direct main"
     description:
-      name: terminate_restart
-      sha256: "9a7c7884a9319b2fcfee9c47de4562b2118e94feabc279c4ee17db5384b19c02"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.9"
+      path: "."
+      ref: eb505e07e11d0fe1f5c03993e707c6678428c353
+      resolved-ref: eb505e07e11d0fe1f5c03993e707c6678428c353
+      url: "https://github.com/anandnet/terminate_restart.git"
+    source: git
+    version: "1.0.7"
   test_api:
     dependency: transitive
     description:

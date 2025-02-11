@@ -67,7 +67,11 @@ dependencies:
       branch: main
       ref: b53567a42b4ba3793a3cf00d478bdba0ecce33d7
   smtc_windows: ^0.1.2
-  terminate_restart: ^1.0.9
+  terminate_restart:
+    git:
+      url: https://github.com/anandnet/terminate_restart.git
+      branch: main
+      ref: eb505e07e11d0fe1f5c03993e707c6678428c353
   toggle_switch: ^2.1.0
   tray_manager: ^0.2.3
   url_launcher: ^6.2.1

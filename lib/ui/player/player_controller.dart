@@ -111,7 +111,7 @@ class PlayerController extends GetxController
       setVolume(appPrefs.get("volume") ?? 100);
     }
 
-    if (appPrefs.get("playerUi") ?? 0 == 1) {
+    if ((appPrefs.get("playerUi") ?? 0) == 1) {
       initGesturePlayerStateAnimationController();
     }
   }

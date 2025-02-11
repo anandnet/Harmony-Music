@@ -471,7 +471,8 @@ List<dynamic> parsePlaylistItems(List<dynamic> results,
     {List<List<dynamic>>? menuEntries,
     dynamic thumbnailsM,
     dynamic artistsM,
-    dynamic albumIdM,
+    String? albumYear,
+    dynamic albumIdName,
     bool isAlbum = false}) {
   List<MediaItem> songs = [];
 
@@ -483,6 +484,7 @@ List<dynamic> parsePlaylistItems(List<dynamic> results,
     }
     dynamic data = result['musicResponsiveListItemRenderer'];
     String? videoId;
+    String? trackDetails;
 
     if (!isAlbum) {
       videoId = nav(data, ['playlistItemData', 'videoId']);
@@ -498,6 +500,8 @@ List<dynamic> parsePlaylistItems(List<dynamic> results,
         'browseId'
       ]);
       videoId = creditId?.split("MPTC")[1];
+      trackDetails =
+          data?["index"] != null ? "${nav(data,['index','runs',0,'text'])}/${results.length}" : null;
     }
 
     // if the item has a menu, find its setVideoId
@@ -533,7 +537,7 @@ List<dynamic> parsePlaylistItems(List<dynamic> results,
 
     List? artists = parseSongArtists(data, 1);
 
-    dynamic album = isAlbum ? {"id": albumIdM} : parseSongAlbum({...data}, 2);
+    dynamic album = isAlbum ? albumIdName : parseSongAlbum({...data}, 2);
 
     dynamic duration;
     if (data.containsKey('fixedColumns')) {
@@ -563,6 +567,7 @@ List<dynamic> parsePlaylistItems(List<dynamic> results,
       'artists': artists ?? artistsM,
       'thumbnails': isAlbum ? thumbnailsM : thumbnails_ ?? thumbnailsM,
       'isAvailable': isAvailable,
+      'trackDetails': trackDetails
     };
 
     if (duration != null) {

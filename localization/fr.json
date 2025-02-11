@@ -164,7 +164,7 @@
     "exporting": "Exportation en cours...",
     "downFilesFound": "fichiers téléchargés trouvés",
     "close": "Fermer",
-    "exportMsg": "Fichiers exportés avec succès !",
+    "exportMsg": "Fichiers exportés avec succès",
     "clearImgCache": "Nettoyer le cache des images",
     "clearImgCacheDes": "Cliquez ici pour vider le cache des images / miniatures. (Non recommandé sauf si vous voulez rafraîchir le cache des images)",
     "deleteDownloadedDataAlert": "Supprimé avec succès des téléchargements !",
@@ -176,7 +176,7 @@
     "backgroundPlayDes": "Activer / Désactiver la lecture de musique en arrière-plan (l’application est accessible depuis la barre d’état système lorsqu'elle s’exécute en arrière-plan)",
     "pipedplstSyncAlert": "Playlist piped synchronisée !",
     "export": "Exporter",
-    "clearImgCacheAlert": "Nettoyage du cache des images réalisé avec succès !",
+    "clearImgCacheAlert": "Nettoyage du cache des images réalisé avec succès",
     "homeContentCount": "Nombre de contenus de l'accueil",
     "upNext": "À suivre",
     "enableBottomNav": "Barre de navigation inférieure",
@@ -213,7 +213,7 @@
     "loudnessNormalizationDes": "Définit le même niveau de volume pour tous les titres (expérimental) (Cela ne fonctionnera pas sur les titres téléchargés sur la version précédente (< v1.10.0))",
     "id": "Identifiant",
     "urlSearchDes": "URL détectée. Cliquez dessus pour ouvrir / lire le contenu associé",
-    "androidBackupWarning": "Non testé : si vous cochez la case après avoir téléchargé plus de 60 fichiers, le processus peut consommer une grande quantité de mémoire et provoquer le blocage du téléphone ou de l'application. Procédez à vos propres risques !",
+    "androidBackupWarning": "Non testé : si vous cochez la case après avoir téléchargé plus de 60 fichiers, le processus peut consommer une grande quantité de mémoire et provoquer le blocage du téléphone ou de l'application. Procédez à vos propres risques.",
     "songInfo": "Informations sur le titre",
     "duration": "Durée",
     "backup": "Sauvegarde",
@@ -237,5 +237,7 @@
     "misc": "Divers",
     "resetToDefault": "Restaurer les paramètres par défaut",
     "resetToDefaultDes": "Réinitialiser les paramètres de l'application aux valeurs par défaut (redémarrage requis)",
-    "resetToDefaultMsg": "La réinitialisation des paramètres par défaut est terminée. Veuillez redémarrer l'application."
+    "resetToDefaultMsg": "La réinitialisation des paramètres par défaut est terminée. Veuillez redémarrer l'application",
+    "autoOpenPlayerDes": "Activer / Désactiver l'ouverture automatique du plein écran du lecteur lors de la sélection du titre à lire",
+    "autoOpenPlayer": "Ouverture automatique de l'écran du lecteur"
 }

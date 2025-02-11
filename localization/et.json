@@ -234,5 +234,12 @@
     "resetToDefaultDes": "Taasta rakenduse vaikimisi seadistused (eeldab rakenduse uuesti käivitamist)",
     "resetToDefault": "Taasta vaikimisi seadistused",
     "autoOpenPlayer": "Ava esitusvaade automaatselt",
-    "autoOpenPlayerDes": "Kas esitatava loo valimisel avaneb esitusvaade automaatselt"
+    "autoOpenPlayerDes": "Kas esitatava loo valimisel avaneb esitusvaade automaatselt",
+    "album": "Album",
+    "playingfromAlbum": "ESITAMISEL ALBUMIST",
+    "playingfromPlaylist": "ESITAMISEL ESITUSLOENDIST",
+    "playingfromSelection": "ESITAMISEL VALIKUST",
+    "randomSelection": "Juhuslik valik",
+    "playingfromArtist": "ESITAMISEL ESITAJAST",
+    "randomRadio": "Juhuslik radio"
 }

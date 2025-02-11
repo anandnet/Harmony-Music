@@ -232,5 +232,7 @@
     "resetToDefaultMsg": "Vaikimisi seadistuste taastamine lõppes, palun käivita rakendus uuesti",
     "misc": "Varia",
     "resetToDefaultDes": "Taasta rakenduse vaikimisi seadistused (eeldab rakenduse uuesti käivitamist)",
-    "resetToDefault": "Taasta vaikimisi seadistused"
+    "resetToDefault": "Taasta vaikimisi seadistused",
+    "autoOpenPlayer": "Ava esitusvaade automaatselt",
+    "autoOpenPlayerDes": "Kas esitatava loo valimisel avaneb esitusvaade automaatselt"
 }

@@ -67,7 +67,7 @@ class SongDownloadButton extends StatelessWidget {
                   ? const LoadingIndicator()
                   : IconButton(
                       icon: Icon(
-                        Icons.download_rounded,
+                        Icons.download,
                         color: Theme.of(context).textTheme.titleMedium!.color,
                       ),
                       onPressed: () {

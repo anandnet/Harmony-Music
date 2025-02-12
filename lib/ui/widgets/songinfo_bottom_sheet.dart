@@ -81,8 +81,8 @@ class SongInfoBottomSheet extends StatelessWidget {
                             onPressed: songInfoController.toggleFav,
                             icon: Obx(() => Icon(
                                   songInfoController.isCurrentSongFav.isFalse
-                                      ? Icons.favorite_border_rounded
-                                      : Icons.favorite_rounded,
+                                      ? Icons.favorite_border
+                                      : Icons.favorite,
                                   color: Theme.of(context)
                                       .textTheme
                                       .titleMedium!
@@ -100,7 +100,7 @@ class SongInfoBottomSheet extends StatelessWidget {
             const Divider(),
             ListTile(
               visualDensity: const VisualDensity(vertical: -1),
-              leading: const Icon(Icons.sensors_rounded),
+              leading: const Icon(Icons.sensors),
               title: Text("startRadio".tr),
               onTap: () {
                 Navigator.of(context).pop();
@@ -111,7 +111,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                 ? const SizedBox.shrink()
                 : ListTile(
                     visualDensity: const VisualDensity(vertical: -1),
-                    leading: const Icon(Icons.playlist_play_rounded),
+                    leading: const Icon(Icons.playlist_play),
                     title: Text("playNext".tr),
                     onTap: () {
                       Navigator.of(context).pop();
@@ -123,7 +123,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                   ),
             ListTile(
               visualDensity: const VisualDensity(vertical: -1),
-              leading: const Icon(Icons.playlist_add_rounded),
+              leading: const Icon(Icons.playlist_add),
               title: Text("addToPlaylist".tr),
               onTap: () {
                 Navigator.of(context).pop();
@@ -137,7 +137,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                 ? const SizedBox.shrink()
                 : ListTile(
                     visualDensity: const VisualDensity(vertical: -1),
-                    leading: const Icon(Icons.merge_rounded),
+                    leading: const Icon(Icons.merge),
                     title: Text("enqueueSong".tr),
                     onTap: () {
                       playerController.enqueueSong(song).whenComplete(() {
@@ -152,7 +152,7 @@ class SongInfoBottomSheet extends StatelessWidget {
             song.extras!['album'] != null
                 ? ListTile(
                     visualDensity: const VisualDensity(vertical: -1),
-                    leading: const Icon(Icons.album_rounded),
+                    leading: const Icon(Icons.album),
                     title: Text("goToAlbum".tr),
                     onTap: () {
                       Navigator.of(context).pop();
@@ -175,7 +175,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                     (playlist != null && playlist!.isPipedPlaylist)
                 ? ListTile(
                     visualDensity: const VisualDensity(vertical: -1),
-                    leading: const Icon(Icons.delete_rounded),
+                    leading: const Icon(Icons.delete),
                     title: playlist!.title == "Library Songs"
                         ? Text("removeFromLib".tr)
                         : Text("removeFromPlaylist".tr),
@@ -193,7 +193,7 @@ class SongInfoBottomSheet extends StatelessWidget {
             (calledFromQueue)
                 ? ListTile(
                     visualDensity: const VisualDensity(vertical: -1),
-                    leading: const Icon(Icons.delete_rounded),
+                    leading: const Icon(Icons.delete),
                     title: Text("removeFromQueue".tr),
                     onTap: () {
                       Navigator.of(context).pop();
@@ -298,7 +298,7 @@ class SongInfoBottomSheet extends StatelessWidget {
             ListTile(
               contentPadding: const EdgeInsets.only(left: 15),
               visualDensity: const VisualDensity(vertical: -1),
-              leading: const Icon(Icons.share_rounded),
+              leading: const Icon(Icons.share),
               title: Text("shareSong".tr),
               onTap: () =>
                   Share.share("https://youtube.com/watch?v=${song.id}"),
@@ -337,7 +337,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                         arguments: [true, e['id']]);
                   },
                   tileColor: Colors.transparent,
-                  leading: const Icon(Icons.person_rounded),
+                  leading: const Icon(Icons.person),
                   title: Text("${"viewArtist".tr} (${e['name']})"),
                 ))
             .toList()

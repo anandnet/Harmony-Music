@@ -14,8 +14,8 @@ import '../widgets/sliding_up_panel.dart';
 
 /// Player screen
 /// Contains the player ui
-/// 
-/// Player ui can be standard player or gesture player  
+///
+/// Player ui can be standard player or gesture player
 class Player extends StatelessWidget {
   const Player({super.key});
 
@@ -26,6 +26,7 @@ class Player extends StatelessWidget {
     final PlayerController playerController = Get.find<PlayerController>();
     final settingsScreenController = Get.find<SettingsScreenController>();
     return Scaffold(
+
         /// SlidingUpPanel is used to create a panel that can slide up and down
         /// It is used to show the current queue panel in mobile
         body: Obx(() => SlidingUpPanel(
@@ -61,13 +62,14 @@ class Player extends StatelessWidget {
                               child: Icon(
                             color:
                                 Theme.of(context).textTheme.titleMedium!.color,
-                            Icons.keyboard_arrow_up_rounded,
+                            Icons.keyboard_arrow_up,
                             size: 40,
                           )),
                         ),
                       ],
                     )),
               ),
+
               /// Panel for queue
               panelBuilder:
                   (ScrollController sc, onReorderStart, onReorderEnd) {
@@ -91,8 +93,8 @@ class Player extends StatelessWidget {
                         child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                           child: Container(
-                            padding: const EdgeInsets.only(top: 15,
-                                bottom: 10, left: 10, right: 10),
+                            padding: const EdgeInsets.only(
+                                top: 15, bottom: 10, left: 10, right: 10),
                             decoration: BoxDecoration(
                                 boxShadow: const [
                                   BoxShadow(
@@ -100,14 +102,15 @@ class Player extends StatelessWidget {
                                 ],
                                 color: Theme.of(context)
                                     .primaryColor
-                                    .withOpacity(0.5)),
+                                    .withOpacity(0.5)
+                                    ),
                             height: 60 + Get.mediaQuery.padding.bottom,
                             child: Align(
                               alignment: Alignment.topCenter,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-
                                   /// number of songs in queue
                                   Obx(
                                     () => Text(
@@ -135,10 +138,12 @@ class Player extends StatelessWidget {
                                             horizontal: 15),
                                         decoration: BoxDecoration(
                                           color: playerController
-                                                  .isQueueLoopModeEnabled.isFalse
+                                                  .isQueueLoopModeEnabled
+                                                  .isFalse
                                               ? Colors.white24
                                               : Colors.white.withOpacity(0.8),
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                         child:
                                             Center(child: Text("queueLoop".tr)),
@@ -168,7 +173,7 @@ class Player extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: const Center(
-                                          child: Icon(Icons.shuffle_rounded,
+                                          child: Icon(Icons.shuffle,
                                               color: Colors.black)),
                                     ),
                                   ),

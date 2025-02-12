@@ -47,13 +47,13 @@ class DesktopSearchBar extends StatelessWidget {
                 },
                 icon: Obx(() => Icon(
                     searchScreenController.isSearchBarInFocus.isTrue
-                        ? Icons.arrow_back_rounded
+                        ? Icons.arrow_back
                         : Icons.search))),
             trailing: [
               Obx(() => searchScreenController.isSearchBarInFocus.isTrue
                   ? IconButton(
                       onPressed: searchScreenController.reset,
-                      icon: const Icon(Icons.clear_rounded))
+                      icon: const Icon(Icons.clear))
                   : const SizedBox.shrink())
             ],
             padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(

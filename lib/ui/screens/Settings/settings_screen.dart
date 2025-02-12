@@ -67,8 +67,8 @@ class SettingsScreen extends StatelessWidget {
                             tileColor: Theme.of(context).colorScheme.secondary,
                             contentPadding:
                                 const EdgeInsets.only(left: 8, right: 10),
-                            leading: const CircleAvatar(
-                                child: Icon(Icons.download_rounded)),
+                            leading:
+                                const CircleAvatar(child: Icon(Icons.download)),
                             title: Text("newVersionAvailable".tr),
                             visualDensity: const VisualDensity(horizontal: -2),
                             subtitle: Text(
@@ -499,7 +499,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               CustomExpansionTile(
                 title: "download".tr,
-                icon: Icons.download_rounded,
+                icon: Icons.download,
                 children: [
                   ListTile(
                     contentPadding: const EdgeInsets.only(left: 5, right: 10),
@@ -595,7 +595,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               CustomExpansionTile(
                   title: "${"backup".tr} & ${"restore".tr}",
-                  icon: Icons.restore_rounded,
+                  icon: Icons.restore,
                   children: [
                     ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),

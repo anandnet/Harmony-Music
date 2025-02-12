@@ -12,7 +12,7 @@ class MiniPlayerProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      size: Size(MediaQuery.of(context).size.width, 3),
+      size: Size(MediaQuery.of(context).size.width, 2),
       painter: ProgressBarPainter(
           current: progressBarStatus.current,
           total: progressBarStatus.total,

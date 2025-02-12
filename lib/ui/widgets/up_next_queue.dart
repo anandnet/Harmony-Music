@@ -151,11 +151,11 @@ class UpNextQueue extends StatelessWidget {
                           children: [
                             if (!GetPlatform.isDesktop)
                               const Icon(
-                                Icons.drag_handle_rounded,
+                                Icons.drag_handle,
                               ),
                             playerController.currentSongIndex.value == index
                                 ? const Icon(
-                                    Icons.equalizer_rounded,
+                                    Icons.equalizer,
                                     color: Colors.white,
                                   )
                                 : Text(

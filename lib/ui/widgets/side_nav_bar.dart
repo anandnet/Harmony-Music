@@ -46,9 +46,9 @@ class SideNavBar extends StatelessWidget {
                       //railDestination("Settings")
                       const NavigationRailDestination(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
-                        icon: Icon(Icons.settings_rounded),
+                        icon: Icon(Icons.settings),
                         label: SizedBox.shrink(),
-                        selectedIcon: Icon(Icons.settings_rounded),
+                        selectedIcon: Icon(Icons.settings),
                       )
                     ],
                   ),
@@ -69,13 +69,13 @@ class SideNavBar extends StatelessWidget {
                 mainLogoImage: 'assets/icons/icon.png',
                 sidebarItems: [
                   SideBarItem(
-                    iconSelected: Icons.home_rounded,
+                    iconSelected: Icons.home,
                     iconUnselected: Icons.home_outlined,
                     text: 'home'.tr,
                   ),
                   SideBarItem(
-                    iconSelected: Icons.audiotrack_rounded,
-                    iconUnselected: Icons.audiotrack_rounded,
+                    iconSelected: Icons.audiotrack,
+                    iconUnselected: Icons.audiotrack,
                     text: 'songs'.tr,
                   ),
                   SideBarItem(

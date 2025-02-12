@@ -206,8 +206,8 @@ class GesturePlayer extends StatelessWidget {
                                     icon: Obx(() => Icon(
                                           playerController
                                                   .isCurrentSongFav.isFalse
-                                              ? Icons.favorite_border_rounded
-                                              : Icons.favorite_rounded,
+                                              ? Icons.favorite_border
+                                              : Icons.favorite,
                                           color: Theme.of(context)
                                               .textTheme
                                               .titleMedium!

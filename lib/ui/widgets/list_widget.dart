@@ -246,7 +246,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
                         Obx(() => playerController.currentSong.value?.id ==
                                 items[index].id
                             ? const Icon(
-                                Icons.equalizer_rounded,
+                                Icons.equalizer,
                               )
                             : const SizedBox.shrink()),
                       Text(

@@ -34,7 +34,7 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                 padding: EdgeInsets.only(top: topPadding),
                 child: IconButton(
                   icon: Icon(
-                    Icons.arrow_back_ios_new_rounded,
+                    Icons.arrow_back_ios_new,
                     color: Theme.of(context).textTheme.titleMedium!.color,
                   ),
                   onPressed: () {
@@ -85,7 +85,10 @@ class PlaylistNAlbumScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 OnlinePlaylistHeader(
-                                    content: content, tag: tag, enableSeparator: !isWiderScreen,),
+                                  content: content,
+                                  tag: tag,
+                                  enableSeparator: !isWiderScreen,
+                                ),
                                 PlaylistContentSection(
                                     content: content, tag: tag)
                               ],

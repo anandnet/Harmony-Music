@@ -87,7 +87,7 @@ class StandardPlayer extends StatelessWidget {
               Positioned.fill(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withOpacity(0.85),
+                    color: Theme.of(context).primaryColor.withOpacity(0.8),
                   ),
                 ),
               ),
@@ -212,7 +212,7 @@ class StandardPlayer extends StatelessWidget {
                 /// Minimize button
                 IconButton(
                   icon: const Icon(
-                    Icons.keyboard_arrow_down_rounded,
+                    Icons.keyboard_arrow_down,
                     size: 28,
                   ),
                   onPressed: playerController.playerPanelController.close,

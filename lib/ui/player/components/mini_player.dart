@@ -175,9 +175,8 @@ class MiniPlayer extends StatelessWidget {
                                         icon: Obx(() => Icon(
                                               playerController
                                                       .isCurrentSongFav.isFalse
-                                                  ? Icons
-                                                      .favorite_border_rounded
-                                                  : Icons.favorite_rounded,
+                                                  ? Icons.favorite_border
+                                                  : Icons.favorite,
                                               color: Theme.of(context)
                                                   .textTheme
                                                   .titleMedium!
@@ -217,7 +216,7 @@ class MiniPlayer extends StatelessWidget {
                                           ? null
                                           : playerController.prev,
                                       child: Icon(
-                                        Icons.skip_previous_rounded,
+                                        Icons.skip_previous,
                                         color: Theme.of(context)
                                             .textTheme
                                             .titleMedium!
@@ -263,7 +262,7 @@ class MiniPlayer extends StatelessWidget {
                                           ? null
                                           : playerController.next,
                                       child: Icon(
-                                        Icons.skip_next_rounded,
+                                        Icons.skip_next,
                                         color: isLastSong
                                             ? Theme.of(context)
                                                 .textTheme
@@ -519,7 +518,7 @@ class MiniPlayer extends StatelessWidget {
       if (buttonState == PlayButtonState.paused) {
         return IconButton(
           icon: Icon(
-            Icons.play_arrow_rounded,
+            Icons.play_arrow,
             color: Theme.of(context).textTheme.titleMedium!.color,
           ),
           iconSize: isWideScreen ? 43.0 : 35.0,
@@ -529,7 +528,7 @@ class MiniPlayer extends StatelessWidget {
           buttonState == PlayButtonState.loading) {
         return IconButton(
           icon: Icon(
-            Icons.pause_rounded,
+            Icons.pause,
             color: Theme.of(context).textTheme.titleMedium!.color,
           ),
           iconSize: isWideScreen ? 43.0 : 35.0,
@@ -538,7 +537,7 @@ class MiniPlayer extends StatelessWidget {
       } else {
         return IconButton(
           icon: Icon(
-            Icons.play_arrow_rounded,
+            Icons.play_arrow,
             color: Theme.of(context).textTheme.titleMedium!.color,
           ),
           iconSize: 35.0,

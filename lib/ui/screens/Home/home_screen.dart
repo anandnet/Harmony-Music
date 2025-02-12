@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                             },
                             child: Icon(homeScreenController.tabIndex.value == 2
                                 ? Icons.add
-                                : Icons.search_rounded)),
+                                : Icons.search)),
                       ),
                     ),
                   ),

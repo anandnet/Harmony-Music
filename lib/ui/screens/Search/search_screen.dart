@@ -31,7 +31,7 @@ class SearchScreen extends StatelessWidget {
                           padding: EdgeInsets.only(top: topPadding),
                           child: IconButton(
                             icon: Icon(
-                              Icons.arrow_back_ios_new_rounded,
+                              Icons.arrow_back_ios_new,
                               color: Theme.of(context)
                                   .textTheme
                                   .titleMedium!

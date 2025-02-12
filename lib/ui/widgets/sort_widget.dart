@@ -89,7 +89,7 @@ class SortWidget extends StatelessWidget {
                     Text(itemCountTitle),
                     if (itemIcon != null)
                       Icon(
-                        Icons.music_note_rounded,
+                        Icons.music_note,
                         size: 15,
                         color: Theme.of(context).colorScheme.secondary,
                       )
@@ -101,7 +101,7 @@ class SortWidget extends StatelessWidget {
                   color: controller.sortType.value == SortType.Name
                       ? Theme.of(context).textTheme.bodySmall!.color
                       : Theme.of(context).colorScheme.secondary,
-                  icon: const Icon(Icons.sort_by_alpha_rounded),
+                  icon: const Icon(Icons.sort_by_alpha),
                   iconSize: 20,
                   splashRadius: 20,
                   visualDensity:
@@ -116,7 +116,7 @@ class SortWidget extends StatelessWidget {
                         color: controller.sortType.value == SortType.Date
                             ? Theme.of(context).textTheme.bodySmall!.color
                             : Theme.of(context).colorScheme.secondary,
-                        icon: const Icon(Icons.calendar_month_rounded),
+                        icon: const Icon(Icons.calendar_month),
                         iconSize: 20,
                         splashRadius: 20,
                         visualDensity:
@@ -131,7 +131,7 @@ class SortWidget extends StatelessWidget {
                         color: controller.sortType.value == SortType.Duration
                             ? Theme.of(context).textTheme.bodySmall!.color
                             : Theme.of(context).colorScheme.secondary,
-                        icon: const Icon(Icons.timer_rounded),
+                        icon: const Icon(Icons.timer),
                         iconSize: 20,
                         splashRadius: 20,
                         visualDensity:
@@ -145,8 +145,8 @@ class SortWidget extends StatelessWidget {
               Obx(
                 () => IconButton(
                   icon: controller.isAscending.value
-                      ? const Icon(Icons.arrow_downward_rounded)
-                      : const Icon(Icons.arrow_upward_rounded),
+                      ? const Icon(Icons.arrow_downward)
+                      : const Icon(Icons.arrow_upward),
                   iconSize: 20,
                   splashRadius: 20,
                   visualDensity:
@@ -171,7 +171,7 @@ class SortWidget extends StatelessWidget {
               if (isAdditionalOperationRequired)
                 PopupMenuButton(
                   child: const Icon(
-                    Icons.more_vert_rounded,
+                    Icons.more_vert,
                     size: 20,
                   ),
                   // Callback that sets the selected popup menu item.
@@ -268,7 +268,7 @@ class SortWidget extends StatelessWidget {
                     children: [
                       IconButton(
                         icon: Icon(controller.isAddtoPlaylistEnabled.isTrue
-                            ? Icons.add_circle_outline_rounded
+                            ? Icons.add_circle_outline
                             : Icons.delete),
                         iconSize: 20,
                         splashRadius: 18,

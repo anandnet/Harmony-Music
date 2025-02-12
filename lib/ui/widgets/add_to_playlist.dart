@@ -39,7 +39,7 @@ class AddToPlaylist extends StatelessWidget {
                       ),
                     ),
                     InkWell(
-                      child: const Icon(Icons.playlist_add_rounded),
+                      child: const Icon(Icons.playlist_add),
                       onTap: () {
                         Navigator.of(context).pop();
                         showDialog(
@@ -96,7 +96,7 @@ class AddToPlaylist extends StatelessWidget {
                       ? ListView.builder(
                           itemCount: addToPlaylistController.playlists.length,
                           itemBuilder: (context, index) => ListTile(
-                            leading: const Icon(Icons.playlist_play_rounded),
+                            leading: const Icon(Icons.playlist_play),
                             title: Text(
                               (addToPlaylistController.playlists[index]).title,
                             ),

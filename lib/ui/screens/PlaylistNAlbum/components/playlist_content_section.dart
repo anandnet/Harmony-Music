@@ -39,7 +39,7 @@ class PlaylistContentSection extends StatelessWidget {
                       !content.isCloudPlaylist,
               itemCountTitle:
                   "${playListNAlbumScreenController.songList.length}",
-              itemIcon: Icons.music_note_rounded,
+              itemIcon: Icons.music_note,
               titleLeftPadding: 9,
               requiredSortTypes: buildSortTypeSet(false, true),
               onSort: (type, ascending) {

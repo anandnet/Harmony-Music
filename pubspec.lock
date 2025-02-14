@@ -396,10 +396,10 @@ packages:
     dependency: "direct main"
     description:
       name: get
-      sha256: e4e7335ede17452b391ed3b2ede016545706c01a02292a6c97619705e7d2a85e
+      sha256: c79eeb4339f1f3deffd9ec912f8a923834bec55f7b49c9e882b8fef2c139d425
       url: "https://pub.dev"
     source: hosted
-    version: "4.6.6"
+    version: "4.7.2"
   google_fonts:
     dependency: "direct main"
     description:
@@ -1228,10 +1228,10 @@ packages:
     dependency: transitive
     description:
       name: web_socket_channel
-      sha256: "58c6666b342a38816b2e7e50ed0f1e261959630becd4c879c4f26bfa14aa5a42"
+      sha256: d88238e5eac9a42bb43ca4e721edba3c08c6354d4a53063afaa568516217621b
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.5"
+    version: "2.4.0"
   widget_marquee:
     dependency: "direct main"
     description:

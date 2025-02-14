@@ -30,7 +30,7 @@ jobs:
           
       - name: Set up osslsigncode
         run: |
-          Invoke-WebRequest -Uri "https://github.com/mtrojnar/osslsigncode/releases/download/2.5/osslsigncode-2.5-windows.zip" -OutFile "osslsigncode.zip"
+          Invoke-WebRequest -Uri "https://github.com/mtrojnar/osslsigncode/releases/download/2.9/osslsigncode-2.9-windows-x64-mingw.zip" -OutFile "osslsigncode.zip"
           Expand-Archive -Path "osslsigncode.zip" -DestinationPath "osslsigncode"
           Add-Content -Path $env:GITHUB_PATH -Value "${{ github.workspace }}\osslsigncode"
       

@@ -49,20 +49,27 @@ class ImageWidget extends StatelessWidget {
                     ? "${artist!.browseId}_artist"
                     : "";
 
-    return GetPlatform.isWeb
-        ? Image.network(
-            imageUrl,
-            fit: BoxFit.fill,
-          )
-        : Container(
-            height: size,
-            width: size,
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              shape: artist != null ? BoxShape.circle : BoxShape.rectangle,
-              borderRadius: artist != null ? null : BorderRadius.circular(5),
-            ),
-            child: CachedNetworkImage(
+    /// only valid for offline songs
+    final bool offlineAvailable =
+        song != null && (song?.extras?["url"] ?? "").contains("file");
+
+    return Container(
+      height: size,
+      width: size,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        shape: artist != null ? BoxShape.circle : BoxShape.rectangle,
+        borderRadius: artist != null ? null : BorderRadius.circular(5),
+      ),
+      child: offlineAvailable
+          ? Image.file(
+              File(
+                  "${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${song!.id}.png"),
+              height: size,
+              width: size,
+              fit: BoxFit.cover,
+            )
+          : CachedNetworkImage(
               height: size,
               width: size,
               memCacheHeight: (song != null && !isPlayerArtImage) ? 140 : null,
@@ -71,20 +78,6 @@ class ImageWidget extends StatelessWidget {
               imageUrl: imageUrl,
               fit: BoxFit.cover,
               errorWidget: (context, url, error) {
-                // if thumb exist in app storage
-                if (song != null) {
-                  final imgFile = File(
-                      "${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${song!.id}.png");
-                  if (imgFile.existsSync()) {
-                    return Image.file(
-                      imgFile,
-                      height: size,
-                      width: size,
-                      cacheHeight:
-                          (song != null && !isPlayerArtImage) ? 140 : null,
-                    );
-                  }
-                }
                 return Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
@@ -112,6 +105,6 @@ class ImageWidget extends StatelessWidget {
                     ),
                   ))),
             ),
-          );
+    );
   }
 }

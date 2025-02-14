@@ -1,15 +1,14 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../screens/Settings/settings_screen_controller.dart';
-import '../../utils/theme_controller.dart';
 import '../../widgets/songinfo_bottom_sheet.dart';
 import '../player_controller.dart';
 import 'albumart_lyrics.dart';
+import 'backgroud_image.dart';
 import 'lyrics_switch.dart';
 import 'player_control.dart';
 
@@ -26,7 +25,7 @@ class StandardPlayer extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final PlayerController playerController = Get.find<PlayerController>();
-    final ThemeController themeController = Get.find<ThemeController>();
+
     double playerArtImageSize =
         size.width - 60; //((size.height < 750) ? 90 : 60);
     //playerArtImageSize = playerArtImageSize > 350 ? 350 : playerArtImageSize;
@@ -39,42 +38,9 @@ class StandardPlayer extends StatelessWidget {
       children: [
         /// Stack first child
         /// Album art image in background covering the whole screen
-        Obx(
-          () => SizedBox.expand(
-            child: playerController.currentSong.value != null
-                ? CachedNetworkImage(
-                    errorWidget: (context, url, error) {
-                      final imgFile = File(
-                          "${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${playerController.currentSong.value!.id}.png");
-                      if (imgFile.existsSync()) {
-                        themeController.setTheme(FileImage(imgFile),
-                            playerController.currentSong.value!.id);
-                        return Image.file(imgFile, cacheHeight: 200);
-                      }
-                      return const SizedBox.shrink();
-                    },
-                    memCacheHeight: 200,
-                    imageBuilder: (context, imageProvider) {
-                      Get.find<SettingsScreenController>()
-                                  .themeModetype
-                                  .value ==
-                              ThemeType.dynamic
-                          ? Future.delayed(
-                              const Duration(milliseconds: 250),
-                              () => themeController.setTheme(imageProvider,
-                                  playerController.currentSong.value!.id))
-                          : null;
-                      return Image(
-                        image: imageProvider,
-                        fit: BoxFit.fitHeight,
-                      );
-                    },
-                    imageUrl:
-                        playerController.currentSong.value!.artUri.toString(),
-                    cacheKey: "${playerController.currentSong.value!.id}_song",
-                  )
-                : Container(),
-          ),
+        BackgroudImage(
+          key: Key("${playerController.currentSong.value?.id}_background"),
+          cacheHeight: 200,
         ),
 
         /// Stack child
@@ -203,6 +169,7 @@ class StandardPlayer extends StatelessWidget {
         /// This is not visible in mobile devices in landscape mode
         if (!(context.isLandscape && GetPlatform.isMobile))
           Padding(
+            key: Key("${playerController.currentSong.value?.id}_playerHeader"),
             padding: EdgeInsets.only(
                 top: Get.mediaQuery.padding.top + 20, left: 10, right: 10),
             child: Row(

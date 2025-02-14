@@ -49,38 +49,42 @@ class MyApp extends StatelessWidget {
       }
       return null;
     });
-    return GetX<ThemeController>(builder: (controller) {
-      return GetMaterialApp(
-          title: 'Harmony Music',
-          theme: controller.themedata.value,
-          home: const Home(),
-          debugShowCheckedModeBanner: false,
-          translations: Languages(),
-          locale: Locale(
-              Hive.box("AppPrefs").get('currentAppLanguageCode') ?? "en"),
-          fallbackLocale: const Locale("en"),
-          builder: (context, child) {
-            final mQuery = MediaQuery.of(context);
-            final scale = mQuery.textScaler
-                .clamp(minScaleFactor: 1.0, maxScaleFactor: 1.1);
-            return Stack(
-              children: [
-                MediaQuery(
-                    data: mQuery.copyWith(textScaler: scale), child: child!),
-                GestureDetector(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      color: Colors.transparent,
-                      height: mQuery.padding.bottom,
-                      width: mQuery.size.width,
-                    ),
+    return GetMaterialApp(
+        title: 'Harmony Music',
+        home: const Home(),
+        debugShowCheckedModeBanner: false,
+        translations: Languages(),
+        locale:
+            Locale(Hive.box("AppPrefs").get('currentAppLanguageCode') ?? "en"),
+        fallbackLocale: const Locale("en"),
+        builder: (context, child) {
+          final mQuery = MediaQuery.of(context);
+          final scale =
+              mQuery.textScaler.clamp(minScaleFactor: 1.0, maxScaleFactor: 1.1);
+          return Stack(
+            children: [
+             GetX<ThemeController>(
+                builder: (controller) => MediaQuery(
+                data: mQuery.copyWith(textScaler: scale),
+                child:  AnimatedTheme(
+                      duration: const Duration(milliseconds: 700),
+                      data: controller.themedata.value!,
+                      child: child!),
+                ),
+              ),
+              GestureDetector(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    color: Colors.transparent,
+                    height: mQuery.padding.bottom,
+                    width: mQuery.size.width,
                   ),
-                )
-              ],
-            );
-          });
-    });
+                ),
+              )
+            ],
+          );
+        });
   }
 }
 

@@ -57,8 +57,8 @@ class ThemeController extends GetxController {
 
   void setTheme(ImageProvider imageProvider, String songId) async {
     if (songId == currentSongId) return;
-    PaletteGenerator generator =
-        await PaletteGenerator.fromImageProvider(imageProvider);
+    PaletteGenerator generator = await PaletteGenerator.fromImageProvider(
+        ResizeImage(imageProvider, height: 200, width: 200));
     //final colorList = generator.colors;
     final paletteColor = generator.dominantColor ??
         generator.darkMutedColor ??

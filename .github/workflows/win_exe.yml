@@ -41,8 +41,8 @@ jobs:
       - name: Decode certificate and key
         working-directory: "${{ github.workspace }}/signed"
         run: |
-          echo "${{ secrets.CERT_PEM }}" | base64 --decode > cert.pem
-          echo "${{ secrets.KEY_PEM }}" | base64 --decode > key.pem
+          [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("${{ secrets.CERT_PEM }}")) | Out-File -FilePath cert.pem -Encoding ASCII
+          [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("${{ secrets.KEY_PEM }}")) | Out-File -FilePath key.pem -Encoding ASCII
 
       - name: Sign executable
         working-directory: "${{ github.workspace }}/signed"

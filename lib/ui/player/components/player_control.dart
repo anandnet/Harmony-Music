@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
-import '../../widgets/loader.dart';
+import '/ui/player/components/animated_play_button.dart';
 import '../player_controller.dart';
 
 class PlayerControlWidget extends StatelessWidget {
@@ -77,7 +77,7 @@ class PlayerControlWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 55,
+                width: 45,
                 child: IconButton(
                     onPressed: playerController.toggleFavourite,
                     icon: Obx(() => Icon(
@@ -128,7 +128,7 @@ class PlayerControlWidget extends StatelessWidget {
                                 .withOpacity(0.2),
                       ))),
               _previousButton(playerController, context),
-              CircleAvatar(radius: 35, child: _playButton()),
+              const CircleAvatar(radius: 35, child: AnimatedPlayButton(key: Key("playButton"),)),
               _nextButton(playerController, context),
               Obx(() {
                 return IconButton(
@@ -149,39 +149,6 @@ class PlayerControlWidget extends StatelessWidget {
         ]);
   }
 
-  Widget _playButton() {
-    return GetX<PlayerController>(builder: (controller) {
-      final buttonState = controller.buttonState.value;
-      if (buttonState == PlayButtonState.loading) {
-        return IconButton(
-          icon: const LoadingIndicator(
-            dimension: 20,
-          ),
-          onPressed: () {},
-        );
-      }
-      if (buttonState == PlayButtonState.paused) {
-        return IconButton(
-          icon: const Icon(Icons.play_arrow),
-          iconSize: 40.0,
-          onPressed: controller.play,
-        );
-      } else if (buttonState == PlayButtonState.playing ||
-          buttonState == PlayButtonState.loading) {
-        return IconButton(
-          icon: const Icon(Icons.pause),
-          iconSize: 40.0,
-          onPressed: controller.pause,
-        );
-      } else {
-        return IconButton(
-          icon: const Icon(Icons.play_arrow),
-          iconSize: 40.0,
-          onPressed: () {},
-        );
-      }
-    });
-  }
 
   Widget _previousButton(
       PlayerController playerController, BuildContext context) {

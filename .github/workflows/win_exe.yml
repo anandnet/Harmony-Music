@@ -27,6 +27,19 @@ jobs:
           flutter clean
           dart pub global activate flutter_distributor
           flutter_distributor package --platform windows --targets exe
+
+      - name: Find first .exe file
+        id: find_exe
+        run: |
+          $lastSubDir = Get-ChildItem -Path "${{ github.workspace }}/dist" -Directory | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          $exeFile = Get-ChildItem -Path "$($lastSubDir.FullName)/*.exe" | Select-Object -First 1
+          if ($exeFile) {
+              echo "Found .exe file: $($exeFile.FullName)"
+              echo "::set-output name=exe_path::$($exeFile.FullName)"
+          } else {
+              Write-Error "No .exe files found in the dist directory."
+              exit 1
+          }
           
       - name: Set up osslsigncode
         run: |
@@ -47,16 +60,18 @@ jobs:
       - name: Sign executable
         working-directory: "${{ github.workspace }}/signed"
         run: |
-          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" sign -certs cert.pem -key key.pem -in  "${{ github.workspace }}/dist/harmonymusic.exe" -out harmonymusic_signed.exe
+          $exePath = "${{ steps.find_exe.outputs.exe_path }}"
+          $signedExePath = "$exePath".Replace(".exe", "_signed.exe")
+          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" sign -certs cert.pem -key key.pem -t http://timestamp.digicert.com -in "$exePath" -out "$signedExePath"
 
-      # Step 5: Verify the signature
       - name: Verify signature
         working-directory: "${{ github.workspace }}/signed"
         run: |
-          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" verify harmonymusic_signed.exe
+          $signedExePath = "${{ steps.find_exe.outputs.exe_path }}".Replace(".exe", "_signed.exe")
+          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" verify "$signedExePath"
           
       - name: Upload Windows exe artifact
         uses: actions/upload-artifact@v4
         with:
           name: Harmony music windows exe
-          path: "${{ github.workspace }}/signed/*.exe"
+          path: "${{ github.workspace }}/dist/*.exe"

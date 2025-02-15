@@ -181,7 +181,7 @@ class Downloader extends GetxService {
     final RegExp invalidChar =
         RegExp(r'Container.|\/|\\|\"|\<|\>|\*|\?|\:|\!|\[|\]|\¡|\||\%');
     final songTitle =
-        "${song.title} (${song.artist})".replaceAll(invalidChar, "");
+        "${song.title.trim()} (${song.artist?.trim()})".replaceAll(invalidChar, "");
     String filePath = "$dirPath/$songTitle.$actualDownformat";
     printINFO("Downloading filePath: $filePath");
     final totalBytes = requiredAudioStream.size;

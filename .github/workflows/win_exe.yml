@@ -32,6 +32,8 @@ jobs:
         run: |
           Invoke-WebRequest -Uri "https://github.com/mtrojnar/osslsigncode/releases/download/2.9/osslsigncode-2.9-windows-x64-mingw.zip" -OutFile "osslsigncode.zip"
           Expand-Archive -Path "osslsigncode.zip" -DestinationPath "osslsigncode"
+          $osslsigncodePath = Resolve-Path "osslsigncode"
+          echo "Adding $osslsigncodePath to PATH"
           Add-Content -Path $env:GITHUB_PATH -Value "${{ github.workspace }}\osslsigncode"
       
       - name: Make signing dir

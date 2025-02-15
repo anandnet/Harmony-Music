@@ -68,7 +68,7 @@ jobs:
       - name: Verify signature
         working-directory: "${{ github.workspace }}/signed"
         run: |
-          $signedExePath = "${{ steps.find_exe.outputs.exe_path }}".Replace(".exe", "_signed.exe")
+          # $signedExePath = "${{ steps.find_exe.outputs.exe_path }}".Replace(".exe", "_signed.exe")
           if (-not (Test-Path $signedExePath)) {
             Write-Error "Signed executable not found: $signedExePath"
             exit 1

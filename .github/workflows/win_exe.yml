@@ -68,10 +68,9 @@ jobs:
       - name: Verify signature
         working-directory: "${{ github.workspace }}/signed"
         run: |
-          # $signedExePath = "${{ steps.find_exe.outputs.exe_path }}".Replace(".exe", "_signed.exe")
-          if (-not (Test-Path $signedExePath)) {
-            Write-Error "Signed executable not found: $signedExePath"
-            exit 1
+          $signedExePath = "${{ steps.find_exe.outputs.exe_path }}".Replace(".exe", "_signed.exe")
+          if ((Test-Path $signedExePath)) {
+            echo "Signed executable found: $signedExePath"
           }
           & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" -TSA-CAfile DigiCertGlobalRootCA.crt verify "$signedExePath"
           

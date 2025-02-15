@@ -1,3 +1,15 @@
+## 1.11.1
+* Fixed Missing playlist content #437
+* Fixed - Album original tracks are not available in album #439,#440 and #299
+* Added right click support for opening song context menu #431
+* Added option to enable/disable auto opening of player full screen #273
+* Added More tags for album songs #404,#293
+* Player screen enhancement (Android) #432
+* Changed icon style and app font
+* Made pause play button animated
+* Updgraded AGP
+* Replaced Device Equalizer & SDKInt package with binding generated with jnigen (Tried to fix Equalizer in Android)
+
 ## 1.11.0
 * Fixed Stream issues
 * Added feature to restore settings to default

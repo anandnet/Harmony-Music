@@ -669,10 +669,10 @@ packages:
     dependency: "direct main"
     description:
       name: palette_generator
-      sha256: "0b20245c451f14a5ca0818ab7a377765162389f8e8f0db361cceabf0fed9d1ea"
+      sha256: "5a96b78983752faeb94866b30cb8f52e94ef176722bf51d1c5541d6a3044368f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.3+5"
+    version: "0.3.3+6"
   path:
     dependency: "direct main"
     description:
@@ -1228,10 +1228,10 @@ packages:
     dependency: transitive
     description:
       name: web_socket_channel
-      sha256: d88238e5eac9a42bb43ca4e721edba3c08c6354d4a53063afaa568516217621b
+      sha256: "58c6666b342a38816b2e7e50ed0f1e261959630becd4c879c4f26bfa14aa5a42"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0"
+    version: "2.4.5"
   widget_marquee:
     dependency: "direct main"
     description:

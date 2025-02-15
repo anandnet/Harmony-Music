@@ -1,0 +1,9 @@
+* Fixed Missing playlist content #437
+* Fixed - Album original tracks are not available in album #439,#440 and #299
+* Added option to enable/disable auto opening of player full screen #273
+* Added More tags for album songs #404,#293
+* Player screen enhancement #432
+* Changed icon style and app font
+* Made pause play button animated
+* Updgraded AGP
+* Replaced Device Equalizer & SDKInt package with binding generated with jnigen (Tried to fix Equalizer in Android)

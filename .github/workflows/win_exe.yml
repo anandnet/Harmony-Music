@@ -47,13 +47,13 @@ jobs:
       - name: Sign executable
         working-directory: "${{ github.workspace }}/signed"
         run: |
-          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" sign -certs cert.pem -key key.pem -in  "${{ github.workspace }}/dist/harmonymusic*.exe" -out harmony_music_signed.exe
+          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" sign -certs cert.pem -key key.pem -in  "${{ github.workspace }}/dist/harmonymusic.exe" -out harmonymusic_signed.exe
 
       # Step 5: Verify the signature
       - name: Verify signature
         working-directory: "${{ github.workspace }}/signed"
         run: |
-          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" verify harmony_music_signed.exe
+          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" verify harmonymusic_signed.exe
           
       - name: Upload Windows exe artifact
         uses: actions/upload-artifact@v4

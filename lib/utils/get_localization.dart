@@ -623,7 +623,16 @@ Map<String, Map<String, String>> get keys => {
     "resetToDefaultMsg": "Нулирането на настройките по подразбиране завърши, Моля, рестартирайте приложението",
     "resetToDefaultDes": "Нулиране на настройките на приложението по подразбиране (изисква се рестартиране)",
     "misc": "Разни",
-    "resetToDefault": "Възстанови настройките по подразбиране"
+    "resetToDefault": "Възстанови настройките по подразбиране",
+    "autoOpenPlayer": "Автоматично отваряне на екрана на плейъра",
+    "autoOpenPlayerDes": "Активиране/деактивиране на автоматичното отваряне на плейъра на цял екран при избор на песен за изпълнение",
+    "album": "Албум",
+    "playingfromAlbum": "ИЗПЪЛНЕНИЕ ОТ АЛБУМ",
+    "playingfromPlaylist": "ИЗПЪЛНЕНИЕ ОТ ПЛЕЙЛИСТ",
+    "playingfromSelection": "ИЗПЪЛНЕНИЕ ОТ ИЗБОР",
+    "playingfromArtist": "ИЗПЪЛНЕНИЕ ОТ ИЗПЪЛНИТЕЛ",
+    "randomSelection": "Случаен избор",
+    "randomRadio": "Случайно радио"
 }
 ,"bn" : {}
 ,"ca" : {
@@ -1077,7 +1086,7 @@ Map<String, Map<String, String>> get keys => {
     "personalisation": "Přizpůsobení",
     "loudnessNormalization": "Normalizace hlasitosti",
     "queueShufflingDeniedMsg": "Frontu nelze zamíchat, když je povolen režim náhodného výběru",
-    "queuerearrangingDeniedMsg": "Frontu nelze měnit, když je povolen režim náhodného výběru",
+    "queuerearrangingDeniedMsg": "Frontu nelze měnit, když je povolen režim promíchání",
     "loudnessNormalizationDes": "Nastaví stejnou úroveň hlasitosti pro všechny skladby (Experimentální) (Nebude fungovat u skladeb stažených v předchozí verzi(< v1.10.0))",
     "urlSearchDes": "Zjištěná URL Kliknutím na ni otevřete/přehrajete související obsah",
     "androidBackupWarning": "Netestováno: Zaškrtnutím políčka po stažení více než 60 souborů může proces spotřebovat velké množství paměti a může způsobit pád telefonu nebo aplikace. Pokračujte na vlastní nebezpečí.",
@@ -1086,10 +1095,10 @@ Map<String, Map<String, String>> get keys => {
     "gesture": "Gesta",
     "playerUiDes": "Vybrat uživatelské rozhraní přehrávače",
     "playnextMsg": "Následuje",
-    "shuffleQueue": "Náhodný výběr",
+    "shuffleQueue": "Promíchat",
     "queueLoop": "Opakovat",
-    "queueLoopNotDisMsg1": "Režim opakování nelze vypnout, pokud je povolen náhodný výběr.",
-    "queueLoopNotDisMsg2": "Náhodný výběr nelze povolit v režimu rádia.",
+    "queueLoopNotDisMsg1": "Režim opakování nelze vypnout, pokud je povoleno promíchání.",
+    "queueLoopNotDisMsg2": "Opakování nelze povolit v režimu rádia.",
     "enableSlidableAction": "Povolit akce gesty",
     "enableSlidableActionDes": "Povolit akce gesty na dlaždici skladby",
     "autoDownFavSong": "Automaticky stáhnout oblíbené skladby",
@@ -1097,7 +1106,16 @@ Map<String, Map<String, String>> get keys => {
     "misc": "Různé",
     "resetToDefault": "Obnovit výchozí nastavení",
     "resetToDefaultDes": "Obnovit výchozí nastavení aplikace (nutný restart)",
-    "resetToDefaultMsg": "Obnovení výchozího nastavení bylo dokončeno, restartujte aplikaci"
+    "resetToDefaultMsg": "Obnovení výchozího nastavení bylo dokončeno, restartujte aplikaci",
+    "album": "Album",
+    "playingfromAlbum": "Přehrávání z albumu",
+    "playingfromPlaylist": "Přehrávání z playlistu",
+    "playingfromSelection": "Přehrávání z výběru",
+    "playingfromArtist": "Přehrávání od umělce",
+    "randomSelection": "Náhodný výběr",
+    "randomRadio": "Náhodné rádio",
+    "autoOpenPlayer": "Automaticky otevřít obrazovku přehrávače",
+    "autoOpenPlayerDes": "Povolí/zakáže automatické otevření přehrávače na celou obrazovku při výběru skladby pro přehrávání"
 }
 ,"de" : {
     "home": "Start",
@@ -1808,7 +1826,7 @@ Map<String, Map<String, String>> get keys => {
     "equalizerDes": "Ecualizador de sistema abierto",
     "removePlaylist": "Eliminar la lista de reproducción",
     "customIns": "Instancia personalizada",
-    "Piped": "Piped",
+    "Piped": "Canalizado",
     "addToPlaylist": "Añadir a la lista de reproducción",
     "stopMusicOnTaskClearDes": "La reproducción de la música se detendrá cuando se desplace la aplicación fuera de la barra de tareas",
     "cachedOrOffline": "En caché/sin conexión",
@@ -1948,7 +1966,7 @@ Map<String, Map<String, String>> get keys => {
     "duration": "Duración",
     "audioCodec": "Codec de audio",
     "bitrate": "Tasa de bits",
-    "loudnessDb": "LoudnessDb",
+    "loudnessDb": "IntensidadDb",
     "appInfo": "Información de la aplicación",
     "download": "Descargar",
     "downloadError2": "La canción solicitada no se puede descargar debido a una restricción del servidor. Puedes intentarlo nuevamente",
@@ -1980,7 +1998,16 @@ Map<String, Map<String, String>> get keys => {
     "misc": "Varios",
     "resetToDefault": "Restaurar configuración predeterminada",
     "resetToDefaultDes": "Restaura la configuración de la aplicación a los valores predeterminados (es necesario reiniciar)",
-    "resetToDefaultMsg": "Se ha restaurado la configuración a los valores predeterminados, Reinicie la aplicación"
+    "resetToDefaultMsg": "Se ha restaurado la configuración a los valores predeterminados, Reinicie la aplicación",
+    "playingfromAlbum": "REPRODUCIENDO DESDE ÁLBUM",
+    "playingfromPlaylist": "REPRODUCIENDO DESDE LISTA DE REPRODUCCIÓN",
+    "playingfromSelection": "REPRODUCIENDO DESDE SELECCIÓN",
+    "playingfromArtist": "REPRODUCIENDO DESDE ARTISTA",
+    "randomSelection": "Selección Aleatoria",
+    "randomRadio": "Radio Aleatorio",
+    "autoOpenPlayer": "Abrir automáticamente pantalla del reproductor",
+    "autoOpenPlayerDes": "Activar/desactivar la apertura automática del reproductor a pantalla completa al seleccionar una canción a reproducir",
+    "album": "Álbum"
 }
 ,"et" : {
     "home": "Avaleht",
@@ -2216,7 +2243,16 @@ Map<String, Map<String, String>> get keys => {
     "resetToDefaultMsg": "Vaikimisi seadistuste taastamine lõppes, palun käivita rakendus uuesti",
     "misc": "Varia",
     "resetToDefaultDes": "Taasta rakenduse vaikimisi seadistused (eeldab rakenduse uuesti käivitamist)",
-    "resetToDefault": "Taasta vaikimisi seadistused"
+    "resetToDefault": "Taasta vaikimisi seadistused",
+    "autoOpenPlayer": "Ava esitusvaade automaatselt",
+    "autoOpenPlayerDes": "Kas esitatava loo valimisel avaneb esitusvaade automaatselt",
+    "album": "Album",
+    "playingfromAlbum": "ESITAMISEL ALBUMIST",
+    "playingfromPlaylist": "ESITAMISEL ESITUSLOENDIST",
+    "playingfromSelection": "ESITAMISEL VALIKUST",
+    "randomSelection": "Juhuslik valik",
+    "playingfromArtist": "ESITAMISEL ESITAJAST",
+    "randomRadio": "Juhuslik radio"
 }
 ,"eu" : {
     "songs": "Abestiak",
@@ -2452,7 +2488,16 @@ Map<String, Map<String, String>> get keys => {
     "misc": "Miszelanea",
     "resetToDefault": "Berrezarri lehenetsitako ezarpenak",
     "resetToDefaultDes": "Berrezarri aplikazioaren ezarpenak lehenespenetara (Berrabiarazi behar da)",
-    "resetToDefaultMsg": "Ezarpenak lehenetsitakoetara itzultzea gauzatu da, Berrabiarazi aplikazioa, mesedez"
+    "resetToDefaultMsg": "Ezarpenak lehenetsitakoetara itzultzea gauzatu da, Berrabiarazi aplikazioa, mesedez",
+    "album": "Albuma",
+    "playingfromAlbum": "ALBUMETIK ERREPRODUZITZEN",
+    "playingfromPlaylist": "ERREPRODUKZIO-ZERRENDATIK ERREPRODUZITZEN",
+    "playingfromSelection": "HAUTAKETATIK ERREPRODUZITZEN",
+    "playingfromArtist": "ARTISTATIK ERREPRODUZITZEN",
+    "randomSelection": "Ausazko Hautaketa",
+    "randomRadio": "Ausazko Irratia",
+    "autoOpenPlayer": "Ireki automatikoki erreproduzitzailearen pantaila",
+    "autoOpenPlayerDes": "Gaitu/desgaitu erreproduzitzailearen pantaila osoko irekiera automatikoa erreproduzitzeko abestia aukeratzerakoan"
 }
 ,"fa" : {
     "home": "خانه",
@@ -2925,7 +2970,7 @@ Map<String, Map<String, String>> get keys => {
     "exporting": "Exportation en cours...",
     "downFilesFound": "fichiers téléchargés trouvés",
     "close": "Fermer",
-    "exportMsg": "Fichiers exportés avec succès !",
+    "exportMsg": "Fichiers exportés avec succès",
     "clearImgCache": "Nettoyer le cache des images",
     "clearImgCacheDes": "Cliquez ici pour vider le cache des images / miniatures. (Non recommandé sauf si vous voulez rafraîchir le cache des images)",
     "deleteDownloadedDataAlert": "Supprimé avec succès des téléchargements !",
@@ -2937,7 +2982,7 @@ Map<String, Map<String, String>> get keys => {
     "backgroundPlayDes": "Activer / Désactiver la lecture de musique en arrière-plan (l’application est accessible depuis la barre d’état système lorsqu'elle s’exécute en arrière-plan)",
     "pipedplstSyncAlert": "Playlist piped synchronisée !",
     "export": "Exporter",
-    "clearImgCacheAlert": "Nettoyage du cache des images réalisé avec succès !",
+    "clearImgCacheAlert": "Nettoyage du cache des images réalisé avec succès",
     "homeContentCount": "Nombre de contenus de l'accueil",
     "upNext": "À suivre",
     "enableBottomNav": "Barre de navigation inférieure",
@@ -2974,7 +3019,7 @@ Map<String, Map<String, String>> get keys => {
     "loudnessNormalizationDes": "Définit le même niveau de volume pour tous les titres (expérimental) (Cela ne fonctionnera pas sur les titres téléchargés sur la version précédente (< v1.10.0))",
     "id": "Identifiant",
     "urlSearchDes": "URL détectée. Cliquez dessus pour ouvrir / lire le contenu associé",
-    "androidBackupWarning": "Non testé : si vous cochez la case après avoir téléchargé plus de 60 fichiers, le processus peut consommer une grande quantité de mémoire et provoquer le blocage du téléphone ou de l'application. Procédez à vos propres risques !",
+    "androidBackupWarning": "Non testé : si vous cochez la case après avoir téléchargé plus de 60 fichiers, le processus peut consommer une grande quantité de mémoire et provoquer le blocage du téléphone ou de l'application. Procédez à vos propres risques.",
     "songInfo": "Informations sur le titre",
     "duration": "Durée",
     "backup": "Sauvegarde",
@@ -2998,7 +3043,16 @@ Map<String, Map<String, String>> get keys => {
     "misc": "Divers",
     "resetToDefault": "Restaurer les paramètres par défaut",
     "resetToDefaultDes": "Réinitialiser les paramètres de l'application aux valeurs par défaut (redémarrage requis)",
-    "resetToDefaultMsg": "La réinitialisation des paramètres par défaut est terminée. Veuillez redémarrer l'application."
+    "resetToDefaultMsg": "La réinitialisation des paramètres par défaut est terminée. Veuillez redémarrer l'application",
+    "autoOpenPlayerDes": "Activer / Désactiver l'ouverture automatique du plein écran du lecteur lors de la sélection du titre à lire",
+    "autoOpenPlayer": "Ouverture automatique de l'écran du lecteur",
+    "album": "Album",
+    "playingfromAlbum": "LECTURE DE L'ALBUM",
+    "playingfromPlaylist": "LECTURE DE LA PLAYLIST",
+    "playingfromSelection": "LECTURE DE LA SÉLECTION",
+    "playingfromArtist": "LECTURE DE L'ARTISTE",
+    "randomRadio": "Radio Aléatoire",
+    "randomSelection": "Sélection Aléatoire"
 }
 ,"ga" : {}
 ,"gl" : {
@@ -5580,7 +5634,7 @@ Map<String, Map<String, String>> get keys => {
     "download": "Pobierz",
     "networkError": "Błąd sieci! Sprawdź połączenie sieciowe.",
     "downloadError2": "Żądany utwór nie może zostać pobrany z powodu ograniczeń serwera. Możesz spróbować ponownie",
-    "downloadError3": "Pobieranie nie powiodło się z powodu błędu sieci! Spróbuj ponownie",
+    "downloadError3": "Pobieranie nie powiodło się z powodu błędu sieci/strumienia! Spróbuj ponownie",
     "duration": "Czas trwania",
     "audioCodec": "Kodek dźwięku",
     "playerUiDes": "Wybierz interfejs użytkownika odtwarzacza",
@@ -5592,7 +5646,20 @@ Map<String, Map<String, String>> get keys => {
     "bitrate": "Szybkość transmisji",
     "playerUi": "Interfejs użytkownika gracza",
     "playnextMsg": "Nadchodzące",
-    "loudnessDb": "GłośnośćDb"
+    "loudnessDb": "GłośnośćDb",
+    "misc": "Różne",
+    "resetToDefault": "Przywracanie ustawień domyślnych",
+    "resetToDefaultDes": "Przywróć domyślne ustawienia aplikacji (wymagane ponowne uruchomienie)",
+    "resetToDefaultMsg": "Przywracanie ustawień domyślnych zakończone, uruchom ponownie aplikację",
+    "autoOpenPlayer": "Automatyczne otwieranie ekranu odtwarzacza",
+    "album": "Album",
+    "playingfromAlbum": "ODTWARZANIE Z ALBUMU",
+    "playingfromPlaylist": "ODTWARZANIE Z PLAYLISTY",
+    "playingfromSelection": "ODTWARZANIE Z WYBORU",
+    "playingfromArtist": "ODTWARZANIE WG. ARTYSTY",
+    "randomSelection": "Wybór losowy",
+    "randomRadio": "Losowe Radio",
+    "autoOpenPlayerDes": "Włączenie/wyłączenie automatycznego otwierania odtwarzacza na pełnym ekranie po wybraniu utworu do odtwarzania"
 }
 ,"pt" : {
     "renamePlaylist": "Renomear Playlist",
@@ -6338,7 +6405,7 @@ Map<String, Map<String, String>> get keys => {
     "search": "Hľadať",
     "githubDes": "Zobrazte zdrojový kód GitHub \nak sa vám tento projekt páči, nezabudnite dať ⭐",
     "playlistBookmarkRemoveAlert": "Záložka playlistu odstránená!",
-    "enqueueAll": "Pridať všetky do poradia",
+    "enqueueAll": "Pridať všetko do poradia",
     "setDiscoverContent": "Nastaviť obsah domovskej obrazovky",
     "songRemovedfromQueue": "Odstránené z poradia!",
     "syncedLyricsNotAvailable": "Synchronizovaný text nie je k dispozícii!",
@@ -6401,7 +6468,7 @@ Map<String, Map<String, String>> get keys => {
     "music&Playback": "Hudba a prehrávanie",
     "loudnessNormalization": "Normalizácia hlasitosti",
     "queueShufflingDeniedMsg": "Keď je zapnutý režim náhodného výberu, poradie nie je možné premiešať",
-    "queuerearrangingDeniedMsg": "Keď je zapnutý režim náhodného výberu, poradie nie je možné meniť",
+    "queuerearrangingDeniedMsg": "Keď je zapnutý režim premiešania, poradie nie je možné meniť",
     "songNotPlayable": "Skladbu nie je možné prehrať z dôvodu obmedzenia servera!",
     "appInfo": "Informácie o aplikácii",
     "networkError": "Chyba siete! Skontrolujte pripojenie k internetu.",
@@ -6414,17 +6481,26 @@ Map<String, Map<String, String>> get keys => {
     "playerUiDes": "Vybrať používateľské rozhranie prehrávača",
     "enableSlidableAction": "Povoliť akcie gestami",
     "playnextMsg": "Nasleduje",
-    "shuffleQueue": "Náhodný výber",
+    "shuffleQueue": "Premiešať",
     "queueLoop": "Opakovať",
-    "queueLoopNotDisMsg1": "Režim opakovania nie je možné vypnúť, keď je povolený náhodný výber.",
-    "queueLoopNotDisMsg2": "V režime rádio nie je možné zapnúť náhodný výber.",
+    "queueLoopNotDisMsg1": "Režim opakovania nie je možné vypnúť, keď je zapnutý režim premiešania.",
+    "queueLoopNotDisMsg2": "V režime rádio nie je možné zapnúť opakovanie.",
     "enableSlidableActionDes": "Povoliť akcie gestami pri skladbe",
     "autoDownFavSong": "Automaticky sťahovať obľúbené skladby",
     "autoDownFavSongDes": "Po pridaní do obľúbených položiek automaticky stiahne obľúbené skladby",
     "resetToDefaultMsg": "Obnovenie predvolených nastavení je dokončené, reštartujte aplikáciu",
     "misc": "Rôzne",
     "resetToDefault": "Obnoviť predvolené nastavenia",
-    "resetToDefaultDes": "Obnoviť predvolené nastavenia aplikácie (vyžaduje sa reštart)"
+    "resetToDefaultDes": "Obnoviť predvolené nastavenia aplikácie (vyžaduje sa reštart)",
+    "album": "Album",
+    "playingfromPlaylist": "Prehrávanie z playlistu",
+    "playingfromSelection": "Prehrávanie z výberu",
+    "randomSelection": "Náhodný výber",
+    "randomRadio": "Náhodné rádio",
+    "autoOpenPlayer": "Automaticky otvoriť obrazovku prehrávača",
+    "autoOpenPlayerDes": "Zapne/vypne automatické otvorenie prehrávača na celú obrazovku pri výbere skladby na prehrávanie",
+    "playingfromArtist": "Prehrávanie od umelca",
+    "playingfromAlbum": "Prehrávanie z albumu"
 }
 ,"sr" : {
     "playlistCreatednsongAddedAlert": "Плејлиста је направљена и песма је додата!",

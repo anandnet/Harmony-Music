@@ -51,11 +51,12 @@ jobs:
         working-directory: "${{ github.workspace }}"
         run: mkdir signed
 
-      - name: Decode certificate and key
+      - name: Collecting certs and key
         working-directory: "${{ github.workspace }}/signed"
         run: |
-          [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("${{ secrets.CERT_PEM }}")) | Out-File -FilePath cert.pem -Encoding ASCII
           [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("${{ secrets.KEY_PEM }}")) | Out-File -FilePath key.pem -Encoding ASCII
+          cp "${{ github.workspace }}/win_cert/DigiCertGlobalRootCA.crt" .
+          cp "${{ github.workspace }}/win_cert/cert.pem" .
 
       - name: Sign executable
         working-directory: "${{ github.workspace }}/signed"
@@ -68,7 +69,7 @@ jobs:
         working-directory: "${{ github.workspace }}/signed"
         run: |
           $signedExePath = "${{ steps.find_exe.outputs.exe_path }}".Replace(".exe", "_signed.exe")
-          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" verify "$signedExePath"
+          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" -TSA-CAfile DigiCertGlobalRootCA.crt verify "$signedExePath"
           
       - name: Upload Windows exe artifact
         uses: actions/upload-artifact@v4

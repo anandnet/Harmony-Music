@@ -64,22 +64,15 @@ jobs:
           $exePath = "${{ steps.find_exe.outputs.exe_path }}"
           $signedExePath = "${{ steps.find_exe.outputs.exe_path }}".Replace(".exe", "_signed.exe")
           & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" sign -certs cert.pem -key key.pem -t http://timestamp.digicert.com -in "$exePath" -out "$signedExePath"
-          if ((Test-Path $signedExePath)) {
-            echo "Signed executable found: $signedExePath"
-          }
-          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" verify -in "$signedExePath" -TSA-CAfile DigiCertGlobalRootCA.crt -CAfile cert.pem
 
-      # - name: Verify signature
-      #   working-directory: "${{ github.workspace }}/signed"
-      #   run: |
-      #     $signedExePath = "${{ steps.find_exe.outputs.exe_path }}".Replace(".exe", "_signed.exe")
-      #     if ((Test-Path $signedExePath)) {
-      #       echo "Signed executable found: $signedExePath"
-      #     }
-      #     # & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" -TSA-CAfile DigiCertGlobalRootCA.crt verify "$signedExePath"
+      - name: Verify signature
+        working-directory: "${{ github.workspace }}/signed"
+        run: |
+          $signedExePath = "${{ steps.find_exe.outputs.exe_path }}".Replace(".exe", "_signed.exe")
+          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" verify -in "$signedExePath" -TSA-CAfile DigiCertGlobalRootCA.crt -CAfile cert.pem
           
       - name: Upload Windows exe artifact
         uses: actions/upload-artifact@v4
         with:
           name: Harmony music windows exe
-          path: "${{ github.workspace }}/dist/*.exe"
+          path: "${{ github.workspace }}/dist/**/*.exe"

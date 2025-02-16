@@ -237,5 +237,14 @@
     "resetToDefault": "Standardeinstellungen wiederherstellen",
     "resetToDefaultMsg": "Zurücksetzen der Einstellungen abgeschlossen, bitte starte die App neu",
     "resetToDefaultDes": "Setze die App-Einstellungen auf die Standards zurück (Neustart erforderlich)",
-    "misc": "Sonstiges"
+    "misc": "Sonstiges",
+    "album": "Album",
+    "playingfromAlbum": "SPIELE AUS ALBUM",
+    "playingfromPlaylist": "SPIELE AUS PLAYLIST",
+    "playingfromSelection": "SPIELE AUS AUSWAHL",
+    "playingfromArtist": "SPIELE AUS KÜNSTLER",
+    "randomSelection": "Zufallsauswahl",
+    "randomRadio": "Zufälliges Radio",
+    "autoOpenPlayer": "Öffne Player Bildschirm automatisch",
+    "autoOpenPlayerDes": "Aktiviere/Deaktiviere automatisches öffnen des Vollbildplayers, wenn ein Lied ausgewählt wurde"
 }

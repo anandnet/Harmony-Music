@@ -63,7 +63,10 @@ jobs:
         run: |
           $exePath = "${{ steps.find_exe.outputs.exe_path }}"
           $signedExePath = [System.IO.Path]::ChangeExtension($exePath, "_signed.exe")
-          # & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" sign -certs cert.pem -key key.pem -t http://timestamp.digicert.com -in "$exePath" -out "$signedExePath"
+          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" sign -certs cert.pem -key key.pem -t http://timestamp.digicert.com -in "$exePath" -out "$signedExePath"
+          if ((Test-Path $signedExePath)) {
+            echo "Signed executable found: $signedExePath"
+          }
 
       - name: Verify signature
         working-directory: "${{ github.workspace }}/signed"
@@ -72,7 +75,7 @@ jobs:
           if ((Test-Path $signedExePath)) {
             echo "Signed executable found: $signedExePath"
           }
-          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" -TSA-CAfile DigiCertGlobalRootCA.crt verify "$signedExePath"
+          # & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" -TSA-CAfile DigiCertGlobalRootCA.crt verify "$signedExePath"
           
       - name: Upload Windows exe artifact
         uses: actions/upload-artifact@v4

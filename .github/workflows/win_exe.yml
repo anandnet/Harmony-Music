@@ -62,7 +62,7 @@ jobs:
         working-directory: "${{ github.workspace }}/signed"
         run: |
           $exePath = "${{ steps.find_exe.outputs.exe_path }}"
-          $signedExePath = "$exePath".Replace(".exe", "_signed.exe")
+          $signedExePath = [System.IO.Path]::ChangeExtension($exePath, "_signed.exe")
           & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" sign -certs cert.pem -key key.pem -t http://timestamp.digicert.com -in "$exePath" -out "$signedExePath"
 
       - name: Verify signature

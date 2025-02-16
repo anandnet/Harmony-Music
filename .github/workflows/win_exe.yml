@@ -67,7 +67,7 @@ jobs:
           if ((Test-Path $signedExePath)) {
             echo "Signed executable found: $signedExePath"
           }
-          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" -TSA-CAfile DigiCertGlobalRootCA.crt verify "$signedExePath"
+          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" verify "$signedExePath" -TSA-CAfile DigiCertGlobalRootCA.crt
 
       # - name: Verify signature
       #   working-directory: "${{ github.workspace }}/signed"

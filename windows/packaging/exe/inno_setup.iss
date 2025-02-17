@@ -1,6 +1,6 @@
 [Setup]
 AppId=B9F6E402-0CAE-4045-BDE6-14BD6C39C4EA
-AppVersion=1.11.1+23
+AppVersion=1.11.2+24
 AppName=Harmony Music
 AppPublisher=anandnet
 AppPublisherURL=https://github.com/anandnet/Harmony-Music
@@ -9,7 +9,7 @@ AppUpdatesURL=https://github.com/anandnet/Harmony-Music
 DefaultDirName={autopf}\harmonymusic
 DisableProgramGroupPage=yes
 OutputDir=.
-OutputBaseFilename=harmonymusic
+OutputBaseFilename=harmonymusic-1.11.2
 Compression=lzma
 SolidCompression=yes
 SetupIconFile=..\..\windows\runner\resources\app_icon.ico

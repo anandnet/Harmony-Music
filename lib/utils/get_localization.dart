@@ -1356,7 +1356,16 @@ Map<String, Map<String, String>> get keys => {
     "resetToDefault": "Standardeinstellungen wiederherstellen",
     "resetToDefaultMsg": "Zurücksetzen der Einstellungen abgeschlossen, bitte starte die App neu",
     "resetToDefaultDes": "Setze die App-Einstellungen auf die Standards zurück (Neustart erforderlich)",
-    "misc": "Sonstiges"
+    "misc": "Sonstiges",
+    "album": "Album",
+    "playingfromAlbum": "SPIELE AUS ALBUM",
+    "playingfromPlaylist": "SPIELE AUS PLAYLIST",
+    "playingfromSelection": "SPIELE AUS AUSWAHL",
+    "playingfromArtist": "SPIELE AUS KÜNSTLER",
+    "randomSelection": "Zufallsauswahl",
+    "randomRadio": "Zufälliges Radio",
+    "autoOpenPlayer": "Öffne Player Bildschirm automatisch",
+    "autoOpenPlayerDes": "Aktiviere/Deaktiviere automatisches öffnen des Vollbildplayers, wenn ein Lied ausgewählt wurde"
 }
 ,"en" : {
     "home": "Home",
@@ -8030,7 +8039,7 @@ Map<String, Map<String, String>> get keys => {
     "restoring": "正在恢复...",
     "appInfo": "应用信息",
     "downloadError2": "服务器限制，无法下载所请求的歌曲。请重试",
-    "downloadError3": "由于网络错误，下载失败！请重试",
+    "downloadError3": "由于网络/串流错误，下载失败！请重试",
     "music&Playback": "音乐与播放",
     "songInfo": "歌曲信息",
     "urlSearchDes": "检测到 URL 后单击即可打开/播放相关内容",
@@ -8086,8 +8095,15 @@ Map<String, Map<String, String>> get keys => {
     "autoDownFavSongDes": "当添加到收藏夹时自动下载收藏的歌曲",
     "misc": "其他",
     "resetToDefault": "恢复默认设置",
-    "resetToDefaultMsg": "已恢复为默认设置，请重启应用程序",
-    "resetToDefaultDes": "恢复为默认设置（需要重启应用程序）"
+    "resetToDefaultMsg": "已重置为默认设置，请重启应用程序",
+    "resetToDefaultDes": "重置为默认设置（需要重启应用程序）",
+    "autoOpenPlayer": "自动打开播放页面",
+    "playingfromAlbum": "从专辑播放",
+    "playingfromPlaylist": "从歌单播放",
+    "randomSelection": "随机选择",
+    "randomRadio": "随机电台",
+    "album": "专辑",
+    "autoOpenPlayerDes": "启用/禁用选择歌曲播放时自动全屏播放器"
 }
 ,"zh_Hant" : {
     "createnAdd": "建立並新增",

@@ -1,4 +1,7 @@
 ## 1.11.1
+* Fixed rendering issue in Android (happening due to flutter upgrade)
+
+## 1.11.1
 * Fixed Missing playlist content #437
 * Fixed - Album original tracks are not available in album #439,#440 and #299
 * Added right click support for opening song context menu #431

@@ -201,9 +201,7 @@ class Player extends StatelessWidget {
           /// show player ui based on selected player ui in settings
           /// Gesture player is only applicable for mobile
           body: settingsScreenController.playerUi.value == 0
-              ? const StandardPlayer(
-                  key: Key("SPlayer"),
-                )
+              ? const StandardPlayer()
               : const GesturePlayer(),
         ),
       ),

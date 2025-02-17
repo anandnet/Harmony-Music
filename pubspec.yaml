@@ -31,7 +31,7 @@ dependencies:
   animations: ^2.0.11
   app_links: ^3.5.1
   archive: ^3.1.6
-  audio_service: ^0.18.15
+  audio_service: ^0.18.17
   audio_service_mpris: ^0.1.5
   audio_video_progress_bar: ^2.0.3
   audiotags: ^1.4.1
@@ -43,14 +43,14 @@ dependencies:
     sdk: flutter
   flutter_keyboard_visibility: ^6.0.0
   flutter_lyric: ^2.0.4+6
-  flutter_slidable: ^4.0.0
+  flutter_slidable: ^3.1.2
   get: ^4.7.1
   google_fonts: ^6.1.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   ionicons: ^0.2.2
   jni: ^0.14.0
-  just_audio: ^0.9.40
+  just_audio: ^0.9.46
   just_audio_media_kit:
     git:
       url: https://github.com/anandnet/just_audio_media_kit.git
@@ -59,7 +59,7 @@ dependencies:
   path: ^1.8.3
   path_provider: ^2.1.1
   permission_handler: ^11.0.1
-  share_plus: ^9.0.0
+  share_plus: ^10.1.4
   shimmer: ^3.0.0
   sidebar_with_animation:
     git:

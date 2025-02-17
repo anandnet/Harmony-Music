@@ -168,7 +168,6 @@ class StandardPlayer extends StatelessWidget {
         /// This is not visible in mobile devices in landscape mode
         if (!(context.isLandscape && GetPlatform.isMobile))
           Padding(
-            key: Key("${playerController.currentSong.value?.id}_playerHeader"),
             padding: EdgeInsets.only(
                 top: Get.mediaQuery.padding.top + 20, left: 10, right: 10),
             child: Row(

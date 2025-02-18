@@ -234,5 +234,14 @@
     "resetToDefault": "初期設定に戻す",
     "resetToDefaultDes": "アプリの設定を初期値に戻す (要再起動)",
     "resetToDefaultMsg": "設定の初期化が完了、アプリを再起動してください",
-    "misc": "ほか"
+    "misc": "ほか",
+    "randomSelection": "SELECTIONからランダム",
+    "randomRadio": "ラジオからランダム",
+    "playingfromSelection": "SELECTIONから再生中",
+    "playingfromArtist": "アーティストから再生中",
+    "autoOpenPlayerDes": "再生する曲の選択時に、プレーヤーを自動的に全画面で開くかどうか",
+    "autoOpenPlayer": "プレーヤー画面を自動で開く",
+    "album": "アルバム",
+    "playingfromAlbum": "アルバムから再生中",
+    "playingfromPlaylist": "再生リストから再生中"
 }

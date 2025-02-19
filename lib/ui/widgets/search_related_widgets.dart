@@ -31,31 +31,30 @@ class ResultWidget extends StatelessWidget {
             child: searchResScrController.isResultContentFetced.value
                 ? Column(children: [
                     if (!isv2Used)
-                      Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "searchRes".tr,
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: GestureDetector(
-                              onTap: () {
-                                searchScreenController
-                                        .textInputController.text =
-                                    searchResScrController.queryString.value;
-                                Navigator.pop(context);
-                              },
+                      GestureDetector(
+                        onTap: () {
+                          searchScreenController.textInputController.text =
+                              searchResScrController.queryString.value;
+                          Navigator.pop(context);
+                        },
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
                               child: Text(
-                                "${"for1".tr} \"${searchResScrController.queryString.value}\"",
+                                "searchRes".tr,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ),
-                          ),
-                        ],
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "${"for1".tr} \"${searchResScrController.queryString.value}\"",
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     const SizedBox(
                       height: 10,

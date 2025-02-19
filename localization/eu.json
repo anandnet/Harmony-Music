@@ -228,5 +228,18 @@
     "cacheHomeScreenData": "Hasierako pantailaren edukiaren datuak katxeatu",
     "exportDowloadedFiles": "Deskargatutako fitxategiak deskargatu",
     "local": "Lokala",
-    "link": "Esteka"
+    "link": "Esteka",
+    "misc": "Miszelanea",
+    "resetToDefault": "Berrezarri lehenetsitako ezarpenak",
+    "resetToDefaultDes": "Berrezarri aplikazioaren ezarpenak lehenespenetara (Berrabiarazi behar da)",
+    "resetToDefaultMsg": "Ezarpenak lehenetsitakoetara itzultzea gauzatu da, Berrabiarazi aplikazioa, mesedez",
+    "album": "Albuma",
+    "playingfromAlbum": "ALBUMETIK ERREPRODUZITZEN",
+    "playingfromPlaylist": "ERREPRODUKZIO-ZERRENDATIK ERREPRODUZITZEN",
+    "playingfromSelection": "HAUTAKETATIK ERREPRODUZITZEN",
+    "playingfromArtist": "ARTISTATIK ERREPRODUZITZEN",
+    "randomSelection": "Ausazko Hautaketa",
+    "randomRadio": "Ausazko Irratia",
+    "autoOpenPlayer": "Ireki automatikoki erreproduzitzailearen pantaila",
+    "autoOpenPlayerDes": "Gaitu/desgaitu erreproduzitzailearen pantaila osoko irekiera automatikoa erreproduzitzeko abestia aukeratzerakoan"
 }

@@ -46,5 +46,6 @@ const langMap = {
   "uk": "Ukrainian",
   "ur": "Urdu",
   "vi": "Vietnamese",
-  "zh_Hans": "Chinese"
+  "zh_Hans": "Chinese",
+  "zh_Hant": "Chinese(Trad.)"
 };

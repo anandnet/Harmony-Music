@@ -5,11 +5,10 @@ import '../models/thumbnail.dart';
 
 class MediaItemBuilder {
   static MediaItem fromJson(dynamic json, {String? url}) {
-    String artistName = '';
+    String? artistName;
     if (json['artists'] != null) {
-      for (dynamic artist in json['artists']) {
-        artistName += "${artist['name']} • ";
-      }
+      artistName =
+          json['artists']?.map((e) => e['name']).toList().join(', ').toString();
     }
 
     Map? album;
@@ -26,16 +25,16 @@ class MediaItemBuilder {
             ? Duration(seconds: json['duration'])
             : toDuration(json['length']),
         album: album != null ? album['name'] : null,
-        artist: artistName == ""
-            ? artistName
-            : artistName.substring(0, artistName.length - 2),
+        artist: artistName,
         artUri: Uri.parse(Thumbnail(json["thumbnails"][0]['url']).high),
         extras: {
           'url': json['url'] ?? url,
           'length': json['length'],
           'album': album,
           'artists': json['artists'],
-          'date': json['date']
+          'date': json['date'],
+          'trackDetails': json['trackDetails'],
+          'year': json['year']
         });
   }
 
@@ -69,6 +68,8 @@ class MediaItemBuilder {
         'thumbnails': [
           {'url': mediaItem.artUri.toString()}
         ],
-        'url': mediaItem.extras!['url']
+        'url': mediaItem.extras!['url'],
+        'trackDetails': mediaItem.extras?['trackDetails'],
+        'year': mediaItem.extras?['year']
       };
 }

@@ -1,0 +1,78 @@
+name: Build Windows exe 
+on: workflow_dispatch
+  
+jobs:
+
+  build-windows-exe:
+    runs-on: windows-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.24.2'
+
+      - name: Update lang data
+        working-directory: "${{ github.workspace }}"
+        run: dart localization/generator.dart
+
+      - name: Set update check flag to true
+        working-directory: "${{ github.workspace }}/lib/utils"
+        run: echo "const updateCheckFlag = true;" > update_check_flag_file.dart
+        
+      - name: Build windows exe package
+        working-directory: "${{ github.workspace }}"
+        run: |
+          flutter clean
+          dart pub global activate flutter_distributor
+          flutter_distributor package --platform windows --targets exe
+
+      - name: Find first .exe file
+        id: find_exe
+        run: |
+          $lastSubDir = Get-ChildItem -Path "${{ github.workspace }}/dist" -Directory | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          $exeFile = Get-ChildItem -Path "$($lastSubDir.FullName)/*.exe" | Select-Object -First 1
+          if ($exeFile) {
+              echo "Found .exe file: $($exeFile.FullName)"
+              echo "::set-output name=exe_path::$($exeFile.FullName)"
+          } else {
+              Write-Error "No .exe files found in the dist directory."
+              exit 1
+          }
+          
+      - name: Set up osslsigncode
+        run: |
+          Invoke-WebRequest -Uri "https://github.com/mtrojnar/osslsigncode/releases/download/2.9/osslsigncode-2.9-windows-x64-mingw.zip" -OutFile "osslsigncode.zip"
+          Expand-Archive -Path "osslsigncode.zip" -DestinationPath "osslsigncode"
+          Add-Content -Path $env:GITHUB_PATH -Value "${{ github.workspace }}\osslsigncode"
+      
+      - name: Make signing dir
+        working-directory: "${{ github.workspace }}"
+        run: mkdir signed
+
+      - name: Collecting certs and key
+        working-directory: "${{ github.workspace }}/signed"
+        run: |
+          [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("${{ secrets.KEY_PEM }}")) | Out-File -FilePath key.pem -Encoding ASCII
+          cp "${{ github.workspace }}/win_cert/DigiCertGlobalRootCA.crt" .
+          cp "${{ github.workspace }}/win_cert/cert.pem" .
+
+      - name: Sign executable
+        working-directory: "${{ github.workspace }}/signed"
+        run: |
+          $exePath = "${{ steps.find_exe.outputs.exe_path }}"
+          $signedExePath = "$exePath".Replace(".exe", "_signed.exe")
+          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" sign -certs cert.pem -key key.pem -t http://timestamp.digicert.com -in "$exePath" -out "$signedExePath"
+
+      - name: Verify signature
+        working-directory: "${{ github.workspace }}/signed"
+        run: |
+          $signedExePath = "${{ steps.find_exe.outputs.exe_path }}".Replace(".exe", "_signed.exe")
+          & "${{ github.workspace }}/osslsigncode/bin/osslsigncode.exe" verify -in "$signedExePath" -TSA-CAfile DigiCertGlobalRootCA.crt -CAfile cert.pem
+          
+      - name: Upload Windows exe artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Harmony music windows exe
+          path: "${{ github.workspace }}/dist/**/*signed.exe"

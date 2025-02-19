@@ -36,7 +36,7 @@ class NewVersionDialog extends StatelessWidget {
                         );
                       },
                       child: const Icon(
-                        Icons.download_rounded,
+                        Icons.download,
                         size: 30,
                       ),
                     ),

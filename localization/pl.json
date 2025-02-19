@@ -221,7 +221,7 @@
     "download": "Pobierz",
     "networkError": "Błąd sieci! Sprawdź połączenie sieciowe.",
     "downloadError2": "Żądany utwór nie może zostać pobrany z powodu ograniczeń serwera. Możesz spróbować ponownie",
-    "downloadError3": "Pobieranie nie powiodło się z powodu błędu sieci! Spróbuj ponownie",
+    "downloadError3": "Pobieranie nie powiodło się z powodu błędu sieci/strumienia! Spróbuj ponownie",
     "duration": "Czas trwania",
     "audioCodec": "Kodek dźwięku",
     "playerUiDes": "Wybierz interfejs użytkownika odtwarzacza",
@@ -233,5 +233,18 @@
     "bitrate": "Szybkość transmisji",
     "playerUi": "Interfejs użytkownika gracza",
     "playnextMsg": "Nadchodzące",
-    "loudnessDb": "GłośnośćDb"
+    "loudnessDb": "GłośnośćDb",
+    "misc": "Różne",
+    "resetToDefault": "Przywracanie ustawień domyślnych",
+    "resetToDefaultDes": "Przywróć domyślne ustawienia aplikacji (wymagane ponowne uruchomienie)",
+    "resetToDefaultMsg": "Przywracanie ustawień domyślnych zakończone, uruchom ponownie aplikację",
+    "autoOpenPlayer": "Automatyczne otwieranie ekranu odtwarzacza",
+    "album": "Album",
+    "playingfromAlbum": "ODTWARZANIE Z ALBUMU",
+    "playingfromPlaylist": "ODTWARZANIE Z PLAYLISTY",
+    "playingfromSelection": "ODTWARZANIE Z WYBORU",
+    "playingfromArtist": "ODTWARZANIE WG. ARTYSTY",
+    "randomSelection": "Wybór losowy",
+    "randomRadio": "Losowe Radio",
+    "autoOpenPlayerDes": "Włączenie/wyłączenie automatycznego otwierania odtwarzacza na pełnym ekranie po wybraniu utworu do odtwarzania"
 }

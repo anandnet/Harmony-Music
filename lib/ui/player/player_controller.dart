@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
+import '../../models/playling_from.dart';
 import '../../services/downloader.dart';
 import '../widgets/snackbar.dart';
 import '/services/synced_lyrics_service.dart';
@@ -57,6 +58,7 @@ class PlayerController extends GetxController
   final isShuffleModeEnabled = false.obs;
   final currentSong = Rxn<MediaItem>();
   final isCurrentSongFav = false.obs;
+  final playinfrom = PlaylingFrom(type: PlaylingFromType.SELECTION).obs;
   final showLyricsflag = false.obs;
   final isLyricsLoading = false.obs;
   final lyricsMode = 0.obs;
@@ -101,18 +103,17 @@ class PlayerController extends GetxController
     _listenForPlaylistChange();
     _listenForKeyboardActivity();
     _setInitLyricsMode();
-    isLoopModeEnabled.value =
-        Hive.box("AppPrefs").get("isLoopModeEnabled") ?? false;
-    isShuffleModeEnabled.value =
-        Hive.box("appPrefs").get("isShuffleModeEnabled") ?? false;
+    final appPrefs = Hive.box("AppPrefs");
+    isLoopModeEnabled.value = appPrefs.get("isLoopModeEnabled") ?? false;
+    isShuffleModeEnabled.value = appPrefs.get("isShuffleModeEnabled") ?? false;
     isQueueLoopModeEnabled.value =
-        Hive.box("AppPrefs").get("queueLoopModeEnabled") ?? false;
+        appPrefs.get("queueLoopModeEnabled") ?? false;
 
     if (GetPlatform.isDesktop) {
-      setVolume(Hive.box("AppPrefs").get("volume") ?? 100);
+      setVolume(appPrefs.get("volume") ?? 100);
     }
 
-    if (Hive.box("AppPrefs").get("playerUi") == 1) {
+    if ((appPrefs.get("playerUi") ?? 0) == 1) {
       initGesturePlayerStateAnimationController();
     }
   }
@@ -282,6 +283,12 @@ class PlayerController extends GetxController
   ///songs into Queue
   Future<void> pushSongToQueue(MediaItem? mediaItem,
       {String? playlistid, bool radio = false}) async {
+    /// update playing from value
+    playinfrom.value = PlaylingFrom(
+        type: PlaylingFromType.SELECTION,
+        name: radio ? "randomRadio".tr : "randomSelection".tr);
+
+    /// set global radio mode flag
     isRadioModeOn = radio;
 
     Future.delayed(
@@ -333,10 +340,14 @@ class PlayerController extends GetxController
     }
   }
 
-  Future<void> playPlayListSong(List<MediaItem> mediaItems, int index) async {
+  Future<void> playPlayListSong(List<MediaItem> mediaItems, int index,
+      {PlaylingFrom? playfrom}) async {
     isRadioModeOn = false;
     //open player pane,set current song and push first song into playing list,
-    //currentSong.value = mediaItems[index];
+
+    /// update playing from value
+    playinfrom.value =
+        playfrom ?? PlaylingFrom(type: PlaylingFromType.SELECTION);
 
     //for changing home content based on last interation
     Future.delayed(const Duration(seconds: 3), () {
@@ -431,7 +442,8 @@ class PlayerController extends GetxController
 
   void _playerPanelCheck({bool restoreSession = false}) {
     final isWideScreen = Get.size.width > 800;
-    if ((!isWideScreen && playerPanelController.isAttached) &&
+    final autoOpenPlayer = Hive.box("AppPrefs").get("autoOpenPlayer") ?? true;
+    if ((!isWideScreen && autoOpenPlayer && playerPanelController.isAttached) &&
         !restoreSession) {
       playerPanelController.open();
     }
@@ -579,7 +591,7 @@ class PlayerController extends GetxController
     if (volume.value != 0) {
       vol = 0;
     } else {
-      vol = await Hive.box("AppPrefs").get("volume");
+      vol = await Hive.box("AppPrefs").get("volume", defaultValue: 10);
       if (vol == 0) {
         vol = 10;
         await Hive.box("AppPrefs").put("volume", vol);

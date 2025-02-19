@@ -17,6 +17,7 @@ import '../ui/screens/Settings/settings_screen_controller.dart';
 import '/utils/helper.dart';
 import '/models/media_Item_builder.dart';
 import '../ui/screens/Library/library_controller.dart';
+import 'music_service.dart';
 //import '../models/thumbnail.dart' as th;
 
 class Downloader extends GetxService {
@@ -180,7 +181,7 @@ class Downloader extends GetxService {
     final RegExp invalidChar =
         RegExp(r'Container.|\/|\\|\"|\<|\>|\*|\?|\:|\!|\[|\]|\¡|\||\%');
     final songTitle =
-        "${song.title} (${song.artist})".replaceAll(invalidChar, "");
+        "${song.title.trim()} (${song.artist?.trim()})".replaceAll(invalidChar, "");
     String filePath = "$dirPath/$songTitle.$actualDownformat";
     printINFO("Downloading filePath: $filePath");
     final totalBytes = requiredAudioStream.size;
@@ -194,6 +195,18 @@ class Downloader extends GetxService {
     }).then(
       (value) async {
         printINFO(value.data);
+
+        String? year;
+        try {
+          if (song.extras?['year'] != null) {
+            year = song.extras?['year'];
+          } else {
+            if (song.album != null) {
+              final musicServ = Get.find<MusicServices>();
+              year = await musicServ.getSongYear(song.id);
+            }
+          }
+        } catch (_) {}
 
         // Save Thumbnail
         try {
@@ -213,6 +226,11 @@ class Downloader extends GetxService {
         Hive.box("SongDownloads").put(song.id, songJson);
         Get.find<LibrarySongsController>().librarySongsList.add(song);
         printINFO("Downloaded successfully");
+
+        final trackDetails = (song.extras?['trackDetails'])?.split("/");
+        final int? trackNumber = int.tryParse(trackDetails?[0] ?? "");
+        final int? totalTracks = int.tryParse(trackDetails?[1] ?? "");
+
         try {
           /// Reverted -- Removed AudioTags as using this package, app is flagged as TROJ_GEN.R002V01K623 by TrendMicro-HouseCall
           final imageUrl = song.artUri!.toString();
@@ -220,6 +238,9 @@ class Downloader extends GetxService {
               title: song.title,
               trackArtist: song.artist,
               album: song.album,
+              year: int.tryParse(year ?? ""),
+              trackNumber: trackNumber,
+              trackTotal: totalTracks,
               albumArtist: song.artist,
               genre: song.genre,
               pictures: [

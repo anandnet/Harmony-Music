@@ -118,6 +118,7 @@ class SeparateTabItemWidget extends StatelessWidget {
                                   title,
                                   isCompleteList,
                                   isArtistSongs: true,
+                                  artist: artistController.artist_,
                                   scrollController: scrollController,
                                 )
                               : ModificationList(

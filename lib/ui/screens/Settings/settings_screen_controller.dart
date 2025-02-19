@@ -30,6 +30,7 @@ class SettingsScreenController extends GetxController {
   final playerUi = 0.obs;
   final slidableActionEnabled = true.obs;
   final isIgnoringBatteryOptimizations = false.obs;
+  final autoOpenPlayer = false.obs;
   final discoverContentType = "QP".obs;
   final isNewVersionAvailable = false.obs;
   final isLinkedWithPiped = false.obs;
@@ -45,7 +46,7 @@ class SettingsScreenController extends GetxController {
   final backgroundPlayEnabled = true.obs;
   final restorePlaybackSession = false.obs;
   final cacheHomeScreenData = true.obs;
-  final currentVersion = "V1.10.4";
+  final currentVersion = "V1.11.2";
 
   @override
   void onInit() {
@@ -82,13 +83,14 @@ class SettingsScreenController extends GetxController {
     noOfHomeScreenContent.value = setBox.get("noOfHomeScreenContent") ?? 3;
     isTransitionAnimationDisabled.value =
         setBox.get("isTransitionAnimationDisabled") ?? false;
-    cacheSongs.value = setBox.get('cacheSongs');
-    themeModetype.value = ThemeType.values[setBox.get('themeModeType')];
+    cacheSongs.value = setBox.get('cacheSongs') ?? false;
+    themeModetype.value = ThemeType.values[setBox.get('themeModeType') ?? 0];
     skipSilenceEnabled.value =
         isDesktop ? false : setBox.get("skipSilenceEnabled");
     loudnessNormalizationEnabled.value = isDesktop
         ? false
         : (setBox.get("loudnessNormalizationEnabled") ?? false);
+    autoOpenPlayer.value = (setBox.get("autoOpenPlayer") ?? true);
     restorePlaybackSession.value =
         setBox.get("restrorePlaybackSession") ?? false;
     cacheHomeScreenData.value = setBox.get("cacheHomeScreenData") ?? true;
@@ -98,13 +100,14 @@ class SettingsScreenController extends GetxController {
     backgroundPlayEnabled.value = setBox.get("backgroundPlayEnabled") ?? true;
     final downloadPath =
         setBox.get('downloadLocationPath') ?? await _createInAppSongDownDir();
-    downloadLocationPath.value = (isDesktop && downloadPath.contains("emulated"))
-        ? await _createInAppSongDownDir()
-        : downloadPath;
+    downloadLocationPath.value =
+        (isDesktop && downloadPath.contains("emulated"))
+            ? await _createInAppSongDownDir()
+            : downloadPath;
 
     exportLocationPath.value =
         setBox.get("exportLocationPath") ?? "/storage/emulated/0/Music";
-    downloadingFormat.value = setBox.get('downloadingFormat') ?? "opus";
+    downloadingFormat.value = setBox.get('downloadingFormat') ?? "m4a";
     discoverContentType.value = setBox.get('discoverContentType') ?? "QP";
     slidableActionEnabled.value = setBox.get('slidableActionEnabled') ?? true;
     if (setBox.containsKey("piped")) {
@@ -296,6 +299,11 @@ class SettingsScreenController extends GetxController {
         await Permission.ignoreBatteryOptimizations.isGranted;
   }
 
+  void toggleAutoOpenPlayer(bool val) {
+    setBox.put('autoOpenPlayer', val);
+    autoOpenPlayer.value = val;
+  }
+
   Future<void> unlinkPiped() async {
     Get.find<PipedServices>().logout();
     isLinkedWithPiped.value = false;
@@ -305,6 +313,10 @@ class SettingsScreenController extends GetxController {
     ScaffoldMessenger.of(Get.context!).showSnackBar(
         snackbar(Get.context!, "unlinkAlert".tr, size: SanckBarSize.MEDIUM));
     box.close();
+  }
+
+  Future<void> resetAppSettingsToDefault() async {
+    await setBox.clear();
   }
 
   void toggleStopPlyabackOnSwipeAway(bool val) {

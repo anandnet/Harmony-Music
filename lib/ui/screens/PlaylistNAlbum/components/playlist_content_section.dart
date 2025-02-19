@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../models/album.dart';
 import '../../../../models/playlist.dart';
 import '../../../widgets/list_widget.dart';
 import '../../../widgets/modification_list.dart';
@@ -38,7 +39,7 @@ class PlaylistContentSection extends StatelessWidget {
                       !content.isCloudPlaylist,
               itemCountTitle:
                   "${playListNAlbumScreenController.songList.length}",
-              itemIcon: Icons.music_note_rounded,
+              itemIcon: Icons.music_note,
               titleLeftPadding: 9,
               requiredSortTypes: buildSortTypeSet(false, true),
               onSort: (type, ascending) {
@@ -65,9 +66,12 @@ class PlaylistContentSection extends StatelessWidget {
                           playListNAlbumScreenController.songList.toList(),
                           "Songs",
                           true,
-                          isPlaylist: true,
+                          isPlaylistOrAlbum: true,
                           playlist: !playListNAlbumScreenController.isAlbum
                               ? content as Playlist
+                              : null,
+                          album: playListNAlbumScreenController.isAlbum
+                              ? content as Album
                               : null,
                         )
                       : ModificationList(

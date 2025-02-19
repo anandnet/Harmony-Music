@@ -16,7 +16,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.10.4+21
+version: 1.11.2+24
 
 environment:
   sdk: ">=3.1.5 <4.0.0"
@@ -31,29 +31,26 @@ dependencies:
   animations: ^2.0.11
   app_links: ^3.5.1
   archive: ^3.1.6
-  audio_service: ^0.18.15
+  audio_service: ^0.18.17
   audio_service_mpris: ^0.1.5
   audio_video_progress_bar: ^2.0.3
   audiotags: ^1.4.1
   buttons_tabbar: ^1.3.13
   cached_network_image: ^3.4.0
-  device_equalizer:
-    git:
-      url: https://github.com/anandnet/device_equalizer.git
-      ref: 29ea7ff4e284101af114de64bafca25a1a0c01d8
   dio: ^5.7.0
   file_picker: ^8.0.6
   flutter:
     sdk: flutter
   flutter_keyboard_visibility: ^6.0.0
   flutter_lyric: ^2.0.4+6
-  flutter_slidable: ^3.1.1
-  get: ^4.6.6
+  flutter_slidable: ^3.1.2
+  get: ^4.7.1
   google_fonts: ^6.1.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   ionicons: ^0.2.2
-  just_audio: ^0.9.40
+  jni: ^0.14.0
+  just_audio: ^0.9.46
   just_audio_media_kit:
     git:
       url: https://github.com/anandnet/just_audio_media_kit.git
@@ -62,12 +59,7 @@ dependencies:
   path: ^1.8.3
   path_provider: ^2.1.1
   permission_handler: ^11.0.1
-  restart_app: ^1.2.1
-  sdk_int:
-    git:
-      url: https://github.com/anandnet/sdk_int.git
-      ref: 91b2d4e0863de4effb2c89dd7868506cbd85a1ee
-  share_plus: ^9.0.0
+  share_plus: ^10.1.4
   shimmer: ^3.0.0
   sidebar_with_animation:
     git:
@@ -75,6 +67,11 @@ dependencies:
       branch: main
       ref: b53567a42b4ba3793a3cf00d478bdba0ecce33d7
   smtc_windows: ^0.1.2
+  terminate_restart:
+    git:
+      url: https://github.com/anandnet/terminate_restart.git
+      branch: main
+      ref: eb505e07e11d0fe1f5c03993e707c6678428c353
   toggle_switch: ^2.1.0
   tray_manager: ^0.2.3
   url_launcher: ^6.2.1
@@ -83,7 +80,7 @@ dependencies:
   youtube_explode_dart:
     git:
       url: https://github.com/anandnet/youtube_explode_dart.git
-      ref: 4255f3abf89943315869b9ef0bc10bc19ace241f
+      ref: 1d9ec9baa806705b1d859260eeb389ec28c6b024
 dev_dependencies:
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -94,6 +91,7 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
+  jnigen: ^0.14.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -1,16 +1,14 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/player/components/backgroud_image.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
 import '../../widgets/songinfo_bottom_sheet.dart';
-import '/models/thumbnail.dart';
-import '../../screens/Settings/settings_screen_controller.dart';
 import '../../utils/theme_controller.dart';
 import '../player_controller.dart';
 
@@ -20,50 +18,11 @@ class GesturePlayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PlayerController playerController = Get.find<PlayerController>();
-    final ThemeController themeController = Get.find<ThemeController>();
     return Stack(
       children: [
         GestureDetector(
-          child: Obx(
-            () => SizedBox.expand(
-              child: playerController.currentSong.value != null
-                  ? CachedNetworkImage(
-                      errorWidget: (context, url, error) {
-                        final imgFile = File(
-                            "${Get.find<SettingsScreenController>().supportDirPath}/thumbnails/${playerController.currentSong.value!.id}.png");
-                        if (imgFile.existsSync()) {
-                          themeController.setTheme(FileImage(imgFile),
-                              playerController.currentSong.value!.id);
-                          return Image.file(imgFile);
-                        }
-                        return const SizedBox.shrink();
-                      },
-                      // memCacheHeight: 544,
-                      imageBuilder: (context, imageProvider) {
-                        Get.find<SettingsScreenController>()
-                                    .themeModetype
-                                    .value ==
-                                ThemeType.dynamic
-                            ? Future.delayed(
-                                const Duration(milliseconds: 250),
-                                () => themeController.setTheme(imageProvider,
-                                    playerController.currentSong.value!.id))
-                            : null;
-                        return Image(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        );
-                      },
-                      imageUrl: Thumbnail(playerController
-                              .currentSong.value!.artUri
-                              .toString())
-                          .sizewith(544),
-                      cacheKey:
-                          "${playerController.currentSong.value!.id}_pl_song",
-                    )
-                  : Container(),
-            ),
-          ),
+          /// Full screen Background image is acting as album art
+          child: const BackgroudImage(),
           onHorizontalDragEnd: (DragEndDetails details) {
             if (details.primaryVelocity! < 0) {
               playerController.next();
@@ -206,8 +165,8 @@ class GesturePlayer extends StatelessWidget {
                                     icon: Obx(() => Icon(
                                           playerController
                                                   .isCurrentSongFav.isFalse
-                                              ? Icons.favorite_border_rounded
-                                              : Icons.favorite_rounded,
+                                              ? Icons.favorite_border
+                                              : Icons.favorite,
                                           color: Theme.of(context)
                                               .textTheme
                                               .titleMedium!

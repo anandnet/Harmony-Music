@@ -55,8 +55,6 @@ class WindowsAudioService extends GetxService {
         case PlayButtonState.loading:
           smtc.setPlaybackStatus(PlaybackStatus.Paused);
           break;
-        default:
-          break;
       }
     });
 

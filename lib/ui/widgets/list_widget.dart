@@ -1,9 +1,13 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter/gestures.dart' show kSecondaryMouseButton;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '/models/album.dart';
+import '../../models/artist.dart';
+import '../../models/playling_from.dart';
 import '/ui/screens/Settings/settings_screen_controller.dart';
 import '/ui/widgets/snackbar.dart';
 import '../../models/playlist.dart';
@@ -16,9 +20,11 @@ import 'songinfo_bottom_sheet.dart';
 class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
   const ListWidget(this.items, this.title, this.isCompleteList,
       {super.key,
-      this.isPlaylist = false,
+      this.isPlaylistOrAlbum = false,
       this.isArtistSongs = false,
       this.playlist,
+      this.album,
+      this.artist,
       this.scrollController});
   final List<dynamic> items;
   final String title;
@@ -27,8 +33,10 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
 
   /// Valid for songlist
   final bool isArtistSongs;
-  final bool isPlaylist;
+  final bool isPlaylistOrAlbum;
   final Playlist? playlist;
+  final Album? album;
+  final Artist? artist;
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +53,10 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
       return isCompleteList
           ? Expanded(
               child: listViewSongVid(items,
-                  isPlaylist: isPlaylist,
+                  isPlaylistOrAlbum: isPlaylistOrAlbum,
                   playlist: playlist,
+                  album: album,
+                  artist: artist,
                   sc: scrollController,
                   isArtistSongs: isArtistSongs))
           : SizedBox(
@@ -69,8 +79,10 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
   }
 
   Widget listViewSongVid(List<dynamic> items,
-      {bool isPlaylist = false,
+      {bool isPlaylistOrAlbum = false,
       Playlist? playlist,
+      Album? album,
+      Artist? artist,
       bool isArtistSongs = false,
       ScrollController? sc}) {
     final playerController = Get.find<PlayerController>();
@@ -86,72 +98,10 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
       physics: isCompleteList
           ? const BouncingScrollPhysics()
           : const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) => Slidable(
-        enabled:
-            Get.find<SettingsScreenController>().slidableActionEnabled.isTrue,
-        startActionPane: ActionPane(motion: const DrawerMotion(), children: [
-          SlidableAction(
-            onPressed: (context) {
-              showDialog(
-                context: context,
-                builder: (context) =>
-                    AddToPlaylist([items[index] as MediaItem]),
-              ).whenComplete(() => Get.delete<AddToPlaylistController>());
-            },
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            foregroundColor: Theme.of(context).textTheme.titleMedium!.color,
-            icon: Icons.playlist_add,
-            //label: 'Add to playlist',
-          ),
-          if (playlist != null && !playlist.isCloudPlaylist)
-            SlidableAction(
-              onPressed: (context) {
-                removeSongFromPlaylist(items[index] as MediaItem, playlist);
-              },
-              backgroundColor: Theme.of(context).colorScheme.secondary,
-              foregroundColor: Theme.of(context).textTheme.titleMedium!.color,
-              icon: Icons.delete,
-              //label: 'delete',
-            ),
-        ]),
-        endActionPane: ActionPane(motion: const DrawerMotion(), children: [
-          SlidableAction(
-            onPressed: (context) {
-              playerController
-                  .enqueueSong(items[index] as MediaItem)
-                  .whenComplete(() {
-                if (!context.mounted) return;
-                ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                    context, "songEnqueueAlert".tr,
-                    size: SanckBarSize.MEDIUM));
-              });
-            },
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            foregroundColor: Theme.of(context).textTheme.titleMedium!.color,
-            icon: Icons.merge,
-            //label: 'Enqueue',
-          ),
-          SlidableAction(
-            onPressed: (context) {
-              playerController.playNext(items[index] as MediaItem);
-              ScaffoldMessenger.of(context).showSnackBar(snackbar(
-                  context, "${"playnextMsg".tr} ${(items[index] as MediaItem).title}",
-                  size: SanckBarSize.BIG));
-            },
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            foregroundColor: Theme.of(context).textTheme.titleMedium!.color,
-            icon: Icons.next_plan_outlined,
-            //label: 'Play Next',
-          ),
-        ]),
-        child: ListTile(
-          onTap: () {
-            (isPlaylist || isArtistSongs)
-                ? playerController.playPlayListSong(
-                    List<MediaItem>.from(items), index)
-                : playerController.pushSongToQueue(items[index] as MediaItem);
-          },
-          onLongPress: () async {
+      itemBuilder: (context, index) => Listener(
+        onPointerDown: (PointerDownEvent event) {
+          if (event.buttons == kSecondaryMouseButton) {
+            //show songinfobotomsheet
             showModalBottomSheet(
               constraints: const BoxConstraints(maxWidth: 500),
               shape: const RoundedRectangleBorder(
@@ -159,80 +109,177 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
               ),
               isScrollControlled: true,
               context: playerController.homeScaffoldkey.currentState!.context,
-              //constraints: BoxConstraints(maxHeight:Get.height),
               barrierColor: Colors.transparent.withAlpha(100),
               builder: (context) => SongInfoBottomSheet(
                 items[index] as MediaItem,
                 playlist: playlist,
               ),
             ).whenComplete(() => Get.delete<SongInfoController>());
-          },
-          contentPadding: const EdgeInsets.only(top: 0, left: 5, right: 30),
-          leading: ImageWidget(
-            size: 55,
-            song: items[index],
-          ),
-          title: Marquee(
-            delay: const Duration(milliseconds: 300),
-            duration: const Duration(seconds: 5),
-            id: items[index].title.hashCode.toString(),
-            child: Text(
-              items[index].title.length > 50
-                  ? items[index].title.substring(0, 50)
-                  : items[index].title,
-              maxLines: 1,
-              style: Theme.of(context).textTheme.titleMedium,
+          }
+        },
+        child: Slidable(
+          enabled:
+              Get.find<SettingsScreenController>().slidableActionEnabled.isTrue,
+          startActionPane: ActionPane(motion: const DrawerMotion(), children: [
+            SlidableAction(
+              onPressed: (context) {
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      AddToPlaylist([items[index] as MediaItem]),
+                ).whenComplete(() => Get.delete<AddToPlaylistController>());
+              },
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              foregroundColor: Theme.of(context).textTheme.titleMedium!.color,
+              icon: Icons.playlist_add,
+              //label: 'Add to playlist',
             ),
-          ),
-          subtitle: Text(
-            "${items[index].artist}",
-            maxLines: 1,
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-          trailing: SizedBox(
-            width: Get.size.width > 800 ? 80 : 40,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (isPlaylist)
-                      Obx(() => playerController.currentSong.value?.id ==
-                              items[index].id
-                          ? const Icon(
-                              Icons.equalizer_rounded,
-                            )
-                          : const SizedBox.shrink()),
-                    Text(
-                      items[index].extras!['length'] ?? "",
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ],
+            if (playlist != null && !playlist.isCloudPlaylist)
+              SlidableAction(
+                onPressed: (context) {
+                  removeSongFromPlaylist(items[index] as MediaItem, playlist);
+                },
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                foregroundColor: Theme.of(context).textTheme.titleMedium!.color,
+                icon: Icons.delete,
+                //label: 'delete',
+              ),
+          ]),
+          endActionPane: ActionPane(motion: const DrawerMotion(), children: [
+            SlidableAction(
+              onPressed: (context) {
+                playerController
+                    .enqueueSong(items[index] as MediaItem)
+                    .whenComplete(() {
+                  if (!context.mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar(
+                      context, "songEnqueueAlert".tr,
+                      size: SanckBarSize.MEDIUM));
+                });
+              },
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              foregroundColor: Theme.of(context).textTheme.titleMedium!.color,
+              icon: Icons.merge,
+              //label: 'Enqueue',
+            ),
+            SlidableAction(
+              onPressed: (context) {
+                playerController.playNext(items[index] as MediaItem);
+                ScaffoldMessenger.of(context).showSnackBar(snackbar(context,
+                    "${"playnextMsg".tr} ${(items[index] as MediaItem).title}",
+                    size: SanckBarSize.BIG));
+              },
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              foregroundColor: Theme.of(context).textTheme.titleMedium!.color,
+              icon: Icons.next_plan_outlined,
+              //label: 'Play Next',
+            ),
+          ]),
+          child: ListTile(
+            onTap: () {
+              (isPlaylistOrAlbum || isArtistSongs)
+                  ? playerController.playPlayListSong(
+                      List<MediaItem>.from(items), index,
+                      playfrom: isPlaylistOrAlbum
+                          ? PlaylingFrom(
+                              type: playlist != null
+                                  ? PlaylingFromType.PLAYLIST
+                                  : PlaylingFromType.ALBUM,
+                              name: playlist?.title ?? album!.title)
+                          : isArtistSongs
+                              ? PlaylingFrom(
+                                  type: PlaylingFromType.ARTIST,
+                                  name: artist?.name ?? ".........")
+                              : PlaylingFrom(
+                                  type: PlaylingFromType.SELECTION,
+                                ))
+                  : playerController.pushSongToQueue(items[index] as MediaItem);
+            },
+            onLongPress: () async {
+              showModalBottomSheet(
+                constraints: const BoxConstraints(maxWidth: 500),
+                shape: const RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(10.0)),
                 ),
-                if (GetPlatform.isDesktop)
-                  IconButton(
-                      splashRadius: 20,
-                      onPressed: () {
-                        showModalBottomSheet(
-                          constraints: const BoxConstraints(maxWidth: 500),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(10.0)),
-                          ),
-                          isScrollControlled: true,
-                          context: playerController
-                              .homeScaffoldkey.currentState!.context,
-                          //constraints: BoxConstraints(maxHeight:Get.height),
-                          barrierColor: Colors.transparent.withAlpha(100),
-                          builder: (context) => SongInfoBottomSheet(
-                            items[index] as MediaItem,
-                            playlist: playlist,
-                          ),
-                        ).whenComplete(() => Get.delete<SongInfoController>());
-                      },
-                      icon: const Icon(Icons.more_vert))
-              ],
+                isScrollControlled: true,
+                context: playerController.homeScaffoldkey.currentState!.context,
+                //constraints: BoxConstraints(maxHeight:Get.height),
+                barrierColor: Colors.transparent.withAlpha(100),
+                builder: (context) => SongInfoBottomSheet(
+                  items[index] as MediaItem,
+                  playlist: playlist,
+                ),
+              ).whenComplete(() => Get.delete<SongInfoController>());
+            },
+            contentPadding: const EdgeInsets.only(top: 0, left: 5, right: 30),
+            leading: ImageWidget(
+              size: 55,
+              song: items[index],
+            ),
+            title: Marquee(
+              delay: const Duration(milliseconds: 300),
+              duration: const Duration(seconds: 5),
+              id: items[index].title.hashCode.toString(),
+              child: Text(
+                items[index].title.length > 50
+                    ? items[index].title.substring(0, 50)
+                    : items[index].title,
+                maxLines: 1,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            subtitle: Text(
+              "${items[index].artist}",
+              maxLines: 1,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            trailing: SizedBox(
+              width: Get.size.width > 800 ? 80 : 40,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (isPlaylistOrAlbum)
+                        Obx(() => playerController.currentSong.value?.id ==
+                                items[index].id
+                            ? const Icon(
+                                Icons.equalizer,
+                              )
+                            : const SizedBox.shrink()),
+                      Text(
+                        items[index].extras!['length'] ?? "",
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ],
+                  ),
+                  if (GetPlatform.isDesktop)
+                    IconButton(
+                        splashRadius: 20,
+                        onPressed: () {
+                          showModalBottomSheet(
+                            constraints: const BoxConstraints(maxWidth: 500),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(10.0)),
+                            ),
+                            isScrollControlled: true,
+                            context: playerController
+                                .homeScaffoldkey.currentState!.context,
+                            //constraints: BoxConstraints(maxHeight:Get.height),
+                            barrierColor: Colors.transparent.withAlpha(100),
+                            builder: (context) => SongInfoBottomSheet(
+                              items[index] as MediaItem,
+                              playlist: playlist,
+                            ),
+                          ).whenComplete(
+                              () => Get.delete<SongInfoController>());
+                        },
+                        icon: const Icon(Icons.more_vert))
+                ],
+              ),
             ),
           ),
         ),

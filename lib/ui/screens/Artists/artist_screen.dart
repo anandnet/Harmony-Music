@@ -49,7 +49,7 @@ class ArtistScreen extends StatelessWidget {
                     playerController.startRadio(null,
                         playlistid: artistScreenController.artist_.radioId);
                   },
-                  child: const Icon(Icons.sensors_rounded)),
+                  child: const Icon(Icons.sensors)),
             ),
           ),
         ),
@@ -84,7 +84,7 @@ class ArtistScreen extends StatelessWidget {
                               ),
                               IconButton(
                                 icon: Icon(
-                                  Icons.arrow_back_ios_new_rounded,
+                                  Icons.arrow_back_ios_new,
                                   color: Theme.of(context)
                                       .textTheme
                                       .titleMedium!
@@ -251,8 +251,8 @@ class AboutArtist extends StatelessWidget {
                                           ? const SizedBox.shrink()
                                           : Icon(artistScreenController
                                                   .isAddedToLibrary.isFalse
-                                              ? Icons.bookmark_add_rounded
-                                              : Icons.bookmark_added_rounded),
+                                              ? Icons.bookmark_add
+                                              : Icons.bookmark_added),
                                     )),
                                 IconButton(
                                     icon: const Icon(

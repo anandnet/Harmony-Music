@@ -67,8 +67,8 @@ class SettingsScreen extends StatelessWidget {
                             tileColor: Theme.of(context).colorScheme.secondary,
                             contentPadding:
                                 const EdgeInsets.only(left: 8, right: 10),
-                            leading: const CircleAvatar(
-                                child: Icon(Icons.download_rounded)),
+                            leading:
+                                const CircleAvatar(child: Icon(Icons.download)),
                             title: Text("newVersionAvailable".tr),
                             visualDensity: const VisualDensity(horizontal: -2),
                             subtitle: Text(
@@ -424,6 +424,17 @@ class SettingsScreen extends StatelessWidget {
                             onChanged: settingsController
                                 .toggleRestorePlaybackSession),
                       )),
+                  ListTile(
+                    contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                    title: Text("autoOpenPlayer".tr),
+                    subtitle: Text("autoOpenPlayerDes".tr,
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    trailing: Obx(
+                      () => CustSwitch(
+                          value: settingsController.autoOpenPlayer.value,
+                          onChanged: settingsController.toggleAutoOpenPlayer),
+                    ),
+                  ),
                   if (!isDesktop)
                     ListTile(
                       contentPadding:
@@ -488,7 +499,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               CustomExpansionTile(
                 title: "download".tr,
-                icon: Icons.download_rounded,
+                icon: Icons.download,
                 children: [
                   ListTile(
                     contentPadding: const EdgeInsets.only(left: 5, right: 10),
@@ -584,7 +595,7 @@ class SettingsScreen extends StatelessWidget {
               ),
               CustomExpansionTile(
                   title: "${"backup".tr} & ${"restore".tr}",
-                  icon: Icons.restore_rounded,
+                  icon: Icons.restore,
                   children: [
                     ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),
@@ -613,6 +624,29 @@ class SettingsScreen extends StatelessWidget {
                         builder: (context) => const RestoreDialog(),
                       ).whenComplete(
                           () => Get.delete<RestoreDialogController>()),
+                    ),
+                  ]),
+              CustomExpansionTile(
+                  icon: Icons.miscellaneous_services,
+                  title: "misc".tr,
+                  children: [
+                    ListTile(
+                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                      title: Text("resetToDefault".tr),
+                      subtitle: Text(
+                        "resetToDefaultDes".tr,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      onTap: () {
+                        settingsController
+                            .resetAppSettingsToDefault()
+                            .then((_) {
+                          ScaffoldMessenger.of(Get.context!).showSnackBar(
+                              snackbar(Get.context!, "resetToDefaultMsg".tr,
+                                  size: SanckBarSize.BIG,
+                                  duration: const Duration(seconds: 2)));
+                        });
+                      },
                     ),
                   ]),
               CustomExpansionTile(

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:terminate_restart/terminate_restart.dart';
 
 import '/ui/screens/Search/search_screen_controller.dart';
 import '/utils/get_localization.dart';
@@ -28,6 +29,7 @@ Future<void> main() async {
   startApplicationServices();
   Get.put<AudioHandler>(await initAudioService(), permanent: true);
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  TerminateRestart.instance.initialize();
   runApp(const MyApp());
 }
 
@@ -47,38 +49,42 @@ class MyApp extends StatelessWidget {
       }
       return null;
     });
-    return GetX<ThemeController>(builder: (controller) {
-      return GetMaterialApp(
-          title: 'Harmony Music',
-          theme: controller.themedata.value,
-          home: const Home(),
-          debugShowCheckedModeBanner: false,
-          translations: Languages(),
-          locale: Locale(
-              Hive.box("AppPrefs").get('currentAppLanguageCode') ?? "en"),
-          fallbackLocale: const Locale("en"),
-          builder: (context, child) {
-            final mQuery = MediaQuery.of(context);
-            final scale = mQuery.textScaler
-                .clamp(minScaleFactor: 1.0, maxScaleFactor: 1.1);
-            return Stack(
-              children: [
-                MediaQuery(
-                    data: mQuery.copyWith(textScaler: scale), child: child!),
-                GestureDetector(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      color: Colors.transparent,
-                      height: mQuery.padding.bottom,
-                      width: mQuery.size.width,
-                    ),
+    return GetMaterialApp(
+        title: 'Harmony Music',
+        home: const Home(),
+        debugShowCheckedModeBanner: false,
+        translations: Languages(),
+        locale:
+            Locale(Hive.box("AppPrefs").get('currentAppLanguageCode') ?? "en"),
+        fallbackLocale: const Locale("en"),
+        builder: (context, child) {
+          final mQuery = MediaQuery.of(context);
+          final scale =
+              mQuery.textScaler.clamp(minScaleFactor: 1.0, maxScaleFactor: 1.1);
+          return Stack(
+            children: [
+             GetX<ThemeController>(
+                builder: (controller) => MediaQuery(
+                data: mQuery.copyWith(textScaler: scale),
+                child:  AnimatedTheme(
+                      duration: const Duration(milliseconds: 700),
+                      data: controller.themedata.value!,
+                      child: child!),
+                ),
+              ),
+              GestureDetector(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    color: Colors.transparent,
+                    height: mQuery.padding.bottom,
+                    width: mQuery.size.width,
                   ),
-                )
-              ],
-            );
-          });
-    });
+                ),
+              )
+            ],
+          );
+        });
   }
 }
 

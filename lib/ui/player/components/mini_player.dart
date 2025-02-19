@@ -7,12 +7,12 @@ import 'package:widget_marquee/widget_marquee.dart';
 import '/ui/widgets/lyrics_dialog.dart';
 import '/ui/widgets/song_info_dialog.dart';
 import '/ui/player/player_controller.dart';
-import '/ui/widgets/loader.dart';
 import '../../widgets/add_to_playlist.dart';
 import '../../widgets/sleep_timer_bottom_sheet.dart';
 import '../../widgets/song_download_btn.dart';
 import '../../widgets/image_widget.dart';
 import '../../widgets/mini_player_progress_bar.dart';
+import 'animated_play_button.dart';
 
 class MiniPlayer extends StatelessWidget {
   const MiniPlayer({super.key});
@@ -25,8 +25,9 @@ class MiniPlayer extends StatelessWidget {
     return Obx(() {
       return Visibility(
         visible: playerController.isPlayerpanelTopVisible.value,
-        child: Opacity(
+        child: AnimatedOpacity(
           opacity: playerController.playerPaneOpacity.value,
+          duration: Duration.zero,
           child: Container(
             height: playerController.playerPanelMinHeight.value,
             width: size.width,
@@ -175,9 +176,8 @@ class MiniPlayer extends StatelessWidget {
                                         icon: Obx(() => Icon(
                                               playerController
                                                       .isCurrentSongFav.isFalse
-                                                  ? Icons
-                                                      .favorite_border_rounded
-                                                  : Icons.favorite_rounded,
+                                                  ? Icons.favorite_border
+                                                  : Icons.favorite,
                                               color: Theme.of(context)
                                                   .textTheme
                                                   .titleMedium!
@@ -217,7 +217,7 @@ class MiniPlayer extends StatelessWidget {
                                           ? null
                                           : playerController.prev,
                                       child: Icon(
-                                        Icons.skip_previous_rounded,
+                                        Icons.skip_previous,
                                         color: Theme.of(context)
                                             .textTheme
                                             .titleMedium!
@@ -236,13 +236,15 @@ class MiniPlayer extends StatelessWidget {
                                       width: 58,
                                       height: 58,
                                       child: Center(
-                                          child: _playButton(
-                                              context, isWideScreen)))
+                                          child: AnimatedPlayButton(
+                                        iconSize: isWideScreen ? 43 : 35,
+                                      )))
                                   : SizedBox.square(
                                       dimension: 50,
                                       child: Center(
-                                          child: _playButton(
-                                              context, isWideScreen))),
+                                          child: AnimatedPlayButton(
+                                        iconSize: isWideScreen ? 43 : 35,
+                                      ))),
                               SizedBox(
                                   width: 40,
                                   child: Obx(() {
@@ -263,7 +265,7 @@ class MiniPlayer extends StatelessWidget {
                                           ? null
                                           : playerController.next,
                                       child: Icon(
-                                        Icons.skip_next_rounded,
+                                        Icons.skip_next,
                                         color: isLastSong
                                             ? Theme.of(context)
                                                 .textTheme
@@ -501,50 +503,6 @@ class MiniPlayer extends StatelessWidget {
           ),
         ),
       );
-    });
-  }
-
-  Widget _playButton(BuildContext context, bool isWideScreen) {
-    return GetX<PlayerController>(builder: (controller) {
-      final buttonState = controller.buttonState.value;
-      if (buttonState == PlayButtonState.loading) {
-        return IconButton(
-          icon: const LoadingIndicator(
-            dimension: 20,
-          ),
-          onPressed: () {},
-        );
-      }
-
-      if (buttonState == PlayButtonState.paused) {
-        return IconButton(
-          icon: Icon(
-            Icons.play_arrow_rounded,
-            color: Theme.of(context).textTheme.titleMedium!.color,
-          ),
-          iconSize: isWideScreen ? 43.0 : 35.0,
-          onPressed: controller.play,
-        );
-      } else if (buttonState == PlayButtonState.playing ||
-          buttonState == PlayButtonState.loading) {
-        return IconButton(
-          icon: Icon(
-            Icons.pause_rounded,
-            color: Theme.of(context).textTheme.titleMedium!.color,
-          ),
-          iconSize: isWideScreen ? 43.0 : 35.0,
-          onPressed: controller.pause,
-        );
-      } else {
-        return IconButton(
-          icon: Icon(
-            Icons.play_arrow_rounded,
-            color: Theme.of(context).textTheme.titleMedium!.color,
-          ),
-          iconSize: 35.0,
-          onPressed: () {},
-        );
-      }
     });
   }
 }

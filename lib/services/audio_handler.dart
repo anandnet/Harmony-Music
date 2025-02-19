@@ -2,14 +2,16 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
 
+import 'package:flutter/services.dart';
+
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_media_kit/just_audio_media_kit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:audio_service/audio_service.dart';
-import 'package:device_equalizer/device_equalizer.dart';
 
+import '/services/equalizer.dart';
 import '/services/stream_service.dart';
 import '/models/hm_streaming_data.dart';
 import '/ui/player/player_controller.dart';
@@ -52,7 +54,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   bool loudnessNormalizationEnabled = false;
   // var networkErrorPause = false;
   bool isSongLoading = true;
-  DeviceEqualizer? deviceEqualizer;
+  
   // list of shuffled queue songs ids
   List<String> shuffledQueue = [];
 
@@ -80,7 +82,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     _listenToPlaybackForNextSong();
     _listenForSequenceStateChanges();
     final appPrefsBox = Hive.box("appPrefs");
-    _player.setSkipSilenceEnabled(appPrefsBox.get("skipSilenceEnabled"));
+    _player.setSkipSilenceEnabled(appPrefsBox.get("skipSilenceEnabled") ?? false);
     loopModeEnabled = appPrefsBox.get("isLoopModeEnabled") ?? false;
     shuffleModeEnabled = appPrefsBox.get("isShuffleModeEnabled") ?? false;
     queueLoopModeEnabled =
@@ -89,7 +91,6 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         appPrefsBox.get("loudnessNormalizationEnabled") ?? false;
     _listenForDurationChanges();
     if (GetPlatform.isAndroid) {
-      deviceEqualizer = DeviceEqualizer();
       _listenSessionIdStream();
     }
   }
@@ -112,7 +113,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   void _listenSessionIdStream() {
     _player.androidAudioSessionIdStream.listen((int? id) {
       if (id != null) {
-        deviceEqualizer?.initAudioEffect(id);
+        EqualizerService.initAudioEffect(id);
       }
     });
   }
@@ -448,7 +449,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
           checkNGetUrl(currentSong.id, generateNewUrl: isNewUrlReq);
       final bool restoreSession = extras['restoreSession'] ?? false;
       isSongLoading = true;
-      playbackState.add(playbackState.value.copyWith(processingState: AudioProcessingState.loading));
+      playbackState.add(playbackState.value
+          .copyWith(processingState: AudioProcessingState.loading));
       if (_playList.children.isNotEmpty) {
         await _playList.clear();
       }
@@ -461,14 +463,16 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         currentSongUrl = null;
         isSongLoading = false;
         Get.find<PlayerController>().notifyPlayError(streamInfo.statusMSG);
-        playbackState.add(playbackState.value
-            .copyWith(processingState: AudioProcessingState.error,errorCode: 404,errorMessage: streamInfo.statusMSG));
+        playbackState.add(playbackState.value.copyWith(
+            processingState: AudioProcessingState.error,
+            errorCode: 404,
+            errorMessage: streamInfo.statusMSG));
         return;
       }
       currentSongUrl = currentSong.extras!['url'] = streamInfo.audio!.url;
       playbackState.add(playbackState.value.copyWith(queueIndex: currentIndex));
       await _playList.add(_createAudioSource(currentSong));
-      
+
       isSongLoading = false;
       if (loudnessNormalizationEnabled && GetPlatform.isAndroid) {
         _normalizeVolume(streamInfo.audio!.loudnessDb);
@@ -611,7 +615,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         shuffledQueue.insert(currentShuffleIndex + 1, song.id);
       }
     } else if (name == 'openEqualizer') {
-      await deviceEqualizer?.open(_player.androidAudioSessionId!);
+      EqualizerService.openEqualizer(_player.androidAudioSessionId!);
     } else if (name == "saveSession") {
       await saveSessionData();
     } else if (name == "setVolume") {
@@ -764,7 +768,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     } else {
       //check if song stream url is cached and allocate url accordingly
       final songsUrlCacheBox = Hive.box("SongsUrlCache");
-      final qualityIndex = Hive.box('AppPrefs').get('streamingQuality');
+      final qualityIndex = Hive.box('AppPrefs').get('streamingQuality') ?? 1;
       HMStreamingData? streamInfo;
       if (songsUrlCacheBox.containsKey(songId) && !generateNewUrl) {
         final streamInfoJson = songsUrlCacheBox.get(songId);
@@ -776,7 +780,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       }
 
       if (streamInfo == null) {
-        final streamInfoJson = await Isolate.run(() => getStreamInfo(songId));
+        final token = RootIsolateToken.instance;
+        final streamInfoJson =
+            await Isolate.run(() => getStreamInfo(songId, token));
         streamInfo = HMStreamingData.fromJson(streamInfoJson);
         if (streamInfo.playable) songsUrlCacheBox.put(songId, streamInfoJson);
       }

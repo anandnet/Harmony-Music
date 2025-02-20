@@ -158,7 +158,7 @@
     "songNotPlayable": "La canzone non è riproducibile a causa di una restrizione del server!",
     "networkError": "Errore di rete! Controllare la connessione di rete.",
     "downloadError2": "Il brano richiesto non è scaricabile a causa di una restrizione del server. È possibile riprovare",
-    "downloadError3": "Download fallito a causa di un errore di rete! Riprovare",
+    "downloadError3": "Download fallito a causa di un errore di rete/connessione! Riprovare",
     "music&Playback": "Musica e riproduzione",
     "content": "Contenuto",
     "setDiscoverContent": "Impostare la scoperta dei contenuti",
@@ -228,5 +228,18 @@
     "standard": "Standard",
     "shuffleQueue": "Coda di riproduzione casuale",
     "queueLoopNotDisMsg2": "La modalità loop di coda non può essere abilitata in modalità radio.",
-    "playerUi": "Interfaccia utente del lettore"
+    "playerUi": "Interfaccia utente del lettore",
+    "misc": "Varie",
+    "resetToDefault": "Ripristina le impostazioni iniziali",
+    "resetToDefaultDes": "Ripristina le impostazioni dell'app ai valori iniziali (riavvio necessario)",
+    "resetToDefaultMsg": "Ripristino impostazioni completato. Riavviare l'app",
+    "album": "Album",
+    "playingfromAlbum": "DALL'ALBUM",
+    "playingfromPlaylist": "DALLA PLAYLIST",
+    "playingfromSelection": "DALLA SELEZIONE",
+    "playingfromArtist": "DALL'ARTISTA",
+    "randomSelection": "Selezione casuale",
+    "randomRadio": "Radio casuale",
+    "autoOpenPlayer": "Apri il player automaticamente",
+    "autoOpenPlayerDes": "Abilita/disabilita l'apertura automatica del player in full screen all'avvio della riproduzione di una canzone"
 }

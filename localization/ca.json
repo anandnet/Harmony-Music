@@ -222,7 +222,7 @@
     "gesture": "Gest",
     "androidBackupWarning": "No provat: Seleccionant la casella de selecció després de descarregar més de 60 fitxers, el procés pot consumir una gran quantitat de memòria i pot causar que el telèfon o l'aplicació es bloquegin. Procedeix sota el teu propi risc.",
     "duration": "Durada",
-    "playnextMsg": "Següent reproducció",
+    "playnextMsg": "A continuació",
     "shuffleQueue": "Barreja la cua de reproducció",
     "queueLoop": "llista de reproducció en bucle",
     "queueLoopNotDisMsg1": "El mode llista de reproducció en bucle no es pot desactivar quan el mode aleatori està activat.",
@@ -230,5 +230,18 @@
     "enableSlidableActionDes": "Habilita les accions lliscants a la fitxa de la cançó",
     "loudnessDb": "SonoritatDb",
     "urlSearchDes": "URL detectada. Fes clic sobre ella per a obrir/reproduir el contingut associat",
-    "loudnessNormalizationDes": "Estableix la mateixa longitud de soroll per a totes les cançons (Experimental) (no funcionarà en les cançons descarregades en la versió anterior(< v1.10.0))"
+    "loudnessNormalizationDes": "Estableix la mateixa longitud de soroll per a totes les cançons (Experimental) (no funcionarà en les cançons descarregades en la versió anterior(< v1.10.0))",
+    "misc": "Miscel·lània",
+    "resetToDefault": "Restablir la configuració inicial",
+    "resetToDefaultDes": "Restablir la configuració inicial de l'aplicació (requereix reiniciar)",
+    "resetToDefaultMsg": "S'ha restablert la configuració per defecte, Si us plau reinicieu l'aplicació",
+    "album": "Àlbum",
+    "playingfromPlaylist": "REPRODUÏNT LA LLISTA DE REPRODUCCIÓ",
+    "playingfromAlbum": "REPRODUINT L'ALBUM",
+    "playingfromSelection": "REPRODUINT LA SELECCIÓ",
+    "playingfromArtist": "REPRODUINT L'ARTISTA",
+    "randomSelection": "Selecció aleatòria",
+    "randomRadio": "Ràdio Aleatòria",
+    "autoOpenPlayer": "Obre automàticament la pantalla del reproductor",
+    "autoOpenPlayerDes": "Activa/desactiva l'obertura automàtica a pantalla completa del reproductor en seleccionar la cançó a reproduir"
 }

@@ -232,5 +232,14 @@
     "queueLoopNotDisMsg1": "當隨機播放模式啟用時，無法關閉播放佇列循環模式。",
     "urlSearchDes": "已檢測到網址，按一下即可開啟/播放相關內容",
     "hintApiUrl": "Piped 實例的 API URL",
-    "customIns": "自訂實例"
+    "customIns": "自訂實例",
+    "playingfromArtist": "從藝人撥放",
+    "album": "專輯",
+    "playingfromAlbum": "從專輯撥放",
+    "playingfromPlaylist": "從播放清單撥放",
+    "playingfromSelection": "從精選撥放",
+    "randomSelection": "隨機選擇",
+    "randomRadio": "隨機廣播",
+    "autoOpenPlayer": "自動開啟播放器螢幕",
+    "autoOpenPlayerDes": "啟用/停用在選擇要播放的歌曲時自動全螢幕開啟播放器"
 }

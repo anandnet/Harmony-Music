@@ -234,5 +234,12 @@
     "misc": "Diversos",
     "resetToDefault": "Restaurar Definições Padrão",
     "resetToDefaultDes": "Redefinir Configurações do App para Padrão (Requer Reinicio)",
-    "resetToDefaultMsg": "Configurações Restauradas ao Padrão com sucesso. Por favor, reinicie o app"
+    "resetToDefaultMsg": "Configurações Restauradas ao Padrão com sucesso. Por favor, reinicie o app",
+    "album": "Álbum",
+    "randomSelection": "Seleção aleatória",
+    "randomRadio": "Rádio aleatório",
+    "playingfromAlbum": "TOCANDO DO ÁLBUM",
+    "playingfromPlaylist": "TOCANDO DA LISTA DE REPRODUÇÃO",
+    "playingfromArtist": "TOCANDO DO ARTISTA",
+    "playingfromSelection": "TOCANDO DA SELEÇÃO"
 }

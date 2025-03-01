@@ -165,7 +165,7 @@
     "deleteDownloadedDataAlert": "Berhasil dihapus dari unduhan!",
     "downFilesFound": "file yang terunduh ditemukan",
     "sleepTimeSetAlert": "Timer tidur Anda telah diatur",
-    "disableTransitionAnimationDes": "Aktifkan opsi ini untuk menonaktifkan animasi transisi tab",
+    "disableTransitionAnimationDes": "Aktifkan opsi ini untuk menonaktifkan animasi transisi antar tab",
     "queuerearrangingDeniedMsg": "Antrian tidak bisa diatur ulang ketika mode acak diaktifkan",
     "export": "Ekspor",
     "backupInProgress": "Pencadangan diproses...",
@@ -232,5 +232,14 @@
     "misc": "Lain-lain",
     "resetToDefault": "Kembalikan pengaturan ke semula",
     "resetToDefaultMsg": "Pengaturan telah direset ke semula, silakan restart aplikasi",
-    "resetToDefaultDes": "Setel ulang pengaturan aplikasi ke semula (Diperlukan restart)"
+    "resetToDefaultDes": "Setel ulang pengaturan aplikasi ke semula (Diperlukan restart)",
+    "playingfromPlaylist": "MEMUTAR LAGU DARI DAFTAR PUTAR",
+    "autoOpenPlayer": "Otomatis membuka layar pemutaran",
+    "autoOpenPlayerDes": "Mengaktifkan/menonaktifkan pembukaan otomatis layar pemutaran secara penuh pada pilihan lagu yang akan diputar",
+    "album": "Album",
+    "playingfromSelection": "MEMUTAR LAGU YANG DI-SELEKSI",
+    "playingfromArtist": "MEMUTAR LAGU DARI ARTIS",
+    "playingfromAlbum": "MEMUTAR LAGU DARI ALBUM",
+    "randomSelection": "Pilihan acak",
+    "randomRadio": "Radio acak"
 }

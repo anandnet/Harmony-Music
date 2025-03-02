@@ -229,5 +229,14 @@
     "customInsSelectMsg": "தனிப்பயன் நிகழ்வைத் தேர்ந்தெடுக்கவும்",
     "allFieldsReqMsg": "தேவையான அனைத்து புலங்களும்",
     "selectAuthIns": "அங்கீகார நிகழ்வைத் தேர்ந்தெடுக்கவும்",
-    "album": "தொகுப்பு"
+    "album": "தொகுப்பு",
+    "misc": "மற்றவை",
+    "resetToDefault": "இயல்புநிலை அமைப்புகளை மீட்டமைக்கவும்",
+    "playingfromAlbum": "ஆல்பத்தில் இருந்து ஒலிக்கிறது",
+    "playingfromSelection": "தேர்விலிருந்து விளையாடும்",
+    "playingfromArtist": "கலைஞரிடமிருந்து இசைக்கிறது",
+    "randomSelection": "சீரற்ற தேர்வு",
+    "autoOpenPlayer": "தானாக திறந்த பிளேயர் திரை",
+    "playingfromPlaylist": "பிளேலிஸ்ட்டில் இருந்து விளையாடுகிறது",
+    "randomRadio": "சீரற்ற வானொலி"
 }

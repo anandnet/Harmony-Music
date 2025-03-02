@@ -188,7 +188,7 @@
     "download": "Unduh",
     "personalisation": "Personalisasi",
     "upNext": "Selanjutnya",
-    "downloadError3": "Unduhan gagal karena kesalahan jaringan/stream! Silakan coba lagi.",
+    "downloadError3": "Unduhan gagal karena jaringan/stream sedang gangguan! Silakan coba periksa kembali.",
     "music&Playback": "Musik & Pemutaran",
     "content": "Konten",
     "restoreLastPlaybackSession": "Pulihkan sesi pemutaran terakhir",

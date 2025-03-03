@@ -204,7 +204,7 @@
     "queueLoopNotDisMsg2": "El mode reproducció en bucle no es pot activar en mode ràdio.",
     "autoDownFavSong": "Descarregar automàticament les cançons favorites",
     "autoDownFavSongDes": "Descarrega automàticament les cançons preferides quan s'afegeixin als preferits",
-    "downloadError3": "Ha fallat la descàrrega a causa d'un error de xarxa! Torneu-ho a provar",
+    "downloadError3": "Ha fallat la descàrrega a causa d'un error de xarxa/transmissió! Torneu-ho a provar",
     "restartApp": "Reinicia l'aplicació",
     "processFiles": "Processant fitxers...",
     "restoreAppData": "Restaura les dades de l'aplicació",

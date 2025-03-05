@@ -241,5 +241,7 @@
     "playingfromAlbum": "TOCANDO DO ÁLBUM",
     "playingfromPlaylist": "TOCANDO DA LISTA DE REPRODUÇÃO",
     "playingfromArtist": "TOCANDO DO ARTISTA",
-    "playingfromSelection": "TOCANDO DA SELEÇÃO"
+    "playingfromSelection": "TOCANDO DA SELEÇÃO",
+    "autoOpenPlayer": "Automaticamente abrir tela de reprodução",
+    "autoOpenPlayerDes": "Ativar/desativar automaticamente abrir a tela de reprodução em tela cheia em uma seleção de música para tocar"
 }

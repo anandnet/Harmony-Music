@@ -96,8 +96,17 @@
     "streamingQuality": "کیفیت استریم",
     "streamingQualityDes": "کیفیت استریم (پخش) موسیقی",
     "disableTransitionAnimation": "غیرفعال کردن انیمیشن انتقال",
-    "downloadError3": "دانلود به علت خطای شبکه شکست خورد! لطفا دوباره تلاش کنید",
+    "downloadError3": "دانلود به علت خطای شبکه/سترین شکست خورد! لطفا دوباره تلاش کنید",
     "content": "محتوا",
     "downloadError2": "موسیقی موردنظر به دلیل محدودیت سرور قابل دانلود نمی‌باشد. می‌توانید دوباره تلاش کنید",
-    "personalisation": "شخصی سازی"
+    "personalisation": "شخصی سازی",
+    "trending": "ترند",
+    "noBookmarks": "بدون نشانک",
+    "randomRadio": "رادیو تصادفی",
+    "album": "آلبوم",
+    "playingfromAlbum": "پخش از آلبوم",
+    "playingfromPlaylist": "پخش از لیست پخش",
+    "playingfromSelection": "پخش از انتخاب شده ها",
+    "playingfromArtist": "پخش از ارتیست",
+    "randomSelection": "انتخاب تصادفی"
 }

@@ -191,7 +191,7 @@
     "backupAppData": "アプリのデータをバックアップ",
     "letsStrart": "始めよう..",
     "backup": "バックアップ",
-    "processFiles": "ファイル処理中...",
+    "processFiles": "ファイルを処理中...",
     "backupInProgress": "バックアップ中...",
     "restoreAppData": "アプリのデータを復元",
     "restartApp": "アプリを再起動",
@@ -235,13 +235,13 @@
     "resetToDefaultDes": "アプリの設定を初期値に戻す (要再起動)",
     "resetToDefaultMsg": "設定の初期化が完了、アプリを再起動してください",
     "misc": "ほか",
-    "randomSelection": "SELECTIONからランダム",
-    "randomRadio": "ラジオからランダム",
-    "playingfromSelection": "SELECTIONから再生中",
+    "randomSelection": "選曲からランダム再生",
+    "randomRadio": "ランダムにラジオ再生",
+    "playingfromSelection": "選曲から再生中",
     "playingfromArtist": "アーティストから再生中",
     "autoOpenPlayerDes": "再生する曲の選択時に、プレーヤーを自動的に全画面で開くかどうか",
     "autoOpenPlayer": "プレーヤー画面を自動で開く",
     "album": "アルバム",
-    "playingfromAlbum": "アルバムから再生中",
-    "playingfromPlaylist": "再生リストから再生中"
+    "playingfromAlbum": "アルバムを再生中",
+    "playingfromPlaylist": "再生リストを再生中"
 }

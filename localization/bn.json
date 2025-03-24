@@ -9,5 +9,13 @@
     "settings": "সেটিংস",
     "downloads": "ডাউনলোড সমূহ",
     "album": "অ্যালবাম",
-    "favorites": "পছন্দ সমূহ"
+    "favorites": "পছন্দ সমূহ",
+    "add5Minutes": "৫ মিনিট যোগ করুন",
+    "upNext": "পরবর্তী গান",
+    "items": "আইটেম সমূহ",
+    "shareSong": "শেয়ার করুন",
+    "cancel": "বাতিল",
+    "noOfflineSong": "কোনো অফলাইন গান নেই!",
+    "playingfromAlbum": "অ্যালবাম হতে বাজানো হচ্ছে",
+    "playingfromPlaylist": "প্লেলিস্ট হতে বাজানো হচ্ছে"
 }

@@ -31,14 +31,18 @@ class Playlist {
   String title;
   final bool isPipedPlaylist;
   final String? description;
-  final String thumbnailUrl;
+  String thumbnailUrl;
   final String? songCount;
   final bool isCloudPlaylist;
+  static const thumbPlaceholderUrl =
+      "https://raw.githubusercontent.com/anandnet/Harmony-Music/refs/heads/main/playlist_placeholder.png";
 
   factory Playlist.fromJson(Map<dynamic, dynamic> json) => Playlist(
       title: json["title"],
       playlistId: json["playlistId"] ?? json["browseId"],
-      thumbnailUrl: Thumbnail(json["thumbnails"][0]["url"]).medium,
+      thumbnailUrl: (json["thumbnails"][0]["url"]).isEmpty
+          ? Thumbnail(thumbPlaceholderUrl).extraHigh
+          : Thumbnail(json["thumbnails"][0]["url"]).extraHigh,
       description: json["description"] ?? "Playlist",
       songCount: json['itemCount'],
       isPipedPlaylist: json["isPipedPlaylist"] ?? false,
@@ -55,6 +59,17 @@ class Playlist {
         "isPipedPlaylist": isPipedPlaylist,
         "isCloudPlaylist": isCloudPlaylist
       };
+
+  Playlist copyWith({String? title, String? thumbnailUrl}) {
+    return Playlist(
+        title: title ?? this.title,
+        playlistId: playlistId,
+        thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
+        description: description,
+        songCount: songCount,
+        isPipedPlaylist: isPipedPlaylist,
+        isCloudPlaylist: isCloudPlaylist);
+  }
 
   set newTitle(String title) {
     this.title = title;

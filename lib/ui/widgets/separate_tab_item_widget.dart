@@ -68,6 +68,7 @@ class SeparateTabItemWidget extends StatelessWidget {
           isCompleteList
               ? Obx(() => SortWidget(
                     tag: "${title}_$artistControllerTag",
+                    screenController: artistController,
                     isAdditionalOperationRequired: artistController != null &&
                         (title == "Songs" || title == "Videos"),
                     isSearchFeatureRequired: artistController != null,
@@ -124,7 +125,7 @@ class SeparateTabItemWidget extends StatelessWidget {
                               : ModificationList(
                                   mode: artistController
                                       .additionalOperationMode.value,
-                                  artistScreenController: artistController,
+                                  screenController: artistController,
                                 )))
                       : const Expanded(
                           child: Center(child: LoadingIndicator())))

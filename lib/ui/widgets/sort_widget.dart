@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'additional_operation_dialog.dart';
 import 'modified_text_field.dart';
 
 enum OperationMode { arrange, delete, addToPlaylist, none }
@@ -43,6 +44,7 @@ class SortWidget extends StatelessWidget {
     this.isSearchFeatureRequired = false,
     this.isPlaylistRearrageFeatureRequired = false,
     this.isSongDeletetioFeatureRequired = false,
+    required this.screenController,
     this.onSearchStart,
     this.onSearch,
     this.onSearchClose,
@@ -64,6 +66,7 @@ class SortWidget extends StatelessWidget {
   final bool isSearchFeatureRequired;
   final bool isSongDeletetioFeatureRequired;
   final bool isPlaylistRearrageFeatureRequired;
+  final dynamic screenController;
   final Function(SortWidgetController, OperationMode)? startAdditionalOperation;
   final Function(bool)? selectAll;
   final Function()? performAdditionalOperation;
@@ -176,6 +179,14 @@ class SortWidget extends StatelessWidget {
                   ),
                   // Callback that sets the selected popup menu item.
                   onSelected: (mode) {
+                    showDialog(
+                        context: context,
+                        builder: (context) => AdditionalOperationDialog(
+                              operationMode: mode,
+                              screenController: screenController,
+                              controller: controller,
+                            ));
+
                     controller.setActiveMode(mode);
                     startAdditionalOperation!(controller, mode);
                   },
@@ -233,105 +244,6 @@ class SortWidget extends StatelessWidget {
                     )),
               ),
             ),
-          if (controller.isDeletionEnabled.isTrue ||
-              controller.isAddtoPlaylistEnabled.isTrue)
-            Container(
-              height: 35,
-              color: Theme.of(context).canvasColor,
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5.0),
-                        child: Obx(
-                          () => Checkbox(
-                            value: controller.isAllSelected.value,
-                            onChanged: (val) {
-                              selectAll!(val!);
-                              controller.toggleSelectAll(val);
-                            },
-                            visualDensity: const VisualDensity(
-                                horizontal: -3, vertical: -3),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 18),
-                      const Text("Select all")
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(controller.isAddtoPlaylistEnabled.isTrue
-                            ? Icons.add_circle_outline
-                            : Icons.delete),
-                        iconSize: 20,
-                        splashRadius: 18,
-                        visualDensity:
-                            const VisualDensity(horizontal: -3, vertical: -3),
-                        onPressed: () {
-                          performAdditionalOperation!();
-                        },
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.close),
-                        iconSize: 20,
-                        splashRadius: 18,
-                        visualDensity:
-                            const VisualDensity(horizontal: -3, vertical: -3),
-                        onPressed: () {
-                          controller.setActiveMode(OperationMode.none);
-                          cancelAdditionalOperation!();
-                        },
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          if (controller.isRearraningEnabled.isTrue)
-            Container(
-              height: 35,
-              color: Theme.of(context).canvasColor,
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.check),
-                    iconSize: 20,
-                    splashRadius: 18,
-                    visualDensity:
-                        const VisualDensity(horizontal: -3, vertical: -3),
-                    onPressed: () {
-                      performAdditionalOperation!();
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    iconSize: 20,
-                    splashRadius: 18,
-                    visualDensity:
-                        const VisualDensity(horizontal: -3, vertical: -3),
-                    onPressed: () {
-                      controller.setActiveMode(OperationMode.none);
-                      cancelAdditionalOperation!();
-                    },
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  )
-                ],
-              ),
-            )
         ],
       ),
     );

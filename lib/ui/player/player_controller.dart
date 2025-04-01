@@ -8,6 +8,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import '../../models/playling_from.dart';
 import '../../services/downloader.dart';
+import '../screens/Playlist/playlist_screen_controller.dart';
 import '../widgets/snackbar.dart';
 import '/services/synced_lyrics_service.dart';
 import '/ui/screens/Settings/settings_screen_controller.dart';
@@ -15,7 +16,6 @@ import '../../services/windows_audio_service.dart';
 import '../../utils/helper.dart';
 import '/models/media_Item_builder.dart';
 import '../screens/Home/home_screen_controller.dart';
-import '../screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
 import '../widgets/sliding_up_panel.dart';
 import '/models/durationstate.dart';
 import '/services/music_service.dart';
@@ -613,14 +613,14 @@ class PlayerController extends GetxController
         ? box.put(currMediaItem.id, MediaItemBuilder.toJson(currMediaItem))
         : box.delete(currMediaItem.id);
     try {
-      final playlistController = Get.find<PlayListNAlbumScreenController>();
-      if (!playlistController.isAlbum && playlistController.id == "LIBFAV") {
+      final playlistController = Get.find<PlaylistScreenController>(tag: 
+          const Key("LIBFAV").hashCode.toString());
         isCurrentSongFav.isFalse
             ? playlistController.addNRemoveItemsinList(currMediaItem,
                 action: 'add', index: 0)
             : playlistController.addNRemoveItemsinList(currMediaItem,
                 action: 'remove');
-      }
+      
       // ignore: empty_catches
     } catch (e) {}
     isCurrentSongFav.value = !isCurrentSongFav.value;
@@ -652,7 +652,7 @@ class PlayerController extends GetxController
       }
       box.add(MediaItemBuilder.toJson(mediaItem));
       try {
-        final playlistController = Get.find<PlayListNAlbumScreenController>(
+        final playlistController = Get.find<PlaylistScreenController>(
             tag: const Key("LIBRP").hashCode.toString());
         if (removedSongId != null) {
           playlistController.songList

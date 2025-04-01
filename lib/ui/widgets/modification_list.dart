@@ -2,30 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
-import '/ui/screens/Artists/artist_screen_controller.dart';
-import '/ui/screens/Library/library_controller.dart';
-import '/ui/screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
 import '/ui/widgets/sort_widget.dart' show OperationMode;
 import 'image_widget.dart';
 
 class ModificationList extends StatelessWidget {
   const ModificationList(
-      {super.key,
-      required this.mode,
-      this.librarySongsController,
-      this.playListNAlbumScreenController,
-      this.artistScreenController});
+      {super.key, required this.mode, this.screenController});
   final OperationMode mode;
-  final PlayListNAlbumScreenController? playListNAlbumScreenController;
-  final LibrarySongsController? librarySongsController;
-  final ArtistScreenController? artistScreenController;
+  final dynamic screenController;
 
   @override
   Widget build(BuildContext context) {
-    dynamic controller = librarySongsController ??
-        playListNAlbumScreenController ??
-        artistScreenController;
-    final items = controller!.additionalOperationTempList;
+    final items = screenController.additionalOperationTempList;
     if (mode == OperationMode.arrange) {
       return Expanded(
         child: ReorderableListView.builder(
@@ -67,7 +55,7 @@ class ModificationList extends StatelessWidget {
                 old_,
               );
               list.insert(new_, item);
-              controller.additionalOperationTempList.value = list;
+              screenController.additionalOperationTempList.value = list;
             }),
       );
     } else if (mode == OperationMode.addToPlaylist ||
@@ -78,9 +66,9 @@ class ModificationList extends StatelessWidget {
           itemCount: items.length,
           itemBuilder: (context, index) => ListTile(
             onTap: () {
-              controller.additionalOperationTempMap[index] =
-                  !controller.additionalOperationTempMap[index]!;
-              controller.checkIfAllSelected();
+              screenController.additionalOperationTempMap[index] =
+                  !screenController.additionalOperationTempMap[index]!;
+              screenController.checkIfAllSelected();
             },
             contentPadding: const EdgeInsets.only(top: 0, left: 5, right: 30),
             leading: SizedBox(
@@ -90,10 +78,12 @@ class ModificationList extends StatelessWidget {
                 children: [
                   Obx(
                     () => Checkbox(
-                      value: controller.additionalOperationTempMap[index],
+                      tristate: true,
+                      value: screenController.additionalOperationTempMap[index],
                       onChanged: (val) {
-                        controller.additionalOperationTempMap[index] = val!;
-                        controller.checkIfAllSelected();
+                        screenController.additionalOperationTempMap[index] =
+                            val!;
+                        screenController.checkIfAllSelected();
                       },
                       visualDensity:
                           const VisualDensity(horizontal: -3, vertical: -3),

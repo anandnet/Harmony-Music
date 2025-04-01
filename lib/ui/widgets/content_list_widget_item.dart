@@ -19,8 +19,14 @@ class ContentListItem extends StatelessWidget {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () {
-        Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
-            id: ScreenNavigationSetup.id, arguments: [isAlbum, content, false]);
+        if (isAlbum) {
+          Get.toNamed(ScreenNavigationSetup.albumScreen,
+              id: ScreenNavigationSetup.id, arguments: content.browseId);
+          return;
+        }
+        Get.toNamed(ScreenNavigationSetup.playlistScreen,
+            id: ScreenNavigationSetup.id,
+            arguments: [content, content.playlistId]);
       },
       child: Container(
         width: 130,
@@ -34,7 +40,11 @@ class ContentListItem extends StatelessWidget {
                     size: 120,
                     album: content,
                   )
-                : content.isCloudPlaylist
+                : content.isCloudPlaylist ||
+                        !(content.playlistId == 'LIBRP' ||
+                            content.playlistId == 'LIBFAV' ||
+                            content.playlistId == 'SongsCache' ||
+                            content.playlistId == 'SongDownloads')
                     ? SizedBox.square(
                         dimension: 120,
                         child: Stack(
@@ -67,6 +77,31 @@ class ContentListItem extends StatelessWidget {
                                     )),
                                   ),
                                 ),
+                              ),
+                            if (!content.isCloudPlaylist)
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: 18,
+                                    width: 18,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                      "L",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(fontSize: 14),
+                                    )),
+                                  ),
+                                ),
                               )
                           ],
                         ),
@@ -85,9 +120,7 @@ class ContentListItem extends StatelessWidget {
                                   ? Icons.favorite
                                   : content.playlistId == 'SongsCache'
                                       ? Icons.flight
-                                      : content.playlistId == 'SongDownloads'
-                                          ? Icons.download
-                                          : Icons.playlist_play,
+                                      : Icons.download,
                           color: Colors.white,
                           size: 40,
                         ))),

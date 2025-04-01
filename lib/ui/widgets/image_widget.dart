@@ -39,15 +39,15 @@ class ImageWidget extends StatelessWidget {
                 : artist != null
                     ? artist!.thumbnailUrl
                     : "";
-    String cacheKey = song != null
-        ? "${song!.id}_song"
-        : playlist != null
-            ? "${playlist!.playlistId}_playlist"
-            : album != null
-                ? "${album!.browseId}_album"
-                : artist != null
-                    ? "${artist!.browseId}_artist"
-                    : "";
+    // String cacheKey = song != null
+    //     ? "${song!.id}_song"
+    //     : playlist != null
+    //         ? "${playlist!.playlistId}_playlist"
+    //         : album != null
+    //             ? "${album!.browseId}_album"
+    //             : artist != null
+    //                 ? "${artist!.browseId}_artist"
+    //                 : "";
 
     /// only valid for offline songs
     final bool offlineAvailable =
@@ -74,7 +74,7 @@ class ImageWidget extends StatelessWidget {
               width: size,
               memCacheHeight: (song != null && !isPlayerArtImage) ? 140 : null,
               //memCacheWidth: (song != null && !isPlayerArtImage)? 140 : null,
-              cacheKey: cacheKey,
+              //cacheKey: cacheKey,
               imageUrl: imageUrl,
               fit: BoxFit.cover,
               errorWidget: (context, url, error) {

@@ -213,22 +213,22 @@ class LibraryPlaylistsController extends GetxController
     Playlist(
         title: "recentlyPlayed".tr,
         playlistId: "LIBRP",
-        thumbnailUrl: "",
+        thumbnailUrl: Playlist.thumbPlaceholderUrl,
         isCloudPlaylist: false),
     Playlist(
         title: "favorites".tr,
         playlistId: "LIBFAV",
-        thumbnailUrl: "",
+        thumbnailUrl: Playlist.thumbPlaceholderUrl,
         isCloudPlaylist: false),
     Playlist(
         title: "cachedOrOffline".tr,
         playlistId: "SongsCache",
-        thumbnailUrl: "",
+        thumbnailUrl: Playlist.thumbPlaceholderUrl,
         isCloudPlaylist: false),
     Playlist(
         title: "downloads".tr,
         playlistId: "SongDownloads",
-        thumbnailUrl: "",
+        thumbnailUrl: Playlist.thumbPlaceholderUrl,
         isCloudPlaylist: false)
   ];
   late RxList<Playlist> libraryPlaylists = RxList(initPlst);
@@ -262,6 +262,12 @@ class LibraryPlaylistsController extends GetxController
 
     isContentFetched.value = true;
     await box.close();
+  }
+
+  void updatePlaylistIntoDb(Playlist playlist) async {
+    final box = await Hive.openBox("LibraryPlaylists");
+    box.put(playlist.playlistId, playlist.toJson());
+    refreshLib();
   }
 
   void removePipedPlaylists() {
@@ -357,8 +363,9 @@ class LibraryPlaylistsController extends GetxController
           newplst = Playlist(
               title: title,
               playlistId: "${res.response['playlistId']}",
-              thumbnailUrl:
-                  songItems != null ? songItems[0].artUri.toString() : "",
+              thumbnailUrl: songItems != null
+                  ? songItems[0].artUri.toString()
+                  : Playlist.thumbPlaceholderUrl,
               description: "Piped Playlist",
               isCloudPlaylist: true,
               isPipedPlaylist: true);
@@ -370,7 +377,9 @@ class LibraryPlaylistsController extends GetxController
         newplst = Playlist(
             title: title,
             playlistId: "LIB${DateTime.now().millisecondsSinceEpoch}",
-            thumbnailUrl: "",
+            thumbnailUrl: songItems != null
+                ? songItems[0].artUri.toString()
+                : Playlist.thumbPlaceholderUrl,
             description: "Library Playlist",
             isCloudPlaylist: false);
         final box = await Hive.openBox("LibraryPlaylists");

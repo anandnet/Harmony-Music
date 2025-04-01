@@ -7,12 +7,12 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../services/downloader.dart';
+import '../screens/Playlist/playlist_screen_controller.dart';
 import '../screens/Settings/settings_screen_controller.dart';
 import '/utils/helper.dart';
 import '/services/piped_service.dart';
 import '/ui/widgets/sleep_timer_bottom_sheet.dart';
 import '/ui/player/player_controller.dart';
-import '../screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
 import '../screens/Library/library_controller.dart';
 import '/ui/widgets/add_to_playlist.dart';
 import '/ui/widgets/snackbar.dart';
@@ -162,9 +162,9 @@ class SongInfoBottomSheet extends StatelessWidget {
                       if (calledFromQueue) {
                         playerController.playerPanelController.close();
                       }
-                      Get.toNamed(ScreenNavigationSetup.playlistNAlbumScreen,
+                      Get.toNamed(ScreenNavigationSetup.albumScreen,
                           id: ScreenNavigationSetup.id,
-                          arguments: [true, song.extras!['album']['id'], true]);
+                          arguments: song.extras!['album']['id']);
                     },
                   )
                 : const SizedBox.shrink(),
@@ -227,7 +227,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                             .then((value) async {
                           box.delete(song.id).then((value) {
                             if (playlist != null) {
-                              Get.find<PlayListNAlbumScreenController>(
+                              Get.find<PlaylistScreenController>(
                                       tag: Key(playlist!.playlistId)
                                           .hashCode
                                           .toString())
@@ -421,7 +421,7 @@ mixin RemoveSongFromPlaylistMixin {
 
     // this try catch block is to handle the case when song is removed from libsongs sections
     try {
-      final plstCntroller = Get.find<PlayListNAlbumScreenController>(
+      final plstCntroller = Get.find<PlaylistScreenController>(
           tag: Key(playlist.playlistId).hashCode.toString());
       if (playlist.isPipedPlaylist) {
         final res = await Get.find<PipedServices>()

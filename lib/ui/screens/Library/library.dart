@@ -39,6 +39,7 @@ class SongsLibraryWidget extends StatelessWidget {
             final libSongsController = Get.find<LibrarySongsController>();
             return SortWidget(
               tag: "LibSongSort",
+              screenController: libSongsController,
               itemCountTitle: "${libSongsController.librarySongsList.length}",
               itemIcon: Icons.music_note,
               titleLeftPadding: 9,
@@ -77,7 +78,7 @@ class SongsLibraryWidget extends StatelessWidget {
                       )
                     : ModificationList(
                         mode: controller.additionalOperationMode.value,
-                        librarySongsController: controller,
+                        screenController: controller,
                       ))
                 : Expanded(
                     child: Center(
@@ -146,6 +147,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
             () => isAlbumContent
                 ? SortWidget(
                     tag: "LibAlbumSort",
+                    screenController: libralbumCntrller,
                     isAdditionalOperationRequired: false,
                     isSearchFeatureRequired: true,
                     itemCountTitle:
@@ -160,6 +162,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                   )
                 : SortWidget(
                     tag: "LibPlaylistSort",
+                    screenController: librplstCntrller,
                     isAdditionalOperationRequired: false,
                     isSearchFeatureRequired: true,
                     itemCountTitle:
@@ -255,6 +258,7 @@ class LibraryArtistWidget extends StatelessWidget {
           Obx(
             () => SortWidget(
               tag: "LibArtistSort",
+              screenController: cntrller,
               isAdditionalOperationRequired: false,
               isSearchFeatureRequired: true,
               itemCountTitle: "${cntrller.libraryArtists.length} ${"items".tr}",

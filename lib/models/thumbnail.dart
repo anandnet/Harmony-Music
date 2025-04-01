@@ -1,12 +1,17 @@
+import 'package:get/get.dart';
+
 class Thumbnail {
   Thumbnail(this._url);
   final String _url;
-  String sizewith(int size) =>
-      (_url.contains("piped") || _url.contains("i.ytimg.com"))
-          ? url
-          : "${_url.split("=")[0]}=w$size-h$size-l90-rj";
+  String sizewith(int size) => (_url.contains("-rj"))
+      ? "${_url.split("=")[0]}=w$size-h$size-l90-rj"
+      : (_url.contains("=s"))
+          ? "${_url.split("=s")[0]}=s$size"
+          : url;
   String get url => _url;
   String get high => sizewith(400); //450
   String get medium => sizewith(250); //350
-  String get low => sizewith(150); //150
+  String get low => sizewith(150);
+  String get extraHigh =>
+      GetPlatform.isDesktop ? sizewith(1000) : sizewith(600); //150
 }

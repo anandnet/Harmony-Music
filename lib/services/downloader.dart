@@ -9,8 +9,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
+import '../ui/screens/Album/album_screen_controller.dart';
+import '../ui/screens/Playlist/playlist_screen_controller.dart';
 import '/services/stream_service.dart';
-import '/ui/screens/PlaylistNAlbum/playlistnalbum_screen_controller.dart';
 import '../ui/widgets/snackbar.dart';
 import '/services/permission_service.dart';
 import '../ui/screens/Settings/settings_screen_controller.dart';
@@ -90,10 +91,19 @@ class Downloader extends GetxService {
           currentPlaylistId.value = playlistId;
           await downloadSongList((playlistQueue[playlistId]!).toList(),
               isPlaylist: true);
-          if (Get.isRegistered<PlayListNAlbumScreenController>(
+          if (Get.isRegistered<PlaylistScreenController>(
                   tag: Key(playlistId).hashCode.toString()) &&
               playlistQueue.containsKey(playlistId)) {
-            Get.find<PlayListNAlbumScreenController>(
+            Get.find<PlaylistScreenController>(
+                    tag: Key(playlistId).hashCode.toString())
+                .isDownloaded
+                .value = true;
+          } 
+          // in case of album
+          else if (Get.isRegistered<AlbumScreenController>(
+                  tag: Key(playlistId).hashCode.toString()) &&
+              playlistQueue.containsKey(playlistId)) {
+            Get.find<AlbumScreenController>(
                     tag: Key(playlistId).hashCode.toString())
                 .isDownloaded
                 .value = true;
@@ -180,8 +190,8 @@ class Downloader extends GetxService {
         requiredAudioStream.audioCodec.name.contains("mp") ? "m4a" : "opus";
     final RegExp invalidChar =
         RegExp(r'Container.|\/|\\|\"|\<|\>|\*|\?|\:|\!|\[|\]|\¡|\||\%');
-    final songTitle =
-        "${song.title.trim()} (${song.artist?.trim()})".replaceAll(invalidChar, "");
+    final songTitle = "${song.title.trim()} (${song.artist?.trim()})"
+        .replaceAll(invalidChar, "");
     String filePath = "$dirPath/$songTitle.$actualDownformat";
     printINFO("Downloading filePath: $filePath");
     final totalBytes = requiredAudioStream.size;

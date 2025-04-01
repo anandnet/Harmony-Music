@@ -246,5 +246,8 @@
     "playingfromSelection": "LECTURE DE LA SÉLECTION",
     "playingfromArtist": "LECTURE DE L'ARTISTE",
     "randomRadio": "Radio Aléatoire",
-    "randomSelection": "Sélection Aléatoire"
+    "randomSelection": "Sélection Aléatoire",
+    "selectSongs": "Sélectionner des titres",
+    "selectAll": "Tout sélectionner",
+    "reArrangeSongs": "Réorganiser les titres"
 }

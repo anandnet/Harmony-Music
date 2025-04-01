@@ -242,5 +242,8 @@
     "randomSelection": "随机选择",
     "randomRadio": "随机电台",
     "album": "专辑",
-    "autoOpenPlayerDes": "启用/禁用选择歌曲播放时自动全屏播放器"
+    "autoOpenPlayerDes": "启用/禁用选择歌曲播放时自动全屏播放器",
+    "reArrangeSongs": "重排曲目",
+    "selectAll": "全选",
+    "selectSongs": "选择曲目"
 }

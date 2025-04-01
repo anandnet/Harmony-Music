@@ -486,9 +486,9 @@ List<dynamic> parsePlaylistItems(List<dynamic> results,
     String? videoId;
     String? trackDetails;
 
-    if (!isAlbum) {
-      videoId = nav(data, ['playlistItemData', 'videoId']);
-    } else {
+    videoId = nav(data, ['playlistItemData', 'videoId']);
+
+    if (videoId == null && isAlbum) {
       final creditId = nav(data, [
         'menu',
         'menuRenderer',
@@ -500,8 +500,14 @@ List<dynamic> parsePlaylistItems(List<dynamic> results,
         'browseId'
       ]);
       videoId = creditId?.split("MPTC")[1];
-      trackDetails =
-          data?["index"] != null ? "${nav(data,['index','runs',0,'text'])}/${results.length}" : null;
+      
+    }
+
+    if(isAlbum){
+      // Contains track number and total tracks 
+      trackDetails = data?["index"] != null
+          ? "${nav(data, ['index', 'runs', 0, 'text'])}/${results.length}"
+          : null;
     }
 
     // if the item has a menu, find its setVideoId

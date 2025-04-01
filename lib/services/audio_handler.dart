@@ -437,20 +437,24 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   @override
   Future<void> customAction(String name, [Map<String, dynamic>? extras]) async {
-    if (name == 'dispose') {
+    switch (name) {
+      
+      case 'dispose':
       await _player.dispose();
       super.stop();
-    } else if (name == 'playByIndex') {
+      break;
+
+      case 'playByIndex':
       final songIndex = extras!['index'];
       currentIndex = songIndex;
       final isNewUrlReq = extras['newUrl'] ?? false;
       final currentSong = queue.value[currentIndex];
       final futureStreamInfo =
-          checkNGetUrl(currentSong.id, generateNewUrl: isNewUrlReq);
+        checkNGetUrl(currentSong.id, generateNewUrl: isNewUrlReq);
       final bool restoreSession = extras['restoreSession'] ?? false;
       isSongLoading = true;
       playbackState.add(playbackState.value
-          .copyWith(processingState: AudioProcessingState.loading));
+        .copyWith(processingState: AudioProcessingState.loading));
       if (_playList.children.isNotEmpty) {
         await _playList.clear();
       }
@@ -464,9 +468,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         isSongLoading = false;
         Get.find<PlayerController>().notifyPlayError(streamInfo.statusMSG);
         playbackState.add(playbackState.value.copyWith(
-            processingState: AudioProcessingState.error,
-            errorCode: 404,
-            errorMessage: streamInfo.statusMSG));
+          processingState: AudioProcessingState.error,
+          errorCode: 404,
+          errorMessage: streamInfo.statusMSG));
         return;
       }
       currentSongUrl = currentSong.extras!['url'] = streamInfo.audio!.url;
@@ -480,26 +484,29 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
       if (restoreSession) {
         if (!GetPlatform.isDesktop) {
-          final position = extras['position'];
-          await _player.load();
-          await _player.seek(
-            Duration(
-              milliseconds: position,
-            ),
-          );
-          await _player.seek(
-            Duration(
-              milliseconds: position,
-            ),
-          );
+        final position = extras['position'];
+        await _player.load();
+        await _player.seek(
+          Duration(
+          milliseconds: position,
+          ),
+        );
+        await _player.seek(
+          Duration(
+          milliseconds: position,
+          ),
+        );
         }
       } else {
         await _player.play();
       }
-    } else if (name == "checkWithCacheDb" && isPlayingUsingLockCachingSource) {
-      final song = extras!['mediaItem'] as MediaItem;
-      final songsCacheBox = Hive.box("SongsCache");
-      if (!songsCacheBox.containsKey(song.id) &&
+      break;
+
+      case 'checkWithCacheDb':
+      if (isPlayingUsingLockCachingSource) {
+        final song = extras!['mediaItem'] as MediaItem;
+        final songsCacheBox = Hive.box("SongsCache");
+        if (!songsCacheBox.containsKey(song.id) &&
           await File("$_cacheDir/cachedSongs/${song.id}.mp3").exists()) {
         song.extras!['url'] = currentSongUrl;
         song.extras!['date'] = DateTime.now().millisecondsSinceEpoch;
@@ -508,20 +515,23 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         jsonData['duration'] = _player.duration!.inSeconds;
         // playbility status and info
         jsonData['streamInfo'] = dbStreamData != null
-            ? [
-                true,
-                dbStreamData[Hive.box('AppPrefs').get('streamingQuality') == 0
-                    ? 'lowQualityAudio'
-                    : "highQualityAudio"]
-              ]
-            : null;
+          ? [
+            true,
+            dbStreamData[Hive.box('AppPrefs').get('streamingQuality') == 0
+              ? 'lowQualityAudio'
+              : "highQualityAudio"]
+            ]
+          : null;
         songsCacheBox.put(song.id, jsonData);
         if (!librarySongsController.isClosed) {
           librarySongsController.librarySongsList.value =
-              librarySongsController.librarySongsList.toList() + [song];
+            librarySongsController.librarySongsList.toList() + [song];
+        }
         }
       }
-    } else if (name == 'setSourceNPlay') {
+      break;
+
+      case 'setSourceNPlay':
       final currMed = (extras!['mediaItem'] as MediaItem);
       final futureStreamInfo = checkNGetUrl(currMed.id);
       isSongLoading = true;
@@ -535,7 +545,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         isSongLoading = false;
         Get.find<PlayerController>().notifyPlayError(streamInfo.statusMSG);
         playbackState.add(playbackState.value
-            .copyWith(processingState: AudioProcessingState.error));
+          .copyWith(processingState: AudioProcessingState.error));
         return;
       }
       currentSongUrl = currMed.extras!['url'] = streamInfo.audio!.url;
@@ -549,10 +559,14 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       }
 
       await _player.play();
-    } else if (name == 'toggleSkipSilence') {
+      break;
+
+      case 'toggleSkipSilence':
       final enable = (extras!['enable'] as bool);
       await _player.setSkipSilenceEnabled(enable);
-    } else if (name == "toggleLoudnessNormalization") {
+      break;
+
+      case 'toggleLoudnessNormalization':
       loudnessNormalizationEnabled = (extras!['enable'] as bool);
       if (!loudnessNormalizationEnabled) {
         _player.setVolume(1.0);
@@ -561,26 +575,28 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
       if (loudnessNormalizationEnabled) {
         try {
-          final currentSongId = (queue.value[currentIndex]).id;
-          final songQualityIndex = Hive.box('AppPrefs').get('streamingQuality');
-          if (Hive.box("SongsUrlCache").containsKey(currentSongId)) {
-            _normalizeVolume((Hive.box("SongsUrlCache")
-                .get(currentSongId))[songQualityIndex + 1]["loudnessDb"]);
-            return;
-          }
+        final currentSongId = (queue.value[currentIndex]).id;
+        final songQualityIndex = Hive.box('AppPrefs').get('streamingQuality');
+        if (Hive.box("SongsUrlCache").containsKey(currentSongId)) {
+          _normalizeVolume((Hive.box("SongsUrlCache")
+            .get(currentSongId))[songQualityIndex + 1]["loudnessDb"]);
+          return;
+        }
 
-          if (Hive.box("SongDownloads").containsKey(currentSongId)) {
-            final streamInfo =
-                (Hive.box("SongDownloads").get(currentSongId))["streamInfo"];
+        if (Hive.box("SongDownloads").containsKey(currentSongId)) {
+          final streamInfo =
+            (Hive.box("SongDownloads").get(currentSongId))["streamInfo"];
 
-            _normalizeVolume(
-                streamInfo == null ? 0 : streamInfo[1]["loudnessDb"]);
-          }
+          _normalizeVolume(
+            streamInfo == null ? 0 : streamInfo[1]["loudnessDb"]);
+        }
         } catch (e) {
-          printERROR(e);
+        printERROR(e);
         }
       }
-    } else if (name == "shuffleQueue") {
+      break;
+
+      case 'shuffleQueue':
       final currentQueue = queue.value;
       final currentItem = currentQueue[currentIndex];
       currentQueue.remove(currentItem);
@@ -589,7 +605,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       queue.add(currentQueue);
       mediaItem.add(currentItem);
       currentIndex = 0;
-    } else if (name == "reorderQueue") {
+      break;
+
+      case 'reorderQueue':
       final oldIndex = extras!['oldIndex'];
       int newIndex = extras['newIndex'];
 
@@ -606,7 +624,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       currentIndex = currentQueue.indexOf(currentItem);
       queue.add(currentQueue);
       mediaItem.add(currentItem);
-    } else if (name == 'addPlayNextItem') {
+      break;
+
+      case 'addPlayNextItem':
       final song = extras!['mediaItem'] as MediaItem;
       final currentQueue = queue.value;
       currentQueue.insert(currentIndex + 1, song);
@@ -614,23 +634,37 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
       if (shuffleModeEnabled) {
         shuffledQueue.insert(currentShuffleIndex + 1, song.id);
       }
-    } else if (name == 'openEqualizer') {
+      break;
+
+      case 'openEqualizer':
       EqualizerService.openEqualizer(_player.androidAudioSessionId!);
-    } else if (name == "saveSession") {
+      break;
+
+      case 'saveSession':
       await saveSessionData();
-    } else if (name == "setVolume") {
+      break;
+
+      case 'setVolume':
       _player.setVolume(extras!['value'] / 100);
-    } else if (name == "shuffleCmd") {
+      break;
+
+      case 'shuffleCmd':
       final songIndex = extras!['index'];
       _shuffleCmd(songIndex);
-    } else if (name == "upadateMediaItemInAudioService") {
+      break;
+
+      case 'upadateMediaItemInAudioService':
       //added to update media item from player controller
       final songIndex = extras!['index'];
       currentIndex = songIndex;
       mediaItem.add(queue.value[currentIndex]);
-    } else if (name == "toggleQueueLoopMode") {
+      break;
+
+      case 'toggleQueueLoopMode':
       queueLoopModeEnabled = extras!['enable'];
-    } else if (name == "clearQueue") {
+      break;
+
+      case 'clearQueue':
       customAction("reorderQueue", {'oldIndex': currentIndex, 'newIndex': 0});
       final newQueue = queue.value;
       newQueue.removeRange(1, newQueue.length);
@@ -640,6 +674,9 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
         shuffledQueue.add(newQueue[0].id);
         currentShuffleIndex = 0;
       }
+      break;
+      default:
+      break;
     }
   }
 

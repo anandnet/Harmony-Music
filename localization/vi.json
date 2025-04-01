@@ -243,5 +243,8 @@
     "randomSelection": "Chọn ngẩu nhiên",
     "randomRadio": "Đài phát thanh ngẩu nhiên",
     "autoOpenPlayer": "Tự động mở màn hình phát nhạc",
-    "autoOpenPlayerDes": "Bật/Tắt chức năng tự động mở màn hình phát nhạc sau khi chọn bài hát"
+    "autoOpenPlayerDes": "Bật/Tắt chức năng tự động mở màn hình phát nhạc sau khi chọn bài hát",
+    "selectSongs": "Chọn bài hát",
+    "reArrangeSongs": "Sắp xếp lại bài hát",
+    "selectAll": "Chọn tất cả"
 }

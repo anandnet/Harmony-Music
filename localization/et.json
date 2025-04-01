@@ -241,5 +241,8 @@
     "playingfromSelection": "ESITAMISEL VALIKUST",
     "randomSelection": "Juhuslik valik",
     "playingfromArtist": "ESITAMISEL ESITAJAST",
-    "randomRadio": "Juhuslik radio"
+    "randomRadio": "Juhuslik radio",
+    "selectAll": "Vali kõik",
+    "reArrangeSongs": "Muuda lugude järjekorda",
+    "selectSongs": "Vali lood"
 }

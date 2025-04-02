@@ -241,5 +241,8 @@
     "randomSelection": "Ausazko Hautaketa",
     "randomRadio": "Ausazko Irratia",
     "autoOpenPlayer": "Ireki automatikoki erreproduzitzailearen pantaila",
-    "autoOpenPlayerDes": "Gaitu/desgaitu erreproduzitzailearen pantaila osoko irekiera automatikoa erreproduzitzeko abestia aukeratzerakoan"
+    "autoOpenPlayerDes": "Gaitu/desgaitu erreproduzitzailearen pantaila osoko irekiera automatikoa erreproduzitzeko abestia aukeratzerakoan",
+    "reArrangeSongs": "Abestiak berrantolatu",
+    "selectSongs": "Abestiak hautatu",
+    "selectAll": "Denak hautatu"
 }

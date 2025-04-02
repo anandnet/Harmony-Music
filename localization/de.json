@@ -246,5 +246,8 @@
     "randomSelection": "Zufallsauswahl",
     "randomRadio": "Zufälliges Radio",
     "autoOpenPlayer": "Öffne Player Bildschirm automatisch",
-    "autoOpenPlayerDes": "Aktiviere/Deaktiviere automatisches öffnen des Vollbildplayers, wenn ein Lied ausgewählt wurde"
+    "autoOpenPlayerDes": "Aktiviere/Deaktiviere automatisches öffnen des Vollbildplayers, wenn ein Lied ausgewählt wurde",
+    "reArrangeSongs": "Lieder neu anordnen",
+    "selectSongs": "Lieder auswählen",
+    "selectAll": "Alles auswählen"
 }

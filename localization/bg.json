@@ -244,5 +244,8 @@
     "playingfromSelection": "ИЗПЪЛНЕНИЕ ОТ ИЗБОР",
     "playingfromArtist": "ИЗПЪЛНЕНИЕ ОТ ИЗПЪЛНИТЕЛ",
     "randomSelection": "Случаен избор",
-    "randomRadio": "Случайно радио"
+    "randomRadio": "Случайно радио",
+    "selectSongs": "Избери песни",
+    "reArrangeSongs": "Пренареди песните",
+    "selectAll": "Избери всички"
 }

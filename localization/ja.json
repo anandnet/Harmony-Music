@@ -212,8 +212,8 @@
     "downloadError3": "ネットワークやストリームのエラーでダウンロード失敗！再度お試しください",
     "downloadError2": "曲がサーバーの制限によりダウンロード不可能です。再試行でうまくいかもしれません",
     "content": "コンテンツ",
-    "queueShufflingDeniedMsg": "シャッフルモードが有効の時はキューをシャッフルできません",
-    "queuerearrangingDeniedMsg": "シャッフルモードが有効の時はキューを並べ替えできません",
+    "queueShufflingDeniedMsg": "シャッフルモードが有効なのでシャッフルできません",
+    "queuerearrangingDeniedMsg": "シャッフルモードが有効なので並べ替えできません",
     "loudnessNormalizationDes": "すべての曲の音の大きさを同程度にする(実験的な設定) (バージョン1.10.0未満でダウンロードした曲では動作しません)",
     "songNotPlayable": "曲はサーバーの制限により再生できません！",
     "urlSearchDes": "URLをクリックして、関連コンテンツを開く/再生",
@@ -225,8 +225,8 @@
     "shuffleQueue": "キューをシャッフル",
     "queueLoop": "キューをループ",
     "playnextMsg": "公開予定 {Song Name}",
-    "queueLoopNotDisMsg1": "シャッフル有効時は、ループは無効にできません。",
-    "queueLoopNotDisMsg2": "ラジオモードでは、ループを有効にできません。",
+    "queueLoopNotDisMsg1": "シャッフル有効時は、ループを無効にできません。",
+    "queueLoopNotDisMsg2": "ラジオモードでは、ループはできません。",
     "enableSlidableActionDes": "曲のタイルをスライドする操作を使う",
     "enableSlidableAction": "スライドによる操作",
     "autoDownFavSongDes": "お気に入りに追加した曲を自動でダウンロード",
@@ -244,5 +244,7 @@
     "album": "アルバム",
     "playingfromAlbum": "アルバムを再生中",
     "playingfromPlaylist": "再生リストを再生中",
-    "selectAll": "すべて選択"
+    "selectAll": "すべて選択",
+    "reArrangeSongs": "曲を並べ替え",
+    "selectSongs": "曲を選択"
 }

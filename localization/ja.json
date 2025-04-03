@@ -243,5 +243,6 @@
     "autoOpenPlayer": "プレーヤー画面を自動で開く",
     "album": "アルバム",
     "playingfromAlbum": "アルバムを再生中",
-    "playingfromPlaylist": "再生リストを再生中"
+    "playingfromPlaylist": "再生リストを再生中",
+    "selectAll": "すべて選択"
 }

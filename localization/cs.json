@@ -244,5 +244,8 @@
     "randomSelection": "Náhodný výběr",
     "randomRadio": "Náhodné rádio",
     "autoOpenPlayer": "Automaticky otevřít obrazovku přehrávače",
-    "autoOpenPlayerDes": "Povolí/zakáže automatické otevření přehrávače na celou obrazovku při výběru skladby pro přehrávání"
+    "autoOpenPlayerDes": "Povolí/zakáže automatické otevření přehrávače na celou obrazovku při výběru skladby pro přehrávání",
+    "selectSongs": "Vybrat skladby",
+    "selectAll": "Vybrat všechno",
+    "reArrangeSongs": "Přeskupit skladby"
 }

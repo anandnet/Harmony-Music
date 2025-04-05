@@ -243,5 +243,8 @@
     "playingfromAlbum": "ГРАЄ З АЛЬБОМУ",
     "playingfromSelection": "ГРАЄ З ВИБОРУ",
     "randomSelection": "Випадковий вибір",
-    "randomRadio": "Випадкове радіо"
+    "randomRadio": "Випадкове радіо",
+    "selectSongs": "Вибрати пісні",
+    "selectAll": "Вибрати все",
+    "reArrangeSongs": "Переставити пісні"
 }

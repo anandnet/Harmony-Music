@@ -243,5 +243,8 @@
     "randomSelection": "Selecció aleatòria",
     "randomRadio": "Ràdio Aleatòria",
     "autoOpenPlayer": "Obre automàticament la pantalla del reproductor",
-    "autoOpenPlayerDes": "Activa/desactiva l'obertura automàtica a pantalla completa del reproductor en seleccionar la cançó a reproduir"
+    "autoOpenPlayerDes": "Activa/desactiva l'obertura automàtica a pantalla completa del reproductor en seleccionar la cançó a reproduir",
+    "selectSongs": "Selecciona les cançons",
+    "selectAll": "Selecciona-ho tot",
+    "reArrangeSongs": "Reorganitzar les cançons"
 }

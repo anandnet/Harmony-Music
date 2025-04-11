@@ -66,5 +66,6 @@ flutter {
 
 dependencies {
     implementation 'com.android.support:multidex:2.0.1'
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
 }
 

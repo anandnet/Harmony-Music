@@ -244,5 +244,8 @@
     "playingfromPlaylist": "ПУШТАЊЕ С ПЛЕЈЛИСТЕ",
     "playingfromSelection": "ПУШТАЊЕ ИЗ ИЗБОРА",
     "playingfromArtist": "ПУШТАЊЕ ОД ИЗВОЂАЧА",
-    "randomRadio": "Насумичан радио"
+    "randomRadio": "Насумичан радио",
+    "reArrangeSongs": "Преуреди песме",
+    "selectSongs": "Изабери песме",
+    "selectAll": "Изабери све"
 }

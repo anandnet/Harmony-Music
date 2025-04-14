@@ -31,7 +31,7 @@
     "selectAuthIns": "Pilih Instans Auth",
     "languageDes": "Setel bahasa Aplikasi",
     "stopMusicOnTaskClear": "Hentikan musik saat tugas selesai",
-    "enqueueAll": "Semua Entri",
+    "enqueueAll": "Antrikan semua",
     "customInsSelectMsg": "Silakan pilih Instans Khusus",
     "skipSilence": "Lewati keheningan",
     "create": "Buat",
@@ -241,5 +241,8 @@
     "playingfromArtist": "MEMUTAR LAGU DARI ARTIS",
     "playingfromAlbum": "MEMUTAR LAGU DARI ALBUM",
     "randomSelection": "Pilihan acak",
-    "randomRadio": "Radio acak"
+    "randomRadio": "Radio acak",
+    "reArrangeSongs": "Atur ulang lagu",
+    "selectSongs": "Pilih lagu",
+    "selectAll": "Pilih semua"
 }

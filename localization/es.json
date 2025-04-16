@@ -244,5 +244,8 @@
     "randomRadio": "Radio Aleatorio",
     "autoOpenPlayer": "Abrir automáticamente pantalla del reproductor",
     "autoOpenPlayerDes": "Activar/desactivar la apertura automática del reproductor a pantalla completa al seleccionar una canción a reproducir",
-    "album": "Álbum"
+    "album": "Álbum",
+    "reArrangeSongs": "Reordenar canciones",
+    "selectSongs": "Seleccionar canciones",
+    "selectAll": "Selecionar todo"
 }

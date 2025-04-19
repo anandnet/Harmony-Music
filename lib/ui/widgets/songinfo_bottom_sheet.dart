@@ -164,7 +164,7 @@ class SongInfoBottomSheet extends StatelessWidget {
                       }
                       Get.toNamed(ScreenNavigationSetup.albumScreen,
                           id: ScreenNavigationSetup.id,
-                          arguments: song.extras!['album']['id']);
+                          arguments: (null, song.extras!['album']['id']));
                     },
                   )
                 : const SizedBox.shrink(),

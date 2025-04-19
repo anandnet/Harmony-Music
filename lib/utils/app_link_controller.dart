@@ -92,7 +92,7 @@ mixin ProcessLink {
   Future<void> openPlaylistOrAlbum(String browseId) async {
     if (browseId.contains("OLAK5uy")) {
       Get.toNamed(ScreenNavigationSetup.albumScreen,
-          id: ScreenNavigationSetup.id, arguments:  browseId);
+          id: ScreenNavigationSetup.id, arguments: (null, browseId));
     } else {
       Get.toNamed(ScreenNavigationSetup.playlistScreen,
           id: ScreenNavigationSetup.id, arguments: [null, browseId]);

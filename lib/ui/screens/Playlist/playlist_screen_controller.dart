@@ -1,4 +1,5 @@
 import 'package:audio_service/audio_service.dart' show MediaItem;
+import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/models/thumbnail.dart';
 import 'package:harmonymusic/utils/helper.dart';
@@ -6,6 +7,7 @@ import 'package:hive/hive.dart';
 
 import '../../../base_class/playlist_album_screen_con_base.dart';
 import '../../../mixins/additional_opeartion_mixin.dart';
+import '../../../models/album.dart' show Album;
 import '../../../models/media_Item_builder.dart';
 import '../../../models/playlist.dart';
 import '../../../services/music_service.dart';
@@ -17,7 +19,7 @@ import '../Library/library_controller.dart';
 ///
 ///Playlist title,image,songs
 class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
-    with AdditionalOpeartionMixin {
+    with AdditionalOpeartionMixin, GetSingleTickerProviderStateMixin {
   final MusicServices _musicServices = Get.find<MusicServices>();
   final playlist = Playlist(
     title: "",
@@ -25,10 +27,30 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
     thumbnailUrl: Playlist.thumbPlaceholderUrl,
   ).obs;
   final isDefaultPlaylist = false.obs;
+  
+  // Title animation
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _heightAnimation;
+
+  AnimationController get animationController => _animationController;
+  Animation<double> get scaleAnimation => _scaleAnimation;
+  Animation<double> get heightAnimation => _heightAnimation;
 
   @override
   void onInit() {
     super.onInit();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+
+    _scaleAnimation =
+        Tween<double>(begin: 0, end: 1.0).animate(animationController);
+
+    _heightAnimation =
+        Tween<double>(begin: 10.0, end: 90.0).animate(CurvedAnimation(parent: animationController, curve: Curves.easeOutBack));
+
     final args = Get.arguments as List;
     final Playlist? playlist = args[0];
     final playlistId = args[1];
@@ -49,7 +71,7 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
 
     if (!isIdOnly && !playlist_.isCloudPlaylist) {
       playlist.value = playlist_;
-
+      _animationController.forward();
       fetchSongsfromDatabase(playlistId);
       isContentFetched.value = true;
 
@@ -61,6 +83,7 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
 
     if (!isIdOnly) {
       playlist.value = playlist_;
+      _animationController.forward();
     }
 
     try {
@@ -103,6 +126,7 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
     if (isIdOnly) {
       content['playlistId'] = id;
       playlist.value = Playlist.fromJson(content);
+      _animationController.forward();
     }
     songList.value = List<MediaItem>.from(content['tracks']);
     checkDownloadStatus();
@@ -222,7 +246,7 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
   }
 
   @override
-  void fetchAlbumDetails(String albumId) {} // Not used in this class
+  void fetchAlbumDetails(Album? album_,String albumId) {} // Not used in this class
 
   /// This function updates the local playlist thumbnail based on the first song's thumbnail
   void _updatePlaylistThumbSongBased() {
@@ -257,6 +281,7 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
   @override
   void onClose() {
     tempListContainer.clear();
+    _animationController.dispose();
     Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();
   }

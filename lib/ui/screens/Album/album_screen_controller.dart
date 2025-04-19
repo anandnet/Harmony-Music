@@ -1,4 +1,5 @@
 import 'package:audio_service/audio_service.dart' show MediaItem;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/base_class/playlist_album_screen_con_base.dart';
 import 'package:harmonymusic/models/album.dart';
@@ -15,24 +16,48 @@ import '../Library/library_controller.dart';
 ///
 ///Album title,image,songs
 class AlbumScreenController extends PlaylistAlbumScreenControllerBase
-    with AdditionalOpeartionMixin {
+    with AdditionalOpeartionMixin, GetSingleTickerProviderStateMixin {
   final album =
       Album(title: "", browseId: "", thumbnailUrl: "", artists: []).obs;
   final isOfflineAlbum = false.obs;
 
+  // Title animation
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _heightAnimation;
+
+  AnimationController get animationController => _animationController;
+  Animation<double> get scaleAnimation => _scaleAnimation;
+  Animation<double> get heightAnimation => _heightAnimation;
+
+
   @override
   void onInit() {
     super.onInit();
-    final args = Get.arguments as String;
-    final albumId = args;
-    fetchAlbumDetails(albumId);
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+
+    _scaleAnimation = Tween<double>(begin: 0, end: 1.0).animate(animationController);
+
+    _heightAnimation = Tween<double>(begin: 10.0, end: 90.0).animate(
+        CurvedAnimation(
+            parent: animationController, curve: Curves.easeOutBack));
+
+    final args = Get.arguments as (Album?, String);
+    fetchAlbumDetails(args.$1, args.$2);
     Future.delayed(const Duration(milliseconds: 200),
         () => Get.find<HomeScreenController>().whenHomeScreenOnTop());
   }
 
   @override
-  void fetchAlbumDetails(String albumId) async {
+  void fetchAlbumDetails(Album? album_, String albumId) async {
     try {
+      if (album_ != null) {
+        album.value = album_;
+        animationController.forward();
+      }
       // Check if the album is offline
       if (!await checkIfAddedToLibrary(albumId)) {
         // Fetch album details online
@@ -40,6 +65,7 @@ class AlbumScreenController extends PlaylistAlbumScreenControllerBase
             await musicServices.getPlaylistOrAlbumSongs(albumId: albumId);
         content['browseId'] = albumId;
         album.value = Album.fromJson(content);
+        animationController.forward();
         songList.value = List<MediaItem>.from(content['tracks']);
       } else {
         // If the album is offline, fetch the songs from the local database
@@ -100,12 +126,13 @@ class AlbumScreenController extends PlaylistAlbumScreenControllerBase
     for (int i = 0; i < songListCopy.length; i++) {
       await songsBox.put(i, MediaItemBuilder.toJson(songListCopy[i]));
     }
-     await songsBox.close();
+    await songsBox.close();
   }
 
   @override
   void onClose() {
     tempListContainer.clear();
+    _animationController.dispose();
     Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();
   }

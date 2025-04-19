@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
+import '../models/album.dart';
 import '../models/media_Item_builder.dart';
 import '../models/playlist.dart';
 import '../services/music_service.dart';
@@ -48,7 +49,7 @@ abstract class PlaylistAlbumScreenControllerBase extends GetxController {
   ///
   /// [albumId] - The unique identifier of the album.
   @protected
-  void fetchAlbumDetails(String albumId);
+  void fetchAlbumDetails(Album? album_, String albumId);
 
   /// Fetches the details of a playlist.
   ///

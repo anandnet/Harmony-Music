@@ -2,12 +2,13 @@ import 'package:audio_service/audio_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/models/playling_from.dart';
-import 'package:harmonymusic/models/thumbnail.dart';
-import 'package:harmonymusic/ui/widgets/playlist_album_scroll_behaviour.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
+import '/models/playling_from.dart';
+import '/models/thumbnail.dart';
+import '/ui/widgets/playlist_album_scroll_behaviour.dart';
+import '/ui/widgets/shimmer_widgets/basic_container.dart';
 import '../../../services/downloader.dart';
 import '../../navigator.dart';
 import '../../player/player_controller.dart';
@@ -532,52 +533,71 @@ class PlaylistScreen extends StatelessWidget {
                                 final description = playlistController
                                     .playlist.value.description;
 
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 25.0, bottom: 10, right: 30),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Marquee(
-                                        delay:
-                                            const Duration(milliseconds: 300),
-                                        duration: const Duration(seconds: 5),
-                                        id: title.hashCode.toString(),
-                                        child: Text(
-                                          title.length > 50
-                                              ? title.substring(0, 50)
-                                              : title,
-                                          maxLines: 1,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleLarge!
-                                              .copyWith(fontSize: 30),
-                                        ),
+                                return AnimatedBuilder(
+                                  animation:
+                                      playlistController.animationController,
+                                  builder: (context, child) {
+                                    return SizedBox(
+                                      height: playlistController
+                                          .heightAnimation.value,
+                                      child: Transform.scale(
+                                        scale: playlistController
+                                            .scaleAnimation.value,
+                                        child: child,
                                       ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 8.0),
-                                        child: Marquee(
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 25.0, bottom: 10, right: 30),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Marquee(
                                           delay:
                                               const Duration(milliseconds: 300),
                                           duration: const Duration(seconds: 5),
-                                          id: description.hashCode.toString(),
+                                          id: title.hashCode.toString(),
                                           child: Text(
-                                            description ?? "playlist".tr,
+                                            title.length > 50
+                                                ? title.substring(0, 50)
+                                                : title,
                                             maxLines: 1,
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .titleSmall,
+                                                .titleLarge!
+                                                .copyWith(fontSize: 30),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 8.0),
+                                          child: Marquee(
+                                            delay: const Duration(
+                                                milliseconds: 300),
+                                            duration:
+                                                const Duration(seconds: 5),
+                                            id: description.hashCode.toString(),
+                                            child: Text(
+                                              description ?? "playlist".tr,
+                                              maxLines: 1,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               } else if (index == 2) {
                                 return SizedBox(
-                                    height: 60,
+                                    height:
+                                        playlistController.isSearchingOn.isTrue
+                                            ? 60
+                                            : 40,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 15.0, right: 10),

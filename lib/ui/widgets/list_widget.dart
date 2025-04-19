@@ -203,7 +203,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
       onTap: () {
         if (album != null) {
           Get.toNamed(ScreenNavigationSetup.albumScreen,
-              id: ScreenNavigationSetup.id, arguments: album.browseId);
+              id: ScreenNavigationSetup.id, arguments: (album, album.browseId));
         } else {
           Get.toNamed(ScreenNavigationSetup.playlistScreen,
               id: ScreenNavigationSetup.id,

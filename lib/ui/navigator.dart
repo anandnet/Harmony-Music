@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/models/album.dart';
 import 'package:harmonymusic/models/artist.dart';
 
 import 'package:harmonymusic/ui/screens/Artists/artist_screen.dart';
@@ -39,7 +40,7 @@ class ScreenNavigation extends StatelessWidget {
                   page: () => const HomeScreen(), settings: settings);
             
             case ScreenNavigationSetup.albumScreen:
-              final id = settings.arguments as String;
+              final id = (settings.arguments as (Album?, String)).$2;
               return GetPageRoute(
                   page: () => AlbumScreen(
                         key: Key(id),

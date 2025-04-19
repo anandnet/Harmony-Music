@@ -21,7 +21,7 @@ class ContentListItem extends StatelessWidget {
       onTap: () {
         if (isAlbum) {
           Get.toNamed(ScreenNavigationSetup.albumScreen,
-              id: ScreenNavigationSetup.id, arguments: content.browseId);
+              id: ScreenNavigationSetup.id, arguments:(content, content.browseId));
           return;
         }
         Get.toNamed(ScreenNavigationSetup.playlistScreen,

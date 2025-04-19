@@ -24,6 +24,8 @@ class ArtistScreenController extends GetxController
   final isAddedToLibrary = false.obs;
   final songScrollController = ScrollController();
   final videoScrollController = ScrollController();
+  final albumScrollController = ScrollController();
+  final singlesScrollController = ScrollController();
   SortWidgetController? sortWidgetController;
   final additionalOperationMode = OperationMode.none.obs;
   bool continuationInProgress = false;
@@ -72,6 +74,7 @@ class ArtistScreenController extends GetxController
 
   Future<void> _fetchArtistContent(String id) async {
     artistData.value = await musicServices.getArtist(id);
+    artistData["Singles"] = artistData["Singles & EPs"];
     isArtistContentFetced.value = true;
     //inspect(artistData.value);
     final data = artistData;
@@ -130,23 +133,28 @@ class ArtistScreenController extends GetxController
     }
 
     // observered - continuation available only for song & vid
-    if (val == 1 || val == 2) {
-      final scrollController =
-          val == 1 ? songScrollController : videoScrollController;
+    if (val != 0) {
+    final scrollController = val == 1
+        ? songScrollController
+        : val == 2
+            ? videoScrollController
+            : val == 3
+                ? albumScrollController
+                : singlesScrollController;
 
-      scrollController.addListener(() {
-        double maxScroll = scrollController.position.maxScrollExtent;
-        double currentScroll = scrollController.position.pixels;
-        if (currentScroll >= maxScroll / 2 &&
-            sepataredContent[tabName]['additionalParams'] !=
-                '&ctoken=null&continuation=null') {
-          if (!continuationInProgress) {
-            continuationInProgress = true;
-            getContinuationContents(artistData[tabName], tabName);
-          }
+    scrollController.addListener(() {
+      double maxScroll = scrollController.position.maxScrollExtent;
+      double currentScroll = scrollController.position.pixels;
+      if (currentScroll >= maxScroll / 2 &&
+          sepataredContent[tabName]['additionalParams'] !=
+              '&ctoken=null&continuation=null') {
+        if (!continuationInProgress) {
+          continuationInProgress = true;
+          getContinuationContents(artistData[tabName], tabName);
         }
-      });
-    }
+      }
+    });
+   }
     isSeparatedArtistContentFetced.value = true;
   }
 
@@ -272,6 +280,8 @@ class ArtistScreenController extends GetxController
     tempListContainer.clear();
     songScrollController.dispose();
     videoScrollController.dispose();
+    albumScrollController.dispose();
+    singlesScrollController.dispose();
     tabController?.dispose();
     Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();

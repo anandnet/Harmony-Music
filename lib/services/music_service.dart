@@ -759,8 +759,13 @@ class MusicServices extends getx.GetxService {
 
     if (category == "Songs" || category == "Videos") {
       if (additionalParams != "") {
-        final x = parsePlaylistItems(response['continuationContents']
-            ['musicPlaylistShelfContinuation']['contents']);
+        final contentList = nav(response, [
+          "onResponseReceivedActions",
+          0,
+          "appendContinuationItemsAction",
+          "continuationItems"
+        ]);
+        final x = parsePlaylistItems(contentList);
         result['results'] = x;
         result['additionalParams'] = "&ctoken=${null}&continuation=${null}";
       } else if (contents.containsKey("gridRenderer")) {
@@ -769,21 +774,58 @@ class MusicServices extends getx.GetxService {
             .toList();
         result['additionalParams'] = "&ctoken=${null}&continuation=${null}";
       } else {
-        final continuationKey = nav(contents, [
-          'musicPlaylistShelfRenderer',
+        final collapseContent =
+            nav(contents, ['musicPlaylistShelfRenderer', "collapsedItemCount"]);
+        if (collapseContent != null) {
+          final contentlist =
+              contents['musicPlaylistShelfRenderer']['contents'];
+          final continuationItem = contentlist.removeAt(100);
+          if (contentlist.length.toString() == collapseContent.toString()) {
+            result['results'] = parsePlaylistItems(contentlist);
+            final continuationKey = nav(continuationItem, [
+              "continuationItemRenderer",
+              "continuationEndpoint",
+              "continuationCommand",
+              "token"
+            ]);
+            result['additionalParams'] =
+                "&ctoken=$continuationKey&continuation=$continuationKey";
+            return result;
+          }
+        }
+      }
+    } else if (category == 'Albums' || category == 'Singles') {
+      List contentlist;
+
+      /// in continuation
+      if (additionalParams != "") {
+        contentlist =
+            response['continuationContents']['gridContinuation']['items'];
+        final continuationKey = nav(response, [
+          'continuationContents',
+          'gridContinuation',
           'continuations',
           0,
           'nextContinuationData',
           'continuation'
         ]);
-        final x = parsePlaylistItems(
-            contents['musicPlaylistShelfRenderer']['contents']);
-        result['results'] = x;
+        result['additionalParams'] =
+            "&ctoken=$continuationKey&continuation=$continuationKey";
+      } else {
+        /// in first request
+        contentlist = contents['gridRenderer']['items'];
+
+        final continuationKey = nav(contents, [
+          'gridRenderer',
+          'continuations',
+          0,
+          'nextContinuationData',
+          'continuation'
+        ]);
         result['additionalParams'] =
             "&ctoken=$continuationKey&continuation=$continuationKey";
       }
-    } else if (category == 'Albums' || category == 'Singles') {
-      final contentlist = contents['gridRenderer']['items'];
+
       result['results'] = category == 'Albums'
           ? contentlist
               .map((item) => parseAlbum(item['musicTwoRowItemRenderer']))

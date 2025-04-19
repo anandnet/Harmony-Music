@@ -181,7 +181,11 @@ class Body extends StatelessWidget {
               ? artistScreenController.songScrollController
               : currentTabName == "Videos"
                   ? artistScreenController.videoScrollController
-                  : null,
+                  : currentTabName == "Albums"
+                      ? artistScreenController.albumScrollController
+                      : currentTabName == "Singles"
+                          ? artistScreenController.singlesScrollController
+                          : null,
         );
       });
     }

@@ -140,9 +140,11 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
             String artistName = "";
-            for (dynamic items in (albums[index].artists).sublist(1)) {
-              artistName = "${artistName + items['name']},";
-            }
+            try {
+              for (dynamic items in (albums[index].artists).sublist(1)) {
+                artistName = "${artistName + items['name']},";
+              }
+            } catch (e) {}
             artistName = artistName.length > 16
                 ? artistName.substring(0, 16)
                 : artistName;
@@ -150,8 +152,9 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
                 album: albums[index],
                 title: albums[index].title,
                 subtitle: artistName,
-                subtitle2:
-                    "${(albums[index].artists[0]['name'])} • ${albums[index].year}");
+                subtitle2: albums[index].artists.isEmpty
+                    ? "${albums[index].year}"
+                    : "${(albums[index].artists[0]['name'])} • ${albums[index].year}");
           }),
     );
   }

@@ -88,7 +88,13 @@ class ArtistScreenBN extends StatelessWidget {
                               ? artistScreenController.songScrollController
                               : item == "Videos"
                                   ? artistScreenController.videoScrollController
-                                  : null,
+                                  : item == "Albums"
+                                      ? artistScreenController
+                                          .albumScrollController
+                                      : item == "Singles"
+                                          ? artistScreenController
+                                              .singlesScrollController
+                                          : null,
                         ),
                       );
                     },

@@ -10,6 +10,7 @@ import '../../../models/media_Item_builder.dart';
 import '../../../models/playlist.dart';
 import '../../../services/music_service.dart';
 import '../../../services/piped_service.dart';
+import '../Home/home_screen_controller.dart';
 import '../Library/library_controller.dart';
 
 ///PlaylistScreenController handles playlist screen
@@ -32,6 +33,8 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
     final Playlist? playlist = args[0];
     final playlistId = args[1];
     fetchPlaylistDetails(playlist, playlistId);
+    Future.delayed(const Duration(milliseconds: 200),
+        () => Get.find<HomeScreenController>().whenHomeScreenOnTop());
   }
 
   ///Fetches playlist details from the service
@@ -254,7 +257,7 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
   @override
   void onClose() {
     tempListContainer.clear();
-
+    Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();
   }
 }

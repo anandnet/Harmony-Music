@@ -260,7 +260,9 @@ class HomeScreenController extends GetxController {
     showVersionDialog.value = !val;
   }
 
-  ///this fn only useful if bottom nav enabled
+  ///This is used to minimized bottom navigation bar by setting [isHomeSreenOnTop.value] to `true` and set mini player height.
+  ///
+  ///and applicable/useful if bottom nav enabled
   void whenHomeScreenOnTop() {
     if (Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue) {
       final currentRoute = getCurrentRouteName();

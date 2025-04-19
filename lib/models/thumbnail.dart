@@ -7,7 +7,9 @@ class Thumbnail {
       ? "${_url.split("=")[0]}=w$size-h$size-l90-rj"
       : (_url.contains("=s"))
           ? "${_url.split("=s")[0]}=s$size"
-          : url;
+          : (_url.contains("i.yti") && size >= 600)
+              ? url.replaceFirst("sddefault", "maxresdefault")
+              : url;
   String get url => _url;
   String get high => sizewith(400); //450
   String get medium => sizewith(250); //350

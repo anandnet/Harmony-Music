@@ -11,7 +11,6 @@ import 'package:widget_marquee/widget_marquee.dart';
 import '../../../services/downloader.dart';
 import '../../player/player_controller.dart';
 import '../../widgets/loader.dart';
-import '../../widgets/shimmer_widgets/basic_container.dart';
 import '../../widgets/snackbar.dart';
 import '../../widgets/song_list_tile.dart';
 import '../../widgets/songinfo_bottom_sheet.dart';
@@ -96,6 +95,20 @@ class AlbumScreen extends StatelessWidget {
                                       : BoxFit.fitWidth,
                                   width: landscape ? null : size.width,
                                   height: landscape ? size.height : null,
+                                  // placeholder: (context, n) => Align(
+                                  //   alignment:landscape?Alignment.centerLeft: Alignment.topCenter,
+                                  //   child: SizedBox(
+                                  //     width: landscape ? size.height : size.width,
+                                  //     height: landscape ? size.height : size.width,
+                                  //     child: Center(
+                                  //       child: Icon(Icons.album,
+                                  //           size: 150,
+                                  //           color: Theme.of(context)
+                                  //               .textTheme.titleSmall!.color
+                                  //         ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 )));
                       }))
                   : SizedBox(

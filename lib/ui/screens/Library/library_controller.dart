@@ -462,7 +462,7 @@ class LibraryPlaylistsController extends GetxController
   Future<void> importPlaylistFromJson(BuildContext context) async {
     try {
       isImporting.value = true;
-      importProgress.value = 0.1; // Started
+      importProgress.value = 0.1;
 
       // Show progress dialog
       if (context.mounted) {
@@ -486,7 +486,7 @@ class LibraryPlaylistsController extends GetxController
         return;
       }
 
-      importProgress.value = 0.2; // File selected
+      importProgress.value = 0.2;
 
       final file = File(result.files.single.path!);
       if (!await file.exists()) {
@@ -494,10 +494,10 @@ class LibraryPlaylistsController extends GetxController
       }
 
       final jsonString = await file.readAsString();
-      importProgress.value = 0.3; // File read
+      importProgress.value = 0.3;
 
       final jsonData = jsonDecode(jsonString);
-      importProgress.value = 0.4; // JSON parsed
+      importProgress.value = 0.4;
 
       // Validate JSON structure
       if (!jsonData.containsKey('playlistInfo') ||
@@ -508,7 +508,7 @@ class LibraryPlaylistsController extends GetxController
       // Create new playlist ID
       final playlistInfo = jsonData['playlistInfo'];
       final newPlaylistId = "LIB${DateTime.now().millisecondsSinceEpoch}";
-      importProgress.value = 0.5; // Validated
+      importProgress.value = 0.5;
 
       // Create playlist object
       final newPlaylist = Playlist(
@@ -522,12 +522,12 @@ class LibraryPlaylistsController extends GetxController
         description: playlistInfo['description'] ?? "importedPlaylist".tr,
         isCloudPlaylist: false,
       );
-      importProgress.value = 0.6; // Playlist created
+      importProgress.value = 0.6;
 
       // Save playlist to database
       final box = await Hive.openBox("LibraryPlaylists");
       box.put(newPlaylistId, newPlaylist.toJson());
-      importProgress.value = 0.7; // Playlist saved
+      importProgress.value = 0.7;
 
       // Save songs to playlist
       final songsBox = await Hive.openBox(newPlaylistId);
@@ -543,7 +543,7 @@ class LibraryPlaylistsController extends GetxController
 
       await songsBox.close();
       await box.close();
-      importProgress.value = 1.0; // Complete
+      importProgress.value = 1.0;
 
       // Close progress dialog if it's still open
       if (Get.isDialogOpen ?? false) {
@@ -555,9 +555,13 @@ class LibraryPlaylistsController extends GetxController
 
       // Show success message
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(snackbar(
-            context, "${"playlistImportedMsg".tr}: ${newPlaylist.title}",
-            size: SanckBarSize.MEDIUM));
+        ScaffoldMessenger.of(context).showSnackBar(
+          snackbar(
+            context,
+            "${"playlistImportedMsg".tr}: ${newPlaylist.title}",
+            size: SanckBarSize.MEDIUM,
+          ),
+        );
       }
     } catch (e) {
       // Close progress dialog if it's still open
@@ -567,7 +571,6 @@ class LibraryPlaylistsController extends GetxController
 
       printERROR("Error importing playlist: $e");
 
-      // Provide more specific error messages
       String errorMsg = "importError".tr;
       if (e is FileSystemException) {
         errorMsg = "importErrorFileAccess".tr;
@@ -608,7 +611,8 @@ class LibraryPlaylistsController extends GetxController
                   value: Get.isRegistered<LibraryPlaylistsController>()
                       ? importProgress.value
                       : 0,
-                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                  backgroundColor:
+                      Theme.of(context).colorScheme.surfaceContainerHighest,
                   valueColor: AlwaysStoppedAnimation<Color>(
                     Theme.of(context).colorScheme.secondary,
                   ),

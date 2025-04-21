@@ -81,24 +81,59 @@ class SortWidget extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("importPlaylist".tr),
+        backgroundColor: Theme.of(context).cardColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        title: Text(
+          "importPlaylist".tr,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("importPlaylistDesc".tr),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-                Get.find<LibraryPlaylistsController>()
-                    .importPlaylistFromJson(context);
-              },
-              child: Text("selectFile".tr),
+            Text(
+              "importPlaylistDesc".tr,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              "importLargeFileNote".tr,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontStyle: FontStyle.italic,
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+            ),
+            const SizedBox(height: 24),
+            Center(
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  foregroundColor: Theme.of(context).colorScheme.onSecondary,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                icon: const Icon(Icons.file_open),
+                label: Text("selectFile".tr),
+                onPressed: () {
+                  Get.find<LibraryPlaylistsController>()
+                      .importPlaylistFromJson(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+              ),
             ),
           ],
         ),
         actions: [
           TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.secondary,
+            ),
             onPressed: () => Navigator.pop(context),
             child: Text("close".tr),
           ),

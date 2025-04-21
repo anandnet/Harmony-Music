@@ -34,6 +34,11 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
   ).obs;
   final isDefaultPlaylist = false.obs;
 
+  // Add this RxBool to track export progress
+  final isExporting = false.obs;
+  final exportProgress = 0.0.obs;
+
+
   // Title animation
 
   late AnimationController _animationController;
@@ -294,12 +299,26 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
 
   Future<void> exportPlaylistToJson(BuildContext context) async {
     if (!await PermissionService.getExtStoragePermission()) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(snackbar(
+            context, "permissionDenied".tr,
+            size: SanckBarSize.MEDIUM));
+      }
       return;
     }
 
     try {
+      isExporting.value = true;
+      exportProgress.value = 0.1; // Started
+
+      // Show progress dialog
+      if (context.mounted) {
+        _showProgressDialog(context, "exportingPlaylist".tr);
+      }
+
       // Get appropriate directory based on platform
       final Directory exportDir = await _getExportDirectory();
+      exportProgress.value = 0.2; // Directory created
 
       // Create playlist data map
       final playlistData = {
@@ -308,31 +327,70 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
         "exportDate": DateTime.now().toIso8601String(),
         "appVersion": Get.find<SettingsScreenController>().currentVersion,
       };
+      exportProgress.value = 0.5; // Data prepared
 
-      // Generate filename with playlist name and timestamp
-      final sanitizedName = playlist.value.title.replaceAll(RegExp(r'[^\w\s]+'), '_');
-      final timestamp = DateTime.now().millisecondsSinceEpoch;
-      final filename = "${sanitizedName}_$timestamp.json";
-      final filePath = "${exportDir.path}/$filename";
+      // Generate filename with playlist name
+      final sanitizedName =
+          playlist.value.title.replaceAll(RegExp(r'[^\w\s]+'), '_');
+
+      // Find available filename with incremental suffix if needed
+      String filename = "$sanitizedName.json";
+      String filePath = "${exportDir.path}/$filename";
+      File file = File(filePath);
+
+      int counter = 1;
+      while (await file.exists()) {
+        filename = "${sanitizedName}_$counter.json";
+        filePath = "${exportDir.path}/$filename";
+        file = File(filePath);
+        counter++;
+      }
+
+      exportProgress.value = 0.7; // Filename generated
 
       // Write JSON to file
-      final file = File(filePath);
       await file.writeAsString(jsonEncode(playlistData));
+      exportProgress.value = 1.0; // Complete
+
+      // Close progress dialog if it's still open
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
 
       // Show success message with platform-specific path info
       String locationMsg = _getLocationMessage(exportDir.path);
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          snackbar(context, "${"playlistExportedMsg".tr}: $locationMsg", size: SanckBarSize.MEDIUM)
-        );
+        ScaffoldMessenger.of(context).showSnackBar(snackbar(
+            context, "${"playlistExportedMsg".tr}: $locationMsg",
+            size: SanckBarSize.MEDIUM));
       }
     } catch (e) {
+      // Close progress dialog if it's still open
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
+
       printERROR("Error exporting playlist: $e");
+
+      // Provide more specific error messages
+      String errorMsg = "exportError".tr;
+      if (e is FileSystemException) {
+        if (e.osError?.errorCode == 13) {
+          errorMsg = "exportErrorPermission".tr;
+        } else if (e.osError?.errorCode == 28) {
+          errorMsg = "exportErrorStorage".tr;
+        }
+      } else if (e is FormatException) {
+        errorMsg = "exportErrorFormat".tr;
+      }
+
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          snackbar(context, "exportError".tr, size: SanckBarSize.MEDIUM)
-        );
+            snackbar(context, errorMsg, size: SanckBarSize.MEDIUM));
       }
+    } finally {
+      isExporting.value = false;
+      exportProgress.value = 0.0;
     }
   }
 
@@ -352,8 +410,8 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
       } else if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
         // Desktop platforms: use Downloads folder in user's home directory
         final homeDir = Platform.environment['HOME'] ??
-                        Platform.environment['USERPROFILE'] ??
-                        '.';
+            Platform.environment['USERPROFILE'] ??
+            '.';
         directory = Directory('$homeDir/Downloads/$appFolderName');
       } else {
         // Fallback: use temporary directory
@@ -389,5 +447,40 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
     } else {
       return path.split('/').last;
     }
+  }
+
+  // Helper method to show progress dialog
+  void _showProgressDialog(BuildContext context, String title) {
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: Theme.of(context).cardColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        title: Text(
+          title,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        content: Obx(() => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                LinearProgressIndicator(
+                  value: exportProgress.value,
+                  backgroundColor:
+                      Theme.of(context).colorScheme.surfaceContainerHighest,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).colorScheme.secondary,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  "${(exportProgress.value * 100).toInt()}%",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ],
+            )),
+      ),
+      barrierDismissible: false,
+    );
   }
 }

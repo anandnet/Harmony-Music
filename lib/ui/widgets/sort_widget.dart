@@ -54,6 +54,7 @@ class SortWidget extends StatelessWidget {
     this.selectAll,
     this.performAdditionalOperation,
     this.cancelAdditionalOperation,
+    this.isImportFeatureRequired = false,
     required this.onSort,
   });
 
@@ -76,6 +77,7 @@ class SortWidget extends StatelessWidget {
   final Function(String, String?)? onSearch;
   final Function(String?)? onSearchClose;
   final Function(SortType, bool) onSort;
+  final bool isImportFeatureRequired;
 
   void _showImportDialog(BuildContext context) {
     showDialog(
@@ -181,7 +183,8 @@ class SortWidget extends StatelessWidget {
                 ),
               ),
               requiredSortTypes.contains(SortType.Date)
-                  ? Obx(() => IconButton(
+                  ? Obx(
+                      () => IconButton(
                         color: controller.sortType.value == SortType.Date
                             ? Theme.of(context).textTheme.bodySmall!.color
                             : Theme.of(context).colorScheme.secondary,
@@ -193,7 +196,8 @@ class SortWidget extends StatelessWidget {
                         onPressed: () {
                           controller.onSortByDate(onSort);
                         },
-                      ))
+                      ),
+                    )
                   : const SizedBox.shrink(),
               requiredSortTypes.contains(SortType.Duration)
                   ? Obx(() => IconButton(
@@ -225,11 +229,12 @@ class SortWidget extends StatelessWidget {
                   },
                 ),
               ),
-              IconButton(
-                icon: const Icon(Icons.import_contacts),
-                tooltip: "importPlaylist".tr,
-                onPressed: () => _showImportDialog(context),
-              ),
+              if (isImportFeatureRequired)
+                IconButton(
+                  icon: const Icon(Icons.import_contacts),
+                  tooltip: "importPlaylist".tr,
+                  onPressed: () => _showImportDialog(context),
+                ),
               if (isSearchFeatureRequired)
                 IconButton(
                   icon: const Icon(Icons.search),

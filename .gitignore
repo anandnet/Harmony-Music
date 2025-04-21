@@ -59,10 +59,14 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-/android/app/.cxx
 
-.fvmrc
+# FVM Version Cache
 .fvm/
-
+.fvmrc
 
 settings.json
+
+android/app/.cxx/Debug/*
+
+/android/app/.cxx
+

@@ -174,6 +174,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                     onSearch: librplstCntrller.onSearch,
                     onSearchClose: librplstCntrller.onSearchClose,
                     onSearchStart: librplstCntrller.onSearchStart,
+                    isImportFeatureRequired: true,
                   ),
           ),
           Expanded(

@@ -309,7 +309,7 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
 
     try {
       isExporting.value = true;
-      exportProgress.value = 0.1; // Started
+      exportProgress.value = 0.1;
 
       // Show progress dialog
       if (context.mounted) {
@@ -318,7 +318,7 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
 
       // Get appropriate directory based on platform
       final Directory exportDir = await _getExportDirectory();
-      exportProgress.value = 0.2; // Directory created
+      exportProgress.value = 0.2;
 
       // Create playlist data map
       final playlistData = {
@@ -327,7 +327,7 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
         "exportDate": DateTime.now().toIso8601String(),
         "appVersion": Get.find<SettingsScreenController>().currentVersion,
       };
-      exportProgress.value = 0.5; // Data prepared
+      exportProgress.value = 0.5;
 
       // Generate filename with playlist name
       final sanitizedName =
@@ -346,11 +346,11 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
         counter++;
       }
 
-      exportProgress.value = 0.7; // Filename generated
+      exportProgress.value = 0.7;
 
       // Write JSON to file
       await file.writeAsString(jsonEncode(playlistData));
-      exportProgress.value = 1.0; // Complete
+      exportProgress.value = 1.0;
 
       // Close progress dialog if it's still open
       if (Get.isDialogOpen ?? false) {
@@ -371,8 +371,7 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
       }
 
       printERROR("Error exporting playlist: $e");
-
-      // Provide more specific error messages
+      
       String errorMsg = "exportError".tr;
       if (e is FileSystemException) {
         if (e.osError?.errorCode == 13) {

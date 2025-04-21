@@ -285,7 +285,7 @@ class PlaylistScreen extends StatelessWidget {
                                                                   ? add
                                                                       ? "playlistBookmarkAddAlert"
                                                                           .tr
-                                                                      : "playlistBookmarkRemoveAlert"
+                                                                      : "listBookmarkRemoveAlert"
                                                                           .tr
                                                                   : "operationFailed"
                                                                       .tr,
@@ -523,6 +523,12 @@ class PlaylistScreen extends StatelessWidget {
                                                   Icons.share,
                                                   size: 20,
                                                 )),
+                                          IconButton(
+                                            onPressed: () => playlistController
+                                                .exportPlaylistToJson(context),
+                                            icon: const Icon(Icons.save),
+                                            tooltip: "exportPlaylist".tr,
+                                          ),
                                         ],
                                       )),
                                 );

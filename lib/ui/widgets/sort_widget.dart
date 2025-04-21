@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/screens/Library/library_controller.dart';
 
 import 'additional_operation_dialog.dart';
 import 'modified_text_field.dart';
@@ -75,6 +76,36 @@ class SortWidget extends StatelessWidget {
   final Function(String, String?)? onSearch;
   final Function(String?)? onSearchClose;
   final Function(SortType, bool) onSort;
+
+  void _showImportDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("importPlaylist".tr),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("importPlaylistDesc".tr),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Get.find<LibraryPlaylistsController>()
+                    .importPlaylistFromJson(context);
+              },
+              child: Text("selectFile".tr),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text("close".tr),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,6 +189,11 @@ class SortWidget extends StatelessWidget {
                     controller.onAscendNDescend(onSort);
                   },
                 ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.import_contacts),
+                tooltip: "importPlaylist".tr,
+                onPressed: () => _showImportDialog(context),
               ),
               if (isSearchFeatureRequired)
                 IconButton(

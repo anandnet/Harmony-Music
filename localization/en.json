@@ -244,5 +244,13 @@
     "restoring": "Restoring...",
     "restore": "Restore",
     "closeApp": "Close App",
-    "restartApp": "Restart App"
+    "restartApp": "Restart App",
+    "exportPlaylist": "Export Playlist",
+    "playlistExportedMsg": "Playlist exported successfully",
+    "exportError": "Error exporting playlist",
+    "importPlaylist": "Import Playlist",
+    "importPlaylistDesc": "Select a previously exported playlist JSON file to import",
+    "selectFile": "Select File",
+    "playlistImportedMsg": "Playlist imported successfully",
+    "importError": "Error importing playlist"
 }

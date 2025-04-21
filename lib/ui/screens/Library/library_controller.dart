@@ -2,8 +2,11 @@ import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:convert';
 
 import '../../../utils/house_keeping.dart';
 import '../../widgets/add_to_playlist.dart';
@@ -450,6 +453,72 @@ class LibraryPlaylistsController extends GetxController
     textInputController.dispose();
     controller.dispose();
     super.dispose();
+  }
+
+  Future<void> importPlaylistFromJson(BuildContext context) async {
+    try {
+      // Use file_picker to select JSON file
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['json'],
+      );
+
+      if (result == null || result.files.isEmpty) return;
+
+      final file = File(result.files.single.path!);
+      final jsonString = await file.readAsString();
+      final jsonData = jsonDecode(jsonString);
+
+      // Validate JSON structure
+      if (!jsonData.containsKey('playlistInfo') ||
+          !jsonData.containsKey('songs')) {
+        throw Exception("Invalid playlist file format");
+      }
+
+      // Create new playlist ID
+      final playlistInfo = jsonData['playlistInfo'];
+      final newPlaylistId = "LIB${DateTime.now().millisecondsSinceEpoch}";
+
+      // Create playlist object
+      final newPlaylist = Playlist(
+        title: "${playlistInfo['title']} (Imported)",
+        playlistId: newPlaylistId,
+        thumbnailUrl: playlistInfo['thumbnails'][0]['url'] ??
+            Playlist.thumbPlaceholderUrl,
+        description: playlistInfo['description'] ?? "Imported Playlist",
+        isCloudPlaylist: false,
+      );
+
+      // Save playlist to database
+      final box = await Hive.openBox("LibraryPlaylists");
+      box.put(newPlaylistId, newPlaylist.toJson());
+
+      // Save songs to playlist
+      final songsBox = await Hive.openBox(newPlaylistId);
+      final songsList = jsonData['songs'] as List;
+      for (var songData in songsList) {
+        await songsBox.add(songData);
+      }
+
+      await songsBox.close();
+      await box.close();
+
+      // Refresh library
+      refreshLib();
+
+      // Show success message
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(snackbar(
+            context, "playlistImportedMsg".tr,
+            size: SanckBarSize.MEDIUM));
+      }
+    } catch (e) {
+      printERROR("Error importing playlist: $e");
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            snackbar(context, "importError".tr, size: SanckBarSize.MEDIUM));
+      }
+    }
   }
 }
 

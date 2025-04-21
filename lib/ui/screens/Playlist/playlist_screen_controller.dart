@@ -1,9 +1,15 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:audio_service/audio_service.dart' show MediaItem;
-import 'package:flutter/animation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/models/thumbnail.dart';
+import 'package:harmonymusic/services/permission_service.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
 import 'package:harmonymusic/utils/helper.dart';
 import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
 import '../../../base_class/playlist_album_screen_con_base.dart';
 import '../../../mixins/additional_opeartion_mixin.dart';
@@ -27,8 +33,9 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
     thumbnailUrl: Playlist.thumbPlaceholderUrl,
   ).obs;
   final isDefaultPlaylist = false.obs;
-  
+
   // Title animation
+
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late Animation<double> _heightAnimation;
@@ -36,7 +43,6 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
   AnimationController get animationController => _animationController;
   Animation<double> get scaleAnimation => _scaleAnimation;
   Animation<double> get heightAnimation => _heightAnimation;
-
   @override
   void onInit() {
     super.onInit();
@@ -284,5 +290,104 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
     _animationController.dispose();
     Get.find<HomeScreenController>().whenHomeScreenOnTop();
     super.onClose();
+  }
+
+  Future<void> exportPlaylistToJson(BuildContext context) async {
+    if (!await PermissionService.getExtStoragePermission()) {
+      return;
+    }
+
+    try {
+      // Get appropriate directory based on platform
+      final Directory exportDir = await _getExportDirectory();
+
+      // Create playlist data map
+      final playlistData = {
+        "playlistInfo": playlist.value.toJson(),
+        "songs": songList.map((song) => MediaItemBuilder.toJson(song)).toList(),
+        "exportDate": DateTime.now().toIso8601String(),
+        "appVersion": Get.find<SettingsScreenController>().currentVersion,
+      };
+
+      // Generate filename with playlist name and timestamp
+      final sanitizedName = playlist.value.title.replaceAll(RegExp(r'[^\w\s]+'), '_');
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      final filename = "${sanitizedName}_$timestamp.json";
+      final filePath = "${exportDir.path}/$filename";
+
+      // Write JSON to file
+      final file = File(filePath);
+      await file.writeAsString(jsonEncode(playlistData));
+
+      // Show success message with platform-specific path info
+      String locationMsg = _getLocationMessage(exportDir.path);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          snackbar(context, "${"playlistExportedMsg".tr}: $locationMsg", size: SanckBarSize.MEDIUM)
+        );
+      }
+    } catch (e) {
+      printERROR("Error exporting playlist: $e");
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          snackbar(context, "exportError".tr, size: SanckBarSize.MEDIUM)
+        );
+      }
+    }
+  }
+
+  // Helper method to get the appropriate export directory for each platform
+  Future<Directory> _getExportDirectory() async {
+    Directory directory;
+    const appFolderName = "HarmonyMusic";
+
+    try {
+      if (Platform.isAndroid) {
+        // Android: use Downloads folder
+        directory = Directory('/storage/emulated/0/Download/$appFolderName');
+      } else if (Platform.isIOS) {
+        // iOS: use Documents directory
+        final docDir = await path_provider.getApplicationDocumentsDirectory();
+        directory = Directory('${docDir.path}/$appFolderName');
+      } else if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+        // Desktop platforms: use Downloads folder in user's home directory
+        final homeDir = Platform.environment['HOME'] ??
+                        Platform.environment['USERPROFILE'] ??
+                        '.';
+        directory = Directory('$homeDir/Downloads/$appFolderName');
+      } else {
+        // Fallback: use temporary directory
+        final tempDir = await path_provider.getTemporaryDirectory();
+        directory = Directory('${tempDir.path}/$appFolderName');
+      }
+
+      // Create directory if it doesn't exist
+      if (!await directory.exists()) {
+        await directory.create(recursive: true);
+      }
+
+      return directory;
+    } catch (e) {
+      // Fallback to app's documents directory if any error occurs
+      final appDocDir = await path_provider.getApplicationDocumentsDirectory();
+      directory = Directory('${appDocDir.path}/$appFolderName');
+      if (!await directory.exists()) {
+        await directory.create(recursive: true);
+      }
+      return directory;
+    }
+  }
+
+  // Helper method to get a user-friendly location message
+  String _getLocationMessage(String path) {
+    if (Platform.isAndroid) {
+      return "Downloads/HarmonyMusic";
+    } else if (Platform.isIOS) {
+      return "Files App > HarmonyMusic";
+    } else if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      return "Downloads/HarmonyMusic";
+    } else {
+      return path.split('/').last;
+    }
   }
 }

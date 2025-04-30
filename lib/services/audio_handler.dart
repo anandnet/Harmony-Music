@@ -4,13 +4,18 @@ import 'dart:math';
 
 import 'package:flutter/services.dart';
 
+
 import 'package:hive/hive.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_media_kit/just_audio_media_kit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:audio_service/audio_service.dart';
+// ignore: depend_on_referenced_packages
+import 'package:rxdart/rxdart.dart';
 
+import '/models/album.dart';
+import '../models/playlist.dart';
 import '/services/equalizer.dart';
 import '/services/stream_service.dart';
 import '/models/hm_streaming_data.dart';
@@ -43,6 +48,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   // ignore: prefer_typing_uninitialized_variables
   late final _cacheDir;
   late AudioPlayer _player;
+  late MediaLibrary _mediaLibrary;
   // ignore: prefer_typing_uninitialized_variables
   dynamic currentIndex;
   int currentShuffleIndex = 0;
@@ -60,14 +66,13 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
   final _playList =
       ConcatenatingAudioSource(children: [], useLazyPreparation: false);
-  LibrarySongsController librarySongsController =
-      Get.find<LibrarySongsController>();
 
   MyAudioHandler() {
     if (GetPlatform.isWindows || GetPlatform.isLinux) {
       JustAudioMediaKit.title = 'Harmony music';
       JustAudioMediaKit.protocolWhitelist = const ['http', 'https', 'file'];
     }
+    _mediaLibrary = MediaLibrary();
     _player = AudioPlayer(
         audioLoadConfiguration: const AudioLoadConfiguration(
             androidLoadControl: AndroidLoadControl(
@@ -439,7 +444,7 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
   @override
   Future<void> customAction(String name, [Map<String, dynamic>? extras]) async {
     switch (name) {
-      
+
       case 'dispose':
         await _player.dispose();
         super.stop();
@@ -526,6 +531,8 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
                   ]
                 : null;
             songsCacheBox.put(song.id, jsonData);
+            LibrarySongsController librarySongsController =
+                Get.find<LibrarySongsController>();
             if (!librarySongsController.isClosed) {
               librarySongsController.librarySongsList.value =
                   librarySongsController.librarySongsList.toList() + [song];
@@ -722,6 +729,32 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
     }
   }
 
+  /// Android Auto
+  @override
+  Future<List<MediaItem>> getChildren(String parentMediaId,
+      [Map<String, dynamic>? options]) async {
+    return _mediaLibrary.getByRootId(parentMediaId);
+  }
+
+  @override
+  ValueStream<Map<String, dynamic>> subscribeToChildren(String parentMediaId) {
+    return Stream.fromFuture(
+            _mediaLibrary.getByRootId(parentMediaId).then((items) => items))
+        .map((_) => <String, dynamic>{})
+        .shareValue();
+  }
+
+  // only for Android Auto
+  @override
+  Future<void> playFromMediaId(String mediaId,
+      [Map<String, dynamic>? extras]) async {
+    customEvent.add({
+      'eventType': 'playFromMediaId',
+      'songId': mediaId,
+      'libraryId': extras!['libraryId'],
+    });
+  }
+
   @override
   Future<void> onTaskRemoved() async {
     final stopForegroundService =
@@ -834,4 +867,107 @@ class MyAudioHandler extends BaseAudioHandler with GetxServiceMixin {
 
 class UrlError extends Error {
   String message() => 'Unable to fetch url';
+}
+
+
+// for Android Auto
+class MediaLibrary {
+  static const albumsRootId = 'albums';
+  static const songsRootId = 'songs';
+  static const favoritesRootId = "LIBFAV";
+  static const playlistsRootId = 'playlists';
+
+  Future<List<MediaItem>> getByRootId(String id) async {
+    switch (id) {
+      case AudioService.browsableRootId:
+        return Future.value(getRoot());
+      case songsRootId:
+        return getLibSongs("SongDownloads");
+      case favoritesRootId:
+        return getLibSongs("LIBFAV");
+      case albumsRootId:
+        return getAlbums();
+      case playlistsRootId:
+        return getPlaylists();
+      case AudioService.recentRootId:
+        return getLibSongs("LIBRP");
+      default:
+        return getLibSongs(id);
+    }
+  }
+
+  List<MediaItem> getRoot() {
+    return [
+      MediaItem(
+        id: songsRootId,
+        title: "songs".tr,
+        playable: false,
+      ),
+      MediaItem(
+        id: favoritesRootId,
+        title: "favorites".tr,
+        playable: false,
+      ),
+      MediaItem(
+        id: albumsRootId,
+        title: "albums".tr,
+        playable: false,
+      ),
+      MediaItem(
+        id: playlistsRootId,
+        title: "playlists".tr,
+        playable: false,
+      ),
+    ];
+  }
+
+  Future<List<MediaItem>> getAlbums() async {
+    final box = await Hive.openBox("LibraryAlbums");
+    final albums =
+        box.values.map((item) => Album.fromJson(item).toMediaItem()).toList();
+    await box.close();
+    return albums;
+  }
+
+  Future<List<MediaItem>> getPlaylists() async {
+    final box = await Hive.openBox("LibraryPlaylists");
+    final playlists = [
+      ...LibraryPlaylistsController.initPlst.map((e) => e.toMediaItem()),
+      ...(box.values
+          .map((item) => Playlist.fromJson(item).toMediaItem())
+          .toList())
+    ];
+    await box.close();
+    return playlists;
+  }
+
+  Future<List<MediaItem>> getLibSongs(String libId) async {
+    Box<dynamic> box;
+    try {
+      box = await Hive.openBox(libId);
+    } catch (e) {
+      box = await Hive.openBox(libId);
+    }
+    final songs = box.values.toList().map((e) {
+      final song = MediaItemBuilder.fromJson(e);
+      return MediaItem(
+        id: song.id,
+        title: song.title,
+        artist: song.artist,
+        artUri: song.artUri,
+        extras: {"libraryId": libId},
+        playable: true,
+      );
+    }).toList();
+
+    if (!libId.contains("SongDownloads")) {
+      await box.close();
+    }
+
+    if (libId == "LIBRP") {
+      return songs.reversed.toList();
+    }
+
+    return songs;
+  }
 }

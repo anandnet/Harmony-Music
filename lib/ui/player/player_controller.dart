@@ -116,6 +116,11 @@ class PlayerController extends GetxController
     if ((appPrefs.get("playerUi") ?? 0) == 1) {
       initGesturePlayerStateAnimationController();
     }
+
+    // only for android auto
+    if (GetPlatform.isAndroid) {
+      _listenForCustomEvents();
+    }
   }
 
   void initGesturePlayerStateAnimationController() {
@@ -279,6 +284,15 @@ class PlayerController extends GetxController
     }
   }
 
+  void _listenForCustomEvents() {
+    _audioHandler.customEvent.listen((event) {
+      if (event['eventType'] == 'playFromMediaId') {
+        _playViaAndroidAuto(
+            event['songId'], event['libraryId']);
+      }
+    });
+  }
+
   ///pushSongToPlaylist method clear previous song queue, plays the tapped song and push related
   ///songs into Queue
   Future<void> pushSongToQueue(MediaItem? mediaItem,
@@ -408,6 +422,26 @@ class PlayerController extends GetxController
       }
     }
     _audioHandler.addQueueItems(listToEnqueue);
+  }
+
+  void _playViaAndroidAuto(
+      String songId, String libraryId) {
+    Hive.openBox(libraryId).then((box) {
+      List<MediaItem> songList = [];
+      final songJson = box.values.toList();
+      int songIndex = 0;
+      for (int i = 0; i < box.length; i++) {
+        final song = MediaItemBuilder.fromJson(songJson[i]);
+        if (song.id == songId) {
+          songIndex = i;
+        }
+        songList.add(song);
+      }
+      playPlayListSong(songList, songIndex);
+      if (libraryId != "SongDownloads") {
+        box.close();
+      }
+    });
   }
 
   void playNext(MediaItem song) {
@@ -613,14 +647,14 @@ class PlayerController extends GetxController
         ? box.put(currMediaItem.id, MediaItemBuilder.toJson(currMediaItem))
         : box.delete(currMediaItem.id);
     try {
-      final playlistController = Get.find<PlaylistScreenController>(tag: 
-          const Key("LIBFAV").hashCode.toString());
-        isCurrentSongFav.isFalse
-            ? playlistController.addNRemoveItemsinList(currMediaItem,
-                action: 'add', index: 0)
-            : playlistController.addNRemoveItemsinList(currMediaItem,
-                action: 'remove');
-      
+      final playlistController = Get.find<PlaylistScreenController>(
+          tag: const Key("LIBFAV").hashCode.toString());
+      isCurrentSongFav.isFalse
+          ? playlistController.addNRemoveItemsinList(currMediaItem,
+              action: 'add', index: 0)
+          : playlistController.addNRemoveItemsinList(currMediaItem,
+              action: 'remove');
+
       // ignore: empty_catches
     } catch (e) {}
     isCurrentSongFav.value = !isCurrentSongFav.value;

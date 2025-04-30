@@ -1,3 +1,5 @@
+import 'package:audio_service/audio_service.dart' show MediaItem;
+
 import '../models/thumbnail.dart';
 
 class AlbumContent {
@@ -57,4 +59,14 @@ class Album {
           {'url': thumbnailUrl}
         ]
       };
+
+  // Converts this object to a MediaItem object.
+  // This is used to display the playlist in Android auto.
+  MediaItem toMediaItem() {
+    return MediaItem(
+        id: browseId,
+        title: title,
+        artUri: Uri.parse(thumbnailUrl),
+        playable: false);
+  }
 }

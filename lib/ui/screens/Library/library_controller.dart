@@ -209,7 +209,7 @@ class LibraryPlaylistsController extends GetxController
   late AnimationController controller;
 
   final playlistCreationMode = "local".obs;
-  final initPlst = [
+  static final initPlst = [
     Playlist(
         title: "recentlyPlayed".tr,
         playlistId: "LIBRP",

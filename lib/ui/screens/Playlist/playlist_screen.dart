@@ -8,7 +8,6 @@ import 'package:widget_marquee/widget_marquee.dart';
 import '/models/playling_from.dart';
 import '/models/thumbnail.dart';
 import '/ui/widgets/playlist_album_scroll_behaviour.dart';
-import '/ui/widgets/shimmer_widgets/basic_container.dart';
 import '../../../services/downloader.dart';
 import '../../navigator.dart';
 import '../../player/player_controller.dart';

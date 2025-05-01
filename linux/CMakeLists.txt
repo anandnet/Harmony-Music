@@ -42,6 +42,10 @@ endif()
 function(APPLY_STANDARD_SETTINGS TARGET)
   target_compile_features(${TARGET} PUBLIC cxx_std_14)
   target_compile_options(${TARGET} PRIVATE -Wall -Werror)
+  ############## Fix #543 #####################
+  ## needs to be removed in future, added as workaround to fix AUR linux build #543
+  target_compile_options(${TARGET} PRIVATE -Wno-error=deprecated-declarations) # Allow deprecated warnings
+  ############## End Fix #543 ################# 
   target_compile_options(${TARGET} PRIVATE "$<$<NOT:$<CONFIG:Debug>>:-O3>")
   target_compile_definitions(${TARGET} PRIVATE "$<$<NOT:$<CONFIG:Debug>>:NDEBUG>")
 endfunction()

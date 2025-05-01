@@ -9,7 +9,7 @@ import '../../utils/theme_controller.dart';
 import '../player_controller.dart';
 
 class BackgroudImage extends StatelessWidget {
-  const BackgroudImage({super.key,this.cacheHeight});
+  const BackgroudImage({super.key, this.cacheHeight});
 
   final int? cacheHeight;
 
@@ -32,9 +32,17 @@ class BackgroudImage extends StatelessWidget {
                         if (snapshot.connectionState == ConnectionState.done &&
                             snapshot.hasData &&
                             snapshot.data == true) {
-                          Get.find<ThemeController>().setTheme(
-                              FileImage(imgFile),
-                              playerController.currentSong.value!.id);
+
+                          /// if theme mode is dynamic then set the theme with image
+                          if (Get.find<SettingsScreenController>()
+                                  .themeModetype
+                                  .value ==
+                              ThemeType.dynamic) {
+                            Get.find<ThemeController>().setTheme(
+                                FileImage(imgFile),
+                                playerController.currentSong.value!.id);
+                          }
+
                           return Image.file(
                             imgFile,
                             cacheHeight: cacheHeight,

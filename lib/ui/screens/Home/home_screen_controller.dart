@@ -125,12 +125,18 @@ class HomeScreenController extends GetxController {
           middleContentTemp.addAll(charts.sublist(1));
         }
       } else if (contentType == "BOLI") {
-        final songId = box.get("recentSongId");
-        if (songId != null) {
-          final rel = (await _musicServices.getContentRelatedToSong(songId));
-          final con = rel.removeAt(0);
-          quickPicks.value = QuickPicks(List<MediaItem>.from(con["contents"]));
-          middleContentTemp.addAll(rel);
+        try {
+          final songId = box.get("recentSongId");
+          if (songId != null) {
+            final rel = (await _musicServices.getContentRelatedToSong(
+                songId, getContentHlCode()));
+            final con = rel.removeAt(0);
+            quickPicks.value =
+                QuickPicks(List<MediaItem>.from(con["contents"]));
+            middleContentTemp.addAll(rel);
+          }
+        } catch (e) {
+          printERROR("Seems Based on last interaction content currently not available!");
         }
       }
 
@@ -209,7 +215,8 @@ class HomeScreenController extends GetxController {
       songId ??= Hive.box("AppPrefs").get("recentSongId");
       if (songId != null) {
         try {
-          final value = await _musicServices.getContentRelatedToSong(songId);
+          final value = await _musicServices.getContentRelatedToSong(
+              songId, getContentHlCode());
           middleContent.value = _setContentList(value);
           if (value.isNotEmpty && (value[0]['title']).contains("like")) {
             quickPicks_ =
@@ -228,6 +235,13 @@ class HomeScreenController extends GetxController {
     cachedHomeScreenData(updateQuickPicksNMiddleContent: true);
     await Hive.box("AppPrefs")
         .put("homeScreenDataTime", DateTime.now().millisecondsSinceEpoch);
+  }
+
+  String getContentHlCode() {
+    const List<String> unsupportedLangIds = ["ia", "ga", "fj", "eo"];
+    final userLangId =
+        Get.find<SettingsScreenController>().currentAppLanguageCode.value;
+    return unsupportedLangIds.contains(userLangId) ? "en" : userLangId;
   }
 
   void onSideBarTabSelected(int index) {

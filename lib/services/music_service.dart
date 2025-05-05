@@ -297,10 +297,11 @@ class MusicServices extends getx.GetxService {
     return audioPlaylistId;
   }
 
-  dynamic getContentRelatedToSong(String videoId) async {
+  dynamic getContentRelatedToSong(String videoId, String hlCode) async {
     final params = await getWatchPlaylist(videoId: videoId, onlyRelated: true);
     final data = Map.from(_context);
     data['browseId'] = params['related'];
+    data['context']['client']['hl'] = hlCode;
     final response = (await _sendRequest('browse', data)).data;
     final sections = nav(response, ['contents'] + section_list);
     final x = parseMixedContent(sections);
@@ -779,8 +780,8 @@ class MusicServices extends getx.GetxService {
         if (collapseContent != null) {
           final contentlist =
               contents['musicPlaylistShelfRenderer']['contents'];
-          final continuationItem = contentlist.removeAt(100);
-          if (contentlist.length.toString() == collapseContent.toString()) {
+          if (contentlist.length.toString() != collapseContent.toString()) {
+            final continuationItem = contentlist.removeAt(100);
             result['results'] = parsePlaylistItems(contentlist);
             final continuationKey = nav(continuationItem, [
               "continuationItemRenderer",
@@ -790,9 +791,12 @@ class MusicServices extends getx.GetxService {
             ]);
             result['additionalParams'] =
                 "&ctoken=$continuationKey&continuation=$continuationKey";
-            return result;
+          } else {
+            result['results'] = parsePlaylistItems(contentlist);
+            result['additionalParams'] = "&ctoken=null&continuation=null";
           }
         }
+        return result;
       }
     } else if (category == 'Albums' || category == 'Singles') {
       List contentlist;

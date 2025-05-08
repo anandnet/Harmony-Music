@@ -4,6 +4,7 @@ import 'package:archive/archive_io.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:terminate_restart/terminate_restart.dart';
 
@@ -82,7 +83,7 @@ class RestoreDialog extends StatelessWidget {
                                 )
                               : exit(0);
                         } else {
-                          restoreDialogController.backup();
+                          restoreDialogController.restore();
                         }
                       },
                       child: Obx(
@@ -129,7 +130,7 @@ class RestoreDialogController extends GetxController {
   final filesToRestore = (0).obs;
   final processingFiles = false.obs;
 
-  Future<void> backup() async {
+  Future<void> restore() async {
     if (!await PermissionService.getExtStoragePermission()) {
       return;
     }
@@ -195,6 +196,23 @@ class RestoreDialogController extends GetxController {
     final tempFilePickerDir = Directory(tempFilePickerDirPath);
     if (tempFilePickerDir.existsSync()) {
       await tempFilePickerDir.delete(recursive: true);
+    }
+
+    // change file download path to support dir path in songs if system is windows or linux
+    if (GetPlatform.isWindows || GetPlatform.isLinux) {
+      // open the restored box
+      final newSongBox = await Hive.openBox("SongDownloads");
+      final downloadedSongs = newSongBox.values.toList();
+      for(final song in downloadedSongs) {
+        final songPath = song["url"];
+        if (songPath != null && songPath is String) {
+          final fileName = songPath.split("/").last;
+          final newFilePath = "$supportDirPath/Music/$fileName";
+          song["url"] = newFilePath;
+          song['streamInfo'][1]['url'] = newFilePath;
+          await newSongBox.put(song["videoId"], song);
+        }
+      }
     }
 
     restoreRunning.value = false;

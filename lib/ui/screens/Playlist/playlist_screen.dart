@@ -8,7 +8,6 @@ import 'package:widget_marquee/widget_marquee.dart';
 import '/models/playling_from.dart';
 import '/models/thumbnail.dart';
 import '/ui/widgets/playlist_album_scroll_behaviour.dart';
-import '/ui/widgets/shimmer_widgets/basic_container.dart';
 import '../../../services/downloader.dart';
 import '../../navigator.dart';
 import '../../player/player_controller.dart';
@@ -66,7 +65,7 @@ class PlaylistScreen extends StatelessWidget {
                                 (size.width - 100);
                         return Opacity(
                           opacity: opacityValue < 0 ||
-                                  playlistController.isSearchingOn.isTrue
+                                  playlistController.isSearchingOn.isTrue && !landscape
                               ? 0
                               : opacityValue,
                           child: DecoratedBox(
@@ -121,6 +120,7 @@ class PlaylistScreen extends StatelessWidget {
                         SizedBox(
                           width: 50,
                           child: IconButton(
+                            tooltip: "back".tr,
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
@@ -253,7 +253,9 @@ class PlaylistScreen extends StatelessWidget {
                                 return Padding(
                                   padding: const EdgeInsets.only(left: 15.0),
                                   child: SizedBox(
-                                      height: 40,
+                                    height: 40,
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
                                       child: Row(
                                         children: [
                                           // Bookmark button
@@ -263,12 +265,15 @@ class PlaylistScreen extends StatelessWidget {
                                                       .value.isCloudPlaylist)
                                               ? const SizedBox.shrink()
                                               : IconButton(
+                                                  tooltip: playlistController
+                                                          .isAddedToLibrary
+                                                          .isFalse
+                                                      ? "addToLibrary".tr
+                                                      : "removeFromLibrary".tr,
                                                   splashRadius: 10,
                                                   onPressed: () {
-                                                    final add =
-                                                        playlistController
-                                                            .isAddedToLibrary
-                                                            .isFalse;
+                                                    final add = playlistController
+                                                        .isAddedToLibrary.isFalse;
                                                     playlistController
                                                         .addNremoveFromLibrary(
                                                             playlistController
@@ -278,15 +283,16 @@ class PlaylistScreen extends StatelessWidget {
                                                       if (!context.mounted) {
                                                         return;
                                                       }
-
-                                                      ScaffoldMessenger.of(context).showSnackBar(
-                                                          snackbar(
+                                      
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(snackbar(
                                                               context,
                                                               value
                                                                   ? add
                                                                       ? "playlistBookmarkAddAlert"
                                                                           .tr
-                                                                      : "playlistBookmarkRemoveAlert"
+                                                                      : "listBookmarkRemoveAlert"
                                                                           .tr
                                                                   : "operationFailed"
                                                                       .tr,
@@ -301,6 +307,7 @@ class PlaylistScreen extends StatelessWidget {
                                                       : Icons.bookmark_added))),
                                           // Play button
                                           IconButton(
+                                            tooltip: "play".tr,
                                               onPressed: () {
                                                 playerController.playPlayListSong(
                                                     List<MediaItem>.from(
@@ -309,9 +316,7 @@ class PlaylistScreen extends StatelessWidget {
                                                     0,
                                                     playfrom: PlaylingFrom(
                                                         name: playlistController
-                                                            .playlist
-                                                            .value
-                                                            .title,
+                                                            .playlist.value.title,
                                                         type: PlaylingFromType
                                                             .PLAYLIST));
                                               },
@@ -324,6 +329,7 @@ class PlaylistScreen extends StatelessWidget {
                                               )),
                                           // Enqueue button
                                           IconButton(
+                                              tooltip: "enqueueSongs".tr,
                                               onPressed: () {
                                                 Get.find<PlayerController>()
                                                     .enqueueSongList(
@@ -332,12 +338,10 @@ class PlaylistScreen extends StatelessWidget {
                                                             .toList())
                                                     .whenComplete(() {
                                                   if (context.mounted) {
-                                                    ScaffoldMessenger.of(
-                                                            context)
+                                                    ScaffoldMessenger.of(context)
                                                         .showSnackBar(snackbar(
                                                             context,
-                                                            "songEnqueueAlert"
-                                                                .tr,
+                                                            "songEnqueueAlert".tr,
                                                             size: SanckBarSize
                                                                 .MEDIUM));
                                                   }
@@ -350,9 +354,10 @@ class PlaylistScreen extends StatelessWidget {
                                                     .titleMedium!
                                                     .color,
                                               )),
-
+                                      
                                           // Shuffle button
                                           IconButton(
+                                              tooltip: "shuffle".tr,
                                               onPressed: () {
                                                 final songsToplay =
                                                     List<MediaItem>.from(
@@ -364,9 +369,7 @@ class PlaylistScreen extends StatelessWidget {
                                                     songsToplay, 0,
                                                     playfrom: PlaylingFrom(
                                                         name: playlistController
-                                                            .playlist
-                                                            .value
-                                                            .title,
+                                                            .playlist.value.title,
                                                         type: PlaylingFromType
                                                             .PLAYLIST));
                                               },
@@ -378,11 +381,11 @@ class PlaylistScreen extends StatelessWidget {
                                                     .color,
                                               )),
                                           // Download button
-                                          GetX<Downloader>(
-                                              builder: (controller) {
+                                          GetX<Downloader>(builder: (controller) {
                                             final id = playlistController
                                                 .playlist.value.playlistId;
                                             return IconButton(
+                                              tooltip: "downloadPlaylist".tr,
                                               onPressed: () {
                                                 if (playlistController
                                                     .isDownloaded.isTrue) {
@@ -398,8 +401,7 @@ class PlaylistScreen extends StatelessWidget {
                                                   ? const Icon(
                                                       Icons.download_done)
                                                   : controller.playlistQueue
-                                                              .containsKey(
-                                                                  id) &&
+                                                              .containsKey(id) &&
                                                           controller
                                                                   .currentPlaylistId
                                                                   .toString() ==
@@ -446,19 +448,23 @@ class PlaylistScreen extends StatelessWidget {
                                                               Icons.download),
                                             );
                                           }),
-
+                                      
                                           if (playlistController
                                               .isAddedToLibrary.isTrue)
                                             IconButton(
+                                                tooltip:
+                                                    "syncPlaylistSongs".tr,
                                                 onPressed: () {
                                                   playlistController
                                                       .syncPlaylistSongs();
                                                 },
-                                                icon: const Icon(
-                                                    Icons.cloud_sync)),
+                                                icon:
+                                                    const Icon(Icons.cloud_sync)),
                                           if (playlistController
                                               .playlist.value.isPipedPlaylist)
                                             IconButton(
+                                                tooltip:
+                                                    "blacklistPipedPlaylist".tr,
                                                 icon: const Icon(
                                                   Icons.block,
                                                   size: 20,
@@ -487,45 +493,49 @@ class PlaylistScreen extends StatelessWidget {
                                           if (playlistController
                                               .playlist.value.isCloudPlaylist)
                                             IconButton(
-                                                visualDensity:
-                                                    const VisualDensity(
-                                                        vertical: -3),
-                                                splashRadius: 10,
-                                                onPressed: () {
-                                                  final content =
-                                                      playlistController
-                                                          .playlist.value;
-                                                  if (content.isPipedPlaylist) {
-                                                    Share.share(
-                                                        "https://piped.video/playlist?list=${content.playlistId}");
-                                                  } else {
-                                                    final isPlaylistIdPrefixAvlbl =
-                                                        content.playlistId
-                                                                .substring(
-                                                                    0, 2) ==
-                                                            "VL";
-                                                    String url =
-                                                        "https://youtube.com/playlist?list=";
-
-                                                    url =
-                                                        isPlaylistIdPrefixAvlbl
-                                                            ? url +
-                                                                content
-                                                                    .playlistId
-                                                                    .substring(
-                                                                        2)
-                                                            : url +
-                                                                content
-                                                                    .playlistId;
-                                                    Share.share(url);
-                                                  }
-                                                },
-                                                icon: const Icon(
-                                                  Icons.share,
-                                                  size: 20,
-                                                )),
+                                              tooltip:
+                                                  "sharePlaylist".tr,
+                                              visualDensity: const VisualDensity(
+                                                vertical: -3,
+                                              ),
+                                              splashRadius: 10,
+                                              onPressed: () {
+                                                final content = playlistController
+                                                    .playlist.value;
+                                                if (content.isPipedPlaylist) {
+                                                  Share.share(
+                                                      "https://piped.video/playlist?list=${content.playlistId}");
+                                                } else {
+                                                  final isPlaylistIdPrefixAvlbl =
+                                                      content.playlistId
+                                                              .substring(0, 2) ==
+                                                          "VL";
+                                                  String url =
+                                                      "https://youtube.com/playlist?list=";
+                                      
+                                                  url = isPlaylistIdPrefixAvlbl
+                                                      ? url +
+                                                          content.playlistId
+                                                              .substring(2)
+                                                      : url + content.playlistId;
+                                                  Share.share(url);
+                                                }
+                                              },
+                                              icon: const Icon(
+                                                Icons.share,
+                                                size: 20,
+                                              ),
+                                            ),
+                                          IconButton(
+                                            onPressed: () => playlistController
+                                                .exportPlaylistToJson(context),
+                                            icon: const Icon(Icons.save),
+                                            tooltip: "exportPlaylist".tr,
+                                          ),
                                         ],
-                                      )),
+                                      ),
+                                    ),
+                                  ),
                                 );
                               } else if (index == 1) {
                                 final title =

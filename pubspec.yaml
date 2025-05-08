@@ -1,5 +1,6 @@
 name: harmony_music
-description: A app for music streaming.
+description: An app for music streaming.
+
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -16,7 +17,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.11.2+24
+version: 1.12.0+25
 
 environment:
   sdk: ">=3.1.5 <4.0.0"
@@ -54,7 +55,7 @@ dependencies:
   just_audio_media_kit:
     git:
       url: https://github.com/anandnet/just_audio_media_kit.git
-      ref: 06de226da469f5c55dd780b215bcc45a0d6269fb
+      ref: 3738e6bcc07e289ff9621cf2514f1906c99de9aa
   palette_generator: ^0.3.3+4
   path: ^1.8.3
   path_provider: ^2.1.1

@@ -26,7 +26,6 @@ const langMap = {
   "ja": "Japanese",
   "kn": "Kannada",
   "ko": "Korean",
-  "ku": "Kurdish",
   "ml": "Malayalam",
   "my": "Burmese",
   "nb_NO": "Norwegian",
@@ -46,6 +45,6 @@ const langMap = {
   "uk": "Ukrainian",
   "ur": "Urdu",
   "vi": "Vietnamese",
-  "zh_Hans": "Chinese",
-  "zh_Hant": "Chinese(Trad.)"
+  "zh-CN": "Chinese",
+  "zh-TW": "Chinese(Trad.)"
 };

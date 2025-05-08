@@ -72,7 +72,7 @@ class SongsLibraryWidget extends StatelessWidget {
                         isPlaylistOrAlbum: true,
                         playlist: Playlist(
                             title: "Library Songs",
-                            playlistId: "SongsCache",
+                            playlistId: "SongsDownloads",
                             thumbnailUrl: "",
                             isCloudPlaylist: false),
                       )
@@ -174,6 +174,7 @@ class PlaylistNAlbumLibraryWidget extends StatelessWidget {
                     onSearch: librplstCntrller.onSearch,
                     onSearchClose: librplstCntrller.onSearchClose,
                     onSearchStart: librplstCntrller.onSearchStart,
+                    isImportFeatureRequired: true,
                   ),
           ),
           Expanded(

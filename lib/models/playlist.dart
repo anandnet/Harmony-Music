@@ -1,3 +1,5 @@
+import 'package:audio_service/audio_service.dart' show MediaItem;
+
 import '../models/thumbnail.dart';
 
 class PlaylistContent {
@@ -69,6 +71,16 @@ class Playlist {
         songCount: songCount,
         isPipedPlaylist: isPipedPlaylist,
         isCloudPlaylist: isCloudPlaylist);
+  }
+
+  // Converts this object to a MediaItem object.
+  // This is used to display the playlist in Android auto.
+  MediaItem toMediaItem() {
+    return MediaItem(
+        id: playlistId,
+        title: title,
+        artUri: Uri.parse(thumbnailUrl),
+        playable: false);
   }
 
   set newTitle(String title) {

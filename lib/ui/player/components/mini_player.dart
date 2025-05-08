@@ -1,6 +1,7 @@
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
@@ -22,6 +23,7 @@ class MiniPlayer extends StatelessWidget {
     final playerController = Get.find<PlayerController>();
     final size = MediaQuery.of(context).size;
     final isWideScreen = size.width > 800;
+    final bottomNavEnabled = Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue;
     return Obx(() {
       return Visibility(
         visible: playerController.isPlayerpanelTopVisible.value,
@@ -35,7 +37,7 @@ class MiniPlayer extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  !isWideScreen
+                  !isWideScreen || bottomNavEnabled
                       ? GetX<PlayerController>(
                           builder: (controller) => Container(
                               height: 3,
@@ -162,11 +164,11 @@ class MiniPlayer extends StatelessWidget {
                         ),
                         //player control
                         SizedBox(
-                          width: isWideScreen ? 450 : 90,
+                          width: isWideScreen && !bottomNavEnabled ? 450 : 90,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              if (isWideScreen)
+                              if (isWideScreen && !bottomNavEnabled)
                                 Row(
                                   children: [
                                     IconButton(
@@ -204,7 +206,7 @@ class MiniPlayer extends StatelessWidget {
                                             ))),
                                   ],
                                 ),
-                              if (isWideScreen)
+                              if (isWideScreen && !bottomNavEnabled)
                                 SizedBox(
                                     width: 40,
                                     child: InkWell(
@@ -225,7 +227,7 @@ class MiniPlayer extends StatelessWidget {
                                         size: 35,
                                       ),
                                     )),
-                              isWideScreen
+                              isWideScreen && !bottomNavEnabled
                                   ? Container(
                                       decoration: BoxDecoration(
                                           color: Theme.of(context)
@@ -280,7 +282,7 @@ class MiniPlayer extends StatelessWidget {
                                       ),
                                     );
                                   })),
-                              if (isWideScreen)
+                              if (isWideScreen && !bottomNavEnabled)
                                 Row(
                                   children: [
                                     IconButton(
@@ -326,14 +328,14 @@ class MiniPlayer extends StatelessWidget {
                                                 .color)),
                                   ],
                                 ),
-                              if (isWideScreen)
+                              if (isWideScreen && !bottomNavEnabled)
                                 const SizedBox(
                                   width: 20,
                                 )
                             ],
                           ),
                         ),
-                        if (isWideScreen)
+                        if (isWideScreen && !bottomNavEnabled)
                           Expanded(
                             child: Padding(
                               padding: EdgeInsets.only(

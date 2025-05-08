@@ -2,8 +2,11 @@ import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:harmonymusic/ui/widgets/snackbar.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:convert';
 
 import '../../../utils/house_keeping.dart';
 import '../../widgets/add_to_playlist.dart';
@@ -209,7 +212,7 @@ class LibraryPlaylistsController extends GetxController
   late AnimationController controller;
 
   final playlistCreationMode = "local".obs;
-  final initPlst = [
+  static final initPlst = [
     Playlist(
         title: "recentlyPlayed".tr,
         playlistId: "LIBRP",
@@ -236,6 +239,10 @@ class LibraryPlaylistsController extends GetxController
   final creationInProgress = false.obs;
   final textInputController = TextEditingController();
   List<Playlist> tempListContainer = [];
+
+  // Add these RxBool to track import progress
+  final isImporting = false.obs;
+  final importProgress = 0.0.obs;
 
   @override
   void onInit() {
@@ -450,6 +457,176 @@ class LibraryPlaylistsController extends GetxController
     textInputController.dispose();
     controller.dispose();
     super.dispose();
+  }
+
+  Future<void> importPlaylistFromJson(BuildContext context) async {
+    try {
+      isImporting.value = true;
+      importProgress.value = 0.1;
+
+      // Show progress dialog
+      if (context.mounted) {
+        _showImportProgressDialog(context);
+      }
+
+      // Use file_picker to select JSON file
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['json'],
+        dialogTitle: 'importPlaylist'.tr,
+      );
+
+      if (result == null || result.files.isEmpty) {
+        // User cancelled the picker
+        if (Get.isDialogOpen ?? false) {
+          Get.back();
+        }
+        isImporting.value = false;
+        importProgress.value = 0.0;
+        return;
+      }
+
+      importProgress.value = 0.2;
+
+      final file = File(result.files.single.path!);
+      if (!await file.exists()) {
+        throw FileSystemException("fileNotFound".tr);
+      }
+
+      final jsonString = await file.readAsString();
+      importProgress.value = 0.3;
+
+      final jsonData = jsonDecode(jsonString);
+      importProgress.value = 0.4;
+
+      // Validate JSON structure
+      if (!jsonData.containsKey('playlistInfo') ||
+          !jsonData.containsKey('songs')) {
+        throw FormatException("invalidPlaylistFile".tr);
+      }
+
+      // Create new playlist ID
+      final playlistInfo = jsonData['playlistInfo'];
+      final newPlaylistId = "LIB${DateTime.now().millisecondsSinceEpoch}";
+      importProgress.value = 0.5;
+
+      // Create playlist object
+      final newPlaylist = Playlist(
+        title: "${playlistInfo['title']} (${"imported".tr})",
+        playlistId: newPlaylistId,
+        thumbnailUrl: playlistInfo['thumbnailUrl'] ??
+            (playlistInfo['thumbnails'] != null &&
+                    playlistInfo['thumbnails'].isNotEmpty
+                ? playlistInfo['thumbnails'][0]['url']
+                : Playlist.thumbPlaceholderUrl),
+        description: playlistInfo['description'] ?? "importedPlaylist".tr,
+        isCloudPlaylist: false,
+      );
+      importProgress.value = 0.6;
+
+      // Save playlist to database
+      final box = await Hive.openBox("LibraryPlaylists");
+      box.put(newPlaylistId, newPlaylist.toJson());
+      importProgress.value = 0.7;
+
+      // Save songs to playlist
+      final songsBox = await Hive.openBox(newPlaylistId);
+      final songsList = jsonData['songs'] as List;
+
+      // Update progress as songs are added
+      final totalSongs = songsList.length;
+      for (int i = 0; i < totalSongs; i++) {
+        await songsBox.put(i, songsList[i]);
+        // Update progress from 70% to 95% based on song import progress
+        importProgress.value = 0.7 + (0.25 * (i + 1) / totalSongs);
+      }
+
+      await songsBox.close();
+      await box.close();
+      importProgress.value = 1.0;
+
+      // Close progress dialog if it's still open
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
+
+      // Refresh library to show the new playlist
+      refreshLib();
+
+      // Show success message
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          snackbar(
+            context,
+            "${"playlistImportedMsg".tr}: ${newPlaylist.title}",
+            size: SanckBarSize.MEDIUM,
+          ),
+        );
+      }
+    } catch (e) {
+      // Close progress dialog if it's still open
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
+
+      printERROR("Error importing playlist: $e");
+
+      String errorMsg = "importError".tr;
+      if (e is FileSystemException) {
+        errorMsg = "importErrorFileAccess".tr;
+      } else if (e is FormatException) {
+        errorMsg = "importErrorFormat".tr;
+      } else if (e.toString().contains("invalidPlaylistFile")) {
+        errorMsg = "invalidPlaylistFile".tr;
+      } else if (e is HiveError) {
+        errorMsg = "importErrorDatabase".tr;
+      }
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            snackbar(context, errorMsg, size: SanckBarSize.MEDIUM));
+      }
+    } finally {
+      isImporting.value = false;
+      importProgress.value = 0.0;
+    }
+  }
+
+  // Helper method to show import progress dialog
+  void _showImportProgressDialog(BuildContext context) {
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: Theme.of(context).cardColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        title: Text(
+          "importingPlaylist".tr,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        content: Obx(() => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                LinearProgressIndicator(
+                  value: Get.isRegistered<LibraryPlaylistsController>()
+                      ? importProgress.value
+                      : 0,
+                  backgroundColor:
+                      Theme.of(context).colorScheme.surfaceContainerHighest,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).colorScheme.secondary,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  "${(Get.isRegistered<LibraryPlaylistsController>() ? importProgress.value * 100 : 0).toInt()}%",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ],
+            )),
+      ),
+      barrierDismissible: false,
+    );
   }
 }
 

@@ -46,7 +46,7 @@ class SettingsScreenController extends GetxController {
   final backgroundPlayEnabled = true.obs;
   final restorePlaybackSession = false.obs;
   final cacheHomeScreenData = true.obs;
-  final currentVersion = "V1.11.2";
+  final currentVersion = "V1.12.0";
 
   @override
   void onInit() {
@@ -77,7 +77,12 @@ class SettingsScreenController extends GetxController {
 
   Future<void> _setInitValue() async {
     final isDesktop = GetPlatform.isDesktop;
-    currentAppLanguageCode.value = setBox.get('currentAppLanguageCode') ?? "en";
+    final appLang = setBox.get('currentAppLanguageCode') ?? "en";
+    currentAppLanguageCode.value = appLang == "zh_Hant"
+        ? "zh-TW"
+        : appLang == "zh_Hans"
+            ? "zh-CN"
+            : appLang;
     isBottomNavBarEnabled.value =
         isDesktop ? false : (setBox.get("isBottomNavBarEnabled") ?? false);
     noOfHomeScreenContent.value = setBox.get("noOfHomeScreenContent") ?? 3;

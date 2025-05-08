@@ -1,6 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:widget_marquee/widget_marquee.dart';
 
 import '/services/piped_service.dart';
 import '../screens/Library/library_controller.dart';
@@ -39,11 +40,15 @@ class CreateNRenamePlaylistPopup extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 5),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    renamePlaylist
-                        ? "renamePlaylist".tr
-                        : "CreateNewPlaylist".tr,
-                    style: Theme.of(context).textTheme.titleMedium,
+                  child: Marquee(
+                    delay: const Duration(milliseconds: 300),
+                    id: "createPlaylist",
+                    child: Text(
+                      renamePlaylist
+                          ? "renamePlaylist".tr
+                          : "CreateNewPlaylist".tr,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   ),
                 ),
               ),

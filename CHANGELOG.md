@@ -1,4 +1,18 @@
-## 1.11.1
+## 1.12.0
+* Redesigned Album & Playlist screen
+* Added Basic Interface for Android Auto #496 #492 #427 #111
+* Import/export functionality for playlists by @ani-sh-arma
+* Android splash screen implemention for all devices by @girish54321
+* (Windows)-TitleBar Color implementation
+* Fixed Album,Single loading issue in Artist acreen #509
+* Fixed Miniplayer in landscape mode #462
+* Fixed playlist add ui overflow #500
+* Fixed restoration of downloaded songs #552
+* Fixed Chinease language issue #548
+* Fixed trigger dynamic mode for offline songs #537
+* Fixed screen freeze issue in Android #348 #492
+
+## 1.11.2
 * Fixed rendering issue in Android (happening due to flutter upgrade)
 
 ## 1.11.1

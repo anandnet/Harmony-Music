@@ -2,6 +2,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:widget_marquee/widget_marquee.dart';
 
 import '../../services/piped_service.dart';
 import '/models/media_Item_builder.dart';
@@ -31,13 +32,20 @@ class AddToPlaylist extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        "CreateNewPlaylist".tr,
-                        style: Theme.of(context).textTheme.titleMedium,
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Marquee(
+                          id:"createNewPlaylistx",
+                          delay: const Duration(milliseconds: 300),
+                          child: Text(
+                            "CreateNewPlaylist".tr,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
                       ),
                     ),
+                    const SizedBox(width: 10,),
                     InkWell(
                       child: const Icon(Icons.playlist_add),
                       onTap: () {

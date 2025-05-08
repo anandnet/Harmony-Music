@@ -9,7 +9,7 @@ output:
 source_path:
   - 'android/app/src/main/kotlin'
 classes:
-  - 'com.anandnet.harmonymusic.Equalizer'
-  - 'com.anandnet.harmonymusic.SDKInt'
+  - 'com.anandnet.harmony_music.Equalizer'
+  - 'com.anandnet.harmony_music.SDKInt'
 
   

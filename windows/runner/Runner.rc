@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.anandnet" "\0"
-            VALUE "FileDescription", "harmonymusic" "\0"
+            VALUE "FileDescription", "harmony_music" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "harmonymusic" "\0"
+            VALUE "InternalName", "harmony_music" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.anandnet. All rights reserved." "\0"
-            VALUE "OriginalFilename", "harmonymusic.exe" "\0"
-            VALUE "ProductName", "harmonymusic" "\0"
+            VALUE "OriginalFilename", "harmony_music.exe" "\0"
+            VALUE "ProductName", "harmony_music" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

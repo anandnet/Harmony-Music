@@ -60,7 +60,7 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
         Tween<double>(begin: 0, end: 1.0).animate(animationController);
 
     _heightAnimation =
-        Tween<double>(begin: 10.0, end: 90.0).animate(CurvedAnimation(parent: animationController, curve: Curves.easeOutBack));
+        Tween<double>(begin: 10.0, end: 75.0).animate(CurvedAnimation(parent: animationController, curve: Curves.easeOutBack));
 
     final args = Get.arguments as List;
     final Playlist? playlist = args[0];

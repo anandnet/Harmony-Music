@@ -65,7 +65,7 @@ class PlaylistScreen extends StatelessWidget {
                                 (size.width - 100);
                         return Opacity(
                           opacity: opacityValue < 0 ||
-                                  playlistController.isSearchingOn.isTrue
+                                  playlistController.isSearchingOn.isTrue && !landscape
                               ? 0
                               : opacityValue,
                           child: DecoratedBox(
@@ -120,6 +120,7 @@ class PlaylistScreen extends StatelessWidget {
                         SizedBox(
                           width: 50,
                           child: IconButton(
+                            tooltip: "back".tr,
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
@@ -254,6 +255,7 @@ class PlaylistScreen extends StatelessWidget {
                                   child: SizedBox(
                                     height: 40,
                                     child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
                                       child: Row(
                                         children: [
                                           // Bookmark button
@@ -263,6 +265,11 @@ class PlaylistScreen extends StatelessWidget {
                                                       .value.isCloudPlaylist)
                                               ? const SizedBox.shrink()
                                               : IconButton(
+                                                  tooltip: playlistController
+                                                          .isAddedToLibrary
+                                                          .isFalse
+                                                      ? "addToLibrary".tr
+                                                      : "removeFromLibrary".tr,
                                                   splashRadius: 10,
                                                   onPressed: () {
                                                     final add = playlistController
@@ -300,6 +307,7 @@ class PlaylistScreen extends StatelessWidget {
                                                       : Icons.bookmark_added))),
                                           // Play button
                                           IconButton(
+                                            tooltip: "play".tr,
                                               onPressed: () {
                                                 playerController.playPlayListSong(
                                                     List<MediaItem>.from(
@@ -321,6 +329,7 @@ class PlaylistScreen extends StatelessWidget {
                                               )),
                                           // Enqueue button
                                           IconButton(
+                                              tooltip: "enqueueSongs".tr,
                                               onPressed: () {
                                                 Get.find<PlayerController>()
                                                     .enqueueSongList(
@@ -348,6 +357,7 @@ class PlaylistScreen extends StatelessWidget {
                                       
                                           // Shuffle button
                                           IconButton(
+                                              tooltip: "shuffle".tr,
                                               onPressed: () {
                                                 final songsToplay =
                                                     List<MediaItem>.from(
@@ -375,6 +385,7 @@ class PlaylistScreen extends StatelessWidget {
                                             final id = playlistController
                                                 .playlist.value.playlistId;
                                             return IconButton(
+                                              tooltip: "downloadPlaylist".tr,
                                               onPressed: () {
                                                 if (playlistController
                                                     .isDownloaded.isTrue) {
@@ -441,6 +452,8 @@ class PlaylistScreen extends StatelessWidget {
                                           if (playlistController
                                               .isAddedToLibrary.isTrue)
                                             IconButton(
+                                                tooltip:
+                                                    "syncPlaylistSongs".tr,
                                                 onPressed: () {
                                                   playlistController
                                                       .syncPlaylistSongs();
@@ -450,6 +463,8 @@ class PlaylistScreen extends StatelessWidget {
                                           if (playlistController
                                               .playlist.value.isPipedPlaylist)
                                             IconButton(
+                                                tooltip:
+                                                    "blacklistPipedPlaylist".tr,
                                                 icon: const Icon(
                                                   Icons.block,
                                                   size: 20,
@@ -478,6 +493,8 @@ class PlaylistScreen extends StatelessWidget {
                                           if (playlistController
                                               .playlist.value.isCloudPlaylist)
                                             IconButton(
+                                              tooltip:
+                                                  "sharePlaylist".tr,
                                               visualDensity: const VisualDensity(
                                                 vertical: -3,
                                               ),

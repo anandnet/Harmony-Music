@@ -154,6 +154,7 @@ class ListWidget extends StatelessWidget with RemoveSongFromPlaylistMixin {
               for (dynamic items in (albums[index].artists).sublist(1)) {
                 artistName = "${artistName + items['name']},";
               }
+            // ignore: empty_catches
             } catch (e) {}
             artistName = artistName.length > 16
                 ? artistName.substring(0, 16)

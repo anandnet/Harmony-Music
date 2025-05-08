@@ -1,8 +1,8 @@
 import 'package:audio_service/audio_service.dart' show MediaItem;
 import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/models/thumbnail.dart';
-import 'package:harmonymusic/utils/helper.dart';
+import 'package:harmony_music/models/thumbnail.dart';
+import 'package:harmony_music/utils/helper.dart';
 import 'package:hive/hive.dart';
 
 import '../../../base_class/playlist_album_screen_con_base.dart';

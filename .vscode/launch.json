@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "harmonymusic",
+            "name": "harmony_music",
             "request": "launch",
             "type": "dart",
             "toolArgs": [
@@ -13,7 +13,7 @@
             ],
         },
         {
-            "name": "harmonymusic (profile mode)",
+            "name": "harmony_music (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile",
@@ -22,7 +22,7 @@
             ],
         },
         {
-            "name": "harmonymusic (release mode)",
+            "name": "harmony_music (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release",

@@ -147,181 +147,201 @@ class SortWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SortWidgetController(), tag: tag);
-    return Obx(
-      () => Stack(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: SizedBox(
+        height: 40,
+        child: Obx(
+          () => Stack(
             children: [
-              Padding(
-                padding: EdgeInsets.only(left: titleLeftPadding),
-                child: Row(
+              if (controller.isSearchingEnabled.isFalse)
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(itemCountTitle),
-                    if (itemIcon != null)
-                      Icon(
-                        Icons.music_note,
-                        size: 15,
-                        color: Theme.of(context).colorScheme.secondary,
-                      )
-                  ],
-                ),
-              ),
-              Obx(
-                () => IconButton(
-                  color: controller.sortType.value == SortType.Name
-                      ? Theme.of(context).textTheme.bodySmall!.color
-                      : Theme.of(context).colorScheme.secondary,
-                  icon: const Icon(Icons.sort_by_alpha),
-                  iconSize: 20,
-                  splashRadius: 20,
-                  visualDensity:
-                      const VisualDensity(horizontal: -3, vertical: -3),
-                  onPressed: () {
-                    controller.onSortByName(onSort);
-                  },
-                ),
-              ),
-              requiredSortTypes.contains(SortType.Date)
-                  ? Obx(
-                      () => IconButton(
-                        color: controller.sortType.value == SortType.Date
-                            ? Theme.of(context).textTheme.bodySmall!.color
-                            : Theme.of(context).colorScheme.secondary,
-                        icon: const Icon(Icons.calendar_month),
-                        iconSize: 20,
-                        splashRadius: 20,
-                        visualDensity:
-                            const VisualDensity(horizontal: -3, vertical: -3),
-                        onPressed: () {
-                          controller.onSortByDate(onSort);
-                        },
+                    Padding(
+                      padding: EdgeInsets.only(left: titleLeftPadding),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(itemCountTitle),
+                          if (itemIcon != null)
+                            Icon(
+                              Icons.music_note,
+                              size: 15,
+                              color: Theme.of(context).colorScheme.secondary,
+                            )
+                        ],
                       ),
-                    )
-                  : const SizedBox.shrink(),
-              requiredSortTypes.contains(SortType.Duration)
-                  ? Obx(() => IconButton(
-                        color: controller.sortType.value == SortType.Duration
-                            ? Theme.of(context).textTheme.bodySmall!.color
-                            : Theme.of(context).colorScheme.secondary,
-                        icon: const Icon(Icons.timer),
-                        iconSize: 20,
-                        splashRadius: 20,
-                        visualDensity:
-                            const VisualDensity(horizontal: -3, vertical: -3),
-                        onPressed: () {
-                          controller.onSortByDuration(onSort);
-                        },
-                      ))
-                  : const SizedBox.shrink(),
-              const Expanded(child: SizedBox()),
-              Obx(
-                () => IconButton(
-                  icon: controller.isAscending.value
-                      ? const Icon(Icons.arrow_downward)
-                      : const Icon(Icons.arrow_upward),
-                  iconSize: 20,
-                  splashRadius: 20,
-                  visualDensity:
-                      const VisualDensity(horizontal: -3, vertical: -3),
-                  onPressed: () {
-                    controller.onAscendNDescend(onSort);
-                  },
-                ),
-              ),
-              if (isImportFeatureRequired)
-                IconButton(
-                  icon: const Icon(Icons.import_contacts),
-                  tooltip: "importPlaylist".tr,
-                  onPressed: () => _showImportDialog(context),
-                ),
-              if (isSearchFeatureRequired)
-                IconButton(
-                  icon: const Icon(Icons.search),
-                  iconSize: 20,
-                  splashRadius: 20,
-                  visualDensity:
-                      const VisualDensity(horizontal: -3, vertical: -3),
-                  onPressed: () {
-                    onSearchStart!(tag);
-                    controller.toggleSearch();
-                  },
-                ),
-              if (isAdditionalOperationRequired)
-                PopupMenuButton(
-                  child: const Icon(
-                    Icons.more_vert,
-                    size: 20,
-                  ),
-                  // Callback that sets the selected popup menu item.
-                  onSelected: (mode) {
-                    showDialog(
-                        context: context,
-                        builder: (context) => AdditionalOperationDialog(
-                              operationMode: mode,
-                              screenController: screenController,
-                              controller: controller,
-                            ));
-
-                    controller.setActiveMode(mode);
-                    startAdditionalOperation!(controller, mode);
-                  },
-                  itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                    if (isPlaylistRearrageFeatureRequired)
-                      PopupMenuItem(
-                        value: OperationMode.arrange,
-                        child: Text("reArrangePlaylist".tr),
-                      ),
-                    if (isSongDeletetioFeatureRequired)
-                      PopupMenuItem(
-                        value: OperationMode.delete,
-                        child: Text("removeMultiple".tr),
-                      ),
-                    PopupMenuItem(
-                      value: OperationMode.addToPlaylist,
-                      child: Text("addMultipleSongs".tr),
                     ),
+                    Obx(
+                      () => _customIconButton(
+                        isSelected:
+                            controller.sortType.value == SortType.Name,
+                        icon: Icons.sort_by_alpha,
+                        tooltip: "sortByName".tr,
+                        onPressed: () {
+                          controller.onSortByName(onSort);
+                        },
+                      ),
+                    ),
+                    requiredSortTypes.contains(SortType.Date)
+                        ? Obx(
+                            () => _customIconButton(
+                              isSelected:
+                                  controller.sortType.value == SortType.Date,
+                              icon: Icons.calendar_month,
+                              tooltip: "sortByDate".tr,
+                              onPressed: () {
+                                controller.onSortByDate(onSort);
+                              },
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                    requiredSortTypes.contains(SortType.Duration)
+                        ? Obx(() => _customIconButton(
+                              isSelected: controller.sortType.value ==
+                                  SortType.Duration,
+                              tooltip: "sortByDuration".tr,
+                              icon: Icons.timer,
+                              onPressed: () {
+                                controller.onSortByDuration(onSort);
+                              },
+                            ))
+                        : const SizedBox.shrink(),
+                    const Expanded(child: SizedBox()),
+                    Obx(
+                      () => _customIconButton(
+                        icon: controller.isAscending.value
+                            ? Icons.arrow_downward
+                            : Icons.arrow_upward,
+                        tooltip: "sortAscendNDescend".tr,
+                        onPressed: () {
+                          controller.onAscendNDescend(onSort);
+                        },
+                      ),
+                    ),
+                    if (isImportFeatureRequired)
+                      _customIconButton(
+                        icon: Icons.import_contacts,
+                        tooltip: "importPlaylist".tr,
+                        onPressed: () => _showImportDialog(context),
+                      ),
+                    if (isSearchFeatureRequired)
+                      _customIconButton(
+                        icon: Icons.search,
+                        tooltip: "search".tr,
+                        onPressed: () {
+                          onSearchStart!(tag);
+                          controller.toggleSearch();
+                        },
+                      ),
+                    if (isAdditionalOperationRequired)
+                      PopupMenuButton(
+                        child: const Icon(
+                          Icons.more_vert,
+                          size: 20,
+                        ),
+                        // Callback that sets the selected popup menu item.
+                        onSelected: (mode) {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AdditionalOperationDialog(
+                                    operationMode: mode,
+                                    screenController: screenController,
+                                    controller: controller,
+                                  ));
+                
+                          controller.setActiveMode(mode);
+                          startAdditionalOperation!(controller, mode);
+                        },
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry>[
+                          if (isPlaylistRearrageFeatureRequired)
+                            PopupMenuItem(
+                              value: OperationMode.arrange,
+                              child: Text("reArrangePlaylist".tr),
+                            ),
+                          if (isSongDeletetioFeatureRequired)
+                            PopupMenuItem(
+                              value: OperationMode.delete,
+                              child: Text("removeMultiple".tr),
+                            ),
+                          PopupMenuItem(
+                            value: OperationMode.addToPlaylist,
+                            child: Text("addMultipleSongs".tr),
+                          ),
+                        ],
+                      ),
+                    const SizedBox(
+                      width: 15,
+                    )
                   ],
                 ),
-              const SizedBox(
-                width: 15,
-              )
+              if (controller.isSearchingEnabled.value)
+                Container(
+                  height: 40,
+                  padding: const EdgeInsets.only(left: 5, right: 20),
+                  // color:
+                  //     Theme.of(context).scaffoldBackgroundColor.withAlpha(125),
+                  child: ColoredBox(
+                    color: Theme.of(context)
+                        .scaffoldBackgroundColor
+                        .withAlpha(125),
+                    child: ModifiedTextField(
+                      controller: controller.textEditingController,
+                      textAlignVertical: TextAlignVertical.center,
+                      autofocus: true,
+                      onChanged: (value) {
+                        onSearch!(value, tag);
+                      },
+                      cursorColor:
+                          Theme.of(context).textTheme.titleSmall!.color,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: const EdgeInsets.all(8),
+                        filled: true,
+                        border: const OutlineInputBorder(),
+                        hintText: "search".tr,
+                        suffixIconColor:
+                            Theme.of(context).colorScheme.secondary,
+                        suffixIcon: IconButton(
+                          splashRadius: 10,
+                          iconSize: 20,
+                          icon: const Icon(Icons.cancel),
+                          onPressed: () {
+                            controller.toggleSearch();
+                            onSearchClose!(tag);
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
             ],
           ),
-          if (controller.isSearchingEnabled.value)
-            Container(
-              height: 60,
-              padding:
-                  const EdgeInsets.only(top: 15, bottom: 5, left: 5, right: 20),
-              color: Theme.of(context).canvasColor,
-              child: ModifiedTextField(
-                controller: controller.textEditingController,
-                textAlignVertical: TextAlignVertical.center,
-                autofocus: true,
-                onChanged: (value) {
-                  onSearch!(value, tag);
-                },
-                cursorColor: Theme.of(context).textTheme.titleSmall!.color,
-                decoration: InputDecoration(
-                    isDense: true,
-                    contentPadding: const EdgeInsets.all(8),
-                    filled: true,
-                    border: const OutlineInputBorder(),
-                    hintText: "search".tr,
-                    suffixIconColor: Theme.of(context).colorScheme.secondary,
-                    suffixIcon: IconButton(
-                      splashRadius: 10,
-                      iconSize: 20,
-                      icon: const Icon(Icons.cancel),
-                      onPressed: () {
-                        controller.toggleSearch();
-                        onSearchClose!(tag);
-                      },
-                    )),
-              ),
-            ),
-        ],
+        ),
       ),
+    );
+  }
+
+  Widget _customIconButton({
+    required IconData icon,
+    required String tooltip,
+    bool? isSelected,
+    Function()? onPressed,
+  }) {
+    return IconButton(
+      icon: Icon(icon),
+      padding: const EdgeInsets.all(0),
+      color: isSelected == null || isSelected == true
+          ? Theme.of(Get.context!).textTheme.bodySmall!.color
+          : Theme.of(Get.context!).colorScheme.secondary,
+      iconSize: 20,
+      splashRadius: 20,
+      visualDensity: const VisualDensity(horizontal: -3, vertical: -3),
+      onPressed: onPressed,
+      tooltip: tooltip,
     );
   }
 }

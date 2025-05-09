@@ -247,5 +247,9 @@
     "playingfromPlaylist": "Воспроизвести плейлист",
     "reArrangeSongs": "Переставить песни",
     "selectSongs": "Выбрать песни",
-    "selectAll": "Выбрать всё"
+    "selectAll": "Выбрать всё",
+    "exportPlaylist": "Экспортировать плейлист",
+    "exportingPlaylist": "Экспортируем плейлист...",
+    "playlistExportedMsg": "Плейлист успешно экспортирован в",
+    "exportError": "Ошибка при экспорте плейлиста"
 }

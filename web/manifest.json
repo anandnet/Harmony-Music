@@ -1,6 +1,6 @@
 {
-    "name": "harmonymusic",
-    "short_name": "harmonymusic",
+    "name": "harmony_music",
+    "short_name": "harmony_music",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

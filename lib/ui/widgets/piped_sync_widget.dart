@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/utils/helper.dart';
+import 'package:harmony_music/utils/helper.dart';
 
 import '../screens/Library/library_controller.dart';
 import 'snackbar.dart';

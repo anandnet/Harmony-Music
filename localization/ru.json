@@ -251,5 +251,20 @@
     "exportPlaylist": "Экспортировать плейлист",
     "exportingPlaylist": "Экспортируем плейлист...",
     "playlistExportedMsg": "Плейлист успешно экспортирован в",
-    "exportError": "Ошибка при экспорте плейлиста"
+    "exportError": "Ошибка при экспорте плейлиста",
+    "exportErrorStorage": "Недостаточно места для хранения",
+    "importLargeFileNote": "Примечание: импорт больших плейлистов может занять больше времени",
+    "importPlaylist": "Импортировать плейлист",
+    "importError": "Ошибка при импорте списка воспроизведения",
+    "invalidPlaylistFile": "Недопустимая структура файла плейлиста",
+    "exportErrorPermission": "Разрешение отказано при экспорте",
+    "exportErrorFormat": "Ошибка форматирования данных плейлиста",
+    "importingPlaylist": "Импорт списка воспроизведения...",
+    "importPlaylistDesc": "Выберите ранее экспортированный файл JSON с плейлистом для импорта",
+    "selectFile": "Выбрать файл",
+    "playlistImportedMsg": "Плейлист импортирован успешно",
+    "importErrorFileAccess": "Не удалось получить доступ к выбранному файлу",
+    "importErrorFormat": "Недопустимый формат файла",
+    "importErrorDatabase": "Ошибка при сохранении в базе данных",
+    "fileNotFound": "Файл не найден"
 }

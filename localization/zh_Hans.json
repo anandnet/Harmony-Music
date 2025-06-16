@@ -245,5 +245,22 @@
     "autoOpenPlayerDes": "启用/禁用选择歌曲播放时自动全屏播放器",
     "reArrangeSongs": "重排曲目",
     "selectAll": "全选",
-    "selectSongs": "选择曲目"
+    "selectSongs": "选择曲目",
+    "exportPlaylist": "导出播放列表",
+    "exportingPlaylist": "导出播放列表中……",
+    "playlistExportedMsg": "成功导出播放列表到",
+    "exportError": "导出播放列表出错",
+    "exportErrorPermission": "导出时权限被拒绝",
+    "exportErrorStorage": "存储空间不足",
+    "exportErrorFormat": "格式化播放列表数据出错",
+    "importPlaylist": "导入播放列表",
+    "importingPlaylist": "导入播放列表中……",
+    "importPlaylistDesc": "选择一个已导出的播放列表JSON文件进行导入",
+    "selectFile": "选择文件",
+    "playlistImportedMsg": "播放列表导入成功",
+    "importError": "播放列表导入出错",
+    "importErrorFormat": "无效的文件格式",
+    "importErrorDatabase": "保存到数据库时出错",
+    "fileNotFound": "文件不存在",
+    "importLargeFileNote": "注意：如果当前导入的播放列表包含内容较多，可能需要更长的时间"
 }

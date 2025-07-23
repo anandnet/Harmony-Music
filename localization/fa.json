@@ -108,5 +108,13 @@
     "playingfromPlaylist": "پخش از لیست پخش",
     "playingfromSelection": "پخش از انتخاب شده ها",
     "playingfromArtist": "پخش از ارتیست",
-    "randomSelection": "انتخاب تصادفی"
+    "randomSelection": "انتخاب تصادفی",
+    "reArrangeSongs": "تنظیم مجدد آهنگ‌ ها",
+    "selectSongs": "انتخاب اهنگ ها",
+    "selectAll": "انتخاب همه",
+    "misc": "قیره",
+    "gesture": "علامت",
+    "autoOpenPlayer": "باز کردن خودکار صفحه پخش",
+    "autoOpenPlayerDes": "فعال/غیرفعال کردن باز شدن خودکار به صورت تمام صفحه با انتخاب آهنگ برای پخش",
+    "disableTransitionAnimationDes": "برای غیرفعال کردن انیمیشن انتقال تب این گزینه را فعال کنید"
 }

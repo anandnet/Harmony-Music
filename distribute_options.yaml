@@ -14,3 +14,9 @@ releases:
           target: rpm
           build_args:
             enable-experiment: records
+      - name: release-dev-android
+        package:
+          platform: android
+          target: apk
+          build_args:
+            enable-experiment: records

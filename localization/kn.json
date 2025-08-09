@@ -8,5 +8,12 @@
     "settings": "ಸಂಯೋಜನೆಗಳು",
     "playlists": "ಪಟ್ಟಿಗಳು",
     "favorites": "ಇಷ್ಟವಾದವು",
-    "albums": "ಆಲ್ಬಂಗಳು"
+    "albums": "ಆಲ್ಬಂಗಳು",
+    "album": "ಆಲ್ಬಂ",
+    "noOfflineSong": "ಆಫ್ಲೈನ್ ಹಾಡುಗಳಿಲ್ಲ!",
+    "cachedOrOffline": "ಸಂಗ್ರಹಿಸಲಾಗಿದೆ/ಆಫ್ ಲೈನ್",
+    "downloads": "ಡೌನ್ಲೋಡ್ಗಳು",
+    "emptyPlaylist": "ಖಾಲಿ ಪ್ಲೇಪಟ್ಟಿ!",
+    "enqueueAll": "ಎಲ್ಲವನ್ನೂ ಎನ್ಕ್ಯೂ ಮಾಡಿ",
+    "renamePlaylist": "ಪ್ಲೇಪಟ್ಟಿಯನ್ನು ಮರುಹೆಸರಿಸಿ"
 }

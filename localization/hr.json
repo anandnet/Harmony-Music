@@ -1,1 +1,10 @@
-{}
+{
+    "home": "Početna",
+    "songs": "Pjesme",
+    "playlists": "Playlista",
+    "albums": "Albumi",
+    "album": "Album",
+    "singles": "Singlovi",
+    "artists": "Izvođač",
+    "settings": "Postavke"
+}

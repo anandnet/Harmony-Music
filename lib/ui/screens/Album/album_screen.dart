@@ -7,6 +7,7 @@ import 'package:harmonymusic/models/thumbnail.dart';
 import 'package:harmonymusic/ui/widgets/playlist_album_scroll_behaviour.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:widget_marquee/widget_marquee.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 
 import '../../../services/downloader.dart';
 import '../../player/player_controller.dart';
@@ -495,19 +496,32 @@ class AlbumScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Marquee(
-              delay: const Duration(milliseconds: 300),
-              duration: const Duration(seconds: 5),
-              id: title.hashCode.toString(),
-              child: Text(
-                title.length > 50 ? title.substring(0, 50) : title,
-                maxLines: 1,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(fontSize: 30),
-              ),
-            ),
+            Obx(() {
+              final settingsController = Get.find<SettingsScreenController>();
+              return settingsController.songTitleMarqueeEnabled.isTrue
+                  ? Marquee(
+                      delay: const Duration(milliseconds: 300),
+                      duration: const Duration(seconds: 5),
+                      id: title.hashCode.toString(),
+                      child: Text(
+                        title.length > 50 ? title.substring(0, 50) : title,
+                        maxLines: 1,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(fontSize: 30),
+                      ),
+                    )
+                  : Text(
+                      title.length > 50 ? title.substring(0, 50) : title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .copyWith(fontSize: 30),
+                    );
+            }),
             Text(
               description ?? "",
               maxLines: 1,
@@ -515,17 +529,26 @@ class AlbumScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: Marquee(
-                delay: const Duration(milliseconds: 300),
-                duration: const Duration(seconds: 5),
-                id: artists.hashCode.toString(),
-                child: Text(
-                  artists,
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              ),
-            ),
+              child: Obx(() {
+                final settingsController = Get.find<SettingsScreenController>();
+                return settingsController.songTitleMarqueeEnabled.isTrue
+                    ? Marquee(
+                        delay: const Duration(milliseconds: 300),
+                        duration: const Duration(seconds: 5),
+                        id: artists.hashCode.toString(),
+                        child: Text(
+                          artists,
+                          maxLines: 1,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      )
+                    : Text(
+                        artists,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      );
+              })),
           ],
         ),
       ),

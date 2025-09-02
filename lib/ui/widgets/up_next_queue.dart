@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/player_controller.dart';
 import 'package:widget_marquee/widget_marquee.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 
 import 'image_widget.dart';
 import 'snackbar.dart';
@@ -20,6 +21,7 @@ class UpNextQueue extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final playerController = Get.find<PlayerController>();
+    final settingsController = Get.find<SettingsScreenController>();
     return Container(
       color: Theme.of(context).bottomSheetTheme.backgroundColor,
       child: Obx(() {
@@ -114,17 +116,24 @@ class UpNextQueue extends StatelessWidget {
                         ),
                       ],
                     ),
-                    title: Marquee(
-                      delay: const Duration(milliseconds: 300),
-                      duration: const Duration(seconds: 5),
-                      id: "queue${playerController.currentQueue[index].title.hashCode}",
-                      child: Text(
-                        playerController.currentQueue[index].title,
-                        maxLines: 1,
-                        style:
-                            Theme.of(homeScaffoldContext).textTheme.titleMedium,
-                      ),
-                    ),
+                    title: Obx(() => settingsController.songTitleMarqueeEnabled.isTrue
+                        ? Marquee(
+                            delay: const Duration(milliseconds: 300),
+                            duration: const Duration(seconds: 5),
+                            id: "queue${playerController.currentQueue[index].title.hashCode}",
+                            child: Text(
+                              playerController.currentQueue[index].title,
+                              maxLines: 1,
+                              style:
+                                  Theme.of(homeScaffoldContext).textTheme.titleMedium,
+                            ),
+                          )
+                        : Text(
+                            playerController.currentQueue[index].title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(homeScaffoldContext).textTheme.titleMedium,
+                          )),
                     subtitle: Text(
                       "${playerController.currentQueue[index].artist}",
                       maxLines: 1,

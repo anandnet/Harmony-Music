@@ -304,7 +304,7 @@ class ThemeController extends GetxController {
               cursorColor: Colors.grey[400],
               selectionColor: Colors.grey[400],
               selectionHandleColor: Colors.grey[400]),
-          dialogTheme: DialogTheme(backgroundColor: Colors.grey[200]),
+          dialogTheme: DialogThemeData(backgroundColor: Colors.grey[200]),
           inputDecorationTheme: const InputDecorationTheme(
               focusColor: Colors.black,
               focusedBorder: UnderlineInputBorder(

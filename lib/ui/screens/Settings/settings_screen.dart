@@ -202,6 +202,16 @@ class SettingsScreen extends StatelessWidget {
                                 settingsController.slidableActionEnabled.isTrue,
                             onChanged: settingsController.toggleSlidableAction),
                       )),
+                  ListTile(
+                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                      title: Text("Song Title Marquee"),
+                      subtitle: Text("Toggle scrolling for long titles",
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      trailing: Obx(
+                        () => CustSwitch(
+                            value: settingsController.songTitleMarqueeEnabled.value,
+                            onChanged: settingsController.toggleSongTitleMarquee),
+                      )),
                 ],
               ),
               CustomExpansionTile(

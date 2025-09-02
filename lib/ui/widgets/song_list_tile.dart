@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:widget_marquee/widget_marquee.dart';
+import '../screens/Settings/settings_screen_controller.dart';
 
 import '../../models/playlist.dart';
 import '../player/player_controller.dart';
-import '../screens/Settings/settings_screen_controller.dart';
 import 'add_to_playlist.dart';
 import 'image_widget.dart';
 import 'snackbar.dart';
@@ -33,6 +33,7 @@ class SongListTile extends StatelessWidget with RemoveSongFromPlaylistMixin {
 
   @override
   Widget build(BuildContext context) {
+    final settingsController = Get.find<SettingsScreenController>();
     final playerController = Get.find<PlayerController>();
     return Listener(
         onPointerDown: (PointerDownEvent event) {
@@ -143,18 +144,27 @@ class SongListTile extends StatelessWidget with RemoveSongFromPlaylistMixin {
                     size: 55,
                     song: song,
                   ),
-            title: Marquee(
-              delay: const Duration(milliseconds: 300),
-              duration: const Duration(seconds: 5),
-              id: song.title.hashCode.toString(),
-              child: Text(
-                song.title.length > 50
-                    ? song.title.substring(0, 50)
-                    : song.title,
-                maxLines: 1,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ),
+            title: Obx(() => settingsController.songTitleMarqueeEnabled.isTrue
+                ? Marquee(
+                    delay: const Duration(milliseconds: 300),
+                    duration: const Duration(seconds: 5),
+                    id: song.title.hashCode.toString(),
+                    child: Text(
+                      song.title.length > 50
+                          ? song.title.substring(0, 50)
+                          : song.title,
+                      maxLines: 1,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  )
+                : Text(
+                    song.title.length > 50
+                        ? song.title.substring(0, 50)
+                        : song.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  )),
             subtitle: Text(
               "${song.artist}",
               maxLines: 1,

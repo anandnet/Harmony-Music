@@ -47,6 +47,7 @@ class SettingsScreenController extends GetxController {
   final restorePlaybackSession = false.obs;
   final cacheHomeScreenData = true.obs;
   final currentVersion = "V1.12.0";
+  final songTitleMarqueeEnabled = true.obs;
 
   @override
   void onInit() {
@@ -115,6 +116,7 @@ class SettingsScreenController extends GetxController {
     downloadingFormat.value = setBox.get('downloadingFormat') ?? "m4a";
     discoverContentType.value = setBox.get('discoverContentType') ?? "QP";
     slidableActionEnabled.value = setBox.get('slidableActionEnabled') ?? true;
+    songTitleMarqueeEnabled.value = setBox.get('songTitleMarqueeEnabled') ?? true;
     if (setBox.containsKey("piped")) {
       isLinkedWithPiped.value = setBox.get("piped")['isLoggedIn'];
     }
@@ -176,6 +178,11 @@ class SettingsScreenController extends GetxController {
   void toggleSlidableAction(bool val) {
     setBox.put("slidableActionEnabled", val);
     slidableActionEnabled.value = val;
+  }
+
+  void toggleSongTitleMarquee(bool val) {
+    setBox.put("songTitleMarqueeEnabled", val);
+    songTitleMarqueeEnabled.value = val;
   }
 
   void changeDownloadingFormat(String? val) {

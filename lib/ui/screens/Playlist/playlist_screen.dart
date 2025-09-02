@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:widget_marquee/widget_marquee.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 
 import '/models/playling_from.dart';
 import '/models/thumbnail.dart';
@@ -564,40 +565,66 @@ class PlaylistScreen extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Marquee(
-                                          delay:
-                                              const Duration(milliseconds: 300),
-                                          duration: const Duration(seconds: 5),
-                                          id: title.hashCode.toString(),
-                                          child: Text(
-                                            title.length > 50
-                                                ? title.substring(0, 50)
-                                                : title,
-                                            maxLines: 1,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleLarge!
-                                                .copyWith(fontSize: 30),
-                                          ),
-                                        ),
+                                        Obx(() {
+                                          final settingsController = Get.find<SettingsScreenController>();
+                                          return settingsController.songTitleMarqueeEnabled.isTrue
+                                              ? Marquee(
+                                                  delay:
+                                                      const Duration(milliseconds: 300),
+                                                  duration: const Duration(seconds: 5),
+                                                  id: title.hashCode.toString(),
+                                                  child: Text(
+                                                    title.length > 50
+                                                        ? title.substring(0, 50)
+                                                        : title,
+                                                    maxLines: 1,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleLarge!
+                                                        .copyWith(fontSize: 30),
+                                                  ),
+                                                )
+                                              : Text(
+                                                  title.length > 50
+                                                      ? title.substring(0, 50)
+                                                      : title,
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge!
+                                                      .copyWith(fontSize: 30),
+                                                );
+                                        }),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(top: 8.0),
-                                          child: Marquee(
-                                            delay: const Duration(
-                                                milliseconds: 300),
-                                            duration:
-                                                const Duration(seconds: 5),
-                                            id: description.hashCode.toString(),
-                                            child: Text(
-                                              description ?? "playlist".tr,
-                                              maxLines: 1,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall,
-                                            ),
-                                          ),
-                                        ),
+                                          child: Obx(() {
+                                            final settingsController = Get.find<SettingsScreenController>();
+                                            return settingsController.songTitleMarqueeEnabled.isTrue
+                                                ? Marquee(
+                                                    delay: const Duration(
+                                                        milliseconds: 300),
+                                                    duration:
+                                                        const Duration(seconds: 5),
+                                                    id: description.hashCode.toString(),
+                                                    child: Text(
+                                                      description ?? "playlist".tr,
+                                                      maxLines: 1,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .titleSmall,
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    description ?? "playlist".tr,
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall,
+                                                  );
+                                          })),
                                       ],
                                     ),
                                   ),

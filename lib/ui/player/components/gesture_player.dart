@@ -1,12 +1,12 @@
 import 'dart:ui';
 
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:harmonymusic/ui/player/components/backgroud_image.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:widget_marquee/widget_marquee.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 
 import '../../widgets/songinfo_bottom_sheet.dart';
 import '../../utils/theme_controller.dart';
@@ -21,7 +21,6 @@ class GesturePlayer extends StatelessWidget {
     return Stack(
       children: [
         GestureDetector(
-          /// Full screen Background image is acting as album art
           child: const BackgroudImage(),
           onHorizontalDragEnd: (DragEndDetails details) {
             if (details.primaryVelocity! < 0) {
@@ -100,53 +99,104 @@ class GesturePlayer extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Obx(() {
-                                    return Marquee(
-                                      delay: const Duration(milliseconds: 300),
-                                      duration: const Duration(seconds: 10),
-                                      id: "${playerController.currentSong.value}_title",
-                                      child: Text(
-                                        playerController.currentSong.value !=
-                                                null
-                                            ? playerController
-                                                .currentSong.value!.title
-                                            : "NA",
-                                        textAlign: TextAlign.start,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium!
-                                            .copyWith(
-                                                color: Theme.of(context)
-                                                    .primaryColor
-                                                    .complementaryColor),
-                                      ),
-                                    );
+                                    final settingsController =
+                                        Get.find<SettingsScreenController>();
+                                    return settingsController
+                                            .songTitleMarqueeEnabled.isTrue
+                                        ? Marquee(
+                                            delay: const Duration(
+                                                milliseconds: 300),
+                                            duration:
+                                                const Duration(seconds: 10),
+                                            id: "${playerController.currentSong.value}_title",
+                                            child: Text(
+                                              playerController
+                                                          .currentSong.value !=
+                                                      null
+                                                  ? playerController
+                                                      .currentSong.value!.title
+                                                  : "NA",
+                                              textAlign: TextAlign.start,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor
+                                                          .complementaryColor),
+                                            ),
+                                          )
+                                        : Text(
+                                            playerController
+                                                        .currentSong.value !=
+                                                    null
+                                                ? playerController
+                                                    .currentSong.value!.title
+                                                : "NA",
+                                            textAlign: TextAlign.start,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .copyWith(
+                                                    color: Theme.of(context)
+                                                        .primaryColor
+                                                        .complementaryColor),
+                                          );
                                   }),
                                   const SizedBox(
                                     height: 7,
                                   ),
                                   GetX<PlayerController>(builder: (controller) {
-                                    return Marquee(
-                                      delay: const Duration(milliseconds: 300),
-                                      duration: const Duration(seconds: 10),
-                                      id: "${playerController.currentSong.value}_subtitle",
-                                      child: Text(
-                                        playerController.currentSong.value !=
-                                                null
-                                            ? controller
-                                                .currentSong.value!.artist!
-                                            : "NA",
-                                        textAlign: TextAlign.start,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .copyWith(
-                                                color: Theme.of(context)
-                                                    .primaryColor
-                                                    .complementaryColor,
-                                                fontWeight: FontWeight.normal),
-                                      ),
-                                    );
+                                    final settingsController =
+                                        Get.find<SettingsScreenController>();
+                                    return settingsController
+                                            .songTitleMarqueeEnabled.isTrue
+                                        ? Marquee(
+                                            delay: const Duration(
+                                                milliseconds: 300),
+                                            duration:
+                                                const Duration(seconds: 10),
+                                            id: "${playerController.currentSong.value}_subtitle",
+                                            child: Text(
+                                              playerController
+                                                          .currentSong.value !=
+                                                      null
+                                                  ? controller.currentSong
+                                                      .value!.artist!
+                                                  : "NA",
+                                              textAlign: TextAlign.start,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .primaryColor
+                                                          .complementaryColor,
+                                                      fontWeight:
+                                                          FontWeight.normal),
+                                            ),
+                                          )
+                                        : Text(
+                                            playerController
+                                                        .currentSong.value !=
+                                                    null
+                                                ? controller
+                                                    .currentSong.value!.artist!
+                                                : "NA",
+                                            textAlign: TextAlign.start,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                                    color: Theme.of(context)
+                                                        .primaryColor
+                                                        .complementaryColor,
+                                                    fontWeight:
+                                                        FontWeight.normal),
+                                          );
                                   }),
                                 ]),
                           ),
@@ -172,104 +222,121 @@ class GesturePlayer extends StatelessWidget {
                                               .titleMedium!
                                               .color,
                                         ))),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Obx(() {
-                                      return IconButton(
-                                          splashRadius: 10,
-                                          visualDensity: const VisualDensity(
-                                              horizontal: -4, vertical: -4),
-                                          iconSize: 18,
-                                          onPressed:
-                                              playerController.toggleLoopMode,
-                                          icon: Icon(
-                                            Icons.all_inclusive,
-                                            color: playerController
-                                                    .isLoopModeEnabled.value
-                                                ? Theme.of(context)
-                                                    .textTheme
-                                                    .titleLarge!
-                                                    .color
-                                                : Theme.of(context)
-                                                    .textTheme
-                                                    .titleLarge!
-                                                    .color!
-                                                    .withOpacity(0.2),
-                                          ));
-                                    }),
-                                    IconButton(
-                                      iconSize: 18,
-                                      splashRadius: 10,
-                                      visualDensity: const VisualDensity(
-                                          horizontal: -4, vertical: -4),
-                                      onPressed:
-                                          playerController.toggleShuffleMode,
-                                      icon: Obx(
-                                        () => Icon(
+                                IconButton(
+                                    splashRadius: 10,
+                                    iconSize: 20,
+                                    visualDensity: const VisualDensity(
+                                        horizontal: -4, vertical: -4),
+                                    onPressed:
+                                        playerController.toggleShuffleMode,
+                                    icon: Obx(() => Icon(
                                           Ionicons.shuffle,
-                                          color: playerController
-                                                  .isShuffleModeEnabled.value
-                                              ? Theme.of(context)
-                                                  .textTheme
-                                                  .titleLarge!
-                                                  .color
-                                              : Theme.of(context)
-                                                  .textTheme
-                                                  .titleLarge!
-                                                  .color!
-                                                  .withOpacity(0.2),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
+                                          color:
+                                              playerController
+                                                      .isShuffleModeEnabled
+                                                      .isTrue
+                                                  ? Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge!
+                                                      .color
+                                                  : Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge!
+                                                      .color!
+                                                      .withOpacity(0.2),
+                                        ))),
                               ],
                             ),
-                          ),
+                          )
                         ],
                       ),
-                      const SizedBox(
-                        height: 5,
-                      ),
                       GetX<PlayerController>(builder: (controller) {
-                        return ProgressBar(
-                          thumbRadius: 6,
-                          baseBarColor:
-                              Theme.of(context).sliderTheme.inactiveTrackColor,
-                          bufferedBarColor:
-                              Theme.of(context).sliderTheme.valueIndicatorColor,
-                          progressBarColor:
-                              Theme.of(context).sliderTheme.activeTrackColor,
-                          thumbColor: Theme.of(context).sliderTheme.thumbColor,
-                          timeLabelTextStyle: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .complementaryColor),
-                          progress: controller.progressBarStatus.value.current,
-                          total: controller.progressBarStatus.value.total,
-                          buffered: controller.progressBarStatus.value.buffered,
-                          onSeek: controller.seek,
+                        return SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                              trackHeight: 2,
+                              thumbShape: const RoundSliderThumbShape(
+                                  enabledThumbRadius: 6.0),
+                              overlayShape: const RoundSliderOverlayShape(
+                                  overlayRadius: 10.0)),
+                          child: ProgressBar(
+                            timeLabelLocation: TimeLabelLocation.sides,
+                            timeLabelTextStyle:
+                                Theme.of(context).textTheme.titleSmall,
+                            thumbRadius: 7,
+                            barHeight: 4,
+                            thumbGlowRadius: 15,
+                            baseBarColor: Theme.of(context)
+                                .sliderTheme
+                                .inactiveTrackColor,
+                            bufferedBarColor: Theme.of(context)
+                                .sliderTheme
+                                .valueIndicatorColor,
+                            progressBarColor:
+                                Theme.of(context).sliderTheme.activeTrackColor,
+                            thumbColor:
+                                Theme.of(context).sliderTheme.thumbColor,
+                            progress:
+                                controller.progressBarStatus.value.current,
+                            total: controller.progressBarStatus.value.total,
+                            buffered:
+                                controller.progressBarStatus.value.buffered,
+                            onSeek: controller.seek,
+                          ),
                         );
                       }),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            onTap: (playerController.currentQueue.isEmpty ||
+                                    (playerController.currentQueue.first.id ==
+                                        playerController.currentSong.value?.id))
+                                ? null
+                                : playerController.prev,
+                            child: const Icon(
+                              Icons.skip_previous,
+                              size: 35,
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.secondary,
+                                borderRadius: BorderRadius.circular(10)),
+                            width: 58,
+                            height: 58,
+                            child: const Icon(
+                              Icons.play_arrow,
+                              size: 50,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              final isLastSong = playerController
+                                      .currentQueue.isEmpty ||
+                                  (!(playerController
+                                              .isShuffleModeEnabled.isTrue ||
+                                          playerController
+                                              .isQueueLoopModeEnabled.isTrue) &&
+                                      (playerController.currentQueue.last.id ==
+                                          playerController
+                                              .currentSong.value?.id));
+                              if (!isLastSong) playerController.next();
+                            },
+                            child: Icon(
+                              Icons.skip_next,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .color,
+                              size: 35,
+                            ),
+                          )
+                        ],
+                      ),
                     ]),
                   ),
                 ),
               ),
-            ),
-          ),
-        ),
-        // absorb pointer to prevent the next,prev gesture from being triggered when the user tries to switch app
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: AbsorbPointer(
-            child: SizedBox(
-              height: Get.mediaQuery.padding.bottom + 20,
-              child: Container(),
             ),
           ),
         )

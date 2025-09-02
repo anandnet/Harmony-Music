@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:widget_marquee/widget_marquee.dart';
+import 'package:harmonymusic/ui/screens/Settings/settings_screen_controller.dart';
 
 import '/ui/player/components/animated_play_button.dart';
 import '../player_controller.dart';
@@ -13,6 +14,7 @@ class PlayerControlWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PlayerController playerController = Get.find<PlayerController>();
+    final SettingsScreenController settingsController = Get.find<SettingsScreenController>();
     return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -43,34 +45,52 @@ class PlayerControlWidget extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Marquee(
-                          delay: const Duration(milliseconds: 300),
-                          duration: const Duration(seconds: 10),
-                          id: "${playerController.currentSong.value}_title",
-                          child: Text(
-                            playerController.currentSong.value != null
-                                ? playerController.currentSong.value!.title
-                                : "NA",
-                            textAlign: TextAlign.start,
-                            style: Theme.of(context).textTheme.labelMedium!,
-                          ),
-                        ),
+                        Obx(() => settingsController.songTitleMarqueeEnabled.isTrue
+                            ? Marquee(
+                                delay: const Duration(milliseconds: 300),
+                                duration: const Duration(seconds: 10),
+                                id: "${playerController.currentSong.value}_title",
+                                child: Text(
+                                  playerController.currentSong.value != null
+                                      ? playerController.currentSong.value!.title
+                                      : "NA",
+                                  textAlign: TextAlign.start,
+                                  style: Theme.of(context).textTheme.labelMedium!,
+                                ),
+                              )
+                            : Text(
+                                playerController.currentSong.value != null
+                                    ? playerController.currentSong.value!.title
+                                    : "NA",
+                                textAlign: TextAlign.start,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.labelMedium!,
+                              )),
                         const SizedBox(
                           height: 5,
                         ),
-                        Marquee(
-                          delay: const Duration(milliseconds: 300),
-                          duration: const Duration(seconds: 10),
-                          id: "${playerController.currentSong.value}_subtitle",
-                          child: Text(
-                            playerController.currentSong.value != null
-                                ? playerController.currentSong.value!.artist!
-                                : "NA",
-                            textAlign: TextAlign.start,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.labelSmall,
-                          ),
-                        )
+                        Obx(() => settingsController.songTitleMarqueeEnabled.isTrue
+                            ? Marquee(
+                                delay: const Duration(milliseconds: 300),
+                                duration: const Duration(seconds: 10),
+                                id: "${playerController.currentSong.value}_subtitle",
+                                child: Text(
+                                  playerController.currentSong.value != null
+                                      ? playerController.currentSong.value!.artist!
+                                      : "NA",
+                                  textAlign: TextAlign.start,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                              )
+                            : Text(
+                                playerController.currentSong.value != null
+                                    ? playerController.currentSong.value!.artist!
+                                    : "NA",
+                                textAlign: TextAlign.start,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.labelSmall,
+                              )),
                       ],
                     );
                   }),

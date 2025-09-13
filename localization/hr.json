@@ -6,5 +6,10 @@
     "album": "Album",
     "singles": "Singlovi",
     "artists": "Izvođač",
-    "settings": "Postavke"
+    "settings": "Postavke",
+    "library": "Biblioteka",
+    "libSongs": "Biblioteka pjesama",
+    "libPlaylists": "Prijevod",
+    "libAlbums": "Albumi biblioteke",
+    "libArtists": "Biblioteka izvođača"
 }

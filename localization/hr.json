@@ -11,5 +11,16 @@
     "libSongs": "Biblioteka pjesama",
     "libPlaylists": "Prijevod",
     "libAlbums": "Albumi biblioteke",
-    "libArtists": "Biblioteka izvođača"
+    "libArtists": "Biblioteka izvođača",
+    "networkError1": "Greška mreže!",
+    "retry": "Pokušaj ponovno!",
+    "noOfflineSong": "Nema offline pjesama!",
+    "recentlyPlayed": "Nedavno pušteno",
+    "favorites": "Favoriti",
+    "downloads": "Preuzimanja",
+    "emptyPlaylist": "Playlista je prazna!",
+    "removePlaylist": "Ukloni playlistu",
+    "CreateNewPlaylist": "Napravi novu playlistu",
+    "selectSongs": "Odaberi pjesme",
+    "selectAll": "Odaberi sve"
 }

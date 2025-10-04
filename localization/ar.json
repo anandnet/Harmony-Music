@@ -230,5 +230,12 @@
     "restartApp": "إعادة تشغيل التطبيق",
     "autoDownFavSong": "تنزيل الأغاني المفضلة تلقائيًا",
     "duration": "مدة",
-    "urlSearchDes": "تم العثور على رابط، انقر عليه لفتح/تشغيل المحتوى المرتبط"
+    "urlSearchDes": "تم العثور على رابط، انقر عليه لفتح/تشغيل المحتوى المرتبط",
+    "album": "البوم",
+    "reArrangeSongs": "إعادة ترتيب الأغاني",
+    "selectSongs": "اختر الأغاني",
+    "selectAll": "حدد الكل",
+    "playingfromAlbum": "اللعب من الألبوم",
+    "playingfromPlaylist": "التشغيل من قائمة التشغيل",
+    "playingfromSelection": "اللعب من المختارة"
 }

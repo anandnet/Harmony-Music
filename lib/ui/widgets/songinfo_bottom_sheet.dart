@@ -446,7 +446,9 @@ mixin RemoveSongFromPlaylistMixin {
     }
 
     if (playlist.playlistId == "SongDownloads" ||
-        playlist.playlistId == "SongsCache") return;
+        playlist.playlistId == "SongsCache") {
+      return;
+    }
     box.close();
   }
 }

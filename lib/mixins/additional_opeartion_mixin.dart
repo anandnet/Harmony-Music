@@ -66,9 +66,9 @@ mixin AdditionalOpeartionMixin on PlaylistAlbumScreenControllerBase {
   }
 
   @override
-  void selectAll(bool selected) {
+  void selectAll(bool selectAll) {
     for (int i = 0; i < additionalOperationTempList.length; i++) {
-      additionalOperationTempMap[i] = selected;
+      additionalOperationTempMap[i] = selectAll;
     }
   }
 

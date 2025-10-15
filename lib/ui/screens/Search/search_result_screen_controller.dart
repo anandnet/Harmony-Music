@@ -53,7 +53,7 @@ class SearchResultScreenController extends GetxController
       final tabName = railItems[value - 1];
       final itemCount = (tabName == 'Songs' || tabName == 'Videos') ? 25 : 10;
       final x = await musicServices.search(queryString.value,
-          filter: tabName.replaceAll(" ", "_").toLowerCase(), limit: itemCount);
+          filter: tabName.replaceAll(" ", "_").toLowerCase(), limit: itemCount, filterParams: resultContent['searchEndpoint'][tabName]);
       separatedResultContent[tabName] = x[tabName];
       additionalParamNext[tabName] = x['params'];
       isSeparatedResultContentFetced.value = true;

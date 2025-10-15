@@ -75,6 +75,7 @@ class ArtistScreenController extends GetxController
   Future<void> _fetchArtistContent(String id) async {
     artistData.value = await musicServices.getArtist(id);
     artistData["Singles"] = artistData["Singles & EPs"];
+    artistData["Songs"] = artistData["Top songs"];
     isArtistContentFetced.value = true;
     //inspect(artistData.value);
     final data = artistData;

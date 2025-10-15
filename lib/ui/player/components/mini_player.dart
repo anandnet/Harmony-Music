@@ -24,6 +24,7 @@ class MiniPlayer extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final isWideScreen = size.width > 800;
     final bottomNavEnabled = Get.find<SettingsScreenController>().isBottomNavBarEnabled.isTrue;
+    final settingsController = Get.find<SettingsScreenController>();
     return Obx(() {
       return Visibility(
         visible: playerController.isPlayerpanelTopVisible.value,
@@ -140,22 +141,27 @@ class MiniPlayer extends StatelessWidget {
                                   ),
                                   SizedBox(
                                     height: 20,
-                                    child: Marquee(
-                                      id: "${playerController.currentSong.value}_mini",
-                                      delay: const Duration(milliseconds: 300),
-                                      duration: const Duration(seconds: 5),
-                                      child: Text(
-                                        playerController.currentSong.value !=
-                                                null
-                                            ? playerController
-                                                .currentSong.value!.artist!
-                                            : "",
-                                        maxLines: 1,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall,
-                                      ),
-                                    ),
+                                    child: Obx(() => settingsController.songTitleMarqueeEnabled.isTrue
+                                        ? Marquee(
+                                            id: "${playerController.currentSong.value}_mini",
+                                            delay: const Duration(milliseconds: 300),
+                                            duration: const Duration(seconds: 5),
+                                            child: Text(
+                                              playerController.currentSong.value != null
+                                                  ? playerController.currentSong.value!.artist!
+                                                  : "",
+                                              maxLines: 1,
+                                              style: Theme.of(context).textTheme.titleSmall,
+                                            ),
+                                          )
+                                        : Text(
+                                            playerController.currentSong.value != null
+                                                ? playerController.currentSong.value!.artist!
+                                                : "",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: Theme.of(context).textTheme.titleSmall,
+                                          )),
                                   ),
                                 ],
                               ),

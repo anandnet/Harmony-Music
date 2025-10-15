@@ -1,3 +1,7 @@
+## 1.12.1
+* Fixed Search issue
+* Fixed Artist-song content
+
 ## 1.12.0
 * Redesigned Album & Playlist screen
 * Added Basic Interface for Android Auto #496 #492 #427 #111

@@ -1,0 +1,2 @@
+* Fixed Search issue
+* Fixed Artist-song content

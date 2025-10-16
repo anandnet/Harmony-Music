@@ -1,8 +1,12 @@
 # Closing Search-Related Issues - Instructions for Maintainer
 
+## ⚠️ ACTION REQUIRED
+
+This document provides instructions for closing 23 search-related issues that were fixed in v1.12.1.
+
 ## Background
 
-Version v1.12.1 was released on October 16, 2025, which fixes the search functionality issue that many users reported.
+Version v1.12.1 was released on October 16, 2025, which fixes the search functionality issue that many users reported. Users need to be notified to update to this version.
 
 ## Issues to Close
 

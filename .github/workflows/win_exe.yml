@@ -12,6 +12,10 @@ jobs:
         with:
           channel: 'stable'
           flutter-version: '3.24.2'
+      
+      - name: Install Inno Setup 6
+        run: |
+          choco install innosetup --version=6.2.2 --yes
 
       - name: Update lang data
         working-directory: "${{ github.workspace }}"

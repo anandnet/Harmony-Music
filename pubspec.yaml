@@ -48,6 +48,7 @@ dependencies:
   google_fonts: ^6.1.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  html: ^0.15.6
   ionicons: ^0.2.2
   jni: ^0.14.0
   just_audio: ^0.9.46

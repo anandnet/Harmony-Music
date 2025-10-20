@@ -393,6 +393,163 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
     }
   }
 
+  Future<void> exportPlaylistToCsv(BuildContext context) async {
+    if (!await PermissionService.getExtStoragePermission()) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(snackbar(
+            context, "permissionDenied".tr,
+            size: SanckBarSize.MEDIUM));
+      }
+      return;
+    }
+
+    try {
+      isExporting.value = true;
+      exportProgress.value = 0.1;
+
+      // Show progress dialog
+      if (context.mounted) {
+        _showProgressDialog(context, "exportingPlaylist".tr);
+      }
+
+      // Get appropriate directory based on platform
+      final Directory exportDir = await _getExportDirectory();
+      exportProgress.value = 0.2;
+
+      // Build CSV content
+      final csvContent = _generateCsvContent();
+      exportProgress.value = 0.5;
+
+      // Generate filename with playlist name
+      final sanitizedName =
+          playlist.value.title.replaceAll(RegExp(r'[^\w\s]+'), '_');
+
+      // Find available filename with incremental suffix if needed
+      String filename = "$sanitizedName.csv";
+      String filePath = "${exportDir.path}/$filename";
+      File file = File(filePath);
+
+      int counter = 1;
+      while (await file.exists()) {
+        filename = "${sanitizedName}_$counter.csv";
+        filePath = "${exportDir.path}/$filename";
+        file = File(filePath);
+        counter++;
+      }
+
+      exportProgress.value = 0.7;
+
+      // Write CSV to file
+      await file.writeAsString(csvContent);
+      exportProgress.value = 1.0;
+
+      // Close progress dialog if it's still open
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
+
+      // Show success message with platform-specific path info
+      String locationMsg = _getLocationMessage(exportDir.path);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(snackbar(
+            context, "${"playlistExportedMsg".tr}: $locationMsg",
+            size: SanckBarSize.MEDIUM));
+      }
+    } catch (e) {
+      // Close progress dialog if it's still open
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
+
+      printERROR("Error exporting playlist to CSV: $e");
+      
+      String errorMsg = "exportError".tr;
+      if (e is FileSystemException) {
+        if (e.osError?.errorCode == 13) {
+          errorMsg = "exportErrorPermission".tr;
+        } else if (e.osError?.errorCode == 28) {
+          errorMsg = "exportErrorStorage".tr;
+        }
+      } else if (e is FormatException) {
+        errorMsg = "exportErrorFormat".tr;
+      }
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            snackbar(context, errorMsg, size: SanckBarSize.MEDIUM));
+      }
+    } finally {
+      isExporting.value = false;
+      exportProgress.value = 0.0;
+    }
+  }
+
+  String _generateCsvContent() {
+    final buffer = StringBuffer();
+    
+    // CSV Header
+    buffer.writeln('PlaylistBrowseId,PlaylistName,MediaId,Title,Artists,Duration,ThumbnailUrl,AlbumId,AlbumTitle,ArtistId');
+    
+    // CSV Rows - one for each song
+    for (final song in songList) {
+      final playlistBrowseId = _escapeCsvField(playlist.value.playlistId);
+      final playlistName = _escapeCsvField(playlist.value.title);
+      final mediaId = _escapeCsvField(song.id);
+      final title = _escapeCsvField(song.title);
+      
+      // Extract artists as comma-separated string
+      final artistsList = song.extras?['artists'] as List?;
+      final artists = artistsList != null
+          ? _escapeCsvField(artistsList.map((a) => a['name']).join(', '))
+          : '';
+      
+      // Format duration as HH:MM:SS or MM:SS
+      final duration = song.duration != null
+          ? _formatDuration(song.duration!)
+          : '';
+      
+      final thumbnailUrl = _escapeCsvField(song.artUri.toString());
+      
+      // Extract album information
+      final albumData = song.extras?['album'] as Map?;
+      final albumId = albumData != null ? _escapeCsvField(albumData['id'] ?? '') : '';
+      final albumTitle = albumData != null ? _escapeCsvField(albumData['name'] ?? '') : '';
+      
+      // Extract artist ID (first artist)
+      final artistId = artistsList != null && artistsList.isNotEmpty
+          ? _escapeCsvField(artistsList[0]['id'] ?? '')
+          : '';
+      
+      buffer.writeln('$playlistBrowseId,$playlistName,$mediaId,$title,$artists,$duration,$thumbnailUrl,$albumId,$albumTitle,$artistId');
+    }
+    
+    return buffer.toString();
+  }
+
+  String _escapeCsvField(String field) {
+    // Escape double quotes by doubling them
+    String escaped = field.replaceAll('"', '""');
+    
+    // If field contains comma, newline, or double quote, wrap in quotes
+    if (escaped.contains(',') || escaped.contains('\n') || escaped.contains('"')) {
+      escaped = '"$escaped"';
+    }
+    
+    return escaped;
+  }
+
+  String _formatDuration(Duration duration) {
+    final hours = duration.inHours;
+    final minutes = duration.inMinutes.remainder(60);
+    final seconds = duration.inSeconds.remainder(60);
+    
+    if (hours > 0) {
+      return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+    } else {
+      return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+    }
+  }
+
   // Helper method to get the appropriate export directory for each platform
   Future<Directory> _getExportDirectory() async {
     Directory directory;

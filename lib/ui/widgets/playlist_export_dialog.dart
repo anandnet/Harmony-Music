@@ -128,7 +128,7 @@ class PlaylistExportDialog extends StatelessWidget {
 
   Future<void> _copyYouTubeMusicLink() async {
     final videoIds = controller.songList.map((song) => song.id).join(',');
-    final url = 'https://music.youtube.com/watch_videos?video_ids=$videoIds';
+    final url = 'https://www.youtube.com/watch_videos?video_ids=$videoIds';
     final ytmUrl = await _generateYTMUrl(url);
 
     Clipboard.setData(ClipboardData(text: ytmUrl ?? url)).then((_) {

@@ -118,7 +118,7 @@ flutter test
 1. **No Login Required**: The app operates without user authentication
 2. **Ad-Free**: No advertisement integration
 3. **GPL v3.0 License**: Code must remain open source
-4. **YouTube Content**: Be mindful of copyright and content usage
+4. **Third Party Content**: Be mindful of copyright and content usage
 5. **Cross-Platform**: Changes should consider all target platforms (Android, Windows, Linux)
 6. **Offline Support**: App caches songs and supports offline playback
 7. **Background Playback**: Audio service integration for background music

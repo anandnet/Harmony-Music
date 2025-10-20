@@ -1,7 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:html/parser.dart' as html_parser;
 
 import '/ui/screens/Playlist/playlist_screen_controller.dart';
 import 'common_dialog_widget.dart';
@@ -89,21 +91,47 @@ class PlaylistExportDialog extends StatelessWidget {
     );
   }
 
-  void _openInYouTubeMusic() {
+  Future<void> _openInYouTubeMusic() async {
     final videoIds = controller.songList.map((song) => song.id).join(',');
-    final url = 'https://music.youtube.com/watch_videos?video_ids=$videoIds';
-    
+    final url = 'https://www.youtube.com/watch_videos?video_ids=$videoIds';
+    final ytmUrl = await _generateYTMUrl(url);
+
     launchUrl(
-      Uri.parse(url),
+      Uri.parse(ytmUrl ?? url),
       mode: LaunchMode.externalApplication,
     );
   }
 
-  void _copyYouTubeMusicLink() {
+  Future<String?> _generateYTMUrl(String ytSimpleUrl) async {
+    if (controller.generatedYtmPlaylistUrl.isNotEmpty) {
+      return controller.generatedYtmPlaylistUrl;
+    }
+
+    try {
+      final x = (await Dio().get(ytSimpleUrl)).data;
+      final document = html_parser.parse(x);
+
+      // Find the <link> element with rel="canonical"
+      final canonicalLink = document.querySelector('link[rel="canonical"]');
+
+      // Extract its href attribute
+      String? href = canonicalLink?.attributes['href'];
+      href = href?.replaceAll('www', 'music');
+      if (href != null) {
+        controller.generatedYtmPlaylistUrl = href;
+        return href;
+      }
+      // ignore: empty_catches
+    } catch (e) {}
+    return null;
+  }
+
+  Future<void> _copyYouTubeMusicLink() async {
     final videoIds = controller.songList.map((song) => song.id).join(',');
     final url = 'https://music.youtube.com/watch_videos?video_ids=$videoIds';
-    
-    Clipboard.setData(ClipboardData(text: url)).then((_) {
+    final ytmUrl = await _generateYTMUrl(url);
+
+    Clipboard.setData(ClipboardData(text: ytmUrl ?? url)).then((_) {
       if (parentContext.mounted) {
         ScaffoldMessenger.of(parentContext).showSnackBar(
           snackbar(

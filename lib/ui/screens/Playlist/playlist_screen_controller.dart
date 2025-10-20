@@ -38,6 +38,7 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
   final isExporting = false.obs;
   final exportProgress = 0.0.obs;
 
+  String generatedYtmPlaylistUrl = '';
 
   // Title animation
 

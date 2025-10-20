@@ -268,5 +268,12 @@
     "importErrorFormat": "Format de fichier invalide",
     "invalidPlaylistFile": "Structure de fichier de playlist non valide",
     "importErrorDatabase": "Erreur lors de l'enregistrement dans la base de données",
-    "fileNotFound": "Fichier introuvable"
+    "fileNotFound": "Fichier introuvable",
+    "exportPlaylistCsv": "Exporter la playlist au format CSV",
+    "exportPlaylistJson": "Exporter la playlist au format JSON",
+    "exportPlaylistJsonSubtitle": "Ce format peut être importé",
+    "exportPlaylistCsvSubtitle": "Ne peut pas être importé ici",
+    "exportToYouTubeMusic": "Exporter vers YouTube Music",
+    "exportToYouTubeMusicSubtitle": "Cela poussera votre playlist (titres < 50) vers la file d'attente actuelle. N'oubliez pas de l'ajouter à la playlist/de l'enregistrer après l'ouverture dans YouTube Music",
+    "linkCopied": "Lien copié dans le presse-papiers"
 }

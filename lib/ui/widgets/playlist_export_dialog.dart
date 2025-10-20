@@ -11,9 +11,11 @@ class PlaylistExportDialog extends StatelessWidget {
   const PlaylistExportDialog({
     super.key,
     required this.controller,
+    required this.parentContext,
   });
 
   final PlaylistScreenController controller;
+  final BuildContext parentContext;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class PlaylistExportDialog extends StatelessWidget {
               subtitle: "exportPlaylistJsonSubtitle".tr,
               onTap: () {
                 Navigator.of(context).pop();
-                controller.exportPlaylistToJson(context);
+                controller.exportPlaylistToJson(parentContext);
               },
             ),
             const SizedBox(height: 12),
@@ -51,7 +53,7 @@ class PlaylistExportDialog extends StatelessWidget {
               subtitle: "exportPlaylistCsvSubtitle".tr,
               onTap: () {
                 Navigator.of(context).pop();
-                controller.exportPlaylistToCsv(context);
+                controller.exportPlaylistToCsv(parentContext);
               },
             ),
             const SizedBox(height: 12),
@@ -62,11 +64,11 @@ class PlaylistExportDialog extends StatelessWidget {
               subtitle: "exportToYouTubeMusicSubtitle".tr,
               onMainTap: () {
                 Navigator.of(context).pop();
-                _openInYouTubeMusic(context);
+                _openInYouTubeMusic();
               },
               onCopyTap: () {
                 Navigator.of(context).pop();
-                _copyYouTubeMusicLink(context);
+                _copyYouTubeMusicLink();
               },
             ),
             const SizedBox(height: 20),
@@ -87,7 +89,7 @@ class PlaylistExportDialog extends StatelessWidget {
     );
   }
 
-  void _openInYouTubeMusic(BuildContext context) {
+  void _openInYouTubeMusic() {
     final videoIds = controller.songList.map((song) => song.id).join(',');
     final url = 'https://www.youtube.com/watch_videos?video_ids=$videoIds';
     
@@ -97,15 +99,15 @@ class PlaylistExportDialog extends StatelessWidget {
     );
   }
 
-  void _copyYouTubeMusicLink(BuildContext context) {
+  void _copyYouTubeMusicLink() {
     final videoIds = controller.songList.map((song) => song.id).join(',');
     final url = 'https://www.youtube.com/watch_videos?video_ids=$videoIds';
     
     Clipboard.setData(ClipboardData(text: url)).then((_) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
+      if (parentContext.mounted) {
+        ScaffoldMessenger.of(parentContext).showSnackBar(
           snackbar(
-            context,
+            parentContext,
             "linkCopied".tr,
             size: SanckBarSize.MEDIUM,
           ),

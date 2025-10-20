@@ -263,5 +263,6 @@
     "playlistImportedMsg": "Esitusloendi importimine õnnestus",
     "importErrorFileAccess": "Valitud failile puudus ligipääs",
     "importErrorDatabase": "Viga salvestamisel andmebaasi",
-    "fileNotFound": "Faili ei leidu"
+    "fileNotFound": "Faili ei leidu",
+    "exportPlaylistCsv": "Ekspordi esitusloend CSV-failina"
 }

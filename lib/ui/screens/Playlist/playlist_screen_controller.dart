@@ -492,7 +492,10 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
     
     // CSV Rows - one for each song
     for (final song in songList) {
-      final playlistBrowseId = _escapeCsvField(playlist.value.playlistId);
+      // Keep playlistBrowseId blank for offline/piped playlists
+      final playlistBrowseId = (!playlist.value.isCloudPlaylist || playlist.value.isPipedPlaylist)
+          ? ''
+          : _escapeCsvField(playlist.value.playlistId);
       final playlistName = _escapeCsvField(playlist.value.title);
       final mediaId = _escapeCsvField(song.id);
       final title = _escapeCsvField(song.title);

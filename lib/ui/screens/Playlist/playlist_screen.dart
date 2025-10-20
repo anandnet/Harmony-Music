@@ -532,9 +532,10 @@ class PlaylistScreen extends StatelessWidget {
                                             onPressed: () {
                                               showDialog(
                                                 context: context,
-                                                builder: (context) =>
+                                                builder: (dialogContext) =>
                                                     PlaylistExportDialog(
                                                   controller: playlistController,
+                                                  parentContext: context,
                                                 ),
                                               );
                                             },

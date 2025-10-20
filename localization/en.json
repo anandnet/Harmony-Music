@@ -269,6 +269,6 @@
   "exportPlaylistJsonSubtitle": "This format can be imported",
   "exportPlaylistCsvSubtitle": "Can't be imported here",
   "exportToYouTubeMusic": "Export to Youtube music",
-  "exportToYouTubeMusicSubtitle": "Don't forget to add to playlist after opening in YtMusic",
+  "exportToYouTubeMusicSubtitle": "It will push your playlist (songs < 50) to current queue, don't forget to add to playlist/save after opening in YtMusic",
   "linkCopied": "Link copied to clipboard"
 }

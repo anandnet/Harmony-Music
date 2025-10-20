@@ -91,7 +91,7 @@ class PlaylistExportDialog extends StatelessWidget {
 
   void _openInYouTubeMusic() {
     final videoIds = controller.songList.map((song) => song.id).join(',');
-    final url = 'https://www.youtube.com/watch_videos?video_ids=$videoIds';
+    final url = 'https://music.youtube.com/watch_videos?video_ids=$videoIds';
     
     launchUrl(
       Uri.parse(url),
@@ -101,7 +101,7 @@ class PlaylistExportDialog extends StatelessWidget {
 
   void _copyYouTubeMusicLink() {
     final videoIds = controller.songList.map((song) => song.id).join(',');
-    final url = 'https://www.youtube.com/watch_videos?video_ids=$videoIds';
+    final url = 'https://music.youtube.com/watch_videos?video_ids=$videoIds';
     
     Clipboard.setData(ClipboardData(text: url)).then((_) {
       if (parentContext.mounted) {

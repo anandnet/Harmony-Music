@@ -246,6 +246,7 @@
   "closeApp": "Close App",
   "restartApp": "Restart App",
   "exportPlaylist": "Export Playlist",
+  "exportPlaylistCsv": "Export Playlist as CSV",
   "exportingPlaylist": "Exporting playlist...",
   "playlistExportedMsg": "Playlist exported successfully to",
   "exportError": "Error exporting playlist",

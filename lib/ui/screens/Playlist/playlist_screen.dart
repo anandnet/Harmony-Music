@@ -532,14 +532,13 @@ class PlaylistScreen extends StatelessWidget {
                                             icon: const Icon(Icons.save),
                                             tooltip: "exportPlaylist".tr,
                                           ),
-                                          // CSV export button for offline playlists
-                                          if (playlistController.isDownloaded.isTrue)
-                                            IconButton(
-                                              onPressed: () => playlistController
-                                                  .exportPlaylistToCsv(context),
-                                              icon: const Icon(Icons.table_chart),
-                                              tooltip: "exportPlaylistCsv".tr,
-                                            ),
+                                          // CSV export button
+                                          IconButton(
+                                            onPressed: () => playlistController
+                                                .exportPlaylistToCsv(context),
+                                            icon: const Icon(Icons.table_chart),
+                                            tooltip: "exportPlaylistCsv".tr,
+                                          ),
                                         ],
                                       ),
                                     ),

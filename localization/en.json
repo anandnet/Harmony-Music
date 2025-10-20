@@ -264,5 +264,11 @@
   "invalidPlaylistFile": "Invalid playlist file structure",
   "importErrorDatabase": "Error saving to database",
   "fileNotFound": "File not found",
-  "importLargeFileNote": "Note: Large playlists may take longer to import"
+  "importLargeFileNote": "Note: Large playlists may take longer to import",
+  "exportPlaylistJson": "Export playlist to JSON",
+  "exportPlaylistJsonSubtitle": "This format can be imported",
+  "exportPlaylistCsvSubtitle": "Can't be imported here",
+  "exportToYouTubeMusic": "Export to Youtube music",
+  "exportToYouTubeMusicSubtitle": "Don't forget to add to playlist after opening in YtMusic",
+  "linkCopied": "Link copied to clipboard"
 }

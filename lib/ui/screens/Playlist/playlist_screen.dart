@@ -13,6 +13,7 @@ import '../../navigator.dart';
 import '../../player/player_controller.dart';
 import '../../widgets/create_playlist_dialog.dart';
 import '../../widgets/loader.dart';
+import '../../widgets/playlist_export_dialog.dart';
 import '../../widgets/snackbar.dart';
 import '../../widgets/song_list_tile.dart';
 import '../../widgets/songinfo_bottom_sheet.dart';
@@ -526,18 +527,19 @@ class PlaylistScreen extends StatelessWidget {
                                                 size: 20,
                                               ),
                                             ),
+                                          // Export button - opens export dialog
                                           IconButton(
-                                            onPressed: () => playlistController
-                                                .exportPlaylistToJson(context),
-                                            icon: const Icon(Icons.save),
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    PlaylistExportDialog(
+                                                  controller: playlistController,
+                                                ),
+                                              );
+                                            },
+                                            icon: const Icon(Icons.file_upload),
                                             tooltip: "exportPlaylist".tr,
-                                          ),
-                                          // CSV export button
-                                          IconButton(
-                                            onPressed: () => playlistController
-                                                .exportPlaylistToCsv(context),
-                                            icon: const Icon(Icons.table_chart),
-                                            tooltip: "exportPlaylistCsv".tr,
                                           ),
                                         ],
                                       ),

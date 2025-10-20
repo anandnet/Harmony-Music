@@ -489,7 +489,7 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
     final buffer = StringBuffer();
     
     // CSV Header
-    buffer.writeln('PlaylistBrowseId,PlaylistName,MediaId,Title,Artists,Duration,ThumbnailUrl,AlbumId,AlbumTitle,ArtistId');
+    buffer.writeln('PlaylistBrowseId,PlaylistName,MediaId,Title,Artists,Duration,ThumbnailUrl,AlbumId,AlbumTitle,ArtistIds');
     
     // CSV Rows - one for each song
     for (final song in songList) {
@@ -519,12 +519,12 @@ class PlaylistScreenController extends PlaylistAlbumScreenControllerBase
       final albumId = albumData != null ? _escapeCsvField(albumData['id'] ?? '') : '';
       final albumTitle = albumData != null ? _escapeCsvField(albumData['name'] ?? '') : '';
       
-      // Extract artist ID (first artist)
-      final artistId = artistsList != null && artistsList.isNotEmpty
-          ? _escapeCsvField(artistsList[0]['id'] ?? '')
+      // Extract all artist IDs (comma-separated)
+      final artistIds = artistsList != null && artistsList.isNotEmpty
+          ? _escapeCsvField(artistsList.map((a) => a['id'] ?? '').join(','))
           : '';
       
-      buffer.writeln('$playlistBrowseId,$playlistName,$mediaId,$title,$artists,$duration,$thumbnailUrl,$albumId,$albumTitle,$artistId');
+      buffer.writeln('$playlistBrowseId,$playlistName,$mediaId,$title,$artists,$duration,$thumbnailUrl,$albumId,$albumTitle,$artistIds');
     }
     
     return buffer.toString();

@@ -1989,6 +1989,7 @@ Map<String, Map<String, String>> get keys => {
   "closeApp": "Close App",
   "restartApp": "Restart App",
   "exportPlaylist": "Export Playlist",
+  "exportPlaylistCsv": "Export Playlist as CSV",
   "exportingPlaylist": "Exporting playlist...",
   "playlistExportedMsg": "Playlist exported successfully to",
   "exportError": "Error exporting playlist",
@@ -2006,7 +2007,13 @@ Map<String, Map<String, String>> get keys => {
   "invalidPlaylistFile": "Invalid playlist file structure",
   "importErrorDatabase": "Error saving to database",
   "fileNotFound": "File not found",
-  "importLargeFileNote": "Note: Large playlists may take longer to import"
+  "importLargeFileNote": "Note: Large playlists may take longer to import",
+  "exportPlaylistJson": "Export playlist to JSON",
+  "exportPlaylistJsonSubtitle": "This format can be imported",
+  "exportPlaylistCsvSubtitle": "Can't be imported here",
+  "exportToYouTubeMusic": "Export to Youtube music",
+  "exportToYouTubeMusicSubtitle": "It will push your playlist (songs < 50) to current queue, don't forget to add to playlist/save after opening in YtMusic",
+  "linkCopied": "Link copied to clipboard"
 }
 ,"eo" : {
     "renamePlaylist": "Alinomi Ludliston",

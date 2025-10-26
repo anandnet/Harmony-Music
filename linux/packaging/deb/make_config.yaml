@@ -1,7 +1,7 @@
-display_name: Harmony Music
-package_name: harmonymusic
+display_name: Ensound
+package_name: Ensound
 maintainer:
-  name: anandnet
+  name: kunalbiz18
 priority: optional
 section: x11
 installed_size: 20000

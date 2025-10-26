@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/models/album.dart';
-import 'package:harmonymusic/models/artist.dart';
+import 'package:Ensound/models/album.dart';
+import 'package:Ensound/models/artist.dart';
 
-import 'package:harmonymusic/ui/screens/Artists/artist_screen.dart';
-import 'package:harmonymusic/ui/screens/Home/home_screen.dart';
+import 'package:Ensound/ui/screens/Artists/artist_screen.dart';
+import 'package:Ensound/ui/screens/Home/home_screen.dart';
 
 import 'screens/Album/album_screen.dart';
 import 'screens/Playlist/playlist_screen.dart';

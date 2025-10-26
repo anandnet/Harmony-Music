@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/ui/utils/theme_controller.dart';
+import 'package:Ensound/ui/utils/theme_controller.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../player_controller.dart';

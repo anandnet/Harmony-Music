@@ -1,15 +1,15 @@
 [Setup]
 AppId=B9F6E402-0CAE-4045-BDE6-14BD6C39C4EA
 AppVersion=1.12.1+26
-AppName=Harmony Music
-AppPublisher=anandnet
-AppPublisherURL=https://github.com/anandnet/Harmony-Music
-AppSupportURL=https://github.com/anandnet/Harmony-Music
-AppUpdatesURL=https://github.com/anandnet/Harmony-Music
-DefaultDirName={autopf}\harmonymusic
+AppName=Ensound
+AppPublisher=kunalbiz18
+AppPublisherURL=https://github.com/kunalbiz18/Ensound
+AppSupportURL=https://github.com/kunalbiz18/Ensound
+AppUpdatesURL=https://github.com/kunalbiz18/Ensound
+DefaultDirName={autopf}\Ensound
 DisableProgramGroupPage=yes
 OutputDir=.
-OutputBaseFilename=harmonymusic-1.12.1
+OutputBaseFilename=Ensound-1.12.1
 Compression=lzma
 SolidCompression=yes
 SetupIconFile=..\..\windows\runner\resources\app_icon.ico
@@ -26,13 +26,13 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\..\build\windows\x64\runner\Release\harmonymusic.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\build\windows\x64\runner\Release\Ensound.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{autoprograms}\Harmony Music"; Filename: "{app}\harmonymusic.exe"
-Name: "{autodesktop}\Harmony Music"; Filename: "{app}\harmonymusic.exe"; Tasks: desktopicon
+Name: "{autoprograms}\Ensound"; Filename: "{app}\Ensound.exe"
+Name: "{autodesktop}\Ensound"; Filename: "{app}\Ensound.exe"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\harmonymusic.exe"; Description: "{cm:LaunchProgram,{#StringChange('Harmony Music', '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\Ensound.exe"; Description: "{cm:LaunchProgram,{#StringChange('Ensound', '&', '&&')}}"; Flags: nowait postinstall skipifsilent

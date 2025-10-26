@@ -711,9 +711,9 @@ List<dynamic> parseSearchResults(List<dynamic> results,
 }
 
 dynamic parseSearchResult(Map<String, dynamic> data,
-    List<String> searchResultTypes, String? resultType, String category) {
+    List<String> searchResultTypes, String? resultType, String? category) {
   if ((resultType != null && resultType.contains("playlist")) ||
-      category.contains("playlists")) {
+      category!.contains("playlists")) {
     resultType = 'playlist';
   }
   int defaultOffset = (resultType == null) ? 2 : 0;

@@ -433,13 +433,13 @@ packages:
     source: hosted
     version: "1.1.0"
   html:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: html
-      sha256: "1fc58edeaec4307368c60d59b7e15b9d658b57d7f3125098b6294153c75337ec"
+      sha256: "6d1264f2dffa1b1101c25a91dff0dc2daee4c18e87cd8538729773c073dbf602"
       url: "https://pub.dev"
     source: hosted
-    version: "0.15.5"
+    version: "0.15.6"
   http:
     dependency: transitive
     description:
@@ -516,8 +516,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "3738e6bcc07e289ff9621cf2514f1906c99de9aa"
-      resolved-ref: "3738e6bcc07e289ff9621cf2514f1906c99de9aa"
+      ref: "6672eb82657d9e671abbf42122031c88aa9e6d80"
+      resolved-ref: "6672eb82657d9e671abbf42122031c88aa9e6d80"
       url: "https://github.com/anandnet/just_audio_media_kit.git"
     source: git
     version: "1.0.0"

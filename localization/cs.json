@@ -266,5 +266,12 @@
     "importingPlaylist": "Importování playlistu...",
     "exportPlaylist": "Exportovat playlist",
     "exportErrorStorage": "Nedostatek úložného místa",
-    "importErrorFileAccess": "Nepodařilo se získat přístup k vybranému souboru"
+    "importErrorFileAccess": "Nepodařilo se získat přístup k vybranému souboru",
+    "exportPlaylistCsv": "Exportovat playlist jako CSV",
+    "exportPlaylistJson": "Exportovat playlist do JSON",
+    "exportPlaylistJsonSubtitle": "Tento formát lze importovat",
+    "exportPlaylistCsvSubtitle": "Nelze importovat sem",
+    "exportToYouTubeMusic": "Exportovat na YouTube Music",
+    "exportToYouTubeMusicSubtitle": "Vaše playlisty (s méně než 50 skladbami) se přesunou do aktuální fronty. Nezapomeňte je po otevření v YtMusic přidat do playlistu/uložit",
+    "linkCopied": "Odkaz zkopírován do schránky"
 }

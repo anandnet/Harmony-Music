@@ -263,5 +263,12 @@
     "playlistImportedMsg": "Esitusloendi importimine õnnestus",
     "importErrorFileAccess": "Valitud failile puudus ligipääs",
     "importErrorDatabase": "Viga salvestamisel andmebaasi",
-    "fileNotFound": "Faili ei leidu"
+    "fileNotFound": "Faili ei leidu",
+    "exportPlaylistCsv": "Ekspordi esitusloend CSV-failina",
+    "exportPlaylistJson": "Ekspordi esitusloend JSON-faili",
+    "exportPlaylistJsonSubtitle": "Seda vormingut saad importida",
+    "exportPlaylistCsvSubtitle": "Seda ei saa siia importida",
+    "exportToYouTubeMusic": "Ekspordi Youtube Musicusse",
+    "exportToYouTubeMusicSubtitle": "Järgnevaga lisatakse sinu esitusloend (<50 loo) praegusesse esitusjärjekorda. Peale Youtube Musicus avamist ära unusta seda lisamast esitusloendisse ja salvestamast",
+    "linkCopied": "Link on kopeeritud lõikelauale"
 }

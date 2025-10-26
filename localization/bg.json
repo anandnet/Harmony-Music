@@ -266,5 +266,12 @@
     "importErrorFileAccess": "Неуспешен достъп до избрания файл",
     "importErrorFormat": "Невалиден файлов формат",
     "importErrorDatabase": "Грешка при запазване в базата данни",
-    "importLargeFileNote": "Забележка: Внасянето на големи плейлисти може да отнеме повече време"
+    "importLargeFileNote": "Забележка: Внасянето на големи плейлисти може да отнеме повече време",
+    "exportPlaylistCsv": "Изнасяне на плейлиста като CSV",
+    "exportPlaylistJson": "Изнасяне на плейлиста в JSON",
+    "exportPlaylistJsonSubtitle": "Този формат може да бъде внесен",
+    "exportPlaylistCsvSubtitle": "Не може да бъде внесен тук",
+    "exportToYouTubeMusic": "Изнасяне в Youtube музика",
+    "exportToYouTubeMusicSubtitle": "Това ще премести плейлиста ви (песни < 50) в текущата опашка, не забравяйте да добавите към плейлиста/запазите след отваряне в YtMusic",
+    "linkCopied": "Връзката е копирана в клипборда"
 }

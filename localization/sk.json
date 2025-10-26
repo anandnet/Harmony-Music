@@ -265,5 +265,12 @@
     "invalidPlaylistFile": "Nesprávna štruktúra súboru playlistu",
     "importErrorDatabase": "Chyba pri ukladaní do databázy",
     "fileNotFound": "Súbor nenájdený",
-    "importLargeFileNote": "Poznámka: Import veľkých playlistov môže trvať dlhšie"
+    "importLargeFileNote": "Poznámka: Import veľkých playlistov môže trvať dlhšie",
+    "exportPlaylistCsv": "Exportovať playlist ako CSV",
+    "exportPlaylistJson": "Exportovať playlist do JSON",
+    "exportPlaylistJsonSubtitle": "Tento formát môže byť importovaný",
+    "exportPlaylistCsvSubtitle": "Nemôže byť tu importovaný",
+    "exportToYouTubeMusic": "Exportovať do YouTube Music",
+    "exportToYouTubeMusicSubtitle": "Do aktuálneho zoznamu skladieb sa presunie váš playlist (menej ako 50 skladieb). Nezabudnite ho pridať do playlistu/uložiť po otvorení v YtMusic",
+    "linkCopied": "Odkaz skopírovaný do schránky"
 }

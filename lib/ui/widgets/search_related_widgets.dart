@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../screens/Search/search_result_screen_controller.dart';
 import '/models/album.dart';
 import '/models/artist.dart';
-import '/models/playlist.dart';
+// import '/models/playlist.dart';
 import '/ui/widgets/content_list_widget.dart';
 import 'separate_tab_item_widget.dart';
 
@@ -71,15 +71,17 @@ class ResultWidget extends StatelessWidget {
               title: item.key, albumList: List<Album>.from(item.value)),
           isHomeContent: false,
         ));
-      } else if (item.key.contains("playlist")) {
-        list.add(ContentListWidget(
-          content: PlaylistContent(
-            title: item.key,
-            playlistList: List<Playlist>.from(item.value),
-          ),
-          isHomeContent: false,
-        ));
-      } else if (item.key.contains("Artist")) {
+      } 
+      // else if (item.key.contains("playlist")) {
+      //   list.add(ContentListWidget(
+      //     content: PlaylistContent(
+      //       title: item.key,
+      //       playlistList: List<Playlist>.from(item.value),
+      //     ),
+      //     isHomeContent: false,
+      //   ));
+      // } 
+      else if (item.key.contains("Artist")) {
         list.add(SeparateTabItemWidget(
           items: List<Artist>.from(item.value),
           title: item.key,

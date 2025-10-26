@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:Ensound/ui/player/player_controller.dart';
+import 'package:ensound/ui/player/player_controller.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
 import 'image_widget.dart';

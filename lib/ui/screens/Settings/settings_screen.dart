@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:Ensound/utils/helper.dart';
-import 'package:Ensound/utils/lang_mapping.dart';
+import 'package:ensound/utils/helper.dart';
+import 'package:ensound/utils/lang_mapping.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/common_dialog_widget.dart';
@@ -57,7 +57,7 @@ class SettingsScreen extends StatelessWidget {
                             onTap: () {
                               launchUrl(
                                 Uri.parse(
-                                  'https://github.com/kunalbiz18/Ensound/releases/latest',
+                                  'https://github.com/kunalbiz18/ensound/releases/latest',
                                 ),
                                 mode: LaunchMode.externalApplication,
                               );
@@ -664,7 +664,7 @@ class SettingsScreen extends StatelessWidget {
                     onTap: () {
                       launchUrl(
                         Uri.parse(
-                          'https://github.com/kunalbiz18/Ensound',
+                          'https://github.com/kunalbiz18/ensound',
                         ),
                         mode: LaunchMode.externalApplication,
                       );
@@ -675,7 +675,7 @@ class SettingsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "Ensound",
+                          "ensound",
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         Text(settingsController.currentVersion,

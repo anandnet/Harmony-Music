@@ -35,7 +35,7 @@ import 'dart:core' as core$_;
 import 'package:jni/_internal.dart' as jni$_;
 import 'package:jni/jni.dart' as jni$_;
 
-/// from: `com.kunalbiz18.Ensound.Equalizer`
+/// from: `com.kunalbiz18.ensound.Equalizer`
 class Equalizer extends jni$_.JObject {
   @jni$_.internal
   @core$_.override
@@ -48,7 +48,7 @@ class Equalizer extends jni$_.JObject {
         super.fromReference(reference);
 
   static final _class =
-      jni$_.JClass.forName(r'com/kunalbiz18/Ensound/Equalizer');
+      jni$_.JClass.forName(r'com/kunalbiz18/ensound/Equalizer');
 
   /// The type which includes information such as the signature of this class.
   static const nullableType = $Equalizer$NullableType();
@@ -181,7 +181,7 @@ final class $Equalizer$NullableType extends jni$_.JObjType<Equalizer?> {
 
   @jni$_.internal
   @core$_.override
-  String get signature => r'Lcom/kunalbiz18/Ensound/Equalizer;';
+  String get signature => r'Lcom/kunalbiz18/ensound/Equalizer;';
 
   @jni$_.internal
   @core$_.override
@@ -218,7 +218,7 @@ final class $Equalizer$Type extends jni$_.JObjType<Equalizer> {
 
   @jni$_.internal
   @core$_.override
-  String get signature => r'Lcom/kunalbiz18/Ensound/Equalizer;';
+  String get signature => r'Lcom/kunalbiz18/ensound/Equalizer;';
 
   @jni$_.internal
   @core$_.override
@@ -248,7 +248,7 @@ final class $Equalizer$Type extends jni$_.JObjType<Equalizer> {
   }
 }
 
-/// from: `com.kunalbiz18.Ensound.SDKInt$Companion`
+/// from: `com.kunalbiz18.ensound.SDKInt$Companion`
 class SDKInt$Companion extends jni$_.JObject {
   @jni$_.internal
   @core$_.override
@@ -261,7 +261,7 @@ class SDKInt$Companion extends jni$_.JObject {
         super.fromReference(reference);
 
   static final _class =
-      jni$_.JClass.forName(r'com/kunalbiz18/Ensound/SDKInt$Companion');
+      jni$_.JClass.forName(r'com/kunalbiz18/ensound/SDKInt$Companion');
 
   /// The type which includes information such as the signature of this class.
   static const nullableType = $SDKInt$Companion$NullableType();
@@ -324,7 +324,7 @@ final class $SDKInt$Companion$NullableType
 
   @jni$_.internal
   @core$_.override
-  String get signature => r'Lcom/kunalbiz18/Ensound/SDKInt$Companion;';
+  String get signature => r'Lcom/kunalbiz18/ensound/SDKInt$Companion;';
 
   @jni$_.internal
   @core$_.override
@@ -362,7 +362,7 @@ final class $SDKInt$Companion$Type extends jni$_.JObjType<SDKInt$Companion> {
 
   @jni$_.internal
   @core$_.override
-  String get signature => r'Lcom/kunalbiz18/Ensound/SDKInt$Companion;';
+  String get signature => r'Lcom/kunalbiz18/ensound/SDKInt$Companion;';
 
   @jni$_.internal
   @core$_.override
@@ -393,7 +393,7 @@ final class $SDKInt$Companion$Type extends jni$_.JObjType<SDKInt$Companion> {
   }
 }
 
-/// from: `com.kunalbiz18.Ensound.SDKInt`
+/// from: `com.kunalbiz18.ensound.SDKInt`
 class SDKInt extends jni$_.JObject {
   @jni$_.internal
   @core$_.override
@@ -406,17 +406,17 @@ class SDKInt extends jni$_.JObject {
         super.fromReference(reference);
 
   static final _class =
-      jni$_.JClass.forName(r'com/kunalbiz18/Ensound/SDKInt');
+      jni$_.JClass.forName(r'com/kunalbiz18/ensound/SDKInt');
 
   /// The type which includes information such as the signature of this class.
   static const nullableType = $SDKInt$NullableType();
   static const type = $SDKInt$Type();
   static final _id_Companion = _class.staticFieldId(
     r'Companion',
-    r'Lcom/kunalbiz18/Ensound/SDKInt$Companion;',
+    r'Lcom/kunalbiz18/ensound/SDKInt$Companion;',
   );
 
-  /// from: `static public final com.kunalbiz18.Ensound.SDKInt$Companion Companion`
+  /// from: `static public final com.kunalbiz18.ensound.SDKInt$Companion Companion`
   /// The returned object must be released after use, by calling the [release] method.
   static SDKInt$Companion get Companion =>
       _id_Companion.get(_class, const $SDKInt$Companion$Type());
@@ -452,7 +452,7 @@ final class $SDKInt$NullableType extends jni$_.JObjType<SDKInt?> {
 
   @jni$_.internal
   @core$_.override
-  String get signature => r'Lcom/kunalbiz18/Ensound/SDKInt;';
+  String get signature => r'Lcom/kunalbiz18/ensound/SDKInt;';
 
   @jni$_.internal
   @core$_.override
@@ -489,7 +489,7 @@ final class $SDKInt$Type extends jni$_.JObjType<SDKInt> {
 
   @jni$_.internal
   @core$_.override
-  String get signature => r'Lcom/kunalbiz18/Ensound/SDKInt;';
+  String get signature => r'Lcom/kunalbiz18/ensound/SDKInt;';
 
   @jni$_.internal
   @core$_.override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:Ensound/utils/helper.dart';
+import 'package:ensound/utils/helper.dart';
 
 import '../screens/Library/library_controller.dart';
 import 'snackbar.dart';

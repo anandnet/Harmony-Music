@@ -1,15 +1,15 @@
 [Setup]
 AppId=B9F6E402-0CAE-4045-BDE6-14BD6C39C4EA
 AppVersion=1.12.1+26
-AppName=Ensound
+AppName=ensound
 AppPublisher=kunalbiz18
-AppPublisherURL=https://github.com/kunalbiz18/Ensound
-AppSupportURL=https://github.com/kunalbiz18/Ensound
-AppUpdatesURL=https://github.com/kunalbiz18/Ensound
-DefaultDirName={autopf}\Ensound
+AppPublisherURL=https://github.com/kunalbiz18/ensound
+AppSupportURL=https://github.com/kunalbiz18/ensound
+AppUpdatesURL=https://github.com/kunalbiz18/ensound
+DefaultDirName={autopf}\ensound
 DisableProgramGroupPage=yes
 OutputDir=.
-OutputBaseFilename=Ensound-1.12.1
+OutputBaseFilename=ensound-1.12.1
 Compression=lzma
 SolidCompression=yes
 SetupIconFile=..\..\windows\runner\resources\app_icon.ico
@@ -26,13 +26,13 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\..\build\windows\x64\runner\Release\Ensound.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\build\windows\x64\runner\Release\ensound.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{autoprograms}\Ensound"; Filename: "{app}\Ensound.exe"
-Name: "{autodesktop}\Ensound"; Filename: "{app}\Ensound.exe"; Tasks: desktopicon
+Name: "{autoprograms}\ensound"; Filename: "{app}\ensound.exe"
+Name: "{autodesktop}\ensound"; Filename: "{app}\ensound.exe"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\Ensound.exe"; Description: "{cm:LaunchProgram,{#StringChange('Ensound', '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\ensound.exe"; Description: "{cm:LaunchProgram,{#StringChange('ensound', '&', '&&')}}"; Flags: nowait postinstall skipifsilent

@@ -15,7 +15,7 @@ jobs:
       
       - name: Install Inno Setup 6
         run: |
-          choco install innosetup --version=6.2.2 --yes
+          choco install innosetup --version=6.2.2 --yes --allow-downgrade
 
       - name: Update lang data
         working-directory: "${{ github.workspace }}"

@@ -9,7 +9,7 @@ output:
 source_path:
   - 'android/app/src/main/kotlin'
 classes:
-  - 'com.kunalbiz18.Ensound.Equalizer'
-  - 'com.kunalbiz18.Ensound.SDKInt'
+  - 'com.kunalbiz18.ensound.Equalizer'
+  - 'com.kunalbiz18.ensound.SDKInt'
 
   

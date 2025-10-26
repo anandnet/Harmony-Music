@@ -1,6 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:dio/dio.dart';
-import 'package:Ensound/utils/helper.dart';
+import 'package:ensound/utils/helper.dart';
 import 'package:hive/hive.dart';
 
 class SyncedLyricsService {

@@ -1,6 +1,6 @@
 {
-    "name": "Ensound",
-    "short_name": "Ensound",
+    "name": "ensound",
+    "short_name": "ensound",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

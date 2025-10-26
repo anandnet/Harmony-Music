@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:Ensound/ui/widgets/common_dialog_widget.dart';
-import 'package:Ensound/ui/widgets/sort_widget.dart';
+import 'package:ensound/ui/widgets/common_dialog_widget.dart';
+import 'package:ensound/ui/widgets/sort_widget.dart';
 
 import 'custom_button.dart';
 import 'modification_list.dart';

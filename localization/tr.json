@@ -244,5 +244,22 @@
     "playingfromArtist": "SANATÇILARDAN ÇALINIYOR",
     "autoOpenPlayer": "Oynatıcı ekranını otomatik olarak aç",
     "autoOpenPlayerDes": "Çalmak için şarkı seçildiğinde oynatıcının otomatik olarak tam ekran açılmasını etkinleştir",
-    "resetToDefaultMsg": "Ayarlar varsayılana sıfırlandı, lütfen uygulamayı yeniden başlatın"
+    "resetToDefaultMsg": "Ayarlar varsayılana sıfırlandı, lütfen uygulamayı yeniden başlatın",
+    "reArrangeSongs": "Şarkıları yeniden düzenle",
+    "selectSongs": "Şarkıları seçin",
+    "selectAll": "Tümünü Seç",
+    "exportPlaylist": "Çalma Listesini Dışa Aktar",
+    "exportPlaylistCsv": "Çalma Listesini CSV olarak Dışa Aktar",
+    "exportingPlaylist": "Çalma listesi dışarı aktarılıyor...",
+    "playlistExportedMsg": "Çalma listesi başarılı bir şekilde dışa aktarıldı:",
+    "exportError": "Çalma listesini dışa aktarırken hata",
+    "exportErrorPermission": "Çalma listesi dışarı aktarılırken izin reddedildi",
+    "exportErrorStorage": "Yeterli depolama alanı yok",
+    "exportErrorFormat": "Çalma listesini biçimlendirirken hata oluştu",
+    "importPlaylist": "Çalma Listesini İçe Aktar",
+    "importingPlaylist": "Çalma listesi içeri aktarılıyor...",
+    "importPlaylistDesc": "Daha önce dışa aktarılmış bir çalma listesi JSON dosyasını seçin",
+    "selectFile": "Dosya Seç",
+    "playlistImportedMsg": "Çalma listesi başarılı bir şekilde içeri aktarıldı",
+    "importError": "Çalma listesini içeri aktarırken hata"
 }

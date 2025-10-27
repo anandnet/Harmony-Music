@@ -1,5 +1,5 @@
 {
-    "home": "Trang chủ",
+    "home": "Trang chủ Harmony",
     "songs": "Bài hát",
     "create": "Tạo",
     "rename": "Đổi tên",
@@ -265,5 +265,12 @@
     "importErrorFormat": "Định dạng tệp không hợp lệ",
     "importErrorDatabase": "Lỗi khi lưu vào cơ sở dữ liệu",
     "fileNotFound": "Không tìm thấy tệp",
-    "importLargeFileNote": "Lưu ý: Danh sách phát lớn có thể tốn nhiều thời gian hơn để nhập"
+    "importLargeFileNote": "Lưu ý: Danh sách phát lớn có thể tốn nhiều thời gian hơn để nhập",
+    "exportPlaylistCsv": "Xuất danh sách phát dạng CSV",
+    "exportPlaylistJson": "Xuất danh sách phát dạng JSON",
+    "exportPlaylistJsonSubtitle": "Không thể nhập bằng định dạng này",
+    "exportPlaylistCsvSubtitle": "Không thể nhập ở đây",
+    "exportToYouTubeMusic": "Xuất ra Youtube Nhạc",
+    "exportToYouTubeMusicSubtitle": "Nó sẽ đẩy danh sách phát của bạn (bài hát < 50) vào hàng đợi hiện tại, đừng quên thêm vào danh sách phát/lưu sau khi mở trong YtMusic",
+    "linkCopied": "Liên kết đã được sao chép vào bảng tạm"
 }

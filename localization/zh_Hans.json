@@ -192,7 +192,7 @@
     "openIn": "打开于",
     "disableTransitionAnimation": "禁用过渡动画",
     "restartApp": "重启应用",
-    "reArrangePlaylist": "重新排列播放列表",
+    "reArrangePlaylist": "重新排序列表",
     "removeMultiple": "移除多首歌曲",
     "addMultipleSongs": "添加到播放列表",
     "songNotPlayable": "由于服务器限制，歌曲无法播放！",
@@ -223,7 +223,7 @@
     "bitrate": "比特率",
     "loudnessDb": "音量分贝",
     "androidBackupWarning": "未测试：下载超过 60 个文件后选中复选框，过程可能会消耗大量内存，并可能导致手机或应用程序崩溃。继续操作风险自负。",
-    "letsStrart": "让我们开始吧……",
+    "letsStrart": "让我们开始吧...",
     "processFiles": "正在处理文件…",
     "includeDownloadedFiles": "包含下载的歌曲文件",
     "backupInProgress": "备份正在进行中...",
@@ -266,5 +266,12 @@
     "playingfromSelection": "从选项播放",
     "playingfromArtist": "从音乐人播放",
     "importErrorFileAccess": "无法访问已选文件",
-    "invalidPlaylistFile": "播放列表的文件结构无效"
+    "invalidPlaylistFile": "播放列表的文件结构无效",
+    "exportPlaylistCsv": "以CSV格式导出播放列表",
+    "exportToYouTubeMusic": "导出至Youtube Music",
+    "exportPlaylistJson": "以JSON格式导出播放列表",
+    "exportPlaylistJsonSubtitle": "此格式可被导入",
+    "linkCopied": "链接已复制到剪切板",
+    "exportToYouTubeMusicSubtitle": "这将推送你的播放列表（小于50首）到当前播放队列，请不要忘记在打开YtMusic后将曲目添加到歌单或保存",
+    "exportPlaylistCsvSubtitle": "无法在此处导入"
 }

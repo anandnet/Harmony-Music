@@ -1,1 +1,12 @@
-{}
+{
+    "songs": "گانے",
+    "playlists": "پلے لسٹ",
+    "albums": "البم",
+    "home": "هوم",
+    "album": "البم",
+    "singles": "سنگلز",
+    "artists": "فنکار",
+    "settings": "ترتیبات",
+    "library": "لائبریری",
+    "libSongs": "لائبریری کے گانے"
+}

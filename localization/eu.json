@@ -130,7 +130,7 @@
     "restoreMsg": "Ongi berrezarri da!\nAldaketak aplikatuko dira berrabiarazi ondoren",
     "restore": "Berreskuratu",
     "closeApp": "Aplikazioa itxi",
-    "home": "Menu Nagusia",
+    "home": "harmony music Menu Nagusia",
     "singles": "Single-ak",
     "artists": "Artistak",
     "networkError1": "Sareak arazoren bat du!",
@@ -263,5 +263,12 @@
     "importErrorFileAccess": "Ezin izan da hautatutako fitxategira sartu",
     "importErrorFormat": "Fitxategi formatu baliogabea",
     "importErrorDatabase": "Errorea datu-basean gordetzean",
-    "fileNotFound": "Fitxategia ez da aurkitu"
+    "fileNotFound": "Fitxategia ez da aurkitu",
+    "exportPlaylistCsv": "Esportatu erreprodukzio-zerrenda CSV gisa",
+    "exportPlaylistJson": "Esportatu erreprodukzio-zerrenda JSON formatuan",
+    "exportPlaylistJsonSubtitle": "Formatu hau inportatu daiteke",
+    "exportPlaylistCsvSubtitle": "Ezin da hemen inportatu",
+    "exportToYouTubeMusic": "Esportatu Youtube music-era",
+    "exportToYouTubeMusicSubtitle": "Zure erreprodukzio-zerrenda (50 abesti baino gutxiago) uneko ilaran jarriko du, ez ahaztu erreprodukzio-zerrendan gehitzea/gordetzea YtMusic-en ireki ondoren",
+    "linkCopied": "Esteka arbelean kopiatu da"
 }

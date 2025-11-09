@@ -15,7 +15,7 @@
     "removePlaylist": "Видалити список відтворення",
     "networkError1": "Упс, помилка мережі!",
     "retry": "Повторити!",
-    "home": "Головна",
+    "home": "Головна harmony music",
     "songs": "Пісні",
     "playlists": "Списки відтворення",
     "albums": "Альбоми",
@@ -265,5 +265,12 @@
     "importPlaylist": "Імпортувати список відтворення",
     "importingPlaylist": "Імпортування списку відтворення...",
     "playlistImportedMsg": "Список відтворення успішно імпортовано",
-    "importError": "Помилка імпортування списку відтворення"
+    "importError": "Помилка імпортування списку відтворення",
+    "exportPlaylistCsv": "Експортувати список відтворення у форматі CSV",
+    "exportPlaylistJson": "Експортувати список відтворення в JSON",
+    "exportPlaylistJsonSubtitle": "Цей формат можна імпортувати",
+    "exportPlaylistCsvSubtitle": "Не можна імпортувати сюди",
+    "exportToYouTubeMusic": "Експортувати до Youtube Music",
+    "exportToYouTubeMusicSubtitle": "Це додасть ваш список відтворення (пісень < 50) до поточної черги, не забудьте додати до плейлиста / зберегти після відкриття в YtMusic",
+    "linkCopied": "Посилання скопійовано в буфер обміну"
 }

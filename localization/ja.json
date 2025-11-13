@@ -93,7 +93,7 @@
     "emptyPlaylist": "再生リストが空です！",
     "favorites": "お気に入り",
     "dark": "ダーク",
-    "home": "ホーム",
+    "home": "harmony music ホーム",
     "cancel": "キャンセル",
     "by": "開発者",
     "streamingQuality": "ストリーミング品質",
@@ -265,5 +265,12 @@
     "importPlaylistDesc": "インポートしたい以前エクスポートしたJSONファイルを選択",
     "fileNotFound": "ファイルが見つかりません",
     "importLargeFileNote": "注・大きい再生リストのインポートは時間がかかります",
-    "importErrorDatabase": "データベースへの保存時のエラー"
+    "importErrorDatabase": "データベースへの保存時のエラー",
+    "exportPlaylistCsv": "再生リストをCSVで出力",
+    "exportPlaylistJson": "再生リストをJSONで出力",
+    "exportPlaylistJsonSubtitle": "この形式は取り入れできません",
+    "exportPlaylistCsvSubtitle": "ここに書き出せません",
+    "exportToYouTubeMusic": "Youtube musicへエクスポート",
+    "exportToYouTubeMusicSubtitle": "再生リスト (曲数50未満) を現在のキューに追加する。YtMusicで開いたら、再生リストへの追加/保存を忘れないよう",
+    "linkCopied": "リンクをクリップボードにコピー"
 }

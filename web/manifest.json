@@ -1,6 +1,6 @@
 {
-    "name": "harmonymusic",
-    "short_name": "harmonymusic",
+    "name": "ensound",
+    "short_name": "ensound",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

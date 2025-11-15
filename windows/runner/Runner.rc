@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.anandnet" "\0"
-            VALUE "FileDescription", "harmonymusic" "\0"
+            VALUE "CompanyName", "com.kunalbiz18" "\0"
+            VALUE "FileDescription", "ensound" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "harmonymusic" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.anandnet. All rights reserved." "\0"
-            VALUE "OriginalFilename", "harmonymusic.exe" "\0"
-            VALUE "ProductName", "harmonymusic" "\0"
+            VALUE "InternalName", "ensound" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 com.kunalbiz18. All rights reserved." "\0"
+            VALUE "OriginalFilename", "ensound.exe" "\0"
+            VALUE "ProductName", "ensound" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

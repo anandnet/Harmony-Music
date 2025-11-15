@@ -32,16 +32,16 @@ SEARCH_ISSUES=(
 # The comment to add to each issue
 COMMENT="Thank you for reporting this issue! 
 
-The search functionality issue has been fixed in version **v1.12.1**. Please update to the latest version from the [releases page](https://github.com/anandnet/Harmony-Music/releases/tag/v1.12.1).
+The search functionality issue has been fixed in version **v1.12.1**. Please update to the latest version from the [releases page](https://github.com/kunalbiz18/ensound/releases/tag/v1.12.1).
 
 **Download Links:**
-- **Android (Universal APK):** [harmonymusic-1.12.1-release.apk](https://github.com/anandnet/Harmony-Music/releases/download/v1.12.1/harmonymusic-1.12.1-release.apk)
-- **Android (ARM64):** [harmonymusic-1.12.1-arm64-v8a-release.apk](https://github.com/anandnet/Harmony-Music/releases/download/v1.12.1/harmonymusic-1.12.1-arm64-v8a-release.apk)
-- **Android (ARMv7):** [harmonymusic-1.12.1-armeabi-v7a-release.apk](https://github.com/anandnet/Harmony-Music/releases/download/v1.12.1/harmonymusic-1.12.1-armeabi-v7a-release.apk)
-- **Windows:** [harmonymusic-1.12.1.exe](https://github.com/anandnet/Harmony-Music/releases/download/v1.12.1/harmonymusic-1.12.1.exe)
-- **Linux (Debian):** [harmonymusic-1.12.1+26-linux.deb](https://github.com/anandnet/Harmony-Music/releases/download/v1.12.1/harmonymusic-1.12.1%2B26-linux.deb)
-- **Linux (AppImage):** [harmonymusic-1.12.1+26-linux.AppImage](https://github.com/anandnet/Harmony-Music/releases/download/v1.12.1/harmonymusic-1.12.1%2B26-linux.AppImage)
-- **Linux (RPM):** [harmonymusic-1.12.1+26-linux.rpm](https://github.com/anandnet/Harmony-Music/releases/download/v1.12.1/harmonymusic-1.12.1%2B26-linux.rpm)
+- **Android (Universal APK):** [ensound-1.12.1-release.apk](https://github.com/kunalbiz18/ensound/releases/download/v1.12.1/ensound-1.12.1-release.apk)
+- **Android (ARM64):** [ensound-1.12.1-arm64-v8a-release.apk](https://github.com/kunalbiz18/ensound/releases/download/v1.12.1/ensound-1.12.1-arm64-v8a-release.apk)
+- **Android (ARMv7):** [ensound-1.12.1-armeabi-v7a-release.apk](https://github.com/kunalbiz18/ensound/releases/download/v1.12.1/ensound-1.12.1-armeabi-v7a-release.apk)
+- **Windows:** [ensound-1.12.1.exe](https://github.com/kunalbiz18/ensound/releases/download/v1.12.1/ensound-1.12.1.exe)
+- **Linux (Debian):** [ensound-1.12.1+26-linux.deb](https://github.com/kunalbiz18/ensound/releases/download/v1.12.1/ensound-1.12.1%2B26-linux.deb)
+- **Linux (AppImage):** [ensound-1.12.1+26-linux.AppImage](https://github.com/kunalbiz18/ensound/releases/download/v1.12.1/ensound-1.12.1%2B26-linux.AppImage)
+- **Linux (RPM):** [ensound-1.12.1+26-linux.rpm](https://github.com/kunalbiz18/ensound/releases/download/v1.12.1/ensound-1.12.1%2B26-linux.rpm)
 
 If the issue persists after updating, please feel free to reopen this issue or create a new one with details about your setup.
 
@@ -73,11 +73,11 @@ for issue_num in "${SEARCH_ISSUES[@]}"; do
     echo "Processing issue #${issue_num}..."
     
     # Add comment to the issue
-    if gh issue comment "${issue_num}" --body "${COMMENT}" --repo anandnet/Harmony-Music; then
+    if gh issue comment "${issue_num}" --body "${COMMENT}" --repo kunalbiz18/ensound; then
         echo "  ✓ Comment added to issue #${issue_num}"
         
         # Close the issue
-        if gh issue close "${issue_num}" --reason completed --repo anandnet/Harmony-Music; then
+        if gh issue close "${issue_num}" --reason completed --repo kunalbiz18/ensound; then
             echo "  ✓ Issue #${issue_num} closed successfully"
             ((closed_count++))
         else

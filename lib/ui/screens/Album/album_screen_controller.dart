@@ -1,10 +1,10 @@
 import 'package:audio_service/audio_service.dart' show MediaItem;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/base_class/playlist_album_screen_con_base.dart';
-import 'package:harmonymusic/models/album.dart';
-import 'package:harmonymusic/models/playlist.dart';
-import 'package:harmonymusic/utils/helper.dart';
+import 'package:ensound/base_class/playlist_album_screen_con_base.dart';
+import 'package:ensound/models/album.dart';
+import 'package:ensound/models/playlist.dart';
+import 'package:ensound/utils/helper.dart';
 import 'package:hive/hive.dart';
 
 import '../../../mixins/additional_opeartion_mixin.dart';

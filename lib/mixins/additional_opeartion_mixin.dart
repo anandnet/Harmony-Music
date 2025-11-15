@@ -1,7 +1,7 @@
 import 'package:audio_service/audio_service.dart' show MediaItem;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:harmonymusic/base_class/playlist_album_screen_con_base.dart';
+import 'package:ensound/base_class/playlist_album_screen_con_base.dart';
 
 import '../ui/widgets/add_to_playlist.dart';
 import '../ui/widgets/sort_widget.dart';

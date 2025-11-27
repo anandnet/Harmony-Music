@@ -235,14 +235,14 @@ class AlbumScreen extends StatelessWidget {
                                                             albumController
                                                                 .songList),
                                                         0,
-                                                        playfrom: PlaylingFrom(
+                                                        playfrom: PlayingFrom(
                                                             name:
                                                                 albumController
                                                                     .album
                                                                     .value
                                                                     .title,
                                                             type:
-                                                                PlaylingFromType
+                                                                PlayingFromType
                                                                     .ALBUM));
                                               },
                                               icon: Icon(
@@ -449,10 +449,10 @@ class AlbumScreen extends StatelessWidget {
                                           List<MediaItem>.from(
                                               albumController.songList),
                                           index - 3,
-                                          playfrom: PlaylingFrom(
+                                          playfrom: PlayingFrom(
                                               name: albumController
                                                   .album.value.title,
-                                              type: PlaylingFromType.ALBUM));
+                                              type: PlayingFromType.ALBUM));
                                     },
                                     song: albumController.songList[index - 3],
                                     isPlaylistOrAlbum: true,

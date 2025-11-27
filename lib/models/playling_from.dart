@@ -2,29 +2,29 @@
 
 import 'package:get/get.dart';
 
-class PlaylingFrom {
-  PlaylingFromType type;
+class PlayingFrom {
+  PlayingFromType type;
   String name;
 
-  PlaylingFrom({required this.type, this.name = ""});
+  PlayingFrom({required this.type, this.name = ""});
 
   get typeString {
     switch (type) {
-      case PlaylingFromType.ALBUM:
+      case PlayingFromType.ALBUM:
         return "playingfromAlbum".tr;
-      case PlaylingFromType.PLAYLIST:
+      case PlayingFromType.PLAYLIST:
         return "playingfromPlaylist".tr;
-      case PlaylingFromType.SELECTION:
+      case PlayingFromType.SELECTION:
         return "playingfromSelection".tr;
-      case PlaylingFromType.ARTIST:
+      case PlayingFromType.ARTIST:
         return "playingfromArtist".tr;
     }
   }
 
   get nameString {
-    if (type == PlaylingFromType.SELECTION) return "randomSelection".tr;
+    if (type == PlayingFromType.SELECTION) return "randomSelection".tr;
     return name;
   }
 }
 
-enum PlaylingFromType { ALBUM, PLAYLIST, SELECTION, ARTIST }
+enum PlayingFromType { ALBUM, PLAYLIST, SELECTION, ARTIST }

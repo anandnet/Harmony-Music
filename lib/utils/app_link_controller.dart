@@ -116,7 +116,7 @@ mixin ProcessLink {
     Navigator.of(Get.context!).pop();
     if (result[0]) {
       Get.find<PlayerController>().playPlayListSong(List.from(result[1]), 0,
-          playfrom: PlaylingFrom(type: PlaylingFromType.SELECTION));
+          playfrom: PlayingFrom(type: PlayingFromType.SELECTION));
     } else {
       ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
           Get.context!, "notaSongVideo".tr,

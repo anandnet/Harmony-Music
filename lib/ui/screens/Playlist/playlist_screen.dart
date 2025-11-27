@@ -315,10 +315,10 @@ class PlaylistScreen extends StatelessWidget {
                                                         playlistController
                                                             .songList),
                                                     0,
-                                                    playfrom: PlaylingFrom(
+                                                    playfrom: PlayingFrom(
                                                         name: playlistController
                                                             .playlist.value.title,
-                                                        type: PlaylingFromType
+                                                        type: PlayingFromType
                                                             .PLAYLIST));
                                               },
                                               icon: Icon(
@@ -368,10 +368,10 @@ class PlaylistScreen extends StatelessWidget {
                                                 songsToplay.shuffle();
                                                 playerController.playPlayListSong(
                                                     songsToplay, 0,
-                                                    playfrom: PlaylingFrom(
+                                                    playfrom: PlayingFrom(
                                                         name: playlistController
                                                             .playlist.value.title,
-                                                        type: PlaylingFromType
+                                                        type: PlayingFromType
                                                             .PLAYLIST));
                                               },
                                               icon: Icon(
@@ -697,10 +697,10 @@ class PlaylistScreen extends StatelessWidget {
                                         List<MediaItem>.from(
                                             playlistController.songList),
                                         index - 3,
-                                        playfrom: PlaylingFrom(
+                                        playfrom: PlayingFrom(
                                             name: playlistController
                                                 .playlist.value.title,
-                                            type: PlaylingFromType.PLAYLIST));
+                                            type: PlayingFromType.PLAYLIST));
                                   },
                                   song: playlistController.songList[index - 3],
                                   isPlaylistOrAlbum: true,

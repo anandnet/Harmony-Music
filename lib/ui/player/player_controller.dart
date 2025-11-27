@@ -59,7 +59,7 @@ class PlayerController extends GetxController
   final isShuffleModeEnabled = false.obs;
   final currentSong = Rxn<MediaItem>();
   final isCurrentSongFav = false.obs;
-  final playinfrom = PlaylingFrom(type: PlaylingFromType.SELECTION).obs;
+  final playinfrom = PlayingFrom(type: PlayingFromType.SELECTION).obs;
   final showLyricsflag = false.obs;
   final isLyricsLoading = false.obs;
   final lyricsMode = 0.obs;
@@ -324,8 +324,8 @@ class PlayerController extends GetxController
   Future<void> pushSongToQueue(MediaItem? mediaItem,
       {String? playlistid, bool radio = false}) async {
     /// update playing from value
-    playinfrom.value = PlaylingFrom(
-        type: PlaylingFromType.SELECTION,
+    playinfrom.value = PlayingFrom(
+        type: PlayingFromType.SELECTION,
         name: radio ? "randomRadio".tr : "randomSelection".tr);
 
     /// set global radio mode flag
@@ -381,13 +381,13 @@ class PlayerController extends GetxController
   }
 
   Future<void> playPlayListSong(List<MediaItem> mediaItems, int index,
-      {PlaylingFrom? playfrom}) async {
+      {PlayingFrom? playfrom}) async {
     isRadioModeOn = false;
     //open player pane,set current song and push first song into playing list,
 
     /// update playing from value
     playinfrom.value =
-        playfrom ?? PlaylingFrom(type: PlaylingFromType.SELECTION);
+        playfrom ?? PlayingFrom(type: PlayingFromType.SELECTION);
 
     //for changing home content based on last interation
     Future.delayed(const Duration(seconds: 3), () {

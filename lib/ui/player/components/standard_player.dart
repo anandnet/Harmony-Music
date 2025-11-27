@@ -190,12 +190,12 @@ class StandardPlayer extends StatelessWidget {
                     child: Obx(
                       () => Column(
                         children: [
-                          Text(playerController.playinfrom.value.typeString,
+                          Text(playerController.playingFrom.value.typeString,
                               style: const TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.bold)),
                           Obx(
                             () => Text(
-                              "\"${playerController.playinfrom.value.nameString}\"",
+                              "\"${playerController.playingFrom.value.nameString}\"",
                               overflow: TextOverflow.ellipsis,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),

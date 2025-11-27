@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '/models/album.dart';
 import '../../models/artist.dart';
-import '../../models/playling_from.dart';
+import '../../models/playing_from.dart';
 import '../../models/playlist.dart';
 import '../navigator.dart';
 import '../player/player_controller.dart';

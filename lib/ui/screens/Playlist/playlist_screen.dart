@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:widget_marquee/widget_marquee.dart';
 
-import '/models/playling_from.dart';
+import '../../../models/playing_from.dart';
 import '/models/thumbnail.dart';
 import '/ui/widgets/playlist_album_scroll_behaviour.dart';
 import '../../../services/downloader.dart';

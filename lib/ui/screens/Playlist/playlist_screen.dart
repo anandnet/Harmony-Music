@@ -293,7 +293,7 @@ class PlaylistScreen extends StatelessWidget {
                                                                   ? add
                                                                       ? "playlistBookmarkAddAlert"
                                                                           .tr
-                                                                      : "listBookmarkRemoveAlert"
+                                                                      : "playlistBookmarkRemoveAlert"
                                                                           .tr
                                                                   : "operationFailed"
                                                                       .tr,

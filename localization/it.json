@@ -86,7 +86,7 @@
     "dark": "Scuro",
     "light": "Chiaro",
     "languageDes": "Seleziona lingua App",
-    "cacheSongs": "Canzoni nella Cache",
+    "cacheSongs": "Canzoni nella cache",
     "streamingQualityDes": "Qualità dello streaming musica",
     "downloadLocation": "Locazione download",
     "exportedFileLocation": "Locazione dei file scaricati esportati",
@@ -263,5 +263,12 @@
     "playlistImportedMsg": "Playlist importata con successo",
     "importError": "Errore nell'importazione della playlist",
     "importErrorFileAccess": "Accesso negato al file selezionato",
-    "importLargeFileNote": "Nota: Playlist grandi potrebbero richiedere più tempo per importare"
+    "importLargeFileNote": "Nota: Playlist grandi potrebbero richiedere più tempo per importare",
+    "exportPlaylistCsv": "Esporta playlist come CSV",
+    "exportPlaylistJson": "Esporta playlist come JSON",
+    "exportPlaylistJsonSubtitle": "Questo formato non può essere importato",
+    "exportPlaylistCsvSubtitle": "Impossibile importare qui",
+    "exportToYouTubeMusic": "Esporta verso Youtube Music",
+    "exportToYouTubeMusicSubtitle": "Sposterà la tua playlist (meno di 50 brani) nella coda corrente, non dimenticare di aggiungere alla playlist/salvare dopo aver aperto YTMusic",
+    "linkCopied": "Link copiato negli appunti"
 }

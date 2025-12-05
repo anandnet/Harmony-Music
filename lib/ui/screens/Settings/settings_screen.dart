@@ -354,9 +354,6 @@ class SettingsScreen extends StatelessWidget {
                         onChanged: settingsController.setStreamingQuality,
                       ),
                     ),
-                    onLongPress: () {
-                      settingsController.showDownLoc();
-                    },
                   ),
                   if (GetPlatform.isAndroid)
                     ListTile(
@@ -536,34 +533,31 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Obx(() => settingsController.hideDloc.isFalse || isDesktop
-                      ? ListTile(
-                          trailing: TextButton(
-                            child: Text(
-                              "reset".tr,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(fontSize: 15),
-                            ),
-                            onPressed: () {
-                              settingsController.resetDownloadLocation();
-                            },
-                          ),
-                          contentPadding:
-                              const EdgeInsets.only(left: 5, right: 10, top: 0),
-                          title: Text("downloadLocation".tr),
-                          subtitle: Obx(() => Text(
-                              settingsController.isCurrentPathsupportDownDir
-                                  ? "In App storage directory"
-                                  : settingsController
-                                      .downloadLocationPath.value,
-                              style: Theme.of(context).textTheme.bodyMedium)),
-                          onTap: () async {
-                            settingsController.setDownloadLocation();
-                          },
-                        )
-                      : const SizedBox.shrink()),
+                  ListTile(
+                    trailing: TextButton(
+                      child: Text(
+                        "reset".tr,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontSize: 15),
+                      ),
+                      onPressed: () {
+                        settingsController.resetDownloadLocation();
+                      },
+                    ),
+                    contentPadding:
+                        const EdgeInsets.only(left: 5, right: 10, top: 0),
+                    title: Text("downloadLocation".tr),
+                    subtitle: Obx(() => Text(
+                        settingsController.isCurrentPathsupportDownDir
+                            ? "In App storage directory"
+                            : settingsController.downloadLocationPath.value,
+                        style: Theme.of(context).textTheme.bodyMedium)),
+                    onTap: () async {
+                      settingsController.setDownloadLocation();
+                    },
+                  ),
                   if (GetPlatform.isAndroid)
                     ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),

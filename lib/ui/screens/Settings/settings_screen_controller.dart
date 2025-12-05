@@ -39,7 +39,6 @@ class SettingsScreenController extends GetxController {
   final downloadLocationPath = "".obs;
   final exportLocationPath = "".obs;
   final downloadingFormat = "".obs;
-  final hideDloc = true.obs;
   final autoDownloadFavoriteSongEnabled = false.obs;
   final isTransitionAnimationDisabled = false.obs;
   final isBottomNavBarEnabled = false.obs;
@@ -211,10 +210,6 @@ class SettingsScreenController extends GetxController {
 
     setBox.put("downloadLocationPath", pickedFolderPath);
     downloadLocationPath.value = pickedFolderPath;
-  }
-
-  void showDownLoc() {
-    hideDloc.value = false;
   }
 
   void disableTransitionAnimation(bool val) {

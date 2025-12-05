@@ -180,6 +180,7 @@ class HomeScreenController extends GetxController {
   ) {
     List contentTemp = [];
     for (var content in contents) {
+      if((content["contents"]).isEmpty) continue;
       if ((content["contents"][0]).runtimeType == Playlist) {
         final tmp = PlaylistContent(
             playlistList: (content["contents"]).whereType<Playlist>().toList(),

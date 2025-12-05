@@ -165,6 +165,7 @@ class MusicServices extends getx.GetxService {
     final data = Map.from(_context);
 
     data['browseId'] = 'FEmusic_charts';
+    data['context']['client']["hl"] = 'en';
     if (countryCode != null) {
       data['formData'] = {
         'selectedValues': [countryCode]
@@ -199,7 +200,7 @@ class MusicServices extends getx.GetxService {
     final catString = catogory == "TMV" ? "Top Music Videos" : "Trending";
     if ((item['title'])!.contains(catString)) {
       final songs = (await getPlaylistOrAlbumSongs(
-        playlistId: item['browseId']))['tracks'];
+          playlistId: item['browseId']))['tracks'];
       final limitedSongs = songs.length > 24 ? songs.sublist(0, 24) : songs;
       return {'title': item['title'], 'contents': limitedSongs};
     }

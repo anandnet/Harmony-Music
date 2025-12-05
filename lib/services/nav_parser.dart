@@ -990,6 +990,20 @@ dynamic parseContentList(results, Function parseFunc) {
   return contents;
 }
 
+Map<String, dynamic> parseChartsItemBrowseId(dynamic result) {
+  final title = nav(result,["musicTwoRowItemRenderer","title","runs",0,"text"]);
+  final browseId = nav(result,
+      ["musicTwoRowItemRenderer","title","runs",0,"navigationEndpoint","browseEndpoint","browseId"]);
+  if (title.contains('Trending')) {
+    return {'title': "Trending", 'browseId': browseId};
+  } else if (title.contains('Daily Top')) {
+    return {'title': "Top Music Videos", 'browseId': browseId};
+  }
+  else{
+    return {'title': title, 'browseId': browseId};
+  }
+}
+
 Map<String, dynamic> parseChartsItem(dynamic result) {
   final contentList = nav(result, ['musicCarouselShelfRenderer', 'contents']);
   final String category = nav(result, [

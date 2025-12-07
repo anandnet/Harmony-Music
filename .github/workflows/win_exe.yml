@@ -15,7 +15,7 @@ jobs:
       
       - name: Install InnoSetup if missing
         run: |
-          if ! (innosetup /? >nul 2>&1); then
+          if (!(innosetup /? >nul 2>&1)); then
             choco install innosetup -y
           else
             echo "InnoSetup already installed."

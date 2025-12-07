@@ -1763,7 +1763,7 @@ Map<String, Map<String, String>> get keys => {
     "keepScreenOnWhilePlaying": "Bildschirm während der Wiedergabe eingeschaltet lassen",
     "keepScreenOnWhilePlayingDes": "Wenn aktiviert, bleibt der Bildschirm des Geräts beim Musikhören eingeschaltet"
 },"en" : {
-    "home": "harmony music Home",
+    "home": "Home",
     "songs": "Songs",
     "playlists": "Playlists",
     "albums": "Albums",
@@ -2475,7 +2475,7 @@ Map<String, Map<String, String>> get keys => {
     "keepScreenOnWhilePlaying": "Mantener la pantalla encendida mientras se reproduce",
     "keepScreenOnWhilePlayingDes": "Si está activado, la pantalla del dispositivo permanecerá despierta mientras se reproduce música"
 },"et" : {
-    "home": "harmony musicu avaleht",
+    "home": "Avaleht",
     "songs": "Lood",
     "playlists": "Esitusloendid",
     "albums": "Albumid",
@@ -2881,7 +2881,7 @@ Map<String, Map<String, String>> get keys => {
     "restoreMsg": "Ongi berrezarri da!\nAldaketak aplikatuko dira berrabiarazi ondoren",
     "restore": "Berreskuratu",
     "closeApp": "Aplikazioa itxi",
-    "home": "harmony music Menu Nagusia",
+    "home": "Menu Nagusia",
     "singles": "Single-ak",
     "artists": "Artistak",
     "networkError1": "Sareak arazoren bat du!",
@@ -5310,7 +5310,7 @@ Map<String, Map<String, String>> get keys => {
     "emptyPlaylist": "再生リストが空です！",
     "favorites": "お気に入り",
     "dark": "ダーク",
-    "home": "harmony music ホーム",
+    "home": "ホーム",
     "cancel": "キャンセル",
     "by": "開発者",
     "streamingQuality": "ストリーミング品質",
@@ -8701,7 +8701,7 @@ Map<String, Map<String, String>> get keys => {
     "singles": "Single'lar",
     "emptyPlaylist": "Bu çalma listesi boş!",
     "favorites": "Favoriler",
-    "home": "harmony müzik Anasayfa",
+    "home": "Ana sayfa",
     "cancel": "İptal et",
     "libPlaylists": "Kitaplık Çalma Listeleri",
     "CreateNewPlaylist": "Çalma Listesi Oluştur",
@@ -8971,7 +8971,7 @@ Map<String, Map<String, String>> get keys => {
     "removePlaylist": "Видалити список відтворення",
     "networkError1": "Упс, помилка мережі!",
     "retry": "Повторити!",
-    "home": "Головна harmony music",
+    "home": "Головна",
     "songs": "Пісні",
     "playlists": "Списки відтворення",
     "albums": "Альбоми",
@@ -9245,7 +9245,7 @@ Map<String, Map<String, String>> get keys => {
     "keepScreenOnWhilePlaying": "پلے ہوتے وقت اسکرین کو روشن رکھیں",
     "keepScreenOnWhilePlayingDes": "اگر فعال ہو تو، جب موسیقی چل رہی ہوگی تو ڈیوائس کی اسکرین روشن رہے گی"
 },"vi" : {
-    "home": "Trang chủ Harmony",
+    "home": "Trang chủ",
     "songs": "Bài hát",
     "create": "Tạo",
     "rename": "Đổi tên",

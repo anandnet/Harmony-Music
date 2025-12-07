@@ -1,3 +1,11 @@
+<div align="center">
+
+### ⚠️ **This repository is no longer maintained**
+
+No further updates will be made. Use at your own risk.
+
+</div>
+
 <img src="https://github.com/anandnet/Harmony-Music/blob/main/cover.png" width="1200" >
 
 # Harmony Music

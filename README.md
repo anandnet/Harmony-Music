@@ -1,8 +1,6 @@
 <div align="center">
 
-### ⚠️ **This repository is no longer maintained**
-
-No further updates will be made. Use at your own risk.
+## 🔴 **This repository is no longer maintained**
 
 </div>
 

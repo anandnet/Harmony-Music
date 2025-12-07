@@ -1,4 +1,10 @@
-## 1.12.1
+# 1.12.2
+* Added wakelock support to keep screen awake while playing music (can be toggled from settings)
+* Enabled downloading in external storage for Android devices
+* Fixed Home discover content loading issue
+* Added more options to export playlist (CSV file & Direct export to YT Music (Song limit - 50))
+
+# 1.12.1
 * Fixed Search issue
 * Fixed Artist-song content
 

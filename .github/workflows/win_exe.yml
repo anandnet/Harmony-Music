@@ -15,11 +15,11 @@ jobs:
       
       - name: Install InnoSetup if missing
         run: |
-          if (!(innosetup /? >nul 2>&1)); then
+          if (-not (Get-Command "innosetup" -ErrorAction SilentlyContinue)) {
             choco install innosetup -y
-          else
-            echo "InnoSetup already installed."
-          fi
+          } else {
+            Write-Output "InnoSetup already installed."
+          }
 
       - name: Update lang data
         working-directory: "${{ github.workspace }}"

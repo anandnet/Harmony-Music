@@ -263,5 +263,7 @@
     "invalidPlaylistFile": "播放清單檔案結構無效",
     "importErrorDatabase": "儲存到資料庫時出錯",
     "fileNotFound": "無法找到檔案",
-    "importLargeFileNote": "注意：匯入大型播放清單可能需要更長的時間"
+    "importLargeFileNote": "注意：匯入大型播放清單可能需要更長的時間",
+    "keepScreenOnWhilePlaying": "播放時保持螢幕常亮",
+    "keepScreenOnWhilePlayingDes": "啟用後，播放音樂時設備螢幕將保持亮起"
 }

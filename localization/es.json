@@ -272,5 +272,7 @@
     "exportPlaylistJsonSubtitle": "Este format puede ser importado",
     "exportPlaylistCsvSubtitle": "No se puede importar aquí",
     "exportToYouTubeMusic": "Exportar a YouTube Music",
-    "linkCopied": "Link copiado al portapapeles"
+    "linkCopied": "Link copiado al portapapeles",
+    "keepScreenOnWhilePlaying": "Mantener la pantalla encendida mientras se reproduce",
+    "keepScreenOnWhilePlayingDes": "Si está activado, la pantalla del dispositivo permanecerá despierta mientras se reproduce música"
 }

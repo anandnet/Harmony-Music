@@ -237,5 +237,7 @@
     "selectAll": "حدد الكل",
     "playingfromAlbum": "اللعب من الألبوم",
     "playingfromPlaylist": "التشغيل من قائمة التشغيل",
-    "playingfromSelection": "اللعب من المختارة"
+    "playingfromSelection": "اللعب من المختارة",
+    "keepScreenOnWhilePlaying": "ابقِ الشاشة مضاءة أثناء التشغيل",
+    "keepScreenOnWhilePlayingDes": "إذا تم التفعيل، ستبقى شاشة الجهاز مضاءة أثناء تشغيل الموسيقى"
 }

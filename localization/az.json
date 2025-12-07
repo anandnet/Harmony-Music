@@ -142,5 +142,7 @@
     "library": "Kitabxana",
     "minutes": "dəqiqə",
     "sleepTimer": "Yuxu taymeri",
-    "cancelTimerAlert": "Yuxu taymeri ləğv edildi"
+    "cancelTimerAlert": "Yuxu taymeri ləğv edildi",
+    "keepScreenOnWhilePlaying": "Musiqi çalarkən ekranı açıq saxla",
+    "keepScreenOnWhilePlayingDes": "Aktivdirsə, cihazın ekranı musiqi çalarkən açıq qalacaq"
 }

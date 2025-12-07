@@ -141,5 +141,7 @@
     "endOfThisSong": "ଏହି ଗୀତର ଶେଷରେ",
     "library": "ଲାଇବ୍ରେରୀ",
     "removeMultiple": "ଏକାଧିକ ଗୀତ କାଢ଼ି ଦିଅନ୍ତୁ",
-    "album": "ସଂଗ୍ରହପୁସ୍ତକ"
+    "album": "ସଂଗ୍ରହପୁସ୍ତକ",
+    "keepScreenOnWhilePlaying": "ସଙ୍ଗୀତ ଚଲିଥିବାବେଳେ ସ୍କ୍ରୀନ୍ ଚାଲୁ ରଖନ୍ତୁ",
+    "keepScreenOnWhilePlayingDes": "ସକ୍ରିୟ କଲେ, ସଙ୍ଗୀତ ଚଳାଉଥିବା ସମୟରେ ଡିଭାଇସର ସ୍କ୍ରୀନ୍ ଜାଗ୍ରତ ରହିବ"
 }

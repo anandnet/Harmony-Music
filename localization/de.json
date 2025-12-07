@@ -268,5 +268,7 @@
     "importErrorFileAccess": "Auf die ausgewählte Datei konnte nicht zugegriffen werden",
     "invalidPlaylistFile": "Ungültige Playlist Dateistruktur",
     "fileNotFound": "Datei nicht gefunden",
-    "importLargeFileNote": "Hinweis: Der Import großer Playlisten kann länger dauern"
+    "importLargeFileNote": "Hinweis: Der Import großer Playlisten kann länger dauern",
+    "keepScreenOnWhilePlaying": "Bildschirm während der Wiedergabe eingeschaltet lassen",
+    "keepScreenOnWhilePlayingDes": "Wenn aktiviert, bleibt der Bildschirm des Geräts beim Musikhören eingeschaltet"
 }

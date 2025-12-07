@@ -265,5 +265,7 @@
     "importErrorFormat": "Formato de arquivo inválido",
     "importErrorDatabase": "Erro em salvar no banco de dados",
     "fileNotFound": "Arquivo não encontrado",
-    "importLargeFileNote": "Nota: Playlists longas pode levar mais tempo para importar"
+    "importLargeFileNote": "Nota: Playlists longas pode levar mais tempo para importar",
+    "keepScreenOnWhilePlaying": "Manter a tela ligada durante a reprodução",
+    "keepScreenOnWhilePlayingDes": "Se ativado, a tela do dispositivo permanecerá ligada enquanto a música estiver sendo reproduzida"
 }

@@ -265,5 +265,7 @@
     "importErrorFormat": "El format del fitxer no és vàlid",
     "importErrorDatabase": "Error en desar a la base de dades",
     "fileNotFound": "No s'ha trobat el fitxer",
-    "importLargeFileNote": "Nota: La importació de llistes de reproducció grosses pot trigar més estona"
+    "importLargeFileNote": "Nota: La importació de llistes de reproducció grosses pot trigar més estona",
+    "keepScreenOnWhilePlaying": "Mantenir la pantalla encesa mentre es reprodueix",
+    "keepScreenOnWhilePlayingDes": "Si està activat, la pantalla del dispositiu romandrà encesa mentre es reprodueix música"
 }

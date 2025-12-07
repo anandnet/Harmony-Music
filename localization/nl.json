@@ -184,5 +184,7 @@
     "restoreSettingsAndPlaylists": "Herstel instellingen en afspeellijsten",
     "album": "Album",
     "selectSongs": "Selecteer liedjes",
-    "selectAll": "Selecteer alle"
+    "selectAll": "Selecteer alle",
+    "keepScreenOnWhilePlaying": "Scherm aanhouden tijdens afspelen",
+    "keepScreenOnWhilePlayingDes": "Indien ingeschakeld blijft het scherm van het apparaat ingeschakeld tijdens het afspelen van muziek"
 }

@@ -273,5 +273,7 @@
     "exportPlaylistJsonSubtitle": "此格式可被导入",
     "linkCopied": "链接已复制到剪切板",
     "exportToYouTubeMusicSubtitle": "这将推送你的播放列表（小于50首）到当前播放队列，请不要忘记在打开YtMusic后将曲目添加到歌单或保存",
-    "exportPlaylistCsvSubtitle": "无法在此处导入"
+    "exportPlaylistCsvSubtitle": "无法在此处导入",
+    "keepScreenOnWhilePlaying": "播放时保持屏幕常亮",
+    "keepScreenOnWhilePlayingDes": "启用后，播放音乐时设备屏幕将保持点亮"
 }

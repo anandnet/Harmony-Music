@@ -61,6 +61,7 @@ dependencies:
   path_provider: ^2.1.1
   permission_handler: ^11.0.1
   share_plus: ^10.1.4
+  wakelock_plus: ^1.4.0
   shimmer: ^3.0.0
   sidebar_with_animation:
     git:

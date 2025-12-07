@@ -268,5 +268,7 @@
     "importLargeFileNote": "Uwaga: import dużych list odtwarzania może potrwać dłużej",
     "importPlaylistDesc": "Wybierz wcześniej wyeksportowany plik playlisty w formacie JSON do zaimportowania",
     "playlistExportedMsg": "Lista odtwarzania została pomyślnie wyeksportowana do",
-    "importError": "Błąd podczas importowania listy odtwarzania"
+    "importError": "Błąd podczas importowania listy odtwarzania",
+    "keepScreenOnWhilePlaying": "Utrzymuj ekran włączony podczas odtwarzania",
+    "keepScreenOnWhilePlayingDes": "Jeśli włączone, ekran urządzenia pozostanie włączony podczas odtwarzania muzyki"
 }

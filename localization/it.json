@@ -270,5 +270,7 @@
     "exportPlaylistCsvSubtitle": "Impossibile importare qui",
     "exportToYouTubeMusic": "Esporta verso Youtube Music",
     "exportToYouTubeMusicSubtitle": "Sposterà la tua playlist (meno di 50 brani) nella coda corrente, non dimenticare di aggiungere alla playlist/salvare dopo aver aperto YTMusic",
-    "linkCopied": "Link copiato negli appunti"
+    "linkCopied": "Link copiato negli appunti",
+    "keepScreenOnWhilePlaying": "Mantieni lo schermo attivo durante la riproduzione",
+    "keepScreenOnWhilePlayingDes": "Se abilitato, lo schermo del dispositivo resterà acceso mentre la musica viene riprodotta"
 }

@@ -411,6 +411,17 @@ class SettingsScreen extends StatelessWidget {
                         )),
                   ListTile(
                       contentPadding: const EdgeInsets.only(left: 5, right: 10),
+                      title: Text("keepScreenOnWhilePlaying".tr),
+                      subtitle: Text("keepScreenOnWhilePlayingDes".tr,
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      trailing: Obx(
+                        () => CustSwitch(
+                            value: settingsController.keepScreenAwake.value,
+                            onChanged:
+                                settingsController.toggleKeepScreenAwake),
+                      )),
+                  ListTile(
+                      contentPadding: const EdgeInsets.only(left: 5, right: 10),
                       title: Text("restoreLastPlaybackSession".tr),
                       subtitle: Text("restoreLastPlaybackSessionDes".tr,
                           style: Theme.of(context).textTheme.bodyMedium),

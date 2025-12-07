@@ -7,5 +7,7 @@
     "album": "អាល់ប៊ុម",
     "artists": "សិល្បករ",
     "settings": "ការកំណត់",
-    "library": "បណ្ណាល័យ"
+    "library": "បណ្ណាល័យ",
+    "keepScreenOnWhilePlaying": "រក្សាអេក្រង់ឲ្យភ្លឺនៅពេលកំពុងចាក់",
+    "keepScreenOnWhilePlayingDes": "ប្រសិនបើបានបើក អេក្រង់ឧបករណ៍នឹងនៅភ្លឺខណៈពេលចាក់តន្ត្រី"
 }

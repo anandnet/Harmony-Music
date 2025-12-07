@@ -273,5 +273,7 @@
     "exportPlaylistCsvSubtitle": "Nelze importovat sem",
     "exportToYouTubeMusic": "Exportovat na YouTube Music",
     "exportToYouTubeMusicSubtitle": "Vaše playlisty (s méně než 50 skladbami) se přesunou do aktuální fronty. Nezapomeňte je po otevření v YtMusic přidat do playlistu/uložit",
-    "linkCopied": "Odkaz zkopírován do schránky"
+    "linkCopied": "Odkaz zkopírován do schránky",
+    "keepScreenOnWhilePlaying": "Nechat obrazovku zapnutou během přehrávání",
+    "keepScreenOnWhilePlayingDes": "Pokud je povoleno, obrazovka zařízení zůstane během přehrávání hudby zapnutá"
 }

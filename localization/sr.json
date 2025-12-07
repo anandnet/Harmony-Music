@@ -266,5 +266,7 @@
     "importPlaylist": "Увоз плејлисте",
     "importErrorFileAccess": "Није могуће приступити изабраном фајлу",
     "importPlaylistDesc": "Изаберите претходно извезен JSON фајл плејлисте за увоз",
-    "importErrorFormat": "Неважећи формат фајла"
+    "importErrorFormat": "Неважећи формат фајла",
+    "keepScreenOnWhilePlaying": "Одржавај екран укљученим током репродукције",
+    "keepScreenOnWhilePlayingDes": "Ако је омогућено, екран уређаја ће остати укључен док се репродукује музика"
 }

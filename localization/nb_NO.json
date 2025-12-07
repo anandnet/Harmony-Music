@@ -135,5 +135,7 @@
     "library": "Bibliotek",
     "synced": "Synkronisert",
     "cancelTimerAlert": "Tidsavbrudd avbrutt",
-    "minutes": "minutter"
+    "minutes": "minutter",
+    "keepScreenOnWhilePlaying": "Hold skjermen på under avspilling",
+    "keepScreenOnWhilePlayingDes": "Hvis aktivert, vil enhetens skjerm være på mens musikk spilles"
 }

@@ -272,5 +272,7 @@
     "exportPlaylistCsvSubtitle": "Nemôže byť tu importovaný",
     "exportToYouTubeMusic": "Exportovať do YouTube Music",
     "exportToYouTubeMusicSubtitle": "Do aktuálneho zoznamu skladieb sa presunie váš playlist (menej ako 50 skladieb). Nezabudnite ho pridať do playlistu/uložiť po otvorení v YtMusic",
-    "linkCopied": "Odkaz skopírovaný do schránky"
+    "linkCopied": "Odkaz skopírovaný do schránky",
+    "keepScreenOnWhilePlaying": "Nechajte obrazovku zapnutú počas prehrávania",
+    "keepScreenOnWhilePlayingDes": "Ak je povolené, obrazovka zariadenia zostane zapnutá počas prehrávania hudby"
 }

@@ -155,5 +155,7 @@
     "backgroundPlayDes": "Ebligi/Malebligi muzikon ludante en la fono (Aplikaĵo estas alirebla de taskopleto kiam aplikaĵo funkcias fone)",
     "githubDes": "Vidi GitHub fontkodon\nse vi ŝatas ĉi tiun projekton, ne forgesu doni ⭐",
     "errorOccuredAlert": "Iu eraro okazis!",
-    "resetblacklistedplaylist": "Rekomencigi nigralistigitajn ludlistojn"
+    "resetblacklistedplaylist": "Rekomencigi nigralistigitajn ludlistojn",
+    "keepScreenOnWhilePlaying": "Konservi ekrano ŝaltita dum ludado",
+    "keepScreenOnWhilePlayingDes": "Se ebligita, la ekrano de la aparato restos ŝaltita dum muziko ludas"
 }

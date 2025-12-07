@@ -220,5 +220,7 @@
     "downloadError2": "Le canto requestate non pote discargar se a causa de un restriction de servitor. Tu pote retentar lo",
     "playerUi": "IU de reproductor",
     "playerUiDes": "Selige le interfacie de usator del reproductor",
-    "enableSlidableAction": "Activar le acciones glissabile"
+    "enableSlidableAction": "Activar le acciones glissabile",
+    "keepScreenOnWhilePlaying": "Mantenir le schermo accendite durante le reproduction",
+    "keepScreenOnWhilePlayingDes": "Si activate, le schermo del dispositivo remanera accendite durante le reproduction del musica"
 }

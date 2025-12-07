@@ -15,5 +15,7 @@
     "downloads": "ಡೌನ್ಲೋಡ್ಗಳು",
     "emptyPlaylist": "ಖಾಲಿ ಪ್ಲೇಪಟ್ಟಿ!",
     "enqueueAll": "ಎಲ್ಲವನ್ನೂ ಎನ್ಕ್ಯೂ ಮಾಡಿ",
-    "renamePlaylist": "ಪ್ಲೇಪಟ್ಟಿಯನ್ನು ಮರುಹೆಸರಿಸಿ"
+    "renamePlaylist": "ಪ್ಲೇಪಟ್ಟಿಯನ್ನು ಮರುಹೆಸರಿಸಿ",
+    "keepScreenOnWhilePlaying": "ಪ್ಲೇ ಮಾಡುವಾಗ ಪರದೆ ಜಾಗೃತವಾಗಿರಲಿ",
+    "keepScreenOnWhilePlayingDes": "ಸಕ್ರಿಯಗೊಳಿಸಿದರೆ, ಸಂಗೀತ ಪ್ಲೇ ಮಾಡುವಾಗ ಸಾಧನದ ಪರದೆ ಜಾಗೃತವಾಗಿರುತ್ತದೆ"
 }

@@ -272,5 +272,7 @@
     "exportPlaylistCsvSubtitle": "Không thể nhập ở đây",
     "exportToYouTubeMusic": "Xuất ra Youtube Nhạc",
     "exportToYouTubeMusicSubtitle": "Nó sẽ đẩy danh sách phát của bạn (bài hát < 50) vào hàng đợi hiện tại, đừng quên thêm vào danh sách phát/lưu sau khi mở trong YtMusic",
-    "linkCopied": "Liên kết đã được sao chép vào bảng tạm"
+    "linkCopied": "Liên kết đã được sao chép vào bảng tạm",
+    "keepScreenOnWhilePlaying": "Giữ màn hình sáng khi phát nhạc",
+    "keepScreenOnWhilePlayingDes": "Nếu được bật, màn hình thiết bị sẽ giữ sáng trong khi nhạc đang phát"
 }

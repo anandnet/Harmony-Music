@@ -241,5 +241,7 @@
     "restartApp": "Reporniți aplicația",
     "playlistBlacklistAlert": "Playlist adăugat pe lista neagră!",
     "restoreAppData": "Restaurați datele aplicației",
-    "id": "Id"
+    "id": "Id",
+    "keepScreenOnWhilePlaying": "Păstrează ecranul aprins în timpul redării",
+    "keepScreenOnWhilePlayingDes": "Dacă este activat, ecranul dispozitivului va rămâne aprins în timp ce muzica se redă"
 }

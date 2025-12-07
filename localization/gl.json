@@ -265,5 +265,7 @@
     "invalidPlaylistFile": "Estrutura de arquivo de lista de reprodución non válida",
     "importErrorDatabase": "Erro gardando na base de datos",
     "fileNotFound": "Arquivo non atopado",
-    "importLargeFileNote": "Nota: As listaxes grandes poden tardar máis en importarse"
+    "importLargeFileNote": "Nota: As listaxes grandes poden tardar máis en importarse",
+    "keepScreenOnWhilePlaying": "Manter a pantalla acesa mentres se reproduce",
+    "keepScreenOnWhilePlayingDes": "Se está activado, a pantalla do dispositivo manterase acesa mentres se reproduce música"
 }

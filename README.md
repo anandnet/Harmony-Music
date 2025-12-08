@@ -80,14 +80,14 @@ Author of this Sotware is aware of the possibility of such damages and known def
 App UI inspired by <a href = 'https://github.com/vfsfitvnm'>vfsfitvnm</a>'s ViMusic<br/>
 Synced lyrics provided by <a href = 'https://lrclib.net' >LRCLIB</a> <br/>
 <a href = 'https://piped.video' >Piped</a> for playlists.
+### Major Packages Used
 
-#### Major Packages used
-* just_audio: ^0.9.40  -  audio player for android
-* media_kit: ^1.1.9 - audio player for linux and windows
-* audio_service: ^0.18.15 - manage background music & platform audio services
-* get: ^4.6.6 -  package for high-performance state management, intelligent dependency injection, and route management
-* youtube_explode_dart: ^2.0.2 - Third party package to provide song url
-* hive: ^2.2.3 - offline db used 
-* hive_flutter: ^1.1.0
-
-
+| Package | Version | Description |
+|----------|----------|-------------|
+| just_audio | ^0.9.40 | Audio player for Android |
+| media_kit | ^1.1.9 | Audio player for Linux and Windows |
+| audio_service | ^0.18.15 | Manage background music & platform audio services |
+| get | ^4.6.6 | High-performance state management, intelligent dependency injection, and route management |
+| youtube_explode_dart | ^2.0.2 | Third-party package to provide song URL |
+| hive | ^2.2.3 | Offline DB used |
+| hive_flutter | ^1.1.0 | Hive integration for Flutter |

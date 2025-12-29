@@ -45,7 +45,7 @@ dependencies:
   flutter_lyric: ^2.0.4+6
   flutter_slidable: ^3.1.2
   get: ^4.7.1
-  google_fonts: ^6.1.0
+  google_fonts: ^6.3.3
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   html: ^0.15.6

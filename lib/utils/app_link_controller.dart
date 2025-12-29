@@ -4,7 +4,7 @@ import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../models/playling_from.dart';
+import '../models/playing_from.dart';
 import '/ui/widgets/songinfo_bottom_sheet.dart';
 import '/utils/helper.dart';
 import '../ui/widgets/loader.dart';
@@ -116,7 +116,7 @@ mixin ProcessLink {
     Navigator.of(Get.context!).pop();
     if (result[0]) {
       Get.find<PlayerController>().playPlayListSong(List.from(result[1]), 0,
-          playfrom: PlaylingFrom(type: PlaylingFromType.SELECTION));
+          playfrom: PlayingFrom(type: PlayingFromType.SELECTION));
     } else {
       ScaffoldMessenger.of(Get.context!).showSnackBar(snackbar(
           Get.context!, "notaSongVideo".tr,
